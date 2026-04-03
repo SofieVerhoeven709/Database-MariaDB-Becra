@@ -12,6 +12,8 @@ import {
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {searchProjects, getDescendantBOMIds, getAncestorBOMIds} from '@/dal/projectBoms'
 import type {ProjectOption} from '@/types/projectBom'
+import {createTargetForType} from '@/dal/targets'
+import {createPurchaseBOMAction} from '@/serverFunctions/purchaseBoms'
 
 // ─── ProjectBOM CRUD ───────────────────────────────────────────────────────────
 
@@ -20,6 +22,7 @@ export const createProjectBOMAction = protectedServerFunction({
   functionName: 'Create project BOM action',
   serverFn: async ({data, logger, profile}) => {
     const id = crypto.randomUUID()
+    const target = await createTargetForType('ProjectBom', profile.id)
     logger.info(`Creating project BOM for project ${data.projectId}, createdBy: ${profile.id}`)
     await prismaClient.projectBOM.create({
       data: {
@@ -27,6 +30,7 @@ export const createProjectBOMAction = protectedServerFunction({
         id,
         createdBy: profile.id,
         createdAt: new Date(),
+        targetId: target.id,
       },
     })
     logger.info(`Project BOM created: ${id}`)
@@ -38,25 +42,19 @@ export const updateProjectBOMAction = protectedServerFunction({
   schema: updateProjectBOMSchema,
   functionName: 'Update project BOM action',
   serverFn: async ({data: {id, ...data}, logger}) => {
-    // Check if readyForPurchase is being set to true
     const wasReadyForPurchase = data.readyForPurchase
 
     await prismaClient.projectBOM.update({where: {id}, data})
     logger.info(`Project BOM updated: ${id}`)
 
     if (wasReadyForPurchase) {
-      // ── Cascade readyForPurchase=true to all structures of this BOM ──────────
       const now = new Date()
       await prismaClient.projectBOMStructure.updateMany({
         where: {projectBOMId: id, deleted: false},
-        data: {
-          readyForPurchase: true,
-          readyForPurchaseDate: now,
-        },
+        data: {readyForPurchase: true, readyForPurchaseDate: now},
       })
       logger.info(`Cascaded readyForPurchase=true to structures of BOM: ${id}`)
 
-      // ── Cascade readyForPurchase=true to all descendant BOMs + their structures
       const descendantIds = await getDescendantBOMIds(id)
       if (descendantIds.length > 0) {
         await prismaClient.projectBOM.updateMany({
@@ -65,16 +63,55 @@ export const updateProjectBOMAction = protectedServerFunction({
         })
         await prismaClient.projectBOMStructure.updateMany({
           where: {projectBOMId: {in: descendantIds}, deleted: false},
-          data: {
-            readyForPurchase: true,
-            readyForPurchaseDate: now,
-          },
+          data: {readyForPurchase: true, readyForPurchaseDate: now},
         })
         logger.info(`Cascaded readyForPurchase=true to ${descendantIds.length} descendant BOM(s): ${id}`)
       }
     }
 
+    const purchaseExists = await prismaClient.purchaseBOM.findFirst({
+      where: {projectBOMId: id},
+    })
+
+    if (data.readyForPurchase && !purchaseExists) {
+      const bom = await prismaClient.purchaseBOM.findFirst({
+        where: {projectBOMId: data.projectBomId!},
+      })
+      let payload
+      if (bom) {
+        payload = {
+          projectId: data.projectId,
+          projectBOMId: id,
+          description: data.description,
+          shortDescription: data.shortDescription,
+          purchaseBomId: bom.purchaseBomId,
+          purchaseBomNumber: data.projectBomNumber,
+          additionalInfo: data.additionalInfo,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          closed: data.closed,
+          materialClosed: data.materialClosed,
+        }
+      } else {
+        payload = {
+          projectId: data.projectId,
+          projectBOMId: id,
+          description: data.description,
+          shortDescription: data.shortDescription,
+          purchaseBomNumber: data.projectBomNumber,
+          additionalInfo: data.additionalInfo,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          closed: data.closed,
+          materialClosed: data.materialClosed,
+        }
+      }
+
+      await createPurchaseBOMAction(payload)
+    }
+
     revalidatePath('/projectBOMs')
+    revalidatePath('/purchaseBOMs')
   },
 })
 
@@ -120,10 +157,9 @@ export const createProjectBOMStructureAction = protectedServerFunction({
   schema: createProjectBOMStructureSchema,
   functionName: 'Create project BOM structure action',
   serverFn: async ({data, logger, profile}) => {
-    // ── Guard: block creation if the BOM is materialClosed ───────────────────
     const bom = await prismaClient.projectBOM.findUniqueOrThrow({
       where: {id: data.projectBOMId},
-      select: {materialClosed: true, readyForPurchase: true},
+      select: {materialClosed: true, readyForPurchase: true, projectId: true},
     })
 
     if (bom.materialClosed) {
@@ -131,7 +167,7 @@ export const createProjectBOMStructureAction = protectedServerFunction({
     }
 
     const id = crypto.randomUUID()
-    await prismaClient.projectBOMStructure.create({
+    const structure = await prismaClient.projectBOMStructure.create({
       data: {
         ...data,
         id,
@@ -141,8 +177,7 @@ export const createProjectBOMStructureAction = protectedServerFunction({
     })
     logger.info(`Project BOM structure created: ${id}`)
 
-    // ── If the BOM (or any ancestor) was readyForPurchase=true, flip it back ─
-    // We reset the BOM itself and all its ancestors.
+    // ── Reset readyForPurchase upward ────────────────────────────────────────
     const bomIdsToReset: string[] = [data.projectBOMId]
     const ancestorIds = await getAncestorBOMIds(data.projectBOMId)
     bomIdsToReset.push(...ancestorIds)
@@ -156,16 +191,28 @@ export const createProjectBOMStructureAction = protectedServerFunction({
     }
 
     revalidatePath('/projectBOMs')
+    revalidatePath('/purchaseBOMs')
   },
 })
 
 export const updateProjectBOMStructureAction = protectedServerFunction({
   schema: updateProjectBOMStructureSchema,
   functionName: 'Update project BOM structure action',
-  serverFn: async ({data: {id, ...data}, logger}) => {
+  serverFn: async ({data: {id, ...data}, logger, profile}) => {
+    // Fetch the current structure so we can check what's changing
+    const existing = await prismaClient.projectBOMStructure.findUniqueOrThrow({
+      where: {id},
+      select: {
+        projectBOMId: true,
+        ProjectBOM: {select: {projectId: true}},
+      },
+    })
+
     await prismaClient.projectBOMStructure.update({where: {id}, data})
     logger.info(`Project BOM structure updated: ${id}`)
+
     revalidatePath('/projectBOMs')
+    revalidatePath('/purchaseBOMs')
   },
 })
 
@@ -178,7 +225,9 @@ export const softDeleteProjectBOMStructureAction = protectedServerFunction({
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
     })
     logger.info(`Project BOM structure soft deleted: ${id}`)
+
     revalidatePath('/projectBOMs')
+    revalidatePath('/purchaseBOMs')
   },
 })
 
@@ -189,19 +238,22 @@ export const hardDeleteProjectBOMStructureAction = protectedServerFunction({
     await prismaClient.projectBOMStructure.delete({where: {id}})
     logger.info(`Project BOM structure hard deleted: ${id}`)
     revalidatePath('/projectBOMs')
+    revalidatePath('/purchaseBOMs')
   },
 })
 
 export const restoreProjectBOMStructureAction = protectedServerFunction({
   schema: projectBOMStructureIdSchema,
   functionName: 'Restore project BOM structure action',
-  serverFn: async ({data: {id}, logger}) => {
+  serverFn: async ({data: {id}, logger, profile}) => {
     await prismaClient.projectBOMStructure.update({
       where: {id},
       data: {deleted: false, deletedAt: null, deletedBy: null},
     })
     logger.info(`Project BOM structure restored: ${id}`)
+
     revalidatePath('/projectBOMs')
+    revalidatePath('/purchaseBOMs')
   },
 })
 

@@ -140,6 +140,8 @@ const ALL_TARGET_TYPES = [
   'PriceList',
   'HourType',
   'Material',
+  'ProjectBom',
+  'PurchaseBom',
 ]
 
 const URGENCY_TYPES = ['Low', 'Medium', 'High', 'Critical']

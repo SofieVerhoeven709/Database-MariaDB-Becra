@@ -57,13 +57,13 @@ export function ProjectBOMStructureFormDialog({
         additionalInfo: structure.additionalInfo ?? '',
         tag: structure.tag ?? '',
         requiredQuantity: structure.requiredQuantity?.toString() ?? '',
-        reservedQuantity: structure.reservedQuantity?.toString() ?? '',
-        issuedQuantity: structure.issuedQuantity?.toString() ?? '',
+        reservedQuantity: structure.execReservedQuantity?.toString() ?? '',
+        issuedQuantity: structure.execIssuedQuantity?.toString() ?? '',
         readyForPurchaseDate: structure.readyForPurchaseDate
           ? new Date(structure.readyForPurchaseDate).toISOString().slice(0, 10)
           : '',
         readyForPurchase: structure.readyForPurchase,
-        notDeliverable: structure.notDeliverable,
+        notDeliverable: structure.execNotDeliverable,
       })
     } else if (open) {
       setForm(emptyForm())
@@ -84,11 +84,8 @@ export function ProjectBOMStructureFormDialog({
         additionalInfo: form.additionalInfo.trim() || null,
         tag: form.tag.trim() || null,
         requiredQuantity: form.requiredQuantity ? parseInt(form.requiredQuantity) : null,
-        reservedQuantity: form.reservedQuantity ? parseInt(form.reservedQuantity) : null,
-        issuedQuantity: form.issuedQuantity ? parseInt(form.issuedQuantity) : null,
         readyForPurchaseDate: form.readyForPurchaseDate ? new Date(form.readyForPurchaseDate) : null,
         readyForPurchase: form.readyForPurchase,
-        notDeliverable: form.notDeliverable,
       }
       if (isEdit) {
         await updateProjectBOMStructureAction({...payload, id: structure.id})
@@ -152,30 +149,6 @@ export function ProjectBOMStructureFormDialog({
               step="1"
               value={form.requiredQuantity}
               onChange={e => set('requiredQuantity', e.target.value)}
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Reserved Qty</Label>
-            <Input
-              type="number"
-              min="0"
-              step="1"
-              value={form.reservedQuantity}
-              onChange={e => set('reservedQuantity', e.target.value)}
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Issued Qty</Label>
-            <Input
-              type="number"
-              min="0"
-              step="1"
-              value={form.issuedQuantity}
-              onChange={e => set('issuedQuantity', e.target.value)}
               className="bg-secondary border-border"
             />
           </div>

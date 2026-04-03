@@ -488,7 +488,8 @@ export const ModelName = {
   ProjectBOM: 'ProjectBOM',
   ProjectBOMStructure: 'ProjectBOMStructure',
   PurchaseBOM: 'PurchaseBOM',
-  PurchaseBOMStructure: 'PurchaseBOMStructure'
+  PurchaseBOMStructure: 'PurchaseBOMStructure',
+  BOMExecution: 'BOMExecution'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -504,7 +505,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -7042,6 +7043,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    BOMExecution: {
+      payload: Prisma.$BOMExecutionPayload<ExtArgs>
+      fields: Prisma.BOMExecutionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BOMExecutionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BOMExecutionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BOMExecutionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BOMExecutionPayload>
+        }
+        findFirst: {
+          args: Prisma.BOMExecutionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BOMExecutionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BOMExecutionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BOMExecutionPayload>
+        }
+        findMany: {
+          args: Prisma.BOMExecutionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BOMExecutionPayload>[]
+        }
+        create: {
+          args: Prisma.BOMExecutionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BOMExecutionPayload>
+        }
+        createMany: {
+          args: Prisma.BOMExecutionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.BOMExecutionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BOMExecutionPayload>
+        }
+        update: {
+          args: Prisma.BOMExecutionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BOMExecutionPayload>
+        }
+        deleteMany: {
+          args: Prisma.BOMExecutionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BOMExecutionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.BOMExecutionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BOMExecutionPayload>
+        }
+        aggregate: {
+          args: Prisma.BOMExecutionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBOMExecution>
+        }
+        groupBy: {
+          args: Prisma.BOMExecutionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BOMExecutionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BOMExecutionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BOMExecutionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -8770,6 +8837,7 @@ export const ProjectBOMScalarFieldEnum = {
   deleted: 'deleted',
   createdBy: 'createdBy',
   projectId: 'projectId',
+  targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -8783,17 +8851,15 @@ export const ProjectBOMStructureScalarFieldEnum = {
   description: 'description',
   tag: 'tag',
   requiredQuantity: 'requiredQuantity',
-  reservedQuantity: 'reservedQuantity',
-  issuedQuantity: 'issuedQuantity',
   createdAt: 'createdAt',
   readyForPurchaseDate: 'readyForPurchaseDate',
   deletedAt: 'deletedAt',
   readyForPurchase: 'readyForPurchase',
-  notDeliverable: 'notDeliverable',
   deleted: 'deleted',
   createdBy: 'createdBy',
   materialId: 'materialId',
   projectBOMId: 'projectBOMId',
+  parentStructureId: 'parentStructureId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -8813,10 +8879,11 @@ export const PurchaseBOMScalarFieldEnum = {
   deletedAt: 'deletedAt',
   closed: 'closed',
   materialClosed: 'materialClosed',
-  readyForPurchase: 'readyForPurchase',
   deleted: 'deleted',
   createdBy: 'createdBy',
   projectId: 'projectId',
+  projectBOMId: 'projectBOMId',
+  targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -8830,21 +8897,38 @@ export const PurchaseBOMStructureScalarFieldEnum = {
   description: 'description',
   tag: 'tag',
   requiredQuantity: 'requiredQuantity',
-  reservedQuantity: 'reservedQuantity',
-  issuedQuantity: 'issuedQuantity',
   createdAt: 'createdAt',
   readyForPurchaseDate: 'readyForPurchaseDate',
   deletedAt: 'deletedAt',
-  readyForPurchase: 'readyForPurchase',
-  notDeliverable: 'notDeliverable',
   deleted: 'deleted',
   createdBy: 'createdBy',
   materialId: 'materialId',
   purchaseBOMId: 'purchaseBOMId',
+  projectBOMStructureId: 'projectBOMStructureId',
+  purchaseBOMStructureId: 'purchaseBOMStructureId',
   deletedBy: 'deletedBy'
 } as const
 
 export type PurchaseBOMStructureScalarFieldEnum = (typeof PurchaseBOMStructureScalarFieldEnum)[keyof typeof PurchaseBOMStructureScalarFieldEnum]
+
+
+export const BOMExecutionScalarFieldEnum = {
+  id: 'id',
+  reservedQuantity: 'reservedQuantity',
+  issuedQuantity: 'issuedQuantity',
+  createdAt: 'createdAt',
+  completedDate: 'completedDate',
+  deletedAt: 'deletedAt',
+  notDeliverable: 'notDeliverable',
+  notCorrect: 'notCorrect',
+  notCorrectReason: 'notCorrectReason',
+  deleted: 'deleted',
+  createdBy: 'createdBy',
+  projectBOMStructureId: 'projectBOMStructureId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type BOMExecutionScalarFieldEnum = (typeof BOMExecutionScalarFieldEnum)[keyof typeof BOMExecutionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -10142,6 +10226,7 @@ export const ProjectBOMOrderByRelevanceFieldEnum = {
   shortDescription: 'shortDescription',
   createdBy: 'createdBy',
   projectId: 'projectId',
+  targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -10157,6 +10242,7 @@ export const ProjectBOMStructureOrderByRelevanceFieldEnum = {
   createdBy: 'createdBy',
   materialId: 'materialId',
   projectBOMId: 'projectBOMId',
+  parentStructureId: 'parentStructureId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -10172,6 +10258,8 @@ export const PurchaseBOMOrderByRelevanceFieldEnum = {
   shortDescription: 'shortDescription',
   createdBy: 'createdBy',
   projectId: 'projectId',
+  projectBOMId: 'projectBOMId',
+  targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -10187,10 +10275,23 @@ export const PurchaseBOMStructureOrderByRelevanceFieldEnum = {
   createdBy: 'createdBy',
   materialId: 'materialId',
   purchaseBOMId: 'purchaseBOMId',
+  projectBOMStructureId: 'projectBOMStructureId',
+  purchaseBOMStructureId: 'purchaseBOMStructureId',
   deletedBy: 'deletedBy'
 } as const
 
 export type PurchaseBOMStructureOrderByRelevanceFieldEnum = (typeof PurchaseBOMStructureOrderByRelevanceFieldEnum)[keyof typeof PurchaseBOMStructureOrderByRelevanceFieldEnum]
+
+
+export const BOMExecutionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  notCorrectReason: 'notCorrectReason',
+  createdBy: 'createdBy',
+  projectBOMStructureId: 'projectBOMStructureId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type BOMExecutionOrderByRelevanceFieldEnum = (typeof BOMExecutionOrderByRelevanceFieldEnum)[keyof typeof BOMExecutionOrderByRelevanceFieldEnum]
 
 
 
@@ -10426,6 +10527,7 @@ export type GlobalOmitConfig = {
   projectBOMStructure?: Prisma.ProjectBOMStructureOmit
   purchaseBOM?: Prisma.PurchaseBOMOmit
   purchaseBOMStructure?: Prisma.PurchaseBOMStructureOmit
+  bOMExecution?: Prisma.BOMExecutionOmit
 }
 
 /* Types for Logging */

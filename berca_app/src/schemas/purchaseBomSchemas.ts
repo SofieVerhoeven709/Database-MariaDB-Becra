@@ -5,6 +5,7 @@ export const purchaseBOMSchema = z.object({
   id: z.string(),
   projectId: z.string(),
   purchaseBomId: z.string().nullable().optional(),
+  projectBOMId: z.string(),
   purchaseBomNumber: z.string(),
   additionalInfo: z.string().max(255).nullable().optional(),
   description: z.string().max(255).nullable().optional(),
@@ -15,7 +16,6 @@ export const purchaseBOMSchema = z.object({
   createdBy: z.string(),
   closed: z.boolean().default(false),
   materialClosed: z.boolean().default(false),
-  readyForPurchase: z.boolean().default(false),
   deleted: z.boolean().default(false),
   deletedAt: z.date().nullable().optional(),
   deletedBy: z.string().nullable().optional(),
@@ -41,7 +41,6 @@ export const updatePurchaseBOMSchema = purchaseBOMSchema.pick({
   endDate: true,
   closed: true,
   materialClosed: true,
-  readyForPurchase: true,
 })
 
 export const purchaseBOMIdSchema = purchaseBOMSchema.pick({id: true})
@@ -50,6 +49,7 @@ export const purchaseBOMIdSchema = purchaseBOMSchema.pick({id: true})
 export const purchaseBOMStructureSchema = z.object({
   id: z.string(),
   purchaseBOMId: z.string(),
+  projectBOMStructureId: z.string(),
   materialId: z.string(),
   shortDescription: z.string().max(255).nullable().optional(),
   additionalInfo: z.string().max(255).nullable().optional(),
@@ -61,35 +61,20 @@ export const purchaseBOMStructureSchema = z.object({
   readyForPurchaseDate: z.date().nullable().optional(),
   createdAt: z.date(),
   createdBy: z.string(),
-  readyForPurchase: z.boolean().default(false),
-  notDeliverable: z.boolean().default(false),
   deleted: z.boolean().default(false),
   deletedAt: z.date().nullable().optional(),
   deletedBy: z.string().nullable().optional(),
 })
 
-export const createPurchaseBOMStructureSchema = purchaseBOMStructureSchema.omit({
-  id: true,
-  createdAt: true,
-  createdBy: true,
-  deleted: true,
-  deletedAt: true,
-  deletedBy: true,
-})
+// ── Purchase structures are NEVER created directly from the purchase side ──────
+// They are created automatically when a ProjectBOMStructure is marked readyForPurchase=true.
+// The purchase side can only update the execution fields below.
 
 export const updatePurchaseBOMStructureSchema = purchaseBOMStructureSchema.pick({
   id: true,
-  materialId: true,
-  shortDescription: true,
-  additionalInfo: true,
-  description: true,
-  tag: true,
-  requiredQuantity: true,
+  // ── Only execution fields are editable on the purchase side ─────────────────
   reservedQuantity: true,
   issuedQuantity: true,
-  readyForPurchaseDate: true,
-  readyForPurchase: true,
-  notDeliverable: true,
 })
 
 export const purchaseBOMStructureIdSchema = purchaseBOMStructureSchema.pick({id: true})

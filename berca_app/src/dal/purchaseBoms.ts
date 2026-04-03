@@ -6,8 +6,6 @@ const purchaseBOMInclude = {
   Employee_PurchaseBOM_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
   Employee_PurchaseBOM_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
   Project: {select: {id: true, projectNumber: true, projectName: true}},
-  // Direct child BOMs (one level — we don't need to recurse in the include;
-  // cascade logic is handled in server actions)
   other_PurchaseBOM: {
     select: {
       id: true,
@@ -16,7 +14,6 @@ const purchaseBOMInclude = {
       shortDescription: true,
       closed: true,
       materialClosed: true,
-      readyForPurchase: true,
       deleted: true,
       PurchaseBOMStructure: {
         where: {deleted: false},
@@ -29,6 +26,25 @@ const purchaseBOMInclude = {
       Material: {select: {id: true, name: true, beNumber: true, shortDescription: true}},
       Employee_PurchaseBOMStructure_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       Employee_PurchaseBOMStructure_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
+      // ── Include the originating ProjectBOMStructure for read-only display fields
+      PurchaseBOMStructure: {
+        where: {deleted: false},
+        select: {id: true},
+      },
+      ProjectBOMStructure: {
+        include: {
+          BOMExecution: {
+            select: {
+              reservedQuantity: true,
+              issuedQuantity: true,
+              notDeliverable: true,
+              notCorrect: true,
+              notCorrectReason: true,
+              completedDate: true,
+            },
+          },
+        },
+      },
     },
     orderBy: {createdAt: 'asc' as const},
   },
@@ -75,12 +91,8 @@ export async function searchProjects(query: string) {
   })
 }
 
-// ─── Cascade helpers (used by server actions) ─────────────────────────────────
+// ─── Cascade helpers ──────────────────────────────────────────────────────────
 
-/**
- * Recursively collect all descendant BOM ids (children, grandchildren, …).
- * Used when cascading readyForPurchase=true downward.
- */
 export async function getDescendantBOMIds(parentId: string): Promise<string[]> {
   const children = await prismaClient.purchaseBOM.findMany({
     where: {purchaseBomId: parentId, deleted: false},
@@ -92,10 +104,6 @@ export async function getDescendantBOMIds(parentId: string): Promise<string[]> {
   return [...childIds, ...deeper.flat()]
 }
 
-/**
- * Recursively collect all ancestor BOM ids (parent, grandparent, …).
- * Used when cascading readyForPurchase=false upward after a new structure is added.
- */
 export async function getAncestorBOMIds(bomId: string): Promise<string[]> {
   const bom = await prismaClient.purchaseBOM.findUnique({
     where: {id: bomId},

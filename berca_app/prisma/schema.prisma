@@ -345,6 +345,8 @@ model Employee {
   deleted                                                                           Boolean                          @default(false)
   deletedAt                                                                         DateTime?                        @db.DateTime(0)
   deletedBy                                                                         String?                          @db.Char(36)
+  BOMExecution_BOMExecution_createdByToEmployee                                     BOMExecution[]                   @relation("BOMExecution_createdByToEmployee")
+  BOMExecution_BOMExecution_deletedByToEmployee                                     BOMExecution[]                   @relation("BOMExecution_deletedByToEmployee")
   Certificate                                                                       Certificate[]
   Certificate_Certificate_deletedByToEmployee                                       Certificate[]                    @relation("Certificate_deletedByToEmployee")
   CertificateType                                                                   CertificateType[]
@@ -1713,6 +1715,8 @@ model Target {
   PriceList                           PriceList[]
   PriceListItemTarget                 PriceListItemTarget[]
   Project                             Project[]
+  ProjectBOM                          ProjectBOM[]
+  PurchaseBOM                         PurchaseBOM[]
   Employee                            Employee                  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_1")
   TargetType                          TargetType                @relation(fields: [targetTypeId], references: [id], onUpdate: Restrict, map: "Target_ibfk_2")
   Employee_Target_deletedByToEmployee Employee?                 @relation("Target_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_3")
@@ -2486,48 +2490,55 @@ model ProjectBOM {
   deleted                                 Boolean               @default(false)
   createdBy                               String                @db.Char(36)
   projectId                               String                @db.Char(36)
+  targetId                                String                @db.Char(36)
   deletedBy                               String?               @db.Char(36)
   Project                                 Project               @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "ProjectBOM_ibfk_1")
   Employee_ProjectBOM_createdByToEmployee Employee              @relation("ProjectBOM_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectBOM_ibfk_2")
   Employee_ProjectBOM_deletedByToEmployee Employee?             @relation("ProjectBOM_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ProjectBOM_ibfk_3")
   ProjectBOM                              ProjectBOM?           @relation("ProjectBOMToProjectBOM", fields: [projectBomId], references: [id], onUpdate: Restrict, map: "ProjectBOM_ibfk_4")
   other_ProjectBOM                        ProjectBOM[]          @relation("ProjectBOMToProjectBOM")
+  Target                                  Target                @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "ProjectBOM_ibfk_5")
   ProjectBOMStructure                     ProjectBOMStructure[]
+  PurchaseBOM                             PurchaseBOM?
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
   @@index([projectId], map: "projectId")
   @@index([projectBomId], map: "projectBomId")
+  @@index([targetId], map: "targetId")
 }
 
 model ProjectBOMStructure {
-  id                                               String     @id @db.Char(36)
-  shortDescription                                 String?    @db.VarChar(255)
-  additionalInfo                                   String?    @db.VarChar(255)
-  description                                      String?    @db.VarChar(255)
-  tag                                              String?    @db.VarChar(255)
+  id                                               String                 @id @db.Char(36)
+  shortDescription                                 String?                @db.VarChar(255)
+  additionalInfo                                   String?                @db.VarChar(255)
+  description                                      String?                @db.VarChar(255)
+  tag                                              String?                @db.VarChar(255)
   requiredQuantity                                 Int?
-  reservedQuantity                                 Int?
-  issuedQuantity                                   Int?
-  createdAt                                        DateTime   @db.DateTime(0)
-  readyForPurchaseDate                             DateTime?  @db.DateTime(0)
-  deletedAt                                        DateTime?  @db.DateTime(0)
-  readyForPurchase                                 Boolean    @default(false)
-  notDeliverable                                   Boolean    @default(false)
-  deleted                                          Boolean    @default(false)
-  createdBy                                        String     @db.Char(36)
-  materialId                                       String     @db.Char(36)
-  projectBOMId                                     String     @db.Char(36)
-  deletedBy                                        String?    @db.Char(36)
-  Material                                         Material   @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_1")
-  ProjectBOM                                       ProjectBOM @relation(fields: [projectBOMId], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_2")
-  Employee_ProjectBOMStructure_createdByToEmployee Employee   @relation("ProjectBOMStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_3")
-  Employee_ProjectBOMStructure_deletedByToEmployee Employee?  @relation("ProjectBOMStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_4")
+  createdAt                                        DateTime               @db.DateTime(0)
+  readyForPurchaseDate                             DateTime?              @db.DateTime(0)
+  deletedAt                                        DateTime?              @db.DateTime(0)
+  readyForPurchase                                 Boolean                @default(false)
+  deleted                                          Boolean                @default(false)
+  createdBy                                        String                 @db.Char(36)
+  materialId                                       String                 @db.Char(36)
+  projectBOMId                                     String                 @db.Char(36)
+  parentStructureId                                String?                @db.Char(36)
+  deletedBy                                        String?                @db.Char(36)
+  BOMExecution                                     BOMExecution?
+  Material                                         Material               @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_1")
+  ProjectBOM                                       ProjectBOM             @relation(fields: [projectBOMId], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_2")
+  Employee_ProjectBOMStructure_createdByToEmployee Employee               @relation("ProjectBOMStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_3")
+  Employee_ProjectBOMStructure_deletedByToEmployee Employee?              @relation("ProjectBOMStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_4")
+  ProjectBOMStructure                              ProjectBOMStructure?   @relation("ProjectBOMStructureToProjectBOMStructure", fields: [parentStructureId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_5")
+  other_ProjectBOMStructure                        ProjectBOMStructure[]  @relation("ProjectBOMStructureToProjectBOMStructure")
+  PurchaseBOMStructure                             PurchaseBOMStructure[]
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
   @@index([materialId], map: "materialId")
   @@index([projectBOMId], map: "projectBOMId")
+  @@index([parentStructureId], map: "parentStructureId")
 }
 
 model PurchaseBOM {
@@ -2543,50 +2554,79 @@ model PurchaseBOM {
   deletedAt                                DateTime?              @db.DateTime(0)
   closed                                   Boolean                @default(false)
   materialClosed                           Boolean                @default(false)
-  readyForPurchase                         Boolean                @default(false)
   deleted                                  Boolean                @default(false)
   createdBy                                String                 @db.Char(36)
   projectId                                String                 @db.Char(36)
+  projectBOMId                             String                 @unique(map: "projectBOMId") @db.Char(36)
+  targetId                                 String                 @db.Char(36)
   deletedBy                                String?                @db.Char(36)
   Project                                  Project                @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_1")
   Employee_PurchaseBOM_createdByToEmployee Employee               @relation("PurchaseBOM_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_2")
   Employee_PurchaseBOM_deletedByToEmployee Employee?              @relation("PurchaseBOM_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_3")
-  PurchaseBOM                              PurchaseBOM?           @relation("PurchaseBOMToPurchaseBOM", fields: [purchaseBomId], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_4")
+  ProjectBOM                               ProjectBOM             @relation(fields: [projectBOMId], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_4")
+  PurchaseBOM                              PurchaseBOM?           @relation("PurchaseBOMToPurchaseBOM", fields: [purchaseBomId], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_5")
   other_PurchaseBOM                        PurchaseBOM[]          @relation("PurchaseBOMToPurchaseBOM")
+  Target                                   Target                 @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_6")
   PurchaseBOMStructure                     PurchaseBOMStructure[]
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
   @@index([projectId], map: "projectId")
   @@index([purchaseBomId], map: "purchaseBomId")
+  @@index([targetId], map: "targetId")
 }
 
 model PurchaseBOMStructure {
-  id                                                String      @id @db.Char(36)
-  shortDescription                                  String?     @db.VarChar(255)
-  additionalInfo                                    String?     @db.VarChar(255)
-  description                                       String?     @db.VarChar(255)
-  tag                                               String?     @db.VarChar(255)
+  id                                                String                 @id @db.Char(36)
+  shortDescription                                  String?                @db.VarChar(255)
+  additionalInfo                                    String?                @db.VarChar(255)
+  description                                       String?                @db.VarChar(255)
+  tag                                               String?                @db.VarChar(255)
   requiredQuantity                                  Int?
-  reservedQuantity                                  Int?
-  issuedQuantity                                    Int?
-  createdAt                                         DateTime    @db.DateTime(0)
-  readyForPurchaseDate                              DateTime?   @db.DateTime(0)
-  deletedAt                                         DateTime?   @db.DateTime(0)
-  readyForPurchase                                  Boolean     @default(false)
-  notDeliverable                                    Boolean     @default(false)
-  deleted                                           Boolean     @default(false)
-  createdBy                                         String      @db.Char(36)
-  materialId                                        String      @db.Char(36)
-  purchaseBOMId                                     String      @db.Char(36)
-  deletedBy                                         String?     @db.Char(36)
-  Material                                          Material    @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_1")
-  PurchaseBOM                                       PurchaseBOM @relation(fields: [purchaseBOMId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_2")
-  Employee_PurchaseBOMStructure_createdByToEmployee Employee    @relation("PurchaseBOMStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_3")
-  Employee_PurchaseBOMStructure_deletedByToEmployee Employee?   @relation("PurchaseBOMStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_4")
+  createdAt                                         DateTime               @db.DateTime(0)
+  readyForPurchaseDate                              DateTime?              @db.DateTime(0)
+  deletedAt                                         DateTime?              @db.DateTime(0)
+  deleted                                           Boolean                @default(false)
+  createdBy                                         String                 @db.Char(36)
+  materialId                                        String                 @db.Char(36)
+  purchaseBOMId                                     String                 @db.Char(36)
+  projectBOMStructureId                             String                 @db.Char(36)
+  purchaseBOMStructureId                            String?                @db.Char(36)
+  deletedBy                                         String?                @db.Char(36)
+  Material                                          Material               @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_1")
+  PurchaseBOM                                       PurchaseBOM            @relation(fields: [purchaseBOMId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_2")
+  Employee_PurchaseBOMStructure_createdByToEmployee Employee               @relation("PurchaseBOMStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_3")
+  Employee_PurchaseBOMStructure_deletedByToEmployee Employee?              @relation("PurchaseBOMStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_4")
+  ProjectBOMStructure                               ProjectBOMStructure    @relation(fields: [projectBOMStructureId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_5")
+  PurchaseBOMStructure                              PurchaseBOMStructure?  @relation("PurchaseBOMStructureToPurchaseBOMStructure", fields: [purchaseBOMStructureId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_6")
+  other_PurchaseBOMStructure                        PurchaseBOMStructure[] @relation("PurchaseBOMStructureToPurchaseBOMStructure")
 
+  @@unique([purchaseBOMId, projectBOMStructureId], map: "purchaseBOMId")
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
   @@index([materialId], map: "materialId")
-  @@index([purchaseBOMId], map: "purchaseBOMId")
+  @@index([projectBOMStructureId], map: "projectBOMStructureId")
+  @@index([purchaseBOMStructureId], map: "purchaseBOMStructureId")
+}
+
+model BOMExecution {
+  id                                        String              @id @db.Char(36)
+  reservedQuantity                          Int?                @default(0)
+  issuedQuantity                            Int?                @default(0)
+  createdAt                                 DateTime            @db.DateTime(0)
+  completedDate                             DateTime?           @db.DateTime(0)
+  deletedAt                                 DateTime?           @db.DateTime(0)
+  notDeliverable                            Boolean             @default(false)
+  notCorrect                                Boolean             @default(false)
+  notCorrectReason                          String?             @db.VarChar(255)
+  deleted                                   Boolean             @default(false)
+  createdBy                                 String              @db.Char(36)
+  projectBOMStructureId                     String              @unique(map: "projectBOMStructureId") @db.Char(36)
+  deletedBy                                 String?             @db.Char(36)
+  ProjectBOMStructure                       ProjectBOMStructure @relation(fields: [projectBOMStructureId], references: [id], onUpdate: Restrict, map: "BOMExecution_ibfk_1")
+  Employee_BOMExecution_createdByToEmployee Employee            @relation("BOMExecution_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "BOMExecution_ibfk_2")
+  Employee_BOMExecution_deletedByToEmployee Employee?           @relation("BOMExecution_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "BOMExecution_ibfk_3")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
 }

@@ -5,13 +5,13 @@ import {
   createPurchaseBOMSchema,
   updatePurchaseBOMSchema,
   purchaseBOMIdSchema,
-  createPurchaseBOMStructureSchema,
   updatePurchaseBOMStructureSchema,
   purchaseBOMStructureIdSchema,
 } from '@/schemas/purchaseBomSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {searchProjects, getDescendantBOMIds, getAncestorBOMIds} from '@/dal/purchaseBoms'
 import type {ProjectOption} from '@/types/purchaseBom'
+import {createTargetForType} from '@/dal/targets'
 
 // ─── PurchaseBOM CRUD ───────────────────────────────────────────────────────────
 
@@ -20,6 +20,7 @@ export const createPurchaseBOMAction = protectedServerFunction({
   functionName: 'Create purchase BOM action',
   serverFn: async ({data, logger, profile}) => {
     const id = crypto.randomUUID()
+    const target = await createTargetForType('PurchaseBom', profile.id)
     logger.info(`Creating purchase BOM for project ${data.projectId}, createdBy: ${profile.id}`)
     await prismaClient.purchaseBOM.create({
       data: {
@@ -27,6 +28,8 @@ export const createPurchaseBOMAction = protectedServerFunction({
         id,
         createdBy: profile.id,
         createdAt: new Date(),
+        targetId: target.id,
+        projectBOMId: data.projectBOMId,
       },
     })
     logger.info(`Purchase BOM created: ${id}`)
@@ -38,40 +41,19 @@ export const updatePurchaseBOMAction = protectedServerFunction({
   schema: updatePurchaseBOMSchema,
   functionName: 'Update purchase BOM action',
   serverFn: async ({data: {id, ...data}, logger}) => {
-    // Check if readyForPurchase is being set to true
-    const wasReadyForPurchase = data.readyForPurchase
-
     await prismaClient.purchaseBOM.update({where: {id}, data})
     logger.info(`Purchase BOM updated: ${id}`)
 
-    if (wasReadyForPurchase) {
-      // ── Cascade readyForPurchase=true to all structures of this BOM ──────────
-      const now = new Date()
-      await prismaClient.purchaseBOMStructure.updateMany({
-        where: {purchaseBOMId: id, deleted: false},
-        data: {
-          readyForPurchase: true,
-          readyForPurchaseDate: now,
-        },
+    const now = new Date()
+    // Note: PurchaseBOMStructure does not have readyForPurchase — that lives on
+    // ProjectBOMStructure. We only cascade the BOM-level flag here.
+    const descendantIds = await getDescendantBOMIds(id)
+    if (descendantIds.length > 0) {
+      await prismaClient.purchaseBOM.updateMany({
+        where: {id: {in: descendantIds}},
+        data: data,
       })
-      logger.info(`Cascaded readyForPurchase=true to structures of BOM: ${id}`)
-
-      // ── Cascade readyForPurchase=true to all descendant BOMs + their structures
-      const descendantIds = await getDescendantBOMIds(id)
-      if (descendantIds.length > 0) {
-        await prismaClient.purchaseBOM.updateMany({
-          where: {id: {in: descendantIds}},
-          data: {readyForPurchase: true},
-        })
-        await prismaClient.purchaseBOMStructure.updateMany({
-          where: {purchaseBOMId: {in: descendantIds}, deleted: false},
-          data: {
-            readyForPurchase: true,
-            readyForPurchaseDate: now,
-          },
-        })
-        logger.info(`Cascaded readyForPurchase=true to ${descendantIds.length} descendant BOM(s): ${id}`)
-      }
+      logger.info(`Cascaded readyForPurchase=true to ${descendantIds.length} descendant BOM(s): ${id}`)
     }
 
     revalidatePath('/purchaseBOMs')
@@ -114,57 +96,18 @@ export const undeletePurchaseBOMAction = protectedServerFunction({
   },
 })
 
-// ─── PurchaseBOMStructure CRUD ──────────────────────────────────────────────────
-
-export const createPurchaseBOMStructureAction = protectedServerFunction({
-  schema: createPurchaseBOMStructureSchema,
-  functionName: 'Create purchase BOM structure action',
-  serverFn: async ({data, logger, profile}) => {
-    // ── Guard: block creation if the BOM is materialClosed ───────────────────
-    const bom = await prismaClient.purchaseBOM.findUniqueOrThrow({
-      where: {id: data.purchaseBOMId},
-      select: {materialClosed: true, readyForPurchase: true},
-    })
-
-    if (bom.materialClosed) {
-      throw new Error('Cannot add structures to a material-closed BOM.')
-    }
-
-    const id = crypto.randomUUID()
-    await prismaClient.purchaseBOMStructure.create({
-      data: {
-        ...data,
-        id,
-        createdBy: profile.id,
-        createdAt: new Date(),
-      },
-    })
-    logger.info(`Purchase BOM structure created: ${id}`)
-
-    // ── If the BOM (or any ancestor) was readyForPurchase=true, flip it back ─
-    // We reset the BOM itself and all its ancestors.
-    const bomIdsToReset: string[] = [data.purchaseBOMId]
-    const ancestorIds = await getAncestorBOMIds(data.purchaseBOMId)
-    bomIdsToReset.push(...ancestorIds)
-
-    if (bomIdsToReset.length > 0) {
-      await prismaClient.purchaseBOM.updateMany({
-        where: {id: {in: bomIdsToReset}, readyForPurchase: true},
-        data: {readyForPurchase: false},
-      })
-      logger.info(`Reset readyForPurchase=false on BOM(s) [${bomIdsToReset.join(', ')}] after new structure added`)
-    }
-
-    revalidatePath('/purchaseBOMs')
-  },
-})
+// ─── PurchaseBOMStructure — execution-only updates ─────────────────────────────
+// Structures are never created directly on the purchase side.
+// They are auto-created by syncPurchaseBOMStructure when a ProjectBOMStructure
+// is marked readyForPurchase=true on the project side.
 
 export const updatePurchaseBOMStructureAction = protectedServerFunction({
   schema: updatePurchaseBOMStructureSchema,
   functionName: 'Update purchase BOM structure action',
   serverFn: async ({data: {id, ...data}, logger}) => {
-    await prismaClient.purchaseBOMStructure.update({where: {id}, data})
-    logger.info(`Purchase BOM structure updated: ${id}`)
+    // Only reservedQuantity and issuedQuantity are allowed through the schema.
+    await prismaClient.bOMExecution.update({where: {id}, data})
+    logger.info(`Purchase BOM structure updated (execution fields): ${id}`)
     revalidatePath('/purchaseBOMs')
   },
 })

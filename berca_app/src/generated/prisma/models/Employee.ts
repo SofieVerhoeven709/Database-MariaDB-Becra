@@ -366,6 +366,8 @@ export type EmployeeWhereInput = {
   deleted?: Prisma.BoolFilter<"Employee"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Employee"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Employee"> | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionListRelationFilter
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionListRelationFilter
   Certificate?: Prisma.CertificateListRelationFilter
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateListRelationFilter
   CertificateType?: Prisma.CertificateTypeListRelationFilter
@@ -586,6 +588,8 @@ export type EmployeeOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionOrderByRelationAggregateInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionOrderByRelationAggregateInput
   Certificate?: Prisma.CertificateOrderByRelationAggregateInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateOrderByRelationAggregateInput
   CertificateType?: Prisma.CertificateTypeOrderByRelationAggregateInput
@@ -810,6 +814,8 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"Employee"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Employee"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Employee"> | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionListRelationFilter
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionListRelationFilter
   Certificate?: Prisma.CertificateListRelationFilter
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateListRelationFilter
   CertificateType?: Prisma.CertificateTypeListRelationFilter
@@ -1094,6 +1100,8 @@ export type EmployeeCreateInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -1314,6 +1322,8 @@ export type EmployeeUncheckedCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -1526,6 +1536,8 @@ export type EmployeeUpdateInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -1746,6 +1758,8 @@ export type EmployeeUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -5099,6 +5113,36 @@ export type EmployeeUpdateOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_de
   update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeInput, Prisma.EmployeeUpdateWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeInput>, Prisma.EmployeeUncheckedUpdateWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeInput>
 }
 
+export type EmployeeCreateNestedOneWithoutBOMExecution_BOMExecution_createdByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput, Prisma.EmployeeUncheckedCreateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutBOMExecution_BOMExecution_createdByToEmployeeInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+}
+
+export type EmployeeCreateNestedOneWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput, Prisma.EmployeeUncheckedCreateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+}
+
+export type EmployeeUpdateOneRequiredWithoutBOMExecution_BOMExecution_createdByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput, Prisma.EmployeeUncheckedCreateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutBOMExecution_BOMExecution_createdByToEmployeeInput
+  upsert?: Prisma.EmployeeUpsertWithoutBOMExecution_BOMExecution_createdByToEmployeeInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutBOMExecution_BOMExecution_createdByToEmployeeInput, Prisma.EmployeeUpdateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput>, Prisma.EmployeeUncheckedUpdateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput>
+}
+
+export type EmployeeUpdateOneWithoutBOMExecution_BOMExecution_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput, Prisma.EmployeeUncheckedCreateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput
+  upsert?: Prisma.EmployeeUpsertWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput
+  disconnect?: Prisma.EmployeeWhereInput | boolean
+  delete?: Prisma.EmployeeWhereInput | boolean
+  connect?: Prisma.EmployeeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput, Prisma.EmployeeUpdateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput>, Prisma.EmployeeUncheckedUpdateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput>
+}
+
 export type EmployeeCreateWithoutCertificateInput = {
   id: string
   firstName: string
@@ -5124,6 +5168,8 @@ export type EmployeeCreateWithoutCertificateInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeCreateNestedManyWithoutEmployee_CertificateType_deletedByToEmployeeInput
@@ -5343,6 +5389,8 @@ export type EmployeeUncheckedCreateWithoutCertificateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployee_CertificateType_deletedByToEmployeeInput
@@ -5559,6 +5607,8 @@ export type EmployeeCreateWithoutCertificate_Certificate_deletedByToEmployeeInpu
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeCreateNestedManyWithoutEmployee_CertificateType_deletedByToEmployeeInput
@@ -5778,6 +5828,8 @@ export type EmployeeUncheckedCreateWithoutCertificate_Certificate_deletedByToEmp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployee_CertificateType_deletedByToEmployeeInput
@@ -6005,6 +6057,8 @@ export type EmployeeUpdateWithoutCertificateInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUpdateManyWithoutEmployee_CertificateType_deletedByToEmployeeNestedInput
@@ -6224,6 +6278,8 @@ export type EmployeeUncheckedUpdateWithoutCertificateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployee_CertificateType_deletedByToEmployeeNestedInput
@@ -6446,6 +6502,8 @@ export type EmployeeUpdateWithoutCertificate_Certificate_deletedByToEmployeeInpu
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUpdateManyWithoutEmployee_CertificateType_deletedByToEmployeeNestedInput
@@ -6665,6 +6723,8 @@ export type EmployeeUncheckedUpdateWithoutCertificate_Certificate_deletedByToEmp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployee_CertificateType_deletedByToEmployeeNestedInput
@@ -6876,6 +6936,8 @@ export type EmployeeCreateWithoutCertificateTypeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeCreateNestedManyWithoutEmployee_CertificateType_deletedByToEmployeeInput
@@ -7095,6 +7157,8 @@ export type EmployeeUncheckedCreateWithoutCertificateTypeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployee_CertificateType_deletedByToEmployeeInput
@@ -7311,6 +7375,8 @@ export type EmployeeCreateWithoutCertificateType_CertificateType_deletedByToEmpl
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -7530,6 +7596,8 @@ export type EmployeeUncheckedCreateWithoutCertificateType_CertificateType_delete
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -7757,6 +7825,8 @@ export type EmployeeUpdateWithoutCertificateTypeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUpdateManyWithoutEmployee_CertificateType_deletedByToEmployeeNestedInput
@@ -7976,6 +8046,8 @@ export type EmployeeUncheckedUpdateWithoutCertificateTypeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployee_CertificateType_deletedByToEmployeeNestedInput
@@ -8198,6 +8270,8 @@ export type EmployeeUpdateWithoutCertificateType_CertificateType_deletedByToEmpl
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -8417,6 +8491,8 @@ export type EmployeeUncheckedUpdateWithoutCertificateType_CertificateType_delete
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -8628,6 +8704,8 @@ export type EmployeeCreateWithoutCompanyInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -8847,6 +8925,8 @@ export type EmployeeUncheckedCreateWithoutCompanyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -9063,6 +9143,8 @@ export type EmployeeCreateWithoutCompany_Company_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -9282,6 +9364,8 @@ export type EmployeeUncheckedCreateWithoutCompany_Company_deletedByToEmployeeInp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -9509,6 +9593,8 @@ export type EmployeeUpdateWithoutCompanyInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -9728,6 +9814,8 @@ export type EmployeeUncheckedUpdateWithoutCompanyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -9950,6 +10038,8 @@ export type EmployeeUpdateWithoutCompany_Company_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -10169,6 +10259,8 @@ export type EmployeeUncheckedUpdateWithoutCompany_Company_deletedByToEmployeeInp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -10380,6 +10472,8 @@ export type EmployeeCreateWithoutCompanyContactInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -10599,6 +10693,8 @@ export type EmployeeUncheckedCreateWithoutCompanyContactInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -10815,6 +10911,8 @@ export type EmployeeCreateWithoutCompanyContact_CompanyContact_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -11034,6 +11132,8 @@ export type EmployeeUncheckedCreateWithoutCompanyContact_CompanyContact_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -11261,6 +11361,8 @@ export type EmployeeUpdateWithoutCompanyContactInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -11480,6 +11582,8 @@ export type EmployeeUncheckedUpdateWithoutCompanyContactInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -11702,6 +11806,8 @@ export type EmployeeUpdateWithoutCompanyContact_CompanyContact_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -11921,6 +12027,8 @@ export type EmployeeUncheckedUpdateWithoutCompanyContact_CompanyContact_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -12132,6 +12240,8 @@ export type EmployeeCreateWithoutContactInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -12351,6 +12461,8 @@ export type EmployeeUncheckedCreateWithoutContactInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -12567,6 +12679,8 @@ export type EmployeeCreateWithoutContact_Contact_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -12786,6 +12900,8 @@ export type EmployeeUncheckedCreateWithoutContact_Contact_deletedByToEmployeeInp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -13013,6 +13129,8 @@ export type EmployeeUpdateWithoutContactInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -13232,6 +13350,8 @@ export type EmployeeUncheckedUpdateWithoutContactInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -13454,6 +13574,8 @@ export type EmployeeUpdateWithoutContact_Contact_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -13673,6 +13795,8 @@ export type EmployeeUncheckedUpdateWithoutContact_Contact_deletedByToEmployeeInp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -13884,6 +14008,8 @@ export type EmployeeCreateWithoutDeliveryNoteSupplierInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -14103,6 +14229,8 @@ export type EmployeeUncheckedCreateWithoutDeliveryNoteSupplierInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -14319,6 +14447,8 @@ export type EmployeeCreateWithoutDeliveryNoteSupplier_DeliveryNoteSupplier_delet
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -14538,6 +14668,8 @@ export type EmployeeUncheckedCreateWithoutDeliveryNoteSupplier_DeliveryNoteSuppl
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -14765,6 +14897,8 @@ export type EmployeeUpdateWithoutDeliveryNoteSupplierInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -14984,6 +15118,8 @@ export type EmployeeUncheckedUpdateWithoutDeliveryNoteSupplierInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -15206,6 +15342,8 @@ export type EmployeeUpdateWithoutDeliveryNoteSupplier_DeliveryNoteSupplier_delet
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -15425,6 +15563,8 @@ export type EmployeeUncheckedUpdateWithoutDeliveryNoteSupplier_DeliveryNoteSuppl
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -15636,6 +15776,8 @@ export type EmployeeCreateWithoutDepartment_Department_deletedByToEmployeeInput 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -15855,6 +15997,8 @@ export type EmployeeUncheckedCreateWithoutDepartment_Department_deletedByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -16071,6 +16215,8 @@ export type EmployeeCreateWithoutDepartment_Department_createdByToEmployeeInput 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -16290,6 +16436,8 @@ export type EmployeeUncheckedCreateWithoutDepartment_Department_createdByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -16517,6 +16665,8 @@ export type EmployeeUpdateWithoutDepartment_Department_deletedByToEmployeeInput 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -16736,6 +16886,8 @@ export type EmployeeUncheckedUpdateWithoutDepartment_Department_deletedByToEmplo
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -16958,6 +17110,8 @@ export type EmployeeUpdateWithoutDepartment_Department_createdByToEmployeeInput 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -17177,6 +17331,8 @@ export type EmployeeUncheckedUpdateWithoutDepartment_Department_createdByToEmplo
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -17388,6 +17544,8 @@ export type EmployeeCreateWithoutDocumentPlaceInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -17607,6 +17765,8 @@ export type EmployeeUncheckedCreateWithoutDocumentPlaceInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -17823,6 +17983,8 @@ export type EmployeeCreateWithoutDocumentPlace_DocumentPlace_createdByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -18042,6 +18204,8 @@ export type EmployeeUncheckedCreateWithoutDocumentPlace_DocumentPlace_createdByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -18269,6 +18433,8 @@ export type EmployeeUpdateWithoutDocumentPlaceInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -18488,6 +18654,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentPlaceInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -18710,6 +18878,8 @@ export type EmployeeUpdateWithoutDocumentPlace_DocumentPlace_createdByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -18929,6 +19099,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentPlace_DocumentPlace_createdByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -19140,6 +19312,8 @@ export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_createdByTo
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -19359,6 +19533,8 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_cr
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -19575,6 +19751,8 @@ export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_deletedByTo
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -19794,6 +19972,8 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_de
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -20010,6 +20190,8 @@ export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_managedById
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -20229,6 +20411,8 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_ma
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -20445,6 +20629,8 @@ export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_revisedById
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -20664,6 +20850,8 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_re
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -20880,6 +21068,8 @@ export type EmployeeCreateWithoutDocumentStructure_Employee_pictureIdToDocumentS
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -21098,6 +21288,8 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_Employee_pictureIdTo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -21331,6 +21523,8 @@ export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_createdByTo
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -21550,6 +21744,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_cr
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -21772,6 +21968,8 @@ export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_deletedByTo
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -21991,6 +22189,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_de
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -22213,6 +22413,8 @@ export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_managedById
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -22432,6 +22634,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_ma
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -22654,6 +22858,8 @@ export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_revisedById
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -22873,6 +23079,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_re
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -23134,6 +23342,8 @@ export type EmployeeCreateWithoutEmergencyContactInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -23353,6 +23563,8 @@ export type EmployeeUncheckedCreateWithoutEmergencyContactInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -23580,6 +23792,8 @@ export type EmployeeUpdateWithoutEmergencyContactInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -23799,6 +24013,8 @@ export type EmployeeUncheckedUpdateWithoutEmergencyContactInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -24010,6 +24226,8 @@ export type EmployeeCreateWithoutOther_EmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -24229,6 +24447,8 @@ export type EmployeeUncheckedCreateWithoutOther_EmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -24445,6 +24665,8 @@ export type EmployeeCreateWithoutEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -24663,6 +24885,8 @@ export type EmployeeUncheckedCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -24885,6 +25109,8 @@ export type EmployeeCreateWithoutOther_Employee_Employee_deletedByToEmployeeInpu
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -25104,6 +25330,8 @@ export type EmployeeUncheckedCreateWithoutOther_Employee_Employee_deletedByToEmp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -25320,6 +25548,8 @@ export type EmployeeCreateWithoutEmployee_Employee_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -25538,6 +25768,8 @@ export type EmployeeUncheckedCreateWithoutEmployee_Employee_deletedByToEmployeeI
   pictureId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -25771,6 +26003,8 @@ export type EmployeeUpdateWithoutOther_EmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -25990,6 +26224,8 @@ export type EmployeeUncheckedUpdateWithoutOther_EmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -26228,6 +26464,8 @@ export type EmployeeUpdateWithoutOther_Employee_Employee_deletedByToEmployeeInpu
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -26447,6 +26685,8 @@ export type EmployeeUncheckedUpdateWithoutOther_Employee_Employee_deletedByToEmp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -26674,6 +26914,8 @@ export type EmployeeCreateWithoutFollowUp_FollowUp_ownedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -26893,6 +27135,8 @@ export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_ownedByToEmployeeInp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -27109,6 +27353,8 @@ export type EmployeeCreateWithoutFollowUp_FollowUp_executedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -27328,6 +27574,8 @@ export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_executedByToEmployee
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -27544,6 +27792,8 @@ export type EmployeeCreateWithoutFollowUp_FollowUp_createdByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -27763,6 +28013,8 @@ export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_createdByToEmployeeI
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -27979,6 +28231,8 @@ export type EmployeeCreateWithoutFollowUp_FollowUp_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -28198,6 +28452,8 @@ export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_deletedByToEmployeeI
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -28425,6 +28681,8 @@ export type EmployeeUpdateWithoutFollowUp_FollowUp_ownedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -28644,6 +28902,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_ownedByToEmployeeInp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -28866,6 +29126,8 @@ export type EmployeeUpdateWithoutFollowUp_FollowUp_executedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -29085,6 +29347,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_executedByToEmployee
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -29307,6 +29571,8 @@ export type EmployeeUpdateWithoutFollowUp_FollowUp_createdByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -29526,6 +29792,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_createdByToEmployeeI
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -29748,6 +30016,8 @@ export type EmployeeUpdateWithoutFollowUp_FollowUp_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -29967,6 +30237,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_deletedByToEmployeeI
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -30178,6 +30450,8 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_deletedByTo
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -30397,6 +30671,8 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_de
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -30613,6 +30889,8 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_ownedByToEm
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -30832,6 +31110,8 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_ow
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -31048,6 +31328,8 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_executedByT
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -31267,6 +31549,8 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_ex
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -31483,6 +31767,8 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_taskForToEm
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -31702,6 +31988,8 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_ta
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -31918,6 +32206,8 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_createdByTo
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -32137,6 +32427,8 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_cr
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -32364,6 +32656,8 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_deletedByTo
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -32583,6 +32877,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_de
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -32805,6 +33101,8 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_ownedByToEm
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -33024,6 +33322,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_ow
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -33246,6 +33546,8 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_executedByT
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -33465,6 +33767,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_ex
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -33687,6 +33991,8 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_taskForToEm
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -33906,6 +34212,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_ta
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -34128,6 +34436,8 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_createdByTo
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -34347,6 +34657,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_cr
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -34558,6 +34870,8 @@ export type EmployeeCreateWithoutFollowUpTargetInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -34777,6 +35091,8 @@ export type EmployeeUncheckedCreateWithoutFollowUpTargetInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -35004,6 +35320,8 @@ export type EmployeeUpdateWithoutFollowUpTargetInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -35223,6 +35541,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUpTargetInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -35434,6 +35754,8 @@ export type EmployeeCreateWithoutFollowUpTypeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -35653,6 +35975,8 @@ export type EmployeeUncheckedCreateWithoutFollowUpTypeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -35869,6 +36193,8 @@ export type EmployeeCreateWithoutFollowUpType_FollowUpType_deletedByToEmployeeIn
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -36088,6 +36414,8 @@ export type EmployeeUncheckedCreateWithoutFollowUpType_FollowUpType_deletedByToE
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -36315,6 +36643,8 @@ export type EmployeeUpdateWithoutFollowUpTypeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -36534,6 +36864,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUpTypeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -36756,6 +37088,8 @@ export type EmployeeUpdateWithoutFollowUpType_FollowUpType_deletedByToEmployeeIn
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -36975,6 +37309,8 @@ export type EmployeeUncheckedUpdateWithoutFollowUpType_FollowUpType_deletedByToE
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -37186,6 +37522,8 @@ export type EmployeeCreateWithoutFunction_Function_createdByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -37405,6 +37743,8 @@ export type EmployeeUncheckedCreateWithoutFunction_Function_createdByToEmployeeI
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -37621,6 +37961,8 @@ export type EmployeeCreateWithoutFunction_Function_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -37840,6 +38182,8 @@ export type EmployeeUncheckedCreateWithoutFunction_Function_deletedByToEmployeeI
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -38067,6 +38411,8 @@ export type EmployeeUpdateWithoutFunction_Function_createdByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -38286,6 +38632,8 @@ export type EmployeeUncheckedUpdateWithoutFunction_Function_createdByToEmployeeI
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -38508,6 +38856,8 @@ export type EmployeeUpdateWithoutFunction_Function_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -38727,6 +39077,8 @@ export type EmployeeUncheckedUpdateWithoutFunction_Function_deletedByToEmployeeI
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -38938,6 +39290,8 @@ export type EmployeeCreateWithoutHourTypeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -39157,6 +39511,8 @@ export type EmployeeUncheckedCreateWithoutHourTypeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -39373,6 +39729,8 @@ export type EmployeeCreateWithoutHourType_HourType_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -39592,6 +39950,8 @@ export type EmployeeUncheckedCreateWithoutHourType_HourType_deletedByToEmployeeI
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -39819,6 +40179,8 @@ export type EmployeeUpdateWithoutHourTypeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -40038,6 +40400,8 @@ export type EmployeeUncheckedUpdateWithoutHourTypeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -40260,6 +40624,8 @@ export type EmployeeUpdateWithoutHourType_HourType_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -40479,6 +40845,8 @@ export type EmployeeUncheckedUpdateWithoutHourType_HourType_deletedByToEmployeeI
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -40690,6 +41058,8 @@ export type EmployeeCreateWithoutInventoryInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -40909,6 +41279,8 @@ export type EmployeeUncheckedCreateWithoutInventoryInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -41125,6 +41497,8 @@ export type EmployeeCreateWithoutInventory_Inventory_deletedByToEmployeeInput = 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -41344,6 +41718,8 @@ export type EmployeeUncheckedCreateWithoutInventory_Inventory_deletedByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -41571,6 +41947,8 @@ export type EmployeeUpdateWithoutInventoryInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -41790,6 +42168,8 @@ export type EmployeeUncheckedUpdateWithoutInventoryInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -42012,6 +42392,8 @@ export type EmployeeUpdateWithoutInventory_Inventory_deletedByToEmployeeInput = 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -42231,6 +42613,8 @@ export type EmployeeUncheckedUpdateWithoutInventory_Inventory_deletedByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -42442,6 +42826,8 @@ export type EmployeeCreateWithoutInventoryChangeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -42661,6 +43047,8 @@ export type EmployeeUncheckedCreateWithoutInventoryChangeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -42877,6 +43265,8 @@ export type EmployeeCreateWithoutInventoryChange_InventoryChange_deletedByToEmpl
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -43096,6 +43486,8 @@ export type EmployeeUncheckedCreateWithoutInventoryChange_InventoryChange_delete
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -43323,6 +43715,8 @@ export type EmployeeUpdateWithoutInventoryChangeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -43542,6 +43936,8 @@ export type EmployeeUncheckedUpdateWithoutInventoryChangeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -43764,6 +44160,8 @@ export type EmployeeUpdateWithoutInventoryChange_InventoryChange_deletedByToEmpl
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -43983,6 +44381,8 @@ export type EmployeeUncheckedUpdateWithoutInventoryChange_InventoryChange_delete
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -44194,6 +44594,8 @@ export type EmployeeCreateWithoutInventoryOrderInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -44413,6 +44815,8 @@ export type EmployeeUncheckedCreateWithoutInventoryOrderInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -44629,6 +45033,8 @@ export type EmployeeCreateWithoutInventoryOrder_InventoryOrder_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -44848,6 +45254,8 @@ export type EmployeeUncheckedCreateWithoutInventoryOrder_InventoryOrder_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -45075,6 +45483,8 @@ export type EmployeeUpdateWithoutInventoryOrderInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -45294,6 +45704,8 @@ export type EmployeeUncheckedUpdateWithoutInventoryOrderInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -45516,6 +45928,8 @@ export type EmployeeUpdateWithoutInventoryOrder_InventoryOrder_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -45735,6 +46149,8 @@ export type EmployeeUncheckedUpdateWithoutInventoryOrder_InventoryOrder_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -45946,6 +46362,8 @@ export type EmployeeCreateWithoutInventoryStructureInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -46165,6 +46583,8 @@ export type EmployeeUncheckedCreateWithoutInventoryStructureInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -46381,6 +46801,8 @@ export type EmployeeCreateWithoutInventoryStructure_InventoryStructure_deletedBy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -46600,6 +47022,8 @@ export type EmployeeUncheckedCreateWithoutInventoryStructure_InventoryStructure_
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -46827,6 +47251,8 @@ export type EmployeeUpdateWithoutInventoryStructureInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -47046,6 +47472,8 @@ export type EmployeeUncheckedUpdateWithoutInventoryStructureInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -47268,6 +47696,8 @@ export type EmployeeUpdateWithoutInventoryStructure_InventoryStructure_deletedBy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -47487,6 +47917,8 @@ export type EmployeeUncheckedUpdateWithoutInventoryStructure_InventoryStructure_
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -47698,6 +48130,8 @@ export type EmployeeCreateWithoutInvoiceInInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -47917,6 +48351,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceInInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -48133,6 +48569,8 @@ export type EmployeeCreateWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeInput = 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -48352,6 +48790,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceIn_InvoiceIn_deletedByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -48568,6 +49008,8 @@ export type EmployeeCreateWithoutInvoiceIn_InvoiceIn_modifiedByToEmployeeInput =
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -48787,6 +49229,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceIn_InvoiceIn_modifiedByToEmploy
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -49014,6 +49458,8 @@ export type EmployeeUpdateWithoutInvoiceInInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -49233,6 +49679,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceInInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -49455,6 +49903,8 @@ export type EmployeeUpdateWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeInput = 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -49674,6 +50124,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceIn_InvoiceIn_deletedByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -49896,6 +50348,8 @@ export type EmployeeUpdateWithoutInvoiceIn_InvoiceIn_modifiedByToEmployeeInput =
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -50115,6 +50569,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceIn_InvoiceIn_modifiedByToEmploy
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -50326,6 +50782,8 @@ export type EmployeeCreateWithoutInvoiceInTargetInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -50545,6 +51003,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceInTargetInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -50772,6 +51232,8 @@ export type EmployeeUpdateWithoutInvoiceInTargetInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -50991,6 +51453,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceInTargetInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -51202,6 +51666,8 @@ export type EmployeeCreateWithoutInvoiceOutInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -51421,6 +51887,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceOutInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -51637,6 +52105,8 @@ export type EmployeeCreateWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -51856,6 +52326,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceOut_InvoiceOut_deletedByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -52072,6 +52544,8 @@ export type EmployeeCreateWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeInput
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -52291,6 +52765,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceOut_InvoiceOut_modifiedByToEmpl
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -52518,6 +52994,8 @@ export type EmployeeUpdateWithoutInvoiceOutInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -52737,6 +53215,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceOutInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -52959,6 +53439,8 @@ export type EmployeeUpdateWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -53178,6 +53660,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceOut_InvoiceOut_deletedByToEmplo
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -53400,6 +53884,8 @@ export type EmployeeUpdateWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeInput
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -53619,6 +54105,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceOut_InvoiceOut_modifiedByToEmpl
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -53830,6 +54318,8 @@ export type EmployeeCreateWithoutInvoiceTypeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -54049,6 +54539,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceTypeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -54265,6 +54757,8 @@ export type EmployeeCreateWithoutInvoiceType_InvoiceType_deletedByToEmployeeInpu
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -54484,6 +54978,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceType_InvoiceType_deletedByToEmp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -54711,6 +55207,8 @@ export type EmployeeUpdateWithoutInvoiceTypeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -54930,6 +55428,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceTypeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -55152,6 +55652,8 @@ export type EmployeeUpdateWithoutInvoiceType_InvoiceType_deletedByToEmployeeInpu
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -55371,6 +55873,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceType_InvoiceType_deletedByToEmp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -55582,6 +56086,8 @@ export type EmployeeCreateWithoutMaterialInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -55801,6 +56307,8 @@ export type EmployeeUncheckedCreateWithoutMaterialInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -56017,6 +56525,8 @@ export type EmployeeCreateWithoutMaterial_Material_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -56236,6 +56746,8 @@ export type EmployeeUncheckedCreateWithoutMaterial_Material_deletedByToEmployeeI
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -56463,6 +56975,8 @@ export type EmployeeUpdateWithoutMaterialInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -56682,6 +57196,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -56904,6 +57420,8 @@ export type EmployeeUpdateWithoutMaterial_Material_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -57123,6 +57641,8 @@ export type EmployeeUncheckedUpdateWithoutMaterial_Material_deletedByToEmployeeI
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -57334,6 +57854,8 @@ export type EmployeeCreateWithoutMaterialAssemblyInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -57553,6 +58075,8 @@ export type EmployeeUncheckedCreateWithoutMaterialAssemblyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -57769,6 +58293,8 @@ export type EmployeeCreateWithoutMaterialAssembly_MaterialAssembly_deletedByToEm
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -57988,6 +58514,8 @@ export type EmployeeUncheckedCreateWithoutMaterialAssembly_MaterialAssembly_dele
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -58215,6 +58743,8 @@ export type EmployeeUpdateWithoutMaterialAssemblyInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -58434,6 +58964,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialAssemblyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -58656,6 +59188,8 @@ export type EmployeeUpdateWithoutMaterialAssembly_MaterialAssembly_deletedByToEm
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -58875,6 +59409,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialAssembly_MaterialAssembly_dele
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -59086,6 +59622,8 @@ export type EmployeeCreateWithoutMaterialCodeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -59305,6 +59843,8 @@ export type EmployeeUncheckedCreateWithoutMaterialCodeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -59521,6 +60061,8 @@ export type EmployeeCreateWithoutMaterialCode_MaterialCode_deletedByToEmployeeIn
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -59740,6 +60282,8 @@ export type EmployeeUncheckedCreateWithoutMaterialCode_MaterialCode_deletedByToE
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -59967,6 +60511,8 @@ export type EmployeeUpdateWithoutMaterialCodeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -60186,6 +60732,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialCodeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -60408,6 +60956,8 @@ export type EmployeeUpdateWithoutMaterialCode_MaterialCode_deletedByToEmployeeIn
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -60627,6 +61177,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialCode_MaterialCode_deletedByToE
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -60838,6 +61390,8 @@ export type EmployeeCreateWithoutMaterialDimensionInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -61057,6 +61611,8 @@ export type EmployeeUncheckedCreateWithoutMaterialDimensionInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -61273,6 +61829,8 @@ export type EmployeeCreateWithoutMaterialDimension_MaterialDimension_deletedByTo
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -61492,6 +62050,8 @@ export type EmployeeUncheckedCreateWithoutMaterialDimension_MaterialDimension_de
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -61719,6 +62279,8 @@ export type EmployeeUpdateWithoutMaterialDimensionInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -61938,6 +62500,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialDimensionInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -62160,6 +62724,8 @@ export type EmployeeUpdateWithoutMaterialDimension_MaterialDimension_deletedByTo
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -62379,6 +62945,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialDimension_MaterialDimension_de
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -62590,6 +63158,8 @@ export type EmployeeCreateWithoutMaterialFamilyInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -62809,6 +63379,8 @@ export type EmployeeUncheckedCreateWithoutMaterialFamilyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -63025,6 +63597,8 @@ export type EmployeeCreateWithoutMaterialFamily_MaterialFamily_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -63244,6 +63818,8 @@ export type EmployeeUncheckedCreateWithoutMaterialFamily_MaterialFamily_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -63471,6 +64047,8 @@ export type EmployeeUpdateWithoutMaterialFamilyInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -63690,6 +64268,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialFamilyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -63912,6 +64492,8 @@ export type EmployeeUpdateWithoutMaterialFamily_MaterialFamily_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -64131,6 +64713,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialFamily_MaterialFamily_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -64342,6 +64926,8 @@ export type EmployeeCreateWithoutMaterialGroupInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -64561,6 +65147,8 @@ export type EmployeeUncheckedCreateWithoutMaterialGroupInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -64788,6 +65376,8 @@ export type EmployeeUpdateWithoutMaterialGroupInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -65007,6 +65597,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialGroupInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -65218,6 +65810,8 @@ export type EmployeeCreateWithoutMaterialMovementInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -65437,6 +66031,8 @@ export type EmployeeUncheckedCreateWithoutMaterialMovementInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -65653,6 +66249,8 @@ export type EmployeeCreateWithoutMaterialMovement_MaterialMovement_deletedByToEm
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -65872,6 +66470,8 @@ export type EmployeeUncheckedCreateWithoutMaterialMovement_MaterialMovement_dele
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -66099,6 +66699,8 @@ export type EmployeeUpdateWithoutMaterialMovementInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -66318,6 +66920,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialMovementInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -66540,6 +67144,8 @@ export type EmployeeUpdateWithoutMaterialMovement_MaterialMovement_deletedByToEm
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -66759,6 +67365,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialMovement_MaterialMovement_dele
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -66970,6 +67578,8 @@ export type EmployeeCreateWithoutMaterialOtherInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -67189,6 +67799,8 @@ export type EmployeeUncheckedCreateWithoutMaterialOtherInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -67405,6 +68017,8 @@ export type EmployeeCreateWithoutMaterialOther_MaterialOther_deletedByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -67624,6 +68238,8 @@ export type EmployeeUncheckedCreateWithoutMaterialOther_MaterialOther_deletedByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -67851,6 +68467,8 @@ export type EmployeeUpdateWithoutMaterialOtherInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -68070,6 +68688,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialOtherInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -68292,6 +68912,8 @@ export type EmployeeUpdateWithoutMaterialOther_MaterialOther_deletedByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -68511,6 +69133,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialOther_MaterialOther_deletedByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -68722,6 +69346,8 @@ export type EmployeeCreateWithoutMaterialPerformanceInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -68941,6 +69567,8 @@ export type EmployeeUncheckedCreateWithoutMaterialPerformanceInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -69157,6 +69785,8 @@ export type EmployeeCreateWithoutMaterialPerformance_MaterialPerformance_deleted
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -69376,6 +70006,8 @@ export type EmployeeUncheckedCreateWithoutMaterialPerformance_MaterialPerformanc
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -69603,6 +70235,8 @@ export type EmployeeUpdateWithoutMaterialPerformanceInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -69822,6 +70456,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialPerformanceInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -70044,6 +70680,8 @@ export type EmployeeUpdateWithoutMaterialPerformance_MaterialPerformance_deleted
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -70263,6 +70901,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialPerformance_MaterialPerformanc
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -70474,6 +71114,8 @@ export type EmployeeCreateWithoutMaterialPriceInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -70693,6 +71335,8 @@ export type EmployeeUncheckedCreateWithoutMaterialPriceInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -70909,6 +71553,8 @@ export type EmployeeCreateWithoutMaterialPrice_MaterialPrice_deletedByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -71128,6 +71774,8 @@ export type EmployeeUncheckedCreateWithoutMaterialPrice_MaterialPrice_deletedByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -71355,6 +72003,8 @@ export type EmployeeUpdateWithoutMaterialPriceInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -71574,6 +72224,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialPriceInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -71796,6 +72448,8 @@ export type EmployeeUpdateWithoutMaterialPrice_MaterialPrice_deletedByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -72015,6 +72669,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialPrice_MaterialPrice_deletedByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -72226,6 +72882,8 @@ export type EmployeeCreateWithoutMaterialSerialTrackInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -72445,6 +73103,8 @@ export type EmployeeUncheckedCreateWithoutMaterialSerialTrackInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -72661,6 +73321,8 @@ export type EmployeeCreateWithoutMaterialSerialTrack_MaterialSerialTrack_deleted
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -72880,6 +73542,8 @@ export type EmployeeUncheckedCreateWithoutMaterialSerialTrack_MaterialSerialTrac
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -73107,6 +73771,8 @@ export type EmployeeUpdateWithoutMaterialSerialTrackInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -73326,6 +73992,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialSerialTrackInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -73548,6 +74216,8 @@ export type EmployeeUpdateWithoutMaterialSerialTrack_MaterialSerialTrack_deleted
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -73767,6 +74437,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialSerialTrack_MaterialSerialTrac
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -73978,6 +74650,8 @@ export type EmployeeCreateWithoutMaterialSerialTrackedStructureInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -74197,6 +74871,8 @@ export type EmployeeUncheckedCreateWithoutMaterialSerialTrackedStructureInput = 
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -74413,6 +75089,8 @@ export type EmployeeCreateWithoutMaterialSerialTrackedStructure_MaterialSerialTr
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -74632,6 +75310,8 @@ export type EmployeeUncheckedCreateWithoutMaterialSerialTrackedStructure_Materia
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -74859,6 +75539,8 @@ export type EmployeeUpdateWithoutMaterialSerialTrackedStructureInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -75078,6 +75760,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialSerialTrackedStructureInput = 
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -75300,6 +75984,8 @@ export type EmployeeUpdateWithoutMaterialSerialTrackedStructure_MaterialSerialTr
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -75519,6 +76205,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialSerialTrackedStructure_Materia
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -75730,6 +76418,8 @@ export type EmployeeCreateWithoutMaterialSpecInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -75949,6 +76639,8 @@ export type EmployeeUncheckedCreateWithoutMaterialSpecInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -76165,6 +76857,8 @@ export type EmployeeCreateWithoutMaterialSpec_MaterialSpec_deletedByToEmployeeIn
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -76384,6 +77078,8 @@ export type EmployeeUncheckedCreateWithoutMaterialSpec_MaterialSpec_deletedByToE
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -76611,6 +77307,8 @@ export type EmployeeUpdateWithoutMaterialSpecInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -76830,6 +77528,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialSpecInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -77052,6 +77752,8 @@ export type EmployeeUpdateWithoutMaterialSpec_MaterialSpec_deletedByToEmployeeIn
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -77271,6 +77973,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialSpec_MaterialSpec_deletedByToE
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -77482,6 +78186,8 @@ export type EmployeeCreateWithoutMaterialStructureInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -77701,6 +78407,8 @@ export type EmployeeUncheckedCreateWithoutMaterialStructureInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -77917,6 +78625,8 @@ export type EmployeeCreateWithoutMaterialStructure_MaterialStructure_deletedByTo
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -78136,6 +78846,8 @@ export type EmployeeUncheckedCreateWithoutMaterialStructure_MaterialStructure_de
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -78363,6 +79075,8 @@ export type EmployeeUpdateWithoutMaterialStructureInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -78582,6 +79296,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialStructureInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -78804,6 +79520,8 @@ export type EmployeeUpdateWithoutMaterialStructure_MaterialStructure_deletedByTo
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -79023,6 +79741,8 @@ export type EmployeeUncheckedUpdateWithoutMaterialStructure_MaterialStructure_de
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -79234,6 +79954,8 @@ export type EmployeeCreateWithoutPartInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -79453,6 +80175,8 @@ export type EmployeeUncheckedCreateWithoutPartInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -79669,6 +80393,8 @@ export type EmployeeCreateWithoutPart_Part_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -79888,6 +80614,8 @@ export type EmployeeUncheckedCreateWithoutPart_Part_deletedByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -80115,6 +80843,8 @@ export type EmployeeUpdateWithoutPartInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -80334,6 +81064,8 @@ export type EmployeeUncheckedUpdateWithoutPartInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -80556,6 +81288,8 @@ export type EmployeeUpdateWithoutPart_Part_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -80775,6 +81509,8 @@ export type EmployeeUncheckedUpdateWithoutPart_Part_deletedByToEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -80986,6 +81722,8 @@ export type EmployeeCreateWithoutPhantomInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -81205,6 +81943,8 @@ export type EmployeeUncheckedCreateWithoutPhantomInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -81421,6 +82161,8 @@ export type EmployeeCreateWithoutPhantom_Phantom_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -81640,6 +82382,8 @@ export type EmployeeUncheckedCreateWithoutPhantom_Phantom_deletedByToEmployeeInp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -81867,6 +82611,8 @@ export type EmployeeUpdateWithoutPhantomInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -82086,6 +82832,8 @@ export type EmployeeUncheckedUpdateWithoutPhantomInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -82308,6 +83056,8 @@ export type EmployeeUpdateWithoutPhantom_Phantom_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -82527,6 +83277,8 @@ export type EmployeeUncheckedUpdateWithoutPhantom_Phantom_deletedByToEmployeeInp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -82738,6 +83490,8 @@ export type EmployeeCreateWithoutProductInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -82957,6 +83711,8 @@ export type EmployeeUncheckedCreateWithoutProductInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -83173,6 +83929,8 @@ export type EmployeeCreateWithoutProduct_Product_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -83392,6 +84150,8 @@ export type EmployeeUncheckedCreateWithoutProduct_Product_deletedByToEmployeeInp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -83619,6 +84379,8 @@ export type EmployeeUpdateWithoutProductInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -83838,6 +84600,8 @@ export type EmployeeUncheckedUpdateWithoutProductInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -84060,6 +84824,8 @@ export type EmployeeUpdateWithoutProduct_Product_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -84279,6 +85045,8 @@ export type EmployeeUncheckedUpdateWithoutProduct_Product_deletedByToEmployeeInp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -84490,6 +85258,8 @@ export type EmployeeCreateWithoutProjectInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -84709,6 +85479,8 @@ export type EmployeeUncheckedCreateWithoutProjectInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -84925,6 +85697,8 @@ export type EmployeeCreateWithoutProject_Project_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -85144,6 +85918,8 @@ export type EmployeeUncheckedCreateWithoutProject_Project_deletedByToEmployeeInp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -85371,6 +86147,8 @@ export type EmployeeUpdateWithoutProjectInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -85590,6 +86368,8 @@ export type EmployeeUncheckedUpdateWithoutProjectInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -85812,6 +86592,8 @@ export type EmployeeUpdateWithoutProject_Project_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -86031,6 +86813,8 @@ export type EmployeeUncheckedUpdateWithoutProject_Project_deletedByToEmployeeInp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -86242,6 +87026,8 @@ export type EmployeeCreateWithoutProjectContact_ProjectContact_createdByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -86461,6 +87247,8 @@ export type EmployeeUncheckedCreateWithoutProjectContact_ProjectContact_createdB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -86677,6 +87465,8 @@ export type EmployeeCreateWithoutProjectContact_ProjectContact_modifiedByToEmplo
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -86896,6 +87686,8 @@ export type EmployeeUncheckedCreateWithoutProjectContact_ProjectContact_modified
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -87112,6 +87904,8 @@ export type EmployeeCreateWithoutProjectContact_ProjectContact_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -87331,6 +88125,8 @@ export type EmployeeUncheckedCreateWithoutProjectContact_ProjectContact_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -87558,6 +88354,8 @@ export type EmployeeUpdateWithoutProjectContact_ProjectContact_createdByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -87777,6 +88575,8 @@ export type EmployeeUncheckedUpdateWithoutProjectContact_ProjectContact_createdB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -87999,6 +88799,8 @@ export type EmployeeUpdateWithoutProjectContact_ProjectContact_modifiedByToEmplo
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -88218,6 +89020,8 @@ export type EmployeeUncheckedUpdateWithoutProjectContact_ProjectContact_modified
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -88440,6 +89244,8 @@ export type EmployeeUpdateWithoutProjectContact_ProjectContact_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -88659,6 +89465,8 @@ export type EmployeeUncheckedUpdateWithoutProjectContact_ProjectContact_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -88870,6 +89678,8 @@ export type EmployeeCreateWithoutProjectTypeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -89089,6 +89899,8 @@ export type EmployeeUncheckedCreateWithoutProjectTypeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -89305,6 +90117,8 @@ export type EmployeeCreateWithoutProjectType_ProjectType_deletedByToEmployeeInpu
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -89524,6 +90338,8 @@ export type EmployeeUncheckedCreateWithoutProjectType_ProjectType_deletedByToEmp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -89751,6 +90567,8 @@ export type EmployeeUpdateWithoutProjectTypeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -89970,6 +90788,8 @@ export type EmployeeUncheckedUpdateWithoutProjectTypeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -90192,6 +91012,8 @@ export type EmployeeUpdateWithoutProjectType_ProjectType_deletedByToEmployeeInpu
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -90411,6 +91233,8 @@ export type EmployeeUncheckedUpdateWithoutProjectType_ProjectType_deletedByToEmp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -90622,6 +91446,8 @@ export type EmployeeCreateWithoutPurchaseInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -90841,6 +91667,8 @@ export type EmployeeUncheckedCreateWithoutPurchaseInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -91057,6 +91885,8 @@ export type EmployeeCreateWithoutPurchase_Purchase_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -91276,6 +92106,8 @@ export type EmployeeUncheckedCreateWithoutPurchase_Purchase_deletedByToEmployeeI
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -91503,6 +92335,8 @@ export type EmployeeUpdateWithoutPurchaseInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -91722,6 +92556,8 @@ export type EmployeeUncheckedUpdateWithoutPurchaseInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -91944,6 +92780,8 @@ export type EmployeeUpdateWithoutPurchase_Purchase_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -92163,6 +93001,8 @@ export type EmployeeUncheckedUpdateWithoutPurchase_Purchase_deletedByToEmployeeI
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -92374,6 +93214,8 @@ export type EmployeeCreateWithoutPurchaseDetailInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -92593,6 +93435,8 @@ export type EmployeeUncheckedCreateWithoutPurchaseDetailInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -92809,6 +93653,8 @@ export type EmployeeCreateWithoutPurchaseDetail_PurchaseDetail_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -93028,6 +93874,8 @@ export type EmployeeUncheckedCreateWithoutPurchaseDetail_PurchaseDetail_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -93255,6 +94103,8 @@ export type EmployeeUpdateWithoutPurchaseDetailInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -93474,6 +94324,8 @@ export type EmployeeUncheckedUpdateWithoutPurchaseDetailInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -93696,6 +94548,8 @@ export type EmployeeUpdateWithoutPurchaseDetail_PurchaseDetail_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -93915,6 +94769,8 @@ export type EmployeeUncheckedUpdateWithoutPurchaseDetail_PurchaseDetail_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -94126,6 +94982,8 @@ export type EmployeeCreateWithoutPurchaseOrderBecraInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -94345,6 +95203,8 @@ export type EmployeeUncheckedCreateWithoutPurchaseOrderBecraInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -94561,6 +95421,8 @@ export type EmployeeCreateWithoutPurchaseOrderBecra_PurchaseOrderBecra_deletedBy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -94780,6 +95642,8 @@ export type EmployeeUncheckedCreateWithoutPurchaseOrderBecra_PurchaseOrderBecra_
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -95007,6 +95871,8 @@ export type EmployeeUpdateWithoutPurchaseOrderBecraInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -95226,6 +96092,8 @@ export type EmployeeUncheckedUpdateWithoutPurchaseOrderBecraInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -95448,6 +96316,8 @@ export type EmployeeUpdateWithoutPurchaseOrderBecra_PurchaseOrderBecra_deletedBy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -95667,6 +96537,8 @@ export type EmployeeUncheckedUpdateWithoutPurchaseOrderBecra_PurchaseOrderBecra_
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -95878,6 +96750,8 @@ export type EmployeeCreateWithoutQuoteSupplierInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -96097,6 +96971,8 @@ export type EmployeeUncheckedCreateWithoutQuoteSupplierInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -96313,6 +97189,8 @@ export type EmployeeCreateWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -96532,6 +97410,8 @@ export type EmployeeUncheckedCreateWithoutQuoteSupplier_QuoteSupplier_deletedByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -96759,6 +97639,8 @@ export type EmployeeUpdateWithoutQuoteSupplierInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -96978,6 +97860,8 @@ export type EmployeeUncheckedUpdateWithoutQuoteSupplierInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -97200,6 +98084,8 @@ export type EmployeeUpdateWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -97419,6 +98305,8 @@ export type EmployeeUncheckedUpdateWithoutQuoteSupplier_QuoteSupplier_deletedByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -97630,6 +98518,8 @@ export type EmployeeCreateWithoutRole_Role_createdByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -97849,6 +98739,8 @@ export type EmployeeUncheckedCreateWithoutRole_Role_createdByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -98065,6 +98957,8 @@ export type EmployeeCreateWithoutRole_Role_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -98284,6 +99178,8 @@ export type EmployeeUncheckedCreateWithoutRole_Role_deletedByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -98511,6 +99407,8 @@ export type EmployeeUpdateWithoutRole_Role_createdByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -98730,6 +99628,8 @@ export type EmployeeUncheckedUpdateWithoutRole_Role_createdByToEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -98952,6 +99852,8 @@ export type EmployeeUpdateWithoutRole_Role_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -99171,6 +100073,8 @@ export type EmployeeUncheckedUpdateWithoutRole_Role_deletedByToEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -99382,6 +100286,8 @@ export type EmployeeCreateWithoutSessionInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -99601,6 +100507,8 @@ export type EmployeeUncheckedCreateWithoutSessionInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -99828,6 +100736,8 @@ export type EmployeeUpdateWithoutSessionInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -100047,6 +100957,8 @@ export type EmployeeUncheckedUpdateWithoutSessionInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -100258,6 +101170,8 @@ export type EmployeeCreateWithoutStatusInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -100477,6 +101391,8 @@ export type EmployeeUncheckedCreateWithoutStatusInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -100693,6 +101609,8 @@ export type EmployeeCreateWithoutStatus_Status_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -100912,6 +101830,8 @@ export type EmployeeUncheckedCreateWithoutStatus_Status_deletedByToEmployeeInput
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -101139,6 +102059,8 @@ export type EmployeeUpdateWithoutStatusInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -101358,6 +102280,8 @@ export type EmployeeUncheckedUpdateWithoutStatusInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -101580,6 +102504,8 @@ export type EmployeeUpdateWithoutStatus_Status_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -101799,6 +102725,8 @@ export type EmployeeUncheckedUpdateWithoutStatus_Status_deletedByToEmployeeInput
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -102010,6 +102938,8 @@ export type EmployeeCreateWithoutSupplierDeliveryNoteFollowUpInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -102229,6 +103159,8 @@ export type EmployeeUncheckedCreateWithoutSupplierDeliveryNoteFollowUpInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -102445,6 +103377,8 @@ export type EmployeeCreateWithoutSupplierDeliveryNoteFollowUp_SupplierDeliveryNo
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -102664,6 +103598,8 @@ export type EmployeeUncheckedCreateWithoutSupplierDeliveryNoteFollowUp_SupplierD
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -102891,6 +103827,8 @@ export type EmployeeUpdateWithoutSupplierDeliveryNoteFollowUpInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -103110,6 +104048,8 @@ export type EmployeeUncheckedUpdateWithoutSupplierDeliveryNoteFollowUpInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -103332,6 +104272,8 @@ export type EmployeeUpdateWithoutSupplierDeliveryNoteFollowUp_SupplierDeliveryNo
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -103551,6 +104493,8 @@ export type EmployeeUncheckedUpdateWithoutSupplierDeliveryNoteFollowUp_SupplierD
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -103762,6 +104706,8 @@ export type EmployeeCreateWithoutTargetInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -103981,6 +104927,8 @@ export type EmployeeUncheckedCreateWithoutTargetInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -104197,6 +105145,8 @@ export type EmployeeCreateWithoutTarget_Target_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -104416,6 +105366,8 @@ export type EmployeeUncheckedCreateWithoutTarget_Target_deletedByToEmployeeInput
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -104643,6 +105595,8 @@ export type EmployeeUpdateWithoutTargetInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -104862,6 +105816,8 @@ export type EmployeeUncheckedUpdateWithoutTargetInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -105084,6 +106040,8 @@ export type EmployeeUpdateWithoutTarget_Target_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -105303,6 +106261,8 @@ export type EmployeeUncheckedUpdateWithoutTarget_Target_deletedByToEmployeeInput
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -105514,6 +106474,8 @@ export type EmployeeCreateWithoutTargetTypeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -105733,6 +106695,8 @@ export type EmployeeUncheckedCreateWithoutTargetTypeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -105949,6 +106913,8 @@ export type EmployeeCreateWithoutTargetType_TargetType_deletedByToEmployeeInput 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -106168,6 +107134,8 @@ export type EmployeeUncheckedCreateWithoutTargetType_TargetType_deletedByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -106395,6 +107363,8 @@ export type EmployeeUpdateWithoutTargetTypeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -106614,6 +107584,8 @@ export type EmployeeUncheckedUpdateWithoutTargetTypeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -106836,6 +107808,8 @@ export type EmployeeUpdateWithoutTargetType_TargetType_deletedByToEmployeeInput 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -107055,6 +108029,8 @@ export type EmployeeUncheckedUpdateWithoutTargetType_TargetType_deletedByToEmplo
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -107266,6 +108242,8 @@ export type EmployeeCreateWithoutTestProcedureInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -107485,6 +108463,8 @@ export type EmployeeUncheckedCreateWithoutTestProcedureInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -107701,6 +108681,8 @@ export type EmployeeCreateWithoutTestProcedure_TestProcedure_deletedByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -107920,6 +108902,8 @@ export type EmployeeUncheckedCreateWithoutTestProcedure_TestProcedure_deletedByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -108147,6 +109131,8 @@ export type EmployeeUpdateWithoutTestProcedureInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -108366,6 +109352,8 @@ export type EmployeeUncheckedUpdateWithoutTestProcedureInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -108588,6 +109576,8 @@ export type EmployeeUpdateWithoutTestProcedure_TestProcedure_deletedByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -108807,6 +109797,8 @@ export type EmployeeUncheckedUpdateWithoutTestProcedure_TestProcedure_deletedByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -109018,6 +110010,8 @@ export type EmployeeCreateWithoutTimeRegistryInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -109237,6 +110231,8 @@ export type EmployeeUncheckedCreateWithoutTimeRegistryInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -109453,6 +110449,8 @@ export type EmployeeCreateWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeIn
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -109672,6 +110670,8 @@ export type EmployeeUncheckedCreateWithoutTimeRegistry_TimeRegistry_deletedByToE
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -109899,6 +110899,8 @@ export type EmployeeUpdateWithoutTimeRegistryInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -110118,6 +111120,8 @@ export type EmployeeUncheckedUpdateWithoutTimeRegistryInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -110340,6 +111344,8 @@ export type EmployeeUpdateWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeIn
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -110559,6 +111565,8 @@ export type EmployeeUncheckedUpdateWithoutTimeRegistry_TimeRegistry_deletedByToE
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -110770,6 +111778,8 @@ export type EmployeeCreateWithoutTimeRegistryEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -110989,6 +111999,8 @@ export type EmployeeUncheckedCreateWithoutTimeRegistryEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -111216,6 +112228,8 @@ export type EmployeeUpdateWithoutTimeRegistryEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -111435,6 +112449,8 @@ export type EmployeeUncheckedUpdateWithoutTimeRegistryEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -111646,6 +112662,8 @@ export type EmployeeCreateWithoutTitle_Employee_titleIdToTitleInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -111864,6 +112882,8 @@ export type EmployeeUncheckedCreateWithoutTitle_Employee_titleIdToTitleInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -112086,6 +113106,8 @@ export type EmployeeCreateWithoutTitle_Title_createdByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -112305,6 +113327,8 @@ export type EmployeeUncheckedCreateWithoutTitle_Title_createdByToEmployeeInput =
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -112521,6 +113545,8 @@ export type EmployeeCreateWithoutTitle_Title_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -112740,6 +113766,8 @@ export type EmployeeUncheckedCreateWithoutTitle_Title_deletedByToEmployeeInput =
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -112983,6 +114011,8 @@ export type EmployeeUpdateWithoutTitle_Title_createdByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -113202,6 +114232,8 @@ export type EmployeeUncheckedUpdateWithoutTitle_Title_createdByToEmployeeInput =
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -113424,6 +114456,8 @@ export type EmployeeUpdateWithoutTitle_Title_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -113643,6 +114677,8 @@ export type EmployeeUncheckedUpdateWithoutTitle_Title_deletedByToEmployeeInput =
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -113854,6 +114890,8 @@ export type EmployeeCreateWithoutTrainingInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -114073,6 +115111,8 @@ export type EmployeeUncheckedCreateWithoutTrainingInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -114289,6 +115329,8 @@ export type EmployeeCreateWithoutTraining_Training_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -114508,6 +115550,8 @@ export type EmployeeUncheckedCreateWithoutTraining_Training_deletedByToEmployeeI
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -114735,6 +115779,8 @@ export type EmployeeUpdateWithoutTrainingInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -114954,6 +116000,8 @@ export type EmployeeUncheckedUpdateWithoutTrainingInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -115176,6 +116224,8 @@ export type EmployeeUpdateWithoutTraining_Training_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -115395,6 +116445,8 @@ export type EmployeeUncheckedUpdateWithoutTraining_Training_deletedByToEmployeeI
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -115606,6 +116658,8 @@ export type EmployeeCreateWithoutTrainingContactInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -115825,6 +116879,8 @@ export type EmployeeUncheckedCreateWithoutTrainingContactInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -116041,6 +117097,8 @@ export type EmployeeCreateWithoutTrainingContact_TrainingContact_deletedByToEmpl
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -116260,6 +117318,8 @@ export type EmployeeUncheckedCreateWithoutTrainingContact_TrainingContact_delete
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -116487,6 +117547,8 @@ export type EmployeeUpdateWithoutTrainingContactInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -116706,6 +117768,8 @@ export type EmployeeUncheckedUpdateWithoutTrainingContactInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -116928,6 +117992,8 @@ export type EmployeeUpdateWithoutTrainingContact_TrainingContact_deletedByToEmpl
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -117147,6 +118213,8 @@ export type EmployeeUncheckedUpdateWithoutTrainingContact_TrainingContact_delete
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -117358,6 +118426,8 @@ export type EmployeeCreateWithoutTrainingDocumentInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -117577,6 +118647,8 @@ export type EmployeeUncheckedCreateWithoutTrainingDocumentInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -117804,6 +118876,8 @@ export type EmployeeUpdateWithoutTrainingDocumentInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -118023,6 +119097,8 @@ export type EmployeeUncheckedUpdateWithoutTrainingDocumentInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -118234,6 +119310,8 @@ export type EmployeeCreateWithoutTrainingStandardInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -118453,6 +119531,8 @@ export type EmployeeUncheckedCreateWithoutTrainingStandardInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -118669,6 +119749,8 @@ export type EmployeeCreateWithoutTrainingStandard_TrainingStandard_deletedByToEm
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -118888,6 +119970,8 @@ export type EmployeeUncheckedCreateWithoutTrainingStandard_TrainingStandard_dele
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -119115,6 +120199,8 @@ export type EmployeeUpdateWithoutTrainingStandardInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -119334,6 +120420,8 @@ export type EmployeeUncheckedUpdateWithoutTrainingStandardInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -119556,6 +120644,8 @@ export type EmployeeUpdateWithoutTrainingStandard_TrainingStandard_deletedByToEm
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -119775,6 +120865,8 @@ export type EmployeeUncheckedUpdateWithoutTrainingStandard_TrainingStandard_dele
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -119986,6 +121078,8 @@ export type EmployeeCreateWithoutUnitInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -120205,6 +121299,8 @@ export type EmployeeUncheckedCreateWithoutUnitInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -120421,6 +121517,8 @@ export type EmployeeCreateWithoutUnit_Unit_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -120640,6 +121738,8 @@ export type EmployeeUncheckedCreateWithoutUnit_Unit_deletedByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -120867,6 +121967,8 @@ export type EmployeeUpdateWithoutUnitInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -121086,6 +122188,8 @@ export type EmployeeUncheckedUpdateWithoutUnitInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -121308,6 +122412,8 @@ export type EmployeeUpdateWithoutUnit_Unit_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -121527,6 +122633,8 @@ export type EmployeeUncheckedUpdateWithoutUnit_Unit_deletedByToEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -121738,6 +122846,8 @@ export type EmployeeCreateWithoutUrgencyTypeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -121957,6 +123067,8 @@ export type EmployeeUncheckedCreateWithoutUrgencyTypeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -122173,6 +123285,8 @@ export type EmployeeCreateWithoutUrgencyType_UrgencyType_deletedByToEmployeeInpu
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -122392,6 +123506,8 @@ export type EmployeeUncheckedCreateWithoutUrgencyType_UrgencyType_deletedByToEmp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -122619,6 +123735,8 @@ export type EmployeeUpdateWithoutUrgencyTypeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -122838,6 +123956,8 @@ export type EmployeeUncheckedUpdateWithoutUrgencyTypeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -123060,6 +124180,8 @@ export type EmployeeUpdateWithoutUrgencyType_UrgencyType_deletedByToEmployeeInpu
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -123279,6 +124401,8 @@ export type EmployeeUncheckedUpdateWithoutUrgencyType_UrgencyType_deletedByToEmp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -123490,6 +124614,8 @@ export type EmployeeCreateWithoutWarehousePlaceInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -123709,6 +124835,8 @@ export type EmployeeUncheckedCreateWithoutWarehousePlaceInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -123925,6 +125053,8 @@ export type EmployeeCreateWithoutWarehousePlace_WarehousePlace_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -124144,6 +125274,8 @@ export type EmployeeUncheckedCreateWithoutWarehousePlace_WarehousePlace_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -124371,6 +125503,8 @@ export type EmployeeUpdateWithoutWarehousePlaceInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -124590,6 +125724,8 @@ export type EmployeeUncheckedUpdateWithoutWarehousePlaceInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -124812,6 +125948,8 @@ export type EmployeeUpdateWithoutWarehousePlace_WarehousePlace_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -125031,6 +126169,8 @@ export type EmployeeUncheckedUpdateWithoutWarehousePlace_WarehousePlace_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -125242,6 +126382,8 @@ export type EmployeeCreateWithoutWorkOrderInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -125461,6 +126603,8 @@ export type EmployeeUncheckedCreateWithoutWorkOrderInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -125677,6 +126821,8 @@ export type EmployeeCreateWithoutWorkOrder_WorkOrder_deletedByToEmployeeInput = 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -125896,6 +127042,8 @@ export type EmployeeUncheckedCreateWithoutWorkOrder_WorkOrder_deletedByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -126123,6 +127271,8 @@ export type EmployeeUpdateWithoutWorkOrderInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -126342,6 +127492,8 @@ export type EmployeeUncheckedUpdateWithoutWorkOrderInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -126564,6 +127716,8 @@ export type EmployeeUpdateWithoutWorkOrder_WorkOrder_deletedByToEmployeeInput = 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -126783,6 +127937,8 @@ export type EmployeeUncheckedUpdateWithoutWorkOrder_WorkOrder_deletedByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -126994,6 +128150,8 @@ export type EmployeeCreateWithoutWorkOrderInvoiceInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -127213,6 +128371,8 @@ export type EmployeeUncheckedCreateWithoutWorkOrderInvoiceInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -127440,6 +128600,8 @@ export type EmployeeUpdateWithoutWorkOrderInvoiceInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -127659,6 +128821,8 @@ export type EmployeeUncheckedUpdateWithoutWorkOrderInvoiceInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -127870,6 +129034,8 @@ export type EmployeeCreateWithoutWorkOrderStructureInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -128089,6 +129255,8 @@ export type EmployeeUncheckedCreateWithoutWorkOrderStructureInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -128305,6 +129473,8 @@ export type EmployeeCreateWithoutWorkOrderStructure_WorkOrderStructure_deletedBy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -128524,6 +129694,8 @@ export type EmployeeUncheckedCreateWithoutWorkOrderStructure_WorkOrderStructure_
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -128751,6 +129923,8 @@ export type EmployeeUpdateWithoutWorkOrderStructureInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -128970,6 +130144,8 @@ export type EmployeeUncheckedUpdateWithoutWorkOrderStructureInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -129192,6 +130368,8 @@ export type EmployeeUpdateWithoutWorkOrderStructure_WorkOrderStructure_deletedBy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -129411,6 +130589,8 @@ export type EmployeeUncheckedUpdateWithoutWorkOrderStructure_WorkOrderStructure_
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -129622,6 +130802,8 @@ export type EmployeeCreateWithoutRoleLevel_RoleLevel_createdByToEmployeeInput = 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -129841,6 +131023,8 @@ export type EmployeeUncheckedCreateWithoutRoleLevel_RoleLevel_createdByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -130057,6 +131241,8 @@ export type EmployeeCreateWithoutRoleLevel_RoleLevel_deletedByToEmployeeInput = 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -130276,6 +131462,8 @@ export type EmployeeUncheckedCreateWithoutRoleLevel_RoleLevel_deletedByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -130503,6 +131691,8 @@ export type EmployeeUpdateWithoutRoleLevel_RoleLevel_createdByToEmployeeInput = 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -130722,6 +131912,8 @@ export type EmployeeUncheckedUpdateWithoutRoleLevel_RoleLevel_createdByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -130944,6 +132136,8 @@ export type EmployeeUpdateWithoutRoleLevel_RoleLevel_deletedByToEmployeeInput = 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -131163,6 +132357,8 @@ export type EmployeeUncheckedUpdateWithoutRoleLevel_RoleLevel_deletedByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -131374,6 +132570,8 @@ export type EmployeeCreateWithoutSubRole_SubRole_createdByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -131593,6 +132791,8 @@ export type EmployeeUncheckedCreateWithoutSubRole_SubRole_createdByToEmployeeInp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -131809,6 +133009,8 @@ export type EmployeeCreateWithoutSubRole_SubRole_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -132028,6 +133230,8 @@ export type EmployeeUncheckedCreateWithoutSubRole_SubRole_deletedByToEmployeeInp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -132255,6 +133459,8 @@ export type EmployeeUpdateWithoutSubRole_SubRole_createdByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -132474,6 +133680,8 @@ export type EmployeeUncheckedUpdateWithoutSubRole_SubRole_createdByToEmployeeInp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -132696,6 +133904,8 @@ export type EmployeeUpdateWithoutSubRole_SubRole_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -132915,6 +134125,8 @@ export type EmployeeUncheckedUpdateWithoutSubRole_SubRole_deletedByToEmployeeInp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -133126,6 +134338,8 @@ export type EmployeeCreateWithoutDepartmentExtern_DepartmentExtern_deletedByToEm
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -133345,6 +134559,8 @@ export type EmployeeUncheckedCreateWithoutDepartmentExtern_DepartmentExtern_dele
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -133561,6 +134777,8 @@ export type EmployeeCreateWithoutDepartmentExtern_DepartmentExtern_createdByToEm
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -133780,6 +134998,8 @@ export type EmployeeUncheckedCreateWithoutDepartmentExtern_DepartmentExtern_crea
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -134007,6 +135227,8 @@ export type EmployeeUpdateWithoutDepartmentExtern_DepartmentExtern_deletedByToEm
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -134226,6 +135448,8 @@ export type EmployeeUncheckedUpdateWithoutDepartmentExtern_DepartmentExtern_dele
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -134448,6 +135672,8 @@ export type EmployeeUpdateWithoutDepartmentExtern_DepartmentExtern_createdByToEm
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -134667,6 +135893,8 @@ export type EmployeeUncheckedUpdateWithoutDepartmentExtern_DepartmentExtern_crea
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -134878,6 +136106,8 @@ export type EmployeeCreateWithoutQuoteBecra_QuoteBecra_createdByToEmployeeInput 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -135097,6 +136327,8 @@ export type EmployeeUncheckedCreateWithoutQuoteBecra_QuoteBecra_createdByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -135313,6 +136545,8 @@ export type EmployeeCreateWithoutQuoteBecra_QuoteBecra_deletedByToEmployeeInput 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -135532,6 +136766,8 @@ export type EmployeeUncheckedCreateWithoutQuoteBecra_QuoteBecra_deletedByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -135759,6 +136995,8 @@ export type EmployeeUpdateWithoutQuoteBecra_QuoteBecra_createdByToEmployeeInput 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -135978,6 +137216,8 @@ export type EmployeeUncheckedUpdateWithoutQuoteBecra_QuoteBecra_createdByToEmplo
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -136200,6 +137440,8 @@ export type EmployeeUpdateWithoutQuoteBecra_QuoteBecra_deletedByToEmployeeInput 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -136419,6 +137661,8 @@ export type EmployeeUncheckedUpdateWithoutQuoteBecra_QuoteBecra_deletedByToEmplo
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -136630,6 +137874,8 @@ export type EmployeeCreateWithoutRoleLevelEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -136849,6 +138095,8 @@ export type EmployeeUncheckedCreateWithoutRoleLevelEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -137076,6 +138324,8 @@ export type EmployeeUpdateWithoutRoleLevelEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -137295,6 +138545,8 @@ export type EmployeeUncheckedUpdateWithoutRoleLevelEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -137506,6 +138758,8 @@ export type EmployeeCreateWithoutCountry_Country_deletedByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -137725,6 +138979,8 @@ export type EmployeeUncheckedCreateWithoutCountry_Country_deletedByToEmployeeInp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -137941,6 +139197,8 @@ export type EmployeeCreateWithoutCountry_Country_createdByToEmployeeInput = {
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -138160,6 +139418,8 @@ export type EmployeeUncheckedCreateWithoutCountry_Country_createdByToEmployeeInp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -138387,6 +139647,8 @@ export type EmployeeUpdateWithoutCountry_Country_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -138606,6 +139868,8 @@ export type EmployeeUncheckedUpdateWithoutCountry_Country_deletedByToEmployeeInp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -138828,6 +140092,8 @@ export type EmployeeUpdateWithoutCountry_Country_createdByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -139047,6 +140313,8 @@ export type EmployeeUncheckedUpdateWithoutCountry_Country_createdByToEmployeeInp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -139258,6 +140526,8 @@ export type EmployeeCreateWithoutInvoiceSentType_InvoiceSentType_createdByToEmpl
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -139477,6 +140747,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceSentType_InvoiceSentType_create
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -139693,6 +140965,8 @@ export type EmployeeCreateWithoutInvoiceSentType_InvoiceSentType_deletedByToEmpl
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -139912,6 +141186,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceSentType_InvoiceSentType_delete
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -140139,6 +141415,8 @@ export type EmployeeUpdateWithoutInvoiceSentType_InvoiceSentType_createdByToEmpl
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -140358,6 +141636,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceSentType_InvoiceSentType_create
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -140580,6 +141860,8 @@ export type EmployeeUpdateWithoutInvoiceSentType_InvoiceSentType_deletedByToEmpl
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -140799,6 +142081,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceSentType_InvoiceSentType_delete
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -141010,6 +142294,8 @@ export type EmployeeCreateWithoutInvoiceStatus_InvoiceStatus_createdByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -141229,6 +142515,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceStatus_InvoiceStatus_createdByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -141445,6 +142733,8 @@ export type EmployeeCreateWithoutInvoiceStatus_InvoiceStatus_deletedByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -141664,6 +142954,8 @@ export type EmployeeUncheckedCreateWithoutInvoiceStatus_InvoiceStatus_deletedByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -141891,6 +143183,8 @@ export type EmployeeUpdateWithoutInvoiceStatus_InvoiceStatus_createdByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -142110,6 +143404,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceStatus_InvoiceStatus_createdByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -142332,6 +143628,8 @@ export type EmployeeUpdateWithoutInvoiceStatus_InvoiceStatus_deletedByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -142551,6 +143849,8 @@ export type EmployeeUncheckedUpdateWithoutInvoiceStatus_InvoiceStatus_deletedByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -142762,6 +144062,8 @@ export type EmployeeCreateWithoutPaymentMethod_PaymentMethod_createdByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -142981,6 +144283,8 @@ export type EmployeeUncheckedCreateWithoutPaymentMethod_PaymentMethod_createdByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -143197,6 +144501,8 @@ export type EmployeeCreateWithoutPaymentMethod_PaymentMethod_deletedByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -143416,6 +144722,8 @@ export type EmployeeUncheckedCreateWithoutPaymentMethod_PaymentMethod_deletedByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -143643,6 +144951,8 @@ export type EmployeeUpdateWithoutPaymentMethod_PaymentMethod_createdByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -143862,6 +145172,8 @@ export type EmployeeUncheckedUpdateWithoutPaymentMethod_PaymentMethod_createdByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -144084,6 +145396,8 @@ export type EmployeeUpdateWithoutPaymentMethod_PaymentMethod_deletedByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -144303,6 +145617,8 @@ export type EmployeeUncheckedUpdateWithoutPaymentMethod_PaymentMethod_deletedByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -144514,6 +145830,8 @@ export type EmployeeCreateWithoutVatMargin_VatMargin_createdByToEmployeeInput = 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -144733,6 +146051,8 @@ export type EmployeeUncheckedCreateWithoutVatMargin_VatMargin_createdByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -144949,6 +146269,8 @@ export type EmployeeCreateWithoutVatMargin_VatMargin_deletedByToEmployeeInput = 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -145168,6 +146490,8 @@ export type EmployeeUncheckedCreateWithoutVatMargin_VatMargin_deletedByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -145395,6 +146719,8 @@ export type EmployeeUpdateWithoutVatMargin_VatMargin_createdByToEmployeeInput = 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -145614,6 +146940,8 @@ export type EmployeeUncheckedUpdateWithoutVatMargin_VatMargin_createdByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -145836,6 +147164,8 @@ export type EmployeeUpdateWithoutVatMargin_VatMargin_deletedByToEmployeeInput = 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -146055,6 +147385,8 @@ export type EmployeeUncheckedUpdateWithoutVatMargin_VatMargin_deletedByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -146266,6 +147598,8 @@ export type EmployeeCreateWithoutPriceList_PriceList_createdByToEmployeeInput = 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -146485,6 +147819,8 @@ export type EmployeeUncheckedCreateWithoutPriceList_PriceList_createdByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -146701,6 +148037,8 @@ export type EmployeeCreateWithoutPriceList_PriceList_deletedByToEmployeeInput = 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -146920,6 +148258,8 @@ export type EmployeeUncheckedCreateWithoutPriceList_PriceList_deletedByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -147147,6 +148487,8 @@ export type EmployeeUpdateWithoutPriceList_PriceList_createdByToEmployeeInput = 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -147366,6 +148708,8 @@ export type EmployeeUncheckedUpdateWithoutPriceList_PriceList_createdByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -147588,6 +148932,8 @@ export type EmployeeUpdateWithoutPriceList_PriceList_deletedByToEmployeeInput = 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -147807,6 +149153,8 @@ export type EmployeeUncheckedUpdateWithoutPriceList_PriceList_deletedByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -148018,6 +149366,8 @@ export type EmployeeCreateWithoutPriceListItem_PriceListItem_createdByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -148237,6 +149587,8 @@ export type EmployeeUncheckedCreateWithoutPriceListItem_PriceListItem_createdByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -148453,6 +149805,8 @@ export type EmployeeCreateWithoutPriceListItem_PriceListItem_deletedByToEmployee
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -148672,6 +150026,8 @@ export type EmployeeUncheckedCreateWithoutPriceListItem_PriceListItem_deletedByT
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -148899,6 +150255,8 @@ export type EmployeeUpdateWithoutPriceListItem_PriceListItem_createdByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -149118,6 +150476,8 @@ export type EmployeeUncheckedUpdateWithoutPriceListItem_PriceListItem_createdByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -149340,6 +150700,8 @@ export type EmployeeUpdateWithoutPriceListItem_PriceListItem_deletedByToEmployee
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -149559,6 +150921,8 @@ export type EmployeeUncheckedUpdateWithoutPriceListItem_PriceListItem_deletedByT
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -149770,6 +151134,8 @@ export type EmployeeCreateWithoutCompanyAddress_CompanyAddress_createdByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -149989,6 +151355,8 @@ export type EmployeeUncheckedCreateWithoutCompanyAddress_CompanyAddress_createdB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -150205,6 +151573,8 @@ export type EmployeeCreateWithoutCompanyAddress_CompanyAddress_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -150424,6 +151794,8 @@ export type EmployeeUncheckedCreateWithoutCompanyAddress_CompanyAddress_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -150651,6 +152023,8 @@ export type EmployeeUpdateWithoutCompanyAddress_CompanyAddress_createdByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -150870,6 +152244,8 @@ export type EmployeeUncheckedUpdateWithoutCompanyAddress_CompanyAddress_createdB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -151092,6 +152468,8 @@ export type EmployeeUpdateWithoutCompanyAddress_CompanyAddress_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -151311,6 +152689,8 @@ export type EmployeeUncheckedUpdateWithoutCompanyAddress_CompanyAddress_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -151522,6 +152902,8 @@ export type EmployeeCreateWithoutDocumentGroupA_DocumentGroupA_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -151741,6 +153123,8 @@ export type EmployeeUncheckedCreateWithoutDocumentGroupA_DocumentGroupA_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -151957,6 +153341,8 @@ export type EmployeeCreateWithoutDocumentGroupA_DocumentGroupA_createdByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -152176,6 +153562,8 @@ export type EmployeeUncheckedCreateWithoutDocumentGroupA_DocumentGroupA_createdB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -152403,6 +153791,8 @@ export type EmployeeUpdateWithoutDocumentGroupA_DocumentGroupA_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -152622,6 +154012,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentGroupA_DocumentGroupA_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -152844,6 +154236,8 @@ export type EmployeeUpdateWithoutDocumentGroupA_DocumentGroupA_createdByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -153063,6 +154457,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentGroupA_DocumentGroupA_createdB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -153274,6 +154670,8 @@ export type EmployeeCreateWithoutDocumentGroupB_DocumentGroupB_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -153493,6 +154891,8 @@ export type EmployeeUncheckedCreateWithoutDocumentGroupB_DocumentGroupB_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -153709,6 +155109,8 @@ export type EmployeeCreateWithoutDocumentGroupB_DocumentGroupB_createdByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -153928,6 +155330,8 @@ export type EmployeeUncheckedCreateWithoutDocumentGroupB_DocumentGroupB_createdB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -154155,6 +155559,8 @@ export type EmployeeUpdateWithoutDocumentGroupB_DocumentGroupB_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -154374,6 +155780,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentGroupB_DocumentGroupB_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -154596,6 +156004,8 @@ export type EmployeeUpdateWithoutDocumentGroupB_DocumentGroupB_createdByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -154815,6 +156225,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentGroupB_DocumentGroupB_createdB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -155026,6 +156438,8 @@ export type EmployeeCreateWithoutDocumentGroupC_DocumentGroupC_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -155245,6 +156659,8 @@ export type EmployeeUncheckedCreateWithoutDocumentGroupC_DocumentGroupC_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -155461,6 +156877,8 @@ export type EmployeeCreateWithoutDocumentGroupC_DocumentGroupC_createdByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -155680,6 +157098,8 @@ export type EmployeeUncheckedCreateWithoutDocumentGroupC_DocumentGroupC_createdB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -155907,6 +157327,8 @@ export type EmployeeUpdateWithoutDocumentGroupC_DocumentGroupC_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -156126,6 +157548,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentGroupC_DocumentGroupC_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -156348,6 +157772,8 @@ export type EmployeeUpdateWithoutDocumentGroupC_DocumentGroupC_createdByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -156567,6 +157993,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentGroupC_DocumentGroupC_createdB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -156778,6 +158206,8 @@ export type EmployeeCreateWithoutDocumentGroupD_DocumentGroupD_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -156997,6 +158427,8 @@ export type EmployeeUncheckedCreateWithoutDocumentGroupD_DocumentGroupD_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -157213,6 +158645,8 @@ export type EmployeeCreateWithoutDocumentGroupD_DocumentGroupD_createdByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -157432,6 +158866,8 @@ export type EmployeeUncheckedCreateWithoutDocumentGroupD_DocumentGroupD_createdB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -157659,6 +159095,8 @@ export type EmployeeUpdateWithoutDocumentGroupD_DocumentGroupD_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -157878,6 +159316,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentGroupD_DocumentGroupD_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -158100,6 +159540,8 @@ export type EmployeeUpdateWithoutDocumentGroupD_DocumentGroupD_createdByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -158319,6 +159761,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentGroupD_DocumentGroupD_createdB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -158530,6 +159974,8 @@ export type EmployeeCreateWithoutDocumentRevision_DocumentRevision_deletedByToEm
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -158749,6 +160195,8 @@ export type EmployeeUncheckedCreateWithoutDocumentRevision_DocumentRevision_dele
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -158965,6 +160413,8 @@ export type EmployeeCreateWithoutDocumentRevision_DocumentRevision_createdByToEm
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -159184,6 +160634,8 @@ export type EmployeeUncheckedCreateWithoutDocumentRevision_DocumentRevision_crea
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -159411,6 +160863,8 @@ export type EmployeeUpdateWithoutDocumentRevision_DocumentRevision_deletedByToEm
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -159630,6 +161084,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentRevision_DocumentRevision_dele
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -159852,6 +161308,8 @@ export type EmployeeUpdateWithoutDocumentRevision_DocumentRevision_createdByToEm
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -160071,6 +161529,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentRevision_DocumentRevision_crea
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -160282,6 +161742,8 @@ export type EmployeeCreateWithoutDocumentStatus_DocumentStatus_deletedByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -160501,6 +161963,8 @@ export type EmployeeUncheckedCreateWithoutDocumentStatus_DocumentStatus_deletedB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -160717,6 +162181,8 @@ export type EmployeeCreateWithoutDocumentStatus_DocumentStatus_createdByToEmploy
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -160936,6 +162402,8 @@ export type EmployeeUncheckedCreateWithoutDocumentStatus_DocumentStatus_createdB
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -161163,6 +162631,8 @@ export type EmployeeUpdateWithoutDocumentStatus_DocumentStatus_deletedByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -161382,6 +162852,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentStatus_DocumentStatus_deletedB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -161604,6 +163076,8 @@ export type EmployeeUpdateWithoutDocumentStatus_DocumentStatus_createdByToEmploy
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -161823,6 +163297,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentStatus_DocumentStatus_createdB
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -162034,6 +163510,8 @@ export type EmployeeCreateWithoutProjectBOM_ProjectBOM_createdByToEmployeeInput 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -162253,6 +163731,8 @@ export type EmployeeUncheckedCreateWithoutProjectBOM_ProjectBOM_createdByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -162469,6 +163949,8 @@ export type EmployeeCreateWithoutProjectBOM_ProjectBOM_deletedByToEmployeeInput 
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -162688,6 +164170,8 @@ export type EmployeeUncheckedCreateWithoutProjectBOM_ProjectBOM_deletedByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -162915,6 +164399,8 @@ export type EmployeeUpdateWithoutProjectBOM_ProjectBOM_createdByToEmployeeInput 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -163134,6 +164620,8 @@ export type EmployeeUncheckedUpdateWithoutProjectBOM_ProjectBOM_createdByToEmplo
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -163356,6 +164844,8 @@ export type EmployeeUpdateWithoutProjectBOM_ProjectBOM_deletedByToEmployeeInput 
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -163575,6 +165065,8 @@ export type EmployeeUncheckedUpdateWithoutProjectBOM_ProjectBOM_deletedByToEmplo
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -163786,6 +165278,8 @@ export type EmployeeCreateWithoutProjectBOMStructure_ProjectBOMStructure_created
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -164005,6 +165499,8 @@ export type EmployeeUncheckedCreateWithoutProjectBOMStructure_ProjectBOMStructur
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -164221,6 +165717,8 @@ export type EmployeeCreateWithoutProjectBOMStructure_ProjectBOMStructure_deleted
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -164440,6 +165938,8 @@ export type EmployeeUncheckedCreateWithoutProjectBOMStructure_ProjectBOMStructur
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -164667,6 +166167,8 @@ export type EmployeeUpdateWithoutProjectBOMStructure_ProjectBOMStructure_created
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -164886,6 +166388,8 @@ export type EmployeeUncheckedUpdateWithoutProjectBOMStructure_ProjectBOMStructur
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -165108,6 +166612,8 @@ export type EmployeeUpdateWithoutProjectBOMStructure_ProjectBOMStructure_deleted
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -165327,6 +166833,8 @@ export type EmployeeUncheckedUpdateWithoutProjectBOMStructure_ProjectBOMStructur
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -165538,6 +167046,8 @@ export type EmployeeCreateWithoutPurchaseBOM_PurchaseBOM_createdByToEmployeeInpu
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -165757,6 +167267,8 @@ export type EmployeeUncheckedCreateWithoutPurchaseBOM_PurchaseBOM_createdByToEmp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -165973,6 +167485,8 @@ export type EmployeeCreateWithoutPurchaseBOM_PurchaseBOM_deletedByToEmployeeInpu
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -166192,6 +167706,8 @@ export type EmployeeUncheckedCreateWithoutPurchaseBOM_PurchaseBOM_deletedByToEmp
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -166419,6 +167935,8 @@ export type EmployeeUpdateWithoutPurchaseBOM_PurchaseBOM_createdByToEmployeeInpu
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -166638,6 +168156,8 @@ export type EmployeeUncheckedUpdateWithoutPurchaseBOM_PurchaseBOM_createdByToEmp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -166860,6 +168380,8 @@ export type EmployeeUpdateWithoutPurchaseBOM_PurchaseBOM_deletedByToEmployeeInpu
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -167079,6 +168601,8 @@ export type EmployeeUncheckedUpdateWithoutPurchaseBOM_PurchaseBOM_deletedByToEmp
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -167290,6 +168814,8 @@ export type EmployeeCreateWithoutPurchaseBOMStructure_PurchaseBOMStructure_creat
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -167509,6 +169035,8 @@ export type EmployeeUncheckedCreateWithoutPurchaseBOMStructure_PurchaseBOMStruct
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -167725,6 +169253,8 @@ export type EmployeeCreateWithoutPurchaseBOMStructure_PurchaseBOMStructure_delet
   passwordCreatedAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
@@ -167944,6 +169474,8 @@ export type EmployeeUncheckedCreateWithoutPurchaseBOMStructure_PurchaseBOMStruct
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
@@ -168171,6 +169703,8 @@ export type EmployeeUpdateWithoutPurchaseBOMStructure_PurchaseBOMStructure_creat
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -168390,6 +169924,8 @@ export type EmployeeUncheckedUpdateWithoutPurchaseBOMStructure_PurchaseBOMStruct
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -168612,6 +170148,8 @@ export type EmployeeUpdateWithoutPurchaseBOMStructure_PurchaseBOMStructure_delet
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -168831,6 +170369,8 @@ export type EmployeeUncheckedUpdateWithoutPurchaseBOMStructure_PurchaseBOMStruct
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -169017,6 +170557,1774 @@ export type EmployeeUncheckedUpdateWithoutPurchaseBOMStructure_PurchaseBOMStruct
   WorkOrderStructure_WorkOrderStructure_deletedByToEmployee?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutEmployee_WorkOrderStructure_deletedByToEmployeeNestedInput
 }
 
+export type EmployeeCreateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput = {
+  id: string
+  firstName: string
+  lastName: string
+  mail?: string | null
+  password_hash: string
+  phoneNumber?: string | null
+  startDate: Date | string
+  endDate?: Date | string | null
+  info?: string | null
+  birthDate?: Date | string | null
+  street?: string | null
+  houseNumber?: string | null
+  busNumber?: string | null
+  zipCode?: string | null
+  place?: string | null
+  username: string
+  createdAt: Date | string
+  permanentEmployee?: boolean
+  checkInfo?: boolean
+  newYearCard?: boolean
+  active?: boolean
+  passwordCreatedAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
+  Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
+  Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
+  CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
+  CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeCreateNestedManyWithoutEmployee_CertificateType_deletedByToEmployeeInput
+  Company?: Prisma.CompanyCreateNestedManyWithoutEmployeeInput
+  Company_Company_deletedByToEmployee?: Prisma.CompanyCreateNestedManyWithoutEmployee_Company_deletedByToEmployeeInput
+  CompanyAddress_CompanyAddress_createdByToEmployee?: Prisma.CompanyAddressCreateNestedManyWithoutEmployee_CompanyAddress_createdByToEmployeeInput
+  CompanyAddress_CompanyAddress_deletedByToEmployee?: Prisma.CompanyAddressCreateNestedManyWithoutEmployee_CompanyAddress_deletedByToEmployeeInput
+  CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutEmployeeInput
+  CompanyContact_CompanyContact_deletedByToEmployee?: Prisma.CompanyContactCreateNestedManyWithoutEmployee_CompanyContact_deletedByToEmployeeInput
+  Contact?: Prisma.ContactCreateNestedManyWithoutEmployeeInput
+  Contact_Contact_deletedByToEmployee?: Prisma.ContactCreateNestedManyWithoutEmployee_Contact_deletedByToEmployeeInput
+  Country_Country_deletedByToEmployee?: Prisma.CountryCreateNestedManyWithoutEmployee_Country_deletedByToEmployeeInput
+  Country_Country_createdByToEmployee?: Prisma.CountryCreateNestedManyWithoutEmployee_Country_createdByToEmployeeInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutEmployeeInput
+  DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutEmployee_DeliveryNoteSupplier_deletedByToEmployeeInput
+  Department_Department_deletedByToEmployee?: Prisma.DepartmentCreateNestedManyWithoutEmployee_Department_deletedByToEmployeeInput
+  Department_Department_createdByToEmployee?: Prisma.DepartmentCreateNestedManyWithoutEmployee_Department_createdByToEmployeeInput
+  DepartmentExtern_DepartmentExtern_deletedByToEmployee?: Prisma.DepartmentExternCreateNestedManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput
+  DepartmentExtern_DepartmentExtern_createdByToEmployee?: Prisma.DepartmentExternCreateNestedManyWithoutEmployee_DepartmentExtern_createdByToEmployeeInput
+  DocumentGroupA_DocumentGroupA_deletedByToEmployee?: Prisma.DocumentGroupACreateNestedManyWithoutEmployee_DocumentGroupA_deletedByToEmployeeInput
+  DocumentGroupA_DocumentGroupA_createdByToEmployee?: Prisma.DocumentGroupACreateNestedManyWithoutEmployee_DocumentGroupA_createdByToEmployeeInput
+  DocumentGroupB_DocumentGroupB_deletedByToEmployee?: Prisma.DocumentGroupBCreateNestedManyWithoutEmployee_DocumentGroupB_deletedByToEmployeeInput
+  DocumentGroupB_DocumentGroupB_createdByToEmployee?: Prisma.DocumentGroupBCreateNestedManyWithoutEmployee_DocumentGroupB_createdByToEmployeeInput
+  DocumentGroupC_DocumentGroupC_deletedByToEmployee?: Prisma.DocumentGroupCCreateNestedManyWithoutEmployee_DocumentGroupC_deletedByToEmployeeInput
+  DocumentGroupC_DocumentGroupC_createdByToEmployee?: Prisma.DocumentGroupCCreateNestedManyWithoutEmployee_DocumentGroupC_createdByToEmployeeInput
+  DocumentGroupD_DocumentGroupD_deletedByToEmployee?: Prisma.DocumentGroupDCreateNestedManyWithoutEmployee_DocumentGroupD_deletedByToEmployeeInput
+  DocumentGroupD_DocumentGroupD_createdByToEmployee?: Prisma.DocumentGroupDCreateNestedManyWithoutEmployee_DocumentGroupD_createdByToEmployeeInput
+  DocumentPlace?: Prisma.DocumentPlaceCreateNestedManyWithoutEmployeeInput
+  DocumentPlace_DocumentPlace_createdByToEmployee?: Prisma.DocumentPlaceCreateNestedManyWithoutEmployee_DocumentPlace_createdByToEmployeeInput
+  DocumentRevision_DocumentRevision_deletedByToEmployee?: Prisma.DocumentRevisionCreateNestedManyWithoutEmployee_DocumentRevision_deletedByToEmployeeInput
+  DocumentRevision_DocumentRevision_createdByToEmployee?: Prisma.DocumentRevisionCreateNestedManyWithoutEmployee_DocumentRevision_createdByToEmployeeInput
+  DocumentStatus_DocumentStatus_deletedByToEmployee?: Prisma.DocumentStatusCreateNestedManyWithoutEmployee_DocumentStatus_deletedByToEmployeeInput
+  DocumentStatus_DocumentStatus_createdByToEmployee?: Prisma.DocumentStatusCreateNestedManyWithoutEmployee_DocumentStatus_createdByToEmployeeInput
+  DocumentStructure_DocumentStructure_createdByToEmployee?: Prisma.DocumentStructureCreateNestedManyWithoutEmployee_DocumentStructure_createdByToEmployeeInput
+  DocumentStructure_DocumentStructure_deletedByToEmployee?: Prisma.DocumentStructureCreateNestedManyWithoutEmployee_DocumentStructure_deletedByToEmployeeInput
+  DocumentStructure_DocumentStructure_managedByIdToEmployee?: Prisma.DocumentStructureCreateNestedManyWithoutEmployee_DocumentStructure_managedByIdToEmployeeInput
+  DocumentStructure_DocumentStructure_revisedByIdToEmployee?: Prisma.DocumentStructureCreateNestedManyWithoutEmployee_DocumentStructure_revisedByIdToEmployeeInput
+  EmergencyContact?: Prisma.EmergencyContactCreateNestedManyWithoutEmployeeInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutOther_EmployeeInput
+  other_Employee?: Prisma.EmployeeCreateNestedManyWithoutEmployeeInput
+  Title_Employee_titleIdToTitle?: Prisma.TitleCreateNestedOneWithoutEmployee_Employee_titleIdToTitleInput
+  DocumentStructure_Employee_pictureIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutEmployee_Employee_pictureIdToDocumentStructureInput
+  Employee_Employee_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutOther_Employee_Employee_deletedByToEmployeeInput
+  other_Employee_Employee_deletedByToEmployee?: Prisma.EmployeeCreateNestedManyWithoutEmployee_Employee_deletedByToEmployeeInput
+  FollowUp_FollowUp_ownedByToEmployee?: Prisma.FollowUpCreateNestedManyWithoutEmployee_FollowUp_ownedByToEmployeeInput
+  FollowUp_FollowUp_executedByToEmployee?: Prisma.FollowUpCreateNestedManyWithoutEmployee_FollowUp_executedByToEmployeeInput
+  FollowUp_FollowUp_createdByToEmployee?: Prisma.FollowUpCreateNestedManyWithoutEmployee_FollowUp_createdByToEmployeeInput
+  FollowUp_FollowUp_deletedByToEmployee?: Prisma.FollowUpCreateNestedManyWithoutEmployee_FollowUp_deletedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_deletedByToEmployee?: Prisma.FollowUpStructureCreateNestedManyWithoutEmployee_FollowUpStructure_deletedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_ownedByToEmployee?: Prisma.FollowUpStructureCreateNestedManyWithoutEmployee_FollowUpStructure_ownedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_executedByToEmployee?: Prisma.FollowUpStructureCreateNestedManyWithoutEmployee_FollowUpStructure_executedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_taskForToEmployee?: Prisma.FollowUpStructureCreateNestedManyWithoutEmployee_FollowUpStructure_taskForToEmployeeInput
+  FollowUpStructure_FollowUpStructure_createdByToEmployee?: Prisma.FollowUpStructureCreateNestedManyWithoutEmployee_FollowUpStructure_createdByToEmployeeInput
+  FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutEmployeeInput
+  FollowUpType?: Prisma.FollowUpTypeCreateNestedManyWithoutEmployeeInput
+  FollowUpType_FollowUpType_deletedByToEmployee?: Prisma.FollowUpTypeCreateNestedManyWithoutEmployee_FollowUpType_deletedByToEmployeeInput
+  Function_Function_createdByToEmployee?: Prisma.FunctionCreateNestedManyWithoutEmployee_Function_createdByToEmployeeInput
+  Function_Function_deletedByToEmployee?: Prisma.FunctionCreateNestedManyWithoutEmployee_Function_deletedByToEmployeeInput
+  HourType?: Prisma.HourTypeCreateNestedManyWithoutEmployeeInput
+  HourType_HourType_deletedByToEmployee?: Prisma.HourTypeCreateNestedManyWithoutEmployee_HourType_deletedByToEmployeeInput
+  Inventory?: Prisma.InventoryCreateNestedManyWithoutEmployeeInput
+  Inventory_Inventory_deletedByToEmployee?: Prisma.InventoryCreateNestedManyWithoutEmployee_Inventory_deletedByToEmployeeInput
+  InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutEmployeeInput
+  InventoryChange_InventoryChange_deletedByToEmployee?: Prisma.InventoryChangeCreateNestedManyWithoutEmployee_InventoryChange_deletedByToEmployeeInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutEmployeeInput
+  InventoryOrder_InventoryOrder_deletedByToEmployee?: Prisma.InventoryOrderCreateNestedManyWithoutEmployee_InventoryOrder_deletedByToEmployeeInput
+  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutEmployeeInput
+  InventoryStructure_InventoryStructure_deletedByToEmployee?: Prisma.InventoryStructureCreateNestedManyWithoutEmployee_InventoryStructure_deletedByToEmployeeInput
+  InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutEmployeeInput
+  InvoiceIn_InvoiceIn_deletedByToEmployee?: Prisma.InvoiceInCreateNestedManyWithoutEmployee_InvoiceIn_deletedByToEmployeeInput
+  InvoiceIn_InvoiceIn_modifiedByToEmployee?: Prisma.InvoiceInCreateNestedManyWithoutEmployee_InvoiceIn_modifiedByToEmployeeInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutEmployeeInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutEmployeeInput
+  InvoiceOut_InvoiceOut_deletedByToEmployee?: Prisma.InvoiceOutCreateNestedManyWithoutEmployee_InvoiceOut_deletedByToEmployeeInput
+  InvoiceOut_InvoiceOut_modifiedByToEmployee?: Prisma.InvoiceOutCreateNestedManyWithoutEmployee_InvoiceOut_modifiedByToEmployeeInput
+  InvoiceSentType_InvoiceSentType_createdByToEmployee?: Prisma.InvoiceSentTypeCreateNestedManyWithoutEmployee_InvoiceSentType_createdByToEmployeeInput
+  InvoiceSentType_InvoiceSentType_deletedByToEmployee?: Prisma.InvoiceSentTypeCreateNestedManyWithoutEmployee_InvoiceSentType_deletedByToEmployeeInput
+  InvoiceStatus_InvoiceStatus_createdByToEmployee?: Prisma.InvoiceStatusCreateNestedManyWithoutEmployee_InvoiceStatus_createdByToEmployeeInput
+  InvoiceStatus_InvoiceStatus_deletedByToEmployee?: Prisma.InvoiceStatusCreateNestedManyWithoutEmployee_InvoiceStatus_deletedByToEmployeeInput
+  InvoiceType?: Prisma.InvoiceTypeCreateNestedManyWithoutEmployeeInput
+  InvoiceType_InvoiceType_deletedByToEmployee?: Prisma.InvoiceTypeCreateNestedManyWithoutEmployee_InvoiceType_deletedByToEmployeeInput
+  Material?: Prisma.MaterialCreateNestedManyWithoutEmployeeInput
+  Material_Material_deletedByToEmployee?: Prisma.MaterialCreateNestedManyWithoutEmployee_Material_deletedByToEmployeeInput
+  MaterialAssembly?: Prisma.MaterialAssemblyCreateNestedManyWithoutEmployeeInput
+  MaterialAssembly_MaterialAssembly_deletedByToEmployee?: Prisma.MaterialAssemblyCreateNestedManyWithoutEmployee_MaterialAssembly_deletedByToEmployeeInput
+  MaterialCode?: Prisma.MaterialCodeCreateNestedManyWithoutEmployeeInput
+  MaterialCode_MaterialCode_deletedByToEmployee?: Prisma.MaterialCodeCreateNestedManyWithoutEmployee_MaterialCode_deletedByToEmployeeInput
+  MaterialDimension?: Prisma.MaterialDimensionCreateNestedManyWithoutEmployeeInput
+  MaterialDimension_MaterialDimension_deletedByToEmployee?: Prisma.MaterialDimensionCreateNestedManyWithoutEmployee_MaterialDimension_deletedByToEmployeeInput
+  MaterialFamily?: Prisma.MaterialFamilyCreateNestedManyWithoutEmployeeInput
+  MaterialFamily_MaterialFamily_deletedByToEmployee?: Prisma.MaterialFamilyCreateNestedManyWithoutEmployee_MaterialFamily_deletedByToEmployeeInput
+  MaterialGroup?: Prisma.MaterialGroupCreateNestedManyWithoutEmployeeInput
+  MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutEmployeeInput
+  MaterialMovement_MaterialMovement_deletedByToEmployee?: Prisma.MaterialMovementCreateNestedManyWithoutEmployee_MaterialMovement_deletedByToEmployeeInput
+  MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutEmployeeInput
+  MaterialOther_MaterialOther_deletedByToEmployee?: Prisma.MaterialOtherCreateNestedManyWithoutEmployee_MaterialOther_deletedByToEmployeeInput
+  MaterialPerformance?: Prisma.MaterialPerformanceCreateNestedManyWithoutEmployeeInput
+  MaterialPerformance_MaterialPerformance_deletedByToEmployee?: Prisma.MaterialPerformanceCreateNestedManyWithoutEmployee_MaterialPerformance_deletedByToEmployeeInput
+  MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutEmployeeInput
+  MaterialPrice_MaterialPrice_deletedByToEmployee?: Prisma.MaterialPriceCreateNestedManyWithoutEmployee_MaterialPrice_deletedByToEmployeeInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutEmployeeInput
+  MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee?: Prisma.MaterialSerialTrackCreateNestedManyWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutEmployeeInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeInput
+  MaterialSpec?: Prisma.MaterialSpecCreateNestedManyWithoutEmployeeInput
+  MaterialSpec_MaterialSpec_deletedByToEmployee?: Prisma.MaterialSpecCreateNestedManyWithoutEmployee_MaterialSpec_deletedByToEmployeeInput
+  MaterialStructure?: Prisma.MaterialStructureCreateNestedManyWithoutEmployeeInput
+  MaterialStructure_MaterialStructure_deletedByToEmployee?: Prisma.MaterialStructureCreateNestedManyWithoutEmployee_MaterialStructure_deletedByToEmployeeInput
+  Part?: Prisma.PartCreateNestedManyWithoutEmployeeInput
+  Part_Part_deletedByToEmployee?: Prisma.PartCreateNestedManyWithoutEmployee_Part_deletedByToEmployeeInput
+  PaymentMethod_PaymentMethod_createdByToEmployee?: Prisma.PaymentMethodCreateNestedManyWithoutEmployee_PaymentMethod_createdByToEmployeeInput
+  PaymentMethod_PaymentMethod_deletedByToEmployee?: Prisma.PaymentMethodCreateNestedManyWithoutEmployee_PaymentMethod_deletedByToEmployeeInput
+  Phantom?: Prisma.PhantomCreateNestedManyWithoutEmployeeInput
+  Phantom_Phantom_deletedByToEmployee?: Prisma.PhantomCreateNestedManyWithoutEmployee_Phantom_deletedByToEmployeeInput
+  PriceList_PriceList_createdByToEmployee?: Prisma.PriceListCreateNestedManyWithoutEmployee_PriceList_createdByToEmployeeInput
+  PriceList_PriceList_deletedByToEmployee?: Prisma.PriceListCreateNestedManyWithoutEmployee_PriceList_deletedByToEmployeeInput
+  PriceListItem_PriceListItem_createdByToEmployee?: Prisma.PriceListItemCreateNestedManyWithoutEmployee_PriceListItem_createdByToEmployeeInput
+  PriceListItem_PriceListItem_deletedByToEmployee?: Prisma.PriceListItemCreateNestedManyWithoutEmployee_PriceListItem_deletedByToEmployeeInput
+  Product?: Prisma.ProductCreateNestedManyWithoutEmployeeInput
+  Product_Product_deletedByToEmployee?: Prisma.ProductCreateNestedManyWithoutEmployee_Product_deletedByToEmployeeInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutEmployeeInput
+  Project_Project_deletedByToEmployee?: Prisma.ProjectCreateNestedManyWithoutEmployee_Project_deletedByToEmployeeInput
+  ProjectBOM_ProjectBOM_createdByToEmployee?: Prisma.ProjectBOMCreateNestedManyWithoutEmployee_ProjectBOM_createdByToEmployeeInput
+  ProjectBOM_ProjectBOM_deletedByToEmployee?: Prisma.ProjectBOMCreateNestedManyWithoutEmployee_ProjectBOM_deletedByToEmployeeInput
+  ProjectBOMStructure_ProjectBOMStructure_createdByToEmployee?: Prisma.ProjectBOMStructureCreateNestedManyWithoutEmployee_ProjectBOMStructure_createdByToEmployeeInput
+  ProjectBOMStructure_ProjectBOMStructure_deletedByToEmployee?: Prisma.ProjectBOMStructureCreateNestedManyWithoutEmployee_ProjectBOMStructure_deletedByToEmployeeInput
+  ProjectContact_ProjectContact_createdByToEmployee?: Prisma.ProjectContactCreateNestedManyWithoutEmployee_ProjectContact_createdByToEmployeeInput
+  ProjectContact_ProjectContact_modifiedByToEmployee?: Prisma.ProjectContactCreateNestedManyWithoutEmployee_ProjectContact_modifiedByToEmployeeInput
+  ProjectContact_ProjectContact_deletedByToEmployee?: Prisma.ProjectContactCreateNestedManyWithoutEmployee_ProjectContact_deletedByToEmployeeInput
+  ProjectType?: Prisma.ProjectTypeCreateNestedManyWithoutEmployeeInput
+  ProjectType_ProjectType_deletedByToEmployee?: Prisma.ProjectTypeCreateNestedManyWithoutEmployee_ProjectType_deletedByToEmployeeInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutEmployeeInput
+  Purchase_Purchase_deletedByToEmployee?: Prisma.PurchaseCreateNestedManyWithoutEmployee_Purchase_deletedByToEmployeeInput
+  PurchaseBOM_PurchaseBOM_createdByToEmployee?: Prisma.PurchaseBOMCreateNestedManyWithoutEmployee_PurchaseBOM_createdByToEmployeeInput
+  PurchaseBOM_PurchaseBOM_deletedByToEmployee?: Prisma.PurchaseBOMCreateNestedManyWithoutEmployee_PurchaseBOM_deletedByToEmployeeInput
+  PurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployee?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeInput
+  PurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployee?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutEmployee_PurchaseBOMStructure_deletedByToEmployeeInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutEmployeeInput
+  PurchaseDetail_PurchaseDetail_deletedByToEmployee?: Prisma.PurchaseDetailCreateNestedManyWithoutEmployee_PurchaseDetail_deletedByToEmployeeInput
+  PurchaseOrderBecra?: Prisma.PurchaseOrderBecraCreateNestedManyWithoutEmployeeInput
+  PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee?: Prisma.PurchaseOrderBecraCreateNestedManyWithoutEmployee_PurchaseOrderBecra_deletedByToEmployeeInput
+  QuoteBecra_QuoteBecra_createdByToEmployee?: Prisma.QuoteBecraCreateNestedManyWithoutEmployee_QuoteBecra_createdByToEmployeeInput
+  QuoteBecra_QuoteBecra_deletedByToEmployee?: Prisma.QuoteBecraCreateNestedManyWithoutEmployee_QuoteBecra_deletedByToEmployeeInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutEmployeeInput
+  QuoteSupplier_QuoteSupplier_deletedByToEmployee?: Prisma.QuoteSupplierCreateNestedManyWithoutEmployee_QuoteSupplier_deletedByToEmployeeInput
+  Role_Role_createdByToEmployee?: Prisma.RoleCreateNestedManyWithoutEmployee_Role_createdByToEmployeeInput
+  Role_Role_deletedByToEmployee?: Prisma.RoleCreateNestedManyWithoutEmployee_Role_deletedByToEmployeeInput
+  RoleLevel_RoleLevel_createdByToEmployee?: Prisma.RoleLevelCreateNestedManyWithoutEmployee_RoleLevel_createdByToEmployeeInput
+  RoleLevel_RoleLevel_deletedByToEmployee?: Prisma.RoleLevelCreateNestedManyWithoutEmployee_RoleLevel_deletedByToEmployeeInput
+  RoleLevelEmployee?: Prisma.RoleLevelEmployeeCreateNestedManyWithoutEmployeeInput
+  Session?: Prisma.SessionCreateNestedManyWithoutEmployeeInput
+  Status?: Prisma.StatusCreateNestedManyWithoutEmployeeInput
+  Status_Status_deletedByToEmployee?: Prisma.StatusCreateNestedManyWithoutEmployee_Status_deletedByToEmployeeInput
+  SubRole_SubRole_createdByToEmployee?: Prisma.SubRoleCreateNestedManyWithoutEmployee_SubRole_createdByToEmployeeInput
+  SubRole_SubRole_deletedByToEmployee?: Prisma.SubRoleCreateNestedManyWithoutEmployee_SubRole_deletedByToEmployeeInput
+  SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpCreateNestedManyWithoutEmployeeInput
+  SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.SupplierDeliveryNoteFollowUpCreateNestedManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput
+  Target?: Prisma.TargetCreateNestedManyWithoutEmployeeInput
+  Target_Target_deletedByToEmployee?: Prisma.TargetCreateNestedManyWithoutEmployee_Target_deletedByToEmployeeInput
+  TargetType?: Prisma.TargetTypeCreateNestedManyWithoutEmployeeInput
+  TargetType_TargetType_deletedByToEmployee?: Prisma.TargetTypeCreateNestedManyWithoutEmployee_TargetType_deletedByToEmployeeInput
+  TestProcedure?: Prisma.TestProcedureCreateNestedManyWithoutEmployeeInput
+  TestProcedure_TestProcedure_deletedByToEmployee?: Prisma.TestProcedureCreateNestedManyWithoutEmployee_TestProcedure_deletedByToEmployeeInput
+  TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutEmployeeInput
+  TimeRegistry_TimeRegistry_deletedByToEmployee?: Prisma.TimeRegistryCreateNestedManyWithoutEmployee_TimeRegistry_deletedByToEmployeeInput
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeCreateNestedManyWithoutEmployeeInput
+  Title_Title_createdByToEmployee?: Prisma.TitleCreateNestedManyWithoutEmployee_Title_createdByToEmployeeInput
+  Title_Title_deletedByToEmployee?: Prisma.TitleCreateNestedManyWithoutEmployee_Title_deletedByToEmployeeInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutEmployeeInput
+  Training_Training_deletedByToEmployee?: Prisma.TrainingCreateNestedManyWithoutEmployee_Training_deletedByToEmployeeInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutEmployeeInput
+  TrainingContact_TrainingContact_deletedByToEmployee?: Prisma.TrainingContactCreateNestedManyWithoutEmployee_TrainingContact_deletedByToEmployeeInput
+  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutEmployeeInput
+  TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutEmployeeInput
+  TrainingStandard_TrainingStandard_deletedByToEmployee?: Prisma.TrainingStandardCreateNestedManyWithoutEmployee_TrainingStandard_deletedByToEmployeeInput
+  Unit?: Prisma.UnitCreateNestedManyWithoutEmployeeInput
+  Unit_Unit_deletedByToEmployee?: Prisma.UnitCreateNestedManyWithoutEmployee_Unit_deletedByToEmployeeInput
+  UrgencyType?: Prisma.UrgencyTypeCreateNestedManyWithoutEmployeeInput
+  UrgencyType_UrgencyType_deletedByToEmployee?: Prisma.UrgencyTypeCreateNestedManyWithoutEmployee_UrgencyType_deletedByToEmployeeInput
+  VatMargin_VatMargin_createdByToEmployee?: Prisma.VatMarginCreateNestedManyWithoutEmployee_VatMargin_createdByToEmployeeInput
+  VatMargin_VatMargin_deletedByToEmployee?: Prisma.VatMarginCreateNestedManyWithoutEmployee_VatMargin_deletedByToEmployeeInput
+  WarehousePlace?: Prisma.WarehousePlaceCreateNestedManyWithoutEmployeeInput
+  WarehousePlace_WarehousePlace_deletedByToEmployee?: Prisma.WarehousePlaceCreateNestedManyWithoutEmployee_WarehousePlace_deletedByToEmployeeInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutEmployeeInput
+  WorkOrder_WorkOrder_deletedByToEmployee?: Prisma.WorkOrderCreateNestedManyWithoutEmployee_WorkOrder_deletedByToEmployeeInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutEmployeeInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutEmployeeInput
+  WorkOrderStructure_WorkOrderStructure_deletedByToEmployee?: Prisma.WorkOrderStructureCreateNestedManyWithoutEmployee_WorkOrderStructure_deletedByToEmployeeInput
+}
+
+export type EmployeeUncheckedCreateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput = {
+  id: string
+  firstName: string
+  lastName: string
+  mail?: string | null
+  password_hash: string
+  phoneNumber?: string | null
+  startDate: Date | string
+  endDate?: Date | string | null
+  info?: string | null
+  birthDate?: Date | string | null
+  street?: string | null
+  houseNumber?: string | null
+  busNumber?: string | null
+  zipCode?: string | null
+  place?: string | null
+  username: string
+  createdAt: Date | string
+  permanentEmployee?: boolean
+  checkInfo?: boolean
+  newYearCard?: boolean
+  active?: boolean
+  passwordCreatedAt: Date | string
+  createdBy?: string | null
+  titleId?: string | null
+  pictureId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput
+  Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
+  Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
+  CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployee_CertificateType_deletedByToEmployeeInput
+  Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
+  Company_Company_deletedByToEmployee?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployee_Company_deletedByToEmployeeInput
+  CompanyAddress_CompanyAddress_createdByToEmployee?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutEmployee_CompanyAddress_createdByToEmployeeInput
+  CompanyAddress_CompanyAddress_deletedByToEmployee?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutEmployee_CompanyAddress_deletedByToEmployeeInput
+  CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutEmployeeInput
+  CompanyContact_CompanyContact_deletedByToEmployee?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutEmployee_CompanyContact_deletedByToEmployeeInput
+  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutEmployeeInput
+  Contact_Contact_deletedByToEmployee?: Prisma.ContactUncheckedCreateNestedManyWithoutEmployee_Contact_deletedByToEmployeeInput
+  Country_Country_deletedByToEmployee?: Prisma.CountryUncheckedCreateNestedManyWithoutEmployee_Country_deletedByToEmployeeInput
+  Country_Country_createdByToEmployee?: Prisma.CountryUncheckedCreateNestedManyWithoutEmployee_Country_createdByToEmployeeInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutEmployeeInput
+  DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutEmployee_DeliveryNoteSupplier_deletedByToEmployeeInput
+  Department_Department_deletedByToEmployee?: Prisma.DepartmentUncheckedCreateNestedManyWithoutEmployee_Department_deletedByToEmployeeInput
+  Department_Department_createdByToEmployee?: Prisma.DepartmentUncheckedCreateNestedManyWithoutEmployee_Department_createdByToEmployeeInput
+  DepartmentExtern_DepartmentExtern_deletedByToEmployee?: Prisma.DepartmentExternUncheckedCreateNestedManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput
+  DepartmentExtern_DepartmentExtern_createdByToEmployee?: Prisma.DepartmentExternUncheckedCreateNestedManyWithoutEmployee_DepartmentExtern_createdByToEmployeeInput
+  DocumentGroupA_DocumentGroupA_deletedByToEmployee?: Prisma.DocumentGroupAUncheckedCreateNestedManyWithoutEmployee_DocumentGroupA_deletedByToEmployeeInput
+  DocumentGroupA_DocumentGroupA_createdByToEmployee?: Prisma.DocumentGroupAUncheckedCreateNestedManyWithoutEmployee_DocumentGroupA_createdByToEmployeeInput
+  DocumentGroupB_DocumentGroupB_deletedByToEmployee?: Prisma.DocumentGroupBUncheckedCreateNestedManyWithoutEmployee_DocumentGroupB_deletedByToEmployeeInput
+  DocumentGroupB_DocumentGroupB_createdByToEmployee?: Prisma.DocumentGroupBUncheckedCreateNestedManyWithoutEmployee_DocumentGroupB_createdByToEmployeeInput
+  DocumentGroupC_DocumentGroupC_deletedByToEmployee?: Prisma.DocumentGroupCUncheckedCreateNestedManyWithoutEmployee_DocumentGroupC_deletedByToEmployeeInput
+  DocumentGroupC_DocumentGroupC_createdByToEmployee?: Prisma.DocumentGroupCUncheckedCreateNestedManyWithoutEmployee_DocumentGroupC_createdByToEmployeeInput
+  DocumentGroupD_DocumentGroupD_deletedByToEmployee?: Prisma.DocumentGroupDUncheckedCreateNestedManyWithoutEmployee_DocumentGroupD_deletedByToEmployeeInput
+  DocumentGroupD_DocumentGroupD_createdByToEmployee?: Prisma.DocumentGroupDUncheckedCreateNestedManyWithoutEmployee_DocumentGroupD_createdByToEmployeeInput
+  DocumentPlace?: Prisma.DocumentPlaceUncheckedCreateNestedManyWithoutEmployeeInput
+  DocumentPlace_DocumentPlace_createdByToEmployee?: Prisma.DocumentPlaceUncheckedCreateNestedManyWithoutEmployee_DocumentPlace_createdByToEmployeeInput
+  DocumentRevision_DocumentRevision_deletedByToEmployee?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutEmployee_DocumentRevision_deletedByToEmployeeInput
+  DocumentRevision_DocumentRevision_createdByToEmployee?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutEmployee_DocumentRevision_createdByToEmployeeInput
+  DocumentStatus_DocumentStatus_deletedByToEmployee?: Prisma.DocumentStatusUncheckedCreateNestedManyWithoutEmployee_DocumentStatus_deletedByToEmployeeInput
+  DocumentStatus_DocumentStatus_createdByToEmployee?: Prisma.DocumentStatusUncheckedCreateNestedManyWithoutEmployee_DocumentStatus_createdByToEmployeeInput
+  DocumentStructure_DocumentStructure_createdByToEmployee?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutEmployee_DocumentStructure_createdByToEmployeeInput
+  DocumentStructure_DocumentStructure_deletedByToEmployee?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutEmployee_DocumentStructure_deletedByToEmployeeInput
+  DocumentStructure_DocumentStructure_managedByIdToEmployee?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutEmployee_DocumentStructure_managedByIdToEmployeeInput
+  DocumentStructure_DocumentStructure_revisedByIdToEmployee?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutEmployee_DocumentStructure_revisedByIdToEmployeeInput
+  EmergencyContact?: Prisma.EmergencyContactUncheckedCreateNestedManyWithoutEmployeeInput
+  other_Employee?: Prisma.EmployeeUncheckedCreateNestedManyWithoutEmployeeInput
+  other_Employee_Employee_deletedByToEmployee?: Prisma.EmployeeUncheckedCreateNestedManyWithoutEmployee_Employee_deletedByToEmployeeInput
+  FollowUp_FollowUp_ownedByToEmployee?: Prisma.FollowUpUncheckedCreateNestedManyWithoutEmployee_FollowUp_ownedByToEmployeeInput
+  FollowUp_FollowUp_executedByToEmployee?: Prisma.FollowUpUncheckedCreateNestedManyWithoutEmployee_FollowUp_executedByToEmployeeInput
+  FollowUp_FollowUp_createdByToEmployee?: Prisma.FollowUpUncheckedCreateNestedManyWithoutEmployee_FollowUp_createdByToEmployeeInput
+  FollowUp_FollowUp_deletedByToEmployee?: Prisma.FollowUpUncheckedCreateNestedManyWithoutEmployee_FollowUp_deletedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_deletedByToEmployee?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutEmployee_FollowUpStructure_deletedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_ownedByToEmployee?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutEmployee_FollowUpStructure_ownedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_executedByToEmployee?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutEmployee_FollowUpStructure_executedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_taskForToEmployee?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutEmployee_FollowUpStructure_taskForToEmployeeInput
+  FollowUpStructure_FollowUpStructure_createdByToEmployee?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutEmployee_FollowUpStructure_createdByToEmployeeInput
+  FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutEmployeeInput
+  FollowUpType?: Prisma.FollowUpTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  FollowUpType_FollowUpType_deletedByToEmployee?: Prisma.FollowUpTypeUncheckedCreateNestedManyWithoutEmployee_FollowUpType_deletedByToEmployeeInput
+  Function_Function_createdByToEmployee?: Prisma.FunctionUncheckedCreateNestedManyWithoutEmployee_Function_createdByToEmployeeInput
+  Function_Function_deletedByToEmployee?: Prisma.FunctionUncheckedCreateNestedManyWithoutEmployee_Function_deletedByToEmployeeInput
+  HourType?: Prisma.HourTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  HourType_HourType_deletedByToEmployee?: Prisma.HourTypeUncheckedCreateNestedManyWithoutEmployee_HourType_deletedByToEmployeeInput
+  Inventory?: Prisma.InventoryUncheckedCreateNestedManyWithoutEmployeeInput
+  Inventory_Inventory_deletedByToEmployee?: Prisma.InventoryUncheckedCreateNestedManyWithoutEmployee_Inventory_deletedByToEmployeeInput
+  InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutEmployeeInput
+  InventoryChange_InventoryChange_deletedByToEmployee?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutEmployee_InventoryChange_deletedByToEmployeeInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutEmployeeInput
+  InventoryOrder_InventoryOrder_deletedByToEmployee?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutEmployee_InventoryOrder_deletedByToEmployeeInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutEmployeeInput
+  InventoryStructure_InventoryStructure_deletedByToEmployee?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutEmployee_InventoryStructure_deletedByToEmployeeInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutEmployeeInput
+  InvoiceIn_InvoiceIn_deletedByToEmployee?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutEmployee_InvoiceIn_deletedByToEmployeeInput
+  InvoiceIn_InvoiceIn_modifiedByToEmployee?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutEmployee_InvoiceIn_modifiedByToEmployeeInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutEmployeeInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutEmployeeInput
+  InvoiceOut_InvoiceOut_deletedByToEmployee?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutEmployee_InvoiceOut_deletedByToEmployeeInput
+  InvoiceOut_InvoiceOut_modifiedByToEmployee?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutEmployee_InvoiceOut_modifiedByToEmployeeInput
+  InvoiceSentType_InvoiceSentType_createdByToEmployee?: Prisma.InvoiceSentTypeUncheckedCreateNestedManyWithoutEmployee_InvoiceSentType_createdByToEmployeeInput
+  InvoiceSentType_InvoiceSentType_deletedByToEmployee?: Prisma.InvoiceSentTypeUncheckedCreateNestedManyWithoutEmployee_InvoiceSentType_deletedByToEmployeeInput
+  InvoiceStatus_InvoiceStatus_createdByToEmployee?: Prisma.InvoiceStatusUncheckedCreateNestedManyWithoutEmployee_InvoiceStatus_createdByToEmployeeInput
+  InvoiceStatus_InvoiceStatus_deletedByToEmployee?: Prisma.InvoiceStatusUncheckedCreateNestedManyWithoutEmployee_InvoiceStatus_deletedByToEmployeeInput
+  InvoiceType?: Prisma.InvoiceTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  InvoiceType_InvoiceType_deletedByToEmployee?: Prisma.InvoiceTypeUncheckedCreateNestedManyWithoutEmployee_InvoiceType_deletedByToEmployeeInput
+  Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutEmployeeInput
+  Material_Material_deletedByToEmployee?: Prisma.MaterialUncheckedCreateNestedManyWithoutEmployee_Material_deletedByToEmployeeInput
+  MaterialAssembly?: Prisma.MaterialAssemblyUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialAssembly_MaterialAssembly_deletedByToEmployee?: Prisma.MaterialAssemblyUncheckedCreateNestedManyWithoutEmployee_MaterialAssembly_deletedByToEmployeeInput
+  MaterialCode?: Prisma.MaterialCodeUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialCode_MaterialCode_deletedByToEmployee?: Prisma.MaterialCodeUncheckedCreateNestedManyWithoutEmployee_MaterialCode_deletedByToEmployeeInput
+  MaterialDimension?: Prisma.MaterialDimensionUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialDimension_MaterialDimension_deletedByToEmployee?: Prisma.MaterialDimensionUncheckedCreateNestedManyWithoutEmployee_MaterialDimension_deletedByToEmployeeInput
+  MaterialFamily?: Prisma.MaterialFamilyUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialFamily_MaterialFamily_deletedByToEmployee?: Prisma.MaterialFamilyUncheckedCreateNestedManyWithoutEmployee_MaterialFamily_deletedByToEmployeeInput
+  MaterialGroup?: Prisma.MaterialGroupUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialMovement_MaterialMovement_deletedByToEmployee?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutEmployee_MaterialMovement_deletedByToEmployeeInput
+  MaterialOther?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialOther_MaterialOther_deletedByToEmployee?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutEmployee_MaterialOther_deletedByToEmployeeInput
+  MaterialPerformance?: Prisma.MaterialPerformanceUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialPerformance_MaterialPerformance_deletedByToEmployee?: Prisma.MaterialPerformanceUncheckedCreateNestedManyWithoutEmployee_MaterialPerformance_deletedByToEmployeeInput
+  MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialPrice_MaterialPrice_deletedByToEmployee?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutEmployee_MaterialPrice_deletedByToEmployeeInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeInput
+  MaterialSpec?: Prisma.MaterialSpecUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialSpec_MaterialSpec_deletedByToEmployee?: Prisma.MaterialSpecUncheckedCreateNestedManyWithoutEmployee_MaterialSpec_deletedByToEmployeeInput
+  MaterialStructure?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialStructure_MaterialStructure_deletedByToEmployee?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutEmployee_MaterialStructure_deletedByToEmployeeInput
+  Part?: Prisma.PartUncheckedCreateNestedManyWithoutEmployeeInput
+  Part_Part_deletedByToEmployee?: Prisma.PartUncheckedCreateNestedManyWithoutEmployee_Part_deletedByToEmployeeInput
+  PaymentMethod_PaymentMethod_createdByToEmployee?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutEmployee_PaymentMethod_createdByToEmployeeInput
+  PaymentMethod_PaymentMethod_deletedByToEmployee?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutEmployee_PaymentMethod_deletedByToEmployeeInput
+  Phantom?: Prisma.PhantomUncheckedCreateNestedManyWithoutEmployeeInput
+  Phantom_Phantom_deletedByToEmployee?: Prisma.PhantomUncheckedCreateNestedManyWithoutEmployee_Phantom_deletedByToEmployeeInput
+  PriceList_PriceList_createdByToEmployee?: Prisma.PriceListUncheckedCreateNestedManyWithoutEmployee_PriceList_createdByToEmployeeInput
+  PriceList_PriceList_deletedByToEmployee?: Prisma.PriceListUncheckedCreateNestedManyWithoutEmployee_PriceList_deletedByToEmployeeInput
+  PriceListItem_PriceListItem_createdByToEmployee?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutEmployee_PriceListItem_createdByToEmployeeInput
+  PriceListItem_PriceListItem_deletedByToEmployee?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutEmployee_PriceListItem_deletedByToEmployeeInput
+  Product?: Prisma.ProductUncheckedCreateNestedManyWithoutEmployeeInput
+  Product_Product_deletedByToEmployee?: Prisma.ProductUncheckedCreateNestedManyWithoutEmployee_Product_deletedByToEmployeeInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutEmployeeInput
+  Project_Project_deletedByToEmployee?: Prisma.ProjectUncheckedCreateNestedManyWithoutEmployee_Project_deletedByToEmployeeInput
+  ProjectBOM_ProjectBOM_createdByToEmployee?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutEmployee_ProjectBOM_createdByToEmployeeInput
+  ProjectBOM_ProjectBOM_deletedByToEmployee?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutEmployee_ProjectBOM_deletedByToEmployeeInput
+  ProjectBOMStructure_ProjectBOMStructure_createdByToEmployee?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutEmployee_ProjectBOMStructure_createdByToEmployeeInput
+  ProjectBOMStructure_ProjectBOMStructure_deletedByToEmployee?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutEmployee_ProjectBOMStructure_deletedByToEmployeeInput
+  ProjectContact_ProjectContact_createdByToEmployee?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutEmployee_ProjectContact_createdByToEmployeeInput
+  ProjectContact_ProjectContact_modifiedByToEmployee?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutEmployee_ProjectContact_modifiedByToEmployeeInput
+  ProjectContact_ProjectContact_deletedByToEmployee?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutEmployee_ProjectContact_deletedByToEmployeeInput
+  ProjectType?: Prisma.ProjectTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  ProjectType_ProjectType_deletedByToEmployee?: Prisma.ProjectTypeUncheckedCreateNestedManyWithoutEmployee_ProjectType_deletedByToEmployeeInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutEmployeeInput
+  Purchase_Purchase_deletedByToEmployee?: Prisma.PurchaseUncheckedCreateNestedManyWithoutEmployee_Purchase_deletedByToEmployeeInput
+  PurchaseBOM_PurchaseBOM_createdByToEmployee?: Prisma.PurchaseBOMUncheckedCreateNestedManyWithoutEmployee_PurchaseBOM_createdByToEmployeeInput
+  PurchaseBOM_PurchaseBOM_deletedByToEmployee?: Prisma.PurchaseBOMUncheckedCreateNestedManyWithoutEmployee_PurchaseBOM_deletedByToEmployeeInput
+  PurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployee?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeInput
+  PurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployee?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutEmployee_PurchaseBOMStructure_deletedByToEmployeeInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutEmployeeInput
+  PurchaseDetail_PurchaseDetail_deletedByToEmployee?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutEmployee_PurchaseDetail_deletedByToEmployeeInput
+  PurchaseOrderBecra?: Prisma.PurchaseOrderBecraUncheckedCreateNestedManyWithoutEmployeeInput
+  PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee?: Prisma.PurchaseOrderBecraUncheckedCreateNestedManyWithoutEmployee_PurchaseOrderBecra_deletedByToEmployeeInput
+  QuoteBecra_QuoteBecra_createdByToEmployee?: Prisma.QuoteBecraUncheckedCreateNestedManyWithoutEmployee_QuoteBecra_createdByToEmployeeInput
+  QuoteBecra_QuoteBecra_deletedByToEmployee?: Prisma.QuoteBecraUncheckedCreateNestedManyWithoutEmployee_QuoteBecra_deletedByToEmployeeInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutEmployeeInput
+  QuoteSupplier_QuoteSupplier_deletedByToEmployee?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutEmployee_QuoteSupplier_deletedByToEmployeeInput
+  Role_Role_createdByToEmployee?: Prisma.RoleUncheckedCreateNestedManyWithoutEmployee_Role_createdByToEmployeeInput
+  Role_Role_deletedByToEmployee?: Prisma.RoleUncheckedCreateNestedManyWithoutEmployee_Role_deletedByToEmployeeInput
+  RoleLevel_RoleLevel_createdByToEmployee?: Prisma.RoleLevelUncheckedCreateNestedManyWithoutEmployee_RoleLevel_createdByToEmployeeInput
+  RoleLevel_RoleLevel_deletedByToEmployee?: Prisma.RoleLevelUncheckedCreateNestedManyWithoutEmployee_RoleLevel_deletedByToEmployeeInput
+  RoleLevelEmployee?: Prisma.RoleLevelEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
+  Session?: Prisma.SessionUncheckedCreateNestedManyWithoutEmployeeInput
+  Status?: Prisma.StatusUncheckedCreateNestedManyWithoutEmployeeInput
+  Status_Status_deletedByToEmployee?: Prisma.StatusUncheckedCreateNestedManyWithoutEmployee_Status_deletedByToEmployeeInput
+  SubRole_SubRole_createdByToEmployee?: Prisma.SubRoleUncheckedCreateNestedManyWithoutEmployee_SubRole_createdByToEmployeeInput
+  SubRole_SubRole_deletedByToEmployee?: Prisma.SubRoleUncheckedCreateNestedManyWithoutEmployee_SubRole_deletedByToEmployeeInput
+  SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutEmployeeInput
+  SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput
+  Target?: Prisma.TargetUncheckedCreateNestedManyWithoutEmployeeInput
+  Target_Target_deletedByToEmployee?: Prisma.TargetUncheckedCreateNestedManyWithoutEmployee_Target_deletedByToEmployeeInput
+  TargetType?: Prisma.TargetTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  TargetType_TargetType_deletedByToEmployee?: Prisma.TargetTypeUncheckedCreateNestedManyWithoutEmployee_TargetType_deletedByToEmployeeInput
+  TestProcedure?: Prisma.TestProcedureUncheckedCreateNestedManyWithoutEmployeeInput
+  TestProcedure_TestProcedure_deletedByToEmployee?: Prisma.TestProcedureUncheckedCreateNestedManyWithoutEmployee_TestProcedure_deletedByToEmployeeInput
+  TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutEmployeeInput
+  TimeRegistry_TimeRegistry_deletedByToEmployee?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutEmployee_TimeRegistry_deletedByToEmployeeInput
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
+  Title_Title_createdByToEmployee?: Prisma.TitleUncheckedCreateNestedManyWithoutEmployee_Title_createdByToEmployeeInput
+  Title_Title_deletedByToEmployee?: Prisma.TitleUncheckedCreateNestedManyWithoutEmployee_Title_deletedByToEmployeeInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutEmployeeInput
+  Training_Training_deletedByToEmployee?: Prisma.TrainingUncheckedCreateNestedManyWithoutEmployee_Training_deletedByToEmployeeInput
+  TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutEmployeeInput
+  TrainingContact_TrainingContact_deletedByToEmployee?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutEmployee_TrainingContact_deletedByToEmployeeInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutEmployeeInput
+  TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutEmployeeInput
+  TrainingStandard_TrainingStandard_deletedByToEmployee?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutEmployee_TrainingStandard_deletedByToEmployeeInput
+  Unit?: Prisma.UnitUncheckedCreateNestedManyWithoutEmployeeInput
+  Unit_Unit_deletedByToEmployee?: Prisma.UnitUncheckedCreateNestedManyWithoutEmployee_Unit_deletedByToEmployeeInput
+  UrgencyType?: Prisma.UrgencyTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  UrgencyType_UrgencyType_deletedByToEmployee?: Prisma.UrgencyTypeUncheckedCreateNestedManyWithoutEmployee_UrgencyType_deletedByToEmployeeInput
+  VatMargin_VatMargin_createdByToEmployee?: Prisma.VatMarginUncheckedCreateNestedManyWithoutEmployee_VatMargin_createdByToEmployeeInput
+  VatMargin_VatMargin_deletedByToEmployee?: Prisma.VatMarginUncheckedCreateNestedManyWithoutEmployee_VatMargin_deletedByToEmployeeInput
+  WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutEmployeeInput
+  WarehousePlace_WarehousePlace_deletedByToEmployee?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutEmployee_WarehousePlace_deletedByToEmployeeInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutEmployeeInput
+  WorkOrder_WorkOrder_deletedByToEmployee?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutEmployee_WorkOrder_deletedByToEmployeeInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedCreateNestedManyWithoutEmployeeInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutEmployeeInput
+  WorkOrderStructure_WorkOrderStructure_deletedByToEmployee?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutEmployee_WorkOrderStructure_deletedByToEmployeeInput
+}
+
+export type EmployeeCreateOrConnectWithoutBOMExecution_BOMExecution_createdByToEmployeeInput = {
+  where: Prisma.EmployeeWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput, Prisma.EmployeeUncheckedCreateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput>
+}
+
+export type EmployeeCreateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput = {
+  id: string
+  firstName: string
+  lastName: string
+  mail?: string | null
+  password_hash: string
+  phoneNumber?: string | null
+  startDate: Date | string
+  endDate?: Date | string | null
+  info?: string | null
+  birthDate?: Date | string | null
+  street?: string | null
+  houseNumber?: string | null
+  busNumber?: string | null
+  zipCode?: string | null
+  place?: string | null
+  username: string
+  createdAt: Date | string
+  permanentEmployee?: boolean
+  checkInfo?: boolean
+  newYearCard?: boolean
+  active?: boolean
+  passwordCreatedAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  Certificate?: Prisma.CertificateCreateNestedManyWithoutEmployeeInput
+  Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
+  CertificateType?: Prisma.CertificateTypeCreateNestedManyWithoutEmployeeInput
+  CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeCreateNestedManyWithoutEmployee_CertificateType_deletedByToEmployeeInput
+  Company?: Prisma.CompanyCreateNestedManyWithoutEmployeeInput
+  Company_Company_deletedByToEmployee?: Prisma.CompanyCreateNestedManyWithoutEmployee_Company_deletedByToEmployeeInput
+  CompanyAddress_CompanyAddress_createdByToEmployee?: Prisma.CompanyAddressCreateNestedManyWithoutEmployee_CompanyAddress_createdByToEmployeeInput
+  CompanyAddress_CompanyAddress_deletedByToEmployee?: Prisma.CompanyAddressCreateNestedManyWithoutEmployee_CompanyAddress_deletedByToEmployeeInput
+  CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutEmployeeInput
+  CompanyContact_CompanyContact_deletedByToEmployee?: Prisma.CompanyContactCreateNestedManyWithoutEmployee_CompanyContact_deletedByToEmployeeInput
+  Contact?: Prisma.ContactCreateNestedManyWithoutEmployeeInput
+  Contact_Contact_deletedByToEmployee?: Prisma.ContactCreateNestedManyWithoutEmployee_Contact_deletedByToEmployeeInput
+  Country_Country_deletedByToEmployee?: Prisma.CountryCreateNestedManyWithoutEmployee_Country_deletedByToEmployeeInput
+  Country_Country_createdByToEmployee?: Prisma.CountryCreateNestedManyWithoutEmployee_Country_createdByToEmployeeInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutEmployeeInput
+  DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutEmployee_DeliveryNoteSupplier_deletedByToEmployeeInput
+  Department_Department_deletedByToEmployee?: Prisma.DepartmentCreateNestedManyWithoutEmployee_Department_deletedByToEmployeeInput
+  Department_Department_createdByToEmployee?: Prisma.DepartmentCreateNestedManyWithoutEmployee_Department_createdByToEmployeeInput
+  DepartmentExtern_DepartmentExtern_deletedByToEmployee?: Prisma.DepartmentExternCreateNestedManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput
+  DepartmentExtern_DepartmentExtern_createdByToEmployee?: Prisma.DepartmentExternCreateNestedManyWithoutEmployee_DepartmentExtern_createdByToEmployeeInput
+  DocumentGroupA_DocumentGroupA_deletedByToEmployee?: Prisma.DocumentGroupACreateNestedManyWithoutEmployee_DocumentGroupA_deletedByToEmployeeInput
+  DocumentGroupA_DocumentGroupA_createdByToEmployee?: Prisma.DocumentGroupACreateNestedManyWithoutEmployee_DocumentGroupA_createdByToEmployeeInput
+  DocumentGroupB_DocumentGroupB_deletedByToEmployee?: Prisma.DocumentGroupBCreateNestedManyWithoutEmployee_DocumentGroupB_deletedByToEmployeeInput
+  DocumentGroupB_DocumentGroupB_createdByToEmployee?: Prisma.DocumentGroupBCreateNestedManyWithoutEmployee_DocumentGroupB_createdByToEmployeeInput
+  DocumentGroupC_DocumentGroupC_deletedByToEmployee?: Prisma.DocumentGroupCCreateNestedManyWithoutEmployee_DocumentGroupC_deletedByToEmployeeInput
+  DocumentGroupC_DocumentGroupC_createdByToEmployee?: Prisma.DocumentGroupCCreateNestedManyWithoutEmployee_DocumentGroupC_createdByToEmployeeInput
+  DocumentGroupD_DocumentGroupD_deletedByToEmployee?: Prisma.DocumentGroupDCreateNestedManyWithoutEmployee_DocumentGroupD_deletedByToEmployeeInput
+  DocumentGroupD_DocumentGroupD_createdByToEmployee?: Prisma.DocumentGroupDCreateNestedManyWithoutEmployee_DocumentGroupD_createdByToEmployeeInput
+  DocumentPlace?: Prisma.DocumentPlaceCreateNestedManyWithoutEmployeeInput
+  DocumentPlace_DocumentPlace_createdByToEmployee?: Prisma.DocumentPlaceCreateNestedManyWithoutEmployee_DocumentPlace_createdByToEmployeeInput
+  DocumentRevision_DocumentRevision_deletedByToEmployee?: Prisma.DocumentRevisionCreateNestedManyWithoutEmployee_DocumentRevision_deletedByToEmployeeInput
+  DocumentRevision_DocumentRevision_createdByToEmployee?: Prisma.DocumentRevisionCreateNestedManyWithoutEmployee_DocumentRevision_createdByToEmployeeInput
+  DocumentStatus_DocumentStatus_deletedByToEmployee?: Prisma.DocumentStatusCreateNestedManyWithoutEmployee_DocumentStatus_deletedByToEmployeeInput
+  DocumentStatus_DocumentStatus_createdByToEmployee?: Prisma.DocumentStatusCreateNestedManyWithoutEmployee_DocumentStatus_createdByToEmployeeInput
+  DocumentStructure_DocumentStructure_createdByToEmployee?: Prisma.DocumentStructureCreateNestedManyWithoutEmployee_DocumentStructure_createdByToEmployeeInput
+  DocumentStructure_DocumentStructure_deletedByToEmployee?: Prisma.DocumentStructureCreateNestedManyWithoutEmployee_DocumentStructure_deletedByToEmployeeInput
+  DocumentStructure_DocumentStructure_managedByIdToEmployee?: Prisma.DocumentStructureCreateNestedManyWithoutEmployee_DocumentStructure_managedByIdToEmployeeInput
+  DocumentStructure_DocumentStructure_revisedByIdToEmployee?: Prisma.DocumentStructureCreateNestedManyWithoutEmployee_DocumentStructure_revisedByIdToEmployeeInput
+  EmergencyContact?: Prisma.EmergencyContactCreateNestedManyWithoutEmployeeInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutOther_EmployeeInput
+  other_Employee?: Prisma.EmployeeCreateNestedManyWithoutEmployeeInput
+  Title_Employee_titleIdToTitle?: Prisma.TitleCreateNestedOneWithoutEmployee_Employee_titleIdToTitleInput
+  DocumentStructure_Employee_pictureIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutEmployee_Employee_pictureIdToDocumentStructureInput
+  Employee_Employee_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutOther_Employee_Employee_deletedByToEmployeeInput
+  other_Employee_Employee_deletedByToEmployee?: Prisma.EmployeeCreateNestedManyWithoutEmployee_Employee_deletedByToEmployeeInput
+  FollowUp_FollowUp_ownedByToEmployee?: Prisma.FollowUpCreateNestedManyWithoutEmployee_FollowUp_ownedByToEmployeeInput
+  FollowUp_FollowUp_executedByToEmployee?: Prisma.FollowUpCreateNestedManyWithoutEmployee_FollowUp_executedByToEmployeeInput
+  FollowUp_FollowUp_createdByToEmployee?: Prisma.FollowUpCreateNestedManyWithoutEmployee_FollowUp_createdByToEmployeeInput
+  FollowUp_FollowUp_deletedByToEmployee?: Prisma.FollowUpCreateNestedManyWithoutEmployee_FollowUp_deletedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_deletedByToEmployee?: Prisma.FollowUpStructureCreateNestedManyWithoutEmployee_FollowUpStructure_deletedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_ownedByToEmployee?: Prisma.FollowUpStructureCreateNestedManyWithoutEmployee_FollowUpStructure_ownedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_executedByToEmployee?: Prisma.FollowUpStructureCreateNestedManyWithoutEmployee_FollowUpStructure_executedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_taskForToEmployee?: Prisma.FollowUpStructureCreateNestedManyWithoutEmployee_FollowUpStructure_taskForToEmployeeInput
+  FollowUpStructure_FollowUpStructure_createdByToEmployee?: Prisma.FollowUpStructureCreateNestedManyWithoutEmployee_FollowUpStructure_createdByToEmployeeInput
+  FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutEmployeeInput
+  FollowUpType?: Prisma.FollowUpTypeCreateNestedManyWithoutEmployeeInput
+  FollowUpType_FollowUpType_deletedByToEmployee?: Prisma.FollowUpTypeCreateNestedManyWithoutEmployee_FollowUpType_deletedByToEmployeeInput
+  Function_Function_createdByToEmployee?: Prisma.FunctionCreateNestedManyWithoutEmployee_Function_createdByToEmployeeInput
+  Function_Function_deletedByToEmployee?: Prisma.FunctionCreateNestedManyWithoutEmployee_Function_deletedByToEmployeeInput
+  HourType?: Prisma.HourTypeCreateNestedManyWithoutEmployeeInput
+  HourType_HourType_deletedByToEmployee?: Prisma.HourTypeCreateNestedManyWithoutEmployee_HourType_deletedByToEmployeeInput
+  Inventory?: Prisma.InventoryCreateNestedManyWithoutEmployeeInput
+  Inventory_Inventory_deletedByToEmployee?: Prisma.InventoryCreateNestedManyWithoutEmployee_Inventory_deletedByToEmployeeInput
+  InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutEmployeeInput
+  InventoryChange_InventoryChange_deletedByToEmployee?: Prisma.InventoryChangeCreateNestedManyWithoutEmployee_InventoryChange_deletedByToEmployeeInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutEmployeeInput
+  InventoryOrder_InventoryOrder_deletedByToEmployee?: Prisma.InventoryOrderCreateNestedManyWithoutEmployee_InventoryOrder_deletedByToEmployeeInput
+  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutEmployeeInput
+  InventoryStructure_InventoryStructure_deletedByToEmployee?: Prisma.InventoryStructureCreateNestedManyWithoutEmployee_InventoryStructure_deletedByToEmployeeInput
+  InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutEmployeeInput
+  InvoiceIn_InvoiceIn_deletedByToEmployee?: Prisma.InvoiceInCreateNestedManyWithoutEmployee_InvoiceIn_deletedByToEmployeeInput
+  InvoiceIn_InvoiceIn_modifiedByToEmployee?: Prisma.InvoiceInCreateNestedManyWithoutEmployee_InvoiceIn_modifiedByToEmployeeInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutEmployeeInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutEmployeeInput
+  InvoiceOut_InvoiceOut_deletedByToEmployee?: Prisma.InvoiceOutCreateNestedManyWithoutEmployee_InvoiceOut_deletedByToEmployeeInput
+  InvoiceOut_InvoiceOut_modifiedByToEmployee?: Prisma.InvoiceOutCreateNestedManyWithoutEmployee_InvoiceOut_modifiedByToEmployeeInput
+  InvoiceSentType_InvoiceSentType_createdByToEmployee?: Prisma.InvoiceSentTypeCreateNestedManyWithoutEmployee_InvoiceSentType_createdByToEmployeeInput
+  InvoiceSentType_InvoiceSentType_deletedByToEmployee?: Prisma.InvoiceSentTypeCreateNestedManyWithoutEmployee_InvoiceSentType_deletedByToEmployeeInput
+  InvoiceStatus_InvoiceStatus_createdByToEmployee?: Prisma.InvoiceStatusCreateNestedManyWithoutEmployee_InvoiceStatus_createdByToEmployeeInput
+  InvoiceStatus_InvoiceStatus_deletedByToEmployee?: Prisma.InvoiceStatusCreateNestedManyWithoutEmployee_InvoiceStatus_deletedByToEmployeeInput
+  InvoiceType?: Prisma.InvoiceTypeCreateNestedManyWithoutEmployeeInput
+  InvoiceType_InvoiceType_deletedByToEmployee?: Prisma.InvoiceTypeCreateNestedManyWithoutEmployee_InvoiceType_deletedByToEmployeeInput
+  Material?: Prisma.MaterialCreateNestedManyWithoutEmployeeInput
+  Material_Material_deletedByToEmployee?: Prisma.MaterialCreateNestedManyWithoutEmployee_Material_deletedByToEmployeeInput
+  MaterialAssembly?: Prisma.MaterialAssemblyCreateNestedManyWithoutEmployeeInput
+  MaterialAssembly_MaterialAssembly_deletedByToEmployee?: Prisma.MaterialAssemblyCreateNestedManyWithoutEmployee_MaterialAssembly_deletedByToEmployeeInput
+  MaterialCode?: Prisma.MaterialCodeCreateNestedManyWithoutEmployeeInput
+  MaterialCode_MaterialCode_deletedByToEmployee?: Prisma.MaterialCodeCreateNestedManyWithoutEmployee_MaterialCode_deletedByToEmployeeInput
+  MaterialDimension?: Prisma.MaterialDimensionCreateNestedManyWithoutEmployeeInput
+  MaterialDimension_MaterialDimension_deletedByToEmployee?: Prisma.MaterialDimensionCreateNestedManyWithoutEmployee_MaterialDimension_deletedByToEmployeeInput
+  MaterialFamily?: Prisma.MaterialFamilyCreateNestedManyWithoutEmployeeInput
+  MaterialFamily_MaterialFamily_deletedByToEmployee?: Prisma.MaterialFamilyCreateNestedManyWithoutEmployee_MaterialFamily_deletedByToEmployeeInput
+  MaterialGroup?: Prisma.MaterialGroupCreateNestedManyWithoutEmployeeInput
+  MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutEmployeeInput
+  MaterialMovement_MaterialMovement_deletedByToEmployee?: Prisma.MaterialMovementCreateNestedManyWithoutEmployee_MaterialMovement_deletedByToEmployeeInput
+  MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutEmployeeInput
+  MaterialOther_MaterialOther_deletedByToEmployee?: Prisma.MaterialOtherCreateNestedManyWithoutEmployee_MaterialOther_deletedByToEmployeeInput
+  MaterialPerformance?: Prisma.MaterialPerformanceCreateNestedManyWithoutEmployeeInput
+  MaterialPerformance_MaterialPerformance_deletedByToEmployee?: Prisma.MaterialPerformanceCreateNestedManyWithoutEmployee_MaterialPerformance_deletedByToEmployeeInput
+  MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutEmployeeInput
+  MaterialPrice_MaterialPrice_deletedByToEmployee?: Prisma.MaterialPriceCreateNestedManyWithoutEmployee_MaterialPrice_deletedByToEmployeeInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutEmployeeInput
+  MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee?: Prisma.MaterialSerialTrackCreateNestedManyWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutEmployeeInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeInput
+  MaterialSpec?: Prisma.MaterialSpecCreateNestedManyWithoutEmployeeInput
+  MaterialSpec_MaterialSpec_deletedByToEmployee?: Prisma.MaterialSpecCreateNestedManyWithoutEmployee_MaterialSpec_deletedByToEmployeeInput
+  MaterialStructure?: Prisma.MaterialStructureCreateNestedManyWithoutEmployeeInput
+  MaterialStructure_MaterialStructure_deletedByToEmployee?: Prisma.MaterialStructureCreateNestedManyWithoutEmployee_MaterialStructure_deletedByToEmployeeInput
+  Part?: Prisma.PartCreateNestedManyWithoutEmployeeInput
+  Part_Part_deletedByToEmployee?: Prisma.PartCreateNestedManyWithoutEmployee_Part_deletedByToEmployeeInput
+  PaymentMethod_PaymentMethod_createdByToEmployee?: Prisma.PaymentMethodCreateNestedManyWithoutEmployee_PaymentMethod_createdByToEmployeeInput
+  PaymentMethod_PaymentMethod_deletedByToEmployee?: Prisma.PaymentMethodCreateNestedManyWithoutEmployee_PaymentMethod_deletedByToEmployeeInput
+  Phantom?: Prisma.PhantomCreateNestedManyWithoutEmployeeInput
+  Phantom_Phantom_deletedByToEmployee?: Prisma.PhantomCreateNestedManyWithoutEmployee_Phantom_deletedByToEmployeeInput
+  PriceList_PriceList_createdByToEmployee?: Prisma.PriceListCreateNestedManyWithoutEmployee_PriceList_createdByToEmployeeInput
+  PriceList_PriceList_deletedByToEmployee?: Prisma.PriceListCreateNestedManyWithoutEmployee_PriceList_deletedByToEmployeeInput
+  PriceListItem_PriceListItem_createdByToEmployee?: Prisma.PriceListItemCreateNestedManyWithoutEmployee_PriceListItem_createdByToEmployeeInput
+  PriceListItem_PriceListItem_deletedByToEmployee?: Prisma.PriceListItemCreateNestedManyWithoutEmployee_PriceListItem_deletedByToEmployeeInput
+  Product?: Prisma.ProductCreateNestedManyWithoutEmployeeInput
+  Product_Product_deletedByToEmployee?: Prisma.ProductCreateNestedManyWithoutEmployee_Product_deletedByToEmployeeInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutEmployeeInput
+  Project_Project_deletedByToEmployee?: Prisma.ProjectCreateNestedManyWithoutEmployee_Project_deletedByToEmployeeInput
+  ProjectBOM_ProjectBOM_createdByToEmployee?: Prisma.ProjectBOMCreateNestedManyWithoutEmployee_ProjectBOM_createdByToEmployeeInput
+  ProjectBOM_ProjectBOM_deletedByToEmployee?: Prisma.ProjectBOMCreateNestedManyWithoutEmployee_ProjectBOM_deletedByToEmployeeInput
+  ProjectBOMStructure_ProjectBOMStructure_createdByToEmployee?: Prisma.ProjectBOMStructureCreateNestedManyWithoutEmployee_ProjectBOMStructure_createdByToEmployeeInput
+  ProjectBOMStructure_ProjectBOMStructure_deletedByToEmployee?: Prisma.ProjectBOMStructureCreateNestedManyWithoutEmployee_ProjectBOMStructure_deletedByToEmployeeInput
+  ProjectContact_ProjectContact_createdByToEmployee?: Prisma.ProjectContactCreateNestedManyWithoutEmployee_ProjectContact_createdByToEmployeeInput
+  ProjectContact_ProjectContact_modifiedByToEmployee?: Prisma.ProjectContactCreateNestedManyWithoutEmployee_ProjectContact_modifiedByToEmployeeInput
+  ProjectContact_ProjectContact_deletedByToEmployee?: Prisma.ProjectContactCreateNestedManyWithoutEmployee_ProjectContact_deletedByToEmployeeInput
+  ProjectType?: Prisma.ProjectTypeCreateNestedManyWithoutEmployeeInput
+  ProjectType_ProjectType_deletedByToEmployee?: Prisma.ProjectTypeCreateNestedManyWithoutEmployee_ProjectType_deletedByToEmployeeInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutEmployeeInput
+  Purchase_Purchase_deletedByToEmployee?: Prisma.PurchaseCreateNestedManyWithoutEmployee_Purchase_deletedByToEmployeeInput
+  PurchaseBOM_PurchaseBOM_createdByToEmployee?: Prisma.PurchaseBOMCreateNestedManyWithoutEmployee_PurchaseBOM_createdByToEmployeeInput
+  PurchaseBOM_PurchaseBOM_deletedByToEmployee?: Prisma.PurchaseBOMCreateNestedManyWithoutEmployee_PurchaseBOM_deletedByToEmployeeInput
+  PurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployee?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeInput
+  PurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployee?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutEmployee_PurchaseBOMStructure_deletedByToEmployeeInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutEmployeeInput
+  PurchaseDetail_PurchaseDetail_deletedByToEmployee?: Prisma.PurchaseDetailCreateNestedManyWithoutEmployee_PurchaseDetail_deletedByToEmployeeInput
+  PurchaseOrderBecra?: Prisma.PurchaseOrderBecraCreateNestedManyWithoutEmployeeInput
+  PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee?: Prisma.PurchaseOrderBecraCreateNestedManyWithoutEmployee_PurchaseOrderBecra_deletedByToEmployeeInput
+  QuoteBecra_QuoteBecra_createdByToEmployee?: Prisma.QuoteBecraCreateNestedManyWithoutEmployee_QuoteBecra_createdByToEmployeeInput
+  QuoteBecra_QuoteBecra_deletedByToEmployee?: Prisma.QuoteBecraCreateNestedManyWithoutEmployee_QuoteBecra_deletedByToEmployeeInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutEmployeeInput
+  QuoteSupplier_QuoteSupplier_deletedByToEmployee?: Prisma.QuoteSupplierCreateNestedManyWithoutEmployee_QuoteSupplier_deletedByToEmployeeInput
+  Role_Role_createdByToEmployee?: Prisma.RoleCreateNestedManyWithoutEmployee_Role_createdByToEmployeeInput
+  Role_Role_deletedByToEmployee?: Prisma.RoleCreateNestedManyWithoutEmployee_Role_deletedByToEmployeeInput
+  RoleLevel_RoleLevel_createdByToEmployee?: Prisma.RoleLevelCreateNestedManyWithoutEmployee_RoleLevel_createdByToEmployeeInput
+  RoleLevel_RoleLevel_deletedByToEmployee?: Prisma.RoleLevelCreateNestedManyWithoutEmployee_RoleLevel_deletedByToEmployeeInput
+  RoleLevelEmployee?: Prisma.RoleLevelEmployeeCreateNestedManyWithoutEmployeeInput
+  Session?: Prisma.SessionCreateNestedManyWithoutEmployeeInput
+  Status?: Prisma.StatusCreateNestedManyWithoutEmployeeInput
+  Status_Status_deletedByToEmployee?: Prisma.StatusCreateNestedManyWithoutEmployee_Status_deletedByToEmployeeInput
+  SubRole_SubRole_createdByToEmployee?: Prisma.SubRoleCreateNestedManyWithoutEmployee_SubRole_createdByToEmployeeInput
+  SubRole_SubRole_deletedByToEmployee?: Prisma.SubRoleCreateNestedManyWithoutEmployee_SubRole_deletedByToEmployeeInput
+  SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpCreateNestedManyWithoutEmployeeInput
+  SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.SupplierDeliveryNoteFollowUpCreateNestedManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput
+  Target?: Prisma.TargetCreateNestedManyWithoutEmployeeInput
+  Target_Target_deletedByToEmployee?: Prisma.TargetCreateNestedManyWithoutEmployee_Target_deletedByToEmployeeInput
+  TargetType?: Prisma.TargetTypeCreateNestedManyWithoutEmployeeInput
+  TargetType_TargetType_deletedByToEmployee?: Prisma.TargetTypeCreateNestedManyWithoutEmployee_TargetType_deletedByToEmployeeInput
+  TestProcedure?: Prisma.TestProcedureCreateNestedManyWithoutEmployeeInput
+  TestProcedure_TestProcedure_deletedByToEmployee?: Prisma.TestProcedureCreateNestedManyWithoutEmployee_TestProcedure_deletedByToEmployeeInput
+  TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutEmployeeInput
+  TimeRegistry_TimeRegistry_deletedByToEmployee?: Prisma.TimeRegistryCreateNestedManyWithoutEmployee_TimeRegistry_deletedByToEmployeeInput
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeCreateNestedManyWithoutEmployeeInput
+  Title_Title_createdByToEmployee?: Prisma.TitleCreateNestedManyWithoutEmployee_Title_createdByToEmployeeInput
+  Title_Title_deletedByToEmployee?: Prisma.TitleCreateNestedManyWithoutEmployee_Title_deletedByToEmployeeInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutEmployeeInput
+  Training_Training_deletedByToEmployee?: Prisma.TrainingCreateNestedManyWithoutEmployee_Training_deletedByToEmployeeInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutEmployeeInput
+  TrainingContact_TrainingContact_deletedByToEmployee?: Prisma.TrainingContactCreateNestedManyWithoutEmployee_TrainingContact_deletedByToEmployeeInput
+  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutEmployeeInput
+  TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutEmployeeInput
+  TrainingStandard_TrainingStandard_deletedByToEmployee?: Prisma.TrainingStandardCreateNestedManyWithoutEmployee_TrainingStandard_deletedByToEmployeeInput
+  Unit?: Prisma.UnitCreateNestedManyWithoutEmployeeInput
+  Unit_Unit_deletedByToEmployee?: Prisma.UnitCreateNestedManyWithoutEmployee_Unit_deletedByToEmployeeInput
+  UrgencyType?: Prisma.UrgencyTypeCreateNestedManyWithoutEmployeeInput
+  UrgencyType_UrgencyType_deletedByToEmployee?: Prisma.UrgencyTypeCreateNestedManyWithoutEmployee_UrgencyType_deletedByToEmployeeInput
+  VatMargin_VatMargin_createdByToEmployee?: Prisma.VatMarginCreateNestedManyWithoutEmployee_VatMargin_createdByToEmployeeInput
+  VatMargin_VatMargin_deletedByToEmployee?: Prisma.VatMarginCreateNestedManyWithoutEmployee_VatMargin_deletedByToEmployeeInput
+  WarehousePlace?: Prisma.WarehousePlaceCreateNestedManyWithoutEmployeeInput
+  WarehousePlace_WarehousePlace_deletedByToEmployee?: Prisma.WarehousePlaceCreateNestedManyWithoutEmployee_WarehousePlace_deletedByToEmployeeInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutEmployeeInput
+  WorkOrder_WorkOrder_deletedByToEmployee?: Prisma.WorkOrderCreateNestedManyWithoutEmployee_WorkOrder_deletedByToEmployeeInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutEmployeeInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutEmployeeInput
+  WorkOrderStructure_WorkOrderStructure_deletedByToEmployee?: Prisma.WorkOrderStructureCreateNestedManyWithoutEmployee_WorkOrderStructure_deletedByToEmployeeInput
+}
+
+export type EmployeeUncheckedCreateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput = {
+  id: string
+  firstName: string
+  lastName: string
+  mail?: string | null
+  password_hash: string
+  phoneNumber?: string | null
+  startDate: Date | string
+  endDate?: Date | string | null
+  info?: string | null
+  birthDate?: Date | string | null
+  street?: string | null
+  houseNumber?: string | null
+  busNumber?: string | null
+  zipCode?: string | null
+  place?: string | null
+  username: string
+  createdAt: Date | string
+  permanentEmployee?: boolean
+  checkInfo?: boolean
+  newYearCard?: boolean
+  active?: boolean
+  passwordCreatedAt: Date | string
+  createdBy?: string | null
+  titleId?: string | null
+  pictureId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput
+  Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
+  Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployee_Certificate_deletedByToEmployeeInput
+  CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployee_CertificateType_deletedByToEmployeeInput
+  Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
+  Company_Company_deletedByToEmployee?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployee_Company_deletedByToEmployeeInput
+  CompanyAddress_CompanyAddress_createdByToEmployee?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutEmployee_CompanyAddress_createdByToEmployeeInput
+  CompanyAddress_CompanyAddress_deletedByToEmployee?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutEmployee_CompanyAddress_deletedByToEmployeeInput
+  CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutEmployeeInput
+  CompanyContact_CompanyContact_deletedByToEmployee?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutEmployee_CompanyContact_deletedByToEmployeeInput
+  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutEmployeeInput
+  Contact_Contact_deletedByToEmployee?: Prisma.ContactUncheckedCreateNestedManyWithoutEmployee_Contact_deletedByToEmployeeInput
+  Country_Country_deletedByToEmployee?: Prisma.CountryUncheckedCreateNestedManyWithoutEmployee_Country_deletedByToEmployeeInput
+  Country_Country_createdByToEmployee?: Prisma.CountryUncheckedCreateNestedManyWithoutEmployee_Country_createdByToEmployeeInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutEmployeeInput
+  DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutEmployee_DeliveryNoteSupplier_deletedByToEmployeeInput
+  Department_Department_deletedByToEmployee?: Prisma.DepartmentUncheckedCreateNestedManyWithoutEmployee_Department_deletedByToEmployeeInput
+  Department_Department_createdByToEmployee?: Prisma.DepartmentUncheckedCreateNestedManyWithoutEmployee_Department_createdByToEmployeeInput
+  DepartmentExtern_DepartmentExtern_deletedByToEmployee?: Prisma.DepartmentExternUncheckedCreateNestedManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput
+  DepartmentExtern_DepartmentExtern_createdByToEmployee?: Prisma.DepartmentExternUncheckedCreateNestedManyWithoutEmployee_DepartmentExtern_createdByToEmployeeInput
+  DocumentGroupA_DocumentGroupA_deletedByToEmployee?: Prisma.DocumentGroupAUncheckedCreateNestedManyWithoutEmployee_DocumentGroupA_deletedByToEmployeeInput
+  DocumentGroupA_DocumentGroupA_createdByToEmployee?: Prisma.DocumentGroupAUncheckedCreateNestedManyWithoutEmployee_DocumentGroupA_createdByToEmployeeInput
+  DocumentGroupB_DocumentGroupB_deletedByToEmployee?: Prisma.DocumentGroupBUncheckedCreateNestedManyWithoutEmployee_DocumentGroupB_deletedByToEmployeeInput
+  DocumentGroupB_DocumentGroupB_createdByToEmployee?: Prisma.DocumentGroupBUncheckedCreateNestedManyWithoutEmployee_DocumentGroupB_createdByToEmployeeInput
+  DocumentGroupC_DocumentGroupC_deletedByToEmployee?: Prisma.DocumentGroupCUncheckedCreateNestedManyWithoutEmployee_DocumentGroupC_deletedByToEmployeeInput
+  DocumentGroupC_DocumentGroupC_createdByToEmployee?: Prisma.DocumentGroupCUncheckedCreateNestedManyWithoutEmployee_DocumentGroupC_createdByToEmployeeInput
+  DocumentGroupD_DocumentGroupD_deletedByToEmployee?: Prisma.DocumentGroupDUncheckedCreateNestedManyWithoutEmployee_DocumentGroupD_deletedByToEmployeeInput
+  DocumentGroupD_DocumentGroupD_createdByToEmployee?: Prisma.DocumentGroupDUncheckedCreateNestedManyWithoutEmployee_DocumentGroupD_createdByToEmployeeInput
+  DocumentPlace?: Prisma.DocumentPlaceUncheckedCreateNestedManyWithoutEmployeeInput
+  DocumentPlace_DocumentPlace_createdByToEmployee?: Prisma.DocumentPlaceUncheckedCreateNestedManyWithoutEmployee_DocumentPlace_createdByToEmployeeInput
+  DocumentRevision_DocumentRevision_deletedByToEmployee?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutEmployee_DocumentRevision_deletedByToEmployeeInput
+  DocumentRevision_DocumentRevision_createdByToEmployee?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutEmployee_DocumentRevision_createdByToEmployeeInput
+  DocumentStatus_DocumentStatus_deletedByToEmployee?: Prisma.DocumentStatusUncheckedCreateNestedManyWithoutEmployee_DocumentStatus_deletedByToEmployeeInput
+  DocumentStatus_DocumentStatus_createdByToEmployee?: Prisma.DocumentStatusUncheckedCreateNestedManyWithoutEmployee_DocumentStatus_createdByToEmployeeInput
+  DocumentStructure_DocumentStructure_createdByToEmployee?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutEmployee_DocumentStructure_createdByToEmployeeInput
+  DocumentStructure_DocumentStructure_deletedByToEmployee?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutEmployee_DocumentStructure_deletedByToEmployeeInput
+  DocumentStructure_DocumentStructure_managedByIdToEmployee?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutEmployee_DocumentStructure_managedByIdToEmployeeInput
+  DocumentStructure_DocumentStructure_revisedByIdToEmployee?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutEmployee_DocumentStructure_revisedByIdToEmployeeInput
+  EmergencyContact?: Prisma.EmergencyContactUncheckedCreateNestedManyWithoutEmployeeInput
+  other_Employee?: Prisma.EmployeeUncheckedCreateNestedManyWithoutEmployeeInput
+  other_Employee_Employee_deletedByToEmployee?: Prisma.EmployeeUncheckedCreateNestedManyWithoutEmployee_Employee_deletedByToEmployeeInput
+  FollowUp_FollowUp_ownedByToEmployee?: Prisma.FollowUpUncheckedCreateNestedManyWithoutEmployee_FollowUp_ownedByToEmployeeInput
+  FollowUp_FollowUp_executedByToEmployee?: Prisma.FollowUpUncheckedCreateNestedManyWithoutEmployee_FollowUp_executedByToEmployeeInput
+  FollowUp_FollowUp_createdByToEmployee?: Prisma.FollowUpUncheckedCreateNestedManyWithoutEmployee_FollowUp_createdByToEmployeeInput
+  FollowUp_FollowUp_deletedByToEmployee?: Prisma.FollowUpUncheckedCreateNestedManyWithoutEmployee_FollowUp_deletedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_deletedByToEmployee?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutEmployee_FollowUpStructure_deletedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_ownedByToEmployee?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutEmployee_FollowUpStructure_ownedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_executedByToEmployee?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutEmployee_FollowUpStructure_executedByToEmployeeInput
+  FollowUpStructure_FollowUpStructure_taskForToEmployee?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutEmployee_FollowUpStructure_taskForToEmployeeInput
+  FollowUpStructure_FollowUpStructure_createdByToEmployee?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutEmployee_FollowUpStructure_createdByToEmployeeInput
+  FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutEmployeeInput
+  FollowUpType?: Prisma.FollowUpTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  FollowUpType_FollowUpType_deletedByToEmployee?: Prisma.FollowUpTypeUncheckedCreateNestedManyWithoutEmployee_FollowUpType_deletedByToEmployeeInput
+  Function_Function_createdByToEmployee?: Prisma.FunctionUncheckedCreateNestedManyWithoutEmployee_Function_createdByToEmployeeInput
+  Function_Function_deletedByToEmployee?: Prisma.FunctionUncheckedCreateNestedManyWithoutEmployee_Function_deletedByToEmployeeInput
+  HourType?: Prisma.HourTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  HourType_HourType_deletedByToEmployee?: Prisma.HourTypeUncheckedCreateNestedManyWithoutEmployee_HourType_deletedByToEmployeeInput
+  Inventory?: Prisma.InventoryUncheckedCreateNestedManyWithoutEmployeeInput
+  Inventory_Inventory_deletedByToEmployee?: Prisma.InventoryUncheckedCreateNestedManyWithoutEmployee_Inventory_deletedByToEmployeeInput
+  InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutEmployeeInput
+  InventoryChange_InventoryChange_deletedByToEmployee?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutEmployee_InventoryChange_deletedByToEmployeeInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutEmployeeInput
+  InventoryOrder_InventoryOrder_deletedByToEmployee?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutEmployee_InventoryOrder_deletedByToEmployeeInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutEmployeeInput
+  InventoryStructure_InventoryStructure_deletedByToEmployee?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutEmployee_InventoryStructure_deletedByToEmployeeInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutEmployeeInput
+  InvoiceIn_InvoiceIn_deletedByToEmployee?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutEmployee_InvoiceIn_deletedByToEmployeeInput
+  InvoiceIn_InvoiceIn_modifiedByToEmployee?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutEmployee_InvoiceIn_modifiedByToEmployeeInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutEmployeeInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutEmployeeInput
+  InvoiceOut_InvoiceOut_deletedByToEmployee?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutEmployee_InvoiceOut_deletedByToEmployeeInput
+  InvoiceOut_InvoiceOut_modifiedByToEmployee?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutEmployee_InvoiceOut_modifiedByToEmployeeInput
+  InvoiceSentType_InvoiceSentType_createdByToEmployee?: Prisma.InvoiceSentTypeUncheckedCreateNestedManyWithoutEmployee_InvoiceSentType_createdByToEmployeeInput
+  InvoiceSentType_InvoiceSentType_deletedByToEmployee?: Prisma.InvoiceSentTypeUncheckedCreateNestedManyWithoutEmployee_InvoiceSentType_deletedByToEmployeeInput
+  InvoiceStatus_InvoiceStatus_createdByToEmployee?: Prisma.InvoiceStatusUncheckedCreateNestedManyWithoutEmployee_InvoiceStatus_createdByToEmployeeInput
+  InvoiceStatus_InvoiceStatus_deletedByToEmployee?: Prisma.InvoiceStatusUncheckedCreateNestedManyWithoutEmployee_InvoiceStatus_deletedByToEmployeeInput
+  InvoiceType?: Prisma.InvoiceTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  InvoiceType_InvoiceType_deletedByToEmployee?: Prisma.InvoiceTypeUncheckedCreateNestedManyWithoutEmployee_InvoiceType_deletedByToEmployeeInput
+  Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutEmployeeInput
+  Material_Material_deletedByToEmployee?: Prisma.MaterialUncheckedCreateNestedManyWithoutEmployee_Material_deletedByToEmployeeInput
+  MaterialAssembly?: Prisma.MaterialAssemblyUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialAssembly_MaterialAssembly_deletedByToEmployee?: Prisma.MaterialAssemblyUncheckedCreateNestedManyWithoutEmployee_MaterialAssembly_deletedByToEmployeeInput
+  MaterialCode?: Prisma.MaterialCodeUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialCode_MaterialCode_deletedByToEmployee?: Prisma.MaterialCodeUncheckedCreateNestedManyWithoutEmployee_MaterialCode_deletedByToEmployeeInput
+  MaterialDimension?: Prisma.MaterialDimensionUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialDimension_MaterialDimension_deletedByToEmployee?: Prisma.MaterialDimensionUncheckedCreateNestedManyWithoutEmployee_MaterialDimension_deletedByToEmployeeInput
+  MaterialFamily?: Prisma.MaterialFamilyUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialFamily_MaterialFamily_deletedByToEmployee?: Prisma.MaterialFamilyUncheckedCreateNestedManyWithoutEmployee_MaterialFamily_deletedByToEmployeeInput
+  MaterialGroup?: Prisma.MaterialGroupUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialMovement_MaterialMovement_deletedByToEmployee?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutEmployee_MaterialMovement_deletedByToEmployeeInput
+  MaterialOther?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialOther_MaterialOther_deletedByToEmployee?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutEmployee_MaterialOther_deletedByToEmployeeInput
+  MaterialPerformance?: Prisma.MaterialPerformanceUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialPerformance_MaterialPerformance_deletedByToEmployee?: Prisma.MaterialPerformanceUncheckedCreateNestedManyWithoutEmployee_MaterialPerformance_deletedByToEmployeeInput
+  MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialPrice_MaterialPrice_deletedByToEmployee?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutEmployee_MaterialPrice_deletedByToEmployeeInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeInput
+  MaterialSpec?: Prisma.MaterialSpecUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialSpec_MaterialSpec_deletedByToEmployee?: Prisma.MaterialSpecUncheckedCreateNestedManyWithoutEmployee_MaterialSpec_deletedByToEmployeeInput
+  MaterialStructure?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutEmployeeInput
+  MaterialStructure_MaterialStructure_deletedByToEmployee?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutEmployee_MaterialStructure_deletedByToEmployeeInput
+  Part?: Prisma.PartUncheckedCreateNestedManyWithoutEmployeeInput
+  Part_Part_deletedByToEmployee?: Prisma.PartUncheckedCreateNestedManyWithoutEmployee_Part_deletedByToEmployeeInput
+  PaymentMethod_PaymentMethod_createdByToEmployee?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutEmployee_PaymentMethod_createdByToEmployeeInput
+  PaymentMethod_PaymentMethod_deletedByToEmployee?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutEmployee_PaymentMethod_deletedByToEmployeeInput
+  Phantom?: Prisma.PhantomUncheckedCreateNestedManyWithoutEmployeeInput
+  Phantom_Phantom_deletedByToEmployee?: Prisma.PhantomUncheckedCreateNestedManyWithoutEmployee_Phantom_deletedByToEmployeeInput
+  PriceList_PriceList_createdByToEmployee?: Prisma.PriceListUncheckedCreateNestedManyWithoutEmployee_PriceList_createdByToEmployeeInput
+  PriceList_PriceList_deletedByToEmployee?: Prisma.PriceListUncheckedCreateNestedManyWithoutEmployee_PriceList_deletedByToEmployeeInput
+  PriceListItem_PriceListItem_createdByToEmployee?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutEmployee_PriceListItem_createdByToEmployeeInput
+  PriceListItem_PriceListItem_deletedByToEmployee?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutEmployee_PriceListItem_deletedByToEmployeeInput
+  Product?: Prisma.ProductUncheckedCreateNestedManyWithoutEmployeeInput
+  Product_Product_deletedByToEmployee?: Prisma.ProductUncheckedCreateNestedManyWithoutEmployee_Product_deletedByToEmployeeInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutEmployeeInput
+  Project_Project_deletedByToEmployee?: Prisma.ProjectUncheckedCreateNestedManyWithoutEmployee_Project_deletedByToEmployeeInput
+  ProjectBOM_ProjectBOM_createdByToEmployee?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutEmployee_ProjectBOM_createdByToEmployeeInput
+  ProjectBOM_ProjectBOM_deletedByToEmployee?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutEmployee_ProjectBOM_deletedByToEmployeeInput
+  ProjectBOMStructure_ProjectBOMStructure_createdByToEmployee?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutEmployee_ProjectBOMStructure_createdByToEmployeeInput
+  ProjectBOMStructure_ProjectBOMStructure_deletedByToEmployee?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutEmployee_ProjectBOMStructure_deletedByToEmployeeInput
+  ProjectContact_ProjectContact_createdByToEmployee?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutEmployee_ProjectContact_createdByToEmployeeInput
+  ProjectContact_ProjectContact_modifiedByToEmployee?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutEmployee_ProjectContact_modifiedByToEmployeeInput
+  ProjectContact_ProjectContact_deletedByToEmployee?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutEmployee_ProjectContact_deletedByToEmployeeInput
+  ProjectType?: Prisma.ProjectTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  ProjectType_ProjectType_deletedByToEmployee?: Prisma.ProjectTypeUncheckedCreateNestedManyWithoutEmployee_ProjectType_deletedByToEmployeeInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutEmployeeInput
+  Purchase_Purchase_deletedByToEmployee?: Prisma.PurchaseUncheckedCreateNestedManyWithoutEmployee_Purchase_deletedByToEmployeeInput
+  PurchaseBOM_PurchaseBOM_createdByToEmployee?: Prisma.PurchaseBOMUncheckedCreateNestedManyWithoutEmployee_PurchaseBOM_createdByToEmployeeInput
+  PurchaseBOM_PurchaseBOM_deletedByToEmployee?: Prisma.PurchaseBOMUncheckedCreateNestedManyWithoutEmployee_PurchaseBOM_deletedByToEmployeeInput
+  PurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployee?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeInput
+  PurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployee?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutEmployee_PurchaseBOMStructure_deletedByToEmployeeInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutEmployeeInput
+  PurchaseDetail_PurchaseDetail_deletedByToEmployee?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutEmployee_PurchaseDetail_deletedByToEmployeeInput
+  PurchaseOrderBecra?: Prisma.PurchaseOrderBecraUncheckedCreateNestedManyWithoutEmployeeInput
+  PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee?: Prisma.PurchaseOrderBecraUncheckedCreateNestedManyWithoutEmployee_PurchaseOrderBecra_deletedByToEmployeeInput
+  QuoteBecra_QuoteBecra_createdByToEmployee?: Prisma.QuoteBecraUncheckedCreateNestedManyWithoutEmployee_QuoteBecra_createdByToEmployeeInput
+  QuoteBecra_QuoteBecra_deletedByToEmployee?: Prisma.QuoteBecraUncheckedCreateNestedManyWithoutEmployee_QuoteBecra_deletedByToEmployeeInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutEmployeeInput
+  QuoteSupplier_QuoteSupplier_deletedByToEmployee?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutEmployee_QuoteSupplier_deletedByToEmployeeInput
+  Role_Role_createdByToEmployee?: Prisma.RoleUncheckedCreateNestedManyWithoutEmployee_Role_createdByToEmployeeInput
+  Role_Role_deletedByToEmployee?: Prisma.RoleUncheckedCreateNestedManyWithoutEmployee_Role_deletedByToEmployeeInput
+  RoleLevel_RoleLevel_createdByToEmployee?: Prisma.RoleLevelUncheckedCreateNestedManyWithoutEmployee_RoleLevel_createdByToEmployeeInput
+  RoleLevel_RoleLevel_deletedByToEmployee?: Prisma.RoleLevelUncheckedCreateNestedManyWithoutEmployee_RoleLevel_deletedByToEmployeeInput
+  RoleLevelEmployee?: Prisma.RoleLevelEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
+  Session?: Prisma.SessionUncheckedCreateNestedManyWithoutEmployeeInput
+  Status?: Prisma.StatusUncheckedCreateNestedManyWithoutEmployeeInput
+  Status_Status_deletedByToEmployee?: Prisma.StatusUncheckedCreateNestedManyWithoutEmployee_Status_deletedByToEmployeeInput
+  SubRole_SubRole_createdByToEmployee?: Prisma.SubRoleUncheckedCreateNestedManyWithoutEmployee_SubRole_createdByToEmployeeInput
+  SubRole_SubRole_deletedByToEmployee?: Prisma.SubRoleUncheckedCreateNestedManyWithoutEmployee_SubRole_deletedByToEmployeeInput
+  SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutEmployeeInput
+  SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput
+  Target?: Prisma.TargetUncheckedCreateNestedManyWithoutEmployeeInput
+  Target_Target_deletedByToEmployee?: Prisma.TargetUncheckedCreateNestedManyWithoutEmployee_Target_deletedByToEmployeeInput
+  TargetType?: Prisma.TargetTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  TargetType_TargetType_deletedByToEmployee?: Prisma.TargetTypeUncheckedCreateNestedManyWithoutEmployee_TargetType_deletedByToEmployeeInput
+  TestProcedure?: Prisma.TestProcedureUncheckedCreateNestedManyWithoutEmployeeInput
+  TestProcedure_TestProcedure_deletedByToEmployee?: Prisma.TestProcedureUncheckedCreateNestedManyWithoutEmployee_TestProcedure_deletedByToEmployeeInput
+  TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutEmployeeInput
+  TimeRegistry_TimeRegistry_deletedByToEmployee?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutEmployee_TimeRegistry_deletedByToEmployeeInput
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
+  Title_Title_createdByToEmployee?: Prisma.TitleUncheckedCreateNestedManyWithoutEmployee_Title_createdByToEmployeeInput
+  Title_Title_deletedByToEmployee?: Prisma.TitleUncheckedCreateNestedManyWithoutEmployee_Title_deletedByToEmployeeInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutEmployeeInput
+  Training_Training_deletedByToEmployee?: Prisma.TrainingUncheckedCreateNestedManyWithoutEmployee_Training_deletedByToEmployeeInput
+  TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutEmployeeInput
+  TrainingContact_TrainingContact_deletedByToEmployee?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutEmployee_TrainingContact_deletedByToEmployeeInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutEmployeeInput
+  TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutEmployeeInput
+  TrainingStandard_TrainingStandard_deletedByToEmployee?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutEmployee_TrainingStandard_deletedByToEmployeeInput
+  Unit?: Prisma.UnitUncheckedCreateNestedManyWithoutEmployeeInput
+  Unit_Unit_deletedByToEmployee?: Prisma.UnitUncheckedCreateNestedManyWithoutEmployee_Unit_deletedByToEmployeeInput
+  UrgencyType?: Prisma.UrgencyTypeUncheckedCreateNestedManyWithoutEmployeeInput
+  UrgencyType_UrgencyType_deletedByToEmployee?: Prisma.UrgencyTypeUncheckedCreateNestedManyWithoutEmployee_UrgencyType_deletedByToEmployeeInput
+  VatMargin_VatMargin_createdByToEmployee?: Prisma.VatMarginUncheckedCreateNestedManyWithoutEmployee_VatMargin_createdByToEmployeeInput
+  VatMargin_VatMargin_deletedByToEmployee?: Prisma.VatMarginUncheckedCreateNestedManyWithoutEmployee_VatMargin_deletedByToEmployeeInput
+  WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutEmployeeInput
+  WarehousePlace_WarehousePlace_deletedByToEmployee?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutEmployee_WarehousePlace_deletedByToEmployeeInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutEmployeeInput
+  WorkOrder_WorkOrder_deletedByToEmployee?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutEmployee_WorkOrder_deletedByToEmployeeInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedCreateNestedManyWithoutEmployeeInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutEmployeeInput
+  WorkOrderStructure_WorkOrderStructure_deletedByToEmployee?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutEmployee_WorkOrderStructure_deletedByToEmployeeInput
+}
+
+export type EmployeeCreateOrConnectWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput = {
+  where: Prisma.EmployeeWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput, Prisma.EmployeeUncheckedCreateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput>
+}
+
+export type EmployeeUpsertWithoutBOMExecution_BOMExecution_createdByToEmployeeInput = {
+  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput, Prisma.EmployeeUncheckedUpdateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput>
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput, Prisma.EmployeeUncheckedCreateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput>
+  where?: Prisma.EmployeeWhereInput
+}
+
+export type EmployeeUpdateToOneWithWhereWithoutBOMExecution_BOMExecution_createdByToEmployeeInput = {
+  where?: Prisma.EmployeeWhereInput
+  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput, Prisma.EmployeeUncheckedUpdateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput>
+}
+
+export type EmployeeUpdateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
+  Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
+  Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
+  CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
+  CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUpdateManyWithoutEmployee_CertificateType_deletedByToEmployeeNestedInput
+  Company?: Prisma.CompanyUpdateManyWithoutEmployeeNestedInput
+  Company_Company_deletedByToEmployee?: Prisma.CompanyUpdateManyWithoutEmployee_Company_deletedByToEmployeeNestedInput
+  CompanyAddress_CompanyAddress_createdByToEmployee?: Prisma.CompanyAddressUpdateManyWithoutEmployee_CompanyAddress_createdByToEmployeeNestedInput
+  CompanyAddress_CompanyAddress_deletedByToEmployee?: Prisma.CompanyAddressUpdateManyWithoutEmployee_CompanyAddress_deletedByToEmployeeNestedInput
+  CompanyContact?: Prisma.CompanyContactUpdateManyWithoutEmployeeNestedInput
+  CompanyContact_CompanyContact_deletedByToEmployee?: Prisma.CompanyContactUpdateManyWithoutEmployee_CompanyContact_deletedByToEmployeeNestedInput
+  Contact?: Prisma.ContactUpdateManyWithoutEmployeeNestedInput
+  Contact_Contact_deletedByToEmployee?: Prisma.ContactUpdateManyWithoutEmployee_Contact_deletedByToEmployeeNestedInput
+  Country_Country_deletedByToEmployee?: Prisma.CountryUpdateManyWithoutEmployee_Country_deletedByToEmployeeNestedInput
+  Country_Country_createdByToEmployee?: Prisma.CountryUpdateManyWithoutEmployee_Country_createdByToEmployeeNestedInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutEmployeeNestedInput
+  DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee?: Prisma.DeliveryNoteSupplierUpdateManyWithoutEmployee_DeliveryNoteSupplier_deletedByToEmployeeNestedInput
+  Department_Department_deletedByToEmployee?: Prisma.DepartmentUpdateManyWithoutEmployee_Department_deletedByToEmployeeNestedInput
+  Department_Department_createdByToEmployee?: Prisma.DepartmentUpdateManyWithoutEmployee_Department_createdByToEmployeeNestedInput
+  DepartmentExtern_DepartmentExtern_deletedByToEmployee?: Prisma.DepartmentExternUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeNestedInput
+  DepartmentExtern_DepartmentExtern_createdByToEmployee?: Prisma.DepartmentExternUpdateManyWithoutEmployee_DepartmentExtern_createdByToEmployeeNestedInput
+  DocumentGroupA_DocumentGroupA_deletedByToEmployee?: Prisma.DocumentGroupAUpdateManyWithoutEmployee_DocumentGroupA_deletedByToEmployeeNestedInput
+  DocumentGroupA_DocumentGroupA_createdByToEmployee?: Prisma.DocumentGroupAUpdateManyWithoutEmployee_DocumentGroupA_createdByToEmployeeNestedInput
+  DocumentGroupB_DocumentGroupB_deletedByToEmployee?: Prisma.DocumentGroupBUpdateManyWithoutEmployee_DocumentGroupB_deletedByToEmployeeNestedInput
+  DocumentGroupB_DocumentGroupB_createdByToEmployee?: Prisma.DocumentGroupBUpdateManyWithoutEmployee_DocumentGroupB_createdByToEmployeeNestedInput
+  DocumentGroupC_DocumentGroupC_deletedByToEmployee?: Prisma.DocumentGroupCUpdateManyWithoutEmployee_DocumentGroupC_deletedByToEmployeeNestedInput
+  DocumentGroupC_DocumentGroupC_createdByToEmployee?: Prisma.DocumentGroupCUpdateManyWithoutEmployee_DocumentGroupC_createdByToEmployeeNestedInput
+  DocumentGroupD_DocumentGroupD_deletedByToEmployee?: Prisma.DocumentGroupDUpdateManyWithoutEmployee_DocumentGroupD_deletedByToEmployeeNestedInput
+  DocumentGroupD_DocumentGroupD_createdByToEmployee?: Prisma.DocumentGroupDUpdateManyWithoutEmployee_DocumentGroupD_createdByToEmployeeNestedInput
+  DocumentPlace?: Prisma.DocumentPlaceUpdateManyWithoutEmployeeNestedInput
+  DocumentPlace_DocumentPlace_createdByToEmployee?: Prisma.DocumentPlaceUpdateManyWithoutEmployee_DocumentPlace_createdByToEmployeeNestedInput
+  DocumentRevision_DocumentRevision_deletedByToEmployee?: Prisma.DocumentRevisionUpdateManyWithoutEmployee_DocumentRevision_deletedByToEmployeeNestedInput
+  DocumentRevision_DocumentRevision_createdByToEmployee?: Prisma.DocumentRevisionUpdateManyWithoutEmployee_DocumentRevision_createdByToEmployeeNestedInput
+  DocumentStatus_DocumentStatus_deletedByToEmployee?: Prisma.DocumentStatusUpdateManyWithoutEmployee_DocumentStatus_deletedByToEmployeeNestedInput
+  DocumentStatus_DocumentStatus_createdByToEmployee?: Prisma.DocumentStatusUpdateManyWithoutEmployee_DocumentStatus_createdByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_createdByToEmployee?: Prisma.DocumentStructureUpdateManyWithoutEmployee_DocumentStructure_createdByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_deletedByToEmployee?: Prisma.DocumentStructureUpdateManyWithoutEmployee_DocumentStructure_deletedByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_managedByIdToEmployee?: Prisma.DocumentStructureUpdateManyWithoutEmployee_DocumentStructure_managedByIdToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_revisedByIdToEmployee?: Prisma.DocumentStructureUpdateManyWithoutEmployee_DocumentStructure_revisedByIdToEmployeeNestedInput
+  EmergencyContact?: Prisma.EmergencyContactUpdateManyWithoutEmployeeNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutOther_EmployeeNestedInput
+  other_Employee?: Prisma.EmployeeUpdateManyWithoutEmployeeNestedInput
+  Title_Employee_titleIdToTitle?: Prisma.TitleUpdateOneWithoutEmployee_Employee_titleIdToTitleNestedInput
+  DocumentStructure_Employee_pictureIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutEmployee_Employee_pictureIdToDocumentStructureNestedInput
+  Employee_Employee_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutOther_Employee_Employee_deletedByToEmployeeNestedInput
+  other_Employee_Employee_deletedByToEmployee?: Prisma.EmployeeUpdateManyWithoutEmployee_Employee_deletedByToEmployeeNestedInput
+  FollowUp_FollowUp_ownedByToEmployee?: Prisma.FollowUpUpdateManyWithoutEmployee_FollowUp_ownedByToEmployeeNestedInput
+  FollowUp_FollowUp_executedByToEmployee?: Prisma.FollowUpUpdateManyWithoutEmployee_FollowUp_executedByToEmployeeNestedInput
+  FollowUp_FollowUp_createdByToEmployee?: Prisma.FollowUpUpdateManyWithoutEmployee_FollowUp_createdByToEmployeeNestedInput
+  FollowUp_FollowUp_deletedByToEmployee?: Prisma.FollowUpUpdateManyWithoutEmployee_FollowUp_deletedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_deletedByToEmployee?: Prisma.FollowUpStructureUpdateManyWithoutEmployee_FollowUpStructure_deletedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_ownedByToEmployee?: Prisma.FollowUpStructureUpdateManyWithoutEmployee_FollowUpStructure_ownedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_executedByToEmployee?: Prisma.FollowUpStructureUpdateManyWithoutEmployee_FollowUpStructure_executedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_taskForToEmployee?: Prisma.FollowUpStructureUpdateManyWithoutEmployee_FollowUpStructure_taskForToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_createdByToEmployee?: Prisma.FollowUpStructureUpdateManyWithoutEmployee_FollowUpStructure_createdByToEmployeeNestedInput
+  FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutEmployeeNestedInput
+  FollowUpType?: Prisma.FollowUpTypeUpdateManyWithoutEmployeeNestedInput
+  FollowUpType_FollowUpType_deletedByToEmployee?: Prisma.FollowUpTypeUpdateManyWithoutEmployee_FollowUpType_deletedByToEmployeeNestedInput
+  Function_Function_createdByToEmployee?: Prisma.FunctionUpdateManyWithoutEmployee_Function_createdByToEmployeeNestedInput
+  Function_Function_deletedByToEmployee?: Prisma.FunctionUpdateManyWithoutEmployee_Function_deletedByToEmployeeNestedInput
+  HourType?: Prisma.HourTypeUpdateManyWithoutEmployeeNestedInput
+  HourType_HourType_deletedByToEmployee?: Prisma.HourTypeUpdateManyWithoutEmployee_HourType_deletedByToEmployeeNestedInput
+  Inventory?: Prisma.InventoryUpdateManyWithoutEmployeeNestedInput
+  Inventory_Inventory_deletedByToEmployee?: Prisma.InventoryUpdateManyWithoutEmployee_Inventory_deletedByToEmployeeNestedInput
+  InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutEmployeeNestedInput
+  InventoryChange_InventoryChange_deletedByToEmployee?: Prisma.InventoryChangeUpdateManyWithoutEmployee_InventoryChange_deletedByToEmployeeNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutEmployeeNestedInput
+  InventoryOrder_InventoryOrder_deletedByToEmployee?: Prisma.InventoryOrderUpdateManyWithoutEmployee_InventoryOrder_deletedByToEmployeeNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutEmployeeNestedInput
+  InventoryStructure_InventoryStructure_deletedByToEmployee?: Prisma.InventoryStructureUpdateManyWithoutEmployee_InventoryStructure_deletedByToEmployeeNestedInput
+  InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutEmployeeNestedInput
+  InvoiceIn_InvoiceIn_deletedByToEmployee?: Prisma.InvoiceInUpdateManyWithoutEmployee_InvoiceIn_deletedByToEmployeeNestedInput
+  InvoiceIn_InvoiceIn_modifiedByToEmployee?: Prisma.InvoiceInUpdateManyWithoutEmployee_InvoiceIn_modifiedByToEmployeeNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutEmployeeNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutEmployeeNestedInput
+  InvoiceOut_InvoiceOut_deletedByToEmployee?: Prisma.InvoiceOutUpdateManyWithoutEmployee_InvoiceOut_deletedByToEmployeeNestedInput
+  InvoiceOut_InvoiceOut_modifiedByToEmployee?: Prisma.InvoiceOutUpdateManyWithoutEmployee_InvoiceOut_modifiedByToEmployeeNestedInput
+  InvoiceSentType_InvoiceSentType_createdByToEmployee?: Prisma.InvoiceSentTypeUpdateManyWithoutEmployee_InvoiceSentType_createdByToEmployeeNestedInput
+  InvoiceSentType_InvoiceSentType_deletedByToEmployee?: Prisma.InvoiceSentTypeUpdateManyWithoutEmployee_InvoiceSentType_deletedByToEmployeeNestedInput
+  InvoiceStatus_InvoiceStatus_createdByToEmployee?: Prisma.InvoiceStatusUpdateManyWithoutEmployee_InvoiceStatus_createdByToEmployeeNestedInput
+  InvoiceStatus_InvoiceStatus_deletedByToEmployee?: Prisma.InvoiceStatusUpdateManyWithoutEmployee_InvoiceStatus_deletedByToEmployeeNestedInput
+  InvoiceType?: Prisma.InvoiceTypeUpdateManyWithoutEmployeeNestedInput
+  InvoiceType_InvoiceType_deletedByToEmployee?: Prisma.InvoiceTypeUpdateManyWithoutEmployee_InvoiceType_deletedByToEmployeeNestedInput
+  Material?: Prisma.MaterialUpdateManyWithoutEmployeeNestedInput
+  Material_Material_deletedByToEmployee?: Prisma.MaterialUpdateManyWithoutEmployee_Material_deletedByToEmployeeNestedInput
+  MaterialAssembly?: Prisma.MaterialAssemblyUpdateManyWithoutEmployeeNestedInput
+  MaterialAssembly_MaterialAssembly_deletedByToEmployee?: Prisma.MaterialAssemblyUpdateManyWithoutEmployee_MaterialAssembly_deletedByToEmployeeNestedInput
+  MaterialCode?: Prisma.MaterialCodeUpdateManyWithoutEmployeeNestedInput
+  MaterialCode_MaterialCode_deletedByToEmployee?: Prisma.MaterialCodeUpdateManyWithoutEmployee_MaterialCode_deletedByToEmployeeNestedInput
+  MaterialDimension?: Prisma.MaterialDimensionUpdateManyWithoutEmployeeNestedInput
+  MaterialDimension_MaterialDimension_deletedByToEmployee?: Prisma.MaterialDimensionUpdateManyWithoutEmployee_MaterialDimension_deletedByToEmployeeNestedInput
+  MaterialFamily?: Prisma.MaterialFamilyUpdateManyWithoutEmployeeNestedInput
+  MaterialFamily_MaterialFamily_deletedByToEmployee?: Prisma.MaterialFamilyUpdateManyWithoutEmployee_MaterialFamily_deletedByToEmployeeNestedInput
+  MaterialGroup?: Prisma.MaterialGroupUpdateManyWithoutEmployeeNestedInput
+  MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutEmployeeNestedInput
+  MaterialMovement_MaterialMovement_deletedByToEmployee?: Prisma.MaterialMovementUpdateManyWithoutEmployee_MaterialMovement_deletedByToEmployeeNestedInput
+  MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutEmployeeNestedInput
+  MaterialOther_MaterialOther_deletedByToEmployee?: Prisma.MaterialOtherUpdateManyWithoutEmployee_MaterialOther_deletedByToEmployeeNestedInput
+  MaterialPerformance?: Prisma.MaterialPerformanceUpdateManyWithoutEmployeeNestedInput
+  MaterialPerformance_MaterialPerformance_deletedByToEmployee?: Prisma.MaterialPerformanceUpdateManyWithoutEmployee_MaterialPerformance_deletedByToEmployeeNestedInput
+  MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutEmployeeNestedInput
+  MaterialPrice_MaterialPrice_deletedByToEmployee?: Prisma.MaterialPriceUpdateManyWithoutEmployee_MaterialPrice_deletedByToEmployeeNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutEmployeeNestedInput
+  MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee?: Prisma.MaterialSerialTrackUpdateManyWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutEmployeeNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
+  MaterialSpec?: Prisma.MaterialSpecUpdateManyWithoutEmployeeNestedInput
+  MaterialSpec_MaterialSpec_deletedByToEmployee?: Prisma.MaterialSpecUpdateManyWithoutEmployee_MaterialSpec_deletedByToEmployeeNestedInput
+  MaterialStructure?: Prisma.MaterialStructureUpdateManyWithoutEmployeeNestedInput
+  MaterialStructure_MaterialStructure_deletedByToEmployee?: Prisma.MaterialStructureUpdateManyWithoutEmployee_MaterialStructure_deletedByToEmployeeNestedInput
+  Part?: Prisma.PartUpdateManyWithoutEmployeeNestedInput
+  Part_Part_deletedByToEmployee?: Prisma.PartUpdateManyWithoutEmployee_Part_deletedByToEmployeeNestedInput
+  PaymentMethod_PaymentMethod_createdByToEmployee?: Prisma.PaymentMethodUpdateManyWithoutEmployee_PaymentMethod_createdByToEmployeeNestedInput
+  PaymentMethod_PaymentMethod_deletedByToEmployee?: Prisma.PaymentMethodUpdateManyWithoutEmployee_PaymentMethod_deletedByToEmployeeNestedInput
+  Phantom?: Prisma.PhantomUpdateManyWithoutEmployeeNestedInput
+  Phantom_Phantom_deletedByToEmployee?: Prisma.PhantomUpdateManyWithoutEmployee_Phantom_deletedByToEmployeeNestedInput
+  PriceList_PriceList_createdByToEmployee?: Prisma.PriceListUpdateManyWithoutEmployee_PriceList_createdByToEmployeeNestedInput
+  PriceList_PriceList_deletedByToEmployee?: Prisma.PriceListUpdateManyWithoutEmployee_PriceList_deletedByToEmployeeNestedInput
+  PriceListItem_PriceListItem_createdByToEmployee?: Prisma.PriceListItemUpdateManyWithoutEmployee_PriceListItem_createdByToEmployeeNestedInput
+  PriceListItem_PriceListItem_deletedByToEmployee?: Prisma.PriceListItemUpdateManyWithoutEmployee_PriceListItem_deletedByToEmployeeNestedInput
+  Product?: Prisma.ProductUpdateManyWithoutEmployeeNestedInput
+  Product_Product_deletedByToEmployee?: Prisma.ProductUpdateManyWithoutEmployee_Product_deletedByToEmployeeNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutEmployeeNestedInput
+  Project_Project_deletedByToEmployee?: Prisma.ProjectUpdateManyWithoutEmployee_Project_deletedByToEmployeeNestedInput
+  ProjectBOM_ProjectBOM_createdByToEmployee?: Prisma.ProjectBOMUpdateManyWithoutEmployee_ProjectBOM_createdByToEmployeeNestedInput
+  ProjectBOM_ProjectBOM_deletedByToEmployee?: Prisma.ProjectBOMUpdateManyWithoutEmployee_ProjectBOM_deletedByToEmployeeNestedInput
+  ProjectBOMStructure_ProjectBOMStructure_createdByToEmployee?: Prisma.ProjectBOMStructureUpdateManyWithoutEmployee_ProjectBOMStructure_createdByToEmployeeNestedInput
+  ProjectBOMStructure_ProjectBOMStructure_deletedByToEmployee?: Prisma.ProjectBOMStructureUpdateManyWithoutEmployee_ProjectBOMStructure_deletedByToEmployeeNestedInput
+  ProjectContact_ProjectContact_createdByToEmployee?: Prisma.ProjectContactUpdateManyWithoutEmployee_ProjectContact_createdByToEmployeeNestedInput
+  ProjectContact_ProjectContact_modifiedByToEmployee?: Prisma.ProjectContactUpdateManyWithoutEmployee_ProjectContact_modifiedByToEmployeeNestedInput
+  ProjectContact_ProjectContact_deletedByToEmployee?: Prisma.ProjectContactUpdateManyWithoutEmployee_ProjectContact_deletedByToEmployeeNestedInput
+  ProjectType?: Prisma.ProjectTypeUpdateManyWithoutEmployeeNestedInput
+  ProjectType_ProjectType_deletedByToEmployee?: Prisma.ProjectTypeUpdateManyWithoutEmployee_ProjectType_deletedByToEmployeeNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutEmployeeNestedInput
+  Purchase_Purchase_deletedByToEmployee?: Prisma.PurchaseUpdateManyWithoutEmployee_Purchase_deletedByToEmployeeNestedInput
+  PurchaseBOM_PurchaseBOM_createdByToEmployee?: Prisma.PurchaseBOMUpdateManyWithoutEmployee_PurchaseBOM_createdByToEmployeeNestedInput
+  PurchaseBOM_PurchaseBOM_deletedByToEmployee?: Prisma.PurchaseBOMUpdateManyWithoutEmployee_PurchaseBOM_deletedByToEmployeeNestedInput
+  PurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployee?: Prisma.PurchaseBOMStructureUpdateManyWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeNestedInput
+  PurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployee?: Prisma.PurchaseBOMStructureUpdateManyWithoutEmployee_PurchaseBOMStructure_deletedByToEmployeeNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutEmployeeNestedInput
+  PurchaseDetail_PurchaseDetail_deletedByToEmployee?: Prisma.PurchaseDetailUpdateManyWithoutEmployee_PurchaseDetail_deletedByToEmployeeNestedInput
+  PurchaseOrderBecra?: Prisma.PurchaseOrderBecraUpdateManyWithoutEmployeeNestedInput
+  PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee?: Prisma.PurchaseOrderBecraUpdateManyWithoutEmployee_PurchaseOrderBecra_deletedByToEmployeeNestedInput
+  QuoteBecra_QuoteBecra_createdByToEmployee?: Prisma.QuoteBecraUpdateManyWithoutEmployee_QuoteBecra_createdByToEmployeeNestedInput
+  QuoteBecra_QuoteBecra_deletedByToEmployee?: Prisma.QuoteBecraUpdateManyWithoutEmployee_QuoteBecra_deletedByToEmployeeNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutEmployeeNestedInput
+  QuoteSupplier_QuoteSupplier_deletedByToEmployee?: Prisma.QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_deletedByToEmployeeNestedInput
+  Role_Role_createdByToEmployee?: Prisma.RoleUpdateManyWithoutEmployee_Role_createdByToEmployeeNestedInput
+  Role_Role_deletedByToEmployee?: Prisma.RoleUpdateManyWithoutEmployee_Role_deletedByToEmployeeNestedInput
+  RoleLevel_RoleLevel_createdByToEmployee?: Prisma.RoleLevelUpdateManyWithoutEmployee_RoleLevel_createdByToEmployeeNestedInput
+  RoleLevel_RoleLevel_deletedByToEmployee?: Prisma.RoleLevelUpdateManyWithoutEmployee_RoleLevel_deletedByToEmployeeNestedInput
+  RoleLevelEmployee?: Prisma.RoleLevelEmployeeUpdateManyWithoutEmployeeNestedInput
+  Session?: Prisma.SessionUpdateManyWithoutEmployeeNestedInput
+  Status?: Prisma.StatusUpdateManyWithoutEmployeeNestedInput
+  Status_Status_deletedByToEmployee?: Prisma.StatusUpdateManyWithoutEmployee_Status_deletedByToEmployeeNestedInput
+  SubRole_SubRole_createdByToEmployee?: Prisma.SubRoleUpdateManyWithoutEmployee_SubRole_createdByToEmployeeNestedInput
+  SubRole_SubRole_deletedByToEmployee?: Prisma.SubRoleUpdateManyWithoutEmployee_SubRole_deletedByToEmployeeNestedInput
+  SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUpdateManyWithoutEmployeeNestedInput
+  SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.SupplierDeliveryNoteFollowUpUpdateManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeNestedInput
+  Target?: Prisma.TargetUpdateManyWithoutEmployeeNestedInput
+  Target_Target_deletedByToEmployee?: Prisma.TargetUpdateManyWithoutEmployee_Target_deletedByToEmployeeNestedInput
+  TargetType?: Prisma.TargetTypeUpdateManyWithoutEmployeeNestedInput
+  TargetType_TargetType_deletedByToEmployee?: Prisma.TargetTypeUpdateManyWithoutEmployee_TargetType_deletedByToEmployeeNestedInput
+  TestProcedure?: Prisma.TestProcedureUpdateManyWithoutEmployeeNestedInput
+  TestProcedure_TestProcedure_deletedByToEmployee?: Prisma.TestProcedureUpdateManyWithoutEmployee_TestProcedure_deletedByToEmployeeNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutEmployeeNestedInput
+  TimeRegistry_TimeRegistry_deletedByToEmployee?: Prisma.TimeRegistryUpdateManyWithoutEmployee_TimeRegistry_deletedByToEmployeeNestedInput
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUpdateManyWithoutEmployeeNestedInput
+  Title_Title_createdByToEmployee?: Prisma.TitleUpdateManyWithoutEmployee_Title_createdByToEmployeeNestedInput
+  Title_Title_deletedByToEmployee?: Prisma.TitleUpdateManyWithoutEmployee_Title_deletedByToEmployeeNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutEmployeeNestedInput
+  Training_Training_deletedByToEmployee?: Prisma.TrainingUpdateManyWithoutEmployee_Training_deletedByToEmployeeNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateManyWithoutEmployeeNestedInput
+  TrainingContact_TrainingContact_deletedByToEmployee?: Prisma.TrainingContactUpdateManyWithoutEmployee_TrainingContact_deletedByToEmployeeNestedInput
+  TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutEmployeeNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutEmployeeNestedInput
+  TrainingStandard_TrainingStandard_deletedByToEmployee?: Prisma.TrainingStandardUpdateManyWithoutEmployee_TrainingStandard_deletedByToEmployeeNestedInput
+  Unit?: Prisma.UnitUpdateManyWithoutEmployeeNestedInput
+  Unit_Unit_deletedByToEmployee?: Prisma.UnitUpdateManyWithoutEmployee_Unit_deletedByToEmployeeNestedInput
+  UrgencyType?: Prisma.UrgencyTypeUpdateManyWithoutEmployeeNestedInput
+  UrgencyType_UrgencyType_deletedByToEmployee?: Prisma.UrgencyTypeUpdateManyWithoutEmployee_UrgencyType_deletedByToEmployeeNestedInput
+  VatMargin_VatMargin_createdByToEmployee?: Prisma.VatMarginUpdateManyWithoutEmployee_VatMargin_createdByToEmployeeNestedInput
+  VatMargin_VatMargin_deletedByToEmployee?: Prisma.VatMarginUpdateManyWithoutEmployee_VatMargin_deletedByToEmployeeNestedInput
+  WarehousePlace?: Prisma.WarehousePlaceUpdateManyWithoutEmployeeNestedInput
+  WarehousePlace_WarehousePlace_deletedByToEmployee?: Prisma.WarehousePlaceUpdateManyWithoutEmployee_WarehousePlace_deletedByToEmployeeNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutEmployeeNestedInput
+  WorkOrder_WorkOrder_deletedByToEmployee?: Prisma.WorkOrderUpdateManyWithoutEmployee_WorkOrder_deletedByToEmployeeNestedInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutEmployeeNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutEmployeeNestedInput
+  WorkOrderStructure_WorkOrderStructure_deletedByToEmployee?: Prisma.WorkOrderStructureUpdateManyWithoutEmployee_WorkOrderStructure_deletedByToEmployeeNestedInput
+}
+
+export type EmployeeUncheckedUpdateWithoutBOMExecution_BOMExecution_createdByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
+  Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
+  Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
+  CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployee_CertificateType_deletedByToEmployeeNestedInput
+  Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
+  Company_Company_deletedByToEmployee?: Prisma.CompanyUncheckedUpdateManyWithoutEmployee_Company_deletedByToEmployeeNestedInput
+  CompanyAddress_CompanyAddress_createdByToEmployee?: Prisma.CompanyAddressUncheckedUpdateManyWithoutEmployee_CompanyAddress_createdByToEmployeeNestedInput
+  CompanyAddress_CompanyAddress_deletedByToEmployee?: Prisma.CompanyAddressUncheckedUpdateManyWithoutEmployee_CompanyAddress_deletedByToEmployeeNestedInput
+  CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutEmployeeNestedInput
+  CompanyContact_CompanyContact_deletedByToEmployee?: Prisma.CompanyContactUncheckedUpdateManyWithoutEmployee_CompanyContact_deletedByToEmployeeNestedInput
+  Contact?: Prisma.ContactUncheckedUpdateManyWithoutEmployeeNestedInput
+  Contact_Contact_deletedByToEmployee?: Prisma.ContactUncheckedUpdateManyWithoutEmployee_Contact_deletedByToEmployeeNestedInput
+  Country_Country_deletedByToEmployee?: Prisma.CountryUncheckedUpdateManyWithoutEmployee_Country_deletedByToEmployeeNestedInput
+  Country_Country_createdByToEmployee?: Prisma.CountryUncheckedUpdateManyWithoutEmployee_Country_createdByToEmployeeNestedInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutEmployeeNestedInput
+  DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutEmployee_DeliveryNoteSupplier_deletedByToEmployeeNestedInput
+  Department_Department_deletedByToEmployee?: Prisma.DepartmentUncheckedUpdateManyWithoutEmployee_Department_deletedByToEmployeeNestedInput
+  Department_Department_createdByToEmployee?: Prisma.DepartmentUncheckedUpdateManyWithoutEmployee_Department_createdByToEmployeeNestedInput
+  DepartmentExtern_DepartmentExtern_deletedByToEmployee?: Prisma.DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeNestedInput
+  DepartmentExtern_DepartmentExtern_createdByToEmployee?: Prisma.DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_createdByToEmployeeNestedInput
+  DocumentGroupA_DocumentGroupA_deletedByToEmployee?: Prisma.DocumentGroupAUncheckedUpdateManyWithoutEmployee_DocumentGroupA_deletedByToEmployeeNestedInput
+  DocumentGroupA_DocumentGroupA_createdByToEmployee?: Prisma.DocumentGroupAUncheckedUpdateManyWithoutEmployee_DocumentGroupA_createdByToEmployeeNestedInput
+  DocumentGroupB_DocumentGroupB_deletedByToEmployee?: Prisma.DocumentGroupBUncheckedUpdateManyWithoutEmployee_DocumentGroupB_deletedByToEmployeeNestedInput
+  DocumentGroupB_DocumentGroupB_createdByToEmployee?: Prisma.DocumentGroupBUncheckedUpdateManyWithoutEmployee_DocumentGroupB_createdByToEmployeeNestedInput
+  DocumentGroupC_DocumentGroupC_deletedByToEmployee?: Prisma.DocumentGroupCUncheckedUpdateManyWithoutEmployee_DocumentGroupC_deletedByToEmployeeNestedInput
+  DocumentGroupC_DocumentGroupC_createdByToEmployee?: Prisma.DocumentGroupCUncheckedUpdateManyWithoutEmployee_DocumentGroupC_createdByToEmployeeNestedInput
+  DocumentGroupD_DocumentGroupD_deletedByToEmployee?: Prisma.DocumentGroupDUncheckedUpdateManyWithoutEmployee_DocumentGroupD_deletedByToEmployeeNestedInput
+  DocumentGroupD_DocumentGroupD_createdByToEmployee?: Prisma.DocumentGroupDUncheckedUpdateManyWithoutEmployee_DocumentGroupD_createdByToEmployeeNestedInput
+  DocumentPlace?: Prisma.DocumentPlaceUncheckedUpdateManyWithoutEmployeeNestedInput
+  DocumentPlace_DocumentPlace_createdByToEmployee?: Prisma.DocumentPlaceUncheckedUpdateManyWithoutEmployee_DocumentPlace_createdByToEmployeeNestedInput
+  DocumentRevision_DocumentRevision_deletedByToEmployee?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutEmployee_DocumentRevision_deletedByToEmployeeNestedInput
+  DocumentRevision_DocumentRevision_createdByToEmployee?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutEmployee_DocumentRevision_createdByToEmployeeNestedInput
+  DocumentStatus_DocumentStatus_deletedByToEmployee?: Prisma.DocumentStatusUncheckedUpdateManyWithoutEmployee_DocumentStatus_deletedByToEmployeeNestedInput
+  DocumentStatus_DocumentStatus_createdByToEmployee?: Prisma.DocumentStatusUncheckedUpdateManyWithoutEmployee_DocumentStatus_createdByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_createdByToEmployee?: Prisma.DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_createdByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_deletedByToEmployee?: Prisma.DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_deletedByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_managedByIdToEmployee?: Prisma.DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_managedByIdToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_revisedByIdToEmployee?: Prisma.DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_revisedByIdToEmployeeNestedInput
+  EmergencyContact?: Prisma.EmergencyContactUncheckedUpdateManyWithoutEmployeeNestedInput
+  other_Employee?: Prisma.EmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
+  other_Employee_Employee_deletedByToEmployee?: Prisma.EmployeeUncheckedUpdateManyWithoutEmployee_Employee_deletedByToEmployeeNestedInput
+  FollowUp_FollowUp_ownedByToEmployee?: Prisma.FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_ownedByToEmployeeNestedInput
+  FollowUp_FollowUp_executedByToEmployee?: Prisma.FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_executedByToEmployeeNestedInput
+  FollowUp_FollowUp_createdByToEmployee?: Prisma.FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_createdByToEmployeeNestedInput
+  FollowUp_FollowUp_deletedByToEmployee?: Prisma.FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_deletedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_deletedByToEmployee?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_deletedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_ownedByToEmployee?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_ownedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_executedByToEmployee?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_executedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_taskForToEmployee?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_taskForToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_createdByToEmployee?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_createdByToEmployeeNestedInput
+  FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutEmployeeNestedInput
+  FollowUpType?: Prisma.FollowUpTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  FollowUpType_FollowUpType_deletedByToEmployee?: Prisma.FollowUpTypeUncheckedUpdateManyWithoutEmployee_FollowUpType_deletedByToEmployeeNestedInput
+  Function_Function_createdByToEmployee?: Prisma.FunctionUncheckedUpdateManyWithoutEmployee_Function_createdByToEmployeeNestedInput
+  Function_Function_deletedByToEmployee?: Prisma.FunctionUncheckedUpdateManyWithoutEmployee_Function_deletedByToEmployeeNestedInput
+  HourType?: Prisma.HourTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  HourType_HourType_deletedByToEmployee?: Prisma.HourTypeUncheckedUpdateManyWithoutEmployee_HourType_deletedByToEmployeeNestedInput
+  Inventory?: Prisma.InventoryUncheckedUpdateManyWithoutEmployeeNestedInput
+  Inventory_Inventory_deletedByToEmployee?: Prisma.InventoryUncheckedUpdateManyWithoutEmployee_Inventory_deletedByToEmployeeNestedInput
+  InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutEmployeeNestedInput
+  InventoryChange_InventoryChange_deletedByToEmployee?: Prisma.InventoryChangeUncheckedUpdateManyWithoutEmployee_InventoryChange_deletedByToEmployeeNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutEmployeeNestedInput
+  InventoryOrder_InventoryOrder_deletedByToEmployee?: Prisma.InventoryOrderUncheckedUpdateManyWithoutEmployee_InventoryOrder_deletedByToEmployeeNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutEmployeeNestedInput
+  InventoryStructure_InventoryStructure_deletedByToEmployee?: Prisma.InventoryStructureUncheckedUpdateManyWithoutEmployee_InventoryStructure_deletedByToEmployeeNestedInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutEmployeeNestedInput
+  InvoiceIn_InvoiceIn_deletedByToEmployee?: Prisma.InvoiceInUncheckedUpdateManyWithoutEmployee_InvoiceIn_deletedByToEmployeeNestedInput
+  InvoiceIn_InvoiceIn_modifiedByToEmployee?: Prisma.InvoiceInUncheckedUpdateManyWithoutEmployee_InvoiceIn_modifiedByToEmployeeNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutEmployeeNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutEmployeeNestedInput
+  InvoiceOut_InvoiceOut_deletedByToEmployee?: Prisma.InvoiceOutUncheckedUpdateManyWithoutEmployee_InvoiceOut_deletedByToEmployeeNestedInput
+  InvoiceOut_InvoiceOut_modifiedByToEmployee?: Prisma.InvoiceOutUncheckedUpdateManyWithoutEmployee_InvoiceOut_modifiedByToEmployeeNestedInput
+  InvoiceSentType_InvoiceSentType_createdByToEmployee?: Prisma.InvoiceSentTypeUncheckedUpdateManyWithoutEmployee_InvoiceSentType_createdByToEmployeeNestedInput
+  InvoiceSentType_InvoiceSentType_deletedByToEmployee?: Prisma.InvoiceSentTypeUncheckedUpdateManyWithoutEmployee_InvoiceSentType_deletedByToEmployeeNestedInput
+  InvoiceStatus_InvoiceStatus_createdByToEmployee?: Prisma.InvoiceStatusUncheckedUpdateManyWithoutEmployee_InvoiceStatus_createdByToEmployeeNestedInput
+  InvoiceStatus_InvoiceStatus_deletedByToEmployee?: Prisma.InvoiceStatusUncheckedUpdateManyWithoutEmployee_InvoiceStatus_deletedByToEmployeeNestedInput
+  InvoiceType?: Prisma.InvoiceTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  InvoiceType_InvoiceType_deletedByToEmployee?: Prisma.InvoiceTypeUncheckedUpdateManyWithoutEmployee_InvoiceType_deletedByToEmployeeNestedInput
+  Material?: Prisma.MaterialUncheckedUpdateManyWithoutEmployeeNestedInput
+  Material_Material_deletedByToEmployee?: Prisma.MaterialUncheckedUpdateManyWithoutEmployee_Material_deletedByToEmployeeNestedInput
+  MaterialAssembly?: Prisma.MaterialAssemblyUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialAssembly_MaterialAssembly_deletedByToEmployee?: Prisma.MaterialAssemblyUncheckedUpdateManyWithoutEmployee_MaterialAssembly_deletedByToEmployeeNestedInput
+  MaterialCode?: Prisma.MaterialCodeUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialCode_MaterialCode_deletedByToEmployee?: Prisma.MaterialCodeUncheckedUpdateManyWithoutEmployee_MaterialCode_deletedByToEmployeeNestedInput
+  MaterialDimension?: Prisma.MaterialDimensionUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialDimension_MaterialDimension_deletedByToEmployee?: Prisma.MaterialDimensionUncheckedUpdateManyWithoutEmployee_MaterialDimension_deletedByToEmployeeNestedInput
+  MaterialFamily?: Prisma.MaterialFamilyUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialFamily_MaterialFamily_deletedByToEmployee?: Prisma.MaterialFamilyUncheckedUpdateManyWithoutEmployee_MaterialFamily_deletedByToEmployeeNestedInput
+  MaterialGroup?: Prisma.MaterialGroupUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialMovement_MaterialMovement_deletedByToEmployee?: Prisma.MaterialMovementUncheckedUpdateManyWithoutEmployee_MaterialMovement_deletedByToEmployeeNestedInput
+  MaterialOther?: Prisma.MaterialOtherUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialOther_MaterialOther_deletedByToEmployee?: Prisma.MaterialOtherUncheckedUpdateManyWithoutEmployee_MaterialOther_deletedByToEmployeeNestedInput
+  MaterialPerformance?: Prisma.MaterialPerformanceUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialPerformance_MaterialPerformance_deletedByToEmployee?: Prisma.MaterialPerformanceUncheckedUpdateManyWithoutEmployee_MaterialPerformance_deletedByToEmployeeNestedInput
+  MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialPrice_MaterialPrice_deletedByToEmployee?: Prisma.MaterialPriceUncheckedUpdateManyWithoutEmployee_MaterialPrice_deletedByToEmployeeNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
+  MaterialSpec?: Prisma.MaterialSpecUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialSpec_MaterialSpec_deletedByToEmployee?: Prisma.MaterialSpecUncheckedUpdateManyWithoutEmployee_MaterialSpec_deletedByToEmployeeNestedInput
+  MaterialStructure?: Prisma.MaterialStructureUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialStructure_MaterialStructure_deletedByToEmployee?: Prisma.MaterialStructureUncheckedUpdateManyWithoutEmployee_MaterialStructure_deletedByToEmployeeNestedInput
+  Part?: Prisma.PartUncheckedUpdateManyWithoutEmployeeNestedInput
+  Part_Part_deletedByToEmployee?: Prisma.PartUncheckedUpdateManyWithoutEmployee_Part_deletedByToEmployeeNestedInput
+  PaymentMethod_PaymentMethod_createdByToEmployee?: Prisma.PaymentMethodUncheckedUpdateManyWithoutEmployee_PaymentMethod_createdByToEmployeeNestedInput
+  PaymentMethod_PaymentMethod_deletedByToEmployee?: Prisma.PaymentMethodUncheckedUpdateManyWithoutEmployee_PaymentMethod_deletedByToEmployeeNestedInput
+  Phantom?: Prisma.PhantomUncheckedUpdateManyWithoutEmployeeNestedInput
+  Phantom_Phantom_deletedByToEmployee?: Prisma.PhantomUncheckedUpdateManyWithoutEmployee_Phantom_deletedByToEmployeeNestedInput
+  PriceList_PriceList_createdByToEmployee?: Prisma.PriceListUncheckedUpdateManyWithoutEmployee_PriceList_createdByToEmployeeNestedInput
+  PriceList_PriceList_deletedByToEmployee?: Prisma.PriceListUncheckedUpdateManyWithoutEmployee_PriceList_deletedByToEmployeeNestedInput
+  PriceListItem_PriceListItem_createdByToEmployee?: Prisma.PriceListItemUncheckedUpdateManyWithoutEmployee_PriceListItem_createdByToEmployeeNestedInput
+  PriceListItem_PriceListItem_deletedByToEmployee?: Prisma.PriceListItemUncheckedUpdateManyWithoutEmployee_PriceListItem_deletedByToEmployeeNestedInput
+  Product?: Prisma.ProductUncheckedUpdateManyWithoutEmployeeNestedInput
+  Product_Product_deletedByToEmployee?: Prisma.ProductUncheckedUpdateManyWithoutEmployee_Product_deletedByToEmployeeNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutEmployeeNestedInput
+  Project_Project_deletedByToEmployee?: Prisma.ProjectUncheckedUpdateManyWithoutEmployee_Project_deletedByToEmployeeNestedInput
+  ProjectBOM_ProjectBOM_createdByToEmployee?: Prisma.ProjectBOMUncheckedUpdateManyWithoutEmployee_ProjectBOM_createdByToEmployeeNestedInput
+  ProjectBOM_ProjectBOM_deletedByToEmployee?: Prisma.ProjectBOMUncheckedUpdateManyWithoutEmployee_ProjectBOM_deletedByToEmployeeNestedInput
+  ProjectBOMStructure_ProjectBOMStructure_createdByToEmployee?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutEmployee_ProjectBOMStructure_createdByToEmployeeNestedInput
+  ProjectBOMStructure_ProjectBOMStructure_deletedByToEmployee?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutEmployee_ProjectBOMStructure_deletedByToEmployeeNestedInput
+  ProjectContact_ProjectContact_createdByToEmployee?: Prisma.ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_createdByToEmployeeNestedInput
+  ProjectContact_ProjectContact_modifiedByToEmployee?: Prisma.ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_modifiedByToEmployeeNestedInput
+  ProjectContact_ProjectContact_deletedByToEmployee?: Prisma.ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_deletedByToEmployeeNestedInput
+  ProjectType?: Prisma.ProjectTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  ProjectType_ProjectType_deletedByToEmployee?: Prisma.ProjectTypeUncheckedUpdateManyWithoutEmployee_ProjectType_deletedByToEmployeeNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutEmployeeNestedInput
+  Purchase_Purchase_deletedByToEmployee?: Prisma.PurchaseUncheckedUpdateManyWithoutEmployee_Purchase_deletedByToEmployeeNestedInput
+  PurchaseBOM_PurchaseBOM_createdByToEmployee?: Prisma.PurchaseBOMUncheckedUpdateManyWithoutEmployee_PurchaseBOM_createdByToEmployeeNestedInput
+  PurchaseBOM_PurchaseBOM_deletedByToEmployee?: Prisma.PurchaseBOMUncheckedUpdateManyWithoutEmployee_PurchaseBOM_deletedByToEmployeeNestedInput
+  PurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployee?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeNestedInput
+  PurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployee?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutEmployee_PurchaseBOMStructure_deletedByToEmployeeNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutEmployeeNestedInput
+  PurchaseDetail_PurchaseDetail_deletedByToEmployee?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutEmployee_PurchaseDetail_deletedByToEmployeeNestedInput
+  PurchaseOrderBecra?: Prisma.PurchaseOrderBecraUncheckedUpdateManyWithoutEmployeeNestedInput
+  PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee?: Prisma.PurchaseOrderBecraUncheckedUpdateManyWithoutEmployee_PurchaseOrderBecra_deletedByToEmployeeNestedInput
+  QuoteBecra_QuoteBecra_createdByToEmployee?: Prisma.QuoteBecraUncheckedUpdateManyWithoutEmployee_QuoteBecra_createdByToEmployeeNestedInput
+  QuoteBecra_QuoteBecra_deletedByToEmployee?: Prisma.QuoteBecraUncheckedUpdateManyWithoutEmployee_QuoteBecra_deletedByToEmployeeNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployeeNestedInput
+  QuoteSupplier_QuoteSupplier_deletedByToEmployee?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_deletedByToEmployeeNestedInput
+  Role_Role_createdByToEmployee?: Prisma.RoleUncheckedUpdateManyWithoutEmployee_Role_createdByToEmployeeNestedInput
+  Role_Role_deletedByToEmployee?: Prisma.RoleUncheckedUpdateManyWithoutEmployee_Role_deletedByToEmployeeNestedInput
+  RoleLevel_RoleLevel_createdByToEmployee?: Prisma.RoleLevelUncheckedUpdateManyWithoutEmployee_RoleLevel_createdByToEmployeeNestedInput
+  RoleLevel_RoleLevel_deletedByToEmployee?: Prisma.RoleLevelUncheckedUpdateManyWithoutEmployee_RoleLevel_deletedByToEmployeeNestedInput
+  RoleLevelEmployee?: Prisma.RoleLevelEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
+  Session?: Prisma.SessionUncheckedUpdateManyWithoutEmployeeNestedInput
+  Status?: Prisma.StatusUncheckedUpdateManyWithoutEmployeeNestedInput
+  Status_Status_deletedByToEmployee?: Prisma.StatusUncheckedUpdateManyWithoutEmployee_Status_deletedByToEmployeeNestedInput
+  SubRole_SubRole_createdByToEmployee?: Prisma.SubRoleUncheckedUpdateManyWithoutEmployee_SubRole_createdByToEmployeeNestedInput
+  SubRole_SubRole_deletedByToEmployee?: Prisma.SubRoleUncheckedUpdateManyWithoutEmployee_SubRole_deletedByToEmployeeNestedInput
+  SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployeeNestedInput
+  SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeNestedInput
+  Target?: Prisma.TargetUncheckedUpdateManyWithoutEmployeeNestedInput
+  Target_Target_deletedByToEmployee?: Prisma.TargetUncheckedUpdateManyWithoutEmployee_Target_deletedByToEmployeeNestedInput
+  TargetType?: Prisma.TargetTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  TargetType_TargetType_deletedByToEmployee?: Prisma.TargetTypeUncheckedUpdateManyWithoutEmployee_TargetType_deletedByToEmployeeNestedInput
+  TestProcedure?: Prisma.TestProcedureUncheckedUpdateManyWithoutEmployeeNestedInput
+  TestProcedure_TestProcedure_deletedByToEmployee?: Prisma.TestProcedureUncheckedUpdateManyWithoutEmployee_TestProcedure_deletedByToEmployeeNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutEmployeeNestedInput
+  TimeRegistry_TimeRegistry_deletedByToEmployee?: Prisma.TimeRegistryUncheckedUpdateManyWithoutEmployee_TimeRegistry_deletedByToEmployeeNestedInput
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
+  Title_Title_createdByToEmployee?: Prisma.TitleUncheckedUpdateManyWithoutEmployee_Title_createdByToEmployeeNestedInput
+  Title_Title_deletedByToEmployee?: Prisma.TitleUncheckedUpdateManyWithoutEmployee_Title_deletedByToEmployeeNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutEmployeeNestedInput
+  Training_Training_deletedByToEmployee?: Prisma.TrainingUncheckedUpdateManyWithoutEmployee_Training_deletedByToEmployeeNestedInput
+  TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutEmployeeNestedInput
+  TrainingContact_TrainingContact_deletedByToEmployee?: Prisma.TrainingContactUncheckedUpdateManyWithoutEmployee_TrainingContact_deletedByToEmployeeNestedInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutEmployeeNestedInput
+  TrainingStandard_TrainingStandard_deletedByToEmployee?: Prisma.TrainingStandardUncheckedUpdateManyWithoutEmployee_TrainingStandard_deletedByToEmployeeNestedInput
+  Unit?: Prisma.UnitUncheckedUpdateManyWithoutEmployeeNestedInput
+  Unit_Unit_deletedByToEmployee?: Prisma.UnitUncheckedUpdateManyWithoutEmployee_Unit_deletedByToEmployeeNestedInput
+  UrgencyType?: Prisma.UrgencyTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  UrgencyType_UrgencyType_deletedByToEmployee?: Prisma.UrgencyTypeUncheckedUpdateManyWithoutEmployee_UrgencyType_deletedByToEmployeeNestedInput
+  VatMargin_VatMargin_createdByToEmployee?: Prisma.VatMarginUncheckedUpdateManyWithoutEmployee_VatMargin_createdByToEmployeeNestedInput
+  VatMargin_VatMargin_deletedByToEmployee?: Prisma.VatMarginUncheckedUpdateManyWithoutEmployee_VatMargin_deletedByToEmployeeNestedInput
+  WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutEmployeeNestedInput
+  WarehousePlace_WarehousePlace_deletedByToEmployee?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutEmployee_WarehousePlace_deletedByToEmployeeNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutEmployeeNestedInput
+  WorkOrder_WorkOrder_deletedByToEmployee?: Prisma.WorkOrderUncheckedUpdateManyWithoutEmployee_WorkOrder_deletedByToEmployeeNestedInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedUpdateManyWithoutEmployeeNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutEmployeeNestedInput
+  WorkOrderStructure_WorkOrderStructure_deletedByToEmployee?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutEmployee_WorkOrderStructure_deletedByToEmployeeNestedInput
+}
+
+export type EmployeeUpsertWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput = {
+  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput, Prisma.EmployeeUncheckedUpdateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput, Prisma.EmployeeUncheckedCreateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput>
+  where?: Prisma.EmployeeWhereInput
+}
+
+export type EmployeeUpdateToOneWithWhereWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput = {
+  where?: Prisma.EmployeeWhereInput
+  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput, Prisma.EmployeeUncheckedUpdateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput>
+}
+
+export type EmployeeUpdateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
+  Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
+  CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
+  CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUpdateManyWithoutEmployee_CertificateType_deletedByToEmployeeNestedInput
+  Company?: Prisma.CompanyUpdateManyWithoutEmployeeNestedInput
+  Company_Company_deletedByToEmployee?: Prisma.CompanyUpdateManyWithoutEmployee_Company_deletedByToEmployeeNestedInput
+  CompanyAddress_CompanyAddress_createdByToEmployee?: Prisma.CompanyAddressUpdateManyWithoutEmployee_CompanyAddress_createdByToEmployeeNestedInput
+  CompanyAddress_CompanyAddress_deletedByToEmployee?: Prisma.CompanyAddressUpdateManyWithoutEmployee_CompanyAddress_deletedByToEmployeeNestedInput
+  CompanyContact?: Prisma.CompanyContactUpdateManyWithoutEmployeeNestedInput
+  CompanyContact_CompanyContact_deletedByToEmployee?: Prisma.CompanyContactUpdateManyWithoutEmployee_CompanyContact_deletedByToEmployeeNestedInput
+  Contact?: Prisma.ContactUpdateManyWithoutEmployeeNestedInput
+  Contact_Contact_deletedByToEmployee?: Prisma.ContactUpdateManyWithoutEmployee_Contact_deletedByToEmployeeNestedInput
+  Country_Country_deletedByToEmployee?: Prisma.CountryUpdateManyWithoutEmployee_Country_deletedByToEmployeeNestedInput
+  Country_Country_createdByToEmployee?: Prisma.CountryUpdateManyWithoutEmployee_Country_createdByToEmployeeNestedInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutEmployeeNestedInput
+  DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee?: Prisma.DeliveryNoteSupplierUpdateManyWithoutEmployee_DeliveryNoteSupplier_deletedByToEmployeeNestedInput
+  Department_Department_deletedByToEmployee?: Prisma.DepartmentUpdateManyWithoutEmployee_Department_deletedByToEmployeeNestedInput
+  Department_Department_createdByToEmployee?: Prisma.DepartmentUpdateManyWithoutEmployee_Department_createdByToEmployeeNestedInput
+  DepartmentExtern_DepartmentExtern_deletedByToEmployee?: Prisma.DepartmentExternUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeNestedInput
+  DepartmentExtern_DepartmentExtern_createdByToEmployee?: Prisma.DepartmentExternUpdateManyWithoutEmployee_DepartmentExtern_createdByToEmployeeNestedInput
+  DocumentGroupA_DocumentGroupA_deletedByToEmployee?: Prisma.DocumentGroupAUpdateManyWithoutEmployee_DocumentGroupA_deletedByToEmployeeNestedInput
+  DocumentGroupA_DocumentGroupA_createdByToEmployee?: Prisma.DocumentGroupAUpdateManyWithoutEmployee_DocumentGroupA_createdByToEmployeeNestedInput
+  DocumentGroupB_DocumentGroupB_deletedByToEmployee?: Prisma.DocumentGroupBUpdateManyWithoutEmployee_DocumentGroupB_deletedByToEmployeeNestedInput
+  DocumentGroupB_DocumentGroupB_createdByToEmployee?: Prisma.DocumentGroupBUpdateManyWithoutEmployee_DocumentGroupB_createdByToEmployeeNestedInput
+  DocumentGroupC_DocumentGroupC_deletedByToEmployee?: Prisma.DocumentGroupCUpdateManyWithoutEmployee_DocumentGroupC_deletedByToEmployeeNestedInput
+  DocumentGroupC_DocumentGroupC_createdByToEmployee?: Prisma.DocumentGroupCUpdateManyWithoutEmployee_DocumentGroupC_createdByToEmployeeNestedInput
+  DocumentGroupD_DocumentGroupD_deletedByToEmployee?: Prisma.DocumentGroupDUpdateManyWithoutEmployee_DocumentGroupD_deletedByToEmployeeNestedInput
+  DocumentGroupD_DocumentGroupD_createdByToEmployee?: Prisma.DocumentGroupDUpdateManyWithoutEmployee_DocumentGroupD_createdByToEmployeeNestedInput
+  DocumentPlace?: Prisma.DocumentPlaceUpdateManyWithoutEmployeeNestedInput
+  DocumentPlace_DocumentPlace_createdByToEmployee?: Prisma.DocumentPlaceUpdateManyWithoutEmployee_DocumentPlace_createdByToEmployeeNestedInput
+  DocumentRevision_DocumentRevision_deletedByToEmployee?: Prisma.DocumentRevisionUpdateManyWithoutEmployee_DocumentRevision_deletedByToEmployeeNestedInput
+  DocumentRevision_DocumentRevision_createdByToEmployee?: Prisma.DocumentRevisionUpdateManyWithoutEmployee_DocumentRevision_createdByToEmployeeNestedInput
+  DocumentStatus_DocumentStatus_deletedByToEmployee?: Prisma.DocumentStatusUpdateManyWithoutEmployee_DocumentStatus_deletedByToEmployeeNestedInput
+  DocumentStatus_DocumentStatus_createdByToEmployee?: Prisma.DocumentStatusUpdateManyWithoutEmployee_DocumentStatus_createdByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_createdByToEmployee?: Prisma.DocumentStructureUpdateManyWithoutEmployee_DocumentStructure_createdByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_deletedByToEmployee?: Prisma.DocumentStructureUpdateManyWithoutEmployee_DocumentStructure_deletedByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_managedByIdToEmployee?: Prisma.DocumentStructureUpdateManyWithoutEmployee_DocumentStructure_managedByIdToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_revisedByIdToEmployee?: Prisma.DocumentStructureUpdateManyWithoutEmployee_DocumentStructure_revisedByIdToEmployeeNestedInput
+  EmergencyContact?: Prisma.EmergencyContactUpdateManyWithoutEmployeeNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutOther_EmployeeNestedInput
+  other_Employee?: Prisma.EmployeeUpdateManyWithoutEmployeeNestedInput
+  Title_Employee_titleIdToTitle?: Prisma.TitleUpdateOneWithoutEmployee_Employee_titleIdToTitleNestedInput
+  DocumentStructure_Employee_pictureIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutEmployee_Employee_pictureIdToDocumentStructureNestedInput
+  Employee_Employee_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutOther_Employee_Employee_deletedByToEmployeeNestedInput
+  other_Employee_Employee_deletedByToEmployee?: Prisma.EmployeeUpdateManyWithoutEmployee_Employee_deletedByToEmployeeNestedInput
+  FollowUp_FollowUp_ownedByToEmployee?: Prisma.FollowUpUpdateManyWithoutEmployee_FollowUp_ownedByToEmployeeNestedInput
+  FollowUp_FollowUp_executedByToEmployee?: Prisma.FollowUpUpdateManyWithoutEmployee_FollowUp_executedByToEmployeeNestedInput
+  FollowUp_FollowUp_createdByToEmployee?: Prisma.FollowUpUpdateManyWithoutEmployee_FollowUp_createdByToEmployeeNestedInput
+  FollowUp_FollowUp_deletedByToEmployee?: Prisma.FollowUpUpdateManyWithoutEmployee_FollowUp_deletedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_deletedByToEmployee?: Prisma.FollowUpStructureUpdateManyWithoutEmployee_FollowUpStructure_deletedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_ownedByToEmployee?: Prisma.FollowUpStructureUpdateManyWithoutEmployee_FollowUpStructure_ownedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_executedByToEmployee?: Prisma.FollowUpStructureUpdateManyWithoutEmployee_FollowUpStructure_executedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_taskForToEmployee?: Prisma.FollowUpStructureUpdateManyWithoutEmployee_FollowUpStructure_taskForToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_createdByToEmployee?: Prisma.FollowUpStructureUpdateManyWithoutEmployee_FollowUpStructure_createdByToEmployeeNestedInput
+  FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutEmployeeNestedInput
+  FollowUpType?: Prisma.FollowUpTypeUpdateManyWithoutEmployeeNestedInput
+  FollowUpType_FollowUpType_deletedByToEmployee?: Prisma.FollowUpTypeUpdateManyWithoutEmployee_FollowUpType_deletedByToEmployeeNestedInput
+  Function_Function_createdByToEmployee?: Prisma.FunctionUpdateManyWithoutEmployee_Function_createdByToEmployeeNestedInput
+  Function_Function_deletedByToEmployee?: Prisma.FunctionUpdateManyWithoutEmployee_Function_deletedByToEmployeeNestedInput
+  HourType?: Prisma.HourTypeUpdateManyWithoutEmployeeNestedInput
+  HourType_HourType_deletedByToEmployee?: Prisma.HourTypeUpdateManyWithoutEmployee_HourType_deletedByToEmployeeNestedInput
+  Inventory?: Prisma.InventoryUpdateManyWithoutEmployeeNestedInput
+  Inventory_Inventory_deletedByToEmployee?: Prisma.InventoryUpdateManyWithoutEmployee_Inventory_deletedByToEmployeeNestedInput
+  InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutEmployeeNestedInput
+  InventoryChange_InventoryChange_deletedByToEmployee?: Prisma.InventoryChangeUpdateManyWithoutEmployee_InventoryChange_deletedByToEmployeeNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutEmployeeNestedInput
+  InventoryOrder_InventoryOrder_deletedByToEmployee?: Prisma.InventoryOrderUpdateManyWithoutEmployee_InventoryOrder_deletedByToEmployeeNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutEmployeeNestedInput
+  InventoryStructure_InventoryStructure_deletedByToEmployee?: Prisma.InventoryStructureUpdateManyWithoutEmployee_InventoryStructure_deletedByToEmployeeNestedInput
+  InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutEmployeeNestedInput
+  InvoiceIn_InvoiceIn_deletedByToEmployee?: Prisma.InvoiceInUpdateManyWithoutEmployee_InvoiceIn_deletedByToEmployeeNestedInput
+  InvoiceIn_InvoiceIn_modifiedByToEmployee?: Prisma.InvoiceInUpdateManyWithoutEmployee_InvoiceIn_modifiedByToEmployeeNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutEmployeeNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutEmployeeNestedInput
+  InvoiceOut_InvoiceOut_deletedByToEmployee?: Prisma.InvoiceOutUpdateManyWithoutEmployee_InvoiceOut_deletedByToEmployeeNestedInput
+  InvoiceOut_InvoiceOut_modifiedByToEmployee?: Prisma.InvoiceOutUpdateManyWithoutEmployee_InvoiceOut_modifiedByToEmployeeNestedInput
+  InvoiceSentType_InvoiceSentType_createdByToEmployee?: Prisma.InvoiceSentTypeUpdateManyWithoutEmployee_InvoiceSentType_createdByToEmployeeNestedInput
+  InvoiceSentType_InvoiceSentType_deletedByToEmployee?: Prisma.InvoiceSentTypeUpdateManyWithoutEmployee_InvoiceSentType_deletedByToEmployeeNestedInput
+  InvoiceStatus_InvoiceStatus_createdByToEmployee?: Prisma.InvoiceStatusUpdateManyWithoutEmployee_InvoiceStatus_createdByToEmployeeNestedInput
+  InvoiceStatus_InvoiceStatus_deletedByToEmployee?: Prisma.InvoiceStatusUpdateManyWithoutEmployee_InvoiceStatus_deletedByToEmployeeNestedInput
+  InvoiceType?: Prisma.InvoiceTypeUpdateManyWithoutEmployeeNestedInput
+  InvoiceType_InvoiceType_deletedByToEmployee?: Prisma.InvoiceTypeUpdateManyWithoutEmployee_InvoiceType_deletedByToEmployeeNestedInput
+  Material?: Prisma.MaterialUpdateManyWithoutEmployeeNestedInput
+  Material_Material_deletedByToEmployee?: Prisma.MaterialUpdateManyWithoutEmployee_Material_deletedByToEmployeeNestedInput
+  MaterialAssembly?: Prisma.MaterialAssemblyUpdateManyWithoutEmployeeNestedInput
+  MaterialAssembly_MaterialAssembly_deletedByToEmployee?: Prisma.MaterialAssemblyUpdateManyWithoutEmployee_MaterialAssembly_deletedByToEmployeeNestedInput
+  MaterialCode?: Prisma.MaterialCodeUpdateManyWithoutEmployeeNestedInput
+  MaterialCode_MaterialCode_deletedByToEmployee?: Prisma.MaterialCodeUpdateManyWithoutEmployee_MaterialCode_deletedByToEmployeeNestedInput
+  MaterialDimension?: Prisma.MaterialDimensionUpdateManyWithoutEmployeeNestedInput
+  MaterialDimension_MaterialDimension_deletedByToEmployee?: Prisma.MaterialDimensionUpdateManyWithoutEmployee_MaterialDimension_deletedByToEmployeeNestedInput
+  MaterialFamily?: Prisma.MaterialFamilyUpdateManyWithoutEmployeeNestedInput
+  MaterialFamily_MaterialFamily_deletedByToEmployee?: Prisma.MaterialFamilyUpdateManyWithoutEmployee_MaterialFamily_deletedByToEmployeeNestedInput
+  MaterialGroup?: Prisma.MaterialGroupUpdateManyWithoutEmployeeNestedInput
+  MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutEmployeeNestedInput
+  MaterialMovement_MaterialMovement_deletedByToEmployee?: Prisma.MaterialMovementUpdateManyWithoutEmployee_MaterialMovement_deletedByToEmployeeNestedInput
+  MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutEmployeeNestedInput
+  MaterialOther_MaterialOther_deletedByToEmployee?: Prisma.MaterialOtherUpdateManyWithoutEmployee_MaterialOther_deletedByToEmployeeNestedInput
+  MaterialPerformance?: Prisma.MaterialPerformanceUpdateManyWithoutEmployeeNestedInput
+  MaterialPerformance_MaterialPerformance_deletedByToEmployee?: Prisma.MaterialPerformanceUpdateManyWithoutEmployee_MaterialPerformance_deletedByToEmployeeNestedInput
+  MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutEmployeeNestedInput
+  MaterialPrice_MaterialPrice_deletedByToEmployee?: Prisma.MaterialPriceUpdateManyWithoutEmployee_MaterialPrice_deletedByToEmployeeNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutEmployeeNestedInput
+  MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee?: Prisma.MaterialSerialTrackUpdateManyWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutEmployeeNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
+  MaterialSpec?: Prisma.MaterialSpecUpdateManyWithoutEmployeeNestedInput
+  MaterialSpec_MaterialSpec_deletedByToEmployee?: Prisma.MaterialSpecUpdateManyWithoutEmployee_MaterialSpec_deletedByToEmployeeNestedInput
+  MaterialStructure?: Prisma.MaterialStructureUpdateManyWithoutEmployeeNestedInput
+  MaterialStructure_MaterialStructure_deletedByToEmployee?: Prisma.MaterialStructureUpdateManyWithoutEmployee_MaterialStructure_deletedByToEmployeeNestedInput
+  Part?: Prisma.PartUpdateManyWithoutEmployeeNestedInput
+  Part_Part_deletedByToEmployee?: Prisma.PartUpdateManyWithoutEmployee_Part_deletedByToEmployeeNestedInput
+  PaymentMethod_PaymentMethod_createdByToEmployee?: Prisma.PaymentMethodUpdateManyWithoutEmployee_PaymentMethod_createdByToEmployeeNestedInput
+  PaymentMethod_PaymentMethod_deletedByToEmployee?: Prisma.PaymentMethodUpdateManyWithoutEmployee_PaymentMethod_deletedByToEmployeeNestedInput
+  Phantom?: Prisma.PhantomUpdateManyWithoutEmployeeNestedInput
+  Phantom_Phantom_deletedByToEmployee?: Prisma.PhantomUpdateManyWithoutEmployee_Phantom_deletedByToEmployeeNestedInput
+  PriceList_PriceList_createdByToEmployee?: Prisma.PriceListUpdateManyWithoutEmployee_PriceList_createdByToEmployeeNestedInput
+  PriceList_PriceList_deletedByToEmployee?: Prisma.PriceListUpdateManyWithoutEmployee_PriceList_deletedByToEmployeeNestedInput
+  PriceListItem_PriceListItem_createdByToEmployee?: Prisma.PriceListItemUpdateManyWithoutEmployee_PriceListItem_createdByToEmployeeNestedInput
+  PriceListItem_PriceListItem_deletedByToEmployee?: Prisma.PriceListItemUpdateManyWithoutEmployee_PriceListItem_deletedByToEmployeeNestedInput
+  Product?: Prisma.ProductUpdateManyWithoutEmployeeNestedInput
+  Product_Product_deletedByToEmployee?: Prisma.ProductUpdateManyWithoutEmployee_Product_deletedByToEmployeeNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutEmployeeNestedInput
+  Project_Project_deletedByToEmployee?: Prisma.ProjectUpdateManyWithoutEmployee_Project_deletedByToEmployeeNestedInput
+  ProjectBOM_ProjectBOM_createdByToEmployee?: Prisma.ProjectBOMUpdateManyWithoutEmployee_ProjectBOM_createdByToEmployeeNestedInput
+  ProjectBOM_ProjectBOM_deletedByToEmployee?: Prisma.ProjectBOMUpdateManyWithoutEmployee_ProjectBOM_deletedByToEmployeeNestedInput
+  ProjectBOMStructure_ProjectBOMStructure_createdByToEmployee?: Prisma.ProjectBOMStructureUpdateManyWithoutEmployee_ProjectBOMStructure_createdByToEmployeeNestedInput
+  ProjectBOMStructure_ProjectBOMStructure_deletedByToEmployee?: Prisma.ProjectBOMStructureUpdateManyWithoutEmployee_ProjectBOMStructure_deletedByToEmployeeNestedInput
+  ProjectContact_ProjectContact_createdByToEmployee?: Prisma.ProjectContactUpdateManyWithoutEmployee_ProjectContact_createdByToEmployeeNestedInput
+  ProjectContact_ProjectContact_modifiedByToEmployee?: Prisma.ProjectContactUpdateManyWithoutEmployee_ProjectContact_modifiedByToEmployeeNestedInput
+  ProjectContact_ProjectContact_deletedByToEmployee?: Prisma.ProjectContactUpdateManyWithoutEmployee_ProjectContact_deletedByToEmployeeNestedInput
+  ProjectType?: Prisma.ProjectTypeUpdateManyWithoutEmployeeNestedInput
+  ProjectType_ProjectType_deletedByToEmployee?: Prisma.ProjectTypeUpdateManyWithoutEmployee_ProjectType_deletedByToEmployeeNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutEmployeeNestedInput
+  Purchase_Purchase_deletedByToEmployee?: Prisma.PurchaseUpdateManyWithoutEmployee_Purchase_deletedByToEmployeeNestedInput
+  PurchaseBOM_PurchaseBOM_createdByToEmployee?: Prisma.PurchaseBOMUpdateManyWithoutEmployee_PurchaseBOM_createdByToEmployeeNestedInput
+  PurchaseBOM_PurchaseBOM_deletedByToEmployee?: Prisma.PurchaseBOMUpdateManyWithoutEmployee_PurchaseBOM_deletedByToEmployeeNestedInput
+  PurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployee?: Prisma.PurchaseBOMStructureUpdateManyWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeNestedInput
+  PurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployee?: Prisma.PurchaseBOMStructureUpdateManyWithoutEmployee_PurchaseBOMStructure_deletedByToEmployeeNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutEmployeeNestedInput
+  PurchaseDetail_PurchaseDetail_deletedByToEmployee?: Prisma.PurchaseDetailUpdateManyWithoutEmployee_PurchaseDetail_deletedByToEmployeeNestedInput
+  PurchaseOrderBecra?: Prisma.PurchaseOrderBecraUpdateManyWithoutEmployeeNestedInput
+  PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee?: Prisma.PurchaseOrderBecraUpdateManyWithoutEmployee_PurchaseOrderBecra_deletedByToEmployeeNestedInput
+  QuoteBecra_QuoteBecra_createdByToEmployee?: Prisma.QuoteBecraUpdateManyWithoutEmployee_QuoteBecra_createdByToEmployeeNestedInput
+  QuoteBecra_QuoteBecra_deletedByToEmployee?: Prisma.QuoteBecraUpdateManyWithoutEmployee_QuoteBecra_deletedByToEmployeeNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutEmployeeNestedInput
+  QuoteSupplier_QuoteSupplier_deletedByToEmployee?: Prisma.QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_deletedByToEmployeeNestedInput
+  Role_Role_createdByToEmployee?: Prisma.RoleUpdateManyWithoutEmployee_Role_createdByToEmployeeNestedInput
+  Role_Role_deletedByToEmployee?: Prisma.RoleUpdateManyWithoutEmployee_Role_deletedByToEmployeeNestedInput
+  RoleLevel_RoleLevel_createdByToEmployee?: Prisma.RoleLevelUpdateManyWithoutEmployee_RoleLevel_createdByToEmployeeNestedInput
+  RoleLevel_RoleLevel_deletedByToEmployee?: Prisma.RoleLevelUpdateManyWithoutEmployee_RoleLevel_deletedByToEmployeeNestedInput
+  RoleLevelEmployee?: Prisma.RoleLevelEmployeeUpdateManyWithoutEmployeeNestedInput
+  Session?: Prisma.SessionUpdateManyWithoutEmployeeNestedInput
+  Status?: Prisma.StatusUpdateManyWithoutEmployeeNestedInput
+  Status_Status_deletedByToEmployee?: Prisma.StatusUpdateManyWithoutEmployee_Status_deletedByToEmployeeNestedInput
+  SubRole_SubRole_createdByToEmployee?: Prisma.SubRoleUpdateManyWithoutEmployee_SubRole_createdByToEmployeeNestedInput
+  SubRole_SubRole_deletedByToEmployee?: Prisma.SubRoleUpdateManyWithoutEmployee_SubRole_deletedByToEmployeeNestedInput
+  SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUpdateManyWithoutEmployeeNestedInput
+  SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.SupplierDeliveryNoteFollowUpUpdateManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeNestedInput
+  Target?: Prisma.TargetUpdateManyWithoutEmployeeNestedInput
+  Target_Target_deletedByToEmployee?: Prisma.TargetUpdateManyWithoutEmployee_Target_deletedByToEmployeeNestedInput
+  TargetType?: Prisma.TargetTypeUpdateManyWithoutEmployeeNestedInput
+  TargetType_TargetType_deletedByToEmployee?: Prisma.TargetTypeUpdateManyWithoutEmployee_TargetType_deletedByToEmployeeNestedInput
+  TestProcedure?: Prisma.TestProcedureUpdateManyWithoutEmployeeNestedInput
+  TestProcedure_TestProcedure_deletedByToEmployee?: Prisma.TestProcedureUpdateManyWithoutEmployee_TestProcedure_deletedByToEmployeeNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutEmployeeNestedInput
+  TimeRegistry_TimeRegistry_deletedByToEmployee?: Prisma.TimeRegistryUpdateManyWithoutEmployee_TimeRegistry_deletedByToEmployeeNestedInput
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUpdateManyWithoutEmployeeNestedInput
+  Title_Title_createdByToEmployee?: Prisma.TitleUpdateManyWithoutEmployee_Title_createdByToEmployeeNestedInput
+  Title_Title_deletedByToEmployee?: Prisma.TitleUpdateManyWithoutEmployee_Title_deletedByToEmployeeNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutEmployeeNestedInput
+  Training_Training_deletedByToEmployee?: Prisma.TrainingUpdateManyWithoutEmployee_Training_deletedByToEmployeeNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateManyWithoutEmployeeNestedInput
+  TrainingContact_TrainingContact_deletedByToEmployee?: Prisma.TrainingContactUpdateManyWithoutEmployee_TrainingContact_deletedByToEmployeeNestedInput
+  TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutEmployeeNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutEmployeeNestedInput
+  TrainingStandard_TrainingStandard_deletedByToEmployee?: Prisma.TrainingStandardUpdateManyWithoutEmployee_TrainingStandard_deletedByToEmployeeNestedInput
+  Unit?: Prisma.UnitUpdateManyWithoutEmployeeNestedInput
+  Unit_Unit_deletedByToEmployee?: Prisma.UnitUpdateManyWithoutEmployee_Unit_deletedByToEmployeeNestedInput
+  UrgencyType?: Prisma.UrgencyTypeUpdateManyWithoutEmployeeNestedInput
+  UrgencyType_UrgencyType_deletedByToEmployee?: Prisma.UrgencyTypeUpdateManyWithoutEmployee_UrgencyType_deletedByToEmployeeNestedInput
+  VatMargin_VatMargin_createdByToEmployee?: Prisma.VatMarginUpdateManyWithoutEmployee_VatMargin_createdByToEmployeeNestedInput
+  VatMargin_VatMargin_deletedByToEmployee?: Prisma.VatMarginUpdateManyWithoutEmployee_VatMargin_deletedByToEmployeeNestedInput
+  WarehousePlace?: Prisma.WarehousePlaceUpdateManyWithoutEmployeeNestedInput
+  WarehousePlace_WarehousePlace_deletedByToEmployee?: Prisma.WarehousePlaceUpdateManyWithoutEmployee_WarehousePlace_deletedByToEmployeeNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutEmployeeNestedInput
+  WorkOrder_WorkOrder_deletedByToEmployee?: Prisma.WorkOrderUpdateManyWithoutEmployee_WorkOrder_deletedByToEmployeeNestedInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutEmployeeNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutEmployeeNestedInput
+  WorkOrderStructure_WorkOrderStructure_deletedByToEmployee?: Prisma.WorkOrderStructureUpdateManyWithoutEmployee_WorkOrderStructure_deletedByToEmployeeNestedInput
+}
+
+export type EmployeeUncheckedUpdateWithoutBOMExecution_BOMExecution_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
+  Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
+  CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  CertificateType_CertificateType_deletedByToEmployee?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployee_CertificateType_deletedByToEmployeeNestedInput
+  Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
+  Company_Company_deletedByToEmployee?: Prisma.CompanyUncheckedUpdateManyWithoutEmployee_Company_deletedByToEmployeeNestedInput
+  CompanyAddress_CompanyAddress_createdByToEmployee?: Prisma.CompanyAddressUncheckedUpdateManyWithoutEmployee_CompanyAddress_createdByToEmployeeNestedInput
+  CompanyAddress_CompanyAddress_deletedByToEmployee?: Prisma.CompanyAddressUncheckedUpdateManyWithoutEmployee_CompanyAddress_deletedByToEmployeeNestedInput
+  CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutEmployeeNestedInput
+  CompanyContact_CompanyContact_deletedByToEmployee?: Prisma.CompanyContactUncheckedUpdateManyWithoutEmployee_CompanyContact_deletedByToEmployeeNestedInput
+  Contact?: Prisma.ContactUncheckedUpdateManyWithoutEmployeeNestedInput
+  Contact_Contact_deletedByToEmployee?: Prisma.ContactUncheckedUpdateManyWithoutEmployee_Contact_deletedByToEmployeeNestedInput
+  Country_Country_deletedByToEmployee?: Prisma.CountryUncheckedUpdateManyWithoutEmployee_Country_deletedByToEmployeeNestedInput
+  Country_Country_createdByToEmployee?: Prisma.CountryUncheckedUpdateManyWithoutEmployee_Country_createdByToEmployeeNestedInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutEmployeeNestedInput
+  DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutEmployee_DeliveryNoteSupplier_deletedByToEmployeeNestedInput
+  Department_Department_deletedByToEmployee?: Prisma.DepartmentUncheckedUpdateManyWithoutEmployee_Department_deletedByToEmployeeNestedInput
+  Department_Department_createdByToEmployee?: Prisma.DepartmentUncheckedUpdateManyWithoutEmployee_Department_createdByToEmployeeNestedInput
+  DepartmentExtern_DepartmentExtern_deletedByToEmployee?: Prisma.DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeNestedInput
+  DepartmentExtern_DepartmentExtern_createdByToEmployee?: Prisma.DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_createdByToEmployeeNestedInput
+  DocumentGroupA_DocumentGroupA_deletedByToEmployee?: Prisma.DocumentGroupAUncheckedUpdateManyWithoutEmployee_DocumentGroupA_deletedByToEmployeeNestedInput
+  DocumentGroupA_DocumentGroupA_createdByToEmployee?: Prisma.DocumentGroupAUncheckedUpdateManyWithoutEmployee_DocumentGroupA_createdByToEmployeeNestedInput
+  DocumentGroupB_DocumentGroupB_deletedByToEmployee?: Prisma.DocumentGroupBUncheckedUpdateManyWithoutEmployee_DocumentGroupB_deletedByToEmployeeNestedInput
+  DocumentGroupB_DocumentGroupB_createdByToEmployee?: Prisma.DocumentGroupBUncheckedUpdateManyWithoutEmployee_DocumentGroupB_createdByToEmployeeNestedInput
+  DocumentGroupC_DocumentGroupC_deletedByToEmployee?: Prisma.DocumentGroupCUncheckedUpdateManyWithoutEmployee_DocumentGroupC_deletedByToEmployeeNestedInput
+  DocumentGroupC_DocumentGroupC_createdByToEmployee?: Prisma.DocumentGroupCUncheckedUpdateManyWithoutEmployee_DocumentGroupC_createdByToEmployeeNestedInput
+  DocumentGroupD_DocumentGroupD_deletedByToEmployee?: Prisma.DocumentGroupDUncheckedUpdateManyWithoutEmployee_DocumentGroupD_deletedByToEmployeeNestedInput
+  DocumentGroupD_DocumentGroupD_createdByToEmployee?: Prisma.DocumentGroupDUncheckedUpdateManyWithoutEmployee_DocumentGroupD_createdByToEmployeeNestedInput
+  DocumentPlace?: Prisma.DocumentPlaceUncheckedUpdateManyWithoutEmployeeNestedInput
+  DocumentPlace_DocumentPlace_createdByToEmployee?: Prisma.DocumentPlaceUncheckedUpdateManyWithoutEmployee_DocumentPlace_createdByToEmployeeNestedInput
+  DocumentRevision_DocumentRevision_deletedByToEmployee?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutEmployee_DocumentRevision_deletedByToEmployeeNestedInput
+  DocumentRevision_DocumentRevision_createdByToEmployee?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutEmployee_DocumentRevision_createdByToEmployeeNestedInput
+  DocumentStatus_DocumentStatus_deletedByToEmployee?: Prisma.DocumentStatusUncheckedUpdateManyWithoutEmployee_DocumentStatus_deletedByToEmployeeNestedInput
+  DocumentStatus_DocumentStatus_createdByToEmployee?: Prisma.DocumentStatusUncheckedUpdateManyWithoutEmployee_DocumentStatus_createdByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_createdByToEmployee?: Prisma.DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_createdByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_deletedByToEmployee?: Prisma.DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_deletedByToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_managedByIdToEmployee?: Prisma.DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_managedByIdToEmployeeNestedInput
+  DocumentStructure_DocumentStructure_revisedByIdToEmployee?: Prisma.DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_revisedByIdToEmployeeNestedInput
+  EmergencyContact?: Prisma.EmergencyContactUncheckedUpdateManyWithoutEmployeeNestedInput
+  other_Employee?: Prisma.EmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
+  other_Employee_Employee_deletedByToEmployee?: Prisma.EmployeeUncheckedUpdateManyWithoutEmployee_Employee_deletedByToEmployeeNestedInput
+  FollowUp_FollowUp_ownedByToEmployee?: Prisma.FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_ownedByToEmployeeNestedInput
+  FollowUp_FollowUp_executedByToEmployee?: Prisma.FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_executedByToEmployeeNestedInput
+  FollowUp_FollowUp_createdByToEmployee?: Prisma.FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_createdByToEmployeeNestedInput
+  FollowUp_FollowUp_deletedByToEmployee?: Prisma.FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_deletedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_deletedByToEmployee?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_deletedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_ownedByToEmployee?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_ownedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_executedByToEmployee?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_executedByToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_taskForToEmployee?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_taskForToEmployeeNestedInput
+  FollowUpStructure_FollowUpStructure_createdByToEmployee?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_createdByToEmployeeNestedInput
+  FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutEmployeeNestedInput
+  FollowUpType?: Prisma.FollowUpTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  FollowUpType_FollowUpType_deletedByToEmployee?: Prisma.FollowUpTypeUncheckedUpdateManyWithoutEmployee_FollowUpType_deletedByToEmployeeNestedInput
+  Function_Function_createdByToEmployee?: Prisma.FunctionUncheckedUpdateManyWithoutEmployee_Function_createdByToEmployeeNestedInput
+  Function_Function_deletedByToEmployee?: Prisma.FunctionUncheckedUpdateManyWithoutEmployee_Function_deletedByToEmployeeNestedInput
+  HourType?: Prisma.HourTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  HourType_HourType_deletedByToEmployee?: Prisma.HourTypeUncheckedUpdateManyWithoutEmployee_HourType_deletedByToEmployeeNestedInput
+  Inventory?: Prisma.InventoryUncheckedUpdateManyWithoutEmployeeNestedInput
+  Inventory_Inventory_deletedByToEmployee?: Prisma.InventoryUncheckedUpdateManyWithoutEmployee_Inventory_deletedByToEmployeeNestedInput
+  InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutEmployeeNestedInput
+  InventoryChange_InventoryChange_deletedByToEmployee?: Prisma.InventoryChangeUncheckedUpdateManyWithoutEmployee_InventoryChange_deletedByToEmployeeNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutEmployeeNestedInput
+  InventoryOrder_InventoryOrder_deletedByToEmployee?: Prisma.InventoryOrderUncheckedUpdateManyWithoutEmployee_InventoryOrder_deletedByToEmployeeNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutEmployeeNestedInput
+  InventoryStructure_InventoryStructure_deletedByToEmployee?: Prisma.InventoryStructureUncheckedUpdateManyWithoutEmployee_InventoryStructure_deletedByToEmployeeNestedInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutEmployeeNestedInput
+  InvoiceIn_InvoiceIn_deletedByToEmployee?: Prisma.InvoiceInUncheckedUpdateManyWithoutEmployee_InvoiceIn_deletedByToEmployeeNestedInput
+  InvoiceIn_InvoiceIn_modifiedByToEmployee?: Prisma.InvoiceInUncheckedUpdateManyWithoutEmployee_InvoiceIn_modifiedByToEmployeeNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutEmployeeNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutEmployeeNestedInput
+  InvoiceOut_InvoiceOut_deletedByToEmployee?: Prisma.InvoiceOutUncheckedUpdateManyWithoutEmployee_InvoiceOut_deletedByToEmployeeNestedInput
+  InvoiceOut_InvoiceOut_modifiedByToEmployee?: Prisma.InvoiceOutUncheckedUpdateManyWithoutEmployee_InvoiceOut_modifiedByToEmployeeNestedInput
+  InvoiceSentType_InvoiceSentType_createdByToEmployee?: Prisma.InvoiceSentTypeUncheckedUpdateManyWithoutEmployee_InvoiceSentType_createdByToEmployeeNestedInput
+  InvoiceSentType_InvoiceSentType_deletedByToEmployee?: Prisma.InvoiceSentTypeUncheckedUpdateManyWithoutEmployee_InvoiceSentType_deletedByToEmployeeNestedInput
+  InvoiceStatus_InvoiceStatus_createdByToEmployee?: Prisma.InvoiceStatusUncheckedUpdateManyWithoutEmployee_InvoiceStatus_createdByToEmployeeNestedInput
+  InvoiceStatus_InvoiceStatus_deletedByToEmployee?: Prisma.InvoiceStatusUncheckedUpdateManyWithoutEmployee_InvoiceStatus_deletedByToEmployeeNestedInput
+  InvoiceType?: Prisma.InvoiceTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  InvoiceType_InvoiceType_deletedByToEmployee?: Prisma.InvoiceTypeUncheckedUpdateManyWithoutEmployee_InvoiceType_deletedByToEmployeeNestedInput
+  Material?: Prisma.MaterialUncheckedUpdateManyWithoutEmployeeNestedInput
+  Material_Material_deletedByToEmployee?: Prisma.MaterialUncheckedUpdateManyWithoutEmployee_Material_deletedByToEmployeeNestedInput
+  MaterialAssembly?: Prisma.MaterialAssemblyUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialAssembly_MaterialAssembly_deletedByToEmployee?: Prisma.MaterialAssemblyUncheckedUpdateManyWithoutEmployee_MaterialAssembly_deletedByToEmployeeNestedInput
+  MaterialCode?: Prisma.MaterialCodeUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialCode_MaterialCode_deletedByToEmployee?: Prisma.MaterialCodeUncheckedUpdateManyWithoutEmployee_MaterialCode_deletedByToEmployeeNestedInput
+  MaterialDimension?: Prisma.MaterialDimensionUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialDimension_MaterialDimension_deletedByToEmployee?: Prisma.MaterialDimensionUncheckedUpdateManyWithoutEmployee_MaterialDimension_deletedByToEmployeeNestedInput
+  MaterialFamily?: Prisma.MaterialFamilyUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialFamily_MaterialFamily_deletedByToEmployee?: Prisma.MaterialFamilyUncheckedUpdateManyWithoutEmployee_MaterialFamily_deletedByToEmployeeNestedInput
+  MaterialGroup?: Prisma.MaterialGroupUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialMovement_MaterialMovement_deletedByToEmployee?: Prisma.MaterialMovementUncheckedUpdateManyWithoutEmployee_MaterialMovement_deletedByToEmployeeNestedInput
+  MaterialOther?: Prisma.MaterialOtherUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialOther_MaterialOther_deletedByToEmployee?: Prisma.MaterialOtherUncheckedUpdateManyWithoutEmployee_MaterialOther_deletedByToEmployeeNestedInput
+  MaterialPerformance?: Prisma.MaterialPerformanceUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialPerformance_MaterialPerformance_deletedByToEmployee?: Prisma.MaterialPerformanceUncheckedUpdateManyWithoutEmployee_MaterialPerformance_deletedByToEmployeeNestedInput
+  MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialPrice_MaterialPrice_deletedByToEmployee?: Prisma.MaterialPriceUncheckedUpdateManyWithoutEmployee_MaterialPrice_deletedByToEmployeeNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
+  MaterialSpec?: Prisma.MaterialSpecUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialSpec_MaterialSpec_deletedByToEmployee?: Prisma.MaterialSpecUncheckedUpdateManyWithoutEmployee_MaterialSpec_deletedByToEmployeeNestedInput
+  MaterialStructure?: Prisma.MaterialStructureUncheckedUpdateManyWithoutEmployeeNestedInput
+  MaterialStructure_MaterialStructure_deletedByToEmployee?: Prisma.MaterialStructureUncheckedUpdateManyWithoutEmployee_MaterialStructure_deletedByToEmployeeNestedInput
+  Part?: Prisma.PartUncheckedUpdateManyWithoutEmployeeNestedInput
+  Part_Part_deletedByToEmployee?: Prisma.PartUncheckedUpdateManyWithoutEmployee_Part_deletedByToEmployeeNestedInput
+  PaymentMethod_PaymentMethod_createdByToEmployee?: Prisma.PaymentMethodUncheckedUpdateManyWithoutEmployee_PaymentMethod_createdByToEmployeeNestedInput
+  PaymentMethod_PaymentMethod_deletedByToEmployee?: Prisma.PaymentMethodUncheckedUpdateManyWithoutEmployee_PaymentMethod_deletedByToEmployeeNestedInput
+  Phantom?: Prisma.PhantomUncheckedUpdateManyWithoutEmployeeNestedInput
+  Phantom_Phantom_deletedByToEmployee?: Prisma.PhantomUncheckedUpdateManyWithoutEmployee_Phantom_deletedByToEmployeeNestedInput
+  PriceList_PriceList_createdByToEmployee?: Prisma.PriceListUncheckedUpdateManyWithoutEmployee_PriceList_createdByToEmployeeNestedInput
+  PriceList_PriceList_deletedByToEmployee?: Prisma.PriceListUncheckedUpdateManyWithoutEmployee_PriceList_deletedByToEmployeeNestedInput
+  PriceListItem_PriceListItem_createdByToEmployee?: Prisma.PriceListItemUncheckedUpdateManyWithoutEmployee_PriceListItem_createdByToEmployeeNestedInput
+  PriceListItem_PriceListItem_deletedByToEmployee?: Prisma.PriceListItemUncheckedUpdateManyWithoutEmployee_PriceListItem_deletedByToEmployeeNestedInput
+  Product?: Prisma.ProductUncheckedUpdateManyWithoutEmployeeNestedInput
+  Product_Product_deletedByToEmployee?: Prisma.ProductUncheckedUpdateManyWithoutEmployee_Product_deletedByToEmployeeNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutEmployeeNestedInput
+  Project_Project_deletedByToEmployee?: Prisma.ProjectUncheckedUpdateManyWithoutEmployee_Project_deletedByToEmployeeNestedInput
+  ProjectBOM_ProjectBOM_createdByToEmployee?: Prisma.ProjectBOMUncheckedUpdateManyWithoutEmployee_ProjectBOM_createdByToEmployeeNestedInput
+  ProjectBOM_ProjectBOM_deletedByToEmployee?: Prisma.ProjectBOMUncheckedUpdateManyWithoutEmployee_ProjectBOM_deletedByToEmployeeNestedInput
+  ProjectBOMStructure_ProjectBOMStructure_createdByToEmployee?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutEmployee_ProjectBOMStructure_createdByToEmployeeNestedInput
+  ProjectBOMStructure_ProjectBOMStructure_deletedByToEmployee?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutEmployee_ProjectBOMStructure_deletedByToEmployeeNestedInput
+  ProjectContact_ProjectContact_createdByToEmployee?: Prisma.ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_createdByToEmployeeNestedInput
+  ProjectContact_ProjectContact_modifiedByToEmployee?: Prisma.ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_modifiedByToEmployeeNestedInput
+  ProjectContact_ProjectContact_deletedByToEmployee?: Prisma.ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_deletedByToEmployeeNestedInput
+  ProjectType?: Prisma.ProjectTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  ProjectType_ProjectType_deletedByToEmployee?: Prisma.ProjectTypeUncheckedUpdateManyWithoutEmployee_ProjectType_deletedByToEmployeeNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutEmployeeNestedInput
+  Purchase_Purchase_deletedByToEmployee?: Prisma.PurchaseUncheckedUpdateManyWithoutEmployee_Purchase_deletedByToEmployeeNestedInput
+  PurchaseBOM_PurchaseBOM_createdByToEmployee?: Prisma.PurchaseBOMUncheckedUpdateManyWithoutEmployee_PurchaseBOM_createdByToEmployeeNestedInput
+  PurchaseBOM_PurchaseBOM_deletedByToEmployee?: Prisma.PurchaseBOMUncheckedUpdateManyWithoutEmployee_PurchaseBOM_deletedByToEmployeeNestedInput
+  PurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployee?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeNestedInput
+  PurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployee?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutEmployee_PurchaseBOMStructure_deletedByToEmployeeNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutEmployeeNestedInput
+  PurchaseDetail_PurchaseDetail_deletedByToEmployee?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutEmployee_PurchaseDetail_deletedByToEmployeeNestedInput
+  PurchaseOrderBecra?: Prisma.PurchaseOrderBecraUncheckedUpdateManyWithoutEmployeeNestedInput
+  PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee?: Prisma.PurchaseOrderBecraUncheckedUpdateManyWithoutEmployee_PurchaseOrderBecra_deletedByToEmployeeNestedInput
+  QuoteBecra_QuoteBecra_createdByToEmployee?: Prisma.QuoteBecraUncheckedUpdateManyWithoutEmployee_QuoteBecra_createdByToEmployeeNestedInput
+  QuoteBecra_QuoteBecra_deletedByToEmployee?: Prisma.QuoteBecraUncheckedUpdateManyWithoutEmployee_QuoteBecra_deletedByToEmployeeNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployeeNestedInput
+  QuoteSupplier_QuoteSupplier_deletedByToEmployee?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_deletedByToEmployeeNestedInput
+  Role_Role_createdByToEmployee?: Prisma.RoleUncheckedUpdateManyWithoutEmployee_Role_createdByToEmployeeNestedInput
+  Role_Role_deletedByToEmployee?: Prisma.RoleUncheckedUpdateManyWithoutEmployee_Role_deletedByToEmployeeNestedInput
+  RoleLevel_RoleLevel_createdByToEmployee?: Prisma.RoleLevelUncheckedUpdateManyWithoutEmployee_RoleLevel_createdByToEmployeeNestedInput
+  RoleLevel_RoleLevel_deletedByToEmployee?: Prisma.RoleLevelUncheckedUpdateManyWithoutEmployee_RoleLevel_deletedByToEmployeeNestedInput
+  RoleLevelEmployee?: Prisma.RoleLevelEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
+  Session?: Prisma.SessionUncheckedUpdateManyWithoutEmployeeNestedInput
+  Status?: Prisma.StatusUncheckedUpdateManyWithoutEmployeeNestedInput
+  Status_Status_deletedByToEmployee?: Prisma.StatusUncheckedUpdateManyWithoutEmployee_Status_deletedByToEmployeeNestedInput
+  SubRole_SubRole_createdByToEmployee?: Prisma.SubRoleUncheckedUpdateManyWithoutEmployee_SubRole_createdByToEmployeeNestedInput
+  SubRole_SubRole_deletedByToEmployee?: Prisma.SubRoleUncheckedUpdateManyWithoutEmployee_SubRole_deletedByToEmployeeNestedInput
+  SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployeeNestedInput
+  SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeNestedInput
+  Target?: Prisma.TargetUncheckedUpdateManyWithoutEmployeeNestedInput
+  Target_Target_deletedByToEmployee?: Prisma.TargetUncheckedUpdateManyWithoutEmployee_Target_deletedByToEmployeeNestedInput
+  TargetType?: Prisma.TargetTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  TargetType_TargetType_deletedByToEmployee?: Prisma.TargetTypeUncheckedUpdateManyWithoutEmployee_TargetType_deletedByToEmployeeNestedInput
+  TestProcedure?: Prisma.TestProcedureUncheckedUpdateManyWithoutEmployeeNestedInput
+  TestProcedure_TestProcedure_deletedByToEmployee?: Prisma.TestProcedureUncheckedUpdateManyWithoutEmployee_TestProcedure_deletedByToEmployeeNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutEmployeeNestedInput
+  TimeRegistry_TimeRegistry_deletedByToEmployee?: Prisma.TimeRegistryUncheckedUpdateManyWithoutEmployee_TimeRegistry_deletedByToEmployeeNestedInput
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
+  Title_Title_createdByToEmployee?: Prisma.TitleUncheckedUpdateManyWithoutEmployee_Title_createdByToEmployeeNestedInput
+  Title_Title_deletedByToEmployee?: Prisma.TitleUncheckedUpdateManyWithoutEmployee_Title_deletedByToEmployeeNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutEmployeeNestedInput
+  Training_Training_deletedByToEmployee?: Prisma.TrainingUncheckedUpdateManyWithoutEmployee_Training_deletedByToEmployeeNestedInput
+  TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutEmployeeNestedInput
+  TrainingContact_TrainingContact_deletedByToEmployee?: Prisma.TrainingContactUncheckedUpdateManyWithoutEmployee_TrainingContact_deletedByToEmployeeNestedInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutEmployeeNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutEmployeeNestedInput
+  TrainingStandard_TrainingStandard_deletedByToEmployee?: Prisma.TrainingStandardUncheckedUpdateManyWithoutEmployee_TrainingStandard_deletedByToEmployeeNestedInput
+  Unit?: Prisma.UnitUncheckedUpdateManyWithoutEmployeeNestedInput
+  Unit_Unit_deletedByToEmployee?: Prisma.UnitUncheckedUpdateManyWithoutEmployee_Unit_deletedByToEmployeeNestedInput
+  UrgencyType?: Prisma.UrgencyTypeUncheckedUpdateManyWithoutEmployeeNestedInput
+  UrgencyType_UrgencyType_deletedByToEmployee?: Prisma.UrgencyTypeUncheckedUpdateManyWithoutEmployee_UrgencyType_deletedByToEmployeeNestedInput
+  VatMargin_VatMargin_createdByToEmployee?: Prisma.VatMarginUncheckedUpdateManyWithoutEmployee_VatMargin_createdByToEmployeeNestedInput
+  VatMargin_VatMargin_deletedByToEmployee?: Prisma.VatMarginUncheckedUpdateManyWithoutEmployee_VatMargin_deletedByToEmployeeNestedInput
+  WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutEmployeeNestedInput
+  WarehousePlace_WarehousePlace_deletedByToEmployee?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutEmployee_WarehousePlace_deletedByToEmployeeNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutEmployeeNestedInput
+  WorkOrder_WorkOrder_deletedByToEmployee?: Prisma.WorkOrderUncheckedUpdateManyWithoutEmployee_WorkOrder_deletedByToEmployeeNestedInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedUpdateManyWithoutEmployeeNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutEmployeeNestedInput
+  WorkOrderStructure_WorkOrderStructure_deletedByToEmployee?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutEmployee_WorkOrderStructure_deletedByToEmployeeNestedInput
+}
+
 export type EmployeeCreateManyDocumentStructure_Employee_pictureIdToDocumentStructureInput = {
   id: string
   firstName: string
@@ -169072,6 +172380,8 @@ export type EmployeeUpdateWithoutDocumentStructure_Employee_pictureIdToDocumentS
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -169290,6 +172600,8 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_Employee_pictureIdTo
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -169592,6 +172904,8 @@ export type EmployeeUpdateWithoutEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -169810,6 +173124,8 @@ export type EmployeeUncheckedUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -170052,6 +173368,8 @@ export type EmployeeUpdateWithoutEmployee_Employee_deletedByToEmployeeInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -170270,6 +173588,8 @@ export type EmployeeUncheckedUpdateWithoutEmployee_Employee_deletedByToEmployeeI
   pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -170542,6 +173862,8 @@ export type EmployeeUpdateWithoutTitle_Employee_titleIdToTitleInput = {
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateManyWithoutEmployeeNestedInput
@@ -170760,6 +174082,8 @@ export type EmployeeUncheckedUpdateWithoutTitle_Employee_titleIdToTitleInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution_BOMExecution_createdByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeNestedInput
+  BOMExecution_BOMExecution_deletedByToEmployee?: Prisma.BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeNestedInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Certificate_Certificate_deletedByToEmployee?: Prisma.CertificateUncheckedUpdateManyWithoutEmployee_Certificate_deletedByToEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -170983,6 +174307,8 @@ export type EmployeeUncheckedUpdateManyWithoutTitle_Employee_titleIdToTitleInput
  */
 
 export type EmployeeCountOutputType = {
+  BOMExecution_BOMExecution_createdByToEmployee: number
+  BOMExecution_BOMExecution_deletedByToEmployee: number
   Certificate: number
   Certificate_Certificate_deletedByToEmployee: number
   CertificateType: number
@@ -171171,6 +174497,8 @@ export type EmployeeCountOutputType = {
 }
 
 export type EmployeeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  BOMExecution_BOMExecution_createdByToEmployee?: boolean | EmployeeCountOutputTypeCountBOMExecution_BOMExecution_createdByToEmployeeArgs
+  BOMExecution_BOMExecution_deletedByToEmployee?: boolean | EmployeeCountOutputTypeCountBOMExecution_BOMExecution_deletedByToEmployeeArgs
   Certificate?: boolean | EmployeeCountOutputTypeCountCertificateArgs
   Certificate_Certificate_deletedByToEmployee?: boolean | EmployeeCountOutputTypeCountCertificate_Certificate_deletedByToEmployeeArgs
   CertificateType?: boolean | EmployeeCountOutputTypeCountCertificateTypeArgs
@@ -171366,6 +174694,20 @@ export type EmployeeCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
    * Select specific fields to fetch from the EmployeeCountOutputType
    */
   select?: Prisma.EmployeeCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * EmployeeCountOutputType without action
+ */
+export type EmployeeCountOutputTypeCountBOMExecution_BOMExecution_createdByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BOMExecutionWhereInput
+}
+
+/**
+ * EmployeeCountOutputType without action
+ */
+export type EmployeeCountOutputTypeCountBOMExecution_BOMExecution_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BOMExecutionWhereInput
 }
 
 /**
@@ -172693,6 +176035,8 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
+  BOMExecution_BOMExecution_createdByToEmployee?: boolean | Prisma.Employee$BOMExecution_BOMExecution_createdByToEmployeeArgs<ExtArgs>
+  BOMExecution_BOMExecution_deletedByToEmployee?: boolean | Prisma.Employee$BOMExecution_BOMExecution_deletedByToEmployeeArgs<ExtArgs>
   Certificate?: boolean | Prisma.Employee$CertificateArgs<ExtArgs>
   Certificate_Certificate_deletedByToEmployee?: boolean | Prisma.Employee$Certificate_Certificate_deletedByToEmployeeArgs<ExtArgs>
   CertificateType?: boolean | Prisma.Employee$CertificateTypeArgs<ExtArgs>
@@ -172920,6 +176264,8 @@ export type EmployeeSelectScalar = {
 
 export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "mail" | "password_hash" | "phoneNumber" | "startDate" | "endDate" | "info" | "birthDate" | "street" | "houseNumber" | "busNumber" | "zipCode" | "place" | "username" | "createdAt" | "permanentEmployee" | "checkInfo" | "newYearCard" | "active" | "passwordCreatedAt" | "createdBy" | "titleId" | "pictureId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["employee"]>
 export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  BOMExecution_BOMExecution_createdByToEmployee?: boolean | Prisma.Employee$BOMExecution_BOMExecution_createdByToEmployeeArgs<ExtArgs>
+  BOMExecution_BOMExecution_deletedByToEmployee?: boolean | Prisma.Employee$BOMExecution_BOMExecution_deletedByToEmployeeArgs<ExtArgs>
   Certificate?: boolean | Prisma.Employee$CertificateArgs<ExtArgs>
   Certificate_Certificate_deletedByToEmployee?: boolean | Prisma.Employee$Certificate_Certificate_deletedByToEmployeeArgs<ExtArgs>
   CertificateType?: boolean | Prisma.Employee$CertificateTypeArgs<ExtArgs>
@@ -173115,6 +176461,8 @@ export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Employee"
   objects: {
+    BOMExecution_BOMExecution_createdByToEmployee: Prisma.$BOMExecutionPayload<ExtArgs>[]
+    BOMExecution_BOMExecution_deletedByToEmployee: Prisma.$BOMExecutionPayload<ExtArgs>[]
     Certificate: Prisma.$CertificatePayload<ExtArgs>[]
     Certificate_Certificate_deletedByToEmployee: Prisma.$CertificatePayload<ExtArgs>[]
     CertificateType: Prisma.$CertificateTypePayload<ExtArgs>[]
@@ -173674,6 +177022,8 @@ readonly fields: EmployeeFieldRefs;
  */
 export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  BOMExecution_BOMExecution_createdByToEmployee<T extends Prisma.Employee$BOMExecution_BOMExecution_createdByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$BOMExecution_BOMExecution_createdByToEmployeeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BOMExecutionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  BOMExecution_BOMExecution_deletedByToEmployee<T extends Prisma.Employee$BOMExecution_BOMExecution_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$BOMExecution_BOMExecution_deletedByToEmployeeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BOMExecutionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Certificate<T extends Prisma.Employee$CertificateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$CertificateArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Certificate_Certificate_deletedByToEmployee<T extends Prisma.Employee$Certificate_Certificate_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$Certificate_Certificate_deletedByToEmployeeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   CertificateType<T extends Prisma.Employee$CertificateTypeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$CertificateTypeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificateTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -174260,6 +177610,54 @@ export type EmployeeDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Employees to delete.
    */
   limit?: number
+}
+
+/**
+ * Employee.BOMExecution_BOMExecution_createdByToEmployee
+ */
+export type Employee$BOMExecution_BOMExecution_createdByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BOMExecution
+   */
+  select?: Prisma.BOMExecutionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BOMExecution
+   */
+  omit?: Prisma.BOMExecutionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BOMExecutionInclude<ExtArgs> | null
+  where?: Prisma.BOMExecutionWhereInput
+  orderBy?: Prisma.BOMExecutionOrderByWithRelationInput | Prisma.BOMExecutionOrderByWithRelationInput[]
+  cursor?: Prisma.BOMExecutionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BOMExecutionScalarFieldEnum | Prisma.BOMExecutionScalarFieldEnum[]
+}
+
+/**
+ * Employee.BOMExecution_BOMExecution_deletedByToEmployee
+ */
+export type Employee$BOMExecution_BOMExecution_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BOMExecution
+   */
+  select?: Prisma.BOMExecutionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BOMExecution
+   */
+  omit?: Prisma.BOMExecutionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BOMExecutionInclude<ExtArgs> | null
+  where?: Prisma.BOMExecutionWhereInput
+  orderBy?: Prisma.BOMExecutionOrderByWithRelationInput | Prisma.BOMExecutionOrderByWithRelationInput[]
+  cursor?: Prisma.BOMExecutionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BOMExecutionScalarFieldEnum | Prisma.BOMExecutionScalarFieldEnum[]
 }
 
 /**

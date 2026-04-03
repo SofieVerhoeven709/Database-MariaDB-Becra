@@ -32,6 +32,7 @@ export const createProjectBOMSchema = projectBOMSchema.omit({
 
 export const updateProjectBOMSchema = projectBOMSchema.pick({
   id: true,
+  projectId: true,
   projectBomId: true,
   projectBomNumber: true,
   additionalInfo: true,
@@ -56,13 +57,10 @@ export const projectBOMStructureSchema = z.object({
   description: z.string().max(255).nullable().optional(),
   tag: z.string().max(255).nullable().optional(),
   requiredQuantity: z.number().int().nullable().optional(),
-  reservedQuantity: z.number().int().nullable().optional(),
-  issuedQuantity: z.number().int().nullable().optional(),
   readyForPurchaseDate: z.date().nullable().optional(),
   createdAt: z.date(),
   createdBy: z.string(),
   readyForPurchase: z.boolean().default(false),
-  notDeliverable: z.boolean().default(false),
   deleted: z.boolean().default(false),
   deletedAt: z.date().nullable().optional(),
   deletedBy: z.string().nullable().optional(),
@@ -85,11 +83,8 @@ export const updateProjectBOMStructureSchema = projectBOMStructureSchema.pick({
   description: true,
   tag: true,
   requiredQuantity: true,
-  reservedQuantity: true,
-  issuedQuantity: true,
   readyForPurchaseDate: true,
   readyForPurchase: true,
-  notDeliverable: true,
 })
 
 export const projectBOMStructureIdSchema = projectBOMStructureSchema.pick({id: true})

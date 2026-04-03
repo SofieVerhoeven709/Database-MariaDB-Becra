@@ -539,3 +539,8 @@ export type PurchaseBOM = Prisma.PurchaseBOMModel
  * 
  */
 export type PurchaseBOMStructure = Prisma.PurchaseBOMStructureModel
+/**
+ * Model BOMExecution
+ * 
+ */
+export type BOMExecution = Prisma.BOMExecutionModel

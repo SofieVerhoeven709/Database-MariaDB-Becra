@@ -3,6 +3,15 @@ import type {MappedProjectBOM, MappedProjectBOMStructure, ChildProjectBOM} from 
 // ─── Raw types (matching updated Prisma include shape) ─────────────────────────
 type StructureEmployeeRaw = {id: string; firstName: string; lastName: string}
 
+export type BOMExecutionRaw = {
+  reservedQuantity: number | null
+  issuedQuantity: number | null
+  notDeliverable: boolean
+  notCorrect: boolean
+  notCorrectReason: string | null
+  completedDate: Date | null
+} | null
+
 type ProjectBOMStructureRaw = {
   id: string
   projectBOMId: string
@@ -12,19 +21,17 @@ type ProjectBOMStructureRaw = {
   description: string | null
   tag: string | null
   requiredQuantity: number | null
-  reservedQuantity: number | null
-  issuedQuantity: number | null
   readyForPurchaseDate: Date | null
   createdAt: Date
   createdBy: string
   readyForPurchase: boolean
-  notDeliverable: boolean
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
   Material: {id: string; name: string | null; beNumber: string | null; shortDescription: string | null}
   Employee_ProjectBOMStructure_createdByToEmployee: StructureEmployeeRaw
   Employee_ProjectBOMStructure_deletedByToEmployee: StructureEmployeeRaw | null
+  BOMExecution: BOMExecutionRaw
 }
 
 type ChildBOMRaw = {
@@ -65,6 +72,7 @@ type ProjectBOMRaw = {
 }
 
 function mapStructure(r: ProjectBOMStructureRaw): MappedProjectBOMStructure {
+  const exec = r.BOMExecution
   return {
     id: r.id,
     projectBOMId: r.projectBOMId,
@@ -76,20 +84,24 @@ function mapStructure(r: ProjectBOMStructureRaw): MappedProjectBOMStructure {
     description: r.description,
     tag: r.tag,
     requiredQuantity: r.requiredQuantity,
-    reservedQuantity: r.reservedQuantity,
-    issuedQuantity: r.issuedQuantity,
     readyForPurchaseDate: r.readyForPurchaseDate?.toISOString() ?? null,
     createdAt: r.createdAt.toISOString(),
     createdBy: r.createdBy,
     createdByName: `${r.Employee_ProjectBOMStructure_createdByToEmployee.firstName} ${r.Employee_ProjectBOMStructure_createdByToEmployee.lastName}`,
     readyForPurchase: r.readyForPurchase,
-    notDeliverable: r.notDeliverable,
     deleted: r.deleted,
     deletedAt: r.deletedAt?.toISOString() ?? null,
     deletedBy: r.deletedBy,
     deletedByName: r.Employee_ProjectBOMStructure_deletedByToEmployee
       ? `${r.Employee_ProjectBOMStructure_deletedByToEmployee.firstName} ${r.Employee_ProjectBOMStructure_deletedByToEmployee.lastName}`
       : null,
+    // ─── Execution fields ────────────────────────────────────────────────────
+    execReservedQuantity: exec?.reservedQuantity ?? null,
+    execIssuedQuantity: exec?.issuedQuantity ?? null,
+    execNotDeliverable: exec?.notDeliverable ?? false,
+    execNotCorrect: exec?.notCorrect ?? false,
+    execNotCorrectReason: exec?.notCorrectReason ?? null,
+    execCompletedDate: exec?.completedDate?.toISOString() ?? null,
   }
 }
 

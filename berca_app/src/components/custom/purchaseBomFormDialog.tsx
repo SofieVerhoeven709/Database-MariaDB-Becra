@@ -9,7 +9,7 @@ import {Label} from '@/components/ui/label'
 import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedPurchaseBOM, ProjectOption} from '@/types/purchaseBom'
-import {createPurchaseBOMAction, updatePurchaseBOMAction, searchPurchasesAction} from '@/serverFunctions/purchaseBoms'
+import {updatePurchaseBOMAction, searchPurchasesAction} from '@/serverFunctions/purchaseBoms'
 import {generateBomNumber} from '@/lib/utils'
 
 interface PurchaseBOMFormDialogProps {
@@ -65,7 +65,6 @@ export function PurchaseBOMFormDialog({
   const [endDate, setEndDate] = useState('')
   const [closed, setClosed] = useState(false)
   const [materialClosed, setMaterialClosed] = useState(false)
-  const [readyForPurchase, setReadyForPurchase] = useState(false)
 
   // ─── Purchase search (create mode only) ───────────────────────────────────────
   const [purchaseQuery, setPurchaseQuery] = useState('')
@@ -89,7 +88,6 @@ export function PurchaseBOMFormDialog({
       setEndDate(bom.endDate?.slice(0, 10) ?? '')
       setClosed(bom.closed)
       setMaterialClosed(bom.materialClosed)
-      setReadyForPurchase(bom.readyForPurchase)
       setParentBomId(bom.purchaseBomId ?? 'none')
     } else {
       setDescription('')
@@ -101,7 +99,6 @@ export function PurchaseBOMFormDialog({
       setEndDate('')
       setClosed(false)
       setMaterialClosed(false)
-      setReadyForPurchase(false)
       setParentBomId('none')
       setPurchaseQuery('')
       setProjectResults([])
@@ -143,18 +140,11 @@ export function PurchaseBOMFormDialog({
         endDate: endDate ? new Date(endDate) : null,
         closed,
         materialClosed,
-        readyForPurchase,
       }
 
       if (isEdit) {
         await updatePurchaseBOMAction({id: bom.id, ...payload})
-      } else {
-        await createPurchaseBOMAction({
-          projectId: selectedProject?.id ?? defaultProjectId!,
-          ...payload,
-        })
       }
-
       onSaved?.()
       onOpenChange(false)
       router.refresh()
@@ -347,7 +337,6 @@ export function PurchaseBOMFormDialog({
               [
                 {label: 'Closed', value: closed, onChange: setClosed},
                 {label: 'Material Closed', value: materialClosed, onChange: setMaterialClosed},
-                {label: 'Ready for Purchase', value: readyForPurchase, onChange: setReadyForPurchase},
               ] as {label: string; value: boolean; onChange: (v: boolean) => void}[]
             ).map(({label, value, onChange}) => (
               <div

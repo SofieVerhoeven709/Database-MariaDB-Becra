@@ -10,11 +10,8 @@ export interface MappedProjectBOMStructure {
   description: string | null
   tag: string | null
   requiredQuantity: number | null
-  reservedQuantity: number | null
-  issuedQuantity: number | null
   readyForPurchaseDate: string | null
   readyForPurchase: boolean
-  notDeliverable: boolean
   createdAt: string
   createdBy: string
   createdByName: string
@@ -22,6 +19,13 @@ export interface MappedProjectBOMStructure {
   deletedAt: string | null
   deletedBy: string | null
   deletedByName: string | null
+  // ─── Execution fields (from BOMExecution, read-only on project side) ────────
+  execReservedQuantity: number | null
+  execIssuedQuantity: number | null
+  execNotDeliverable: boolean
+  execNotCorrect: boolean
+  execNotCorrectReason: string | null
+  execCompletedDate: string | null
 }
 
 // ─── Child BOM summary (lightweight, no nested children to avoid infinite type) ─

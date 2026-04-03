@@ -147,7 +147,7 @@ export function ProjectBOMFormDialog({
       }
 
       if (isEdit) {
-        await updateProjectBOMAction({id: bom.id, ...payload})
+        await updateProjectBOMAction({id: bom.id, projectId: bom.projectId, ...payload})
       } else {
         await createProjectBOMAction({
           projectId: selectedProject?.id ?? defaultProjectId!,

@@ -6,8 +6,6 @@ export const projectBOMInclude = {
   Employee_ProjectBOM_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
   Employee_ProjectBOM_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
   Project: {select: {id: true, projectNumber: true, projectName: true}},
-  // Direct child BOMs (one level — we don't need to recurse in the include;
-  // cascade logic is handled in server actions)
   other_ProjectBOM: {
     select: {
       id: true,
@@ -29,6 +27,17 @@ export const projectBOMInclude = {
       Material: {select: {id: true, name: true, beNumber: true, shortDescription: true}},
       Employee_ProjectBOMStructure_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       Employee_ProjectBOMStructure_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
+      // ── Include BOMExecution so the project side can display execution status ──
+      BOMExecution: {
+        select: {
+          reservedQuantity: true,
+          issuedQuantity: true,
+          notDeliverable: true,
+          notCorrect: true,
+          notCorrectReason: true,
+          completedDate: true,
+        },
+      },
     },
     orderBy: {createdAt: 'asc' as const},
   },
@@ -77,10 +86,6 @@ export async function searchProjects(query: string) {
 
 // ─── Cascade helpers (used by server actions) ─────────────────────────────────
 
-/**
- * Recursively collect all descendant BOM ids (children, grandchildren, …).
- * Used when cascading readyForPurchase=true downward.
- */
 export async function getDescendantBOMIds(parentId: string): Promise<string[]> {
   const children = await prismaClient.projectBOM.findMany({
     where: {projectBomId: parentId, deleted: false},
@@ -92,10 +97,6 @@ export async function getDescendantBOMIds(parentId: string): Promise<string[]> {
   return [...childIds, ...deeper.flat()]
 }
 
-/**
- * Recursively collect all ancestor BOM ids (parent, grandparent, …).
- * Used when cascading readyForPurchase=false upward after a new structure is added.
- */
 export async function getAncestorBOMIds(bomId: string): Promise<string[]> {
   const bom = await prismaClient.projectBOM.findUnique({
     where: {id: bomId},

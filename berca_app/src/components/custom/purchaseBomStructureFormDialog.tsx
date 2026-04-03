@@ -5,96 +5,64 @@ import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from '@/
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import {Textarea} from '@/components/ui/textarea'
-import {Switch} from '@/components/ui/switch'
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
-import {createPurchaseBOMStructureAction, updatePurchaseBOMStructureAction} from '@/serverFunctions/purchaseBoms'
+import {Badge} from '@/components/ui/badge'
+import {updatePurchaseBOMStructureAction} from '@/serverFunctions/purchaseBoms'
 import type {MappedPurchaseBOMStructure, BomMaterialOption} from '@/types/purchaseBom'
 import {useRouter} from 'next/navigation'
 
 interface PurchaseBOMStructureFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  /** null = dialog closed / no structure selected */
   structure: MappedPurchaseBOMStructure | null
   purchaseBOMId: string
+  /** kept in props for API compatibility but not used — material is read-only */
   materialOptions: BomMaterialOption[]
 }
 
-function emptyForm() {
-  return {
-    materialId: '',
-    shortDescription: '',
-    description: '',
-    additionalInfo: '',
-    tag: '',
-    requiredQuantity: '',
-    reservedQuantity: '',
-    issuedQuantity: '',
-    readyForPurchaseDate: '',
-    readyForPurchase: false,
-    notDeliverable: false,
-  }
+function formatDate(date: string | null) {
+  if (!date) return '—'
+  return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
-export function PurchaseBOMStructureFormDialog({
-  open,
-  onOpenChange,
-  structure,
-  purchaseBOMId,
-  materialOptions,
-}: PurchaseBOMStructureFormDialogProps) {
+function ReadOnlyField({label, value}: {label: string; value: React.ReactNode}) {
+  return (
+    <div className="flex flex-col gap-1">
+      <Label className="text-xs text-muted-foreground">{label}</Label>
+      <div className="flex h-9 items-center rounded-md border border-border/50 bg-secondary/40 px-3 text-sm text-muted-foreground select-none cursor-default">
+        {value ?? '—'}
+      </div>
+    </div>
+  )
+}
+
+export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: PurchaseBOMStructureFormDialogProps) {
   const router = useRouter()
-  const isEdit = !!structure
   const [saving, setSaving] = useState(false)
-  const [form, setForm] = useState(emptyForm())
+
+  // ── Only the execution fields are editable ───────────────────────────────────
+  const [reservedQuantity, setReservedQuantity] = useState('')
+  const [issuedQuantity, setIssuedQuantity] = useState('')
 
   useEffect(() => {
     if (structure) {
-      setForm({
-        materialId: structure.materialId,
-        shortDescription: structure.shortDescription ?? '',
-        description: structure.description ?? '',
-        additionalInfo: structure.additionalInfo ?? '',
-        tag: structure.tag ?? '',
-        requiredQuantity: structure.requiredQuantity?.toString() ?? '',
-        reservedQuantity: structure.reservedQuantity?.toString() ?? '',
-        issuedQuantity: structure.issuedQuantity?.toString() ?? '',
-        readyForPurchaseDate: structure.readyForPurchaseDate
-          ? new Date(structure.readyForPurchaseDate).toISOString().slice(0, 10)
-          : '',
-        readyForPurchase: structure.readyForPurchase,
-        notDeliverable: structure.notDeliverable,
-      })
-    } else if (open) {
-      setForm(emptyForm())
+      setReservedQuantity(structure.reservedQuantity?.toString() ?? '')
+      setIssuedQuantity(structure.issuedQuantity?.toString() ?? '')
+    } else {
+      setReservedQuantity('')
+      setIssuedQuantity('')
     }
   }, [structure?.id, open])
 
-  function set<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
-    setForm(prev => ({...prev, [key]: value}))
-  }
-
   async function handleSubmit() {
+    if (!structure) return
     setSaving(true)
     try {
-      const payload = {
-        materialId: form.materialId,
-        shortDescription: form.shortDescription.trim() || null,
-        description: form.description.trim() || null,
-        additionalInfo: form.additionalInfo.trim() || null,
-        tag: form.tag.trim() || null,
-        requiredQuantity: form.requiredQuantity ? parseInt(form.requiredQuantity) : null,
-        reservedQuantity: form.reservedQuantity ? parseInt(form.reservedQuantity) : null,
-        issuedQuantity: form.issuedQuantity ? parseInt(form.issuedQuantity) : null,
-        readyForPurchaseDate: form.readyForPurchaseDate ? new Date(form.readyForPurchaseDate) : null,
-        readyForPurchase: form.readyForPurchase,
-        notDeliverable: form.notDeliverable,
-      }
-      if (isEdit) {
-        await updatePurchaseBOMStructureAction({...payload, id: structure.id})
-      } else {
-        await createPurchaseBOMStructureAction({...payload, purchaseBOMId})
-      }
+      await updatePurchaseBOMStructureAction({
+        id: structure.id,
+        reservedQuantity: reservedQuantity !== '' ? parseInt(reservedQuantity) : null,
+        issuedQuantity: issuedQuantity !== '' ? parseInt(issuedQuantity) : null,
+      })
       onOpenChange(false)
       router.refresh()
     } finally {
@@ -102,129 +70,86 @@ export function PurchaseBOMStructureFormDialog({
     }
   }
 
-  const canSubmit = !!form.materialId
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto bg-card border-border">
+      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-card border-border">
         <DialogHeader>
-          <DialogTitle className="text-foreground">{isEdit ? 'Edit BOM Structure' : 'Add BOM Structure'}</DialogTitle>
+          <DialogTitle className="text-foreground">Update Execution Quantities</DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 gap-5 py-3 sm:grid-cols-2">
-          {/* Material — full width */}
-          <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label className="text-xs text-muted-foreground">Material *</Label>
-            <Select value={form.materialId} onValueChange={v => set('materialId', v)}>
-              <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select material…" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                {materialOptions.map(m => (
-                  <SelectItem key={m.id} value={m.id}>
-                    {m.beNumber ?? m.id}
-                    {m.name ? ` — ${m.name}` : m.shortDescription ? ` — ${m.shortDescription}` : ''}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Short Description</Label>
-            <Input
-              value={form.shortDescription}
-              onChange={e => set('shortDescription', e.target.value)}
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Tag</Label>
-            <Input value={form.tag} onChange={e => set('tag', e.target.value)} className="bg-secondary border-border" />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Required Qty</Label>
-            <Input
-              type="number"
-              min="0"
-              step="1"
-              value={form.requiredQuantity}
-              onChange={e => set('requiredQuantity', e.target.value)}
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Reserved Qty</Label>
-            <Input
-              type="number"
-              min="0"
-              step="1"
-              value={form.reservedQuantity}
-              onChange={e => set('reservedQuantity', e.target.value)}
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Issued Qty</Label>
-            <Input
-              type="number"
-              min="0"
-              step="1"
-              value={form.issuedQuantity}
-              onChange={e => set('issuedQuantity', e.target.value)}
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Ready for Purchase Date</Label>
-            <Input
-              type="date"
-              value={form.readyForPurchaseDate}
-              onChange={e => set('readyForPurchaseDate', e.target.value)}
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label className="text-xs text-muted-foreground">Description</Label>
-            <Textarea
-              value={form.description}
-              onChange={e => set('description', e.target.value)}
-              rows={2}
-              className="bg-secondary border-border resize-none"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label className="text-xs text-muted-foreground">Additional Info</Label>
-            <Textarea
-              value={form.additionalInfo}
-              onChange={e => set('additionalInfo', e.target.value)}
-              rows={2}
-              className="bg-secondary border-border resize-none"
-            />
-          </div>
-
-          {/* Toggles */}
-          <div className="sm:col-span-2 flex flex-col gap-2">
-            {(
-              [
-                {key: 'readyForPurchase', label: 'Ready for Purchase'},
-                {key: 'notDeliverable', label: 'Not Deliverable'},
-              ] as {key: 'readyForPurchase' | 'notDeliverable'; label: string}[]
-            ).map(({key, label}) => (
-              <div
-                key={key}
-                className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
-                <Label className="text-xs text-muted-foreground">{label}</Label>
-                <Switch checked={form[key]} onCheckedChange={v => set(key, v)} />
+        <div className="flex flex-col gap-5 py-3">
+          {/* ── Read-only structural information ─────────────────────────────── */}
+          <div className="rounded-lg border border-border/40 bg-secondary/20 px-4 py-3">
+            <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wide">
+              Structure Info (read-only — managed from Project BOM)
+            </p>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="sm:col-span-2">
+                <ReadOnlyField
+                  label="Material"
+                  value={
+                    structure ? (
+                      <span className="flex items-center gap-2">
+                        <span className="font-mono text-xs text-muted-foreground/70">{structure.materialBeNumber}</span>
+                        <span>{structure.materialName}</span>
+                      </span>
+                    ) : null
+                  }
+                />
               </div>
-            ))}
+              <ReadOnlyField label="Short Description" value={structure?.shortDescription} />
+              <ReadOnlyField label="Tag" value={structure?.tag} />
+              <ReadOnlyField label="Required Qty" value={structure?.requiredQuantity?.toString()} />
+              <ReadOnlyField
+                label="Ready for Purchase Date"
+                value={formatDate(structure?.readyForPurchaseDate ?? null)}
+              />
+              <div className="flex flex-col gap-1">
+                <Label className="text-xs text-muted-foreground">Not Deliverable</Label>
+                <div className="flex h-9 items-center px-1">
+                  {structure?.notDeliverable ? (
+                    <Badge className="text-xs text-red-600 bg-red-600/15 border-0">Yes</Badge>
+                  ) : (
+                    <Badge variant="secondary" className="text-xs text-muted-foreground/60">
+                      No
+                    </Badge>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Editable execution fields ─────────────────────────────────────── */}
+          <div className="flex flex-col gap-1.5">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
+              Execution Quantities
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Reserved Qty</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={reservedQuantity}
+                  onChange={e => setReservedQuantity(e.target.value)}
+                  className="bg-secondary border-border"
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Issued Qty</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={issuedQuantity}
+                  onChange={e => setIssuedQuantity(e.target.value)}
+                  className="bg-secondary border-border"
+                  placeholder="0"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -234,9 +159,9 @@ export function PurchaseBOMStructureFormDialog({
           </Button>
           <Button
             onClick={handleSubmit}
-            disabled={saving || !canSubmit}
+            disabled={saving || !structure}
             className="bg-accent text-accent-foreground hover:bg-accent/80">
-            {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Add Structure'}
+            {saving ? 'Saving…' : 'Save Quantities'}
           </Button>
         </DialogFooter>
       </DialogContent>

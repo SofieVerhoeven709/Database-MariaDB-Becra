@@ -2,18 +2,18 @@
 export interface MappedPurchaseBOMStructure {
   id: string
   purchaseBOMId: string
+  // ─── Link back to the originating project structure ─────────────────────────
+  projectBOMStructureId: string
   materialId: string
   materialName: string
   materialBeNumber: string
+  // ─── Read-only fields (driven from ProjectBOMStructure) ──────────────────────
   shortDescription: string | null
   additionalInfo: string | null
   description: string | null
   tag: string | null
   requiredQuantity: number | null
-  reservedQuantity: number | null
-  issuedQuantity: number | null
   readyForPurchaseDate: string | null
-  readyForPurchase: boolean
   notDeliverable: boolean
   createdAt: string
   createdBy: string
@@ -22,6 +22,12 @@ export interface MappedPurchaseBOMStructure {
   deletedAt: string | null
   deletedBy: string | null
   deletedByName: string | null
+  // ─── Execution fields (editable on purchase side) ────────────────────────────
+  reservedQuantity: number | null
+  issuedQuantity: number | null
+  notCorrect: boolean
+  notCorrectReason: string | null
+  completedDate: string | null
 }
 
 // ─── Child BOM summary (lightweight, no nested children to avoid infinite type) ─
@@ -33,7 +39,6 @@ export interface ChildPurchaseBOM {
   structureCount: number
   closed: boolean
   materialClosed: boolean
-  readyForPurchase: boolean
   deleted: boolean
 }
 
@@ -56,7 +61,6 @@ export interface MappedPurchaseBOM {
   createdByName: string
   closed: boolean
   materialClosed: boolean
-  readyForPurchase: boolean
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null

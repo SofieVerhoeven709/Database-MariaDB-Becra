@@ -4,7 +4,7 @@ import {useState} from 'react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {ArrowLeft, Pencil, X, Save, Plus, Trash2, GitBranch, Layers} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Trash2, GitBranch, Layers} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -49,12 +49,11 @@ export function PurchaseBOMDetail({
 }: PurchaseBOMDetailProps) {
   const router = useRouter()
   const canEdit = currentUserLevel >= 40
-  const canCreate = currentUserLevel >= 60
   const canDelete = currentUserLevel >= 80
   const canEditNumber = currentUserLevel >= 80
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
-  // ─── Header editing ──────────────────────────────────────────────────────────
+  // ─── Header editing (BOM metadata — purchase side CAN edit these) ────────────
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [editDescription, setEditDescription] = useState(bom.description ?? '')
@@ -66,7 +65,6 @@ export function PurchaseBOMDetail({
   const [editEndDate, setEditEndDate] = useState(bom.endDate?.slice(0, 10) ?? '')
   const [editClosed, setEditClosed] = useState(bom.closed)
   const [editMaterialClosed, setEditMaterialClosed] = useState(bom.materialClosed)
-  const [editReadyForPurchase, setEditReadyForPurchase] = useState(bom.readyForPurchase)
 
   const parentBomOptions = allBOMs.filter(b => b.id !== bom.id)
   const parentBom = allBOMs.find(b => b.id === bom.purchaseBomId) ?? null
@@ -85,7 +83,6 @@ export function PurchaseBOMDetail({
         endDate: editEndDate ? new Date(editEndDate) : null,
         closed: editClosed,
         materialClosed: editMaterialClosed,
-        readyForPurchase: editReadyForPurchase,
       })
       setEditing(false)
       router.refresh()
@@ -104,11 +101,12 @@ export function PurchaseBOMDetail({
     setEditEndDate(bom.endDate?.slice(0, 10) ?? '')
     setEditClosed(bom.closed)
     setEditMaterialClosed(bom.materialClosed)
-    setEditReadyForPurchase(bom.readyForPurchase)
     setEditing(false)
   }
 
-  // ─── Structure dialog ────────────────────────────────────────────────────────
+  // ─── Structure execution edit dialog ─────────────────────────────────────────
+  // NOTE: the dialog only shows execution fields (reservedQty, issuedQty).
+  // All structural fields (material, description, qty, etc.) are read-only.
   const [structureDialogOpen, setStructureDialogOpen] = useState(false)
   const [editingStructure, setEditingStructure] = useState<MappedPurchaseBOMStructure | null>(null)
 
@@ -275,7 +273,7 @@ export function PurchaseBOMDetail({
             )}
           </div>
 
-          {/* Purchase */}
+          {/* Project */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project</Label>
             <div className="flex flex-col gap-0.5">
@@ -349,12 +347,6 @@ export function PurchaseBOMDetail({
                   onChange: setEditMaterialClosed,
                   current: bom.materialClosed,
                 },
-                {
-                  label: 'Ready for Purchase',
-                  value: editReadyForPurchase,
-                  onChange: setEditReadyForPurchase,
-                  current: bom.readyForPurchase,
-                },
               ] as {label: string; value: boolean; onChange: (v: boolean) => void; current: boolean}[]
             ).map(({label, value, onChange, current}) => (
               <div
@@ -400,6 +392,12 @@ export function PurchaseBOMDetail({
 
           {/* ── Structures ─────────────────────────────────────────────────── */}
           <TabsContent value="structures" className="p-4 pt-3">
+            {/* info banner: structures are auto-synced from project side */}
+            <div className="mb-3 rounded-lg border border-border/40 bg-secondary/30 px-3 py-2 text-xs text-muted-foreground/70">
+              Structures are automatically synced from the Project BOM when marked as Ready for Purchase. Only execution
+              quantities can be edited here.
+            </div>
+
             <div className="flex items-center justify-between mb-3">
               <Select value={structureFilter} onValueChange={v => setStructureFilter(v as StructureFilter)}>
                 <SelectTrigger className="h-7 text-xs w-[130px] bg-secondary border-border">
@@ -417,42 +415,30 @@ export function PurchaseBOMDetail({
                   </SelectItem>
                 </SelectContent>
               </Select>
-
-              {canCreate &&
-                (bom.materialClosed ? (
-                  <div className="flex items-center gap-1.5 rounded-md border border-border bg-secondary/50 px-2.5 py-1 text-xs text-muted-foreground/60 select-none">
-                    <Plus className="h-3.5 w-3.5" /> Material Closed
-                  </div>
-                ) : (
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="text-xs h-7 border-border gap-1"
-                    onClick={() => {
-                      setEditingStructure(null)
-                      setStructureDialogOpen(true)
-                    }}>
-                    <Plus className="h-3.5 w-3.5" /> Add Structure
-                  </Button>
-                ))}
+              {/* No "Add Structure" button — structures come from project side only */}
             </div>
 
             {visibleStructures.length === 0 ? (
-              <p className="text-sm text-muted-foreground text-center py-8">No structures found.</p>
+              <p className="text-sm text-muted-foreground text-center py-8">
+                No structures found. Structures appear here when marked Ready for Purchase on the Project BOM.
+              </p>
             ) : (
               <div className="rounded-lg border border-border/60 overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow className="hover:bg-transparent border-border/60">
+                      {/* Read-only structural columns */}
                       <TableHead className={thClass}>Material</TableHead>
                       <TableHead className={thClass}>Short Desc.</TableHead>
                       <TableHead className={thClass}>Tag</TableHead>
                       <TableHead className={thClass}>Req. Qty</TableHead>
-                      <TableHead className={thClass}>Res. Qty</TableHead>
-                      <TableHead className={thClass}>Issued Qty</TableHead>
                       <TableHead className={thClass}>Ready</TableHead>
                       <TableHead className={thClass}>Not Deliv.</TableHead>
                       <TableHead className={thClass}>Ready Date</TableHead>
+                      {/* Editable execution columns */}
+                      <TableHead className={`${thClass} border-l border-border/40`}>Res. Qty</TableHead>
+                      <TableHead className={thClass}>Issued Qty</TableHead>
+                      {/* Meta */}
                       <TableHead className={thClass}>Added By</TableHead>
                       <TableHead className={thClass}>Added At</TableHead>
                       <TableHead className="w-28">
@@ -465,6 +451,7 @@ export function PurchaseBOMDetail({
                       <TableRow
                         key={s.id}
                         className={`border-border/40 hover:bg-secondary/50 ${s.deleted ? 'opacity-50' : ''}`}>
+                        {/* Read-only structural cells */}
                         <TableCell className={`${tdClass} text-foreground font-medium`}>
                           <div className="flex flex-col gap-0.5">
                             <span>{s.materialName}</span>
@@ -476,17 +463,6 @@ export function PurchaseBOMDetail({
                         <TableCell className={tdClass}>{s.shortDescription ?? '—'}</TableCell>
                         <TableCell className={tdClass}>{s.tag ?? '—'}</TableCell>
                         <TableCell className={tdClass}>{s.requiredQuantity ?? '—'}</TableCell>
-                        <TableCell className={tdClass}>{s.reservedQuantity ?? '—'}</TableCell>
-                        <TableCell className={tdClass}>{s.issuedQuantity ?? '—'}</TableCell>
-                        <TableCell>
-                          {s.readyForPurchase ? (
-                            <Badge className="bg-accent/15 text-accent border-0 text-xs">Yes</Badge>
-                          ) : (
-                            <Badge variant="secondary" className="text-xs text-muted-foreground/60">
-                              No
-                            </Badge>
-                          )}
-                        </TableCell>
                         <TableCell>
                           {s.notDeliverable ? (
                             <Badge className="text-xs text-red-600 bg-red-600/15 border-0">Yes</Badge>
@@ -497,6 +473,12 @@ export function PurchaseBOMDetail({
                           )}
                         </TableCell>
                         <TableCell className={tdClass}>{formatDate(s.readyForPurchaseDate)}</TableCell>
+                        {/* Editable execution cells */}
+                        <TableCell className={`${tdClass} border-l border-border/40`}>
+                          {s.reservedQuantity ?? '—'}
+                        </TableCell>
+                        <TableCell className={tdClass}>{s.issuedQuantity ?? '—'}</TableCell>
+                        {/* Meta */}
                         <TableCell className={tdClass}>{s.createdByName}</TableCell>
                         <TableCell className={tdClass}>{formatDate(s.createdAt)}</TableCell>
                         <TableCell>
@@ -508,6 +490,7 @@ export function PurchaseBOMDetail({
                                     variant="ghost"
                                     size="icon"
                                     className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                    title="Edit execution quantities"
                                     onClick={() => {
                                       setEditingStructure(s)
                                       setStructureDialogOpen(true)
@@ -603,9 +586,6 @@ export function PurchaseBOMDetail({
                       <Badge variant="secondary" className="text-xs">
                         {child.structureCount} structure{child.structureCount !== 1 ? 's' : ''}
                       </Badge>
-                      {child.readyForPurchase && (
-                        <Badge className="bg-accent/15 text-accent border-0 text-xs">Ready</Badge>
-                      )}
                       {child.materialClosed && (
                         <Badge variant="secondary" className="text-xs">
                           Mat. Closed
@@ -630,6 +610,7 @@ export function PurchaseBOMDetail({
         </Tabs>
       </div>
 
+      {/* Execution-only edit dialog */}
       <PurchaseBOMStructureFormDialog
         open={structureDialogOpen}
         onOpenChange={setStructureDialogOpen}

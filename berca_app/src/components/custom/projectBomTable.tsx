@@ -72,11 +72,11 @@ function BOMStatusBadges({bom}: {bom: MappedProjectBOM}) {
   const activeStructures = bom.structures.filter(s => !s.deleted)
   const allReady = activeStructures.length > 0 && activeStructures.every(s => s.readyForPurchase)
   const someReady = !allReady && activeStructures.some(s => s.readyForPurchase)
-  const anyNotDeliverable = activeStructures.some(s => s.notDeliverable)
+  const anyNotDeliverable = activeStructures.some(s => s.execNotDeliverable)
   const fullyIssued =
     activeStructures.length > 0 &&
     activeStructures.every(
-      s => s.issuedQuantity !== null && s.requiredQuantity !== null && s.issuedQuantity >= s.requiredQuantity,
+      s => s.execIssuedQuantity !== null && s.requiredQuantity !== null && s.execIssuedQuantity >= s.requiredQuantity,
     )
 
   const badges: React.ReactNode[] = []

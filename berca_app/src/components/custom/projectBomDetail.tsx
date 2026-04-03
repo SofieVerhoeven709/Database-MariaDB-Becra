@@ -76,6 +76,7 @@ export function ProjectBOMDetail({
     try {
       await updateProjectBOMAction({
         id: bom.id,
+        projectId: bom.projectId,
         description: editDescription.trim() || null,
         shortDescription: editShortDescription.trim(),
         projectBomId: editParentBomId !== 'none' ? editParentBomId : null,
@@ -448,11 +449,18 @@ export function ProjectBOMDetail({
                       <TableHead className={thClass}>Short Desc.</TableHead>
                       <TableHead className={thClass}>Tag</TableHead>
                       <TableHead className={thClass}>Req. Qty</TableHead>
-                      <TableHead className={thClass}>Res. Qty</TableHead>
-                      <TableHead className={thClass}>Issued Qty</TableHead>
                       <TableHead className={thClass}>Ready</TableHead>
                       <TableHead className={thClass}>Not Deliv.</TableHead>
                       <TableHead className={thClass}>Ready Date</TableHead>
+                      {/* ── Execution columns (read-only, from BOMExecution) ── */}
+                      <TableHead className={`${thClass} border-l border-border/40 text-muted-foreground/60`}>
+                        Exec. Res. Qty
+                      </TableHead>
+                      <TableHead className={`${thClass} text-muted-foreground/60`}>Exec. Issued Qty</TableHead>
+                      <TableHead className={`${thClass} text-muted-foreground/60`}>Exec. Not Deliv.</TableHead>
+                      <TableHead className={`${thClass} text-muted-foreground/60`}>Exec. Not Correct</TableHead>
+                      <TableHead className={`${thClass} text-muted-foreground/60`}>Completed</TableHead>
+                      {/* ─────────────────────────────────────────────────────── */}
                       <TableHead className={thClass}>Added By</TableHead>
                       <TableHead className={thClass}>Added At</TableHead>
                       <TableHead className="w-28">
@@ -476,8 +484,6 @@ export function ProjectBOMDetail({
                         <TableCell className={tdClass}>{s.shortDescription ?? '—'}</TableCell>
                         <TableCell className={tdClass}>{s.tag ?? '—'}</TableCell>
                         <TableCell className={tdClass}>{s.requiredQuantity ?? '—'}</TableCell>
-                        <TableCell className={tdClass}>{s.reservedQuantity ?? '—'}</TableCell>
-                        <TableCell className={tdClass}>{s.issuedQuantity ?? '—'}</TableCell>
                         <TableCell>
                           {s.readyForPurchase ? (
                             <Badge className="bg-accent/15 text-accent border-0 text-xs">Yes</Badge>
@@ -487,8 +493,14 @@ export function ProjectBOMDetail({
                             </Badge>
                           )}
                         </TableCell>
+                        <TableCell className={tdClass}>{formatDate(s.readyForPurchaseDate)}</TableCell>
+                        {/* ── Execution columns ── */}
+                        <TableCell className={`${tdClass} border-l border-border/40`}>
+                          {s.execReservedQuantity ?? '—'}
+                        </TableCell>
+                        <TableCell className={tdClass}>{s.execIssuedQuantity ?? '—'}</TableCell>
                         <TableCell>
-                          {s.notDeliverable ? (
+                          {s.execNotDeliverable ? (
                             <Badge className="text-xs text-red-600 bg-red-600/15 border-0">Yes</Badge>
                           ) : (
                             <Badge variant="secondary" className="text-xs text-muted-foreground/60">
@@ -496,7 +508,21 @@ export function ProjectBOMDetail({
                             </Badge>
                           )}
                         </TableCell>
-                        <TableCell className={tdClass}>{formatDate(s.readyForPurchaseDate)}</TableCell>
+                        <TableCell>
+                          {s.execNotCorrect ? (
+                            <Badge
+                              className="text-xs text-amber-600 bg-amber-600/15 border-0"
+                              title={s.execNotCorrectReason ?? undefined}>
+                              Yes
+                            </Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-xs text-muted-foreground/60">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className={tdClass}>{formatDate(s.execCompletedDate)}</TableCell>
+                        {/* ─────────────────────── */}
                         <TableCell className={tdClass}>{s.createdByName}</TableCell>
                         <TableCell className={tdClass}>{formatDate(s.createdAt)}</TableCell>
                         <TableCell>

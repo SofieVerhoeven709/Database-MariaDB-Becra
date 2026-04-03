@@ -70,8 +70,6 @@ function Th({
 /** Derive a human-readable status from booleans + structures */
 function BOMStatusBadges({bom}: {bom: MappedPurchaseBOM}) {
   const activeStructures = bom.structures.filter(s => !s.deleted)
-  const allReady = activeStructures.length > 0 && activeStructures.every(s => s.readyForPurchase)
-  const someReady = !allReady && activeStructures.some(s => s.readyForPurchase)
   const anyNotDeliverable = activeStructures.some(s => s.notDeliverable)
   const fullyIssued =
     activeStructures.length > 0 &&
@@ -91,18 +89,6 @@ function BOMStatusBadges({bom}: {bom: MappedPurchaseBOM}) {
     badges.push(
       <Badge key="mat" variant="secondary" className="text-xs">
         Mat. Closed
-      </Badge>,
-    )
-  if (bom.readyForPurchase || allReady)
-    badges.push(
-      <Badge key="ready" className="bg-accent/15 text-accent border-0 text-xs">
-        Ready
-      </Badge>,
-    )
-  else if (someReady)
-    badges.push(
-      <Badge key="partial" className="bg-accent/10 text-accent/70 border-0 text-xs">
-        Partial Ready
       </Badge>,
     )
   else
@@ -256,16 +242,6 @@ export function PurchaseBOMTable({
             </SelectContent>
           </Select>
         </div>
-        {isAdmin && (
-          <Button
-            onClick={() => {
-              setEditingBOM(null)
-              setDialogOpen(true)
-            }}
-            className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-            <Plus className="h-4 w-4" /> New BOM
-          </Button>
-        )}
       </div>
 
       {/* Table */}

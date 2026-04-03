@@ -22,8 +22,11 @@ export default async function SpecPage() {
     groupB: g.groupB,
     groupC: g.groupC,
     groupD: g.groupD,
-    createdAt: null,
-    createdByName: null,
+    createdById: g.createdBy,
+    createdAt: g.createdAt.toISOString(),
+    createdByName: [g.createdByFirstName, g.createdByLastName].filter(Boolean).join(' ') || null,
+    deletedAt: g.deletedAt ? g.deletedAt.toISOString() : null,
+    deletedByName: [g.deletedByFirstName, g.deletedByLastName].filter(Boolean).join(' ') || null,
     deleted: g.deleted,
   }))
 
@@ -36,6 +39,10 @@ export default async function SpecPage() {
     longDescription: u.longDescription ?? null,
     createdAt: u.createdAt.toISOString(),
     createdByName: `${u.Employee.firstName} ${u.Employee.lastName}`,
+    deletedAt: u.deletedAt ? u.deletedAt.toISOString() : null,
+    deletedByName: u.Employee_Unit_deletedByToEmployee
+      ? `${u.Employee_Unit_deletedByToEmployee.firstName} ${u.Employee_Unit_deletedByToEmployee.lastName}`
+      : null,
     valid: u.valid,
     deleted: u.deleted,
   }))
@@ -49,6 +56,10 @@ export default async function SpecPage() {
     longDescription: p.longDescription ?? null,
     createdAt: p.createdAt.toISOString(),
     createdByName: p.Employee ? `${p.Employee.firstName} ${p.Employee.lastName}` : null,
+    deletedAt: p.deletedAt ? p.deletedAt.toISOString() : null,
+    deletedByName: p.Employee_MaterialPerformance_deletedByToEmployee
+      ? `${p.Employee_MaterialPerformance_deletedByToEmployee.firstName} ${p.Employee_MaterialPerformance_deletedByToEmployee.lastName}`
+      : null,
     deleted: p.deleted,
   }))
 

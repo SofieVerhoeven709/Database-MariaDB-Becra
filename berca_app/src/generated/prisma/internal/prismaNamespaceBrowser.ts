@@ -711,8 +711,7 @@ export const MaterialScalarFieldEnum = {
   longDescription: 'longDescription',
   preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
-  documentationPlace: 'documentationPlace',
-  bePartDoc: 'bePartDoc',
+  warehousePlaceId: 'warehousePlaceId',
   rejected: 'rejected',
   isSerialTracked: 'isSerialTracked',
   materialGroupIdA: 'materialGroupIdA',
@@ -723,11 +722,11 @@ export const MaterialScalarFieldEnum = {
   unitId: 'unitId',
   longLeadTime: 'longLeadTime',
   createdBy: 'createdBy',
+  createdAt: 'createdAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  targetId: 'targetId',
-  warehousePlaceId: 'warehousePlaceId'
+  targetId: 'targetId'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -811,8 +810,10 @@ export const MaterialGroupScalarFieldEnum = {
   groupB: 'groupB',
   groupC: 'groupC',
   groupD: 'groupD',
+  createdAt: 'createdAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
   deletedBy: 'deletedBy'
 } as const
 
@@ -936,14 +937,14 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   management: 'management',
   date: 'date',
   expiredDate: 'expiredDate',
-  documentationPlace: 'documentationPlace',
-  docRevision: 'docRevision',
+  warehousePlaceId: 'warehousePlaceId',
   valid: 'valid',
   additionalInfo: 'additionalInfo',
   beNumber: 'beNumber',
@@ -1462,8 +1463,8 @@ export const WarehousePlaceScalarFieldEnum = {
   layerPlace: 'layerPlace',
   information: 'information',
   quantityInStock: 'quantityInStock',
-  createdAt: 'createdAt',
   createdBy: 'createdBy',
+  createdAt: 'createdAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -2261,8 +2262,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   longDescription: 'longDescription',
   preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
-  documentationPlace: 'documentationPlace',
-  bePartDoc: 'bePartDoc',
+  warehousePlaceId: 'warehousePlaceId',
   materialGroupIdA: 'materialGroupIdA',
   materialGroupIdB: 'materialGroupIdB',
   materialGroupIdC: 'materialGroupIdC',
@@ -2271,8 +2271,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   unitId: 'unitId',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy',
-  targetId: 'targetId',
-  warehousePlaceId: 'warehousePlaceId'
+  targetId: 'targetId'
 } as const
 
 export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
@@ -2343,6 +2342,7 @@ export const MaterialGroupOrderByRelevanceFieldEnum = {
   groupB: 'groupB',
   groupC: 'groupC',
   groupD: 'groupD',
+  createdBy: 'createdBy',
   deletedBy: 'deletedBy'
 } as const
 
@@ -2446,11 +2446,12 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   management: 'management',
-  documentationPlace: 'documentationPlace',
+  warehousePlaceId: 'warehousePlaceId',
   additionalInfo: 'additionalInfo',
   beNumber: 'beNumber',
   beParentPart: 'beParentPart',

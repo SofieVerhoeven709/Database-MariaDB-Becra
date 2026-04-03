@@ -12,15 +12,39 @@ export type MaterialGroupOption = {
   groupB: string | null
   groupC: string | null
   groupD: string | null
+  createdAt: Date
+  createdBy: string
+  createdByFirstName: string | null
+  createdByLastName: string | null
   deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
+  deletedByFirstName: string | null
+  deletedByLastName: string | null
 }
 
 export function getMaterialGroups(includeDeleted = false): Promise<MaterialGroupOption[]> {
   return prismaClient.$queryRaw<MaterialGroupOption[]>(PrismaClientLib.sql`
-    SELECT id, groupA, groupB, groupC, groupD, deleted
-    FROM MaterialGroup
-    ${includeDeleted ? PrismaClientLib.sql`` : PrismaClientLib.sql`WHERE deleted = 0`}
-    ORDER BY groupA ASC, groupB ASC, groupC ASC, groupD ASC
+    SELECT
+      mg.id,
+      mg.groupA,
+      mg.groupB,
+      mg.groupC,
+      mg.groupD,
+      mg.createdAt,
+      mg.createdBy,
+      creator.firstName AS createdByFirstName,
+      creator.lastName AS createdByLastName,
+      mg.deleted,
+      mg.deletedAt,
+      mg.deletedBy,
+      deleter.firstName AS deletedByFirstName,
+      deleter.lastName AS deletedByLastName
+    FROM MaterialGroup mg
+    INNER JOIN Employee creator ON creator.id = mg.createdBy
+    LEFT JOIN Employee deleter ON deleter.id = mg.deletedBy
+    ${includeDeleted ? PrismaClientLib.sql`` : PrismaClientLib.sql`WHERE mg.deleted = 0`}
+    ORDER BY mg.groupA ASC, mg.groupB ASC, mg.groupC ASC, mg.groupD ASC
   `)
 }
 
@@ -30,11 +54,13 @@ export function createMaterialGroup(data: {
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  createdBy: string
+  createdAt: Date
 }) {
   return prismaClient.$executeRaw(
     PrismaClientLib.sql`
-      INSERT INTO MaterialGroup (id, groupA, groupB, groupC, groupD, deleted, deletedAt, deletedBy)
-      VALUES (${data.id}, ${data.groupA}, ${data.groupB ?? null}, ${data.groupC ?? null}, ${data.groupD ?? null}, 0, NULL, NULL)
+      INSERT INTO MaterialGroup (id, groupA, groupB, groupC, groupD, createdBy, createdAt, deleted, deletedAt, deletedBy)
+      VALUES (${data.id}, ${data.groupA}, ${data.groupB ?? null}, ${data.groupC ?? null}, ${data.groupD ?? null}, ${data.createdBy}, ${data.createdAt}, 0, NULL, NULL)
     `,
   )
 }
@@ -84,6 +110,7 @@ export function softDeleteMaterialGroup(id: string, deletedBy: string) {
 
 export type UnitWithCreator = Unit & {
   Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
+  Employee_Unit_deletedByToEmployee: Pick<Employee, 'id' | 'firstName' | 'lastName'> | null
 }
 
 export async function getUnits(includeDeleted = false): Promise<UnitWithCreator[]> {
@@ -91,6 +118,7 @@ export async function getUnits(includeDeleted = false): Promise<UnitWithCreator[
     where: includeDeleted ? undefined : {deleted: false},
     include: {
       Employee: {select: {id: true, firstName: true, lastName: true}},
+      Employee_Unit_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
     },
     orderBy: {unitName: 'asc'},
   })
@@ -133,6 +161,7 @@ export async function getMaterialFamilies(): Promise<MaterialFamily[]> {
 
 export type MaterialPerformanceWithCreator = MaterialPerformance & {
   Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'> | null
+  Employee_MaterialPerformance_deletedByToEmployee: Pick<Employee, 'id' | 'firstName' | 'lastName'> | null
 }
 
 export async function getMaterialPerformances(includeDeleted = false): Promise<MaterialPerformanceWithCreator[]> {
@@ -140,6 +169,7 @@ export async function getMaterialPerformances(includeDeleted = false): Promise<M
     where: includeDeleted ? undefined : {deleted: false},
     include: {
       Employee: {select: {id: true, firstName: true, lastName: true}},
+      Employee_MaterialPerformance_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
     },
     orderBy: {name: 'asc'},
   })

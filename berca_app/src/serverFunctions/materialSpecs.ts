@@ -32,9 +32,9 @@ export const createMaterialGroupAction = protectedFormAction({
   schema: materialGroupSchema,
   functionName: 'Create material group',
   globalErrorMessage: 'Could not create the material group, please try again.',
-  serverFn: async ({data, logger}) => {
+  serverFn: async ({data, profile, logger}) => {
     const groupId = data.id || randomUUID()
-    await createMaterialGroup({...data, id: groupId})
+    await createMaterialGroup({...data, id: groupId, createdBy: profile.id, createdAt: new Date()})
     logger.info(`MaterialGroup created: ${groupId}`)
     revalidatePath(REVALIDATE)
     revalidatePath(REVALIDATE_MATERIAL)

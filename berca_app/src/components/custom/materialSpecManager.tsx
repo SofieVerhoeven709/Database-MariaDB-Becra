@@ -1,6 +1,7 @@
 'use client'
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
+import {useRouter} from 'next/navigation'
 import {Plus, Pencil, Trash2, Search, ChevronUp, ChevronDown, Check, X, Copy} from 'lucide-react'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
@@ -32,8 +33,11 @@ export interface MappedMaterialGroup {
   groupB: string | null
   groupC: string | null
   groupD: string | null
+  createdById: string
   createdAt: string | null
   createdByName: string | null
+  deletedAt: string | null
+  deletedByName: string | null
   deleted: boolean
 }
 
@@ -46,6 +50,8 @@ export interface MappedUnit {
   longDescription: string | null
   createdAt: string | null
   createdByName: string | null
+  deletedAt: string | null
+  deletedByName: string | null
   valid: boolean
   deleted: boolean
 }
@@ -59,6 +65,8 @@ export interface MappedPerformance {
   longDescription: string | null
   createdAt: string | null
   createdByName: string | null
+  deletedAt: string | null
+  deletedByName: string | null
   deleted: boolean
 }
 
@@ -114,13 +122,20 @@ const EMPTY_GROUP: MappedMaterialGroup = {
   groupB: null,
   groupC: null,
   groupD: null,
+  createdById: '',
   createdAt: null,
   createdByName: null,
+  deletedAt: null,
+  deletedByName: null,
   deleted: false,
 }
 
 function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]}) {
+  const router = useRouter()
   const [groups, setGroups] = useState(initialGroups)
+  useEffect(() => {
+    setGroups(initialGroups)
+  }, [initialGroups])
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'deleted'>('all')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
@@ -162,6 +177,7 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
       await createMaterialGroupAction({success: false}, fd)
       setGroups(prev => [...prev, {...form}])
     }
+    router.refresh()
     setSaving(false)
     setDialogOpen(false)
   }
@@ -179,11 +195,13 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
     const fd = new FormData()
     fd.append('id', id)
     await deleteMaterialGroupAction({success: false}, fd)
+    const deletedAt = new Date().toISOString()
     setGroups(prev =>
       target.deleted
         ? prev.filter(g => g.id !== id)
-        : prev.map(g => (g.id === id ? {...g, deleted: true} : g)),
+        : prev.map(g => (g.id === id ? {...g, deleted: true, deletedAt} : g)),
     )
+    router.refresh()
   }
 
   const filtered = groups
@@ -249,7 +267,7 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group D</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
-              <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <TableHead className="w-25 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
             </TableRow>
@@ -270,26 +288,15 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
                   <TableCell className="text-sm text-muted-foreground">{g.groupD ?? '—'}</TableCell>
                   <TableCell className="text-sm">
                     <div className="flex flex-col leading-tight">
-                      <span>{g.createdByName ?? '-'}</span>
+                      <span>{g.createdByName ?? g.createdById ?? '-'}</span>
                       <span className="text-xs text-muted-foreground">{formatDateTime(g.createdAt)}</span>
                     </div>
                   </TableCell>
-                  <TableCell>
-                    {g.deleted ? (
-                      <Badge
-                        variant="secondary"
-                        className="text-xs bg-red-500/15 text-red-700 dark:text-red-400 flex items-center gap-1 w-fit">
-                        <X className="h-3 w-3" />
-                        Deleted
-                      </Badge>
-                    ) : (
-                      <Badge
-                        variant="secondary"
-                        className="text-xs bg-green-500/15 text-green-700 dark:text-green-400 flex items-center gap-1 w-fit">
-                        <Check className="h-3 w-3" />
-                        Not deleted
-                      </Badge>
-                    )}
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{g.deleted ? g.deletedByName ?? '-' : '—'}</span>
+                      <span className="text-xs text-muted-foreground">{g.deleted ? formatDateTime(g.deletedAt) : '—'}</span>
+                    </div>
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
@@ -403,12 +410,18 @@ const EMPTY_UNIT: MappedUnit = {
   longDescription: null,
   createdAt: null,
   createdByName: null,
+  deletedAt: null,
+  deletedByName: null,
   valid: true,
   deleted: false,
 }
 
 function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
+  const router = useRouter()
   const [units, setUnits] = useState(initialUnits)
+  useEffect(() => {
+    setUnits(initialUnits)
+  }, [initialUnits])
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'deleted'>('all')
   const [validFilter, setValidFilter] = useState<'all' | 'valid' | 'invalid'>('all')
@@ -463,6 +476,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
       await createUnitAction({success: false}, fd)
       setUnits(prev => [...prev, {...form}])
     }
+    router.refresh()
     setSaving(false)
     setDialogOpen(false)
   }
@@ -472,7 +486,9 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
     const fd = new FormData()
     fd.append('id', id)
     await deleteUnitAction({success: false}, fd)
-    setUnits(prev => prev.map(u => (u.id === id ? {...u, deleted: true} : u)))
+    const deletedAt = new Date().toISOString()
+    setUnits(prev => prev.map(u => (u.id === id ? {...u, deleted: true, deletedAt} : u)))
+    router.refresh()
   }
 
   const filtered = units
@@ -561,7 +577,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
               </TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
-              <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <TableHead className="w-25 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
             </TableRow>
@@ -597,7 +613,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
                     )}
                   </TableCell>
                   <TableCell
-                    className="text-sm text-muted-foreground max-w-[200px] truncate"
+                    className="text-sm text-muted-foreground max-w-50 truncate"
                     title={u.shortDescription ?? undefined}>
                     {u.shortDescription ?? '—'}
                   </TableCell>
@@ -607,22 +623,11 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
                       <span className="text-xs text-muted-foreground">{formatDateTime(u.createdAt)}</span>
                     </div>
                   </TableCell>
-                  <TableCell>
-                    {u.deleted ? (
-                      <Badge
-                        variant="secondary"
-                        className="text-xs bg-red-500/15 text-red-700 dark:text-red-400 flex items-center gap-1 w-fit">
-                        <X className="h-3 w-3" />
-                        Deleted
-                      </Badge>
-                    ) : (
-                      <Badge
-                        variant="secondary"
-                        className="text-xs bg-green-500/15 text-green-700 dark:text-green-400 flex items-center gap-1 w-fit">
-                        <Check className="h-3 w-3" />
-                        Not deleted
-                      </Badge>
-                    )}
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{u.deleted ? u.deletedByName ?? '-' : '—'}</span>
+                      <span className="text-xs text-muted-foreground">{u.deleted ? formatDateTime(u.deletedAt) : '—'}</span>
+                    </div>
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
@@ -765,6 +770,8 @@ const EMPTY_PERFORMANCE: MappedPerformance = {
   longDescription: null,
   createdAt: null,
   createdByName: null,
+  deletedAt: null,
+  deletedByName: null,
   deleted: false,
 }
 
@@ -777,7 +784,11 @@ function PerformanceTab({
   specs: MappedSpec[]
   families: MappedFamily[]
 }) {
+  const router = useRouter()
   const [performances, setPerformances] = useState(initialPerformances)
+  useEffect(() => {
+    setPerformances(initialPerformances)
+  }, [initialPerformances])
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'deleted'>('all')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
@@ -821,6 +832,7 @@ function PerformanceTab({
       await createPerformanceAction({success: false}, fd)
       setPerformances(prev => [...prev, {...form}])
     }
+    router.refresh()
     setSaving(false)
     setDialogOpen(false)
   }
@@ -830,7 +842,9 @@ function PerformanceTab({
     const fd = new FormData()
     fd.append('id', id)
     await deletePerformanceAction({success: false}, fd)
-    setPerformances(prev => prev.map(p => (p.id === id ? {...p, deleted: true} : p)))
+    const deletedAt = new Date().toISOString()
+    setPerformances(prev => prev.map(p => (p.id === id ? {...p, deleted: true, deletedAt} : p)))
+    router.refresh()
   }
 
   const filtered = performances
@@ -908,7 +922,7 @@ function PerformanceTab({
               </TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
-              <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <TableHead className="w-25 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
             </TableRow>
@@ -927,7 +941,7 @@ function PerformanceTab({
                   <TableCell className="text-sm text-muted-foreground">{specLabel(p.materialSpecId)}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{familyLabel(p.materialFamilyId)}</TableCell>
                   <TableCell
-                    className="text-sm text-muted-foreground max-w-[220px] truncate"
+                    className="text-sm text-muted-foreground max-w-55 truncate"
                     title={p.shortDescription ?? undefined}>
                     {p.shortDescription ?? '—'}
                   </TableCell>
@@ -937,22 +951,11 @@ function PerformanceTab({
                       <span className="text-xs text-muted-foreground">{formatDateTime(p.createdAt)}</span>
                     </div>
                   </TableCell>
-                  <TableCell>
-                    {p.deleted ? (
-                      <Badge
-                        variant="secondary"
-                        className="text-xs bg-red-500/15 text-red-700 dark:text-red-400 flex items-center gap-1 w-fit">
-                        <X className="h-3 w-3" />
-                        Deleted
-                      </Badge>
-                    ) : (
-                      <Badge
-                        variant="secondary"
-                        className="text-xs bg-green-500/15 text-green-700 dark:text-green-400 flex items-center gap-1 w-fit">
-                        <Check className="h-3 w-3" />
-                        Not deleted
-                      </Badge>
-                    )}
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{p.deleted ? p.deletedByName ?? '-' : '—'}</span>
+                      <span className="text-xs text-muted-foreground">{p.deleted ? formatDateTime(p.deletedAt) : '—'}</span>
+                    </div>
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">

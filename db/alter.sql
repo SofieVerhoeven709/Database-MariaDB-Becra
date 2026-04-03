@@ -1024,3 +1024,93 @@ PREPARE fk_stmt FROM @fk_sql;
 EXECUTE fk_stmt;
 DEALLOCATE PREPARE fk_stmt;
 
+-- Serial tracked inspection planning fields
+ALTER TABLE MaterialSerialTrack
+  ADD COLUMN IF NOT EXISTS `lastInspectionDate` DATE NULL,
+  ADD COLUMN IF NOT EXISTS `inspectionIntervalValue` INT NULL,
+  ADD COLUMN IF NOT EXISTS `inspectionIntervalUnit` ENUM('DAY','WEEK','MONTH','YEAR') NULL,
+  ADD COLUMN IF NOT EXISTS `nextInspectionDate` DATE NULL;
+
+-- Backfill from legacy days column if it still exists
+SET @has_old_interval_days = (
+  SELECT COUNT(*)
+  FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialSerialTrack'
+    AND COLUMN_NAME = 'inspectionIntervalDays'
+);
+
+SET @backfill_sql = IF(
+  @has_old_interval_days > 0,
+  'UPDATE MaterialSerialTrack
+   SET inspectionIntervalValue = COALESCE(inspectionIntervalValue, inspectionIntervalDays),
+       inspectionIntervalUnit = COALESCE(inspectionIntervalUnit, ''DAY'')
+   WHERE inspectionIntervalDays IS NOT NULL',
+  'SELECT ''Skipping backfill: legacy inspectionIntervalDays not found'''
+);
+
+PREPARE backfill_stmt FROM @backfill_sql;
+EXECUTE backfill_stmt;
+DEALLOCATE PREPARE backfill_stmt;
+
+ALTER TABLE MaterialSerialTrack
+  DROP CONSTRAINT IF EXISTS chk_materialSerialTrack_inspection_interval_positive;
+
+ALTER TABLE MaterialSerialTrack
+  DROP CONSTRAINT IF EXISTS chk_materialSerialTrack_inspection_interval_valid;
+
+ALTER TABLE MaterialSerialTrack
+  ADD CONSTRAINT chk_materialSerialTrack_inspection_interval_valid
+  CHECK (
+    (`inspectionIntervalValue` IS NULL AND `inspectionIntervalUnit` IS NULL)
+    OR
+    (`inspectionIntervalValue` > 0 AND `inspectionIntervalUnit` IS NOT NULL)
+  );
+
+-- Recalculate next inspection date for rows that have a schedule but no computed next date yet.
+UPDATE MaterialSerialTrack
+SET nextInspectionDate = CASE
+  WHEN inspectionIntervalUnit = 'DAY' THEN DATE_ADD(lastInspectionDate, INTERVAL inspectionIntervalValue DAY)
+  WHEN inspectionIntervalUnit = 'WEEK' THEN DATE_ADD(lastInspectionDate, INTERVAL inspectionIntervalValue WEEK)
+  WHEN inspectionIntervalUnit = 'MONTH' THEN DATE_ADD(lastInspectionDate, INTERVAL inspectionIntervalValue MONTH)
+  WHEN inspectionIntervalUnit = 'YEAR' THEN DATE_ADD(lastInspectionDate, INTERVAL inspectionIntervalValue YEAR)
+  ELSE nextInspectionDate
+END
+WHERE nextInspectionDate IS NULL
+  AND lastInspectionDate IS NOT NULL
+  AND inspectionIntervalValue IS NOT NULL
+  AND inspectionIntervalUnit IS NOT NULL;
+
+CREATE INDEX IF NOT EXISTS idx_materialSerialTrack_nextInspectionDate
+  ON MaterialSerialTrack (nextInspectionDate);
+
+CREATE OR REPLACE VIEW vw_materialSerialTrackInspectionAlerts AS
+SELECT
+  mst.id,
+  mst.materialId,
+  mst.beNumber,
+  mst.shortDescription,
+  mst.nextInspectionDate,
+  DATEDIFF(mst.nextInspectionDate, CURDATE()) AS daysUntilInspection,
+  (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 30) AS remindMonthBefore,
+  (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 7) AS remindWeekBefore,
+  (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 1) AS remindDayBefore,
+  (DATEDIFF(mst.nextInspectionDate, CURDATE()) < 0) AS isOverdue
+FROM MaterialSerialTrack mst
+WHERE mst.deleted = 0
+  AND mst.nextInspectionDate IS NOT NULL;
+
+CREATE OR REPLACE VIEW vw_materialSerialTrackDueCurrentMonth AS
+SELECT
+  mst.id,
+  mst.materialId,
+  mst.beNumber,
+  mst.shortDescription,
+  mst.nextInspectionDate,
+  DATEDIFF(mst.nextInspectionDate, CURDATE()) AS daysUntilInspection
+FROM MaterialSerialTrack mst
+WHERE mst.deleted = 0
+  AND mst.nextInspectionDate IS NOT NULL
+  AND YEAR(mst.nextInspectionDate) = YEAR(CURDATE())
+  AND MONTH(mst.nextInspectionDate) = MONTH(CURDATE());
+

@@ -353,11 +353,11 @@ export type FollowUpStructureWhereInput = {
   UrgencyType?: Prisma.XOR<Prisma.UrgencyTypeScalarRelationFilter, Prisma.UrgencyTypeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
-  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Status?: Prisma.XOR<Prisma.StatusScalarRelationFilter, Prisma.StatusWhereInput>
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   FollowUp?: Prisma.XOR<Prisma.FollowUpScalarRelationFilter, Prisma.FollowUpWhereInput>
+  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -393,11 +393,11 @@ export type FollowUpStructureOrderByWithRelationInput = {
   UrgencyType?: Prisma.UrgencyTypeOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
-  DocumentStructure?: Prisma.DocumentStructureOrderByWithRelationInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Status?: Prisma.StatusOrderByWithRelationInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   FollowUp?: Prisma.FollowUpOrderByWithRelationInput
+  DocumentStructure?: Prisma.DocumentStructureOrderByWithRelationInput
   Contact?: Prisma.ContactOrderByWithRelationInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
@@ -437,11 +437,11 @@ export type FollowUpStructureWhereUniqueInput = Prisma.AtLeast<{
   UrgencyType?: Prisma.XOR<Prisma.UrgencyTypeScalarRelationFilter, Prisma.UrgencyTypeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
-  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Status?: Prisma.XOR<Prisma.StatusScalarRelationFilter, Prisma.StatusWhereInput>
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   FollowUp?: Prisma.XOR<Prisma.FollowUpScalarRelationFilter, Prisma.FollowUpWhereInput>
+  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -530,11 +530,11 @@ export type FollowUpStructureCreateInput = {
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpStructureInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Contact: Prisma.ContactCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_taskForToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput
   Employee_FollowUpStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput
@@ -588,11 +588,11 @@ export type FollowUpStructureUpdateInput = {
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeNestedInput
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeNestedInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeNestedInput
@@ -1287,11 +1287,11 @@ export type FollowUpStructureCreateWithoutContactInput = {
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpStructureInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_taskForToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput
   Employee_FollowUpStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput
 }
@@ -1482,11 +1482,11 @@ export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_deletedByTo
   deletedAt?: Date | string | null
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpStructureInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpStructureInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Contact: Prisma.ContactCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_taskForToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput
   Employee_FollowUpStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput
@@ -1549,10 +1549,10 @@ export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_ownedByToEm
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpStructureInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Contact: Prisma.ContactCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_taskForToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput
   Employee_FollowUpStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput
@@ -1615,10 +1615,10 @@ export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_executedByT
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpStructureInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpStructureInput
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Contact: Prisma.ContactCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_taskForToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput
   Employee_FollowUpStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput
@@ -1681,11 +1681,11 @@ export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_taskForToEm
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpStructureInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Contact: Prisma.ContactCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput
 }
@@ -1747,11 +1747,11 @@ export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_createdByTo
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpStructureInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Contact: Prisma.ContactCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_taskForToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput
 }
@@ -1893,10 +1893,10 @@ export type FollowUpStructureCreateWithoutFollowUpInput = {
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpStructureInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Contact: Prisma.ContactCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_taskForToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput
   Employee_FollowUpStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput
@@ -1975,10 +1975,10 @@ export type FollowUpStructureCreateWithoutStatusInput = {
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpStructureInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput
   Employee_FollowUpStructure_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Contact: Prisma.ContactCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_taskForToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput
   Employee_FollowUpStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput
@@ -2056,11 +2056,11 @@ export type FollowUpStructureCreateWithoutTargetInput = {
   deletedAt?: Date | string | null
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Contact: Prisma.ContactCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_taskForToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput
   Employee_FollowUpStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput
@@ -2138,11 +2138,11 @@ export type FollowUpStructureCreateWithoutUrgencyTypeInput = {
   deletedAt?: Date | string | null
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpStructureInput
   Contact: Prisma.ContactCreateNestedOneWithoutFollowUpStructureInput
   Employee_FollowUpStructure_taskForToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput
   Employee_FollowUpStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput
@@ -2249,11 +2249,11 @@ export type FollowUpStructureUpdateWithoutContactInput = {
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeNestedInput
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeNestedInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeNestedInput
 }
@@ -2584,11 +2584,11 @@ export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_deletedByTo
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpStructureNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeNestedInput
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeNestedInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeNestedInput
@@ -2669,10 +2669,10 @@ export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_ownedByToEm
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeNestedInput
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeNestedInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeNestedInput
@@ -2753,10 +2753,10 @@ export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_executedByT
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeNestedInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeNestedInput
@@ -2837,11 +2837,11 @@ export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_taskForToEm
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeNestedInput
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeNestedInput
 }
@@ -2921,11 +2921,11 @@ export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_createdByTo
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeNestedInput
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeNestedInput
 }
@@ -3033,10 +3033,10 @@ export type FollowUpStructureUpdateWithoutFollowUpInput = {
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeNestedInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeNestedInput
@@ -3145,10 +3145,10 @@ export type FollowUpStructureUpdateWithoutStatusInput = {
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeNestedInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeNestedInput
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeNestedInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeNestedInput
@@ -3256,11 +3256,11 @@ export type FollowUpStructureUpdateWithoutTargetInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeNestedInput
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeNestedInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeNestedInput
@@ -3368,11 +3368,11 @@ export type FollowUpStructureUpdateWithoutUrgencyTypeInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUpStructure_FollowUpStructure_deletedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeNestedInput
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutFollowUpStructureNestedInput
   Employee_FollowUpStructure_taskForToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeNestedInput
   Employee_FollowUpStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeNestedInput
@@ -3466,11 +3466,11 @@ export type FollowUpStructureSelect<ExtArgs extends runtime.Types.Extensions.Int
   UrgencyType?: boolean | Prisma.UrgencyTypeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   Employee_FollowUpStructure_deletedByToEmployee?: boolean | Prisma.FollowUpStructure$Employee_FollowUpStructure_deletedByToEmployeeArgs<ExtArgs>
-  DocumentStructure?: boolean | Prisma.FollowUpStructure$DocumentStructureArgs<ExtArgs>
   Employee_FollowUpStructure_ownedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Status?: boolean | Prisma.StatusDefaultArgs<ExtArgs>
   Employee_FollowUpStructure_executedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   FollowUp?: boolean | Prisma.FollowUpDefaultArgs<ExtArgs>
+  DocumentStructure?: boolean | Prisma.FollowUpStructure$DocumentStructureArgs<ExtArgs>
   Contact?: boolean | Prisma.ContactDefaultArgs<ExtArgs>
   Employee_FollowUpStructure_taskForToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_FollowUpStructure_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -3512,11 +3512,11 @@ export type FollowUpStructureInclude<ExtArgs extends runtime.Types.Extensions.In
   UrgencyType?: boolean | Prisma.UrgencyTypeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   Employee_FollowUpStructure_deletedByToEmployee?: boolean | Prisma.FollowUpStructure$Employee_FollowUpStructure_deletedByToEmployeeArgs<ExtArgs>
-  DocumentStructure?: boolean | Prisma.FollowUpStructure$DocumentStructureArgs<ExtArgs>
   Employee_FollowUpStructure_ownedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Status?: boolean | Prisma.StatusDefaultArgs<ExtArgs>
   Employee_FollowUpStructure_executedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   FollowUp?: boolean | Prisma.FollowUpDefaultArgs<ExtArgs>
+  DocumentStructure?: boolean | Prisma.FollowUpStructure$DocumentStructureArgs<ExtArgs>
   Contact?: boolean | Prisma.ContactDefaultArgs<ExtArgs>
   Employee_FollowUpStructure_taskForToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_FollowUpStructure_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -3528,11 +3528,11 @@ export type $FollowUpStructurePayload<ExtArgs extends runtime.Types.Extensions.I
     UrgencyType: Prisma.$UrgencyTypePayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
     Employee_FollowUpStructure_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
-    DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs> | null
     Employee_FollowUpStructure_ownedByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Status: Prisma.$StatusPayload<ExtArgs>
     Employee_FollowUpStructure_executedByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     FollowUp: Prisma.$FollowUpPayload<ExtArgs>
+    DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs> | null
     Contact: Prisma.$ContactPayload<ExtArgs>
     Employee_FollowUpStructure_taskForToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_FollowUpStructure_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
@@ -3907,11 +3907,11 @@ export interface Prisma__FollowUpStructureClient<T, Null = never, ExtArgs extend
   UrgencyType<T extends Prisma.UrgencyTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UrgencyTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__UrgencyTypeClient<runtime.Types.Result.GetResult<Prisma.$UrgencyTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_FollowUpStructure_deletedByToEmployee<T extends Prisma.FollowUpStructure$Employee_FollowUpStructure_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FollowUpStructure$Employee_FollowUpStructure_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  DocumentStructure<T extends Prisma.FollowUpStructure$DocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FollowUpStructure$DocumentStructureArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_FollowUpStructure_ownedByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Status<T extends Prisma.StatusDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StatusDefaultArgs<ExtArgs>>): Prisma.Prisma__StatusClient<runtime.Types.Result.GetResult<Prisma.$StatusPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_FollowUpStructure_executedByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   FollowUp<T extends Prisma.FollowUpDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FollowUpDefaultArgs<ExtArgs>>): Prisma.Prisma__FollowUpClient<runtime.Types.Result.GetResult<Prisma.$FollowUpPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  DocumentStructure<T extends Prisma.FollowUpStructure$DocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FollowUpStructure$DocumentStructureArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Contact<T extends Prisma.ContactDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ContactDefaultArgs<ExtArgs>>): Prisma.Prisma__ContactClient<runtime.Types.Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_FollowUpStructure_taskForToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_FollowUpStructure_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>

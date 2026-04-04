@@ -55,7 +55,7 @@ export type MaterialWithRelations = Prisma.MaterialGetPayload<{
     Target: {select: {createdAt: true}}
     Employee_Material_deletedByToEmployee: {select: {id: true; firstName: true; lastName: true}}
     PreferredSupplierCompany: {select: {id: true; name: true}}
-    MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
+    MaterialSupplier: {include: {Company: {select: {id: true, name: true}}}}
     MaterialStructure_MaterialStructure_materialIdToMaterial: {
       where: {deleted: false; management: typeof PARENT_PART_MANAGEMENT}
       select: {
@@ -307,6 +307,12 @@ export async function createMaterial(data: {
           createdBy: data.createdBy,
           deleted: false,
         },
+        // DB schema can lag behind Prisma model; only read columns we actually need.
+        select: {
+          id: true,
+          beNumber: true,
+          serialTrackedId: true,
+        },
       })
       console.log(
         '[createMaterial] Created MaterialSerialTrackedStructure:',
@@ -475,6 +481,12 @@ export async function updateMaterial(
             beNumber: updated.beNumber,
             createdBy: existing.createdBy,
             deleted: false,
+          },
+          // DB schema can lag behind Prisma model; avoid selecting drifted columns.
+          select: {
+            id: true,
+            beNumber: true,
+            serialTrackedId: true,
           },
         })
       }

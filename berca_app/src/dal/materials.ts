@@ -1,9 +1,68 @@
 import 'server-only'
 import {randomUUID} from 'crypto'
 import {prismaClient} from './prismaClient'
-import type {Prisma} from '@/generated/prisma/client'
+import {Prisma} from '@/generated/prisma/client'
 
 const PARENT_PART_MANAGEMENT = 'PARENT_PART'
+
+function isMissingTrackedStructureMaterialGroupColumnError(error: unknown): boolean {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    const metaColumn = String(error.meta?.column ?? '')
+    return error.code === 'P2022' && metaColumn.includes('MaterialSerialTrackedStructure.materialGroupId')
+  }
+
+  if (error instanceof Error) {
+    return (
+      error.message.includes('MaterialSerialTrackedStructure.materialGroupId') &&
+      error.message.includes('does not exist')
+    )
+  }
+
+  return false
+}
+
+async function createTrackedStructureCompat(
+  tx: Prisma.TransactionClient,
+  data: {
+    id: string
+    serialTrackedId: string
+    beNumber: string | null | undefined
+    createdBy: string
+  },
+) {
+  try {
+    return await tx.materialSerialTrackedStructure.create({
+      data: {
+        id: data.id,
+        serialTrackedId: data.serialTrackedId,
+        beNumber: data.beNumber ?? null,
+        createdBy: data.createdBy,
+        deleted: false,
+      },
+      select: {
+        id: true,
+        beNumber: true,
+        serialTrackedId: true,
+      },
+    })
+  } catch (error) {
+    if (!isMissingTrackedStructureMaterialGroupColumnError(error)) {
+      throw error
+    }
+
+    // Temporary compatibility path for DBs that miss the newer materialGroupId column.
+    await tx.$executeRaw`
+      INSERT INTO MaterialSerialTrackedStructure (id, serialTrackedId, beNumber, createdBy, deleted)
+      VALUES (${data.id}, ${data.serialTrackedId}, ${data.beNumber ?? null}, ${data.createdBy}, false)
+    `
+
+    return {
+      id: data.id,
+      beNumber: data.beNumber ?? null,
+      serialTrackedId: data.serialTrackedId,
+    }
+  }
+}
 
 const materialListInclude = {
   Unit: true,
@@ -299,20 +358,11 @@ export async function createMaterial(data: {
       })
       console.log('[createMaterial] Created MaterialSerialTrack:', serialTrack.id, serialTrack.beNumber)
       // Create MaterialSerialTrackedStructure
-      const trackedStruct = await tx.materialSerialTrackedStructure.create({
-        data: {
-          id: randomUUID(),
-          serialTrackedId: serialTrack.id,
-          beNumber: material.beNumber,
-          createdBy: data.createdBy,
-          deleted: false,
-        },
-        // DB schema can lag behind Prisma model; only read columns we actually need.
-        select: {
-          id: true,
-          beNumber: true,
-          serialTrackedId: true,
-        },
+      const trackedStruct = await createTrackedStructureCompat(tx, {
+        id: randomUUID(),
+        serialTrackedId: serialTrack.id,
+        beNumber: material.beNumber,
+        createdBy: data.createdBy,
       })
       console.log(
         '[createMaterial] Created MaterialSerialTrackedStructure:',
@@ -474,20 +524,11 @@ export async function updateMaterial(
           },
         })
 
-        await tx.materialSerialTrackedStructure.create({
-          data: {
-            id: randomUUID(),
-            serialTrackedId: serialTrack.id,
-            beNumber: updated.beNumber,
-            createdBy: existing.createdBy,
-            deleted: false,
-          },
-          // DB schema can lag behind Prisma model; avoid selecting drifted columns.
-          select: {
-            id: true,
-            beNumber: true,
-            serialTrackedId: true,
-          },
+        await createTrackedStructureCompat(tx, {
+          id: randomUUID(),
+          serialTrackedId: serialTrack.id,
+          beNumber: updated.beNumber,
+          createdBy: existing.createdBy,
         })
       }
     } else if (activeSerialTrack) {

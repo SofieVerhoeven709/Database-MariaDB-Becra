@@ -29,14 +29,14 @@ function getParentBeNumbers(material: unknown): string[] {
 type MaterialRow = Awaited<ReturnType<typeof getMaterials>>[number]
 type MaterialDocumentFlags = {
   hasAtex: boolean
-  hasCe: boolean
-  hasRohs: boolean
-  hasDs: boolean
+  hasCE: boolean
+  hasROHS: boolean
+  hasDS: boolean
   hasDoc: boolean
-  has3dCad: boolean
-  has2dCad: boolean
-  hasBdoc: boolean
-  hasInsp: boolean
+  has3DCAD: boolean
+  has2DCAD: boolean
+  hasBDOC: boolean
+  hasINSP: boolean
 }
 
 export default async function MaterialPage({params}: PageProps) {
@@ -85,14 +85,14 @@ export default async function MaterialPage({params}: PageProps) {
       leadTimeUnit: (m.MaterialLeadTime?.leadTimeUnit as 'days' | 'weeks' | null) ?? null,
       rejected: m.rejected ?? false,
       hasAtex: materialWithDocuments.hasAtex ?? false,
-      hasCe: materialWithDocuments.hasCe ?? false,
-      hasRohs: materialWithDocuments.hasRohs ?? false,
-      hasDs: materialWithDocuments.hasDs ?? false,
+      hasCe: materialWithDocuments.hasCE ?? false,
+      hasRohs: materialWithDocuments.hasROHS ?? false,
+      hasDs: materialWithDocuments.hasDS ?? false,
       hasDoc: materialWithDocuments.hasDoc ?? false,
-      has3dCad: materialWithDocuments.has3dCad ?? false,
-      has2dCad: materialWithDocuments.has2dCad ?? false,
-      hasBdoc: materialWithDocuments.hasBdoc ?? false,
-      hasInsp: materialWithDocuments.hasInsp ?? false,
+      has3dCad: materialWithDocuments.has3DCAD ?? false,
+      has2dCad: materialWithDocuments.has2DCAD ?? false,
+      hasBdoc: materialWithDocuments.hasBDOC ?? false,
+      hasInsp: materialWithDocuments.hasINSP ?? false,
       materialGroupIdA: m.materialGroupIdA ?? null,
       materialGroupIdB: m.materialGroupIdB ?? null,
       materialGroupIdC: m.materialGroupIdC ?? null,

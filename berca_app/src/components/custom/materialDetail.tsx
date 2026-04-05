@@ -65,6 +65,15 @@ interface MappedMaterialDetail {
   longLeadTime: boolean
   leadTimeValue: number | null
   leadTimeUnit: 'days' | 'weeks' | null
+  hasAtex: boolean
+  hasCe: boolean
+  hasRohs: boolean
+  hasDs: boolean
+  hasDoc: boolean
+  has3dCad: boolean
+  has2dCad: boolean
+  hasBdoc: boolean
+  hasInsp: boolean
   materialGroupIdA: string | null
   materialGroupIdB: string | null
   materialGroupIdC: string | null
@@ -161,6 +170,15 @@ export function MaterialDetail({
     leadTimeUnit: material.leadTimeUnit ?? null,
     isSerialTracked: material.isSerialTracked ?? false,
     isParentPart: (material.parentBeNumbers && material.parentBeNumbers.length > 0) ?? false,
+    hasAtex: material.hasAtex ?? false,
+    hasCe: material.hasCe ?? false,
+    hasRohs: material.hasRohs ?? false,
+    hasDs: material.hasDs ?? false,
+    hasDoc: material.hasDoc ?? false,
+    has3dCad: material.has3dCad ?? false,
+    has2dCad: material.has2dCad ?? false,
+    hasBdoc: material.hasBdoc ?? false,
+    hasInsp: material.hasInsp ?? false,
     materialGroupIdA: material.materialGroupIdA ?? '',
     materialGroupIdB: material.materialGroupIdB,
     materialGroupIdC: material.materialGroupIdC,
@@ -234,6 +252,15 @@ export function MaterialDetail({
       }
       fd.append('isSerialTracked', String(form.isSerialTracked))
       fd.append('isParentPart', String(form.isParentPart))
+      fd.append('hasAtex', String(form.hasAtex))
+      fd.append('hasCe', String(form.hasCe))
+      fd.append('hasRohs', String(form.hasRohs))
+      fd.append('hasDs', String(form.hasDs))
+      fd.append('hasDoc', String(form.hasDoc))
+      fd.append('has3dCad', String(form.has3dCad))
+      fd.append('has2dCad', String(form.has2dCad))
+      fd.append('hasBdoc', String(form.hasBdoc))
+      fd.append('hasInsp', String(form.hasInsp))
       fd.append('materialGroupIdA', form.materialGroupIdA)
       fd.append('materialGroupIdB', form.materialGroupIdB ?? '')
       fd.append('materialGroupIdC', form.materialGroupIdC ?? '')
@@ -770,6 +797,37 @@ export function MaterialDetail({
               )}
             </div>
 
+            {/* Document Flags Section */}
+            <div className="md:col-span-2">
+              <h3 className="text-sm font-semibold mb-3">Document Flags</h3>
+              <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
+                {[
+                  {key: 'hasAtex', label: 'ATEX'},
+                  {key: 'hasCe', label: 'CE'},
+                  {key: 'hasRohs', label: 'RoHS'},
+                  {key: 'hasDs', label: 'DS'},
+                  {key: 'hasDoc', label: 'Documentation'},
+                  {key: 'has3dCad', label: '3D CAD'},
+                  {key: 'has2dCad', label: '2D CAD'},
+                  {key: 'hasBdoc', label: 'Becra-Doc'},
+                  {key: 'hasInsp', label: 'Inspection'},
+                ].map(flag => (
+                  <div key={flag.key} className="flex flex-col gap-1.5">
+                    <Label className="text-xs text-muted-foreground">{flag.label}</Label>
+                    {editing ? (
+                      <div className="flex items-center gap-2 h-9">
+                        <Switch
+                          checked={(form as any)[flag.key]}
+                          onCheckedChange={v => handleField(flag.key as any, v)}
+                        />
+                      </div>
+                    ) : (
+                      <p className="text-sm">{(material as any)[flag.key] ? 'Yes' : 'No'}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Long Lead Time</Label>
               {editing ? (
@@ -806,7 +864,9 @@ export function MaterialDetail({
                     />
                     <Select
                       value={form.leadTimeUnit ?? '__none__'}
-                      onValueChange={v => handleField('leadTimeUnit', v === '__none__' ? null : (v as 'days' | 'weeks'))}>
+                      onValueChange={v =>
+                        handleField('leadTimeUnit', v === '__none__' ? null : (v as 'days' | 'weeks'))
+                      }>
                       <SelectTrigger className="bg-secondary border-border w-32">
                         <SelectValue placeholder="Unit" />
                       </SelectTrigger>
@@ -821,7 +881,9 @@ export function MaterialDetail({
                   <p className="text-sm text-muted-foreground">Enable Long Lead Time first.</p>
                 )
               ) : material.longLeadTime && material.leadTimeValue && material.leadTimeUnit ? (
-                <p className="text-sm">{material.leadTimeValue} {material.leadTimeUnit}</p>
+                <p className="text-sm">
+                  {material.leadTimeValue} {material.leadTimeUnit}
+                </p>
               ) : (
                 <p className="text-sm text-muted-foreground">—</p>
               )}

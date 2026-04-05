@@ -48,11 +48,12 @@ type MaterialDocumentFlags = {
   hasInsp: boolean
 }
 
-type MaterialFormState = Partial<MappedMaterial> & MaterialDocumentFlags & {
-  id: string
-  isSerialTracked: boolean
-  isParentPart: boolean
-}
+type MaterialFormState = Partial<MappedMaterial> &
+  MaterialDocumentFlags & {
+    id: string
+    isSerialTracked: boolean
+    isParentPart: boolean
+  }
 
 interface MaterialFormDialogProps {
   open: boolean
@@ -495,7 +496,7 @@ export function MaterialFormDialog({
             <Label htmlFor="beNumber" className="text-xs text-muted-foreground">
               {numberKind} Number
             </Label>
-            <p className="text-xs text-muted-foreground">Laat leeg voor automatische generatie</p>
+            <p className="text-xs text-muted-foreground">Leave empty for automatically generating of the number</p>
             <Input
               id="beNumber"
               className={inputStyles}
@@ -797,7 +798,8 @@ export function MaterialFormDialog({
 
             {parentPartLinkCount > 0 && (
               <p className="text-xs text-muted-foreground">
-                {parentPartLinkCount} parent part link{parentPartLinkCount === 1 ? '' : 's'} are available in the current list.
+                {parentPartLinkCount} parent part link{parentPartLinkCount === 1 ? '' : 's'} are available in the
+                current list.
               </p>
             )}
 
@@ -890,12 +892,18 @@ export function MaterialFormDialog({
             </div>
             <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
               {DOCUMENT_FLAGS.map(flag => (
-                <div key={flag.key} className="flex items-center justify-between gap-3 rounded-md border border-border bg-background/40 px-3 py-2">
+                <div
+                  key={flag.key}
+                  className="flex items-center justify-between gap-3 rounded-md border border-border bg-background/40 px-3 py-2">
                   <Label htmlFor={flag.key} className="text-sm text-foreground cursor-pointer">
                     {flag.label}
                   </Label>
                   <div className="flex items-center gap-3">
-                    <Switch id={flag.key} checked={Boolean(form[flag.key])} onCheckedChange={v => updateFlag(flag.key, v)} />
+                    <Switch
+                      id={flag.key}
+                      checked={Boolean(form[flag.key])}
+                      onCheckedChange={v => updateFlag(flag.key, v)}
+                    />
                     <span className="text-sm text-muted-foreground">{form[flag.key] ? 'Yes' : 'No'}</span>
                   </div>
                 </div>
@@ -923,7 +931,9 @@ export function MaterialFormDialog({
                 <Label className="text-xs text-muted-foreground">Lead Time Unit</Label>
                 <Select
                   value={form.leadTimeUnit ?? '__none__'}
-                  onValueChange={value => update('leadTimeUnit', value === '__none__' ? null : (value as 'days' | 'weeks'))}>
+                  onValueChange={value =>
+                    update('leadTimeUnit', value === '__none__' ? null : (value as 'days' | 'weeks'))
+                  }>
                   <SelectTrigger className={inputStyles}>
                     <SelectValue placeholder="Select unit..." />
                   </SelectTrigger>

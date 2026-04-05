@@ -379,6 +379,32 @@ export function MaterialTable({
     {key: 'longLeadTime', label: 'Long Lead'},
   ]
 
+  const renderDocumentFlags = (m: MappedMaterial) => {
+    const flags = [
+      {key: 'hasAtex', label: 'ATEX', active: m.hasAtex},
+      {key: 'hasCe', label: 'CE', active: m.hasCe},
+      {key: 'hasRohs', label: 'RoHS', active: m.hasRohs},
+      {key: 'hasDs', label: 'DS', active: m.hasDs},
+      {key: 'hasDoc', label: 'Doc', active: m.hasDoc},
+      {key: 'has3dCad', label: '3D', active: m.has3dCad},
+      {key: 'has2dCad', label: '2D', active: m.has2dCad},
+      {key: 'hasBdoc', label: 'Becra Doc', active: m.hasBdoc},
+      {key: 'hasInsp', label: 'Insp', active: m.hasInsp},
+    ]
+    return (
+      <div className="flex flex-wrap gap-1">
+        {flags.map(flag => (
+          <Badge
+            key={flag.key}
+            variant={flag.active ? 'default' : 'secondary'}
+            className={`text-xs ${flag.active ? 'bg-blue-500/20 text-blue-700 dark:text-blue-400' : 'bg-gray-500/10 text-gray-500'}`}>
+            {flag.label}
+          </Badge>
+        ))}
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-4">
       {alert && (
@@ -445,6 +471,9 @@ export function MaterialTable({
                   <SortIcon field={col.key} sortField={sortField} sortDir={sortDir} />
                 </TableHead>
               ))}
+              <TableHead className="w-40 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Document Flags
+              </TableHead>
               <TableHead className="w-25 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Serial Tracked
               </TableHead>
@@ -526,6 +555,8 @@ export function MaterialTable({
                       <span className="text-sm text-muted-foreground">No</span>
                     )}
                   </TableCell>
+                  {/* Document Flags Column */}
+                  <TableCell className="text-sm">{renderDocumentFlags(m)}</TableCell>
                   {/* Serial Tracked Button Column */}
                   <TableCell className="text-center">
                     <Button

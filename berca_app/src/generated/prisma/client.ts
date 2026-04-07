@@ -559,3 +559,18 @@ export type MaterialDemand = Prisma.MaterialDemandModel
  * 
  */
 export type MaterialDemandSource = Prisma.MaterialDemandSourceModel
+/**
+ * Model MaterialDemandSourceType
+ * 
+ */
+export type MaterialDemandSourceType = Prisma.MaterialDemandSourceTypeModel
+/**
+ * Model PaymentCondition
+ * 
+ */
+export type PaymentCondition = Prisma.PaymentConditionModel
+/**
+ * Model QuoteSupplierLine
+ * 
+ */
+export type QuoteSupplierLine = Prisma.QuoteSupplierLineModel

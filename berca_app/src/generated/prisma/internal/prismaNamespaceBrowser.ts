@@ -151,7 +151,10 @@ export const ModelName = {
   PurchaseBOMStructure: 'PurchaseBOMStructure',
   BOMExecution: 'BOMExecution',
   MaterialDemand: 'MaterialDemand',
-  MaterialDemandSource: 'MaterialDemandSource'
+  MaterialDemandSource: 'MaterialDemandSource',
+  MaterialDemandSourceType: 'MaterialDemandSourceType',
+  PaymentCondition: 'PaymentCondition',
+  QuoteSupplierLine: 'QuoteSupplierLine'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1201,17 +1204,18 @@ export type PurchaseOrderBecraScalarFieldEnum = (typeof PurchaseOrderBecraScalar
 
 export const QuoteSupplierScalarFieldEnum = {
   id: 'id',
+  quoteNumber: 'quoteNumber',
+  quotationNumber: 'quotationNumber',
   description: 'description',
-  projectId: 'projectId',
+  companyId: 'companyId',
   rejected: 'rejected',
   additionalInfo: 'additionalInfo',
-  link: 'link',
-  documentPlaceId: 'documentPlaceId',
-  payementCondition: 'payementCondition',
+  documentId: 'documentId',
   acceptedForPOB: 'acceptedForPOB',
   validUntill: 'validUntill',
   deliveryTimeDays: 'deliveryTimeDays',
   createdBy: 'createdBy',
+  paymentConditionId: 'paymentConditionId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -1951,7 +1955,8 @@ export const PurchaseBOMStructureScalarFieldEnum = {
   purchaseBOMId: 'purchaseBOMId',
   projectBOMStructureId: 'projectBOMStructureId',
   purchaseBOMStructureId: 'purchaseBOMStructureId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  quoteSupplierLineId: 'quoteSupplierLineId'
 } as const
 
 export type PurchaseBOMStructureScalarFieldEnum = (typeof PurchaseBOMStructureScalarFieldEnum)[keyof typeof PurchaseBOMStructureScalarFieldEnum]
@@ -1984,7 +1989,6 @@ export const MaterialDemandScalarFieldEnum = {
   materialId: 'materialId',
   totalRequiredQty: 'totalRequiredQty',
   reservedQty: 'reservedQty',
-  toPurchaseQty: 'toPurchaseQty',
   createdAt: 'createdAt'
 } as const
 
@@ -1994,12 +1998,53 @@ export type MaterialDemandScalarFieldEnum = (typeof MaterialDemandScalarFieldEnu
 export const MaterialDemandSourceScalarFieldEnum = {
   id: 'id',
   materialDemandId: 'materialDemandId',
-  projectBOMStructureId: 'projectBOMStructureId',
+  sourceTypeId: 'sourceTypeId',
+  sourceReferenceId: 'sourceReferenceId',
   requiredQty: 'requiredQty',
-  reservedQty: 'reservedQty'
+  reservedQty: 'reservedQty',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
 } as const
 
 export type MaterialDemandSourceScalarFieldEnum = (typeof MaterialDemandSourceScalarFieldEnum)[keyof typeof MaterialDemandSourceScalarFieldEnum]
+
+
+export const MaterialDemandSourceTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialDemandSourceTypeScalarFieldEnum = (typeof MaterialDemandSourceTypeScalarFieldEnum)[keyof typeof MaterialDemandSourceTypeScalarFieldEnum]
+
+
+export const PaymentConditionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  deleted: 'deleted',
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PaymentConditionScalarFieldEnum = (typeof PaymentConditionScalarFieldEnum)[keyof typeof PaymentConditionScalarFieldEnum]
+
+
+export const QuoteSupplierLineScalarFieldEnum = {
+  id: 'id',
+  quoteSupplierId: 'quoteSupplierId',
+  materialId: 'materialId',
+  materialDemandId: 'materialDemandId',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  minQuantity: 'minQuantity',
+  selected: 'selected'
+} as const
+
+export type QuoteSupplierLineScalarFieldEnum = (typeof QuoteSupplierLineScalarFieldEnum)[keyof typeof QuoteSupplierLineScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2779,13 +2824,14 @@ export type PurchaseOrderBecraOrderByRelevanceFieldEnum = (typeof PurchaseOrderB
 
 export const QuoteSupplierOrderByRelevanceFieldEnum = {
   id: 'id',
+  quoteNumber: 'quoteNumber',
+  quotationNumber: 'quotationNumber',
   description: 'description',
-  projectId: 'projectId',
+  companyId: 'companyId',
   additionalInfo: 'additionalInfo',
-  link: 'link',
-  documentPlaceId: 'documentPlaceId',
-  payementCondition: 'payementCondition',
+  documentId: 'documentId',
   createdBy: 'createdBy',
+  paymentConditionId: 'paymentConditionId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -3356,7 +3402,8 @@ export const PurchaseBOMStructureOrderByRelevanceFieldEnum = {
   purchaseBOMId: 'purchaseBOMId',
   projectBOMStructureId: 'projectBOMStructureId',
   purchaseBOMStructureId: 'purchaseBOMStructureId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  quoteSupplierLineId: 'quoteSupplierLineId'
 } as const
 
 export type PurchaseBOMStructureOrderByRelevanceFieldEnum = (typeof PurchaseBOMStructureOrderByRelevanceFieldEnum)[keyof typeof PurchaseBOMStructureOrderByRelevanceFieldEnum]
@@ -3384,8 +3431,40 @@ export type MaterialDemandOrderByRelevanceFieldEnum = (typeof MaterialDemandOrde
 export const MaterialDemandSourceOrderByRelevanceFieldEnum = {
   id: 'id',
   materialDemandId: 'materialDemandId',
-  projectBOMStructureId: 'projectBOMStructureId'
+  sourceTypeId: 'sourceTypeId',
+  sourceReferenceId: 'sourceReferenceId',
+  createdBy: 'createdBy'
 } as const
 
 export type MaterialDemandSourceOrderByRelevanceFieldEnum = (typeof MaterialDemandSourceOrderByRelevanceFieldEnum)[keyof typeof MaterialDemandSourceOrderByRelevanceFieldEnum]
+
+
+export const MaterialDemandSourceTypeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialDemandSourceTypeOrderByRelevanceFieldEnum = (typeof MaterialDemandSourceTypeOrderByRelevanceFieldEnum)[keyof typeof MaterialDemandSourceTypeOrderByRelevanceFieldEnum]
+
+
+export const PaymentConditionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PaymentConditionOrderByRelevanceFieldEnum = (typeof PaymentConditionOrderByRelevanceFieldEnum)[keyof typeof PaymentConditionOrderByRelevanceFieldEnum]
+
+
+export const QuoteSupplierLineOrderByRelevanceFieldEnum = {
+  id: 'id',
+  quoteSupplierId: 'quoteSupplierId',
+  materialId: 'materialId',
+  materialDemandId: 'materialDemandId'
+} as const
+
+export type QuoteSupplierLineOrderByRelevanceFieldEnum = (typeof QuoteSupplierLineOrderByRelevanceFieldEnum)[keyof typeof QuoteSupplierLineOrderByRelevanceFieldEnum]
 

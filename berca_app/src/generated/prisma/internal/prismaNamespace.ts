@@ -492,7 +492,10 @@ export const ModelName = {
   PurchaseBOMStructure: 'PurchaseBOMStructure',
   BOMExecution: 'BOMExecution',
   MaterialDemand: 'MaterialDemand',
-  MaterialDemandSource: 'MaterialDemandSource'
+  MaterialDemandSource: 'MaterialDemandSource',
+  MaterialDemandSourceType: 'MaterialDemandSourceType',
+  PaymentCondition: 'PaymentCondition',
+  QuoteSupplierLine: 'QuoteSupplierLine'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -508,7 +511,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -7310,6 +7313,204 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MaterialDemandSourceType: {
+      payload: Prisma.$MaterialDemandSourceTypePayload<ExtArgs>
+      fields: Prisma.MaterialDemandSourceTypeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MaterialDemandSourceTypeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialDemandSourceTypePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MaterialDemandSourceTypeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialDemandSourceTypePayload>
+        }
+        findFirst: {
+          args: Prisma.MaterialDemandSourceTypeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialDemandSourceTypePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MaterialDemandSourceTypeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialDemandSourceTypePayload>
+        }
+        findMany: {
+          args: Prisma.MaterialDemandSourceTypeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialDemandSourceTypePayload>[]
+        }
+        create: {
+          args: Prisma.MaterialDemandSourceTypeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialDemandSourceTypePayload>
+        }
+        createMany: {
+          args: Prisma.MaterialDemandSourceTypeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MaterialDemandSourceTypeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialDemandSourceTypePayload>
+        }
+        update: {
+          args: Prisma.MaterialDemandSourceTypeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialDemandSourceTypePayload>
+        }
+        deleteMany: {
+          args: Prisma.MaterialDemandSourceTypeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MaterialDemandSourceTypeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MaterialDemandSourceTypeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialDemandSourceTypePayload>
+        }
+        aggregate: {
+          args: Prisma.MaterialDemandSourceTypeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMaterialDemandSourceType>
+        }
+        groupBy: {
+          args: Prisma.MaterialDemandSourceTypeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MaterialDemandSourceTypeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MaterialDemandSourceTypeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MaterialDemandSourceTypeCountAggregateOutputType> | number
+        }
+      }
+    }
+    PaymentCondition: {
+      payload: Prisma.$PaymentConditionPayload<ExtArgs>
+      fields: Prisma.PaymentConditionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PaymentConditionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentConditionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PaymentConditionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentConditionPayload>
+        }
+        findFirst: {
+          args: Prisma.PaymentConditionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentConditionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PaymentConditionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentConditionPayload>
+        }
+        findMany: {
+          args: Prisma.PaymentConditionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentConditionPayload>[]
+        }
+        create: {
+          args: Prisma.PaymentConditionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentConditionPayload>
+        }
+        createMany: {
+          args: Prisma.PaymentConditionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PaymentConditionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentConditionPayload>
+        }
+        update: {
+          args: Prisma.PaymentConditionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentConditionPayload>
+        }
+        deleteMany: {
+          args: Prisma.PaymentConditionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PaymentConditionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PaymentConditionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentConditionPayload>
+        }
+        aggregate: {
+          args: Prisma.PaymentConditionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePaymentCondition>
+        }
+        groupBy: {
+          args: Prisma.PaymentConditionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentConditionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PaymentConditionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentConditionCountAggregateOutputType> | number
+        }
+      }
+    }
+    QuoteSupplierLine: {
+      payload: Prisma.$QuoteSupplierLinePayload<ExtArgs>
+      fields: Prisma.QuoteSupplierLineFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuoteSupplierLineFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteSupplierLinePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuoteSupplierLineFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteSupplierLinePayload>
+        }
+        findFirst: {
+          args: Prisma.QuoteSupplierLineFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteSupplierLinePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuoteSupplierLineFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteSupplierLinePayload>
+        }
+        findMany: {
+          args: Prisma.QuoteSupplierLineFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteSupplierLinePayload>[]
+        }
+        create: {
+          args: Prisma.QuoteSupplierLineCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteSupplierLinePayload>
+        }
+        createMany: {
+          args: Prisma.QuoteSupplierLineCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.QuoteSupplierLineDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteSupplierLinePayload>
+        }
+        update: {
+          args: Prisma.QuoteSupplierLineUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteSupplierLinePayload>
+        }
+        deleteMany: {
+          args: Prisma.QuoteSupplierLineDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuoteSupplierLineUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.QuoteSupplierLineUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteSupplierLinePayload>
+        }
+        aggregate: {
+          args: Prisma.QuoteSupplierLineAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuoteSupplierLine>
+        }
+        groupBy: {
+          args: Prisma.QuoteSupplierLineGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteSupplierLineGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuoteSupplierLineCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteSupplierLineCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -8380,17 +8581,18 @@ export type PurchaseOrderBecraScalarFieldEnum = (typeof PurchaseOrderBecraScalar
 
 export const QuoteSupplierScalarFieldEnum = {
   id: 'id',
+  quoteNumber: 'quoteNumber',
+  quotationNumber: 'quotationNumber',
   description: 'description',
-  projectId: 'projectId',
+  companyId: 'companyId',
   rejected: 'rejected',
   additionalInfo: 'additionalInfo',
-  link: 'link',
-  documentPlaceId: 'documentPlaceId',
-  payementCondition: 'payementCondition',
+  documentId: 'documentId',
   acceptedForPOB: 'acceptedForPOB',
   validUntill: 'validUntill',
   deliveryTimeDays: 'deliveryTimeDays',
   createdBy: 'createdBy',
+  paymentConditionId: 'paymentConditionId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -9130,7 +9332,8 @@ export const PurchaseBOMStructureScalarFieldEnum = {
   purchaseBOMId: 'purchaseBOMId',
   projectBOMStructureId: 'projectBOMStructureId',
   purchaseBOMStructureId: 'purchaseBOMStructureId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  quoteSupplierLineId: 'quoteSupplierLineId'
 } as const
 
 export type PurchaseBOMStructureScalarFieldEnum = (typeof PurchaseBOMStructureScalarFieldEnum)[keyof typeof PurchaseBOMStructureScalarFieldEnum]
@@ -9163,7 +9366,6 @@ export const MaterialDemandScalarFieldEnum = {
   materialId: 'materialId',
   totalRequiredQty: 'totalRequiredQty',
   reservedQty: 'reservedQty',
-  toPurchaseQty: 'toPurchaseQty',
   createdAt: 'createdAt'
 } as const
 
@@ -9173,12 +9375,53 @@ export type MaterialDemandScalarFieldEnum = (typeof MaterialDemandScalarFieldEnu
 export const MaterialDemandSourceScalarFieldEnum = {
   id: 'id',
   materialDemandId: 'materialDemandId',
-  projectBOMStructureId: 'projectBOMStructureId',
+  sourceTypeId: 'sourceTypeId',
+  sourceReferenceId: 'sourceReferenceId',
   requiredQty: 'requiredQty',
-  reservedQty: 'reservedQty'
+  reservedQty: 'reservedQty',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
 } as const
 
 export type MaterialDemandSourceScalarFieldEnum = (typeof MaterialDemandSourceScalarFieldEnum)[keyof typeof MaterialDemandSourceScalarFieldEnum]
+
+
+export const MaterialDemandSourceTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialDemandSourceTypeScalarFieldEnum = (typeof MaterialDemandSourceTypeScalarFieldEnum)[keyof typeof MaterialDemandSourceTypeScalarFieldEnum]
+
+
+export const PaymentConditionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  deleted: 'deleted',
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PaymentConditionScalarFieldEnum = (typeof PaymentConditionScalarFieldEnum)[keyof typeof PaymentConditionScalarFieldEnum]
+
+
+export const QuoteSupplierLineScalarFieldEnum = {
+  id: 'id',
+  quoteSupplierId: 'quoteSupplierId',
+  materialId: 'materialId',
+  materialDemandId: 'materialDemandId',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  minQuantity: 'minQuantity',
+  selected: 'selected'
+} as const
+
+export type QuoteSupplierLineScalarFieldEnum = (typeof QuoteSupplierLineScalarFieldEnum)[keyof typeof QuoteSupplierLineScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -9958,13 +10201,14 @@ export type PurchaseOrderBecraOrderByRelevanceFieldEnum = (typeof PurchaseOrderB
 
 export const QuoteSupplierOrderByRelevanceFieldEnum = {
   id: 'id',
+  quoteNumber: 'quoteNumber',
+  quotationNumber: 'quotationNumber',
   description: 'description',
-  projectId: 'projectId',
+  companyId: 'companyId',
   additionalInfo: 'additionalInfo',
-  link: 'link',
-  documentPlaceId: 'documentPlaceId',
-  payementCondition: 'payementCondition',
+  documentId: 'documentId',
   createdBy: 'createdBy',
+  paymentConditionId: 'paymentConditionId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -10535,7 +10779,8 @@ export const PurchaseBOMStructureOrderByRelevanceFieldEnum = {
   purchaseBOMId: 'purchaseBOMId',
   projectBOMStructureId: 'projectBOMStructureId',
   purchaseBOMStructureId: 'purchaseBOMStructureId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  quoteSupplierLineId: 'quoteSupplierLineId'
 } as const
 
 export type PurchaseBOMStructureOrderByRelevanceFieldEnum = (typeof PurchaseBOMStructureOrderByRelevanceFieldEnum)[keyof typeof PurchaseBOMStructureOrderByRelevanceFieldEnum]
@@ -10563,10 +10808,42 @@ export type MaterialDemandOrderByRelevanceFieldEnum = (typeof MaterialDemandOrde
 export const MaterialDemandSourceOrderByRelevanceFieldEnum = {
   id: 'id',
   materialDemandId: 'materialDemandId',
-  projectBOMStructureId: 'projectBOMStructureId'
+  sourceTypeId: 'sourceTypeId',
+  sourceReferenceId: 'sourceReferenceId',
+  createdBy: 'createdBy'
 } as const
 
 export type MaterialDemandSourceOrderByRelevanceFieldEnum = (typeof MaterialDemandSourceOrderByRelevanceFieldEnum)[keyof typeof MaterialDemandSourceOrderByRelevanceFieldEnum]
+
+
+export const MaterialDemandSourceTypeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialDemandSourceTypeOrderByRelevanceFieldEnum = (typeof MaterialDemandSourceTypeOrderByRelevanceFieldEnum)[keyof typeof MaterialDemandSourceTypeOrderByRelevanceFieldEnum]
+
+
+export const PaymentConditionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PaymentConditionOrderByRelevanceFieldEnum = (typeof PaymentConditionOrderByRelevanceFieldEnum)[keyof typeof PaymentConditionOrderByRelevanceFieldEnum]
+
+
+export const QuoteSupplierLineOrderByRelevanceFieldEnum = {
+  id: 'id',
+  quoteSupplierId: 'quoteSupplierId',
+  materialId: 'materialId',
+  materialDemandId: 'materialDemandId'
+} as const
+
+export type QuoteSupplierLineOrderByRelevanceFieldEnum = (typeof QuoteSupplierLineOrderByRelevanceFieldEnum)[keyof typeof QuoteSupplierLineOrderByRelevanceFieldEnum]
 
 
 
@@ -10813,6 +11090,9 @@ export type GlobalOmitConfig = {
   bOMExecution?: Prisma.BOMExecutionOmit
   materialDemand?: Prisma.MaterialDemandOmit
   materialDemandSource?: Prisma.MaterialDemandSourceOmit
+  materialDemandSourceType?: Prisma.MaterialDemandSourceTypeOmit
+  paymentCondition?: Prisma.PaymentConditionOmit
+  quoteSupplierLine?: Prisma.QuoteSupplierLineOmit
 }
 
 /* Types for Logging */

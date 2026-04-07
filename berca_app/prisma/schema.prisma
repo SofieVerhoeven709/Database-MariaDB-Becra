@@ -96,6 +96,7 @@ model Company {
   PriceListCompany                                      PriceListCompany[]
   Project                                               Project[]
   Purchase                                              Purchase[]
+  QuoteSupplier                                         QuoteSupplier[]
 
   @@index([companyId], map: "companyId")
   @@index([createdBy], map: "createdBy")
@@ -242,7 +243,6 @@ model DocumentPlace {
   Employee                                   Employee?           @relation(fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentPlace_ibfk_1")
   Employee_DocumentPlace_createdByToEmployee Employee            @relation("DocumentPlace_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentPlace_ibfk_2")
   DocumentStructure                          DocumentStructure[]
-  QuoteSupplier                              QuoteSupplier[]
 
   @@index([deletedBy], map: "deletedBy")
   @@index([createdBy], map: "createdBy")
@@ -290,6 +290,7 @@ model DocumentStructure {
   FollowUpStructure                                                                           FollowUpStructure[]
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure MaterialSerialTrackedStructure[] @relation("MaterialSerialTrackedStructure_documentIdToDocumentStructure")
   MaterialStructure                                                                           MaterialStructure[]
+  QuoteSupplier                                                                               QuoteSupplier[]
   TrainingDocument                                                                            TrainingDocument[]
 
   @@index([createdBy], map: "fk_documentStructure_createdBy")
@@ -434,6 +435,8 @@ model Employee {
   MaterialAssembly_MaterialAssembly_deletedByToEmployee                             MaterialAssembly[]               @relation("MaterialAssembly_deletedByToEmployee")
   MaterialCode                                                                      MaterialCode[]
   MaterialCode_MaterialCode_deletedByToEmployee                                     MaterialCode[]                   @relation("MaterialCode_deletedByToEmployee")
+  MaterialDemandSource                                                              MaterialDemandSource[]
+  MaterialDemandSourceType                                                          MaterialDemandSourceType[]
   MaterialDimension                                                                 MaterialDimension[]
   MaterialDimension_MaterialDimension_deletedByToEmployee                           MaterialDimension[]              @relation("MaterialDimension_deletedByToEmployee")
   MaterialFamily                                                                    MaterialFamily[]
@@ -457,6 +460,8 @@ model Employee {
   MaterialStructure_MaterialStructure_deletedByToEmployee                           MaterialStructure[]              @relation("MaterialStructure_deletedByToEmployee")
   Part                                                                              Part[]
   Part_Part_deletedByToEmployee                                                     Part[]                           @relation("Part_deletedByToEmployee")
+  PaymentCondition_PaymentCondition_createdByToEmployee                             PaymentCondition[]               @relation("PaymentCondition_createdByToEmployee")
+  PaymentCondition_PaymentCondition_deletedByToEmployee                             PaymentCondition[]               @relation("PaymentCondition_deletedByToEmployee")
   PaymentMethod_PaymentMethod_createdByToEmployee                                   PaymentMethod[]                  @relation("PaymentMethod_createdByToEmployee")
   PaymentMethod_PaymentMethod_deletedByToEmployee                                   PaymentMethod[]                  @relation("PaymentMethod_deletedByToEmployee")
   Phantom                                                                           Phantom[]
@@ -999,7 +1004,7 @@ model Material {
   Employee_Material_deletedByToEmployee                    Employee?              @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_8")
   PreferredSupplierCompany                                 Company?               @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "fk_material_preferredSupplierCompanyId")
   Target                                                   Target                 @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_material_target")
-  MaterialDemand                                           MaterialDemand[]
+  MaterialDemand                                           MaterialDemand?
   MaterialLeadTime                                         MaterialLeadTime?
   MaterialMovement                                         MaterialMovement[]
   MaterialOther                                            MaterialOther[]
@@ -1010,6 +1015,7 @@ model Material {
   Product                                                  Product[]
   ProjectBOMStructure                                      ProjectBOMStructure[]
   PurchaseBOMStructure                                     PurchaseBOMStructure[]
+  QuoteSupplierLine                                        QuoteSupplierLine[]
   WorkOrderStructure                                       WorkOrderStructure[]
 
   @@index([createdBy], map: "createdBy")
@@ -1485,7 +1491,6 @@ model Project {
   Purchase                             Purchase[]
   PurchaseBOM                          PurchaseBOM[]
   PurchaseDetail                       PurchaseDetail[]
-  QuoteSupplier                        QuoteSupplier[]
   WorkOrder                            WorkOrder[]
 
   @@index([companyId], map: "companyId")
@@ -1614,30 +1619,34 @@ model PurchaseOrderBecra {
 }
 
 model QuoteSupplier {
-  id                                         String         @id @db.Char(36)
-  description                                String?        @db.Text
-  projectId                                  String?        @db.Char(36)
-  rejected                                   Boolean
-  additionalInfo                             String?        @db.VarChar(255)
-  link                                       String?        @db.VarChar(255)
-  documentPlaceId                            String?        @db.Char(36)
-  payementCondition                          String?        @db.VarChar(255)
-  acceptedForPOB                             Boolean?
-  validUntill                                DateTime?      @db.DateTime(0)
+  id                                         String              @id @db.Char(36)
+  quoteNumber                                String              @db.VarChar(255)
+  quotationNumber                            String?             @db.VarChar(255)
+  description                                String?             @db.Text
+  companyId                                  String              @db.Char(36)
+  rejected                                   Boolean             @default(false)
+  additionalInfo                             String?             @db.VarChar(255)
+  documentId                                 String?             @db.Char(36)
+  acceptedForPOB                             Boolean             @default(false)
+  validUntill                                DateTime?           @db.DateTime(0)
   deliveryTimeDays                           Int?
-  createdBy                                  String         @db.Char(36)
-  deleted                                    Boolean        @default(false)
-  deletedAt                                  DateTime?      @db.DateTime(0)
-  deletedBy                                  String?        @db.Char(36)
-  Project                                    Project?       @relation(fields: [projectId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "QuoteSupplier_ibfk_1")
-  DocumentPlace                              DocumentPlace? @relation(fields: [documentPlaceId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "QuoteSupplier_ibfk_2")
-  Employee                                   Employee       @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "QuoteSupplier_ibfk_3")
-  Employee_QuoteSupplier_deletedByToEmployee Employee?      @relation("QuoteSupplier_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "QuoteSupplier_ibfk_4")
+  createdBy                                  String              @db.Char(36)
+  paymentConditionId                         String?             @db.Char(36)
+  deleted                                    Boolean             @default(false)
+  deletedAt                                  DateTime?           @db.DateTime(0)
+  deletedBy                                  String?             @db.Char(36)
+  Company                                    Company             @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "QuoteSupplier_ibfk_1")
+  DocumentStructure                          DocumentStructure?  @relation(fields: [documentId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "QuoteSupplier_ibfk_2")
+  Employee                                   Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "QuoteSupplier_ibfk_3")
+  Employee_QuoteSupplier_deletedByToEmployee Employee?           @relation("QuoteSupplier_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "QuoteSupplier_ibfk_4")
+  PaymentCondition                           PaymentCondition?   @relation(fields: [paymentConditionId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "QuoteSupplier_ibfk_5")
+  QuoteSupplierLine                          QuoteSupplierLine[]
 
   @@index([createdBy], map: "createdBy")
-  @@index([documentPlaceId], map: "documentPlaceId")
-  @@index([projectId], map: "projectId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([companyId], map: "companyId")
+  @@index([documentId], map: "documentId")
+  @@index([paymentConditionId], map: "paymentConditionId")
 }
 
 model Role {
@@ -2551,7 +2560,6 @@ model ProjectBOMStructure {
   parentStructureId                                String?                @db.Char(36)
   deletedBy                                        String?                @db.Char(36)
   BOMExecution                                     BOMExecution?
-  MaterialDemandSource                             MaterialDemandSource[]
   Material                                         Material               @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_1")
   ProjectBOM                                       ProjectBOM             @relation(fields: [projectBOMId], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_2")
   Employee_ProjectBOMStructure_createdByToEmployee Employee               @relation("ProjectBOMStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_3")
@@ -2620,6 +2628,7 @@ model PurchaseBOMStructure {
   projectBOMStructureId                             String                 @db.Char(36)
   purchaseBOMStructureId                            String?                @db.Char(36)
   deletedBy                                         String?                @db.Char(36)
+  quoteSupplierLineId                               String?                @db.Char(36)
   Material                                          Material               @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_1")
   PurchaseBOM                                       PurchaseBOM            @relation(fields: [purchaseBOMId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_2")
   Employee_PurchaseBOMStructure_createdByToEmployee Employee               @relation("PurchaseBOMStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_3")
@@ -2627,6 +2636,7 @@ model PurchaseBOMStructure {
   ProjectBOMStructure                               ProjectBOMStructure    @relation(fields: [projectBOMStructureId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_5")
   PurchaseBOMStructure                              PurchaseBOMStructure?  @relation("PurchaseBOMStructureToPurchaseBOMStructure", fields: [purchaseBOMStructureId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_6")
   other_PurchaseBOMStructure                        PurchaseBOMStructure[] @relation("PurchaseBOMStructureToPurchaseBOMStructure")
+  QuoteSupplierLine                                 QuoteSupplierLine?     @relation(fields: [quoteSupplierLineId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_quoteSupplierLine_purchaseBomStructure")
 
   @@unique([purchaseBOMId, projectBOMStructureId], map: "purchaseBOMId")
   @@index([createdBy], map: "createdBy")
@@ -2634,6 +2644,7 @@ model PurchaseBOMStructure {
   @@index([materialId], map: "materialId")
   @@index([projectBOMStructureId], map: "projectBOMStructureId")
   @@index([purchaseBOMStructureId], map: "purchaseBOMStructureId")
+  @@index([quoteSupplierLineId], map: "fk_quoteSupplierLine_purchaseBomStructure")
 }
 
 model BOMExecution {
@@ -2663,28 +2674,78 @@ model BOMExecution {
 
 model MaterialDemand {
   id                   String                 @id @db.Char(36)
-  materialId           String                 @db.Char(36)
+  materialId           String                 @unique(map: "materialId") @db.Char(36)
   totalRequiredQty     Int
   reservedQty          Int?                   @default(0)
-  toPurchaseQty        Int?                   @default(0)
   createdAt            DateTime               @db.DateTime(0)
   Material             Material               @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "MaterialDemand_ibfk_1")
   MaterialDemandSource MaterialDemandSource[]
-
-  @@index([materialId], map: "materialId")
+  QuoteSupplierLine    QuoteSupplierLine[]
 }
 
 model MaterialDemandSource {
-  id                    String              @id @db.Char(36)
-  materialDemandId      String              @db.Char(36)
-  projectBOMStructureId String              @db.Char(36)
-  requiredQty           Int
-  reservedQty           Int?                @default(0)
-  MaterialDemand        MaterialDemand      @relation(fields: [materialDemandId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialDemandSource_ibfk_1")
-  ProjectBOMStructure   ProjectBOMStructure @relation(fields: [projectBOMStructureId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialDemandSource_ibfk_2")
+  id                       String                   @id @db.Char(36)
+  materialDemandId         String                   @db.Char(36)
+  sourceTypeId             String                   @db.Char(36)
+  sourceReferenceId        String?                  @db.Char(36)
+  requiredQty              Int
+  reservedQty              Int?                     @default(0)
+  createdAt                DateTime                 @db.DateTime(0)
+  createdBy                String                   @db.Char(36)
+  MaterialDemand           MaterialDemand           @relation(fields: [materialDemandId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialDemandSource_ibfk_1")
+  MaterialDemandSourceType MaterialDemandSourceType @relation(fields: [sourceTypeId], references: [id], onUpdate: Restrict, map: "MaterialDemandSource_ibfk_2")
+  Employee                 Employee                 @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialDemandSource_ibfk_3")
 
   @@index([materialDemandId], map: "materialDemandId")
-  @@index([projectBOMStructureId], map: "projectBOMStructureId")
+  @@index([createdBy], map: "createdBy")
+  @@index([sourceTypeId], map: "sourceTypeId")
+}
+
+model MaterialDemandSourceType {
+  id                   String                 @id @db.Char(36)
+  name                 String                 @unique(map: "name") @db.VarChar(50)
+  description          String?                @db.VarChar(255)
+  createdAt            DateTime               @db.DateTime(0)
+  createdBy            String                 @db.Char(36)
+  MaterialDemandSource MaterialDemandSource[]
+  Employee             Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialDemandSourceType_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model PaymentCondition {
+  id                                            String          @id @db.Char(36)
+  name                                          String          @db.VarChar(255)
+  deleted                                       Boolean         @default(false)
+  createdAt                                     DateTime        @db.DateTime(0)
+  deletedAt                                     DateTime?       @db.DateTime(0)
+  createdBy                                     String          @db.Char(36)
+  deletedBy                                     String?         @db.Char(36)
+  Employee_PaymentCondition_createdByToEmployee Employee        @relation("PaymentCondition_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PaymentCondition_ibfk_1")
+  Employee_PaymentCondition_deletedByToEmployee Employee?       @relation("PaymentCondition_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PaymentCondition_ibfk_2")
+  QuoteSupplier                                 QuoteSupplier[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model QuoteSupplierLine {
+  id                   String                 @id @db.Char(36)
+  quoteSupplierId      String                 @db.Char(36)
+  materialId           String                 @db.Char(36)
+  materialDemandId     String?                @db.Char(36)
+  quantity             Int
+  unitPrice            Decimal                @db.Decimal(10, 2)
+  minQuantity          Int?
+  selected             Boolean?               @default(false)
+  PurchaseBOMStructure PurchaseBOMStructure[]
+  QuoteSupplier        QuoteSupplier          @relation(fields: [quoteSupplierId], references: [id], onUpdate: Restrict, map: "QuoteSupplierLine_ibfk_1")
+  Material             Material               @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "QuoteSupplierLine_ibfk_2")
+  MaterialDemand       MaterialDemand?        @relation(fields: [materialDemandId], references: [id], onUpdate: Restrict, map: "QuoteSupplierLine_ibfk_3")
+
+  @@index([materialDemandId], map: "materialDemandId")
+  @@index([materialId], map: "materialId")
+  @@index([quoteSupplierId], map: "quoteSupplierId")
 }
 
 enum MaterialSerialTrack_inspectionIntervalUnit {

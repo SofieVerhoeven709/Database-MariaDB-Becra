@@ -1872,7 +1872,6 @@ CREATE TABLE
             additionalInfo VARCHAR(255),
             description VARCHAR(255),
             tag VARCHAR(255),
-            requiredQuantity INT,
             createdAt DATETIME NOT NULL,
             readyForPurchaseDate DATETIME,
             deletedAt DATETIME,
@@ -1927,7 +1926,6 @@ CREATE TABLE
             additionalInfo VARCHAR(255),
             description VARCHAR(255),
             tag VARCHAR(255),
-            requiredQuantity INT,
             createdAt DATETIME NOT NULL,
             readyForPurchaseDate DATETIME,
             deletedAt DATETIME,
@@ -1951,8 +1949,11 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS BOMExecution (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            reservedQuantity INT DEFAULT 0,
+            requiredQuantity INT NOT NULL,
+            stockReservedQuantity INT DEFAULT 0,
             issuedQuantity INT DEFAULT 0,
+            purchaseOrderedQuantity INT DEFAULT 0,
+            purchaseReceivedQuantity INT DEFAULT 0,
             createdAt DATETIME NOT NULL,
             completedDate DATETIME,
             deletedAt DATETIME,

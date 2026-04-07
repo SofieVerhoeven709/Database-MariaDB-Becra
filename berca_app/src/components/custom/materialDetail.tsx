@@ -12,7 +12,9 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Switch} from '@/components/ui/switch'
+import {MATERIAL_DOCUMENT_FLAGS} from '@/components/custom/materialDocumentFlags'
 import {updateMaterialAction} from '@/serverFunctions/materials'
+import type {WarehousePlaceOption} from '@/types/warehousePlace'
 
 interface InventoryItem {
   id: string
@@ -25,6 +27,24 @@ interface InventoryItem {
   information: string | null
   valid: boolean
   noValidDate: string
+  inventoryStructures: InventoryStructureItem[]
+}
+
+interface InventoryStructureItem {
+  id: string
+  inventoryPlaceId: string
+  place: string | null
+  warehousePlaceId: string | null
+  information: string | null
+  coordinate: boolean
+  inventoryId: string
+  forInventory: boolean
+  forProject: boolean
+  active: boolean
+  materialActive: boolean
+  valid: boolean
+  createdAt: string
+  createdBy: string
 }
 
 interface MappedMaterialDetail {
@@ -41,9 +61,21 @@ interface MappedMaterialDetail {
   supplierCompanyIds: string[]
   supplierCompanyNames: string[]
   brandName: string | null
-  documentationPlace: string | null
-  bePartDoc: number | null
+  warehousePlace: string | null
   rejected: boolean | null
+  partApproved: boolean
+  longLeadTime: boolean
+  leadTimeValue: number | null
+  leadTimeUnit: 'days' | 'weeks' | 'months' | null
+  hasAtex: boolean
+  hasCe: boolean
+  hasRohs: boolean
+  hasDs: boolean
+  hasDoc: boolean
+  has3dCad: boolean
+  has2dCad: boolean
+  hasBdoc: boolean
+  hasInsp: boolean
   materialGroupIdA: string | null
   materialGroupIdB: string | null
   materialGroupIdC: string | null
@@ -58,6 +90,7 @@ interface MappedMaterialDetail {
   unitAbbreviation: string
   createdBy: string
   createdByName: string
+  createdAt: string | null
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
@@ -92,6 +125,7 @@ interface MaterialDetailProps {
   materialGroups: MaterialGroup[]
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
+  warehousePlaces?: WarehousePlaceOption[]
 }
 
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
@@ -102,7 +136,19 @@ function formatDate(iso: string | null | undefined) {
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
-export function MaterialDetail({material, materialGroups, units, supplierCompanies}: MaterialDetailProps) {
+function formatWarehousePlace(place: WarehousePlaceOption) {
+  return [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+    .filter(Boolean)
+    .join(' - ')
+}
+
+export function MaterialDetail({
+  material,
+  materialGroups,
+  units,
+  supplierCompanies,
+  warehousePlaces = [],
+}: MaterialDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -119,11 +165,23 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
     preferredSupplierShortDescription: material.preferredSupplierShortDescription ?? '',
     supplierCompanyIds: material.supplierCompanyIds ?? [],
     brandName: material.brandName ?? '',
-    documentationPlace: material.documentationPlace ?? '',
-    bePartDoc: material.bePartDoc !== null ? material.bePartDoc : ('' as number | ''),
+    warehousePlace: material.warehousePlace ?? '',
     rejected: material.rejected ?? false,
+    partApproved: material.partApproved ?? false,
+    longLeadTime: material.longLeadTime ?? false,
+    leadTimeValue: material.leadTimeValue ?? null,
+    leadTimeUnit: (material.leadTimeUnit ?? null) as MappedMaterialDetail['leadTimeUnit'],
     isSerialTracked: material.isSerialTracked ?? false,
     isParentPart: (material.parentBeNumbers && material.parentBeNumbers.length > 0) ?? false,
+    hasAtex: material.hasAtex ?? false,
+    hasCe: material.hasCe ?? false,
+    hasRohs: material.hasRohs ?? false,
+    hasDs: material.hasDs ?? false,
+    hasDoc: material.hasDoc ?? false,
+    has3dCad: material.has3dCad ?? false,
+    has2dCad: material.has2dCad ?? false,
+    hasBdoc: material.hasBdoc ?? false,
+    hasInsp: material.hasInsp ?? false,
     materialGroupIdA: material.materialGroupIdA ?? '',
     materialGroupIdB: material.materialGroupIdB,
     materialGroupIdC: material.materialGroupIdC,
@@ -146,6 +204,29 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
     }
   }
 
+  const warehousePlaceById = new Map(warehousePlaces.map(place => [place.id, place]))
+
+  const resolvedWarehousePlace = form.warehousePlace ? (warehousePlaceById.get(form.warehousePlace) ?? null) : null
+
+  function formatInventoryStructureLocation(structure: InventoryStructureItem) {
+    const warehousePlace = structure.warehousePlaceId
+      ? (warehousePlaceById.get(structure.warehousePlaceId) ?? null)
+      : null
+    const warehouseLabel = warehousePlace
+      ? formatWarehousePlace(warehousePlace)
+      : structure.place || structure.warehousePlaceId || structure.inventoryPlaceId
+    const statusParts = [structure.coordinate ? 'coordinate' : 'no coordinate', structure.valid ? 'valid' : 'invalid']
+
+    return [
+      warehouseLabel ?? '-',
+      `inventoryPlaceId: ${structure.inventoryPlaceId}`,
+      `inventoryId: ${structure.inventoryId}`,
+      ...statusParts,
+    ]
+      .filter(Boolean)
+      .join(' | ')
+  }
+
   async function handleSave() {
     setSaving(true)
     setSaveError(null)
@@ -165,11 +246,25 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
         fd.append('preferredSupplierShortDescription', form.preferredSupplierShortDescription)
       form.supplierCompanyIds.forEach(id => fd.append('supplierCompanyIds', id))
       if (form.brandName) fd.append('brandName', form.brandName)
-      if (form.documentationPlace) fd.append('documentationPlace', form.documentationPlace)
-      if (form.bePartDoc !== '') fd.append('bePartDoc', String(form.bePartDoc))
+      if (form.warehousePlace) fd.append('warehousePlace', form.warehousePlace)
       fd.append('rejected', String(form.rejected))
+      fd.append('partApproved', String(form.partApproved))
+      fd.append('longLeadTime', String(form.longLeadTime))
+      if (form.longLeadTime) {
+        if (form.leadTimeValue !== null) fd.append('leadTimeValue', String(form.leadTimeValue))
+        if (form.leadTimeUnit) fd.append('leadTimeUnit', form.leadTimeUnit)
+      }
       fd.append('isSerialTracked', String(form.isSerialTracked))
       fd.append('isParentPart', String(form.isParentPart))
+      fd.append('hasAtex', String(form.hasAtex))
+      fd.append('hasCe', String(form.hasCe))
+      fd.append('hasRohs', String(form.hasRohs))
+      fd.append('hasDs', String(form.hasDs))
+      fd.append('hasDoc', String(form.hasDoc))
+      fd.append('has3dCad', String(form.has3dCad))
+      fd.append('has2dCad', String(form.has2dCad))
+      fd.append('hasBdoc', String(form.hasBdoc))
+      fd.append('hasInsp', String(form.hasInsp))
       fd.append('materialGroupIdA', form.materialGroupIdA)
       fd.append('materialGroupIdB', form.materialGroupIdB ?? '')
       fd.append('materialGroupIdC', form.materialGroupIdC ?? '')
@@ -639,31 +734,46 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Documentation Place</Label>
+              <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
               {editing ? (
-                <Input
-                  value={form.documentationPlace}
-                  onChange={e => handleField('documentationPlace', e.target.value)}
-                  placeholder="—"
-                />
+                <div className="space-y-2">
+                  <Select
+                    value={form.warehousePlace || '__none__'}
+                    onValueChange={value => handleField('warehousePlace', value === '__none__' ? '' : value)}>
+                    <SelectTrigger className="bg-secondary border-border">
+                      <SelectValue placeholder="Select warehouse place" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="__none__">None</SelectItem>
+                      {warehousePlaces.map(place => (
+                        <SelectItem key={place.id} value={place.id}>
+                          {place.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {resolvedWarehousePlace && (
+                    <div className="text-xs text-muted-foreground space-y-0.5">
+                      <p>Abbr: {resolvedWarehousePlace.abbreviation ?? '-'}</p>
+                      <p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
+                      <p>Shelf: {resolvedWarehousePlace.shelf ?? '-'}</p>
+                      <p>Column: {resolvedWarehousePlace.column ?? '-'}</p>
+                      <p>Layer: {resolvedWarehousePlace.layer ?? '-'}</p>
+                      <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
+                    </div>
+                  )}
+                </div>
+              ) : resolvedWarehousePlace ? (
+                <div className="text-sm space-y-0.5">
+                  <p>Abbr: {resolvedWarehousePlace.abbreviation ?? '-'}</p>
+                  <p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
+                  <p>Shelf: {resolvedWarehousePlace.shelf ?? '-'}</p>
+                  <p>Column: {resolvedWarehousePlace.column ?? '-'}</p>
+                  <p>Layer: {resolvedWarehousePlace.layer ?? '-'}</p>
+                  <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
+                </div>
               ) : (
-                <p className="text-sm">
-                  {material.documentationPlace ?? <span className="text-muted-foreground">—</span>}
-                </p>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">BE Part Doc</Label>
-              {editing ? (
-                <Input
-                  type="number"
-                  value={form.bePartDoc === '' ? '' : String(form.bePartDoc)}
-                  onChange={e => handleField('bePartDoc', e.target.value === '' ? '' : Number(e.target.value))}
-                  placeholder="—"
-                />
-              ) : (
-                <p className="text-sm">{material.bePartDoc ?? <span className="text-muted-foreground">—</span>}</p>
+                <p className="text-sm text-muted-foreground">—</p>
               )}
             </div>
 
@@ -692,6 +802,104 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Part Approved</Label>
+              {editing ? (
+                <div className="flex items-center gap-2 h-9">
+                  <Switch checked={form.partApproved} onCheckedChange={v => handleField('partApproved', v)} />
+                  <span className="text-sm text-muted-foreground">{form.partApproved ? 'Yes' : 'No'}</span>
+                </div>
+              ) : (
+                <p className="text-sm">{material.partApproved ? 'Yes' : 'No'}</p>
+              )}
+            </div>
+
+            {/* Document Flags Section */}
+            <div className="md:col-span-2">
+              <h3 className="text-sm font-semibold mb-3">Document Flags</h3>
+              <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
+                {MATERIAL_DOCUMENT_FLAGS.map(flag => (
+                  <div key={flag.key} className="flex flex-col gap-1.5">
+                    <Label className="text-xs text-muted-foreground">{flag.label}</Label>
+                    {editing ? (
+                      <div className="flex items-center gap-2 h-9">
+                        <Switch
+                          checked={(form as any)[flag.key]}
+                          onCheckedChange={v => handleField(flag.key as any, v)}
+                        />
+                      </div>
+                    ) : (
+                      <p className="text-sm">{(material as any)[flag.key] ? 'Yes' : 'No'}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Long Lead Time</Label>
+              {editing ? (
+                <div className="flex items-center gap-2 h-9">
+                  <Switch
+                    checked={form.longLeadTime}
+                    onCheckedChange={v => {
+                      handleField('longLeadTime', v)
+                      if (!v) {
+                        handleField('leadTimeValue', null)
+                        handleField('leadTimeUnit', null)
+                      }
+                    }}
+                  />
+                  <span className="text-sm text-muted-foreground">{form.longLeadTime ? 'Yes' : 'No'}</span>
+                </div>
+              ) : (
+                <p className="text-sm">{material.longLeadTime ? 'Yes' : 'No'}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Lead Time Period</Label>
+              {editing ? (
+                form.longLeadTime ? (
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      min={1}
+                      value={form.leadTimeValue ?? ''}
+                      onChange={e => handleField('leadTimeValue', e.target.value ? Number(e.target.value) : null)}
+                      className="w-28"
+                      placeholder="Value"
+                    />
+                    <Select
+                      value={form.leadTimeUnit ?? '__none__'}
+                      onValueChange={v =>
+                        handleField(
+                          'leadTimeUnit',
+                          (v === '__none__' ? null : v) as unknown as (typeof form)['leadTimeUnit'],
+                        )
+                      }>
+                      <SelectTrigger className="bg-secondary border-border w-32">
+                        <SelectValue placeholder="Unit" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="__none__">None</SelectItem>
+                        <SelectItem value="days">Days</SelectItem>
+                        <SelectItem value="weeks">Weeks</SelectItem>
+                        <SelectItem value="months">Months</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">Enable Long Lead Time first.</p>
+                )
+              ) : material.longLeadTime && material.leadTimeValue && material.leadTimeUnit ? (
+                <p className="text-sm">
+                  {material.leadTimeValue} {material.leadTimeUnit}
+                </p>
+              ) : (
+                <p className="text-sm text-muted-foreground">—</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Is Parent Part</Label>
               {editing ? (
                 <div className="flex items-center gap-2 h-9">
@@ -707,7 +915,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
 
             <div className="flex flex-col gap-1.5 md:col-span-2 pt-4 border-t border-border">
               <p className="text-xs text-muted-foreground">
-                Created by <span className="font-medium text-foreground">{material.createdByName}</span>
+                Created by <span className="font-medium text-foreground">{material.createdByName || '-'}</span>
+                {' on '}
+                <span className="font-medium text-foreground">{formatDate(material.createdAt)}</span>
               </p>
             </div>
           </div>
@@ -741,7 +951,23 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                     <TableRow key={inv.id} className="hover:bg-secondary/50">
                       <TableCell className={`${tdClass} font-mono`}>{inv.beNumber}</TableCell>
                       <TableCell className={tdClass}>
-                        {inv.place ?? <span className="text-muted-foreground">—</span>}
+                        <div className="space-y-1">
+                          <p>{inv.place ?? <span className="text-muted-foreground">—</span>}</p>
+                          {inv.inventoryStructures.length > 0 && (
+                            <div className="space-y-1 text-xs text-muted-foreground">
+                              {inv.inventoryStructures.map(structure => (
+                                <div
+                                  key={structure.id}
+                                  className="rounded-md border border-border bg-secondary/30 px-2 py-1">
+                                  <p className="font-mono">{formatInventoryStructureLocation(structure)}</p>
+                                  {structure.information && (
+                                    <p className="whitespace-pre-wrap">{structure.information}</p>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </TableCell>
                       <TableCell className="text-sm font-semibold">{inv.quantityInStock}</TableCell>
                       <TableCell className={tdClass}>{inv.minQuantityInStock}</TableCell>

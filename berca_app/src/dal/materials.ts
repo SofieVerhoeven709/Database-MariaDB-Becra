@@ -1,12 +1,73 @@
 import 'server-only'
 import {randomUUID} from 'crypto'
 import {prismaClient} from './prismaClient'
-import type {Prisma} from '@/generated/prisma/client'
+import {Prisma} from '@/generated/prisma/client'
 
 const PARENT_PART_MANAGEMENT = 'PARENT_PART'
 
+function isMissingTrackedStructureMaterialGroupColumnError(error: unknown): boolean {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    const metaColumn = String(error.meta?.column ?? '')
+    return error.code === 'P2022' && metaColumn.includes('MaterialSerialTrackedStructure.materialGroupId')
+  }
+
+  if (error instanceof Error) {
+    return (
+      error.message.includes('MaterialSerialTrackedStructure.materialGroupId') &&
+      error.message.includes('does not exist')
+    )
+  }
+
+  return false
+}
+
+async function createTrackedStructureCompat(
+  tx: Prisma.TransactionClient,
+  data: {
+    id: string
+    serialTrackedId: string
+    beNumber: string | null | undefined
+    createdBy: string
+  },
+) {
+  try {
+    return await tx.materialSerialTrackedStructure.create({
+      data: {
+        id: data.id,
+        serialTrackedId: data.serialTrackedId,
+        beNumber: data.beNumber ?? null,
+        createdBy: data.createdBy,
+        deleted: false,
+      },
+      select: {
+        id: true,
+        beNumber: true,
+        serialTrackedId: true,
+      },
+    })
+  } catch (error) {
+    if (!isMissingTrackedStructureMaterialGroupColumnError(error)) {
+      throw error
+    }
+
+    // Temporary compatibility path for DBs that miss the newer materialGroupId column.
+    await tx.$executeRaw`
+      INSERT INTO MaterialSerialTrackedStructure (id, serialTrackedId, beNumber, createdBy, deleted)
+      VALUES (${data.id}, ${data.serialTrackedId}, ${data.beNumber ?? null}, ${data.createdBy}, false)
+    `
+
+    return {
+      id: data.id,
+      beNumber: data.beNumber ?? null,
+      serialTrackedId: data.serialTrackedId,
+    }
+  }
+}
+
 const materialListInclude = {
   Unit: true,
+  Employee: {select: {firstName: true, lastName: true}},
+  Target: {select: {createdAt: true}},
   Employee_Material_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
   PreferredSupplierCompany: {select: {id: true, name: true}},
   MaterialSupplier: {
@@ -30,6 +91,7 @@ const materialListInclude = {
     select: {id: true},
     orderBy: {updatedAt: 'desc'},
   },
+  MaterialLeadTime: true,
 } as const
 
 export type MaterialListItem = Prisma.MaterialGetPayload<{
@@ -44,13 +106,42 @@ export type MaterialGroupOption = {
   groupD: string | null
 }
 
+type MaterialDocumentFlagInput = {
+  hasAtex?: boolean
+  hasCe?: boolean
+  hasRohs?: boolean
+  hasDs?: boolean
+  hasDoc?: boolean
+  has3dCad?: boolean
+  has2dCad?: boolean
+  hasBdoc?: boolean
+  hasInsp?: boolean
+}
+
+function toPrismaMaterialDocumentFlags(flags: MaterialDocumentFlagInput) {
+  const {hasAtex, hasCe, hasRohs, hasDs, hasDoc, has3dCad, has2dCad, hasBdoc, hasInsp} = flags
+  return {
+    hasAtex,
+    hasCE: hasCe,
+    hasROHS: hasRohs,
+    hasDS: hasDs,
+    hasDoc,
+    has3DCAD: has3dCad,
+    has2DCAD: has2dCad,
+    hasBDOC: hasBdoc,
+    hasINSP: hasInsp,
+  }
+}
+
 // Type for material with all relations included in getMaterialById
 export type MaterialWithRelations = Prisma.MaterialGetPayload<{
   include: {
     Unit: true
+    Employee: {select: {firstName: true; lastName: true}}
+    Target: {select: {createdAt: true}}
     Employee_Material_deletedByToEmployee: {select: {id: true; firstName: true; lastName: true}}
     PreferredSupplierCompany: {select: {id: true; name: true}}
-    MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
+    MaterialSupplier: {include: {Company: {select: {id: true, name: true}}}}
     MaterialStructure_MaterialStructure_materialIdToMaterial: {
       where: {deleted: false; management: typeof PARENT_PART_MANAGEMENT}
       select: {
@@ -63,9 +154,32 @@ export type MaterialWithRelations = Prisma.MaterialGetPayload<{
       select: {id: true}
       orderBy: {updatedAt: 'desc'}
     }
+    MaterialLeadTime: true
     Inventory_Inventory_materialIdToMaterial: {
       where: {deleted: false}
       orderBy: {createdAt: 'asc'}
+      include: {
+        InventoryStructure: {
+          where: {deleted: false}
+          orderBy: {createdAt: 'asc'}
+          select: {
+            id: true
+            inventoryPlaceId: true
+            place: true
+            warehousePlaceId: true
+            information: true
+            coordinate: true
+            inventoryId: true
+            forInventory: true
+            forProject: true
+            active: true
+            materialActive: true
+            valid: true
+            createdAt: true
+            createdBy: true
+          }
+        }
+      }
     }
   }
 }>
@@ -84,6 +198,8 @@ export async function getMaterialById(id: string): Promise<MaterialWithRelations
     where: {id},
     include: {
       Unit: true,
+      Employee: {select: {firstName: true, lastName: true}},
+      Target: {select: {createdAt: true}},
       Employee_Material_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}}, // deleter
       PreferredSupplierCompany: {
         select: {id: true, name: true},
@@ -109,9 +225,32 @@ export async function getMaterialById(id: string): Promise<MaterialWithRelations
         select: {id: true},
         orderBy: {updatedAt: 'desc'},
       },
+      MaterialLeadTime: true,
       Inventory_Inventory_materialIdToMaterial: {
         where: {deleted: false},
         orderBy: {createdAt: 'asc'},
+        include: {
+          InventoryStructure: {
+            where: {deleted: false},
+            orderBy: {createdAt: 'asc'},
+            select: {
+              id: true,
+              inventoryPlaceId: true,
+              place: true,
+              warehousePlaceId: true,
+              information: true,
+              coordinate: true,
+              inventoryId: true,
+              forInventory: true,
+              forProject: true,
+              active: true,
+              materialActive: true,
+              valid: true,
+              createdAt: true,
+              createdBy: true,
+            },
+          },
+        },
       },
     },
   })
@@ -151,9 +290,21 @@ export async function createMaterial(data: {
   supplierCompanyIds?: string[]
   parentBeNumbers?: string[]
   brandName?: string | null
-  documentationPlace?: string | null
-  bePartDoc?: number | null
+  warehousePlace?: string | null
   rejected?: boolean | null
+  partApproved?: boolean
+  longLeadTime?: boolean
+  leadTimeValue?: number | null
+  leadTimeUnit?: 'days' | 'weeks' | 'months' | null
+  hasAtex?: boolean
+  hasCe?: boolean
+  hasRohs?: boolean
+  hasDs?: boolean
+  hasDoc?: boolean
+  has3dCad?: boolean
+  has2dCad?: boolean
+  hasBdoc?: boolean
+  hasInsp?: boolean
   materialGroupIdA: string | null
   materialGroupIdB?: string | null
   materialGroupIdC?: string | null
@@ -167,11 +318,22 @@ export async function createMaterial(data: {
   const {
     supplierCompanyIds = [],
     parentBeNumbers = [],
-    bePartDoc,
+    warehousePlace,
     preferredSupplierCompanyId,
     preferredSupplierOrderId,
     preferredSupplierShortDescription,
+    leadTimeValue,
+    leadTimeUnit,
     isParentPart,
+    hasAtex,
+    hasCe,
+    hasRohs,
+    hasDs,
+    hasDoc,
+    has3dCad,
+    has2dCad,
+    hasBdoc,
+    hasInsp,
     ...materialData
   } = data
 
@@ -189,8 +351,19 @@ export async function createMaterial(data: {
     const material = await tx.material.create({
       data: {
         ...materialData,
+        ...toPrismaMaterialDocumentFlags({
+          hasAtex,
+          hasCe,
+          hasRohs,
+          hasDs,
+          hasDoc,
+          has3dCad,
+          has2dCad,
+          hasBdoc,
+          hasInsp,
+        }),
+        warehousePlaceId: warehousePlace ?? null,
         isSerialTracked: data.isSerialTracked ?? false,
-        bePartDoc: bePartDoc != null ? String(bePartDoc) : null,
         MaterialSupplier:
           supplierCompanyIds.length > 0
             ? {
@@ -242,14 +415,11 @@ export async function createMaterial(data: {
       })
       console.log('[createMaterial] Created MaterialSerialTrack:', serialTrack.id, serialTrack.beNumber)
       // Create MaterialSerialTrackedStructure
-      const trackedStruct = await tx.materialSerialTrackedStructure.create({
-        data: {
-          id: randomUUID(),
-          serialTrackedId: serialTrack.id,
-          beNumber: material.beNumber,
-          createdBy: data.createdBy,
-          deleted: false,
-        },
+      const trackedStruct = await createTrackedStructureCompat(tx, {
+        id: randomUUID(),
+        serialTrackedId: serialTrack.id,
+        beNumber: material.beNumber,
+        createdBy: data.createdBy,
       })
       console.log(
         '[createMaterial] Created MaterialSerialTrackedStructure:',
@@ -259,6 +429,20 @@ export async function createMaterial(data: {
         trackedStruct.serialTrackedId,
       )
     }
+
+    if (material.longLeadTime && leadTimeValue != null && leadTimeUnit) {
+      await tx.materialLeadTime.upsert({
+        where: {materialId: material.id},
+        update: {leadTimeValue, leadTimeUnit},
+        create: {
+          id: randomUUID(),
+          materialId: material.id,
+          leadTimeValue,
+          leadTimeUnit,
+        },
+      })
+    }
+
     return material
   })
 }
@@ -277,9 +461,21 @@ export async function updateMaterial(
     supplierCompanyIds?: string[]
     parentBeNumbers?: string[]
     brandName?: string | null
-    documentationPlace?: string | null
-    bePartDoc?: number | null
+    warehousePlace?: string | null
     rejected?: boolean | null
+    canCopy?: boolean
+    longLeadTime?: boolean
+    leadTimeValue?: number | null
+    leadTimeUnit?: 'days' | 'weeks' | 'months' | null
+    hasAtex?: boolean
+    hasCe?: boolean
+    hasRohs?: boolean
+    hasDs?: boolean
+    hasDoc?: boolean
+    has3dCad?: boolean
+    has2dCad?: boolean
+    hasBdoc?: boolean
+    hasInsp?: boolean
     materialGroupIdA?: string | null
     materialGroupIdB?: string | null
     materialGroupIdC?: string | null
@@ -292,17 +488,26 @@ export async function updateMaterial(
   const {
     supplierCompanyIds,
     parentBeNumbers,
-    bePartDoc,
+    warehousePlace,
     preferredSupplierCompanyId,
     preferredSupplierOrderId,
     preferredSupplierShortDescription,
+    leadTimeValue,
+    leadTimeUnit,
     isParentPart,
+    hasAtex,
+    hasCe,
+    hasRohs,
+    hasDs,
+    hasDoc,
+    has3dCad,
+    has2dCad,
+    hasBdoc,
+    hasInsp,
     ...materialData
   } = data
 
-  let uniqueParentBeNumbers = parentBeNumbers
-    ? Array.from(new Set(parentBeNumbers)).filter(parentBeNumber => parentBeNumber !== materialData.beNumber)
-    : undefined
+  let uniqueParentBeNumbers = parentBeNumbers ? Array.from(new Set(parentBeNumbers)) : undefined
 
   if (isParentPart === false) {
     uniqueParentBeNumbers = []
@@ -317,6 +522,7 @@ export async function updateMaterial(
           select: {id: true},
           orderBy: {updatedAt: 'desc'},
         },
+        MaterialLeadTime: true,
       },
     })
 
@@ -324,11 +530,27 @@ export async function updateMaterial(
       throw new Error(`Material not found: ${id}`)
     }
 
+    if (uniqueParentBeNumbers !== undefined) {
+      const currentBeNumber = materialData.beNumber ?? existing.beNumber
+      uniqueParentBeNumbers = uniqueParentBeNumbers.filter(parentBeNumber => parentBeNumber !== currentBeNumber)
+    }
+
     const updated = await tx.material.update({
       where: {id},
       data: {
         ...materialData,
-        bePartDoc: bePartDoc !== undefined ? (bePartDoc != null ? String(bePartDoc) : null) : undefined,
+        ...toPrismaMaterialDocumentFlags({
+          hasAtex,
+          hasCe,
+          hasRohs,
+          hasDs,
+          hasDoc,
+          has3dCad,
+          has2dCad,
+          hasBdoc,
+          hasInsp,
+        }),
+        warehousePlaceId: warehousePlace !== undefined ? warehousePlace : undefined,
         MaterialSupplier:
           supplierCompanyIds === undefined
             ? undefined
@@ -389,14 +611,11 @@ export async function updateMaterial(
           },
         })
 
-        await tx.materialSerialTrackedStructure.create({
-          data: {
-            id: randomUUID(),
-            serialTrackedId: serialTrack.id,
-            beNumber: updated.beNumber,
-            createdBy: existing.createdBy,
-            deleted: false,
-          },
+        await createTrackedStructureCompat(tx, {
+          id: randomUUID(),
+          serialTrackedId: serialTrack.id,
+          beNumber: updated.beNumber,
+          createdBy: existing.createdBy,
         })
       }
     } else if (activeSerialTrack) {
@@ -413,6 +632,30 @@ export async function updateMaterial(
         where: {serialTrackedId: activeSerialTrack.id, deleted: false},
         data: {deleted: true, deletedAt: new Date(), updatedAt: new Date()},
       })
+    }
+
+    const longLeadTimeEnabled = updated.longLeadTime ?? false
+    if (!longLeadTimeEnabled) {
+      await tx.materialLeadTime.deleteMany({where: {materialId: updated.id}})
+    } else {
+      const nextLeadTimeValue = leadTimeValue ?? existing.MaterialLeadTime?.leadTimeValue ?? null
+      const nextLeadTimeUnit = leadTimeUnit ?? existing.MaterialLeadTime?.leadTimeUnit ?? null
+
+      if (nextLeadTimeValue != null && nextLeadTimeUnit) {
+        await tx.materialLeadTime.upsert({
+          where: {materialId: updated.id},
+          update: {
+            leadTimeValue: nextLeadTimeValue,
+            leadTimeUnit: nextLeadTimeUnit,
+          },
+          create: {
+            id: randomUUID(),
+            materialId: updated.id,
+            leadTimeValue: nextLeadTimeValue,
+            leadTimeUnit: nextLeadTimeUnit,
+          },
+        })
+      }
     }
 
     return updated
@@ -434,31 +677,6 @@ export async function restoreMaterial(id: string) {
   return prismaClient.material.update({
     where: {id},
     data: {
-      deleted: false,
-      deletedAt: null,
-      deletedBy: null,
-    },
-  })
-}
-
-export async function cloneMaterial(id: string) {
-  const original = await prismaClient.material.findUniqueOrThrow({where: {id}})
-  const {id: _oldId, deleted: _deleted, deletedAt: _deletedAt, deletedBy: _deletedBy, beNumber, ...rest} = original
-  const newId = randomUUID()
-
-  let baseBeNumber = beNumber ? String(beNumber) : 'CLONE'
-  let newBeNumber = baseBeNumber + '-copy'
-  let counter = 1
-  while (await prismaClient.material.findUnique({where: {beNumber: newBeNumber}})) {
-    newBeNumber = `${baseBeNumber}-copy${counter}`
-    counter++
-  }
-
-  return prismaClient.material.create({
-    data: {
-      ...rest,
-      id: newId,
-      beNumber: newBeNumber,
       deleted: false,
       deletedAt: null,
       deletedBy: null,

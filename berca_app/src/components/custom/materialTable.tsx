@@ -1,7 +1,7 @@
 'use client'
 
 import {useMemo, useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye, Copy} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -9,7 +9,9 @@ import {Alert} from '@/components/ui/alert'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
+import {MATERIAL_DOCUMENT_FLAGS} from '@/components/custom/materialDocumentFlags'
 import type {MappedMaterial} from '@/types/material'
+import type {WarehousePlaceOption} from '@/types/warehousePlace'
 import {createMaterialAction, updateMaterialAction, deleteMaterialAction} from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
 
@@ -42,6 +44,12 @@ type SortField =
   | 'beNumber'
   | 'name'
   | 'shortDescription'
+  | 'warehouseAbbreviation'
+  | 'warehousePlace'
+  | 'warehouseShelf'
+  | 'warehouseColumn'
+  | 'warehouseLayer'
+  | 'warehouseLayerPlace'
   | 'brandName'
   | 'materialGroupLabelA'
   | 'materialGroupLabelB'
@@ -50,8 +58,17 @@ type SortField =
   | 'unitName'
   | 'parentBeNumbers'
   | 'createdByName'
-  | 'createdAt'
   | 'rejected'
+  | 'partApproved'
+  | 'longLeadTime'
+  | 'hasAtex'
+  | 'hasCe'
+  | 'hasRohs'
+  | 'hasDs'
+  | 'has3dCad'
+  | 'has2dCad'
+  | 'hasBdoc'
+  | 'hasInsp'
 type SortDir = 'asc' | 'desc'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
@@ -84,6 +101,7 @@ interface MaterialTableProps {
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
   parentPartOptions: ParentPartOption[]
+  warehousePlaces: WarehousePlaceOption[]
   departmentId?: string
 }
 
@@ -93,6 +111,7 @@ export function MaterialTable({
   units,
   supplierCompanies,
   parentPartOptions,
+  warehousePlaces,
   departmentId,
 }: MaterialTableProps) {
   const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
@@ -104,6 +123,7 @@ export function MaterialTable({
   const [filterNumberKind, setFilterNumberKind] = useState<FilterNumberKind>('all')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
+  const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [alert, setAlert] = useState<{
@@ -128,6 +148,66 @@ export function MaterialTable({
     return normalized.startsWith('4') ? 'ios' : 'be'
   }
 
+  const warehousePlaceById = useMemo(() => new Map(warehousePlaces.map(place => [place.id, place])), [warehousePlaces])
+
+  function formatWarehouseCoordinates(place: WarehousePlaceOption): string {
+    const parts = [
+      place.abbreviation && `Abbr: ${place.abbreviation}`,
+      place.place && `Place: ${place.place}`,
+      place.shelf && `Shelf: ${place.shelf}`,
+      place.column && `Column: ${place.column}`,
+      place.layer && `Layer: ${place.layer}`,
+      place.layerPlace && `Layer place: ${place.layerPlace}`,
+    ].filter(Boolean)
+
+    return parts.length > 0 ? parts.join(' | ') : place.label
+  }
+
+  function resolveMaterialPlace(value: string | null): string {
+    if (!value) return ''
+    const place = warehousePlaceById.get(value)
+    if (!place) return value
+    return formatWarehouseCoordinates(place)
+  }
+
+  function getWarehousePart(value: string | null, part: keyof WarehousePlaceOption): string {
+    if (!value) return ''
+    const place = warehousePlaceById.get(value)
+    if (!place) return ''
+    const partValue = place[part]
+    return typeof partValue === 'string' ? partValue : ''
+  }
+
+  function getSortValue(material: MappedMaterial, field: SortField): string {
+    switch (field) {
+      case 'warehouseAbbreviation':
+        return getWarehousePart(material.warehousePlace, 'abbreviation')
+      case 'warehousePlace':
+        return getWarehousePart(material.warehousePlace, 'place')
+      case 'warehouseShelf':
+        return getWarehousePart(material.warehousePlace, 'shelf')
+      case 'warehouseColumn':
+        return getWarehousePart(material.warehousePlace, 'column')
+      case 'warehouseLayer':
+        return getWarehousePart(material.warehousePlace, 'layer')
+      case 'warehouseLayerPlace':
+        return getWarehousePart(material.warehousePlace, 'layerPlace')
+      case 'hasAtex':
+      case 'hasCe':
+      case 'hasRohs':
+      case 'hasDs':
+      case 'has3dCad':
+      case 'has2dCad':
+      case 'hasBdoc':
+      case 'hasInsp':
+        return material[field] ? '1' : '0'
+      case 'partApproved':
+        return material.partApproved ? '1' : '0'
+      default:
+        return String(material[field] ?? '')
+    }
+  }
+
   const filtered = materials
     .filter(m => {
       if (filterNumberKind === 'all') return true
@@ -145,6 +225,7 @@ export function MaterialTable({
         m.beNumber.toLowerCase().includes(q) ||
         (m.name ?? '').toLowerCase().includes(q) ||
         m.shortDescription.toLowerCase().includes(q) ||
+        resolveMaterialPlace(m.warehousePlace).toLowerCase().includes(q) ||
         (m.brandName ?? '').toLowerCase().includes(q) ||
         m.materialGroupLabel.toLowerCase().includes(q) ||
         m.materialGroupLabelA.toLowerCase().includes(q) ||
@@ -158,8 +239,8 @@ export function MaterialTable({
       )
     })
     .sort((a, b) => {
-      const aVal = String(a[sortField] ?? '')
-      const bVal = String(b[sortField] ?? '')
+      const aVal = getSortValue(a, sortField)
+      const bVal = getSortValue(b, sortField)
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
 
@@ -181,9 +262,21 @@ export function MaterialTable({
         'supplierCompanyIds',
         'parentBeNumbers',
         'brandName',
-        'documentationPlace',
-        'bePartDoc',
+        'warehousePlace',
         'rejected',
+        'partApproved',
+        'longLeadTime',
+        'leadTimeValue',
+        'leadTimeUnit',
+        'hasAtex',
+        'hasCe',
+        'hasRohs',
+        'hasDs',
+        'hasDoc',
+        'has3dCad',
+        'has2dCad',
+        'hasBdoc',
+        'hasInsp',
         'materialGroupIdA',
         'materialGroupIdB',
         'materialGroupIdC',
@@ -201,8 +294,9 @@ export function MaterialTable({
         'preferredSupplierOrderId',
         'preferredSupplierShortDescription',
         'brandName',
-        'documentationPlace',
-        'bePartDoc',
+        'warehousePlace',
+        'leadTimeValue',
+        'leadTimeUnit',
         'materialGroupIdB',
         'materialGroupIdC',
         'materialGroupIdD',
@@ -225,9 +319,10 @@ export function MaterialTable({
         fd.append(k, String(v))
       })
 
-      const result = editingMaterial
-        ? await updateMaterialAction({success: false}, fd)
-        : await createMaterialAction({success: false}, fd)
+      const result =
+        dialogMode === 'edit' && editingMaterial
+          ? await updateMaterialAction({success: false}, fd)
+          : await createMaterialAction({success: false}, fd)
 
       if (result && !result.success) {
         console.error('Material save failed:', result.errors)
@@ -256,7 +351,12 @@ export function MaterialTable({
     router.refresh()
   }
 
-  async function handleViewSerialTracked(serialTrackedId: string | null, beNumber: string, departmentId?: string, router?: any) {
+  async function handleViewSerialTracked(
+    serialTrackedId: string | null,
+    beNumber: string,
+    departmentId?: string,
+    router?: any,
+  ) {
     if (!departmentId || !router) return
 
     if (serialTrackedId) {
@@ -282,6 +382,12 @@ export function MaterialTable({
     {key: 'beNumber', label: 'Number'},
     {key: 'name', label: 'Name'},
     {key: 'shortDescription', label: 'Description'},
+    {key: 'warehouseAbbreviation', label: 'Abbr'},
+    {key: 'warehousePlace', label: 'Place'},
+    {key: 'warehouseShelf', label: 'Shelf'},
+    {key: 'warehouseColumn', label: 'Column'},
+    {key: 'warehouseLayer', label: 'Layer'},
+    {key: 'warehouseLayerPlace', label: 'Layer Place'},
     {key: 'brandName', label: 'Brand'},
     {key: 'materialGroupLabelA', label: 'Group A'},
     {key: 'materialGroupLabelB', label: 'Group B'},
@@ -291,7 +397,19 @@ export function MaterialTable({
     {key: 'parentBeNumbers', label: 'Parent Parts'},
     {key: 'createdByName', label: 'Created'},
     {key: 'rejected', label: 'Status'},
+    {key: 'partApproved', label: 'Approved'},
+    {key: 'longLeadTime', label: 'Long Lead'},
   ]
+
+  const renderDocumentFlag = (active: boolean) => {
+    return active ? (
+      <Badge variant="default" className="text-xs bg-blue-500/20 text-blue-700 dark:text-blue-400">
+        Yes
+      </Badge>
+    ) : (
+      <span className="text-xs text-muted-foreground">-</span>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -335,6 +453,7 @@ export function MaterialTable({
 
         <Button
           onClick={() => {
+            setDialogMode('create')
             setEditingMaterial(null)
             setDialogOpen(true)
           }}
@@ -358,6 +477,15 @@ export function MaterialTable({
                   <SortIcon field={col.key} sortField={sortField} sortDir={sortDir} />
                 </TableHead>
               ))}
+              {MATERIAL_DOCUMENT_FLAGS.map(flag => (
+                <TableHead
+                  key={flag.key}
+                  className="w-24 cursor-pointer select-none text-center text-xs font-semibold text-muted-foreground uppercase tracking-wide"
+                  onClick={() => handleSort(flag.key)}>
+                  {flag.label}
+                  <SortIcon field={flag.key} sortField={sortField} sortDir={sortDir} />
+                </TableHead>
+              ))}
               <TableHead className="w-25 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Serial Tracked
               </TableHead>
@@ -369,7 +497,7 @@ export function MaterialTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 2} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={columns.length + MATERIAL_DOCUMENT_FLAGS.length + 2} className="text-center text-muted-foreground py-10">
                   No materials found
                 </TableCell>
               </TableRow>
@@ -386,6 +514,12 @@ export function MaterialTable({
                   <TableCell className="text-sm max-w-55 truncate" title={m.shortDescription}>
                     {m.shortDescription}
                   </TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'abbreviation') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'place') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'shelf') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'column') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'layer') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'layerPlace') || '—'}</TableCell>
                   <TableCell className="text-sm">
                     {m.brandName ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
@@ -424,6 +558,29 @@ export function MaterialTable({
                       </Badge>
                     )}
                   </TableCell>
+                  <TableCell>
+                    {m.partApproved ? (
+                      <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-700 dark:text-emerald-400">
+                        Yes
+                      </Badge>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">No</span>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {m.longLeadTime ? (
+                      <Badge variant="secondary" className="text-xs bg-amber-500/15 text-amber-700 dark:text-amber-400">
+                        Yes
+                      </Badge>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">No</span>
+                    )}
+                  </TableCell>
+                  {MATERIAL_DOCUMENT_FLAGS.map(flag => (
+                    <TableCell key={flag.key} className="text-sm text-center">
+                      {renderDocumentFlag(Boolean(m[flag.key]))}
+                    </TableCell>
+                  ))}
                   {/* Serial Tracked Button Column */}
                   <TableCell className="text-center">
                     <Button
@@ -454,10 +611,24 @@ export function MaterialTable({
                         variant="ghost"
                         className="h-7 w-7"
                         onClick={() => {
+                          setDialogMode('edit')
                           setEditingMaterial(m)
                           setDialogOpen(true)
                         }}>
                         <Pencil className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-7 w-7"
+                        disabled={!m.partApproved}
+                        onClick={() => {
+                          setDialogMode('duplicate')
+                          setEditingMaterial(m)
+                          setDialogOpen(true)
+                        }}
+                        title={m.partApproved ? 'Copy row' : 'Approve this part first'}>
+                        <Copy className="h-3.5 w-3.5" />
                       </Button>
                       <Button
                         size="icon"
@@ -485,15 +656,18 @@ export function MaterialTable({
           setDialogOpen(open)
           if (!open) {
             setEditingMaterial(null)
+            setDialogMode('create')
             setSaveError(null)
           }
         }}
         material={editingMaterial}
+        mode={dialogMode}
         materialGroups={materialGroups}
         units={units}
         supplierCompanies={supplierCompanies}
         parentPartOptions={parentPartOptions}
         parentPartBeNumbersInUse={parentPartBeNumbersInUse}
+        warehousePlaces={warehousePlaces}
         onSave={handleSave}
         saving={saving}
         saveError={saveError}

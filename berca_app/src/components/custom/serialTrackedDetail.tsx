@@ -7,27 +7,38 @@ import {MaterialSerialTrackedFormDialog} from '@/components/custom/serialTracked
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 
-
 interface Props {
   item: any
   companies: {id: string; name: string}[]
   projects: {id: string; name: string}[]
   materialGroups: {id: string; name: string}[]
+  warehousePlaces: {id: string; label: string}[]
   materialOptions: any[] // Add this line
   currentUserRole: string
   currentUserLevel: number
 }
 
-export function MaterialSerialTrackedDetail({item, companies, projects, materialGroups, materialOptions, currentUserRole, currentUserLevel}: Props) {
+export function MaterialSerialTrackedDetail({
+  item,
+  companies,
+  projects,
+  materialGroups,
+  warehousePlaces,
+  materialOptions,
+}: Props) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [structure, setStructure] = useState<any[]>([])
+
+  const formatDate = (value?: string | null) => (value ? new Date(value).toLocaleDateString('en-GB') : null)
+  const formatInspectionInterval = (value?: number | null, unit?: string | null) =>
+    value ? `${value} ${unit ? unit.toLowerCase() + (value === 1 ? '' : 's') : 'days'}` : null
+
   useEffect(() => {
     async function fetchStructure() {
       // Fetch from API route instead of direct DAL call
       const res = await fetch(`/api/serialTrackedStructure/${item.id}`)
       if (res.ok) {
         const data = await res.json()
-        console.log('Fetched structure:', data)
         setStructure(data)
       } else {
         setStructure([])
@@ -44,11 +55,7 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
           <h1 className="text-xl font-semibold">Serial Tracked Item</h1>
           <p className="text-muted-foreground text-sm">BE Number: {item.beNumber ?? '-'}</p>
         </div>
-        <button
-          className="ml-4 rounded p-2 hover:bg-accent/20"
-          title="Edit"
-          onClick={() => setDialogOpen(true)}
-        >
+        <button className="ml-4 rounded p-2 hover:bg-accent/20" title="Edit" onClick={() => setDialogOpen(true)}>
           <Pencil className="h-5 w-5 text-accent" />
         </button>
       </div>
@@ -66,8 +73,31 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
             <Field label="Management" value={item.management} />
             <Field label="Order Number" value={item.orderNumber} />
             <Field label="Transaction Type" value={item.transactionType} />
+            <Field
+              label="Stock Location"
+              value={
+                item.WarehousePlace?.[0]
+                  ? [
+                      item.WarehousePlace[0].abbreviation,
+                      item.WarehousePlace[0].place,
+                      item.WarehousePlace[0].shelf,
+                      item.WarehousePlace[0].column,
+                      item.WarehousePlace[0].layer,
+                      item.WarehousePlace[0].layerPlace,
+                    ]
+                      .filter(Boolean)
+                      .join(' / ')
+                  : null
+              }
+            />
             <Field label="From Location" value={item.fromLocation} />
             <Field label="To Location" value={item.toLocation} />
+            <Field label="Last Inspection Date" value={formatDate(item.lastInspectionDate)} />
+            <Field
+              label="Inspection Interval"
+              value={formatInspectionInterval(item.inspectionIntervalValue, item.inspectionIntervalUnit)}
+            />
+            <Field label="Next Inspection Date" value={formatDate(item.nextInspectionDate)} />
             <Field label="Preferred Supplier" value={item.preferredSupplier} />
             <Field label="Becra Code" value={item.becraCode} />
 
@@ -91,10 +121,6 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
         </TabsContent>
         <TabsContent value="structure">
           <div className="rounded-xl border border-border bg-card p-6">
-            <details>
-              <summary className="mb-2 cursor-pointer text-xs text-muted-foreground">Show raw structure data (debug)</summary>
-              <pre className="text-xs bg-muted p-2 rounded overflow-x-auto max-h-64">{JSON.stringify(structure, null, 2)}</pre>
-            </details>
             {structure.length === 0 ? (
               <p className="text-muted-foreground text-sm">No structure found for this serial tracked item.</p>
             ) : (
@@ -115,7 +141,14 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
                       <TableCell>{s.MaterialSerialTrack?.beNumber ?? '-'}</TableCell>
                       <TableCell>
                         {s.MaterialSerialTrack?.MaterialGroup
-                          ? [s.MaterialSerialTrack.MaterialGroup.groupA, s.MaterialSerialTrack.MaterialGroup.groupB, s.MaterialSerialTrack.MaterialGroup.groupC, s.MaterialSerialTrack.MaterialGroup.groupD].filter(Boolean).join(' / ')
+                          ? [
+                              s.MaterialSerialTrack.MaterialGroup.groupA,
+                              s.MaterialSerialTrack.MaterialGroup.groupB,
+                              s.MaterialSerialTrack.MaterialGroup.groupC,
+                              s.MaterialSerialTrack.MaterialGroup.groupD,
+                            ]
+                              .filter(Boolean)
+                              .join(' / ')
                           : '-'}
                       </TableCell>
                     </TableRow>
@@ -134,6 +167,7 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
         companyOptions={companies}
         projectOptions={projects}
         materialGroupOptions={materialGroups}
+        warehousePlaceOptions={warehousePlaces}
         materialOptions={materialOptions} // Pass the prop
         departmentId={item.departmentId}
       />

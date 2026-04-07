@@ -231,12 +231,16 @@ export function DocumentFormDialog({
       if (targetMaterial) assignments.push({typeName: 'Material', targetId: targetMaterial})
       if (targetProject) assignments.push({typeName: 'Project', targetId: targetProject})
       if (targetCompany) assignments.push({typeName: 'Company', targetId: targetCompany})
+      function normalizeGroupId(id: string | null | undefined) {
+        return id ?? ''
+      }
+
       const docGroup = documentGroups.find(
         group =>
-          group.groupAId === selAId &&
-          group.groupBId === selBId &&
-          group.groupCId === selCId &&
-          group.groupDId === selDId,
+          normalizeGroupId(group.groupAId) === selAId &&
+          normalizeGroupId(group.groupBId) === selBId &&
+          normalizeGroupId(group.groupCId) === selCId &&
+          normalizeGroupId(group.groupDId) === selDId,
       )
       await onSave(
         {
@@ -246,7 +250,7 @@ export function DocumentFormDialog({
           additionalInfo: form.additionalInfo?.trim() || null,
           revisionDetail: form.revisionDetail?.trim() || null,
           documentNumber: form.documentNumber.trim(),
-          documentGroupId: docGroup!.id,
+          documentGroupId: docGroup?.id || null,
         },
         visibilityRows,
         assignments,

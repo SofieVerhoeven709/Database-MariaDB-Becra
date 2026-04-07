@@ -52,9 +52,31 @@ const preferredSupplierShortDescriptionSchema = z.preprocess(
   z.string().trim().max(255).nullable().optional(),
 )
 
-export const materialSchema = z.object({
+const leadTimeValueSchema = z.preprocess(
+  val => (val === '' || val == null ? null : Number(val)),
+  z.number().int().min(1).nullable().optional(),
+)
+
+const leadTimeUnitSchema = z.preprocess(
+  val => (val === '' || val == null ? null : val),
+  z.enum(['days', 'weeks', 'months']).nullable().optional(),
+)
+
+const documentFlagSchema = z
+  .preprocess(val => {
+    if (val === undefined) return false
+    if (val === 'false' || val === false || val === 0) return false
+    if (val === 'true' || val === true || val === 1) return true
+    return val
+  }, z.boolean())
+  .default(false)
+
+const materialSchemaBase = z.object({
   id: z.string().uuid(),
-  beNumber: beNumberSchema,
+  beNumber: z.preprocess(
+    val => (typeof val === 'string' && val.trim() === '' ? undefined : val),
+    beNumberSchema.optional(),
+  ),
   name: z.string().max(255).nullable().optional(),
   brandOrderNr: brandOrderNrSchema,
   shortDescription: z.string().min(1).max(255),
@@ -65,9 +87,26 @@ export const materialSchema = z.object({
   supplierCompanyIds: supplierCompanyIdsSchema,
   parentBeNumbers: parentBeNumbersSchema,
   brandName: z.string().max(255).nullable().optional(),
-  documentationPlace: z.string().max(255).nullable().optional(),
-  bePartDoc: z.coerce.number().int().nullable().optional(),
+  warehousePlace: nullableUuidSchema,
   rejected: booleanFromString,
+  partApproved: z
+    .preprocess(val => {
+      if (val === undefined) return false
+      if (val === 'false' || val === false || val === 0) return false
+      if (val === 'true' || val === true || val === 1) return true
+      return val
+    }, z.boolean())
+    .default(false),
+  longLeadTime: z
+    .preprocess(val => {
+      if (val === undefined) return false
+      if (val === 'false' || val === false || val === 0) return false
+      if (val === 'true' || val === true || val === 1) return true
+      return val
+    }, z.boolean())
+    .default(false),
+  leadTimeValue: leadTimeValueSchema,
+  leadTimeUnit: leadTimeUnitSchema,
   materialGroupIdA: z.string().uuid(),
   materialGroupIdB: nullableUuidSchema,
   materialGroupIdC: nullableUuidSchema,
@@ -81,6 +120,15 @@ export const materialSchema = z.object({
       return val
     }, z.boolean())
     .default(false),
+  hasAtex: documentFlagSchema,
+  hasCe: documentFlagSchema,
+  hasRohs: documentFlagSchema,
+  hasDs: documentFlagSchema,
+  hasDoc: documentFlagSchema,
+  has3dCad: documentFlagSchema,
+  has2dCad: documentFlagSchema,
+  hasBdoc: documentFlagSchema,
+  hasInsp: documentFlagSchema,
   isParentPart: z
     .preprocess(val => {
       if (val === undefined) return false
@@ -91,16 +139,33 @@ export const materialSchema = z.object({
     .default(false),
 })
 
-export const createMaterialSchema = materialSchema.extend({
-  beNumber: z.preprocess(
-    val => (typeof val === 'string' && val.trim() === '' ? undefined : val),
-    beNumberSchema.optional(),
-  ),
-})
+function withLongLeadTimeValidation<T extends z.ZodTypeAny>(schema: T) {
+  return schema.superRefine((data: any, ctx) => {
+    if (!data.longLeadTime) return
 
-export const updateMaterialSchema = materialSchema.partial().extend({
-  id: z.string().uuid(),
-})
+    if (data.leadTimeValue == null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['leadTimeValue'],
+        message: 'Lead time value is required when long lead time is enabled.',
+      })
+    }
+
+    if (data.leadTimeUnit == null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['leadTimeUnit'],
+        message: 'Lead time unit is required when long lead time is enabled.',
+      })
+    }
+  })
+}
+
+export const materialSchema = withLongLeadTimeValidation(materialSchemaBase)
+
+export const createMaterialSchema = withLongLeadTimeValidation(materialSchemaBase)
+
+export const updateMaterialSchema = withLongLeadTimeValidation(materialSchemaBase.partial().required({id: true}))
 export const deleteMaterialSchema = z.object({
   id: z.string().uuid(),
 })

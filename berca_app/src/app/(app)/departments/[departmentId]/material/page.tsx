@@ -1,9 +1,10 @@
 import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
-import type {MaterialListItem} from '@/dal/materials'
 import {MaterialTable} from '@/components/custom/materialTable'
 import {getDepartmentById} from '@/dal/department'
 import {getSupplierCompanies} from '@/dal/companies'
+import {getWarehousePlaces} from '@/dal/warehousePlace'
 import type {MappedMaterial} from '@/types/material'
+import type {WarehousePlaceOption} from '@/types/warehousePlace'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -25,34 +26,45 @@ function getParentBeNumbers(material: unknown): string[] {
     .filter((value): value is string => value !== null)
 }
 
-export default async function MaterialPage({params}: PageProps) {
-  const parseBePartDoc = (value: string | null) => {
-    if (value == null || value === '') return null
-    const parsed = Number(value)
-    return Number.isFinite(parsed) ? parsed : null
-  }
+type MaterialRow = Awaited<ReturnType<typeof getMaterials>>[number]
+type MaterialDocumentFlags = {
+  hasAtex: boolean
+  hasCE: boolean
+  hasROHS: boolean
+  hasDS: boolean
+  hasDoc: boolean
+  has3DCAD: boolean
+  has2DCAD: boolean
+  hasBDOC: boolean
+  hasINSP: boolean
+}
 
+export default async function MaterialPage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [department, materials, groups, units, supplierCompanies] = await Promise.all([
+  const [department, materials, groups, units, supplierCompanies, warehousePlaces] = await Promise.all([
     getDepartmentById(departmentId),
     getMaterials(),
     getMaterialGroups(),
     getUnits(),
     getSupplierCompanies(),
+    getWarehousePlaces(),
   ])
 
   if (!department) return <p>Department not found</p>
 
   const groupById = new Map(groups.map(g => [g.id, g]))
 
-  const mappedMaterials: MappedMaterial[] = materials.map((m: MaterialListItem) => {
+  const mappedMaterials: MappedMaterial[] = materials.map((m: MaterialRow) => {
+    const materialWithDocuments = m as MaterialRow & MaterialDocumentFlags
+    const createdByName = [m.Employee?.firstName, m.Employee?.lastName].filter(Boolean).join(' ').trim()
+
     const preferredSupplierEntry =
       m.MaterialSupplier.find(s => s.companyId === m.preferredSupplierCompanyId) ??
       m.MaterialSupplier.find(s => s.isPreferred) ??
       null
 
-    const mapped: MappedMaterial = {
+    const mapped = {
       id: m.id,
       beNumber: m.beNumber ?? '',
       name: m.name ?? null,
@@ -67,9 +79,21 @@ export default async function MaterialPage({params}: PageProps) {
       supplierCompanyNames: m.MaterialSupplier.map(s => s.Company.name),
       parentBeNumbers: getParentBeNumbers(m),
       brandName: m.brandName ?? null,
-      documentationPlace: m.documentationPlace ?? null,
-      bePartDoc: parseBePartDoc(m.bePartDoc),
+      warehousePlace: m.warehousePlaceId ?? null,
+      partApproved: (m as any).partApproved ?? false,
+      longLeadTime: m.longLeadTime ?? false,
+      leadTimeValue: m.MaterialLeadTime?.leadTimeValue ?? null,
+      leadTimeUnit: (m.MaterialLeadTime?.leadTimeUnit as 'days' | 'weeks' | 'months' | null) ?? null,
       rejected: m.rejected ?? false,
+      hasAtex: materialWithDocuments.hasAtex ?? false,
+      hasCe: materialWithDocuments.hasCE ?? false,
+      hasRohs: materialWithDocuments.hasROHS ?? false,
+      hasDs: materialWithDocuments.hasDS ?? false,
+      hasDoc: materialWithDocuments.hasDoc ?? false,
+      has3dCad: materialWithDocuments.has3DCAD ?? false,
+      has2dCad: materialWithDocuments.has2DCAD ?? false,
+      hasBdoc: materialWithDocuments.hasBDOC ?? false,
+      hasInsp: materialWithDocuments.hasINSP ?? false,
       materialGroupIdA: m.materialGroupIdA ?? null,
       materialGroupIdB: m.materialGroupIdB ?? null,
       materialGroupIdC: m.materialGroupIdC ?? null,
@@ -90,8 +114,8 @@ export default async function MaterialPage({params}: PageProps) {
       unitName: m.Unit.unitName,
       unitAbbreviation: m.Unit.abbreviation,
       createdBy: m.createdBy,
-      createdByName: '',
-      createdAt: null,
+      createdByName,
+      createdAt: m.Target?.createdAt?.toISOString() ?? null,
       deleted: m.deleted,
       deletedAt: m.deletedAt?.toISOString() ?? null,
       deletedBy: m.deletedBy ?? null,
@@ -99,7 +123,7 @@ export default async function MaterialPage({params}: PageProps) {
       serialTrackedId: m.MaterialSerialTrack[0]?.id ?? null,
       isParentPart: false,
     }
-    return mapped
+    return mapped as MappedMaterial
   })
 
   const mappedGroups = groups.map(g => ({
@@ -122,6 +146,19 @@ export default async function MaterialPage({params}: PageProps) {
     number: c.number,
   }))
 
+  const mappedWarehousePlaces: WarehousePlaceOption[] = warehousePlaces.map(place => ({
+    id: place.id,
+    label: [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+      .filter(Boolean)
+      .join(' - '),
+    abbreviation: place.abbreviation ?? null,
+    place: place.place ?? null,
+    shelf: place.shelf ?? null,
+    column: place.column ?? null,
+    layer: place.layer ?? null,
+    layerPlace: place.layerPlace ?? null,
+  }))
+
   const mappedParentPartOptions = materials
     .filter(m => typeof m.beNumber === 'string' && m.beNumber.length > 0)
     .map(m => ({
@@ -142,6 +179,7 @@ export default async function MaterialPage({params}: PageProps) {
         materialGroups={mappedGroups}
         units={mappedUnits}
         supplierCompanies={mappedSupplierCompanies}
+        warehousePlaces={mappedWarehousePlaces}
         departmentId={departmentId}
         parentPartOptions={mappedParentPartOptions}
       />

@@ -1,5 +1,5 @@
 CREATE DATABASE BecraBV;
-USE BecraBV;
+USE BecraBVs;
 
 CREATE TABLE
       IF NOT EXISTS Role (
@@ -171,21 +171,33 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS Material (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            beNumber VARCHAR(255) NOT NULL,
+            beNumber VARCHAR(255),
             name VARCHAR(255),
-            brandOrderNr VARCHAR(255) NULL,
+            brandOrderNr VARCHAR(255),
             shortDescription VARCHAR(255) NOT NULL,
             longDescription TEXT,
+            preferredSupplier VARCHAR(255),
             brandName VARCHAR(255),
             documentationPlace VARCHAR(255),
             bePartDoc VARCHAR(255) NULL,
             rejected BOOLEAN DEFAULT FALSE,
+            isSerialTracked BOOLEAN NOT NULL DEFAULT 0,
             materialGroupIdA CHAR(36) NULL,
             materialGroupIdB CHAR(36) NULL,
             materialGroupIdC CHAR(36) NULL,
             materialGroupIdD CHAR(36) NULL,
             preferredSupplierCompanyId CHAR(36) NULL,
             unitId CHAR(36) NOT NULL,
+            longLeadTime BOOLEAN,
+            hasAtex BOOLEAN NOT NULL DEFAULT 0,
+            hasCE BOOLEAN NOT NULL DEFAULT 0,
+            hasROHS BOOLEAN NOT NULL DEFAULT 0,
+            hasDS BOOLEAN NOT NULL DEFAULT 0,
+            hasDoc BOOLEAN NOT NULL DEFAULT 0,
+            has3DCAD BOOLEAN NOT NULL DEFAULT 0,
+            has2DCAD BOOLEAN NOT NULL DEFAULT 0,
+            hasBDOC BOOLEAN NOT NULL DEFAULT 0,
+            hasINSP BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
             FOREIGN KEY (materialGroupIdA) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
@@ -198,6 +210,16 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS MaterialLeadTime (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NOT NULL,
+            leadTimeValue INT NOT NULL,
+            leadTimeUnit VARCHAR(10) NOT NULL,
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
+            UNIQUE (materialId)
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -290,6 +312,7 @@ ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES
 ALTER TABLE Material ADD targetId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_material_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
 
+
 CREATE TABLE
       IF NOT EXISTS EmergencyContact (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -308,9 +331,9 @@ CREATE TABLE
             officialName VARCHAR(255) NOT NULL,
             number VARCHAR(255) NOT NULL,
             idOld VARCHAR(255),
-            mail VARCHAR(100),
-            businessPhone VARCHAR(100),
-            website VARCHAR(100),
+            mail VARCHAR(255),
+            businessPhone VARCHAR(255),
+            website VARCHAR(255),
             vatNumber VARCHAR(100),
             bankNumber VARCHAR(100),
             iban VARCHAR(100),
@@ -450,8 +473,8 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             materialId CHAR(36) NOT NULL,
             companyId CHAR(36) NOT NULL,
-            supplierOrderNr VARCHAR(255),
-            shortDescription VARCHAR(255),
+            supplierOrderNr VARCHAR(255) NULL,
+            shortDescription VARCHAR(255) NULL,
             isPreferred BOOLEAN NOT NULL DEFAULT 0,
             CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
             FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
@@ -855,14 +878,13 @@ CREATE TABLE
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
-
-CREATE TABLE
+CREATE TABLE 
       IF NOT EXISTS PriceListItem (
             id CHAR(36) NOT NULL PRIMARY KEY,
             priceListId CHAR(36) NOT NULL,
             description VARCHAR(255) NOT NULL,
             unit VARCHAR(100) NOT NULL,
-            price DECIMAL(10, 2) NOT NULL,
+            price DECIMAL(10,2) NOT NULL,
             createdAt DATETIME NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             isCostMargin BOOLEAN NOT NULL DEFAULT 0,
@@ -908,6 +930,7 @@ CREATE TABLE
             invoiceSentTypeId CHAR(36) NOT NULL,
             invoiceStatusId CHAR(36) NOT NULL,
             vatMarginId CHAR(36) NOT NULL,
+            priceListId CHAR(36),
             FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
@@ -1338,7 +1361,7 @@ ALTER TABLE DocumentStructure ADD documentGroupId CHAR(36) NULL,
       ADD CONSTRAINT fk_documentStructure_documentGroup FOREIGN KEY (documentGroupId) REFERENCES DocumentGroup (id) ON DELETE SET NULL;
 ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NULL,
       ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE SET NUll;
-ALTER TABLE DocumentStructure ADD documentStatusId CHAR(36) NOT NULL,
+ALTER TABLE DocumentStructure ADD documentStatusId CHAR(36) NULL,
       ADD CONSTRAINT fk_documentStructure_documentStatus FOREIGN KEY (documentStatusId) REFERENCES DocumentStatus (id) ON DELETE SET NUll;
 
 CREATE TABLE
@@ -1404,8 +1427,8 @@ CREATE TABLE
             updatedAt DATETIME,
             rejected BOOLEAN,
             additionalInfo VARCHAR(255),
-            unitPrice Decimal(10,3),
-            quantityPrice DECIMAL(10,3),
+            unitPrice Decimal(10,2),
+            quantityPrice INT,
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -1419,7 +1442,12 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS MaterialSerialTrack (
             id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NULL,
             beNumber VARCHAR(255),
+            lastInspectionDate DATE,
+            inspectionIntervalValue INT,
+            inspectionIntervalUnit ENUM('DAY','WEEK','MONTH','YEAR'),
+            nextInspectionDate DATE,
             brandName VARCHAR(255),
             management VARCHAR(255),
             brandOrderNumber VARCHAR(255),
@@ -1439,9 +1467,10 @@ CREATE TABLE
             becraCode VARCHAR(255),
             createdBy CHAR(36),
             FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
-            FOREIGN KEY (materialGroupId) REFERENCES MaterialGroup (id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialGroupId) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
             FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
@@ -1460,7 +1489,7 @@ CREATE TABLE
             layer VARCHAR(255),
             layerPlace VARCHAR(255),
             information VARCHAR(255),
-            volume INT NOT NULL,
+            quantityInStock INT NOT NULL,
             createdAt DATETIME NOT NULL,
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
@@ -1832,3 +1861,33 @@ CREATE TABLE
             FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
+
+CREATE OR REPLACE VIEW vw_materialSerialTrackInspectionAlerts AS
+SELECT
+      mst.id,
+      mst.materialId,
+      mst.beNumber,
+      mst.shortDescription,
+      mst.nextInspectionDate,
+      DATEDIFF(mst.nextInspectionDate, CURDATE()) AS daysUntilInspection,
+      (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 30) AS remindMonthBefore,
+      (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 7) AS remindWeekBefore,
+      (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 1) AS remindDayBefore,
+      (DATEDIFF(mst.nextInspectionDate, CURDATE()) < 0) AS isOverdue
+FROM MaterialSerialTrack mst
+WHERE mst.deleted = 0
+  AND mst.nextInspectionDate IS NOT NULL;
+
+CREATE OR REPLACE VIEW vw_materialSerialTrackDueCurrentMonth AS
+SELECT
+      mst.id,
+      mst.materialId,
+      mst.beNumber,
+      mst.shortDescription,
+      mst.nextInspectionDate,
+      DATEDIFF(mst.nextInspectionDate, CURDATE()) AS daysUntilInspection
+FROM MaterialSerialTrack mst
+WHERE mst.deleted = 0
+  AND mst.nextInspectionDate IS NOT NULL
+  AND YEAR(mst.nextInspectionDate) = YEAR(CURDATE())
+  AND MONTH(mst.nextInspectionDate) = MONTH(CURDATE());

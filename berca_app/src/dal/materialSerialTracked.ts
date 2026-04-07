@@ -1,7 +1,6 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 import type {Prisma} from '@/generated/prisma/client'
-import {randomUUID} from 'crypto'
 
 export type SerialTrackedWithRelations = Prisma.MaterialSerialTrackGetPayload<{
   include: {
@@ -28,13 +27,27 @@ export type SerialTrackedWithRelations = Prisma.MaterialSerialTrackGetPayload<{
         groupD: true
       }
     }
+    WarehousePlace: {
+      where: {
+        deleted: false
+      }
+      select: {
+        id: true
+        abbreviation: true
+        place: true
+        shelf: true
+        column: true
+        layer: true
+        layerPlace: true
+      }
+    }
   }
 }>
 
 export async function getSerialTracked(options?: {includeDeleted?: boolean}): Promise<SerialTrackedWithRelations[]> {
   const includeDeleted = options?.includeDeleted ?? false
 
-  const results = await prismaClient.materialSerialTrack.findMany({
+  return prismaClient.materialSerialTrack.findMany({
     where: includeDeleted ? undefined : {deleted: false},
     include: {
       Employee: {
@@ -56,11 +69,21 @@ export async function getSerialTracked(options?: {includeDeleted?: boolean}): Pr
           groupD: true,
         },
       },
+      WarehousePlace: {
+        where: {deleted: false},
+        select: {
+          id: true,
+          abbreviation: true,
+          place: true,
+          shelf: true,
+          column: true,
+          layer: true,
+          layerPlace: true,
+        },
+      },
     },
     orderBy: {shortDescription: 'asc'},
   })
-  console.log('[DAL:getSerialTracked] count:', results.length, 'sample:', results.slice(0, 2))
-  return results
 }
 
 export async function getSerialTrackedById(id: string): Promise<SerialTrackedWithRelations | null> {
@@ -84,6 +107,18 @@ export async function getSerialTrackedById(id: string): Promise<SerialTrackedWit
           groupB: true,
           groupC: true,
           groupD: true,
+        },
+      },
+      WarehousePlace: {
+        where: {deleted: false},
+        select: {
+          id: true,
+          abbreviation: true,
+          place: true,
+          shelf: true,
+          column: true,
+          layer: true,
+          layerPlace: true,
         },
       },
     },
@@ -112,22 +147,81 @@ export async function createSerialTracked(data: {
   additionalInfo?: string | null
   becraCode?: string | null
   beNumber?: string | null
+  warehousePlaceId?: string | null
+  lastInspectionDate?: Date | null
+  nextInspectionDate?: Date | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR' | null
 }) {
-  console.log('[DAL:createSerialTracked] input:', data)
-  const {materialId, companyId, projectId, createdBy, deletedBy, ...rest} = data
+  const {
+    materialId,
+    companyId,
+    projectId,
+    createdBy,
+    deletedBy,
+    warehousePlaceId,
+    lastInspectionDate,
+    nextInspectionDate,
+    inspectionIntervalValue,
+    inspectionIntervalUnit,
+    ...rest
+  } = data
 
-  const prismaData: any = {...rest}
+  // Calculate nextInspectionDate if not provided but lastInspectionDate and inspectionIntervalValue are provided
+  let calculatedNextInspectionDate = nextInspectionDate
+  if (!calculatedNextInspectionDate && lastInspectionDate && inspectionIntervalValue) {
+    const nextDate = new Date(lastInspectionDate)
+    // Default to DAY if unit is not specified
+    const unit = inspectionIntervalUnit || 'DAY'
+    if (unit === 'DAY') {
+      nextDate.setDate(nextDate.getDate() + inspectionIntervalValue)
+    } else if (unit === 'WEEK') {
+      nextDate.setDate(nextDate.getDate() + inspectionIntervalValue * 7)
+    } else if (unit === 'MONTH') {
+      nextDate.setMonth(nextDate.getMonth() + inspectionIntervalValue)
+    } else if (unit === 'YEAR') {
+      nextDate.setFullYear(nextDate.getFullYear() + inspectionIntervalValue)
+    }
+    calculatedNextInspectionDate = nextDate
+  }
+
+  const prismaData: any = {
+    ...rest,
+    lastInspectionDate,
+    nextInspectionDate: calculatedNextInspectionDate,
+    inspectionIntervalValue,
+    inspectionIntervalUnit,
+  }
   if (materialId) prismaData.material = {connect: {id: materialId}}
   if (companyId) prismaData.Company = {connect: {id: companyId}}
   if (projectId) prismaData.Project = {connect: {id: projectId}}
   if (createdBy) prismaData.Employee = {connect: {id: createdBy}}
   if (deletedBy) prismaData.Employee_MaterialSerialTrack_deletedByToEmployee = {connect: {id: deletedBy}}
 
-  const created = await prismaClient.materialSerialTrack.create({
-    data: prismaData,
+  return prismaClient.$transaction(async tx => {
+    const createdItem = await tx.materialSerialTrack.create({
+      data: prismaData,
+    })
+
+    if (warehousePlaceId !== undefined) {
+      await tx.warehousePlace.updateMany({
+        where: {serialTrackedId: createdItem.id, deleted: false},
+        data: {serialTrackedId: null},
+      })
+
+      if (warehousePlaceId) {
+        await tx.warehousePlace.update({
+          where: {id: warehousePlaceId},
+          data: {
+            serialTrackedId: createdItem.id,
+            beNumber: createdItem.beNumber ?? null,
+          },
+        })
+      }
+    }
+
+    return createdItem
   })
-  console.log('[DAL:createSerialTracked] created:', created)
-  return created
 }
 
 export async function updateSerialTracked(
@@ -149,14 +243,77 @@ export async function updateSerialTracked(
     additionalInfo?: string | null
     projectId?: string | null
     becraCode?: string | null
+    beNumber?: string | null
+    warehousePlaceId?: string | null
+    lastInspectionDate?: Date | null
+    nextInspectionDate?: Date | null
+    inspectionIntervalValue?: number | null
+    inspectionIntervalUnit?: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR' | null
   },
 ) {
-  return prismaClient.materialSerialTrack.update({
-    where: {id},
-    data: {
-      ...data,
-      updatedAt: new Date(),
-    },
+  const {
+    warehousePlaceId,
+    lastInspectionDate,
+    nextInspectionDate,
+    inspectionIntervalValue,
+    inspectionIntervalUnit,
+    ...rest
+  } = data
+
+  // Calculate nextInspectionDate if not provided but lastInspectionDate and inspectionIntervalValue are provided
+  let calculatedNextInspectionDate = nextInspectionDate
+  if (!calculatedNextInspectionDate && lastInspectionDate && inspectionIntervalValue) {
+    const nextDate = new Date(lastInspectionDate)
+    // Default to DAY if unit is not specified
+    const unit = inspectionIntervalUnit || 'DAY'
+    if (unit === 'DAY') {
+      nextDate.setDate(nextDate.getDate() + inspectionIntervalValue)
+    } else if (unit === 'WEEK') {
+      nextDate.setDate(nextDate.getDate() + inspectionIntervalValue * 7)
+    } else if (unit === 'MONTH') {
+      nextDate.setMonth(nextDate.getMonth() + inspectionIntervalValue)
+    } else if (unit === 'YEAR') {
+      nextDate.setFullYear(nextDate.getFullYear() + inspectionIntervalValue)
+    }
+    calculatedNextInspectionDate = nextDate
+  }
+
+  return prismaClient.$transaction(async tx => {
+    const updatedItem = await tx.materialSerialTrack.update({
+      where: {id},
+      data: {
+        ...rest,
+        lastInspectionDate,
+        nextInspectionDate: calculatedNextInspectionDate,
+        inspectionIntervalValue,
+        inspectionIntervalUnit,
+        updatedAt: new Date(),
+      },
+    })
+
+    if (warehousePlaceId !== undefined) {
+      await tx.warehousePlace.updateMany({
+        where: {serialTrackedId: id, deleted: false},
+        data: {serialTrackedId: null},
+      })
+
+      if (warehousePlaceId) {
+        await tx.warehousePlace.update({
+          where: {id: warehousePlaceId},
+          data: {
+            serialTrackedId: id,
+            beNumber: updatedItem.beNumber ?? null,
+          },
+        })
+      }
+    } else if (rest.beNumber !== undefined) {
+      await tx.warehousePlace.updateMany({
+        where: {serialTrackedId: id, deleted: false},
+        data: {beNumber: rest.beNumber ?? null},
+      })
+    }
+
+    return updatedItem
   })
 }
 
@@ -171,19 +328,4 @@ export async function softDeleteSerialTracked(id: string, deletedBy: string) {
   })
 }
 
-export async function cloneSerialTracked(id: string, createdBy: string) {
-  const original = await prismaClient.materialSerialTrack.findUniqueOrThrow({where: {id}})
-  const {id: _oldId, deleted: _deleted, deletedAt: _deletedAt, deletedBy: _deletedBy, ...rest} = original
-  const newId = randomUUID()
-  const newSerialTracked = await prismaClient.materialSerialTrack.create({
-    data: {
-      ...rest,
-      id: newId,
-      createdBy,
-      deleted: false,
-      deletedAt: null,
-      deletedBy: null,
-    },
-  })
-  return newSerialTracked
-}
+// cloneSerialTracked removed: no current callers in the codebase.

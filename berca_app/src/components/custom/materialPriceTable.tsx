@@ -2,7 +2,7 @@
 
 import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Copy} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -90,6 +90,7 @@ export function MaterialPriceTable({
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<MappedMaterialPrice | null>(null)
+  const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
 
   const filtered = initialEntries
     .filter(e => {
@@ -139,7 +140,7 @@ export function MaterialPriceTable({
   }
 
   async function handleSave(e: MappedMaterialPrice) {
-    if (editing) {
+    if (dialogMode === 'edit' && editing) {
       await updateMaterialPriceAction({
         id: e.id,
         beNumber: e.beNumber,
@@ -220,6 +221,7 @@ export function MaterialPriceTable({
           </span>
           <Button
             onClick={() => {
+              setDialogMode('create')
               setEditing(null)
               setDialogOpen(true)
             }}
@@ -316,11 +318,26 @@ export function MaterialPriceTable({
                         size="icon"
                         className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
                         onClick={() => {
+                          setDialogMode('edit')
                           setEditing(entry)
                           setDialogOpen(true)
                         }}>
                         <Pencil className="h-3.5 w-3.5" />
                       </Button>
+                      {!entry.deleted && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          onClick={() => {
+                            setDialogMode('duplicate')
+                            setEditing({...entry, id: ''})
+                            setDialogOpen(true)
+                          }}>
+                          <Copy className="h-3.5 w-3.5" />
+                          <span className="sr-only">Duplicate {entry.beNumber ?? entry.id}</span>
+                        </Button>
+                      )}
                       <Button
                         variant="ghost"
                         size="icon"
@@ -341,6 +358,7 @@ export function MaterialPriceTable({
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         entry={editing}
+        mode={dialogMode}
         companies={companies}
         onSave={handleSave}
       />

@@ -13,9 +13,12 @@ export interface MappedMaterial {
   supplierCompanyNames: string[]
   parentBeNumbers: string[]
   brandName: string | null
-  documentationPlace: string | null
-  bePartDoc: number | null
+  warehousePlace: string | null
   rejected: boolean | null
+  partApproved: boolean
+  longLeadTime: boolean
+  leadTimeValue: number | null
+  leadTimeUnit: 'days' | 'weeks' | 'months' | null
   materialGroupIdA: string | null
   materialGroupIdB: string | null
   materialGroupIdC: string | null
@@ -35,6 +38,15 @@ export interface MappedMaterial {
   deletedAt: string | null
   deletedBy: string | null
   isSerialTracked: boolean
+  hasAtex: boolean
+  hasCe: boolean
+  hasRohs: boolean
+  hasDs: boolean
+  hasDoc: boolean
+  has3dCad: boolean
+  has2dCad: boolean
+  hasBdoc: boolean
+  hasInsp: boolean
   serialTrackedId: string | null
   isParentPart: boolean
 }

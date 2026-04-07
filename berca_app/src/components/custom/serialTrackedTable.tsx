@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
+import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, Copy} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -51,11 +51,17 @@ export type MappedMaterialSerialTracked = {
   additionalInfo: string | null
   projectId: string | null
   becraCode: string | null
+  warehousePlaceId: string | null
+  warehousePlaceLabel: string | null
   createdBy: string | null
   createdByName: string | null
   deleted: boolean
   deletedAt?: string | null
   deletedByName?: string | null
+  lastInspectionDate?: string | null
+  nextInspectionDate?: string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: string | null
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -108,6 +114,7 @@ interface SerialTrackedTableProps {
   companyOptions: {id: string; name: string}[]
   projectOptions: {id: string; name: string}[]
   materialGroupOptions: {id: string; name: string}[]
+  warehousePlaceOptions: {id: string; label: string}[]
   departmentId: string
   materialOptions: {
     id: string
@@ -128,13 +135,10 @@ export function SerialTrackedTable({
   companyOptions,
   projectOptions,
   materialGroupOptions,
+  warehousePlaceOptions,
   departmentId,
   materialOptions,
 }: SerialTrackedTableProps) {
-  // DEBUG: Log incoming data and filtered data
-  console.log('SerialTrackedTable initialSerialTracked:', initialSerialTracked)
-  console.log('[SerialTrackedTable] initialSerialTracked:', initialSerialTracked)
-
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
@@ -145,6 +149,11 @@ export function SerialTrackedTable({
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<MappedMaterialSerialTracked | null>(null)
+  const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
+
+  const formatDate = (value?: string | null) => (value ? new Date(value).toLocaleDateString('en-GB') : '-')
+  const formatInspectionInterval = (value?: number | null, unit?: string | null) =>
+    value ? `${value} ${unit ? unit.toLowerCase() + (value === 1 ? '' : 's') : 'days'}` : '-'
 
   const companyMap = new Map(companyOptions.map(c => [c.id, c.name]))
   const projectMap = new Map(projectOptions.map(p => [p.id, p.name]))
@@ -180,7 +189,8 @@ export function SerialTrackedTable({
         item.createdByName?.toLowerCase().includes(q) ||
         (item.companyId ? companyMap.get(item.companyId)?.toLowerCase().includes(q) : false) ||
         (item.projectId ? projectMap.get(item.projectId)?.toLowerCase().includes(q) : false) ||
-        (item.materialGroupId ? materialGroupMap.get(item.materialGroupId)?.toLowerCase().includes(q) : false)
+        (item.materialGroupId ? materialGroupMap.get(item.materialGroupId)?.toLowerCase().includes(q) : false) ||
+        item.warehousePlaceLabel?.toLowerCase().includes(q)
       )
     })
     .sort((a, b) => {
@@ -220,9 +230,6 @@ export function SerialTrackedTable({
       }
     })
 
-  // DEBUG: Log filtered data
-  console.log('SerialTrackedTable filtered:', filtered)
-
   async function handleSoftDelete(item: MappedMaterialSerialTracked) {
     await deleteMaterialSerialTrackedAction({id: item.id})
     router.refresh()
@@ -239,7 +246,7 @@ export function SerialTrackedTable({
   }
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
-  const colCount = showDeletedCols ? 16 : 13
+  const colCount = showDeletedCols ? 20 : 17
 
   return (
     <div className="flex flex-col gap-6">
@@ -270,6 +277,7 @@ export function SerialTrackedTable({
         {canDelete && (
           <Button
             onClick={() => {
+              setDialogMode('create')
               setEditingItem(null)
               setDialogOpen(true)
             }}
@@ -311,8 +319,12 @@ export function SerialTrackedTable({
               <TableHead className="whitespace-nowrap text-xs">Company</TableHead>
               <TableHead className="whitespace-nowrap text-xs">Material Group</TableHead>
               <TableHead className="whitespace-nowrap text-xs">Project</TableHead>
+              <TableHead className="whitespace-nowrap text-xs">Stock Location</TableHead>
               <Th field="fromLocation" label="From" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="toLocation" label="To" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <TableHead className="whitespace-nowrap text-xs">Last Inspection</TableHead>
+              <TableHead className="whitespace-nowrap text-xs">Inspection Interval</TableHead>
+              <TableHead className="whitespace-nowrap text-xs">Next Inspection</TableHead>
               <Th field="rejected" label="Rejected" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdBy" label="Created By" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
 
@@ -367,8 +379,14 @@ export function SerialTrackedTable({
                   <TableCell className={tdClass}>
                     {item.projectId ? (projectMap.get(item.projectId) ?? '-') : '-'}
                   </TableCell>
+                  <TableCell className={tdClass}>{item.warehousePlaceLabel ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{item.fromLocation ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{item.toLocation ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{formatDate(item.lastInspectionDate)}</TableCell>
+                  <TableCell className={tdClass}>
+                    {formatInspectionInterval(item.inspectionIntervalValue, item.inspectionIntervalUnit)}
+                  </TableCell>
+                  <TableCell className={tdClass}>{formatDate(item.nextInspectionDate)}</TableCell>
 
                   <TableCell>
                     <YesNoBadge value={!!item.rejected} />
@@ -413,10 +431,24 @@ export function SerialTrackedTable({
                             size="icon"
                             className="h-8 w-8 text-muted-foreground hover:bg-secondary hover:text-foreground"
                             onClick={() => {
+                              setDialogMode('edit')
                               setEditingItem(item)
                               setDialogOpen(true)
                             }}>
                             <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                            onClick={() => {
+                              setDialogMode('duplicate')
+                              setEditingItem(item)
+                              setDialogOpen(true)
+                            }}>
+                            <Copy className="h-3.5 w-3.5" />
+                            <span className="sr-only">Duplicate {item.beNumber ?? item.id}</span>
                           </Button>
 
                           {canDelete && (
@@ -470,9 +502,11 @@ export function SerialTrackedTable({
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         materialSerialTracked={editingItem as any}
+        mode={dialogMode}
         companyOptions={companyOptions}
         projectOptions={projectOptions}
         materialGroupOptions={materialGroupOptions}
+        warehousePlaceOptions={warehousePlaceOptions}
         materialOptions={materialOptions}
         departmentId={departmentId}
       />

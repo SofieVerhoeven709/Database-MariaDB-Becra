@@ -183,6 +183,10 @@ ALTER TABLE Material
     ADD COLUMN IF NOT EXISTS `materialGroupIdB` CHAR(36) NULL,
     ADD COLUMN IF NOT EXISTS `materialGroupIdC` CHAR(36) NULL,
     ADD COLUMN IF NOT EXISTS `materialGroupIdD` CHAR(36) NULL;
+
+-- 31a. Material: ensure longLeadTime exists for Prisma model compatibility
+ALTER TABLE Material
+  ADD COLUMN IF NOT EXISTS `longLeadTime` BOOLEAN NULL;
  
 -- 31b. Copy existing single materialGroupId into materialGroupIdA (only if column still exists)
 SET @col_exists = (
@@ -266,23 +270,45 @@ PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
  
--- 32c. Material: add FK Material_ibfk_5 on preferredSupplierCompanyId (skip if already exists)
+-- 32c. Material: add FK on preferredSupplierCompanyId (skip if already exists)
 SET @fk_exists = (
   SELECT COUNT(*)
   FROM information_schema.TABLE_CONSTRAINTS
   WHERE TABLE_SCHEMA = DATABASE()
     AND TABLE_NAME = 'Material'
-    AND CONSTRAINT_NAME = 'Material_ibfk_5'
+    AND CONSTRAINT_NAME IN ('fk_material_preferredSupplierCompanyId', 'Material_ibfk_5')
 );
  
 SET @sql = IF(@fk_exists = 0,
-  'ALTER TABLE `Material` ADD CONSTRAINT `Material_ibfk_5` FOREIGN KEY (`preferredSupplierCompanyId`) REFERENCES `Company`(`id`) ON DELETE SET NULL',
-  'SELECT ''FK Material_ibfk_5 already exists'''
+  'ALTER TABLE `Material` ADD CONSTRAINT `fk_material_preferredSupplierCompanyId` FOREIGN KEY (`preferredSupplierCompanyId`) REFERENCES `Company`(`id`) ON DELETE SET NULL',
+  'SELECT ''FK for Material.preferredSupplierCompanyId already exists'''
 );
  
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
+
+-- 32d. MaterialLeadTime: add per-material lead time value and unit
+CREATE TABLE IF NOT EXISTS MaterialLeadTime (
+  id CHAR(36) NOT NULL PRIMARY KEY,
+  materialId CHAR(36) NOT NULL,
+  leadTimeValue INT NOT NULL,
+  leadTimeUnit VARCHAR(10) NOT NULL,
+  UNIQUE (materialId),
+  FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+-- 33. Material: add document type boolean columns for tracking linked documents
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `hasAtex` BOOLEAN NOT NULL DEFAULT 0 AFTER `longLeadTime`;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `hasCE` BOOLEAN NOT NULL DEFAULT 0 AFTER `hasAtex`;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `hasROHS` BOOLEAN NOT NULL DEFAULT 0 AFTER `hasCE`;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `hasDS` BOOLEAN NOT NULL DEFAULT 0 AFTER `hasROHS`;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `hasDoc` BOOLEAN NOT NULL DEFAULT 0 AFTER `hasDS`;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `has3DCAD` BOOLEAN NOT NULL DEFAULT 0 AFTER `hasDoc`;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `has2DCAD` BOOLEAN NOT NULL DEFAULT 0 AFTER `has3DCAD`;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `hasBDOC` BOOLEAN NOT NULL DEFAULT 0 AFTER `has2DCAD`;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `hasINSP` BOOLEAN NOT NULL DEFAULT 0 AFTER `hasBDOC`;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `partApproved` BOOLEAN NOT NULL DEFAULT 0 AFTER `hasINSP`;
  
 -- 33. Add MaterialSupplier junction table (material <-> company many-to-many)
 CREATE TABLE
@@ -981,3 +1007,121 @@ ALTER TABLE MaterialSerialTrack
 ALTER TABLE MaterialSerialTrack
   ADD CONSTRAINT fk_materialSerialTrack_materialGroupId
   FOREIGN KEY (`materialGroupId`) REFERENCES MaterialGroup(`id`) ON DELETE SET NULL;
+  
+  
+  -- Idempotent hotfix for environments where Material.warehousePlaceId is missing.
+ALTER TABLE `Material`
+  ADD COLUMN IF NOT EXISTS `warehousePlaceId` CHAR(36) NULL;
+
+-- Keep lookup performance consistent with schema index.
+CREATE INDEX IF NOT EXISTS `warehousePlaceId` ON `Material` (`warehousePlaceId`);
+
+-- Add FK only when it is not already present.
+SET @fk_exists := (
+  SELECT COUNT(*)
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND COLUMN_NAME = 'warehousePlaceId'
+    AND REFERENCED_TABLE_NAME = 'WarehousePlace'
+);
+
+SET @fk_sql := IF(
+  @fk_exists = 0,
+  'ALTER TABLE `Material` ADD CONSTRAINT `fk_material_warehousePlaceId` FOREIGN KEY (`warehousePlaceId`) REFERENCES `WarehousePlace`(`id`) ON DELETE SET NULL ON UPDATE RESTRICT',
+  'SELECT 1'
+);
+
+PREPARE fk_stmt FROM @fk_sql;
+EXECUTE fk_stmt;
+DEALLOCATE PREPARE fk_stmt;
+
+-- Serial tracked inspection planning fields
+ALTER TABLE MaterialSerialTrack
+  ADD COLUMN IF NOT EXISTS `lastInspectionDate` DATE NULL,
+  ADD COLUMN IF NOT EXISTS `inspectionIntervalValue` INT NULL,
+  ADD COLUMN IF NOT EXISTS `inspectionIntervalUnit` ENUM('DAY','WEEK','MONTH','YEAR') NULL,
+  ADD COLUMN IF NOT EXISTS `nextInspectionDate` DATE NULL;
+
+-- Backfill from legacy days column if it still exists
+SET @has_old_interval_days = (
+  SELECT COUNT(*)
+  FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialSerialTrack'
+    AND COLUMN_NAME = 'inspectionIntervalDays'
+);
+
+SET @backfill_sql = IF(
+  @has_old_interval_days > 0,
+  'UPDATE MaterialSerialTrack
+   SET inspectionIntervalValue = COALESCE(inspectionIntervalValue, inspectionIntervalDays),
+       inspectionIntervalUnit = COALESCE(inspectionIntervalUnit, ''DAY'')
+   WHERE inspectionIntervalDays IS NOT NULL',
+  'SELECT ''Skipping backfill: legacy inspectionIntervalDays not found'''
+);
+
+PREPARE backfill_stmt FROM @backfill_sql;
+EXECUTE backfill_stmt;
+DEALLOCATE PREPARE backfill_stmt;
+
+ALTER TABLE MaterialSerialTrack
+  DROP CONSTRAINT IF EXISTS chk_materialSerialTrack_inspection_interval_positive;
+
+ALTER TABLE MaterialSerialTrack
+  DROP CONSTRAINT IF EXISTS chk_materialSerialTrack_inspection_interval_valid;
+
+ALTER TABLE MaterialSerialTrack
+  ADD CONSTRAINT chk_materialSerialTrack_inspection_interval_valid
+  CHECK (
+    (`inspectionIntervalValue` IS NULL AND `inspectionIntervalUnit` IS NULL)
+    OR
+    (`inspectionIntervalValue` > 0 AND `inspectionIntervalUnit` IS NOT NULL)
+  );
+
+-- Recalculate next inspection date for rows that have a schedule but no computed next date yet.
+UPDATE MaterialSerialTrack
+SET nextInspectionDate = CASE
+  WHEN inspectionIntervalUnit = 'DAY' THEN DATE_ADD(lastInspectionDate, INTERVAL inspectionIntervalValue DAY)
+  WHEN inspectionIntervalUnit = 'WEEK' THEN DATE_ADD(lastInspectionDate, INTERVAL inspectionIntervalValue WEEK)
+  WHEN inspectionIntervalUnit = 'MONTH' THEN DATE_ADD(lastInspectionDate, INTERVAL inspectionIntervalValue MONTH)
+  WHEN inspectionIntervalUnit = 'YEAR' THEN DATE_ADD(lastInspectionDate, INTERVAL inspectionIntervalValue YEAR)
+  ELSE nextInspectionDate
+END
+WHERE nextInspectionDate IS NULL
+  AND lastInspectionDate IS NOT NULL
+  AND inspectionIntervalValue IS NOT NULL
+  AND inspectionIntervalUnit IS NOT NULL;
+
+CREATE INDEX IF NOT EXISTS idx_materialSerialTrack_nextInspectionDate
+  ON MaterialSerialTrack (nextInspectionDate);
+
+CREATE OR REPLACE VIEW vw_materialSerialTrackInspectionAlerts AS
+SELECT
+  mst.id,
+  mst.materialId,
+  mst.beNumber,
+  mst.shortDescription,
+  mst.nextInspectionDate,
+  DATEDIFF(mst.nextInspectionDate, CURDATE()) AS daysUntilInspection,
+  (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 30) AS remindMonthBefore,
+  (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 7) AS remindWeekBefore,
+  (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 1) AS remindDayBefore,
+  (DATEDIFF(mst.nextInspectionDate, CURDATE()) < 0) AS isOverdue
+FROM MaterialSerialTrack mst
+WHERE mst.deleted = 0
+  AND mst.nextInspectionDate IS NOT NULL;
+
+CREATE OR REPLACE VIEW vw_materialSerialTrackDueCurrentMonth AS
+SELECT
+  mst.id,
+  mst.materialId,
+  mst.beNumber,
+  mst.shortDescription,
+  mst.nextInspectionDate,
+  DATEDIFF(mst.nextInspectionDate, CURDATE()) AS daysUntilInspection
+FROM MaterialSerialTrack mst
+WHERE mst.deleted = 0
+  AND mst.nextInspectionDate IS NOT NULL
+  AND YEAR(mst.nextInspectionDate) = YEAR(CURDATE())
+  AND MONTH(mst.nextInspectionDate) = MONTH(CURDATE());

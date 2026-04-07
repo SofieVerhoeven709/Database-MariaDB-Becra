@@ -51,7 +51,12 @@ export const materialSerialTrackedSchema = z.object({
   additionalInfo: nullableString255Schema,
   projectId: nullableUuidSchema,
   becraCode: nullableString255Schema,
+  warehousePlaceId: nullableUuidSchema,
   createdBy: nullableUuidSchema,
+  lastInspectionDate: z.coerce.date().nullable().optional(),
+  nextInspectionDate: z.coerce.date().nullable().optional(),
+  inspectionIntervalValue: z.coerce.number().int().positive().nullable().optional(),
+  inspectionIntervalUnit: z.enum(['DAY', 'WEEK', 'MONTH', 'YEAR']).nullable().optional(),
 })
 
 export const createMaterialSerialTrackedSchema = materialSerialTrackedSchema.extend({

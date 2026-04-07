@@ -2,14 +2,30 @@
 
 import {revalidatePath} from 'next/cache'
 import {randomUUID} from 'crypto'
-import {createMaterial, updateMaterial, softDeleteMaterial, restoreMaterial, cloneMaterial} from '@/dal/materials'
+import {createMaterial, updateMaterial, softDeleteMaterial, restoreMaterial} from '@/dal/materials'
 import {prismaClient} from '@/dal/prismaClient'
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {createMaterialSchema, updateMaterialSchema, deleteMaterialSchema} from '@/schemas/materialSchemas'
 import {createTargetForType} from '@/dal/targets'
+import {z} from 'zod/v4'
+import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {getLogger} from '@/lib/logger'
+import {Prisma} from '@/generated/prisma/client'
 
 const REVALIDATE_MATERIAL = '/departments/engineering/material'
 const REVALIDATE_INVENTORY = '/departments/warehouse/inventory'
+const REVALIDATE_WAREHOUSE_PLACE = '/departments/[departmentId]/place'
+const REVALIDATE_MATERIAL_PLACE = '/departments/[departmentId]/materialPlace'
+
+const createMaterialForPlaceSchema = z.object({
+  id: z.string().uuid(),
+  beNumber: z
+    .string()
+    .trim()
+    .regex(/^(1\d{6}|4\d{6})$/, 'Nummer moet in de 1000000-reeks (BE) of 4000000-reeks (IOS) liggen'),
+  shortDescription: z.string().trim().min(1).max(255),
+  name: z.string().trim().max(255).optional(),
+})
 
 async function generateBeNumber() {
   const materials = await prismaClient.material.findMany({
@@ -31,6 +47,23 @@ async function generateBeNumber() {
   return String(Math.max(maxBeNumber + 1, START_NUMBER))
 }
 
+async function resolveValidWarehousePlaceId(warehousePlaceId: string | null | undefined) {
+  if (!warehousePlaceId) return null
+
+  const place = await prismaClient.warehousePlace.findUnique({
+    where: {id: warehousePlaceId},
+    select: {id: true},
+  })
+
+  return place ? warehousePlaceId : null
+}
+
+function isWarehousePlaceForeignKeyError(error: unknown): boolean {
+  if (!(error instanceof Prisma.PrismaClientKnownRequestError)) return false
+  if (error.code !== 'P2003') return false
+  return /warehousePlaceId/i.test(error.message)
+}
+
 export const createMaterialAction = protectedFormAction({
   schema: createMaterialSchema,
   functionName: 'Create material',
@@ -47,27 +80,48 @@ export const createMaterialAction = protectedFormAction({
       ]),
     )
 
+    const warehousePlaceId = await resolveValidWarehousePlaceId(data.warehousePlace ?? null)
+    if (data.warehousePlace && !warehousePlaceId) {
+      return {
+        success: false,
+        errors: {warehousePlace: ['Selected warehouse place does not exist anymore. Please select a valid one.']},
+      }
+    }
+
     if (!beNumber) {
       beNumber = await generateBeNumber()
     }
 
-    const material = await createMaterial({
-      ...restData,
-      id: data.id || randomUUID(),
-      beNumber,
-      brandOrderNr: brandOrderNr ?? null,
-      preferredSupplierCompanyId,
-      preferredSupplierOrderId: data.preferredSupplierOrderId ?? null,
-      preferredSupplierShortDescription: data.preferredSupplierShortDescription ?? null,
-      supplierCompanyIds,
-      bePartDoc: data.bePartDoc != null ? Number(data.bePartDoc) : null,
-      materialGroupIdA: data.materialGroupIdA,
-      materialGroupIdB: data.materialGroupIdB ?? null,
-      materialGroupIdC: data.materialGroupIdC ?? null,
-      materialGroupIdD: data.materialGroupIdD ?? null,
-      createdBy: profile.id,
-      targetId: target.id,
-    })
+    let material
+    try {
+      material = await createMaterial({
+        ...restData,
+        id: data.id || randomUUID(),
+        beNumber,
+        brandOrderNr: brandOrderNr ?? null,
+        preferredSupplierCompanyId,
+        preferredSupplierOrderId: data.preferredSupplierOrderId ?? null,
+        preferredSupplierShortDescription: data.preferredSupplierShortDescription ?? null,
+        supplierCompanyIds,
+        warehousePlace: warehousePlaceId,
+        leadTimeValue: data.longLeadTime ? (data.leadTimeValue ?? null) : null,
+        leadTimeUnit: data.longLeadTime ? (data.leadTimeUnit ?? null) : null,
+        materialGroupIdA: data.materialGroupIdA,
+        materialGroupIdB: data.materialGroupIdB ?? null,
+        materialGroupIdC: data.materialGroupIdC ?? null,
+        materialGroupIdD: data.materialGroupIdD ?? null,
+        createdBy: profile.id,
+        targetId: target.id,
+      })
+    } catch (error) {
+      if (isWarehousePlaceForeignKeyError(error)) {
+        return {
+          success: false,
+          errors: {warehousePlace: ['Selected warehouse place is invalid. Please choose another place.']},
+        }
+      }
+      throw error
+    }
 
     if (!material) {
       return {
@@ -95,13 +149,34 @@ export const updateMaterialAction = protectedFormAction({
       ]),
     )
 
-    const updated = await updateMaterial(id, {
-      ...rest,
-      brandOrderNr: rest.brandOrderNr ?? null,
-      preferredSupplierCompanyId,
-      supplierCompanyIds,
-      bePartDoc: rest.bePartDoc != null ? Number(rest.bePartDoc) : rest.bePartDoc,
-    })
+    const warehousePlaceId = await resolveValidWarehousePlaceId(rest.warehousePlace ?? null)
+    if (rest.warehousePlace && !warehousePlaceId) {
+      return {
+        success: false,
+        errors: {warehousePlace: ['Selected warehouse place does not exist anymore. Please select a valid one.']},
+      }
+    }
+
+    let updated
+    try {
+      updated = await updateMaterial(id, {
+        ...rest,
+        brandOrderNr: rest.brandOrderNr ?? null,
+        preferredSupplierCompanyId,
+        supplierCompanyIds,
+        warehousePlace: warehousePlaceId,
+        leadTimeValue: rest.longLeadTime ? (rest.leadTimeValue ?? null) : null,
+        leadTimeUnit: rest.longLeadTime ? (rest.leadTimeUnit ?? null) : null,
+      })
+    } catch (error) {
+      if (isWarehousePlaceForeignKeyError(error)) {
+        return {
+          success: false,
+          errors: {warehousePlace: ['Selected warehouse place is invalid. Please choose another place.']},
+        }
+      }
+      throw error
+    }
     logger.info(`Material updated: ${updated.id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
@@ -135,16 +210,51 @@ export const restoreMaterialAction = protectedFormAction({
   },
 })
 
-export const cloneMaterialAction = protectedFormAction({
-  schema: updateMaterialSchema, // Accepts an id for the material to clone
-  functionName: 'Clone material',
-  globalErrorMessage: 'Could not clone the material, please try again.',
-  serverFn: async ({data, profile, logger}) => {
-    const {id} = data
-    const cloned = await cloneMaterial(id)
-    logger.info(`Material cloned: ${cloned.id} from ${id}`)
-    revalidatePath(REVALIDATE_MATERIAL)
-    revalidatePath(REVALIDATE_INVENTORY)
-    return {success: true, id: cloned.id}
-  },
-})
+export async function createMaterialForPlaceAction(unvalidatedData: z.infer<typeof createMaterialForPlaceSchema>) {
+  const logger = await getLogger()
+  const profile = await getSessionProfileFromCookieOrThrow()
+  const data = createMaterialForPlaceSchema.parse(unvalidatedData)
+
+  const [defaultUnit, defaultMaterialGroup] = await Promise.all([
+    prismaClient.unit.findFirst({
+      where: {deleted: false, valid: true},
+      select: {id: true},
+      orderBy: {unitName: 'asc'},
+    }),
+    prismaClient.materialGroup.findFirst({
+      where: {deleted: false},
+      select: {id: true},
+      orderBy: [{groupA: 'asc'}, {groupB: 'asc'}, {groupC: 'asc'}, {groupD: 'asc'}],
+    }),
+  ])
+
+  if (!defaultUnit || !defaultMaterialGroup) {
+    throw new Error('No standard unit of materialgroup found for creating material.')
+  }
+
+  const target = await createTargetForType('Company', profile.id)
+  const material = await createMaterial({
+    id: data.id,
+    beNumber: data.beNumber,
+    shortDescription: data.shortDescription,
+    name: data.name || null,
+    materialGroupIdA: defaultMaterialGroup.id,
+    unitId: defaultUnit.id,
+    createdBy: profile.id,
+    targetId: target.id,
+    isSerialTracked: false,
+  })
+
+  logger.info(`Material quick-created for place: ${material.id}`)
+  revalidatePath(REVALIDATE_MATERIAL)
+  revalidatePath(REVALIDATE_INVENTORY)
+  revalidatePath(REVALIDATE_WAREHOUSE_PLACE, 'page')
+  revalidatePath(REVALIDATE_MATERIAL_PLACE, 'page')
+
+  return {
+    id: material.id,
+    beNumber: material.beNumber,
+    name: material.name,
+    shortDescription: material.shortDescription,
+  }
+}

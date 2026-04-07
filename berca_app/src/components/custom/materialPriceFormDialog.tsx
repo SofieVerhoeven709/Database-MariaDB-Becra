@@ -18,6 +18,7 @@ interface MaterialPriceFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   entry: MappedMaterialPrice | null
+  mode?: 'create' | 'edit' | 'duplicate'
   companies: MaterialPriceOption[]
   onSave: (entry: MappedMaterialPrice) => Promise<void>
 }
@@ -49,13 +50,27 @@ function emptyEntry(): MappedMaterialPrice {
   }
 }
 
-export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, onSave}: MaterialPriceFormDialogProps) {
+export function MaterialPriceFormDialog({
+  open,
+  onOpenChange,
+  entry,
+  mode,
+  companies,
+  onSave,
+}: MaterialPriceFormDialogProps) {
   const [form, setForm] = useState<MappedMaterialPrice>(emptyEntry())
   const [saving, setSaving] = useState(false)
+  const resolvedMode: 'create' | 'edit' | 'duplicate' = mode ?? (entry ? 'edit' : 'create')
 
   useEffect(() => {
-    if (open) setForm(entry ?? emptyEntry())
-  }, [open, entry])
+    if (open) {
+      if (entry) {
+        setForm(resolvedMode === 'duplicate' ? {...entry, id: ''} : entry)
+      } else {
+        setForm(emptyEntry())
+      }
+    }
+  }, [open, entry, resolvedMode])
 
   function set<K extends keyof MappedMaterialPrice>(key: K, value: MappedMaterialPrice[K]) {
     setForm(prev => ({...prev, [key]: value}))
@@ -71,13 +86,15 @@ export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, o
     }
   }
 
-  const isEdit = !!entry
+  const isEdit = resolvedMode === 'edit'
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg bg-card border-border max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{isEdit ? 'Edit Material Price' : 'New Material Price'}</DialogTitle>
+          <DialogTitle>
+            {isEdit ? 'Edit Material Price' : resolvedMode === 'duplicate' ? 'Duplicate Material Price' : 'New Material Price'}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="grid gap-4 py-2">

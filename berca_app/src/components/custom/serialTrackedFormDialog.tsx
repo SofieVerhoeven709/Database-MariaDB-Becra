@@ -33,15 +33,22 @@ type MaterialSerialTrackedFormValue = {
   additionalInfo: string | null
   projectId: string | null
   becraCode: string | null
+  warehousePlaceId: string | null
+  lastInspectionDate?: string | Date | null
+  nextInspectionDate?: string | Date | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR'
 }
 
 interface MaterialSerialTrackedFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   materialSerialTracked: MaterialSerialTrackedFormValue | null
+  mode?: 'create' | 'edit' | 'duplicate'
   companyOptions: {id: string; name: string}[]
   projectOptions: {id: string; name: string}[]
   materialGroupOptions: {id: string; name: string}[]
+  warehousePlaceOptions: {id: string; label: string}[]
   materialOptions: {
     id: string
     beNumber: string
@@ -75,6 +82,11 @@ type FormState = {
   additionalInfo: string
   projectId: string
   becraCode: string
+  warehousePlaceId: string
+  lastInspectionDate: string
+  nextInspectionDate: string
+  inspectionIntervalValue: string
+  inspectionIntervalUnit: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR'
 }
 
 const emptyForm: FormState = {
@@ -96,15 +108,35 @@ const emptyForm: FormState = {
   additionalInfo: '',
   projectId: '',
   becraCode: '',
+  warehousePlaceId: '',
+  lastInspectionDate: '',
+  nextInspectionDate: '',
+  inspectionIntervalValue: '',
+  inspectionIntervalUnit: 'DAY',
 }
 
-function toFormState(item: MaterialSerialTrackedFormValue | null): FormState {
+function toFormState(item: MaterialSerialTrackedFormValue | null, mode: 'create' | 'edit' | 'duplicate'): FormState {
   if (!item) return emptyForm
 
+  const isDuplicate = mode === 'duplicate'
+
+  const formatDate = (date: string | Date | null | undefined): string => {
+    if (!date) return ''
+
+    // DAL-backed edit flows can provide Date objects; inputs need YYYY-MM-DD strings.
+    if (date instanceof Date) {
+      return Number.isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0]
+    }
+
+    // Already a string, might be ISO date - extract just the date part.
+    return date.split('T')[0]
+  }
+
   return {
-    id: item.id,
+    id: isDuplicate ? undefined : item.id,
     materialId: '',
-    beNumber: item.beNumber ?? '',
+    // Force user to pick a BE/material when duplicating, so create validation stays correct.
+    beNumber: isDuplicate ? '' : (item.beNumber ?? ''),
     brandName: item.brandName ?? '',
     management: item.management ?? '',
     brandOrderNumber: item.brandOrderNumber ?? '',
@@ -121,22 +153,22 @@ function toFormState(item: MaterialSerialTrackedFormValue | null): FormState {
     additionalInfo: item.additionalInfo ?? '',
     projectId: item.projectId ?? '',
     becraCode: item.becraCode ?? '',
+    warehousePlaceId: item.warehousePlaceId ?? (item as any).WarehousePlace?.[0]?.id ?? '',
+    lastInspectionDate: formatDate(item.lastInspectionDate),
+    nextInspectionDate: formatDate(item.nextInspectionDate),
+    inspectionIntervalValue: item.inspectionIntervalValue ? String(item.inspectionIntervalValue) : '',
+    inspectionIntervalUnit: item.inspectionIntervalUnit ?? 'DAY',
   }
-}
-
-function parseBooleanString(value: string): boolean | null | undefined {
-  if (value === 'true') return true
-  if (value === 'false') return false
-  if (value === '') return null
-  return undefined
 }
 
 export function MaterialSerialTrackedFormDialog({
   open,
   onOpenChange,
   materialSerialTracked,
+  mode,
   companyOptions,
   materialGroupOptions,
+  warehousePlaceOptions,
   materialOptions,
 }: MaterialSerialTrackedFormDialogProps) {
   //const router = useRouter()
@@ -145,18 +177,61 @@ export function MaterialSerialTrackedFormDialog({
   const [error, setError] = useState<string | null>(null)
   const [createdId] = useState<string | null>(null)
   const idInputRef = useRef<HTMLInputElement>(null)
-  const isEditing = !!materialSerialTracked
+  const resolvedMode: 'create' | 'edit' | 'duplicate' = mode ?? (materialSerialTracked ? 'edit' : 'create')
+  const isEditing = resolvedMode === 'edit' && !!materialSerialTracked
 
   useEffect(() => {
     if (open) {
-      setForm(toFormState(materialSerialTracked))
+      setForm(toFormState(materialSerialTracked, resolvedMode))
     }
-  }, [open, materialSerialTracked])
+  }, [open, materialSerialTracked, resolvedMode])
 
-  const title = useMemo(() => (isEditing ? 'Edit Serial Tracked Item' : 'New Serial Tracked Item'), [isEditing])
+  const title = useMemo(() => {
+    if (resolvedMode === 'edit') return 'Edit Serial Tracked Item'
+    if (resolvedMode === 'duplicate') return 'Duplicate Serial Tracked Item'
+    return 'New Serial Tracked Item'
+  }, [resolvedMode])
 
   function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm(prev => ({...prev, [key]: value}))
+
+    // Auto-calculate nextInspectionDate when lastInspectionDate, inspectionIntervalValue, or inspectionIntervalUnit changes
+    if (key === 'lastInspectionDate' || key === 'inspectionIntervalValue' || key === 'inspectionIntervalUnit') {
+      const updatedForm =
+        key === 'lastInspectionDate'
+          ? {...form, lastInspectionDate: value as string}
+          : key === 'inspectionIntervalValue'
+            ? {...form, inspectionIntervalValue: value as string}
+            : {...form, inspectionIntervalUnit: value as 'DAY' | 'WEEK' | 'MONTH' | 'YEAR'}
+
+      if (updatedForm.lastInspectionDate && updatedForm.inspectionIntervalValue) {
+        try {
+          const lastDate = new Date(updatedForm.lastInspectionDate)
+          const intervalValue = parseInt(updatedForm.inspectionIntervalValue, 10)
+          const intervalUnit = updatedForm.inspectionIntervalUnit || 'DAY'
+
+          if (!isNaN(lastDate.getTime()) && !isNaN(intervalValue) && intervalValue > 0) {
+            const nextDate = new Date(lastDate)
+
+            if (intervalUnit === 'DAY') {
+              nextDate.setDate(nextDate.getDate() + intervalValue)
+            } else if (intervalUnit === 'WEEK') {
+              nextDate.setDate(nextDate.getDate() + intervalValue * 7)
+            } else if (intervalUnit === 'MONTH') {
+              nextDate.setMonth(nextDate.getMonth() + intervalValue)
+            } else if (intervalUnit === 'YEAR') {
+              nextDate.setFullYear(nextDate.getFullYear() + intervalValue)
+            }
+
+            // Format as YYYY-MM-DD for the input
+            const nextDateStr = nextDate.toISOString().split('T')[0]
+            setForm(prev => ({...prev, nextInspectionDate: nextDateStr}))
+          }
+        } catch (e) {
+          // Silently ignore date calculation errors
+        }
+      }
+    }
   }
 
   async function handleBeNumberSelect(beNumber: string) {
@@ -184,6 +259,12 @@ export function MaterialSerialTrackedFormDialog({
     startTransition(async () => {
       try {
         const materialGroupId = form.materialGroupId || null
+        const lastInspectionDate = form.lastInspectionDate ? new Date(form.lastInspectionDate) : null
+        const nextInspectionDate = form.nextInspectionDate ? new Date(form.nextInspectionDate) : null
+        const inspectionIntervalValue = form.inspectionIntervalValue ? parseInt(form.inspectionIntervalValue, 10) : null
+        const inspectionIntervalUnit =
+          form.inspectionIntervalValue && form.inspectionIntervalUnit ? form.inspectionIntervalUnit : null
+
         if (isEditing && form.id) {
           await updateMaterialSerialTrackedAction({
             id: form.id,
@@ -205,6 +286,11 @@ export function MaterialSerialTrackedFormDialog({
             additionalInfo: form.additionalInfo,
             projectId: form.projectId,
             becraCode: form.becraCode,
+            warehousePlaceId: form.warehousePlaceId || null,
+            lastInspectionDate,
+            nextInspectionDate,
+            inspectionIntervalValue,
+            inspectionIntervalUnit,
           })
         } else {
           await createMaterialSerialTrackedAction({
@@ -226,6 +312,11 @@ export function MaterialSerialTrackedFormDialog({
             additionalInfo: form.additionalInfo,
             projectId: form.projectId,
             becraCode: form.becraCode,
+            warehousePlaceId: form.warehousePlaceId || null,
+            lastInspectionDate,
+            nextInspectionDate,
+            inspectionIntervalValue,
+            inspectionIntervalUnit,
           })
         }
         onOpenChange(false)
@@ -248,7 +339,11 @@ export function MaterialSerialTrackedFormDialog({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
-            {isEditing ? 'Update the serial tracked item details.' : 'Create a new serial tracked item.'}
+            {resolvedMode === 'edit'
+              ? 'Update the serial tracked item details.'
+              : resolvedMode === 'duplicate'
+                ? 'Create a new item from copied values. Select a new BE Number before saving.'
+                : 'Create a new serial tracked item.'}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -367,6 +462,25 @@ export function MaterialSerialTrackedFormDialog({
             </div>
 
             <div className="space-y-2">
+              <Label>Stock Location</Label>
+              <Select
+                value={form.warehousePlaceId || '__none__'}
+                onValueChange={value => setField('warehousePlaceId', value === '__none__' ? '' : value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select stock location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">No location</SelectItem>
+                  {warehousePlaceOptions.map(option => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="transactionType">Transaction Type</Label>
               <Input
                 id="transactionType"
@@ -424,6 +538,61 @@ export function MaterialSerialTrackedFormDialog({
                 id="rejected-switch"
               />
               <span className="text-xs text-muted-foreground">{form.rejected ? 'Yes' : 'No'}</span>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="lastInspectionDate">Last Inspection Date</Label>
+              <Input
+                id="lastInspectionDate"
+                type="date"
+                value={form.lastInspectionDate}
+                onChange={e => setField('lastInspectionDate', e.target.value)}
+                placeholder="Last inspection date"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="inspectionIntervalValue">Inspection Interval</Label>
+              <div className="flex gap-2">
+                <Input
+                  id="inspectionIntervalValue"
+                  type="number"
+                  min="1"
+                  value={form.inspectionIntervalValue}
+                  onChange={e => setField('inspectionIntervalValue', e.target.value)}
+                  placeholder="e.g., 365"
+                  className="flex-1"
+                />
+                <Select
+                  value={form.inspectionIntervalUnit}
+                  onValueChange={(value: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR') =>
+                    setField('inspectionIntervalUnit', value)
+                  }>
+                  <SelectTrigger className="w-32">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="DAY">Days</SelectItem>
+                    <SelectItem value="WEEK">Weeks</SelectItem>
+                    <SelectItem value="MONTH">Months</SelectItem>
+                    <SelectItem value="YEAR">Years</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="nextInspectionDate">Next Inspection Date</Label>
+              <Input
+                id="nextInspectionDate"
+                type="date"
+                value={form.nextInspectionDate}
+                onChange={e => setField('nextInspectionDate', e.target.value)}
+                placeholder="Next inspection date"
+              />
+              <p className="text-xs text-muted-foreground">
+                Auto-calculated from last inspection date + interval, or set manually
+              </p>
             </div>
           </div>
 

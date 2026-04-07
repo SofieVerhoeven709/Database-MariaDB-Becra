@@ -5,12 +5,95 @@ import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Label} from '@/components/ui/label'
 import type {MappedWarehousePlace} from '@/types/warehousePlace'
+import {createMaterialForPlaceAction} from '@/serverFunctions/materials'
+
+type MaterialOption = {id: string; beNumber: string; name: string | null; shortDescription: string}
 
 interface WarehousePlaceFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   item: MappedWarehousePlace | null
+  materials: MaterialOption[]
   onSave: (item: Partial<MappedWarehousePlace> & {id: string}) => Promise<void>
+}
+
+interface MaterialNumberPickerProps {
+  selectedBeNumber: string
+  materials: MaterialOption[]
+  inputStyles: string
+  onSelect: (beNumber: string) => void
+}
+
+function MaterialNumberPicker({selectedBeNumber, materials, inputStyles, onSelect}: MaterialNumberPickerProps) {
+  const [search, setSearch] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
+
+  const selectedMaterial = materials.find(m => m.beNumber === selectedBeNumber)
+
+  const filtered = materials.filter(m => {
+    const q = search.toLowerCase().trim()
+    if (!q) return true
+    return (
+      m.beNumber.toLowerCase().includes(q) ||
+      (m.name ?? '').toLowerCase().includes(q) ||
+      m.shortDescription.toLowerCase().includes(q)
+    )
+  })
+
+  const displayValue = isFocused
+    ? search
+    : search || (selectedMaterial ? `${selectedMaterial.beNumber} - ${selectedMaterial.name ?? selectedMaterial.shortDescription}` : selectedBeNumber)
+
+  return (
+    <div className="relative">
+      <Input
+        className={inputStyles}
+        placeholder="Type materiaalnummer of naam..."
+        value={displayValue}
+        onChange={e => {
+          setSearch(e.target.value)
+          setIsOpen(true)
+        }}
+        onFocus={() => {
+          setIsFocused(true)
+          setIsOpen(true)
+        }}
+        onBlur={() => {
+          setIsFocused(false)
+          setTimeout(() => setIsOpen(false), 150)
+        }}
+      />
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-1 z-50 max-h-56 overflow-y-auto rounded-md border border-border bg-secondary">
+          <div
+            className="cursor-pointer border-b border-border px-2 py-1.5 text-sm text-muted-foreground hover:bg-secondary/80"
+            onClick={() => {
+              onSelect('')
+              setSearch('')
+              setIsOpen(false)
+              setIsFocused(false)
+            }}>
+            Geen materiaal
+          </div>
+          {filtered.map(m => (
+            <div
+              key={m.id}
+              className={`cursor-pointer px-2 py-1.5 text-sm hover:bg-secondary/80 ${selectedBeNumber === m.beNumber ? 'bg-secondary/80 font-semibold' : ''}`}
+              onClick={() => {
+                onSelect(m.beNumber)
+                setSearch('')
+                setIsOpen(false)
+                setIsFocused(false)
+              }}>
+              {m.beNumber} - {m.name ?? m.shortDescription}
+            </div>
+          ))}
+          {filtered.length === 0 && <div className="px-2 py-1.5 text-xs text-muted-foreground">Geen materiaal gevonden</div>}
+        </div>
+      )}
+    </div>
+  )
 }
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
@@ -29,21 +112,38 @@ const EMPTY: Partial<MappedWarehousePlace> & {id: string} = {
   quantityInStock: 0,
 }
 
-export function WarehousePlaceFormDialog({open, onOpenChange, item, onSave}: WarehousePlaceFormDialogProps) {
+export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, onSave}: WarehousePlaceFormDialogProps) {
   const isEditing = item !== null
   const makeForm = (): Partial<MappedWarehousePlace> & {id: string} =>
     item ? {...item} : {...EMPTY, id: crypto.randomUUID()}
   const [form, setForm] = useState(makeForm)
+  const [materialOptions, setMaterialOptions] = useState<MaterialOption[]>(materials)
   const [saving, setSaving] = useState(false)
+  const [creatingMaterial, setCreatingMaterial] = useState(false)
+  const [showCreateMaterial, setShowCreateMaterial] = useState(false)
+  const [newMaterialBeNumber, setNewMaterialBeNumber] = useState('')
+  const [newMaterialName, setNewMaterialName] = useState('')
+  const [newMaterialShortDescription, setNewMaterialShortDescription] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [materialError, setMaterialError] = useState<string | null>(null)
 
   useEffect(() => {
     if (open) {
       setForm(makeForm())
+      setMaterialOptions(materials)
       setError(null)
+      setMaterialError(null)
+      setShowCreateMaterial(false)
+      setNewMaterialBeNumber('')
+      setNewMaterialName('')
+      setNewMaterialShortDescription('')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, item?.id])
+
+  useEffect(() => {
+    setMaterialOptions(materials)
+  }, [materials])
 
   function update<K extends keyof MappedWarehousePlace>(field: K, value: MappedWarehousePlace[K]) {
     setForm(prev => ({...prev, [field]: value}))
@@ -62,6 +162,51 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, onSave}: War
     }
   }
 
+  async function handleCreateMaterial() {
+    setMaterialError(null)
+    const beNumber = newMaterialBeNumber.trim()
+    const shortDescription = newMaterialShortDescription.trim()
+    const name = newMaterialName.trim()
+
+    if (!/^(1\d{6}|4\d{6})$/.test(beNumber)) {
+      setMaterialError('Gebruik een geldig BE/IOS nummer (1000000 of 4000000 reeks).')
+      return
+    }
+    if (!shortDescription) {
+      setMaterialError('Short description is verplicht.')
+      return
+    }
+
+    setCreatingMaterial(true)
+    try {
+      const created = await createMaterialForPlaceAction({
+        id: crypto.randomUUID(),
+        beNumber,
+        shortDescription,
+        name: name || undefined,
+      })
+      const createdOption: MaterialOption = {
+        id: created.id,
+        beNumber: created.beNumber ?? '',
+        name: created.name,
+        shortDescription: created.shortDescription,
+      }
+      setMaterialOptions(prev => {
+        if (prev.some(m => m.beNumber === createdOption.beNumber)) return prev
+        return [createdOption, ...prev]
+      })
+      update('beNumber', createdOption.beNumber)
+      setShowCreateMaterial(false)
+      setNewMaterialBeNumber('')
+      setNewMaterialName('')
+      setNewMaterialShortDescription('')
+    } catch (err) {
+      setMaterialError(err instanceof Error ? err.message : 'Kon materiaal niet aanmaken.')
+    } finally {
+      setCreatingMaterial(false)
+    }
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-card border-border max-w-xl max-h-[90vh] overflow-y-auto">
@@ -76,7 +221,7 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, onSave}: War
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          {/* Abbreviation + BE Number */}
+          {/* Abbreviation + Material Number (BE/IOS) */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="wp-abbreviation" className="text-xs text-muted-foreground">
@@ -93,15 +238,70 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, onSave}: War
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="wp-beNumber" className="text-xs text-muted-foreground">
-                BE Number
+                Material Number (BE/IOS)
               </Label>
-              <Input
-                id="wp-beNumber"
-                className={inputStyles}
-                value={form.beNumber ?? ''}
-                onChange={e => update('beNumber', e.target.value)}
-                placeholder="e.g. 1000943"
+              <MaterialNumberPicker
+                selectedBeNumber={form.beNumber ?? ''}
+                materials={materialOptions}
+                inputStyles={inputStyles}
+                onSelect={beNumber => update('beNumber', beNumber)}
               />
+              <div className="pt-1">
+                <Button type="button" variant="outline" size="sm" onClick={() => setShowCreateMaterial(v => !v)}>
+                  {showCreateMaterial ? 'Annuleer nieuw materiaal' : 'Nieuw materiaal aanmaken'}
+                </Button>
+              </div>
+              {showCreateMaterial && (
+                <div className="rounded-md border border-border bg-secondary/40 p-3 flex flex-col gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="new-material-be" className="text-xs text-muted-foreground">
+                        BE/IOS nummer *
+                      </Label>
+                      <Input
+                        id="new-material-be"
+                        className={inputStyles}
+                        value={newMaterialBeNumber}
+                        onChange={e => setNewMaterialBeNumber(e.target.value)}
+                        placeholder="1000001 of 4000001"
+                        disabled={creatingMaterial}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="new-material-name" className="text-xs text-muted-foreground">
+                        Naam
+                      </Label>
+                      <Input
+                        id="new-material-name"
+                        className={inputStyles}
+                        value={newMaterialName}
+                        onChange={e => setNewMaterialName(e.target.value)}
+                        placeholder="Optioneel"
+                        disabled={creatingMaterial}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <Label htmlFor="new-material-short" className="text-xs text-muted-foreground">
+                      Short description *
+                    </Label>
+                    <Input
+                      id="new-material-short"
+                      className={inputStyles}
+                      value={newMaterialShortDescription}
+                      onChange={e => setNewMaterialShortDescription(e.target.value)}
+                      placeholder="Korte omschrijving"
+                      disabled={creatingMaterial}
+                    />
+                  </div>
+                  {materialError && <p className="text-xs text-destructive">{materialError}</p>}
+                  <div className="flex justify-end">
+                    <Button type="button" size="sm" onClick={handleCreateMaterial} disabled={creatingMaterial}>
+                      {creatingMaterial ? 'Aanmaken...' : 'Materiaal aanmaken en selecteren'}
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {Plus, Pencil, Trash2, Search, ChevronUp, ChevronDown, Check, X} from 'lucide-react'
+import {Plus, Pencil, Trash2, Search, ChevronUp, ChevronDown, Check, X, Copy} from 'lucide-react'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Input} from '@/components/ui/input'
@@ -138,6 +138,12 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
   function openEdit(g: MappedMaterialGroup) {
     setEditing(g)
     setForm({...g})
+    setDialogOpen(true)
+  }
+
+  function openDuplicate(g: MappedMaterialGroup) {
+    setEditing(null)
+    setForm({...g, id: crypto.randomUUID()})
     setDialogOpen(true)
   }
 
@@ -290,6 +296,9 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
                       <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(g)}>
                         <Pencil className="h-3.5 w-3.5" />
                       </Button>
+                      <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openDuplicate(g)}>
+                        <Copy className="h-3.5 w-3.5" />
+                      </Button>
                       <Button
                         size="icon"
                         variant="ghost"
@@ -419,6 +428,12 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
   function openEdit(u: MappedUnit) {
     setEditing(u)
     setForm({...u})
+    setDialogOpen(true)
+  }
+
+  function openDuplicate(u: MappedUnit) {
+    setEditing(null)
+    setForm({...u, id: crypto.randomUUID()})
     setDialogOpen(true)
   }
 
@@ -614,6 +629,9 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
                       <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(u)}>
                         <Pencil className="h-3.5 w-3.5" />
                       </Button>
+                      <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openDuplicate(u)}>
+                        <Copy className="h-3.5 w-3.5" />
+                      </Button>
                       <Button
                         size="icon"
                         variant="ghost"
@@ -780,6 +798,12 @@ function PerformanceTab({
     setDialogOpen(true)
   }
 
+  function openDuplicate(p: MappedPerformance) {
+    setEditing(null)
+    setForm({...p, id: crypto.randomUUID()})
+    setDialogOpen(true)
+  }
+
   async function handleSave() {
     setSaving(true)
     const fd = new FormData()
@@ -934,6 +958,9 @@ function PerformanceTab({
                     <div className="flex justify-end gap-1">
                       <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(p)}>
                         <Pencil className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openDuplicate(p)}>
+                        <Copy className="h-3.5 w-3.5" />
                       </Button>
                       <Button
                         size="icon"

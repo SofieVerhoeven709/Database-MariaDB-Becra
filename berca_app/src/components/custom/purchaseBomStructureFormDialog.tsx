@@ -42,16 +42,19 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
   const [reservedQuantity, setReservedQuantity] = useState('')
   const [issuedQuantity, setIssuedQuantity] = useState('')
   const [notDeliverable, setNotDeliverable] = useState(false)
+  const [purchased, setPurchased] = useState(false)
 
   useEffect(() => {
     if (structure) {
       setReservedQuantity(structure.reservedQuantity?.toString() ?? '')
       setIssuedQuantity(structure.issuedQuantity?.toString() ?? '')
       setNotDeliverable(structure.notDeliverable ?? false)
+      setPurchased(structure.purchased ?? false)
     } else {
       setReservedQuantity('')
       setIssuedQuantity('')
       setNotDeliverable(false)
+      setPurchased(false)
     }
   }, [structure?.id, open])
 
@@ -65,6 +68,7 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
         reservedQuantity: reservedQuantity !== '' ? parseInt(reservedQuantity) : null,
         issuedQuantity: issuedQuantity !== '' ? parseInt(issuedQuantity) : null,
         notDeliverable,
+        purchased,
       })
       onOpenChange(false)
       router.refresh()
@@ -141,12 +145,18 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
               </div>
             </div>
 
-            {/* ── Toggles / status flags ──────────────────────────────────────── */}
+            {/* ── Status toggles ──────────────────────────────────────────────── */}
             <div className="flex flex-col gap-2">
               {/* Not Deliverable — editable */}
               <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
                 <Label className="text-xs text-muted-foreground">Not Deliverable</Label>
                 <Switch checked={notDeliverable} onCheckedChange={setNotDeliverable} />
+              </div>
+
+              {/* Purchased — editable */}
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <Label className="text-xs text-muted-foreground">Purchased</Label>
+                <Switch checked={purchased} onCheckedChange={setPurchased} />
               </div>
 
               {/* Not Correct — read-only status */}
@@ -159,7 +169,6 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
                     {structure?.notCorrect && <AlertCircle className="h-3.5 w-3.5 text-destructive" />}
                     <Label className="text-xs text-muted-foreground">Not Correct</Label>
                   </div>
-                  {/* Visual-only indicator, not interactive */}
                   <Switch checked={structure?.notCorrect ?? false} disabled />
                 </div>
                 {structure?.notCorrect && structure?.notCorrectReason && (

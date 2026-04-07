@@ -53,7 +53,7 @@ export function PurchaseBOMDetail({
   const canEditNumber = currentUserLevel >= 80
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
-  // ─── Header editing (BOM metadata — purchase side CAN edit these) ────────────
+  // ─── Header editing ───────────────────────────────────────────────────────────
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [editDescription, setEditDescription] = useState(bom.description ?? '')
@@ -65,6 +65,7 @@ export function PurchaseBOMDetail({
   const [editEndDate, setEditEndDate] = useState(bom.endDate?.slice(0, 10) ?? '')
   const [editClosed, setEditClosed] = useState(bom.closed)
   const [editMaterialClosed, setEditMaterialClosed] = useState(bom.materialClosed)
+  const [editPurchased, setEditPurchased] = useState(bom.purchased ?? false)
 
   const parentBomOptions = allBOMs.filter(b => b.id !== bom.id)
   const parentBom = allBOMs.find(b => b.id === bom.purchaseBomId) ?? null
@@ -82,7 +83,10 @@ export function PurchaseBOMDetail({
         startDate: new Date(editStartDate),
         endDate: editEndDate ? new Date(editEndDate) : null,
         closed: editClosed,
-        materialClosed: editMaterialClosed,
+        // purchased=true forces materialClosed on the server, but we mirror it in
+        // the payload too so the UI reflects the correct value immediately on refresh
+        materialClosed: editPurchased ? true : editMaterialClosed,
+        purchased: editPurchased,
       })
       setEditing(false)
       router.refresh()
@@ -101,12 +105,11 @@ export function PurchaseBOMDetail({
     setEditEndDate(bom.endDate?.slice(0, 10) ?? '')
     setEditClosed(bom.closed)
     setEditMaterialClosed(bom.materialClosed)
+    setEditPurchased(bom.purchased ?? false)
     setEditing(false)
   }
 
   // ─── Structure execution edit dialog ─────────────────────────────────────────
-  // NOTE: the dialog only shows execution fields (reservedQty, issuedQty).
-  // All structural fields (material, description, qty, etc.) are read-only.
   const [structureDialogOpen, setStructureDialogOpen] = useState(false)
   const [editingStructure, setEditingStructure] = useState<MappedPurchaseBOMStructure | null>(null)
 
@@ -338,24 +341,65 @@ export function PurchaseBOMDetail({
 
           {/* Toggles */}
           <div className="sm:col-span-2 lg:col-span-3 flex flex-col gap-2">
-            {(
-              [
-                {label: 'Closed', value: editClosed, onChange: setEditClosed, current: bom.closed},
-                {
-                  label: 'Material Closed',
-                  value: editMaterialClosed,
-                  onChange: setEditMaterialClosed,
-                  current: bom.materialClosed,
-                },
-              ] as {label: string; value: boolean; onChange: (v: boolean) => void; current: boolean}[]
-            ).map(({label, value, onChange, current}) => (
-              <div
-                key={label}
-                className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2 max-w-xs">
-                <Label className="text-xs text-muted-foreground">{label}</Label>
+            {/* Closed */}
+            <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2 max-w-xs">
+              <Label className="text-xs text-muted-foreground">Closed</Label>
+              {editing ? (
+                <Switch checked={editClosed} onCheckedChange={setEditClosed} />
+              ) : bom.closed ? (
+                <Badge className="bg-accent/15 text-accent border-0 font-medium text-xs">Yes</Badge>
+              ) : (
+                <Badge variant="secondary" className="text-muted-foreground font-medium text-xs">
+                  No
+                </Badge>
+              )}
+            </div>
+
+            {/* Material Closed — disabled when purchased is on */}
+            <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2 max-w-xs">
+              <div className="flex flex-col gap-0.5">
+                <Label className="text-xs text-muted-foreground">
+                  Material Closed
+                  {editing && editPurchased && (
+                    <span className="ml-1.5 text-muted-foreground/50">(set by Purchased)</span>
+                  )}
+                </Label>
+              </div>
+              {editing ? (
+                <Switch
+                  checked={editPurchased ? true : editMaterialClosed}
+                  onCheckedChange={v => !editPurchased && setEditMaterialClosed(v)}
+                  disabled={editPurchased}
+                />
+              ) : bom.materialClosed ? (
+                <Badge className="bg-accent/15 text-accent border-0 font-medium text-xs">Yes</Badge>
+              ) : (
+                <Badge variant="secondary" className="text-muted-foreground font-medium text-xs">
+                  No
+                </Badge>
+              )}
+            </div>
+
+            {/* Purchased */}
+            <div className="flex flex-col gap-1 rounded-lg border border-border bg-secondary px-3 py-2 max-w-xs">
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-0.5">
+                  <Label className="text-xs text-muted-foreground">Purchased</Label>
+                  {editing && (
+                    <p className="text-xs text-muted-foreground/55">
+                      Marks all active structures as purchased and sets Material Closed on the Project BOM
+                    </p>
+                  )}
+                </div>
                 {editing ? (
-                  <Switch checked={value} onCheckedChange={onChange} />
-                ) : current ? (
+                  <Switch
+                    checked={editPurchased}
+                    onCheckedChange={v => {
+                      setEditPurchased(v)
+                      if (v) setEditMaterialClosed(true)
+                    }}
+                  />
+                ) : (bom.purchased ?? false) ? (
                   <Badge className="bg-accent/15 text-accent border-0 font-medium text-xs">Yes</Badge>
                 ) : (
                   <Badge variant="secondary" className="text-muted-foreground font-medium text-xs">
@@ -363,7 +407,7 @@ export function PurchaseBOMDetail({
                   </Badge>
                 )}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>
@@ -392,10 +436,9 @@ export function PurchaseBOMDetail({
 
           {/* ── Structures ─────────────────────────────────────────────────── */}
           <TabsContent value="structures" className="p-4 pt-3">
-            {/* info banner: structures are auto-synced from project side */}
             <div className="mb-3 rounded-lg border border-border/40 bg-secondary/30 px-3 py-2 text-xs text-muted-foreground/70">
               Structures are automatically synced from the Project BOM when marked as Ready for Purchase. Only execution
-              quantities can be edited here.
+              quantities and purchased status can be edited here.
             </div>
 
             <div className="flex items-center justify-between mb-3">
@@ -415,7 +458,6 @@ export function PurchaseBOMDetail({
                   </SelectItem>
                 </SelectContent>
               </Select>
-              {/* No "Add Structure" button — structures come from project side only */}
             </div>
 
             {visibleStructures.length === 0 ? (
@@ -427,18 +469,15 @@ export function PurchaseBOMDetail({
                 <Table>
                   <TableHeader>
                     <TableRow className="hover:bg-transparent border-border/60">
-                      {/* Read-only structural columns */}
                       <TableHead className={thClass}>Material</TableHead>
                       <TableHead className={thClass}>Short Desc.</TableHead>
                       <TableHead className={thClass}>Tag</TableHead>
                       <TableHead className={thClass}>Req. Qty</TableHead>
-                      <TableHead className={thClass}>Ready</TableHead>
                       <TableHead className={thClass}>Not Deliv.</TableHead>
                       <TableHead className={thClass}>Ready Date</TableHead>
-                      {/* Editable execution columns */}
                       <TableHead className={`${thClass} border-l border-border/40`}>Res. Qty</TableHead>
                       <TableHead className={thClass}>Issued Qty</TableHead>
-                      {/* Meta */}
+                      <TableHead className={thClass}>Purchased</TableHead>
                       <TableHead className={thClass}>Added By</TableHead>
                       <TableHead className={thClass}>Added At</TableHead>
                       <TableHead className="w-28">
@@ -451,7 +490,6 @@ export function PurchaseBOMDetail({
                       <TableRow
                         key={s.id}
                         className={`border-border/40 hover:bg-secondary/50 ${s.deleted ? 'opacity-50' : ''}`}>
-                        {/* Read-only structural cells */}
                         <TableCell className={`${tdClass} text-foreground font-medium`}>
                           <div className="flex flex-col gap-0.5">
                             <span>{s.materialName}</span>
@@ -473,12 +511,19 @@ export function PurchaseBOMDetail({
                           )}
                         </TableCell>
                         <TableCell className={tdClass}>{formatDate(s.readyForPurchaseDate)}</TableCell>
-                        {/* Editable execution cells */}
                         <TableCell className={`${tdClass} border-l border-border/40`}>
                           {s.reservedQuantity ?? '—'}
                         </TableCell>
                         <TableCell className={tdClass}>{s.issuedQuantity ?? '—'}</TableCell>
-                        {/* Meta */}
+                        <TableCell>
+                          {s.purchased ? (
+                            <Badge className="text-xs bg-accent/15 text-accent border-0">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-xs text-muted-foreground/60">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
                         <TableCell className={tdClass}>{s.createdByName}</TableCell>
                         <TableCell className={tdClass}>{formatDate(s.createdAt)}</TableCell>
                         <TableCell>
@@ -586,6 +631,9 @@ export function PurchaseBOMDetail({
                       <Badge variant="secondary" className="text-xs">
                         {child.structureCount} structure{child.structureCount !== 1 ? 's' : ''}
                       </Badge>
+                      {(child.purchased ?? false) && (
+                        <Badge className="text-xs bg-accent/15 text-accent border-0">Purchased</Badge>
+                      )}
                       {child.materialClosed && (
                         <Badge variant="secondary" className="text-xs">
                           Mat. Closed

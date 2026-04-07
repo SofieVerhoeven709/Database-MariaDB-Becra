@@ -44,6 +44,7 @@ export type PurchaseBOMStructureMinAggregateOutputType = {
   createdAt: Date | null
   readyForPurchaseDate: Date | null
   deletedAt: Date | null
+  purchased: boolean | null
   deleted: boolean | null
   createdBy: string | null
   materialId: string | null
@@ -63,6 +64,7 @@ export type PurchaseBOMStructureMaxAggregateOutputType = {
   createdAt: Date | null
   readyForPurchaseDate: Date | null
   deletedAt: Date | null
+  purchased: boolean | null
   deleted: boolean | null
   createdBy: string | null
   materialId: string | null
@@ -82,6 +84,7 @@ export type PurchaseBOMStructureCountAggregateOutputType = {
   createdAt: number
   readyForPurchaseDate: number
   deletedAt: number
+  purchased: number
   deleted: number
   createdBy: number
   materialId: number
@@ -111,6 +114,7 @@ export type PurchaseBOMStructureMinAggregateInputType = {
   createdAt?: true
   readyForPurchaseDate?: true
   deletedAt?: true
+  purchased?: true
   deleted?: true
   createdBy?: true
   materialId?: true
@@ -130,6 +134,7 @@ export type PurchaseBOMStructureMaxAggregateInputType = {
   createdAt?: true
   readyForPurchaseDate?: true
   deletedAt?: true
+  purchased?: true
   deleted?: true
   createdBy?: true
   materialId?: true
@@ -149,6 +154,7 @@ export type PurchaseBOMStructureCountAggregateInputType = {
   createdAt?: true
   readyForPurchaseDate?: true
   deletedAt?: true
+  purchased?: true
   deleted?: true
   createdBy?: true
   materialId?: true
@@ -255,6 +261,7 @@ export type PurchaseBOMStructureGroupByOutputType = {
   createdAt: Date
   readyForPurchaseDate: Date | null
   deletedAt: Date | null
+  purchased: boolean
   deleted: boolean
   createdBy: string
   materialId: string
@@ -297,6 +304,7 @@ export type PurchaseBOMStructureWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"PurchaseBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
+  purchased?: Prisma.BoolFilter<"PurchaseBOMStructure"> | boolean
   deleted?: Prisma.BoolFilter<"PurchaseBOMStructure"> | boolean
   createdBy?: Prisma.StringFilter<"PurchaseBOMStructure"> | string
   materialId?: Prisma.StringFilter<"PurchaseBOMStructure"> | string
@@ -323,6 +331,7 @@ export type PurchaseBOMStructureOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchased?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
@@ -354,6 +363,7 @@ export type PurchaseBOMStructureWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"PurchaseBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
+  purchased?: Prisma.BoolFilter<"PurchaseBOMStructure"> | boolean
   deleted?: Prisma.BoolFilter<"PurchaseBOMStructure"> | boolean
   createdBy?: Prisma.StringFilter<"PurchaseBOMStructure"> | string
   materialId?: Prisma.StringFilter<"PurchaseBOMStructure"> | string
@@ -380,6 +390,7 @@ export type PurchaseBOMStructureOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchased?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
@@ -407,6 +418,7 @@ export type PurchaseBOMStructureScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PurchaseBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseBOMStructure"> | Date | string | null
+  purchased?: Prisma.BoolWithAggregatesFilter<"PurchaseBOMStructure"> | boolean
   deleted?: Prisma.BoolWithAggregatesFilter<"PurchaseBOMStructure"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"PurchaseBOMStructure"> | string
   materialId?: Prisma.StringWithAggregatesFilter<"PurchaseBOMStructure"> | string
@@ -426,6 +438,7 @@ export type PurchaseBOMStructureCreateInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
@@ -446,6 +459,7 @@ export type PurchaseBOMStructureUncheckedCreateInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -466,6 +480,7 @@ export type PurchaseBOMStructureUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
@@ -486,6 +501,7 @@ export type PurchaseBOMStructureUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -506,6 +522,7 @@ export type PurchaseBOMStructureCreateManyInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -525,6 +542,7 @@ export type PurchaseBOMStructureUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -538,6 +556,7 @@ export type PurchaseBOMStructureUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -583,6 +602,7 @@ export type PurchaseBOMStructureCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  purchased?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
@@ -606,6 +626,7 @@ export type PurchaseBOMStructureMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  purchased?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
@@ -625,6 +646,7 @@ export type PurchaseBOMStructureMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  purchased?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
@@ -916,6 +938,7 @@ export type PurchaseBOMStructureCreateWithoutEmployee_PurchaseBOMStructure_creat
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
@@ -935,6 +958,7 @@ export type PurchaseBOMStructureUncheckedCreateWithoutEmployee_PurchaseBOMStruct
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   materialId: string
   purchaseBOMId: string
@@ -964,6 +988,7 @@ export type PurchaseBOMStructureCreateWithoutEmployee_PurchaseBOMStructure_delet
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
@@ -983,6 +1008,7 @@ export type PurchaseBOMStructureUncheckedCreateWithoutEmployee_PurchaseBOMStruct
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -1031,6 +1057,7 @@ export type PurchaseBOMStructureScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"PurchaseBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
+  purchased?: Prisma.BoolFilter<"PurchaseBOMStructure"> | boolean
   deleted?: Prisma.BoolFilter<"PurchaseBOMStructure"> | boolean
   createdBy?: Prisma.StringFilter<"PurchaseBOMStructure"> | string
   materialId?: Prisma.StringFilter<"PurchaseBOMStructure"> | string
@@ -1066,6 +1093,7 @@ export type PurchaseBOMStructureCreateWithoutMaterialInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
@@ -1085,6 +1113,7 @@ export type PurchaseBOMStructureUncheckedCreateWithoutMaterialInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   purchaseBOMId: string
@@ -1130,6 +1159,7 @@ export type PurchaseBOMStructureCreateWithoutProjectBOMStructureInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
@@ -1149,6 +1179,7 @@ export type PurchaseBOMStructureUncheckedCreateWithoutProjectBOMStructureInput =
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -1194,6 +1225,7 @@ export type PurchaseBOMStructureCreateWithoutPurchaseBOMInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
@@ -1213,6 +1245,7 @@ export type PurchaseBOMStructureUncheckedCreateWithoutPurchaseBOMInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -1258,6 +1291,7 @@ export type PurchaseBOMStructureCreateWithoutOther_PurchaseBOMStructureInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
@@ -1277,6 +1311,7 @@ export type PurchaseBOMStructureUncheckedCreateWithoutOther_PurchaseBOMStructure
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -1301,6 +1336,7 @@ export type PurchaseBOMStructureCreateWithoutPurchaseBOMStructureInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
@@ -1320,6 +1356,7 @@ export type PurchaseBOMStructureUncheckedCreateWithoutPurchaseBOMStructureInput 
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -1360,6 +1397,7 @@ export type PurchaseBOMStructureUpdateWithoutOther_PurchaseBOMStructureInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
@@ -1379,6 +1417,7 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutOther_PurchaseBOMStructure
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1414,6 +1453,7 @@ export type PurchaseBOMStructureCreateManyEmployee_PurchaseBOMStructure_createdB
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   materialId: string
   purchaseBOMId: string
@@ -1432,6 +1472,7 @@ export type PurchaseBOMStructureCreateManyEmployee_PurchaseBOMStructure_deletedB
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -1450,6 +1491,7 @@ export type PurchaseBOMStructureUpdateWithoutEmployee_PurchaseBOMStructure_creat
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
@@ -1469,6 +1511,7 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutEmployee_PurchaseBOMStruct
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1488,6 +1531,7 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutEmployee_PurchaseBOMSt
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1506,6 +1550,7 @@ export type PurchaseBOMStructureUpdateWithoutEmployee_PurchaseBOMStructure_delet
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
@@ -1525,6 +1570,7 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutEmployee_PurchaseBOMStruct
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1544,6 +1590,7 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutEmployee_PurchaseBOMSt
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1562,6 +1609,7 @@ export type PurchaseBOMStructureCreateManyMaterialInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   purchaseBOMId: string
@@ -1580,6 +1628,7 @@ export type PurchaseBOMStructureUpdateWithoutMaterialInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
@@ -1599,6 +1648,7 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutMaterialInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1618,6 +1668,7 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutMaterialInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1636,6 +1687,7 @@ export type PurchaseBOMStructureCreateManyProjectBOMStructureInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -1654,6 +1706,7 @@ export type PurchaseBOMStructureUpdateWithoutProjectBOMStructureInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
@@ -1673,6 +1726,7 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutProjectBOMStructureInput =
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1692,6 +1746,7 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureInp
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1710,6 +1765,7 @@ export type PurchaseBOMStructureCreateManyPurchaseBOMInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -1728,6 +1784,7 @@ export type PurchaseBOMStructureUpdateWithoutPurchaseBOMInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
@@ -1747,6 +1804,7 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutPurchaseBOMInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1766,6 +1824,7 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1784,6 +1843,7 @@ export type PurchaseBOMStructureCreateManyPurchaseBOMStructureInput = {
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
+  purchased?: boolean
   deleted?: boolean
   createdBy: string
   materialId: string
@@ -1802,6 +1862,7 @@ export type PurchaseBOMStructureUpdateWithoutPurchaseBOMStructureInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
@@ -1821,6 +1882,7 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutPurchaseBOMStructureInput 
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1840,6 +1902,7 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureIn
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1889,6 +1952,7 @@ export type PurchaseBOMStructureSelect<ExtArgs extends runtime.Types.Extensions.
   createdAt?: boolean
   readyForPurchaseDate?: boolean
   deletedAt?: boolean
+  purchased?: boolean
   deleted?: boolean
   createdBy?: boolean
   materialId?: boolean
@@ -1918,6 +1982,7 @@ export type PurchaseBOMStructureSelectScalar = {
   createdAt?: boolean
   readyForPurchaseDate?: boolean
   deletedAt?: boolean
+  purchased?: boolean
   deleted?: boolean
   createdBy?: boolean
   materialId?: boolean
@@ -1927,7 +1992,7 @@ export type PurchaseBOMStructureSelectScalar = {
   deletedBy?: boolean
 }
 
-export type PurchaseBOMStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shortDescription" | "additionalInfo" | "description" | "tag" | "requiredQuantity" | "createdAt" | "readyForPurchaseDate" | "deletedAt" | "deleted" | "createdBy" | "materialId" | "purchaseBOMId" | "projectBOMStructureId" | "purchaseBOMStructureId" | "deletedBy", ExtArgs["result"]["purchaseBOMStructure"]>
+export type PurchaseBOMStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shortDescription" | "additionalInfo" | "description" | "tag" | "requiredQuantity" | "createdAt" | "readyForPurchaseDate" | "deletedAt" | "purchased" | "deleted" | "createdBy" | "materialId" | "purchaseBOMId" | "projectBOMStructureId" | "purchaseBOMStructureId" | "deletedBy", ExtArgs["result"]["purchaseBOMStructure"]>
 export type PurchaseBOMStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   PurchaseBOM?: boolean | Prisma.PurchaseBOMDefaultArgs<ExtArgs>
@@ -1960,6 +2025,7 @@ export type $PurchaseBOMStructurePayload<ExtArgs extends runtime.Types.Extension
     createdAt: Date
     readyForPurchaseDate: Date | null
     deletedAt: Date | null
+    purchased: boolean
     deleted: boolean
     createdBy: string
     materialId: string
@@ -2352,6 +2418,7 @@ export interface PurchaseBOMStructureFieldRefs {
   readonly createdAt: Prisma.FieldRef<"PurchaseBOMStructure", 'DateTime'>
   readonly readyForPurchaseDate: Prisma.FieldRef<"PurchaseBOMStructure", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"PurchaseBOMStructure", 'DateTime'>
+  readonly purchased: Prisma.FieldRef<"PurchaseBOMStructure", 'Boolean'>
   readonly deleted: Prisma.FieldRef<"PurchaseBOMStructure", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"PurchaseBOMStructure", 'String'>
   readonly materialId: Prisma.FieldRef<"PurchaseBOMStructure", 'String'>

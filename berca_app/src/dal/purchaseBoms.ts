@@ -14,6 +14,7 @@ const purchaseBOMInclude = {
       shortDescription: true,
       closed: true,
       materialClosed: true,
+      purchased: true,
       deleted: true,
       PurchaseBOMStructure: {
         where: {deleted: false},

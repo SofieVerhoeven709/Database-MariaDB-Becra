@@ -16,6 +16,7 @@ export const purchaseBOMSchema = z.object({
   createdBy: z.string(),
   closed: z.boolean().default(false),
   materialClosed: z.boolean().default(false),
+  purchased: z.boolean().default(false),
   deleted: z.boolean().default(false),
   deletedAt: z.date().nullable().optional(),
   deletedBy: z.string().nullable().optional(),
@@ -41,6 +42,7 @@ export const updatePurchaseBOMSchema = purchaseBOMSchema.pick({
   endDate: true,
   closed: true,
   materialClosed: true,
+  purchased: true,
 })
 
 export const purchaseBOMIdSchema = purchaseBOMSchema.pick({id: true})
@@ -60,6 +62,7 @@ export const purchaseBOMStructureSchema = z.object({
   issuedQuantity: z.number().int().nullable().optional(),
   readyForPurchaseDate: z.date().nullable().optional(),
   notDeliverable: z.boolean().default(false),
+  purchased: z.boolean().default(false),
   createdAt: z.date(),
   createdBy: z.string(),
   deleted: z.boolean().default(false),
@@ -90,6 +93,7 @@ export const updatePurchaseBOMStructureSchema = purchaseBOMStructureSchema.pick(
   issuedQuantity: true,
   notDeliverable: true,
   projectBOMStructureId: true,
+  purchased: true,
 })
 
 export const purchaseBOMStructureIdSchema = purchaseBOMStructureSchema.pick({id: true})

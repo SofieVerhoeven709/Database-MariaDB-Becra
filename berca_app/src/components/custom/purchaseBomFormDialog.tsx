@@ -65,6 +65,7 @@ export function PurchaseBOMFormDialog({
   const [endDate, setEndDate] = useState('')
   const [closed, setClosed] = useState(false)
   const [materialClosed, setMaterialClosed] = useState(false)
+  const [purchased, setPurchased] = useState(false)
 
   // ─── Purchase search (create mode only) ───────────────────────────────────────
   const [purchaseQuery, setPurchaseQuery] = useState('')
@@ -88,6 +89,7 @@ export function PurchaseBOMFormDialog({
       setEndDate(bom.endDate?.slice(0, 10) ?? '')
       setClosed(bom.closed)
       setMaterialClosed(bom.materialClosed)
+      setPurchased(bom.purchased ?? false)
       setParentBomId(bom.purchaseBomId ?? 'none')
     } else {
       setDescription('')
@@ -99,6 +101,7 @@ export function PurchaseBOMFormDialog({
       setEndDate('')
       setClosed(false)
       setMaterialClosed(false)
+      setPurchased(false)
       setParentBomId('none')
       setPurchaseQuery('')
       setProjectResults([])
@@ -139,7 +142,8 @@ export function PurchaseBOMFormDialog({
         startDate: new Date(startDate),
         endDate: endDate ? new Date(endDate) : null,
         closed,
-        materialClosed,
+        materialClosed: purchased ? true : materialClosed,
+        purchased,
       }
 
       if (isEdit) {
@@ -333,19 +337,47 @@ export function PurchaseBOMFormDialog({
 
           {/* Toggles */}
           <div className="flex flex-col gap-2">
-            {(
-              [
-                {label: 'Closed', value: closed, onChange: setClosed},
-                {label: 'Material Closed', value: materialClosed, onChange: setMaterialClosed},
-              ] as {label: string; value: boolean; onChange: (v: boolean) => void}[]
-            ).map(({label, value, onChange}) => (
-              <div
-                key={label}
-                className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
-                <Label className="text-xs text-muted-foreground">{label}</Label>
-                <Switch checked={value} onCheckedChange={onChange} />
+            {/* Closed */}
+            <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+              <Label className="text-xs text-muted-foreground">Closed</Label>
+              <Switch checked={closed} onCheckedChange={setClosed} />
+            </div>
+
+            {/* Material Closed — locked when purchased is on */}
+            <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+              <div className="flex flex-col gap-0.5">
+                <Label className="text-xs text-muted-foreground">
+                  Material Closed
+                  {purchased && <span className="ml-1.5 text-muted-foreground/50">(set by Purchased)</span>}
+                </Label>
               </div>
-            ))}
+              <Switch
+                checked={purchased ? true : materialClosed}
+                onCheckedChange={v => !purchased && setMaterialClosed(v)}
+                disabled={purchased}
+              />
+            </div>
+
+            {/* Purchased — edit mode only */}
+            {isEdit && (
+              <div className="flex flex-col gap-1 rounded-lg border border-border bg-secondary px-3 py-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col gap-0.5">
+                    <Label className="text-xs text-muted-foreground">Purchased</Label>
+                    <p className="text-xs text-muted-foreground/55">
+                      Marks all active structures as purchased and sets Material Closed on the Project BOM
+                    </p>
+                  </div>
+                  <Switch
+                    checked={purchased}
+                    onCheckedChange={v => {
+                      setPurchased(v)
+                      if (v) setMaterialClosed(true)
+                    }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

@@ -320,7 +320,7 @@ export function ProjectBOMTable({
                   <TableRow
                     key={bom.id}
                     className={`border-border/40 hover:bg-secondary/50 ${bom.deleted ? 'opacity-50' : ''}`}>
-                    <TableCell className={`${tdClass} font-mono text-foreground`}>
+                    <TableCell className={`${tdClass} font-medium text-foreground`}>
                       <Link
                         href={`/departments/${departmentId}/projectBom/${bom.id}` as Route}
                         className="hover:text-accent hover:underline transition-colors">

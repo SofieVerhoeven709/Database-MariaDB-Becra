@@ -98,6 +98,7 @@ export const updateProjectBOMAction = protectedServerFunction({
           endDate: data.endDate,
           closed: data.closed,
           materialClosed: data.materialClosed,
+          purchased: false,
         }
       } else {
         payload = {
@@ -110,6 +111,7 @@ export const updateProjectBOMAction = protectedServerFunction({
           startDate: data.startDate,
           endDate: data.endDate,
           closed: data.closed,
+          purchased: false,
           materialClosed: data.materialClosed,
         }
       }
@@ -130,6 +132,7 @@ export const updateProjectBOMAction = protectedServerFunction({
             additionalInfo: structure.additionalInfo,
             description: structure.description,
             tag: structure.tag,
+            purchased: false,
             requiredQuantity: structure.requiredQuantity,
             readyForPurchaseDate: structure.readyForPurchaseDate,
           }
@@ -266,6 +269,7 @@ export const updateProjectBOMStructureAction = protectedServerFunction({
           startDate: projectBom.startDate,
           endDate: projectBom.endDate,
           closed: projectBom.closed,
+          purchased: false,
           materialClosed: projectBom.materialClosed,
         }
         await createPurchaseBOMAction(payload)
@@ -289,6 +293,7 @@ export const updateProjectBOMStructureAction = protectedServerFunction({
         additionalInfo: data.additionalInfo,
         description: data.description,
         tag: data.tag,
+        purchased: false,
         requiredQuantity: data.requiredQuantity,
         readyForPurchaseDate: data.readyForPurchaseDate,
       }

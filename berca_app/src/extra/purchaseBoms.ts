@@ -21,6 +21,7 @@ type PurchaseBOMStructureRaw = {
   // those live on ProjectBOMStructure / BOMExecution. We read them from the joined
   // ProjectBOMStructure below.
   deleted: boolean
+  purchased: boolean
   deletedAt: Date | null
   deletedBy: string | null
   Material: {id: string; name: string | null; beNumber: string | null; shortDescription: string | null}
@@ -38,6 +39,7 @@ type ChildBOMRaw = {
   shortDescription: string
   closed: boolean
   materialClosed: boolean
+  purchased: boolean
   deleted: boolean
   PurchaseBOMStructure: {id: string}[]
 }
@@ -57,6 +59,7 @@ type PurchaseBOMRaw = {
   closed: boolean
   materialClosed: boolean
   deleted: boolean
+  purchased: boolean
   deletedAt: Date | null
   deletedBy: string | null
   Project: {id: string; projectNumber: string | null; projectName: string | null}
@@ -86,6 +89,7 @@ function mapStructure(r: PurchaseBOMStructureRaw): MappedPurchaseBOMStructure {
     createdBy: r.createdBy,
     createdByName: `${r.Employee_PurchaseBOMStructure_createdByToEmployee.firstName} ${r.Employee_PurchaseBOMStructure_createdByToEmployee.lastName}`,
     deleted: r.deleted,
+    purchased: r.purchased,
     deletedAt: r.deletedAt?.toISOString() ?? null,
     deletedBy: r.deletedBy,
     deletedByName: r.Employee_PurchaseBOMStructure_deletedByToEmployee
@@ -109,6 +113,7 @@ function mapChild(r: ChildBOMRaw): ChildPurchaseBOM {
     shortDescription: r.shortDescription,
     structureCount: r.PurchaseBOMStructure.length,
     closed: r.closed,
+    purchased: r.purchased,
     materialClosed: r.materialClosed,
     deleted: r.deleted,
   }
@@ -134,6 +139,7 @@ export function mapPurchaseBOM(r: PurchaseBOMRaw): MappedPurchaseBOM {
     closed: r.closed,
     materialClosed: r.materialClosed,
     deleted: r.deleted,
+    purchased: r.purchased,
     deletedAt: r.deletedAt?.toISOString() ?? null,
     deletedBy: r.deletedBy,
     deletedByName: r.Employee_PurchaseBOM_deletedByToEmployee

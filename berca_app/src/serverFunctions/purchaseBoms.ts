@@ -42,19 +42,35 @@ export const updatePurchaseBOMAction = protectedServerFunction({
   schema: updatePurchaseBOMSchema,
   functionName: 'Update purchase BOM action',
   serverFn: async ({data: {id, ...data}, logger}) => {
-    await prismaClient.purchaseBOM.update({where: {id}, data})
+    // purchased=true forces materialClosed=true on this BOM only — no descendant cascade.
+    const bomUpdateData = {
+      ...data,
+      ...(data.purchased === true ? {materialClosed: true} : {}),
+    }
+
+    const updatedBom = await prismaClient.purchaseBOM.update({
+      where: {id},
+      data: bomUpdateData,
+      select: {projectBOMId: true},
+    })
     logger.info(`Purchase BOM updated: ${id}`)
 
-    const now = new Date()
-    // Note: PurchaseBOMStructure does not have readyForPurchase — that lives on
-    // ProjectBOMStructure. We only cascade the BOM-level flag here.
-    const descendantIds = await getDescendantBOMIds(id)
-    if (descendantIds.length > 0) {
-      await prismaClient.purchaseBOM.updateMany({
-        where: {id: {in: descendantIds}},
-        data: data,
+    if (data.purchased === true) {
+      // Mark every active structure on THIS BOM as purchased
+      await prismaClient.purchaseBOMStructure.updateMany({
+        where: {purchaseBOMId: id, deleted: false},
+        data: {purchased: true},
       })
-      logger.info(`Cascaded readyForPurchase=true to ${descendantIds.length} descendant BOM(s): ${id}`)
+      logger.info(`Marked all active structures as purchased for PurchaseBOM: ${id}`)
+
+      // Mirror materialClosed=true onto the linked ProjectBOM
+      if (updatedBom.projectBOMId) {
+        await prismaClient.projectBOM.update({
+          where: {id: updatedBom.projectBOMId},
+          data: {materialClosed: true},
+        })
+        logger.info(`Set materialClosed=true on ProjectBOM: ${updatedBom.projectBOMId}`)
+      }
     }
 
     revalidatePath('/purchaseBOMs')
@@ -115,7 +131,6 @@ export const createPurchaseBOMStructureAction = protectedServerFunction({
       },
     })
     logger.info(`Purchase BOM structure created: ${id}`)
-
     revalidatePath('/purchaseBOMs')
   },
 })
@@ -123,10 +138,26 @@ export const createPurchaseBOMStructureAction = protectedServerFunction({
 export const updatePurchaseBOMStructureAction = protectedServerFunction({
   schema: updatePurchaseBOMStructureSchema,
   functionName: 'Update purchase BOM structure action',
-  serverFn: async ({data: {id, ...data}, logger}) => {
-    // Only reservedQuantity and issuedQuantity are allowed through the schema.
-    await prismaClient.bOMExecution.update({where: {projectBOMStructureId: data.projectBOMStructureId}, data})
-    logger.info(`Purchase BOM structure updated (execution fields): ${id}`)
+  serverFn: async ({data: {id, purchased, ...data}, logger}) => {
+    // Update execution fields on BOMExecution
+    await prismaClient.bOMExecution.update({
+      where: {projectBOMStructureId: data.projectBOMStructureId},
+      data: {
+        reservedQuantity: data.reservedQuantity,
+        issuedQuantity: data.issuedQuantity,
+        notDeliverable: data.notDeliverable,
+      },
+    })
+
+    // Update purchased flag directly on PurchaseBOMStructure — no roll-up logic
+    if (purchased !== undefined) {
+      await prismaClient.purchaseBOMStructure.update({
+        where: {id},
+        data: {purchased},
+      })
+    }
+
+    logger.info(`Purchase BOM structure updated: ${id}`)
     revalidatePath('/purchaseBOMs')
   },
 })

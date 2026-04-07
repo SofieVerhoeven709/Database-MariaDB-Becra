@@ -19,6 +19,7 @@ export interface MappedPurchaseBOMStructure {
   createdBy: string
   createdByName: string
   deleted: boolean
+  purchased: boolean
   deletedAt: string | null
   deletedBy: string | null
   deletedByName: string | null
@@ -38,6 +39,7 @@ export interface ChildPurchaseBOM {
   shortDescription: string
   structureCount: number
   closed: boolean
+  purchased: boolean
   materialClosed: boolean
   deleted: boolean
 }
@@ -62,6 +64,7 @@ export interface MappedPurchaseBOM {
   closed: boolean
   materialClosed: boolean
   deleted: boolean
+  purchased: boolean
   deletedAt: string | null
   deletedBy: string | null
   deletedByName: string | null

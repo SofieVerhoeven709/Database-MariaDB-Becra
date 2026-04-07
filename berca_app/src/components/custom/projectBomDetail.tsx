@@ -493,7 +493,7 @@ export function ProjectBOMDetail({
                         <TableCell className={tdClass}>{formatDate(s.readyForPurchaseDate)}</TableCell>
                         {/* ── Execution columns ── */}
                         <TableCell className={`${tdClass} border-l border-border/40`}>
-                          {s.execReservedQuantity ?? '—'}
+                          {s.execStockReservedQuantity ?? '—'}
                         </TableCell>
                         <TableCell className={tdClass}>{s.execIssuedQuantity ?? '—'}</TableCell>
                         <TableCell>

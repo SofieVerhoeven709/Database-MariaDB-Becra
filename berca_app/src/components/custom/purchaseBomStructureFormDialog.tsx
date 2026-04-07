@@ -65,7 +65,7 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
       await updatePurchaseBOMStructureAction({
         id: structure.id,
         projectBOMStructureId: structure.projectBOMStructureId,
-        reservedQuantity: reservedQuantity !== '' ? parseInt(reservedQuantity) : null,
+        stockReservedQuantity: reservedQuantity !== '' ? parseInt(reservedQuantity) : null,
         issuedQuantity: issuedQuantity !== '' ? parseInt(issuedQuantity) : null,
         notDeliverable,
         purchased,

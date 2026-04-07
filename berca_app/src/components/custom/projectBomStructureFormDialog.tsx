@@ -57,7 +57,7 @@ export function ProjectBOMStructureFormDialog({
         additionalInfo: structure.additionalInfo ?? '',
         tag: structure.tag ?? '',
         requiredQuantity: structure.requiredQuantity?.toString() ?? '',
-        reservedQuantity: structure.execReservedQuantity?.toString() ?? '',
+        reservedQuantity: structure.execStockReservedQuantity?.toString() ?? '',
         issuedQuantity: structure.execIssuedQuantity?.toString() ?? '',
         readyForPurchaseDate: structure.readyForPurchaseDate
           ? new Date(structure.readyForPurchaseDate).toISOString().slice(0, 10)
@@ -83,7 +83,7 @@ export function ProjectBOMStructureFormDialog({
         description: form.description.trim() || null,
         additionalInfo: form.additionalInfo.trim() || null,
         tag: form.tag.trim() || null,
-        requiredQuantity: form.requiredQuantity ? parseInt(form.requiredQuantity) : null,
+        requiredQuantity: parseInt(form.requiredQuantity),
         readyForPurchaseDate: form.readyForPurchaseDate ? new Date(form.readyForPurchaseDate) : null,
         readyForPurchase: form.readyForPurchase,
       }

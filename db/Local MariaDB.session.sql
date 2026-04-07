@@ -2026,3 +2026,25 @@ CREATE TABLE
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
             UNIQUE(projectBOMStructureId)
       ) ENGINE = InnoDB;
+
+CREATE TABLE 
+      IF NOT EXISTS MaterialDemand (
+            id CHAR(36) PRIMARY KEY,
+            materialId CHAR(36) NOT NULL,
+            totalRequiredQty INT NOT NULL,
+            reservedQty INT DEFAULT 0,
+            toPurchaseQty INT DEFAULT 0,
+            createdAt DATETIME NOT NULL,
+            FOREIGN KEY (materialId) REFERENCES Material(id) ON DELETE RESTRICT
+      )ENGINE = InnoDB;
+
+CREATE TABLE 
+      IF NOT EXISTS MaterialDemandSource (
+            id CHAR(36) PRIMARY KEY,
+            materialDemandId CHAR(36) NOT NULL,
+            projectBOMStructureId CHAR(36) NOT NULL,
+            requiredQty INT NOT NULL,
+            reservedQty INT DEFAULT 0,
+            FOREIGN KEY (materialDemandId) REFERENCES MaterialDemand(id) ON DELETE CASCADE,
+            FOREIGN KEY (projectBOMStructureId) REFERENCES ProjectBOMStructure(id) ON DELETE CASCADE
+      )ENGINE = InnoDB;

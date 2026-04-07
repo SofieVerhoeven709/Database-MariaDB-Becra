@@ -20,18 +20,8 @@ export type ProjectBOMStructureModel = runtime.Types.Result.DefaultSelection<Pri
 
 export type AggregateProjectBOMStructure = {
   _count: ProjectBOMStructureCountAggregateOutputType | null
-  _avg: ProjectBOMStructureAvgAggregateOutputType | null
-  _sum: ProjectBOMStructureSumAggregateOutputType | null
   _min: ProjectBOMStructureMinAggregateOutputType | null
   _max: ProjectBOMStructureMaxAggregateOutputType | null
-}
-
-export type ProjectBOMStructureAvgAggregateOutputType = {
-  requiredQuantity: number | null
-}
-
-export type ProjectBOMStructureSumAggregateOutputType = {
-  requiredQuantity: number | null
 }
 
 export type ProjectBOMStructureMinAggregateOutputType = {
@@ -40,7 +30,6 @@ export type ProjectBOMStructureMinAggregateOutputType = {
   additionalInfo: string | null
   description: string | null
   tag: string | null
-  requiredQuantity: number | null
   createdAt: Date | null
   readyForPurchaseDate: Date | null
   deletedAt: Date | null
@@ -59,7 +48,6 @@ export type ProjectBOMStructureMaxAggregateOutputType = {
   additionalInfo: string | null
   description: string | null
   tag: string | null
-  requiredQuantity: number | null
   createdAt: Date | null
   readyForPurchaseDate: Date | null
   deletedAt: Date | null
@@ -78,7 +66,6 @@ export type ProjectBOMStructureCountAggregateOutputType = {
   additionalInfo: number
   description: number
   tag: number
-  requiredQuantity: number
   createdAt: number
   readyForPurchaseDate: number
   deletedAt: number
@@ -93,21 +80,12 @@ export type ProjectBOMStructureCountAggregateOutputType = {
 }
 
 
-export type ProjectBOMStructureAvgAggregateInputType = {
-  requiredQuantity?: true
-}
-
-export type ProjectBOMStructureSumAggregateInputType = {
-  requiredQuantity?: true
-}
-
 export type ProjectBOMStructureMinAggregateInputType = {
   id?: true
   shortDescription?: true
   additionalInfo?: true
   description?: true
   tag?: true
-  requiredQuantity?: true
   createdAt?: true
   readyForPurchaseDate?: true
   deletedAt?: true
@@ -126,7 +104,6 @@ export type ProjectBOMStructureMaxAggregateInputType = {
   additionalInfo?: true
   description?: true
   tag?: true
-  requiredQuantity?: true
   createdAt?: true
   readyForPurchaseDate?: true
   deletedAt?: true
@@ -145,7 +122,6 @@ export type ProjectBOMStructureCountAggregateInputType = {
   additionalInfo?: true
   description?: true
   tag?: true
-  requiredQuantity?: true
   createdAt?: true
   readyForPurchaseDate?: true
   deletedAt?: true
@@ -197,18 +173,6 @@ export type ProjectBOMStructureAggregateArgs<ExtArgs extends runtime.Types.Exten
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: ProjectBOMStructureAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: ProjectBOMStructureSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProjectBOMStructureMinAggregateInputType
@@ -239,8 +203,6 @@ export type ProjectBOMStructureGroupByArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   _count?: ProjectBOMStructureCountAggregateInputType | true
-  _avg?: ProjectBOMStructureAvgAggregateInputType
-  _sum?: ProjectBOMStructureSumAggregateInputType
   _min?: ProjectBOMStructureMinAggregateInputType
   _max?: ProjectBOMStructureMaxAggregateInputType
 }
@@ -251,7 +213,6 @@ export type ProjectBOMStructureGroupByOutputType = {
   additionalInfo: string | null
   description: string | null
   tag: string | null
-  requiredQuantity: number | null
   createdAt: Date
   readyForPurchaseDate: Date | null
   deletedAt: Date | null
@@ -263,8 +224,6 @@ export type ProjectBOMStructureGroupByOutputType = {
   parentStructureId: string | null
   deletedBy: string | null
   _count: ProjectBOMStructureCountAggregateOutputType | null
-  _avg: ProjectBOMStructureAvgAggregateOutputType | null
-  _sum: ProjectBOMStructureSumAggregateOutputType | null
   _min: ProjectBOMStructureMinAggregateOutputType | null
   _max: ProjectBOMStructureMaxAggregateOutputType | null
 }
@@ -293,7 +252,6 @@ export type ProjectBOMStructureWhereInput = {
   additionalInfo?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
   description?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
-  requiredQuantity?: Prisma.IntNullableFilter<"ProjectBOMStructure"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ProjectBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableFilter<"ProjectBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"ProjectBOMStructure"> | Date | string | null
@@ -305,6 +263,7 @@ export type ProjectBOMStructureWhereInput = {
   parentStructureId?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
   deletedBy?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
   BOMExecution?: Prisma.XOR<Prisma.BOMExecutionNullableScalarRelationFilter, Prisma.BOMExecutionWhereInput> | null
+  MaterialDemandSource?: Prisma.MaterialDemandSourceListRelationFilter
   Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
   ProjectBOM?: Prisma.XOR<Prisma.ProjectBOMScalarRelationFilter, Prisma.ProjectBOMWhereInput>
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -320,7 +279,6 @@ export type ProjectBOMStructureOrderByWithRelationInput = {
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
-  requiredQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -332,6 +290,7 @@ export type ProjectBOMStructureOrderByWithRelationInput = {
   parentStructureId?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   BOMExecution?: Prisma.BOMExecutionOrderByWithRelationInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceOrderByRelationAggregateInput
   Material?: Prisma.MaterialOrderByWithRelationInput
   ProjectBOM?: Prisma.ProjectBOMOrderByWithRelationInput
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
@@ -351,7 +310,6 @@ export type ProjectBOMStructureWhereUniqueInput = Prisma.AtLeast<{
   additionalInfo?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
   description?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
-  requiredQuantity?: Prisma.IntNullableFilter<"ProjectBOMStructure"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ProjectBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableFilter<"ProjectBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"ProjectBOMStructure"> | Date | string | null
@@ -363,6 +321,7 @@ export type ProjectBOMStructureWhereUniqueInput = Prisma.AtLeast<{
   parentStructureId?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
   deletedBy?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
   BOMExecution?: Prisma.XOR<Prisma.BOMExecutionNullableScalarRelationFilter, Prisma.BOMExecutionWhereInput> | null
+  MaterialDemandSource?: Prisma.MaterialDemandSourceListRelationFilter
   Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
   ProjectBOM?: Prisma.XOR<Prisma.ProjectBOMScalarRelationFilter, Prisma.ProjectBOMWhereInput>
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -378,7 +337,6 @@ export type ProjectBOMStructureOrderByWithAggregationInput = {
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
-  requiredQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -390,10 +348,8 @@ export type ProjectBOMStructureOrderByWithAggregationInput = {
   parentStructureId?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProjectBOMStructureCountOrderByAggregateInput
-  _avg?: Prisma.ProjectBOMStructureAvgOrderByAggregateInput
   _max?: Prisma.ProjectBOMStructureMaxOrderByAggregateInput
   _min?: Prisma.ProjectBOMStructureMinOrderByAggregateInput
-  _sum?: Prisma.ProjectBOMStructureSumOrderByAggregateInput
 }
 
 export type ProjectBOMStructureScalarWhereWithAggregatesInput = {
@@ -405,7 +361,6 @@ export type ProjectBOMStructureScalarWhereWithAggregatesInput = {
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"ProjectBOMStructure"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"ProjectBOMStructure"> | string | null
   tag?: Prisma.StringNullableWithAggregatesFilter<"ProjectBOMStructure"> | string | null
-  requiredQuantity?: Prisma.IntNullableWithAggregatesFilter<"ProjectBOMStructure"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProjectBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableWithAggregatesFilter<"ProjectBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ProjectBOMStructure"> | Date | string | null
@@ -424,13 +379,13 @@ export type ProjectBOMStructureCreateInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
   readyForPurchase?: boolean
   deleted?: boolean
   BOMExecution?: Prisma.BOMExecutionCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceCreateNestedManyWithoutProjectBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutProjectBOMStructureInput
   ProjectBOM: Prisma.ProjectBOMCreateNestedOneWithoutProjectBOMStructureInput
   Employee_ProjectBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeInput
@@ -446,7 +401,6 @@ export type ProjectBOMStructureUncheckedCreateInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -458,6 +412,7 @@ export type ProjectBOMStructureUncheckedCreateInput = {
   parentStructureId?: string | null
   deletedBy?: string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
 }
@@ -468,13 +423,13 @@ export type ProjectBOMStructureUpdateInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   BOMExecution?: Prisma.BOMExecutionUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUpdateManyWithoutProjectBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeNestedInput
@@ -490,7 +445,6 @@ export type ProjectBOMStructureUncheckedUpdateInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -502,6 +456,7 @@ export type ProjectBOMStructureUncheckedUpdateInput = {
   parentStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
 }
@@ -512,7 +467,6 @@ export type ProjectBOMStructureCreateManyInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -531,7 +485,6 @@ export type ProjectBOMStructureUpdateManyMutationInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -545,7 +498,6 @@ export type ProjectBOMStructureUncheckedUpdateManyInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -585,7 +537,6 @@ export type ProjectBOMStructureCountOrderByAggregateInput = {
   additionalInfo?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  requiredQuantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -598,17 +549,12 @@ export type ProjectBOMStructureCountOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
-export type ProjectBOMStructureAvgOrderByAggregateInput = {
-  requiredQuantity?: Prisma.SortOrder
-}
-
 export type ProjectBOMStructureMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  requiredQuantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -627,7 +573,6 @@ export type ProjectBOMStructureMinOrderByAggregateInput = {
   additionalInfo?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  requiredQuantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -638,10 +583,6 @@ export type ProjectBOMStructureMinOrderByAggregateInput = {
   projectBOMId?: Prisma.SortOrder
   parentStructureId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-}
-
-export type ProjectBOMStructureSumOrderByAggregateInput = {
-  requiredQuantity?: Prisma.SortOrder
 }
 
 export type ProjectBOMStructureScalarRelationFilter = {
@@ -903,19 +844,33 @@ export type ProjectBOMStructureUpdateOneRequiredWithoutBOMExecutionNestedInput =
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectBOMStructureUpdateToOneWithWhereWithoutBOMExecutionInput, Prisma.ProjectBOMStructureUpdateWithoutBOMExecutionInput>, Prisma.ProjectBOMStructureUncheckedUpdateWithoutBOMExecutionInput>
 }
 
+export type ProjectBOMStructureCreateNestedOneWithoutMaterialDemandSourceInput = {
+  create?: Prisma.XOR<Prisma.ProjectBOMStructureCreateWithoutMaterialDemandSourceInput, Prisma.ProjectBOMStructureUncheckedCreateWithoutMaterialDemandSourceInput>
+  connectOrCreate?: Prisma.ProjectBOMStructureCreateOrConnectWithoutMaterialDemandSourceInput
+  connect?: Prisma.ProjectBOMStructureWhereUniqueInput
+}
+
+export type ProjectBOMStructureUpdateOneRequiredWithoutMaterialDemandSourceNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectBOMStructureCreateWithoutMaterialDemandSourceInput, Prisma.ProjectBOMStructureUncheckedCreateWithoutMaterialDemandSourceInput>
+  connectOrCreate?: Prisma.ProjectBOMStructureCreateOrConnectWithoutMaterialDemandSourceInput
+  upsert?: Prisma.ProjectBOMStructureUpsertWithoutMaterialDemandSourceInput
+  connect?: Prisma.ProjectBOMStructureWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectBOMStructureUpdateToOneWithWhereWithoutMaterialDemandSourceInput, Prisma.ProjectBOMStructureUpdateWithoutMaterialDemandSourceInput>, Prisma.ProjectBOMStructureUncheckedUpdateWithoutMaterialDemandSourceInput>
+}
+
 export type ProjectBOMStructureCreateWithoutEmployee_ProjectBOMStructure_createdByToEmployeeInput = {
   id: string
   shortDescription?: string | null
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
   readyForPurchase?: boolean
   deleted?: boolean
   BOMExecution?: Prisma.BOMExecutionCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceCreateNestedManyWithoutProjectBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutProjectBOMStructureInput
   ProjectBOM: Prisma.ProjectBOMCreateNestedOneWithoutProjectBOMStructureInput
   Employee_ProjectBOMStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_deletedByToEmployeeInput
@@ -930,7 +885,6 @@ export type ProjectBOMStructureUncheckedCreateWithoutEmployee_ProjectBOMStructur
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -941,6 +895,7 @@ export type ProjectBOMStructureUncheckedCreateWithoutEmployee_ProjectBOMStructur
   parentStructureId?: string | null
   deletedBy?: string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
 }
@@ -961,13 +916,13 @@ export type ProjectBOMStructureCreateWithoutEmployee_ProjectBOMStructure_deleted
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
   readyForPurchase?: boolean
   deleted?: boolean
   BOMExecution?: Prisma.BOMExecutionCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceCreateNestedManyWithoutProjectBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutProjectBOMStructureInput
   ProjectBOM: Prisma.ProjectBOMCreateNestedOneWithoutProjectBOMStructureInput
   Employee_ProjectBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeInput
@@ -982,7 +937,6 @@ export type ProjectBOMStructureUncheckedCreateWithoutEmployee_ProjectBOMStructur
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -993,6 +947,7 @@ export type ProjectBOMStructureUncheckedCreateWithoutEmployee_ProjectBOMStructur
   projectBOMId: string
   parentStructureId?: string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
 }
@@ -1032,7 +987,6 @@ export type ProjectBOMStructureScalarWhereInput = {
   additionalInfo?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
   description?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"ProjectBOMStructure"> | string | null
-  requiredQuantity?: Prisma.IntNullableFilter<"ProjectBOMStructure"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ProjectBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableFilter<"ProjectBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"ProjectBOMStructure"> | Date | string | null
@@ -1067,13 +1021,13 @@ export type ProjectBOMStructureCreateWithoutMaterialInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
   readyForPurchase?: boolean
   deleted?: boolean
   BOMExecution?: Prisma.BOMExecutionCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceCreateNestedManyWithoutProjectBOMStructureInput
   ProjectBOM: Prisma.ProjectBOMCreateNestedOneWithoutProjectBOMStructureInput
   Employee_ProjectBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeInput
   Employee_ProjectBOMStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_deletedByToEmployeeInput
@@ -1088,7 +1042,6 @@ export type ProjectBOMStructureUncheckedCreateWithoutMaterialInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1099,6 +1052,7 @@ export type ProjectBOMStructureUncheckedCreateWithoutMaterialInput = {
   parentStructureId?: string | null
   deletedBy?: string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
 }
@@ -1135,13 +1089,13 @@ export type ProjectBOMStructureCreateWithoutProjectBOMInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
   readyForPurchase?: boolean
   deleted?: boolean
   BOMExecution?: Prisma.BOMExecutionCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceCreateNestedManyWithoutProjectBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutProjectBOMStructureInput
   Employee_ProjectBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeInput
   Employee_ProjectBOMStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_deletedByToEmployeeInput
@@ -1156,7 +1110,6 @@ export type ProjectBOMStructureUncheckedCreateWithoutProjectBOMInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1167,6 +1120,7 @@ export type ProjectBOMStructureUncheckedCreateWithoutProjectBOMInput = {
   parentStructureId?: string | null
   deletedBy?: string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
 }
@@ -1203,13 +1157,13 @@ export type ProjectBOMStructureCreateWithoutOther_ProjectBOMStructureInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
   readyForPurchase?: boolean
   deleted?: boolean
   BOMExecution?: Prisma.BOMExecutionCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceCreateNestedManyWithoutProjectBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutProjectBOMStructureInput
   ProjectBOM: Prisma.ProjectBOMCreateNestedOneWithoutProjectBOMStructureInput
   Employee_ProjectBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeInput
@@ -1224,7 +1178,6 @@ export type ProjectBOMStructureUncheckedCreateWithoutOther_ProjectBOMStructureIn
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1236,6 +1189,7 @@ export type ProjectBOMStructureUncheckedCreateWithoutOther_ProjectBOMStructureIn
   parentStructureId?: string | null
   deletedBy?: string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
 }
 
@@ -1250,13 +1204,13 @@ export type ProjectBOMStructureCreateWithoutProjectBOMStructureInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
   readyForPurchase?: boolean
   deleted?: boolean
   BOMExecution?: Prisma.BOMExecutionCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceCreateNestedManyWithoutProjectBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutProjectBOMStructureInput
   ProjectBOM: Prisma.ProjectBOMCreateNestedOneWithoutProjectBOMStructureInput
   Employee_ProjectBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeInput
@@ -1271,7 +1225,6 @@ export type ProjectBOMStructureUncheckedCreateWithoutProjectBOMStructureInput = 
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1282,6 +1235,7 @@ export type ProjectBOMStructureUncheckedCreateWithoutProjectBOMStructureInput = 
   projectBOMId: string
   deletedBy?: string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
 }
@@ -1313,13 +1267,13 @@ export type ProjectBOMStructureUpdateWithoutOther_ProjectBOMStructureInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   BOMExecution?: Prisma.BOMExecutionUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUpdateManyWithoutProjectBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeNestedInput
@@ -1334,7 +1288,6 @@ export type ProjectBOMStructureUncheckedUpdateWithoutOther_ProjectBOMStructureIn
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1346,6 +1299,7 @@ export type ProjectBOMStructureUncheckedUpdateWithoutOther_ProjectBOMStructureIn
   parentStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
 }
 
@@ -1371,13 +1325,13 @@ export type ProjectBOMStructureCreateWithoutPurchaseBOMStructureInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
   readyForPurchase?: boolean
   deleted?: boolean
   BOMExecution?: Prisma.BOMExecutionCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceCreateNestedManyWithoutProjectBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutProjectBOMStructureInput
   ProjectBOM: Prisma.ProjectBOMCreateNestedOneWithoutProjectBOMStructureInput
   Employee_ProjectBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeInput
@@ -1392,7 +1346,6 @@ export type ProjectBOMStructureUncheckedCreateWithoutPurchaseBOMStructureInput =
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1404,6 +1357,7 @@ export type ProjectBOMStructureUncheckedCreateWithoutPurchaseBOMStructureInput =
   parentStructureId?: string | null
   deletedBy?: string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedCreateNestedOneWithoutProjectBOMStructureInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
 }
 
@@ -1429,13 +1383,13 @@ export type ProjectBOMStructureUpdateWithoutPurchaseBOMStructureInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   BOMExecution?: Prisma.BOMExecutionUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUpdateManyWithoutProjectBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeNestedInput
@@ -1450,7 +1404,6 @@ export type ProjectBOMStructureUncheckedUpdateWithoutPurchaseBOMStructureInput =
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1462,6 +1415,7 @@ export type ProjectBOMStructureUncheckedUpdateWithoutPurchaseBOMStructureInput =
   parentStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
 }
 
@@ -1471,12 +1425,12 @@ export type ProjectBOMStructureCreateWithoutBOMExecutionInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
   readyForPurchase?: boolean
   deleted?: boolean
+  MaterialDemandSource?: Prisma.MaterialDemandSourceCreateNestedManyWithoutProjectBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutProjectBOMStructureInput
   ProjectBOM: Prisma.ProjectBOMCreateNestedOneWithoutProjectBOMStructureInput
   Employee_ProjectBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeInput
@@ -1492,7 +1446,6 @@ export type ProjectBOMStructureUncheckedCreateWithoutBOMExecutionInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1503,6 +1456,7 @@ export type ProjectBOMStructureUncheckedCreateWithoutBOMExecutionInput = {
   projectBOMId: string
   parentStructureId?: string | null
   deletedBy?: string | null
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
 }
@@ -1529,12 +1483,12 @@ export type ProjectBOMStructureUpdateWithoutBOMExecutionInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUpdateManyWithoutProjectBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeNestedInput
@@ -1550,7 +1504,6 @@ export type ProjectBOMStructureUncheckedUpdateWithoutBOMExecutionInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1561,6 +1514,107 @@ export type ProjectBOMStructureUncheckedUpdateWithoutBOMExecutionInput = {
   projectBOMId?: Prisma.StringFieldUpdateOperationsInput | string
   parentStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
+  other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
+  PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
+}
+
+export type ProjectBOMStructureCreateWithoutMaterialDemandSourceInput = {
+  id: string
+  shortDescription?: string | null
+  additionalInfo?: string | null
+  description?: string | null
+  tag?: string | null
+  createdAt: Date | string
+  readyForPurchaseDate?: Date | string | null
+  deletedAt?: Date | string | null
+  readyForPurchase?: boolean
+  deleted?: boolean
+  BOMExecution?: Prisma.BOMExecutionCreateNestedOneWithoutProjectBOMStructureInput
+  Material: Prisma.MaterialCreateNestedOneWithoutProjectBOMStructureInput
+  ProjectBOM: Prisma.ProjectBOMCreateNestedOneWithoutProjectBOMStructureInput
+  Employee_ProjectBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeInput
+  Employee_ProjectBOMStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOMStructure_ProjectBOMStructure_deletedByToEmployeeInput
+  ProjectBOMStructure?: Prisma.ProjectBOMStructureCreateNestedOneWithoutOther_ProjectBOMStructureInput
+  other_ProjectBOMStructure?: Prisma.ProjectBOMStructureCreateNestedManyWithoutProjectBOMStructureInput
+  PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutProjectBOMStructureInput
+}
+
+export type ProjectBOMStructureUncheckedCreateWithoutMaterialDemandSourceInput = {
+  id: string
+  shortDescription?: string | null
+  additionalInfo?: string | null
+  description?: string | null
+  tag?: string | null
+  createdAt: Date | string
+  readyForPurchaseDate?: Date | string | null
+  deletedAt?: Date | string | null
+  readyForPurchase?: boolean
+  deleted?: boolean
+  createdBy: string
+  materialId: string
+  projectBOMId: string
+  parentStructureId?: string | null
+  deletedBy?: string | null
+  BOMExecution?: Prisma.BOMExecutionUncheckedCreateNestedOneWithoutProjectBOMStructureInput
+  other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
+  PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutProjectBOMStructureInput
+}
+
+export type ProjectBOMStructureCreateOrConnectWithoutMaterialDemandSourceInput = {
+  where: Prisma.ProjectBOMStructureWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectBOMStructureCreateWithoutMaterialDemandSourceInput, Prisma.ProjectBOMStructureUncheckedCreateWithoutMaterialDemandSourceInput>
+}
+
+export type ProjectBOMStructureUpsertWithoutMaterialDemandSourceInput = {
+  update: Prisma.XOR<Prisma.ProjectBOMStructureUpdateWithoutMaterialDemandSourceInput, Prisma.ProjectBOMStructureUncheckedUpdateWithoutMaterialDemandSourceInput>
+  create: Prisma.XOR<Prisma.ProjectBOMStructureCreateWithoutMaterialDemandSourceInput, Prisma.ProjectBOMStructureUncheckedCreateWithoutMaterialDemandSourceInput>
+  where?: Prisma.ProjectBOMStructureWhereInput
+}
+
+export type ProjectBOMStructureUpdateToOneWithWhereWithoutMaterialDemandSourceInput = {
+  where?: Prisma.ProjectBOMStructureWhereInput
+  data: Prisma.XOR<Prisma.ProjectBOMStructureUpdateWithoutMaterialDemandSourceInput, Prisma.ProjectBOMStructureUncheckedUpdateWithoutMaterialDemandSourceInput>
+}
+
+export type ProjectBOMStructureUpdateWithoutMaterialDemandSourceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  BOMExecution?: Prisma.BOMExecutionUpdateOneWithoutProjectBOMStructureNestedInput
+  Material?: Prisma.MaterialUpdateOneRequiredWithoutProjectBOMStructureNestedInput
+  ProjectBOM?: Prisma.ProjectBOMUpdateOneRequiredWithoutProjectBOMStructureNestedInput
+  Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeNestedInput
+  Employee_ProjectBOMStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOMStructure_ProjectBOMStructure_deletedByToEmployeeNestedInput
+  ProjectBOMStructure?: Prisma.ProjectBOMStructureUpdateOneWithoutOther_ProjectBOMStructureNestedInput
+  other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUpdateManyWithoutProjectBOMStructureNestedInput
+  PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutProjectBOMStructureNestedInput
+}
+
+export type ProjectBOMStructureUncheckedUpdateWithoutMaterialDemandSourceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectBOMId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BOMExecution?: Prisma.BOMExecutionUncheckedUpdateOneWithoutProjectBOMStructureNestedInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
 }
@@ -1571,7 +1625,6 @@ export type ProjectBOMStructureCreateManyEmployee_ProjectBOMStructure_createdByT
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1589,7 +1642,6 @@ export type ProjectBOMStructureCreateManyEmployee_ProjectBOMStructure_deletedByT
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1607,13 +1659,13 @@ export type ProjectBOMStructureUpdateWithoutEmployee_ProjectBOMStructure_created
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   BOMExecution?: Prisma.BOMExecutionUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUpdateManyWithoutProjectBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   Employee_ProjectBOMStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOMStructure_ProjectBOMStructure_deletedByToEmployeeNestedInput
@@ -1628,7 +1680,6 @@ export type ProjectBOMStructureUncheckedUpdateWithoutEmployee_ProjectBOMStructur
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1639,6 +1690,7 @@ export type ProjectBOMStructureUncheckedUpdateWithoutEmployee_ProjectBOMStructur
   parentStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
 }
@@ -1649,7 +1701,6 @@ export type ProjectBOMStructureUncheckedUpdateManyWithoutEmployee_ProjectBOMStru
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1667,13 +1718,13 @@ export type ProjectBOMStructureUpdateWithoutEmployee_ProjectBOMStructure_deleted
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   BOMExecution?: Prisma.BOMExecutionUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUpdateManyWithoutProjectBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeNestedInput
@@ -1688,7 +1739,6 @@ export type ProjectBOMStructureUncheckedUpdateWithoutEmployee_ProjectBOMStructur
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1699,6 +1749,7 @@ export type ProjectBOMStructureUncheckedUpdateWithoutEmployee_ProjectBOMStructur
   projectBOMId?: Prisma.StringFieldUpdateOperationsInput | string
   parentStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
 }
@@ -1709,7 +1760,6 @@ export type ProjectBOMStructureUncheckedUpdateManyWithoutEmployee_ProjectBOMStru
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1727,7 +1777,6 @@ export type ProjectBOMStructureCreateManyMaterialInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1745,13 +1794,13 @@ export type ProjectBOMStructureUpdateWithoutMaterialInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   BOMExecution?: Prisma.BOMExecutionUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUpdateManyWithoutProjectBOMStructureNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeNestedInput
   Employee_ProjectBOMStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOMStructure_ProjectBOMStructure_deletedByToEmployeeNestedInput
@@ -1766,7 +1815,6 @@ export type ProjectBOMStructureUncheckedUpdateWithoutMaterialInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1777,6 +1825,7 @@ export type ProjectBOMStructureUncheckedUpdateWithoutMaterialInput = {
   parentStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
 }
@@ -1787,7 +1836,6 @@ export type ProjectBOMStructureUncheckedUpdateManyWithoutMaterialInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1805,7 +1853,6 @@ export type ProjectBOMStructureCreateManyProjectBOMInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1823,13 +1870,13 @@ export type ProjectBOMStructureUpdateWithoutProjectBOMInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   BOMExecution?: Prisma.BOMExecutionUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUpdateManyWithoutProjectBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeNestedInput
   Employee_ProjectBOMStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOMStructure_ProjectBOMStructure_deletedByToEmployeeNestedInput
@@ -1844,7 +1891,6 @@ export type ProjectBOMStructureUncheckedUpdateWithoutProjectBOMInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1855,6 +1901,7 @@ export type ProjectBOMStructureUncheckedUpdateWithoutProjectBOMInput = {
   parentStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
 }
@@ -1865,7 +1912,6 @@ export type ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1883,7 +1929,6 @@ export type ProjectBOMStructureCreateManyProjectBOMStructureInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1901,13 +1946,13 @@ export type ProjectBOMStructureUpdateWithoutProjectBOMStructureInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   BOMExecution?: Prisma.BOMExecutionUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUpdateManyWithoutProjectBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneRequiredWithoutProjectBOMStructureNestedInput
   Employee_ProjectBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOMStructure_ProjectBOMStructure_createdByToEmployeeNestedInput
@@ -1922,7 +1967,6 @@ export type ProjectBOMStructureUncheckedUpdateWithoutProjectBOMStructureInput = 
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1933,6 +1977,7 @@ export type ProjectBOMStructureUncheckedUpdateWithoutProjectBOMStructureInput = 
   projectBOMId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BOMExecution?: Prisma.BOMExecutionUncheckedUpdateOneWithoutProjectBOMStructureNestedInput
+  MaterialDemandSource?: Prisma.MaterialDemandSourceUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   other_ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureNestedInput
 }
@@ -1943,7 +1988,6 @@ export type ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureInpu
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1961,11 +2005,13 @@ export type ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureInpu
  */
 
 export type ProjectBOMStructureCountOutputType = {
+  MaterialDemandSource: number
   other_ProjectBOMStructure: number
   PurchaseBOMStructure: number
 }
 
 export type ProjectBOMStructureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  MaterialDemandSource?: boolean | ProjectBOMStructureCountOutputTypeCountMaterialDemandSourceArgs
   other_ProjectBOMStructure?: boolean | ProjectBOMStructureCountOutputTypeCountOther_ProjectBOMStructureArgs
   PurchaseBOMStructure?: boolean | ProjectBOMStructureCountOutputTypeCountPurchaseBOMStructureArgs
 }
@@ -1978,6 +2024,13 @@ export type ProjectBOMStructureCountOutputTypeDefaultArgs<ExtArgs extends runtim
    * Select specific fields to fetch from the ProjectBOMStructureCountOutputType
    */
   select?: Prisma.ProjectBOMStructureCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProjectBOMStructureCountOutputType without action
+ */
+export type ProjectBOMStructureCountOutputTypeCountMaterialDemandSourceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaterialDemandSourceWhereInput
 }
 
 /**
@@ -2001,7 +2054,6 @@ export type ProjectBOMStructureSelect<ExtArgs extends runtime.Types.Extensions.I
   additionalInfo?: boolean
   description?: boolean
   tag?: boolean
-  requiredQuantity?: boolean
   createdAt?: boolean
   readyForPurchaseDate?: boolean
   deletedAt?: boolean
@@ -2013,6 +2065,7 @@ export type ProjectBOMStructureSelect<ExtArgs extends runtime.Types.Extensions.I
   parentStructureId?: boolean
   deletedBy?: boolean
   BOMExecution?: boolean | Prisma.ProjectBOMStructure$BOMExecutionArgs<ExtArgs>
+  MaterialDemandSource?: boolean | Prisma.ProjectBOMStructure$MaterialDemandSourceArgs<ExtArgs>
   Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   ProjectBOM?: boolean | Prisma.ProjectBOMDefaultArgs<ExtArgs>
   Employee_ProjectBOMStructure_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -2031,7 +2084,6 @@ export type ProjectBOMStructureSelectScalar = {
   additionalInfo?: boolean
   description?: boolean
   tag?: boolean
-  requiredQuantity?: boolean
   createdAt?: boolean
   readyForPurchaseDate?: boolean
   deletedAt?: boolean
@@ -2044,9 +2096,10 @@ export type ProjectBOMStructureSelectScalar = {
   deletedBy?: boolean
 }
 
-export type ProjectBOMStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shortDescription" | "additionalInfo" | "description" | "tag" | "requiredQuantity" | "createdAt" | "readyForPurchaseDate" | "deletedAt" | "readyForPurchase" | "deleted" | "createdBy" | "materialId" | "projectBOMId" | "parentStructureId" | "deletedBy", ExtArgs["result"]["projectBOMStructure"]>
+export type ProjectBOMStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shortDescription" | "additionalInfo" | "description" | "tag" | "createdAt" | "readyForPurchaseDate" | "deletedAt" | "readyForPurchase" | "deleted" | "createdBy" | "materialId" | "projectBOMId" | "parentStructureId" | "deletedBy", ExtArgs["result"]["projectBOMStructure"]>
 export type ProjectBOMStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   BOMExecution?: boolean | Prisma.ProjectBOMStructure$BOMExecutionArgs<ExtArgs>
+  MaterialDemandSource?: boolean | Prisma.ProjectBOMStructure$MaterialDemandSourceArgs<ExtArgs>
   Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   ProjectBOM?: boolean | Prisma.ProjectBOMDefaultArgs<ExtArgs>
   Employee_ProjectBOMStructure_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -2061,6 +2114,7 @@ export type $ProjectBOMStructurePayload<ExtArgs extends runtime.Types.Extensions
   name: "ProjectBOMStructure"
   objects: {
     BOMExecution: Prisma.$BOMExecutionPayload<ExtArgs> | null
+    MaterialDemandSource: Prisma.$MaterialDemandSourcePayload<ExtArgs>[]
     Material: Prisma.$MaterialPayload<ExtArgs>
     ProjectBOM: Prisma.$ProjectBOMPayload<ExtArgs>
     Employee_ProjectBOMStructure_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
@@ -2075,7 +2129,6 @@ export type $ProjectBOMStructurePayload<ExtArgs extends runtime.Types.Extensions
     additionalInfo: string | null
     description: string | null
     tag: string | null
-    requiredQuantity: number | null
     createdAt: Date
     readyForPurchaseDate: Date | null
     deletedAt: Date | null
@@ -2427,6 +2480,7 @@ readonly fields: ProjectBOMStructureFieldRefs;
 export interface Prisma__ProjectBOMStructureClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   BOMExecution<T extends Prisma.ProjectBOMStructure$BOMExecutionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectBOMStructure$BOMExecutionArgs<ExtArgs>>): Prisma.Prisma__BOMExecutionClient<runtime.Types.Result.GetResult<Prisma.$BOMExecutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  MaterialDemandSource<T extends Prisma.ProjectBOMStructure$MaterialDemandSourceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectBOMStructure$MaterialDemandSourceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialDemandSourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Material<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   ProjectBOM<T extends Prisma.ProjectBOMDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectBOMDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectBOMClient<runtime.Types.Result.GetResult<Prisma.$ProjectBOMPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_ProjectBOMStructure_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -2468,7 +2522,6 @@ export interface ProjectBOMStructureFieldRefs {
   readonly additionalInfo: Prisma.FieldRef<"ProjectBOMStructure", 'String'>
   readonly description: Prisma.FieldRef<"ProjectBOMStructure", 'String'>
   readonly tag: Prisma.FieldRef<"ProjectBOMStructure", 'String'>
-  readonly requiredQuantity: Prisma.FieldRef<"ProjectBOMStructure", 'Int'>
   readonly createdAt: Prisma.FieldRef<"ProjectBOMStructure", 'DateTime'>
   readonly readyForPurchaseDate: Prisma.FieldRef<"ProjectBOMStructure", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"ProjectBOMStructure", 'DateTime'>
@@ -2838,6 +2891,30 @@ export type ProjectBOMStructure$BOMExecutionArgs<ExtArgs extends runtime.Types.E
    */
   include?: Prisma.BOMExecutionInclude<ExtArgs> | null
   where?: Prisma.BOMExecutionWhereInput
+}
+
+/**
+ * ProjectBOMStructure.MaterialDemandSource
+ */
+export type ProjectBOMStructure$MaterialDemandSourceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaterialDemandSource
+   */
+  select?: Prisma.MaterialDemandSourceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaterialDemandSource
+   */
+  omit?: Prisma.MaterialDemandSourceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaterialDemandSourceInclude<ExtArgs> | null
+  where?: Prisma.MaterialDemandSourceWhereInput
+  orderBy?: Prisma.MaterialDemandSourceOrderByWithRelationInput | Prisma.MaterialDemandSourceOrderByWithRelationInput[]
+  cursor?: Prisma.MaterialDemandSourceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaterialDemandSourceScalarFieldEnum | Prisma.MaterialDemandSourceScalarFieldEnum[]
 }
 
 /**

@@ -56,7 +56,7 @@ export const projectBOMStructureSchema = z.object({
   additionalInfo: z.string().max(255).nullable().optional(),
   description: z.string().max(255).nullable().optional(),
   tag: z.string().max(255).nullable().optional(),
-  requiredQuantity: z.number().int().nullable().optional(),
+  requiredQuantity: z.number().int(),
   readyForPurchaseDate: z.date().nullable().optional(),
   createdAt: z.date(),
   createdBy: z.string(),

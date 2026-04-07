@@ -133,7 +133,6 @@ export const updateProjectBOMAction = protectedServerFunction({
             description: structure.description,
             tag: structure.tag,
             purchased: false,
-            requiredQuantity: structure.requiredQuantity,
             readyForPurchaseDate: structure.readyForPurchaseDate,
           }
 
@@ -210,6 +209,7 @@ export const createProjectBOMStructureAction = protectedServerFunction({
             id: crypto.randomUUID(),
             createdBy: profile.id,
             createdAt: new Date(),
+            requiredQuantity: data.requiredQuantity,
           },
         },
       },

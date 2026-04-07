@@ -27,19 +27,28 @@ export type AggregateBOMExecution = {
 }
 
 export type BOMExecutionAvgAggregateOutputType = {
-  reservedQuantity: number | null
+  requiredQuantity: number | null
+  stockReservedQuantity: number | null
   issuedQuantity: number | null
+  purchaseOrderedQuantity: number | null
+  purchaseReceivedQuantity: number | null
 }
 
 export type BOMExecutionSumAggregateOutputType = {
-  reservedQuantity: number | null
+  requiredQuantity: number | null
+  stockReservedQuantity: number | null
   issuedQuantity: number | null
+  purchaseOrderedQuantity: number | null
+  purchaseReceivedQuantity: number | null
 }
 
 export type BOMExecutionMinAggregateOutputType = {
   id: string | null
-  reservedQuantity: number | null
+  requiredQuantity: number | null
+  stockReservedQuantity: number | null
   issuedQuantity: number | null
+  purchaseOrderedQuantity: number | null
+  purchaseReceivedQuantity: number | null
   createdAt: Date | null
   completedDate: Date | null
   deletedAt: Date | null
@@ -54,8 +63,11 @@ export type BOMExecutionMinAggregateOutputType = {
 
 export type BOMExecutionMaxAggregateOutputType = {
   id: string | null
-  reservedQuantity: number | null
+  requiredQuantity: number | null
+  stockReservedQuantity: number | null
   issuedQuantity: number | null
+  purchaseOrderedQuantity: number | null
+  purchaseReceivedQuantity: number | null
   createdAt: Date | null
   completedDate: Date | null
   deletedAt: Date | null
@@ -70,8 +82,11 @@ export type BOMExecutionMaxAggregateOutputType = {
 
 export type BOMExecutionCountAggregateOutputType = {
   id: number
-  reservedQuantity: number
+  requiredQuantity: number
+  stockReservedQuantity: number
   issuedQuantity: number
+  purchaseOrderedQuantity: number
+  purchaseReceivedQuantity: number
   createdAt: number
   completedDate: number
   deletedAt: number
@@ -87,19 +102,28 @@ export type BOMExecutionCountAggregateOutputType = {
 
 
 export type BOMExecutionAvgAggregateInputType = {
-  reservedQuantity?: true
+  requiredQuantity?: true
+  stockReservedQuantity?: true
   issuedQuantity?: true
+  purchaseOrderedQuantity?: true
+  purchaseReceivedQuantity?: true
 }
 
 export type BOMExecutionSumAggregateInputType = {
-  reservedQuantity?: true
+  requiredQuantity?: true
+  stockReservedQuantity?: true
   issuedQuantity?: true
+  purchaseOrderedQuantity?: true
+  purchaseReceivedQuantity?: true
 }
 
 export type BOMExecutionMinAggregateInputType = {
   id?: true
-  reservedQuantity?: true
+  requiredQuantity?: true
+  stockReservedQuantity?: true
   issuedQuantity?: true
+  purchaseOrderedQuantity?: true
+  purchaseReceivedQuantity?: true
   createdAt?: true
   completedDate?: true
   deletedAt?: true
@@ -114,8 +138,11 @@ export type BOMExecutionMinAggregateInputType = {
 
 export type BOMExecutionMaxAggregateInputType = {
   id?: true
-  reservedQuantity?: true
+  requiredQuantity?: true
+  stockReservedQuantity?: true
   issuedQuantity?: true
+  purchaseOrderedQuantity?: true
+  purchaseReceivedQuantity?: true
   createdAt?: true
   completedDate?: true
   deletedAt?: true
@@ -130,8 +157,11 @@ export type BOMExecutionMaxAggregateInputType = {
 
 export type BOMExecutionCountAggregateInputType = {
   id?: true
-  reservedQuantity?: true
+  requiredQuantity?: true
+  stockReservedQuantity?: true
   issuedQuantity?: true
+  purchaseOrderedQuantity?: true
+  purchaseReceivedQuantity?: true
   createdAt?: true
   completedDate?: true
   deletedAt?: true
@@ -233,8 +263,11 @@ export type BOMExecutionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 
 export type BOMExecutionGroupByOutputType = {
   id: string
-  reservedQuantity: number | null
+  requiredQuantity: number
+  stockReservedQuantity: number | null
   issuedQuantity: number | null
+  purchaseOrderedQuantity: number | null
+  purchaseReceivedQuantity: number | null
   createdAt: Date
   completedDate: Date | null
   deletedAt: Date | null
@@ -272,8 +305,11 @@ export type BOMExecutionWhereInput = {
   OR?: Prisma.BOMExecutionWhereInput[]
   NOT?: Prisma.BOMExecutionWhereInput | Prisma.BOMExecutionWhereInput[]
   id?: Prisma.StringFilter<"BOMExecution"> | string
-  reservedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
+  requiredQuantity?: Prisma.IntFilter<"BOMExecution"> | number
+  stockReservedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
   issuedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
+  purchaseOrderedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
+  purchaseReceivedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
   createdAt?: Prisma.DateTimeFilter<"BOMExecution"> | Date | string
   completedDate?: Prisma.DateTimeNullableFilter<"BOMExecution"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"BOMExecution"> | Date | string | null
@@ -291,8 +327,11 @@ export type BOMExecutionWhereInput = {
 
 export type BOMExecutionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  reservedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiredQuantity?: Prisma.SortOrder
+  stockReservedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   issuedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchaseOrderedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchaseReceivedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   completedDate?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -315,8 +354,11 @@ export type BOMExecutionWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.BOMExecutionWhereInput | Prisma.BOMExecutionWhereInput[]
   OR?: Prisma.BOMExecutionWhereInput[]
   NOT?: Prisma.BOMExecutionWhereInput | Prisma.BOMExecutionWhereInput[]
-  reservedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
+  requiredQuantity?: Prisma.IntFilter<"BOMExecution"> | number
+  stockReservedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
   issuedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
+  purchaseOrderedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
+  purchaseReceivedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
   createdAt?: Prisma.DateTimeFilter<"BOMExecution"> | Date | string
   completedDate?: Prisma.DateTimeNullableFilter<"BOMExecution"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"BOMExecution"> | Date | string | null
@@ -333,8 +375,11 @@ export type BOMExecutionWhereUniqueInput = Prisma.AtLeast<{
 
 export type BOMExecutionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  reservedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiredQuantity?: Prisma.SortOrder
+  stockReservedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   issuedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchaseOrderedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchaseReceivedQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   completedDate?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -357,8 +402,11 @@ export type BOMExecutionScalarWhereWithAggregatesInput = {
   OR?: Prisma.BOMExecutionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.BOMExecutionScalarWhereWithAggregatesInput | Prisma.BOMExecutionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"BOMExecution"> | string
-  reservedQuantity?: Prisma.IntNullableWithAggregatesFilter<"BOMExecution"> | number | null
+  requiredQuantity?: Prisma.IntWithAggregatesFilter<"BOMExecution"> | number
+  stockReservedQuantity?: Prisma.IntNullableWithAggregatesFilter<"BOMExecution"> | number | null
   issuedQuantity?: Prisma.IntNullableWithAggregatesFilter<"BOMExecution"> | number | null
+  purchaseOrderedQuantity?: Prisma.IntNullableWithAggregatesFilter<"BOMExecution"> | number | null
+  purchaseReceivedQuantity?: Prisma.IntNullableWithAggregatesFilter<"BOMExecution"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BOMExecution"> | Date | string
   completedDate?: Prisma.DateTimeNullableWithAggregatesFilter<"BOMExecution"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"BOMExecution"> | Date | string | null
@@ -373,8 +421,11 @@ export type BOMExecutionScalarWhereWithAggregatesInput = {
 
 export type BOMExecutionCreateInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -389,8 +440,11 @@ export type BOMExecutionCreateInput = {
 
 export type BOMExecutionUncheckedCreateInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -405,8 +459,11 @@ export type BOMExecutionUncheckedCreateInput = {
 
 export type BOMExecutionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -421,8 +478,11 @@ export type BOMExecutionUpdateInput = {
 
 export type BOMExecutionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -437,8 +497,11 @@ export type BOMExecutionUncheckedUpdateInput = {
 
 export type BOMExecutionCreateManyInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -453,8 +516,11 @@ export type BOMExecutionCreateManyInput = {
 
 export type BOMExecutionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -466,8 +532,11 @@ export type BOMExecutionUpdateManyMutationInput = {
 
 export type BOMExecutionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -503,8 +572,11 @@ export type BOMExecutionOrderByRelevanceInput = {
 
 export type BOMExecutionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  reservedQuantity?: Prisma.SortOrder
+  requiredQuantity?: Prisma.SortOrder
+  stockReservedQuantity?: Prisma.SortOrder
   issuedQuantity?: Prisma.SortOrder
+  purchaseOrderedQuantity?: Prisma.SortOrder
+  purchaseReceivedQuantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   completedDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -518,14 +590,20 @@ export type BOMExecutionCountOrderByAggregateInput = {
 }
 
 export type BOMExecutionAvgOrderByAggregateInput = {
-  reservedQuantity?: Prisma.SortOrder
+  requiredQuantity?: Prisma.SortOrder
+  stockReservedQuantity?: Prisma.SortOrder
   issuedQuantity?: Prisma.SortOrder
+  purchaseOrderedQuantity?: Prisma.SortOrder
+  purchaseReceivedQuantity?: Prisma.SortOrder
 }
 
 export type BOMExecutionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  reservedQuantity?: Prisma.SortOrder
+  requiredQuantity?: Prisma.SortOrder
+  stockReservedQuantity?: Prisma.SortOrder
   issuedQuantity?: Prisma.SortOrder
+  purchaseOrderedQuantity?: Prisma.SortOrder
+  purchaseReceivedQuantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   completedDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -540,8 +618,11 @@ export type BOMExecutionMaxOrderByAggregateInput = {
 
 export type BOMExecutionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  reservedQuantity?: Prisma.SortOrder
+  requiredQuantity?: Prisma.SortOrder
+  stockReservedQuantity?: Prisma.SortOrder
   issuedQuantity?: Prisma.SortOrder
+  purchaseOrderedQuantity?: Prisma.SortOrder
+  purchaseReceivedQuantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   completedDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -555,8 +636,11 @@ export type BOMExecutionMinOrderByAggregateInput = {
 }
 
 export type BOMExecutionSumOrderByAggregateInput = {
-  reservedQuantity?: Prisma.SortOrder
+  requiredQuantity?: Prisma.SortOrder
+  stockReservedQuantity?: Prisma.SortOrder
   issuedQuantity?: Prisma.SortOrder
+  purchaseOrderedQuantity?: Prisma.SortOrder
+  purchaseReceivedQuantity?: Prisma.SortOrder
 }
 
 export type BOMExecutionCreateNestedManyWithoutEmployee_BOMExecution_createdByToEmployeeInput = {
@@ -677,8 +761,11 @@ export type BOMExecutionUncheckedUpdateOneWithoutProjectBOMStructureNestedInput 
 
 export type BOMExecutionCreateWithoutEmployee_BOMExecution_createdByToEmployeeInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -692,8 +779,11 @@ export type BOMExecutionCreateWithoutEmployee_BOMExecution_createdByToEmployeeIn
 
 export type BOMExecutionUncheckedCreateWithoutEmployee_BOMExecution_createdByToEmployeeInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -717,8 +807,11 @@ export type BOMExecutionCreateManyEmployee_BOMExecution_createdByToEmployeeInput
 
 export type BOMExecutionCreateWithoutEmployee_BOMExecution_deletedByToEmployeeInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -732,8 +825,11 @@ export type BOMExecutionCreateWithoutEmployee_BOMExecution_deletedByToEmployeeIn
 
 export type BOMExecutionUncheckedCreateWithoutEmployee_BOMExecution_deletedByToEmployeeInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -776,8 +872,11 @@ export type BOMExecutionScalarWhereInput = {
   OR?: Prisma.BOMExecutionScalarWhereInput[]
   NOT?: Prisma.BOMExecutionScalarWhereInput | Prisma.BOMExecutionScalarWhereInput[]
   id?: Prisma.StringFilter<"BOMExecution"> | string
-  reservedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
+  requiredQuantity?: Prisma.IntFilter<"BOMExecution"> | number
+  stockReservedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
   issuedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
+  purchaseOrderedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
+  purchaseReceivedQuantity?: Prisma.IntNullableFilter<"BOMExecution"> | number | null
   createdAt?: Prisma.DateTimeFilter<"BOMExecution"> | Date | string
   completedDate?: Prisma.DateTimeNullableFilter<"BOMExecution"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"BOMExecution"> | Date | string | null
@@ -808,8 +907,11 @@ export type BOMExecutionUpdateManyWithWhereWithoutEmployee_BOMExecution_deletedB
 
 export type BOMExecutionCreateWithoutProjectBOMStructureInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -823,8 +925,11 @@ export type BOMExecutionCreateWithoutProjectBOMStructureInput = {
 
 export type BOMExecutionUncheckedCreateWithoutProjectBOMStructureInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -854,8 +959,11 @@ export type BOMExecutionUpdateToOneWithWhereWithoutProjectBOMStructureInput = {
 
 export type BOMExecutionUpdateWithoutProjectBOMStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -869,8 +977,11 @@ export type BOMExecutionUpdateWithoutProjectBOMStructureInput = {
 
 export type BOMExecutionUncheckedUpdateWithoutProjectBOMStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -884,8 +995,11 @@ export type BOMExecutionUncheckedUpdateWithoutProjectBOMStructureInput = {
 
 export type BOMExecutionCreateManyEmployee_BOMExecution_createdByToEmployeeInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -899,8 +1013,11 @@ export type BOMExecutionCreateManyEmployee_BOMExecution_createdByToEmployeeInput
 
 export type BOMExecutionCreateManyEmployee_BOMExecution_deletedByToEmployeeInput = {
   id: string
-  reservedQuantity?: number | null
+  requiredQuantity: number
+  stockReservedQuantity?: number | null
   issuedQuantity?: number | null
+  purchaseOrderedQuantity?: number | null
+  purchaseReceivedQuantity?: number | null
   createdAt: Date | string
   completedDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -914,8 +1031,11 @@ export type BOMExecutionCreateManyEmployee_BOMExecution_deletedByToEmployeeInput
 
 export type BOMExecutionUpdateWithoutEmployee_BOMExecution_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -929,8 +1049,11 @@ export type BOMExecutionUpdateWithoutEmployee_BOMExecution_createdByToEmployeeIn
 
 export type BOMExecutionUncheckedUpdateWithoutEmployee_BOMExecution_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -944,8 +1067,11 @@ export type BOMExecutionUncheckedUpdateWithoutEmployee_BOMExecution_createdByToE
 
 export type BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -959,8 +1085,11 @@ export type BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_createdB
 
 export type BOMExecutionUpdateWithoutEmployee_BOMExecution_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -974,8 +1103,11 @@ export type BOMExecutionUpdateWithoutEmployee_BOMExecution_deletedByToEmployeeIn
 
 export type BOMExecutionUncheckedUpdateWithoutEmployee_BOMExecution_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -989,8 +1121,11 @@ export type BOMExecutionUncheckedUpdateWithoutEmployee_BOMExecution_deletedByToE
 
 export type BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  reservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  stockReservedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   issuedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseOrderedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  purchaseReceivedQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1006,8 +1141,11 @@ export type BOMExecutionUncheckedUpdateManyWithoutEmployee_BOMExecution_deletedB
 
 export type BOMExecutionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  reservedQuantity?: boolean
+  requiredQuantity?: boolean
+  stockReservedQuantity?: boolean
   issuedQuantity?: boolean
+  purchaseOrderedQuantity?: boolean
+  purchaseReceivedQuantity?: boolean
   createdAt?: boolean
   completedDate?: boolean
   deletedAt?: boolean
@@ -1027,8 +1165,11 @@ export type BOMExecutionSelect<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type BOMExecutionSelectScalar = {
   id?: boolean
-  reservedQuantity?: boolean
+  requiredQuantity?: boolean
+  stockReservedQuantity?: boolean
   issuedQuantity?: boolean
+  purchaseOrderedQuantity?: boolean
+  purchaseReceivedQuantity?: boolean
   createdAt?: boolean
   completedDate?: boolean
   deletedAt?: boolean
@@ -1041,7 +1182,7 @@ export type BOMExecutionSelectScalar = {
   deletedBy?: boolean
 }
 
-export type BOMExecutionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reservedQuantity" | "issuedQuantity" | "createdAt" | "completedDate" | "deletedAt" | "notDeliverable" | "notCorrect" | "notCorrectReason" | "deleted" | "createdBy" | "projectBOMStructureId" | "deletedBy", ExtArgs["result"]["bOMExecution"]>
+export type BOMExecutionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requiredQuantity" | "stockReservedQuantity" | "issuedQuantity" | "purchaseOrderedQuantity" | "purchaseReceivedQuantity" | "createdAt" | "completedDate" | "deletedAt" | "notDeliverable" | "notCorrect" | "notCorrectReason" | "deleted" | "createdBy" | "projectBOMStructureId" | "deletedBy", ExtArgs["result"]["bOMExecution"]>
 export type BOMExecutionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ProjectBOMStructure?: boolean | Prisma.ProjectBOMStructureDefaultArgs<ExtArgs>
   Employee_BOMExecution_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -1057,8 +1198,11 @@ export type $BOMExecutionPayload<ExtArgs extends runtime.Types.Extensions.Intern
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    reservedQuantity: number | null
+    requiredQuantity: number
+    stockReservedQuantity: number | null
     issuedQuantity: number | null
+    purchaseOrderedQuantity: number | null
+    purchaseReceivedQuantity: number | null
     createdAt: Date
     completedDate: Date | null
     deletedAt: Date | null
@@ -1442,8 +1586,11 @@ export interface Prisma__BOMExecutionClient<T, Null = never, ExtArgs extends run
  */
 export interface BOMExecutionFieldRefs {
   readonly id: Prisma.FieldRef<"BOMExecution", 'String'>
-  readonly reservedQuantity: Prisma.FieldRef<"BOMExecution", 'Int'>
+  readonly requiredQuantity: Prisma.FieldRef<"BOMExecution", 'Int'>
+  readonly stockReservedQuantity: Prisma.FieldRef<"BOMExecution", 'Int'>
   readonly issuedQuantity: Prisma.FieldRef<"BOMExecution", 'Int'>
+  readonly purchaseOrderedQuantity: Prisma.FieldRef<"BOMExecution", 'Int'>
+  readonly purchaseReceivedQuantity: Prisma.FieldRef<"BOMExecution", 'Int'>
   readonly createdAt: Prisma.FieldRef<"BOMExecution", 'DateTime'>
   readonly completedDate: Prisma.FieldRef<"BOMExecution", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"BOMExecution", 'DateTime'>

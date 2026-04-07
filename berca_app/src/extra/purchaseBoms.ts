@@ -13,7 +13,6 @@ type PurchaseBOMStructureRaw = {
   additionalInfo: string | null
   description: string | null
   tag: string | null
-  requiredQuantity: number | null
   readyForPurchaseDate: Date | null
   createdAt: Date
   createdBy: string
@@ -28,7 +27,8 @@ type PurchaseBOMStructureRaw = {
   Employee_PurchaseBOMStructure_createdByToEmployee: StructureEmployeeRaw
   Employee_PurchaseBOMStructure_deletedByToEmployee: StructureEmployeeRaw | null
   ProjectBOMStructure: {
-    BOMExecution: BOMExecutionRaw
+    Material: {id: string; name: string | null; beNumber: string | null; shortDescription: string | null}
+    BOMExecution: BOMExecutionRaw | null
   }
 }
 
@@ -83,7 +83,7 @@ function mapStructure(r: PurchaseBOMStructureRaw): MappedPurchaseBOMStructure {
     additionalInfo: r.additionalInfo,
     description: r.description,
     tag: r.tag,
-    requiredQuantity: r.requiredQuantity,
+    requiredQuantity: exec?.requiredQuantity ?? null,
     readyForPurchaseDate: r.readyForPurchaseDate?.toISOString() ?? null,
     createdAt: r.createdAt.toISOString(),
     createdBy: r.createdBy,
@@ -96,7 +96,7 @@ function mapStructure(r: PurchaseBOMStructureRaw): MappedPurchaseBOMStructure {
       ? `${r.Employee_PurchaseBOMStructure_deletedByToEmployee.firstName} ${r.Employee_PurchaseBOMStructure_deletedByToEmployee.lastName}`
       : null,
     // ─── Execution fields (editable on purchase side) ───────────────────────
-    reservedQuantity: exec?.reservedQuantity ?? null,
+    reservedQuantity: exec?.stockReservedQuantity ?? null,
     issuedQuantity: exec?.issuedQuantity ?? null,
     notDeliverable: exec?.notDeliverable ?? false,
     notCorrect: exec?.notCorrect ?? false,

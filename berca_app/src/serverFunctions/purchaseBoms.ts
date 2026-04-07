@@ -143,7 +143,7 @@ export const updatePurchaseBOMStructureAction = protectedServerFunction({
     await prismaClient.bOMExecution.update({
       where: {projectBOMStructureId: data.projectBOMStructureId},
       data: {
-        reservedQuantity: data.reservedQuantity,
+        stockReservedQuantity: data.stockReservedQuantity,
         issuedQuantity: data.issuedQuantity,
         notDeliverable: data.notDeliverable,
       },

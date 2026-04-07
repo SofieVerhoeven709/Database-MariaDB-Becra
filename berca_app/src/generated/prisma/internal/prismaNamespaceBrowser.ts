@@ -144,11 +144,14 @@ export const ModelName = {
   DocumentRevision: 'DocumentRevision',
   DocumentStatus: 'DocumentStatus',
   DocumentStructureTarget: 'DocumentStructureTarget',
+  MaterialLeadTime: 'MaterialLeadTime',
   ProjectBOM: 'ProjectBOM',
   ProjectBOMStructure: 'ProjectBOMStructure',
   PurchaseBOM: 'PurchaseBOM',
   PurchaseBOMStructure: 'PurchaseBOMStructure',
-  BOMExecution: 'BOMExecution'
+  BOMExecution: 'BOMExecution',
+  MaterialDemand: 'MaterialDemand',
+  MaterialDemandSource: 'MaterialDemandSource'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -715,8 +718,7 @@ export const MaterialScalarFieldEnum = {
   longDescription: 'longDescription',
   preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
-  documentationPlace: 'documentationPlace',
-  bePartDoc: 'bePartDoc',
+  warehousePlaceId: 'warehousePlaceId',
   rejected: 'rejected',
   isSerialTracked: 'isSerialTracked',
   materialGroupIdA: 'materialGroupIdA',
@@ -725,6 +727,17 @@ export const MaterialScalarFieldEnum = {
   materialGroupIdD: 'materialGroupIdD',
   preferredSupplierCompanyId: 'preferredSupplierCompanyId',
   unitId: 'unitId',
+  longLeadTime: 'longLeadTime',
+  hasAtex: 'hasAtex',
+  hasCE: 'hasCE',
+  hasROHS: 'hasROHS',
+  hasDS: 'hasDS',
+  hasDoc: 'hasDoc',
+  has3DCAD: 'has3DCAD',
+  has2DCAD: 'has2DCAD',
+  hasBDOC: 'hasBDOC',
+  hasINSP: 'hasINSP',
+  partApproved: 'partApproved',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -906,6 +919,10 @@ export const MaterialSerialTrackScalarFieldEnum = {
   id: 'id',
   materialId: 'materialId',
   beNumber: 'beNumber',
+  lastInspectionDate: 'lastInspectionDate',
+  inspectionIntervalValue: 'inspectionIntervalValue',
+  inspectionIntervalUnit: 'inspectionIntervalUnit',
+  nextInspectionDate: 'nextInspectionDate',
   brandName: 'brandName',
   management: 'management',
   brandOrderNumber: 'brandOrderNumber',
@@ -945,8 +962,7 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   management: 'management',
   date: 'date',
   expiredDate: 'expiredDate',
-  documentationPlace: 'documentationPlace',
-  docRevision: 'docRevision',
+  warehousePlaceId: 'warehousePlaceId',
   valid: 'valid',
   additionalInfo: 'additionalInfo',
   beNumber: 'beNumber',
@@ -1839,6 +1855,16 @@ export const DocumentStructureTargetScalarFieldEnum = {
 export type DocumentStructureTargetScalarFieldEnum = (typeof DocumentStructureTargetScalarFieldEnum)[keyof typeof DocumentStructureTargetScalarFieldEnum]
 
 
+export const MaterialLeadTimeScalarFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  leadTimeValue: 'leadTimeValue',
+  leadTimeUnit: 'leadTimeUnit'
+} as const
+
+export type MaterialLeadTimeScalarFieldEnum = (typeof MaterialLeadTimeScalarFieldEnum)[keyof typeof MaterialLeadTimeScalarFieldEnum]
+
+
 export const ProjectBOMScalarFieldEnum = {
   id: 'id',
   projectBomNumber: 'projectBomNumber',
@@ -1869,7 +1895,6 @@ export const ProjectBOMStructureScalarFieldEnum = {
   additionalInfo: 'additionalInfo',
   description: 'description',
   tag: 'tag',
-  requiredQuantity: 'requiredQuantity',
   createdAt: 'createdAt',
   readyForPurchaseDate: 'readyForPurchaseDate',
   deletedAt: 'deletedAt',
@@ -1916,7 +1941,6 @@ export const PurchaseBOMStructureScalarFieldEnum = {
   additionalInfo: 'additionalInfo',
   description: 'description',
   tag: 'tag',
-  requiredQuantity: 'requiredQuantity',
   createdAt: 'createdAt',
   readyForPurchaseDate: 'readyForPurchaseDate',
   deletedAt: 'deletedAt',
@@ -1935,8 +1959,11 @@ export type PurchaseBOMStructureScalarFieldEnum = (typeof PurchaseBOMStructureSc
 
 export const BOMExecutionScalarFieldEnum = {
   id: 'id',
-  reservedQuantity: 'reservedQuantity',
+  requiredQuantity: 'requiredQuantity',
+  stockReservedQuantity: 'stockReservedQuantity',
   issuedQuantity: 'issuedQuantity',
+  purchaseOrderedQuantity: 'purchaseOrderedQuantity',
+  purchaseReceivedQuantity: 'purchaseReceivedQuantity',
   createdAt: 'createdAt',
   completedDate: 'completedDate',
   deletedAt: 'deletedAt',
@@ -1950,6 +1977,29 @@ export const BOMExecutionScalarFieldEnum = {
 } as const
 
 export type BOMExecutionScalarFieldEnum = (typeof BOMExecutionScalarFieldEnum)[keyof typeof BOMExecutionScalarFieldEnum]
+
+
+export const MaterialDemandScalarFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  totalRequiredQty: 'totalRequiredQty',
+  reservedQty: 'reservedQty',
+  toPurchaseQty: 'toPurchaseQty',
+  createdAt: 'createdAt'
+} as const
+
+export type MaterialDemandScalarFieldEnum = (typeof MaterialDemandScalarFieldEnum)[keyof typeof MaterialDemandScalarFieldEnum]
+
+
+export const MaterialDemandSourceScalarFieldEnum = {
+  id: 'id',
+  materialDemandId: 'materialDemandId',
+  projectBOMStructureId: 'projectBOMStructureId',
+  requiredQty: 'requiredQty',
+  reservedQty: 'reservedQty'
+} as const
+
+export type MaterialDemandSourceScalarFieldEnum = (typeof MaterialDemandSourceScalarFieldEnum)[keyof typeof MaterialDemandSourceScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2367,8 +2417,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   longDescription: 'longDescription',
   preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
-  documentationPlace: 'documentationPlace',
-  bePartDoc: 'bePartDoc',
+  warehousePlaceId: 'warehousePlaceId',
   materialGroupIdA: 'materialGroupIdA',
   materialGroupIdB: 'materialGroupIdB',
   materialGroupIdC: 'materialGroupIdC',
@@ -2556,7 +2605,7 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   management: 'management',
-  documentationPlace: 'documentationPlace',
+  warehousePlaceId: 'warehousePlaceId',
   additionalInfo: 'additionalInfo',
   beNumber: 'beNumber',
   beParentPart: 'beParentPart',
@@ -3238,6 +3287,15 @@ export const DocumentStructureTargetOrderByRelevanceFieldEnum = {
 export type DocumentStructureTargetOrderByRelevanceFieldEnum = (typeof DocumentStructureTargetOrderByRelevanceFieldEnum)[keyof typeof DocumentStructureTargetOrderByRelevanceFieldEnum]
 
 
+export const MaterialLeadTimeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  leadTimeUnit: 'leadTimeUnit'
+} as const
+
+export type MaterialLeadTimeOrderByRelevanceFieldEnum = (typeof MaterialLeadTimeOrderByRelevanceFieldEnum)[keyof typeof MaterialLeadTimeOrderByRelevanceFieldEnum]
+
+
 export const ProjectBOMOrderByRelevanceFieldEnum = {
   id: 'id',
   projectBomNumber: 'projectBomNumber',
@@ -3313,4 +3371,21 @@ export const BOMExecutionOrderByRelevanceFieldEnum = {
 } as const
 
 export type BOMExecutionOrderByRelevanceFieldEnum = (typeof BOMExecutionOrderByRelevanceFieldEnum)[keyof typeof BOMExecutionOrderByRelevanceFieldEnum]
+
+
+export const MaterialDemandOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialId: 'materialId'
+} as const
+
+export type MaterialDemandOrderByRelevanceFieldEnum = (typeof MaterialDemandOrderByRelevanceFieldEnum)[keyof typeof MaterialDemandOrderByRelevanceFieldEnum]
+
+
+export const MaterialDemandSourceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialDemandId: 'materialDemandId',
+  projectBOMStructureId: 'projectBOMStructureId'
+} as const
+
+export type MaterialDemandSourceOrderByRelevanceFieldEnum = (typeof MaterialDemandSourceOrderByRelevanceFieldEnum)[keyof typeof MaterialDemandSourceOrderByRelevanceFieldEnum]
 

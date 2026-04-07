@@ -30,18 +30,19 @@ export const projectBOMInclude = {
       // ── Include BOMExecution so the project side can display execution status ──
       BOMExecution: {
         select: {
-          reservedQuantity: true,
+          stockReservedQuantity: true,
           issuedQuantity: true,
           notDeliverable: true,
           notCorrect: true,
           notCorrectReason: true,
           completedDate: true,
+          requiredQuantity: true,
         },
       },
     },
     orderBy: {createdAt: 'asc' as const},
   },
-}
+} as const
 
 // ─── Queries ───────────────────────────────────────────────────────────────────
 export async function getProjectBOMs(projectId?: string) {

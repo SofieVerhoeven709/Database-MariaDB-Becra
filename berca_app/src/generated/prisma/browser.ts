@@ -493,6 +493,11 @@ export type DocumentStatus = Prisma.DocumentStatusModel
  */
 export type DocumentStructureTarget = Prisma.DocumentStructureTargetModel
 /**
+ * Model MaterialLeadTime
+ * 
+ */
+export type MaterialLeadTime = Prisma.MaterialLeadTimeModel
+/**
  * Model ProjectBOM
  * 
  */
@@ -517,3 +522,13 @@ export type PurchaseBOMStructure = Prisma.PurchaseBOMStructureModel
  * 
  */
 export type BOMExecution = Prisma.BOMExecutionModel
+/**
+ * Model MaterialDemand
+ * 
+ */
+export type MaterialDemand = Prisma.MaterialDemandModel
+/**
+ * Model MaterialDemandSource
+ * 
+ */
+export type MaterialDemandSource = Prisma.MaterialDemandSourceModel

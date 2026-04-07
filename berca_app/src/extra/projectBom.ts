@@ -4,13 +4,14 @@ import type {MappedProjectBOM, MappedProjectBOMStructure, ChildProjectBOM} from 
 type StructureEmployeeRaw = {id: string; firstName: string; lastName: string}
 
 export type BOMExecutionRaw = {
-  reservedQuantity: number | null
+  requiredQuantity: number
+  stockReservedQuantity: number | null
   issuedQuantity: number | null
   notDeliverable: boolean
   notCorrect: boolean
   notCorrectReason: string | null
   completedDate: Date | null
-} | null
+}
 
 type ProjectBOMStructureRaw = {
   id: string
@@ -20,7 +21,6 @@ type ProjectBOMStructureRaw = {
   additionalInfo: string | null
   description: string | null
   tag: string | null
-  requiredQuantity: number | null
   readyForPurchaseDate: Date | null
   createdAt: Date
   createdBy: string
@@ -31,7 +31,7 @@ type ProjectBOMStructureRaw = {
   Material: {id: string; name: string | null; beNumber: string | null; shortDescription: string | null}
   Employee_ProjectBOMStructure_createdByToEmployee: StructureEmployeeRaw
   Employee_ProjectBOMStructure_deletedByToEmployee: StructureEmployeeRaw | null
-  BOMExecution: BOMExecutionRaw
+  BOMExecution: BOMExecutionRaw | null
 }
 
 type ChildBOMRaw = {
@@ -83,7 +83,7 @@ function mapStructure(r: ProjectBOMStructureRaw): MappedProjectBOMStructure {
     additionalInfo: r.additionalInfo,
     description: r.description,
     tag: r.tag,
-    requiredQuantity: r.requiredQuantity,
+    requiredQuantity: exec?.requiredQuantity ?? null,
     readyForPurchaseDate: r.readyForPurchaseDate?.toISOString() ?? null,
     createdAt: r.createdAt.toISOString(),
     createdBy: r.createdBy,
@@ -96,7 +96,7 @@ function mapStructure(r: ProjectBOMStructureRaw): MappedProjectBOMStructure {
       ? `${r.Employee_ProjectBOMStructure_deletedByToEmployee.firstName} ${r.Employee_ProjectBOMStructure_deletedByToEmployee.lastName}`
       : null,
     // ─── Execution fields ────────────────────────────────────────────────────
-    execReservedQuantity: exec?.reservedQuantity ?? null,
+    execStockReservedQuantity: exec?.stockReservedQuantity ?? null,
     execIssuedQuantity: exec?.issuedQuantity ?? null,
     execNotDeliverable: exec?.notDeliverable ?? false,
     execNotCorrect: exec?.notCorrect ?? false,

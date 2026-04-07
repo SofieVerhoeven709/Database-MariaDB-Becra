@@ -57,8 +57,7 @@ export const purchaseBOMStructureSchema = z.object({
   additionalInfo: z.string().max(255).nullable().optional(),
   description: z.string().max(255).nullable().optional(),
   tag: z.string().max(255).nullable().optional(),
-  requiredQuantity: z.number().int().nullable().optional(),
-  reservedQuantity: z.number().int().nullable().optional(),
+  stockReservedQuantity: z.number().int().nullable().optional(),
   issuedQuantity: z.number().int().nullable().optional(),
   readyForPurchaseDate: z.date().nullable().optional(),
   notDeliverable: z.boolean().default(false),
@@ -77,7 +76,7 @@ export const createPurchaseBOMStructureSchema = purchaseBOMStructureSchema.omit(
   deleted: true,
   deletedAt: true,
   deletedBy: true,
-  reservedQuantity: true,
+  stockReservedQuantity: true,
   issuedQuantity: true,
   notDeliverable: true,
 })
@@ -89,7 +88,7 @@ export const createPurchaseBOMStructureSchema = purchaseBOMStructureSchema.omit(
 export const updatePurchaseBOMStructureSchema = purchaseBOMStructureSchema.pick({
   id: true,
   // ── Only execution fields are editable on the purchase side ─────────────────
-  reservedQuantity: true,
+  stockReservedQuantity: true,
   issuedQuantity: true,
   notDeliverable: true,
   projectBOMStructureId: true,

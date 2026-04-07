@@ -20,18 +20,8 @@ export type PurchaseBOMStructureModel = runtime.Types.Result.DefaultSelection<Pr
 
 export type AggregatePurchaseBOMStructure = {
   _count: PurchaseBOMStructureCountAggregateOutputType | null
-  _avg: PurchaseBOMStructureAvgAggregateOutputType | null
-  _sum: PurchaseBOMStructureSumAggregateOutputType | null
   _min: PurchaseBOMStructureMinAggregateOutputType | null
   _max: PurchaseBOMStructureMaxAggregateOutputType | null
-}
-
-export type PurchaseBOMStructureAvgAggregateOutputType = {
-  requiredQuantity: number | null
-}
-
-export type PurchaseBOMStructureSumAggregateOutputType = {
-  requiredQuantity: number | null
 }
 
 export type PurchaseBOMStructureMinAggregateOutputType = {
@@ -40,7 +30,6 @@ export type PurchaseBOMStructureMinAggregateOutputType = {
   additionalInfo: string | null
   description: string | null
   tag: string | null
-  requiredQuantity: number | null
   createdAt: Date | null
   readyForPurchaseDate: Date | null
   deletedAt: Date | null
@@ -60,7 +49,6 @@ export type PurchaseBOMStructureMaxAggregateOutputType = {
   additionalInfo: string | null
   description: string | null
   tag: string | null
-  requiredQuantity: number | null
   createdAt: Date | null
   readyForPurchaseDate: Date | null
   deletedAt: Date | null
@@ -80,7 +68,6 @@ export type PurchaseBOMStructureCountAggregateOutputType = {
   additionalInfo: number
   description: number
   tag: number
-  requiredQuantity: number
   createdAt: number
   readyForPurchaseDate: number
   deletedAt: number
@@ -96,21 +83,12 @@ export type PurchaseBOMStructureCountAggregateOutputType = {
 }
 
 
-export type PurchaseBOMStructureAvgAggregateInputType = {
-  requiredQuantity?: true
-}
-
-export type PurchaseBOMStructureSumAggregateInputType = {
-  requiredQuantity?: true
-}
-
 export type PurchaseBOMStructureMinAggregateInputType = {
   id?: true
   shortDescription?: true
   additionalInfo?: true
   description?: true
   tag?: true
-  requiredQuantity?: true
   createdAt?: true
   readyForPurchaseDate?: true
   deletedAt?: true
@@ -130,7 +108,6 @@ export type PurchaseBOMStructureMaxAggregateInputType = {
   additionalInfo?: true
   description?: true
   tag?: true
-  requiredQuantity?: true
   createdAt?: true
   readyForPurchaseDate?: true
   deletedAt?: true
@@ -150,7 +127,6 @@ export type PurchaseBOMStructureCountAggregateInputType = {
   additionalInfo?: true
   description?: true
   tag?: true
-  requiredQuantity?: true
   createdAt?: true
   readyForPurchaseDate?: true
   deletedAt?: true
@@ -203,18 +179,6 @@ export type PurchaseBOMStructureAggregateArgs<ExtArgs extends runtime.Types.Exte
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: PurchaseBOMStructureAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: PurchaseBOMStructureSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: PurchaseBOMStructureMinAggregateInputType
@@ -245,8 +209,6 @@ export type PurchaseBOMStructureGroupByArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   _count?: PurchaseBOMStructureCountAggregateInputType | true
-  _avg?: PurchaseBOMStructureAvgAggregateInputType
-  _sum?: PurchaseBOMStructureSumAggregateInputType
   _min?: PurchaseBOMStructureMinAggregateInputType
   _max?: PurchaseBOMStructureMaxAggregateInputType
 }
@@ -257,7 +219,6 @@ export type PurchaseBOMStructureGroupByOutputType = {
   additionalInfo: string | null
   description: string | null
   tag: string | null
-  requiredQuantity: number | null
   createdAt: Date
   readyForPurchaseDate: Date | null
   deletedAt: Date | null
@@ -270,8 +231,6 @@ export type PurchaseBOMStructureGroupByOutputType = {
   purchaseBOMStructureId: string | null
   deletedBy: string | null
   _count: PurchaseBOMStructureCountAggregateOutputType | null
-  _avg: PurchaseBOMStructureAvgAggregateOutputType | null
-  _sum: PurchaseBOMStructureSumAggregateOutputType | null
   _min: PurchaseBOMStructureMinAggregateOutputType | null
   _max: PurchaseBOMStructureMaxAggregateOutputType | null
 }
@@ -300,7 +259,6 @@ export type PurchaseBOMStructureWhereInput = {
   additionalInfo?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
   description?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
-  requiredQuantity?: Prisma.IntNullableFilter<"PurchaseBOMStructure"> | number | null
   createdAt?: Prisma.DateTimeFilter<"PurchaseBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
@@ -327,7 +285,6 @@ export type PurchaseBOMStructureOrderByWithRelationInput = {
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
-  requiredQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -359,7 +316,6 @@ export type PurchaseBOMStructureWhereUniqueInput = Prisma.AtLeast<{
   additionalInfo?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
   description?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
-  requiredQuantity?: Prisma.IntNullableFilter<"PurchaseBOMStructure"> | number | null
   createdAt?: Prisma.DateTimeFilter<"PurchaseBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
@@ -386,7 +342,6 @@ export type PurchaseBOMStructureOrderByWithAggregationInput = {
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
-  requiredQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -399,10 +354,8 @@ export type PurchaseBOMStructureOrderByWithAggregationInput = {
   purchaseBOMStructureId?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PurchaseBOMStructureCountOrderByAggregateInput
-  _avg?: Prisma.PurchaseBOMStructureAvgOrderByAggregateInput
   _max?: Prisma.PurchaseBOMStructureMaxOrderByAggregateInput
   _min?: Prisma.PurchaseBOMStructureMinOrderByAggregateInput
-  _sum?: Prisma.PurchaseBOMStructureSumOrderByAggregateInput
 }
 
 export type PurchaseBOMStructureScalarWhereWithAggregatesInput = {
@@ -414,7 +367,6 @@ export type PurchaseBOMStructureScalarWhereWithAggregatesInput = {
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"PurchaseBOMStructure"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"PurchaseBOMStructure"> | string | null
   tag?: Prisma.StringNullableWithAggregatesFilter<"PurchaseBOMStructure"> | string | null
-  requiredQuantity?: Prisma.IntNullableWithAggregatesFilter<"PurchaseBOMStructure"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PurchaseBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseBOMStructure"> | Date | string | null
@@ -434,7 +386,6 @@ export type PurchaseBOMStructureCreateInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -455,7 +406,6 @@ export type PurchaseBOMStructureUncheckedCreateInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -476,7 +426,6 @@ export type PurchaseBOMStructureUpdateInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -497,7 +446,6 @@ export type PurchaseBOMStructureUncheckedUpdateInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -518,7 +466,6 @@ export type PurchaseBOMStructureCreateManyInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -538,7 +485,6 @@ export type PurchaseBOMStructureUpdateManyMutationInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -552,7 +498,6 @@ export type PurchaseBOMStructureUncheckedUpdateManyInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -598,7 +543,6 @@ export type PurchaseBOMStructureCountOrderByAggregateInput = {
   additionalInfo?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  requiredQuantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -612,17 +556,12 @@ export type PurchaseBOMStructureCountOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
-export type PurchaseBOMStructureAvgOrderByAggregateInput = {
-  requiredQuantity?: Prisma.SortOrder
-}
-
 export type PurchaseBOMStructureMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  requiredQuantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -642,7 +581,6 @@ export type PurchaseBOMStructureMinOrderByAggregateInput = {
   additionalInfo?: Prisma.SortOrder
   description?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  requiredQuantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   readyForPurchaseDate?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -654,10 +592,6 @@ export type PurchaseBOMStructureMinOrderByAggregateInput = {
   projectBOMStructureId?: Prisma.SortOrder
   purchaseBOMStructureId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-}
-
-export type PurchaseBOMStructureSumOrderByAggregateInput = {
-  requiredQuantity?: Prisma.SortOrder
 }
 
 export type PurchaseBOMStructureCreateNestedManyWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeInput = {
@@ -934,7 +868,6 @@ export type PurchaseBOMStructureCreateWithoutEmployee_PurchaseBOMStructure_creat
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -954,7 +887,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutEmployee_PurchaseBOMStruct
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -984,7 +916,6 @@ export type PurchaseBOMStructureCreateWithoutEmployee_PurchaseBOMStructure_delet
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1004,7 +935,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutEmployee_PurchaseBOMStruct
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1053,7 +983,6 @@ export type PurchaseBOMStructureScalarWhereInput = {
   additionalInfo?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
   description?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
-  requiredQuantity?: Prisma.IntNullableFilter<"PurchaseBOMStructure"> | number | null
   createdAt?: Prisma.DateTimeFilter<"PurchaseBOMStructure"> | Date | string
   readyForPurchaseDate?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseBOMStructure"> | Date | string | null
@@ -1089,7 +1018,6 @@ export type PurchaseBOMStructureCreateWithoutMaterialInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1109,7 +1037,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutMaterialInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1155,7 +1082,6 @@ export type PurchaseBOMStructureCreateWithoutProjectBOMStructureInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1175,7 +1101,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutProjectBOMStructureInput =
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1221,7 +1146,6 @@ export type PurchaseBOMStructureCreateWithoutPurchaseBOMInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1241,7 +1165,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutPurchaseBOMInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1287,7 +1210,6 @@ export type PurchaseBOMStructureCreateWithoutOther_PurchaseBOMStructureInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1307,7 +1229,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutOther_PurchaseBOMStructure
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1332,7 +1253,6 @@ export type PurchaseBOMStructureCreateWithoutPurchaseBOMStructureInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1352,7 +1272,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutPurchaseBOMStructureInput 
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1393,7 +1312,6 @@ export type PurchaseBOMStructureUpdateWithoutOther_PurchaseBOMStructureInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1413,7 +1331,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutOther_PurchaseBOMStructure
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1449,7 +1366,6 @@ export type PurchaseBOMStructureCreateManyEmployee_PurchaseBOMStructure_createdB
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1468,7 +1384,6 @@ export type PurchaseBOMStructureCreateManyEmployee_PurchaseBOMStructure_deletedB
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1487,7 +1402,6 @@ export type PurchaseBOMStructureUpdateWithoutEmployee_PurchaseBOMStructure_creat
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1507,7 +1421,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutEmployee_PurchaseBOMStruct
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1527,7 +1440,6 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutEmployee_PurchaseBOMSt
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1546,7 +1458,6 @@ export type PurchaseBOMStructureUpdateWithoutEmployee_PurchaseBOMStructure_delet
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1566,7 +1477,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutEmployee_PurchaseBOMStruct
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1586,7 +1496,6 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutEmployee_PurchaseBOMSt
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1605,7 +1514,6 @@ export type PurchaseBOMStructureCreateManyMaterialInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1624,7 +1532,6 @@ export type PurchaseBOMStructureUpdateWithoutMaterialInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1644,7 +1551,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutMaterialInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1664,7 +1570,6 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutMaterialInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1683,7 +1588,6 @@ export type PurchaseBOMStructureCreateManyProjectBOMStructureInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1702,7 +1606,6 @@ export type PurchaseBOMStructureUpdateWithoutProjectBOMStructureInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1722,7 +1625,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutProjectBOMStructureInput =
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1742,7 +1644,6 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutProjectBOMStructureInp
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1761,7 +1662,6 @@ export type PurchaseBOMStructureCreateManyPurchaseBOMInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1780,7 +1680,6 @@ export type PurchaseBOMStructureUpdateWithoutPurchaseBOMInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1800,7 +1699,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutPurchaseBOMInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1820,7 +1718,6 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1839,7 +1736,6 @@ export type PurchaseBOMStructureCreateManyPurchaseBOMStructureInput = {
   additionalInfo?: string | null
   description?: string | null
   tag?: string | null
-  requiredQuantity?: number | null
   createdAt: Date | string
   readyForPurchaseDate?: Date | string | null
   deletedAt?: Date | string | null
@@ -1858,7 +1754,6 @@ export type PurchaseBOMStructureUpdateWithoutPurchaseBOMStructureInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1878,7 +1773,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutPurchaseBOMStructureInput 
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1898,7 +1792,6 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureIn
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requiredQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1948,7 +1841,6 @@ export type PurchaseBOMStructureSelect<ExtArgs extends runtime.Types.Extensions.
   additionalInfo?: boolean
   description?: boolean
   tag?: boolean
-  requiredQuantity?: boolean
   createdAt?: boolean
   readyForPurchaseDate?: boolean
   deletedAt?: boolean
@@ -1978,7 +1870,6 @@ export type PurchaseBOMStructureSelectScalar = {
   additionalInfo?: boolean
   description?: boolean
   tag?: boolean
-  requiredQuantity?: boolean
   createdAt?: boolean
   readyForPurchaseDate?: boolean
   deletedAt?: boolean
@@ -1992,7 +1883,7 @@ export type PurchaseBOMStructureSelectScalar = {
   deletedBy?: boolean
 }
 
-export type PurchaseBOMStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shortDescription" | "additionalInfo" | "description" | "tag" | "requiredQuantity" | "createdAt" | "readyForPurchaseDate" | "deletedAt" | "purchased" | "deleted" | "createdBy" | "materialId" | "purchaseBOMId" | "projectBOMStructureId" | "purchaseBOMStructureId" | "deletedBy", ExtArgs["result"]["purchaseBOMStructure"]>
+export type PurchaseBOMStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shortDescription" | "additionalInfo" | "description" | "tag" | "createdAt" | "readyForPurchaseDate" | "deletedAt" | "purchased" | "deleted" | "createdBy" | "materialId" | "purchaseBOMId" | "projectBOMStructureId" | "purchaseBOMStructureId" | "deletedBy", ExtArgs["result"]["purchaseBOMStructure"]>
 export type PurchaseBOMStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   PurchaseBOM?: boolean | Prisma.PurchaseBOMDefaultArgs<ExtArgs>
@@ -2021,7 +1912,6 @@ export type $PurchaseBOMStructurePayload<ExtArgs extends runtime.Types.Extension
     additionalInfo: string | null
     description: string | null
     tag: string | null
-    requiredQuantity: number | null
     createdAt: Date
     readyForPurchaseDate: Date | null
     deletedAt: Date | null
@@ -2414,7 +2304,6 @@ export interface PurchaseBOMStructureFieldRefs {
   readonly additionalInfo: Prisma.FieldRef<"PurchaseBOMStructure", 'String'>
   readonly description: Prisma.FieldRef<"PurchaseBOMStructure", 'String'>
   readonly tag: Prisma.FieldRef<"PurchaseBOMStructure", 'String'>
-  readonly requiredQuantity: Prisma.FieldRef<"PurchaseBOMStructure", 'Int'>
   readonly createdAt: Prisma.FieldRef<"PurchaseBOMStructure", 'DateTime'>
   readonly readyForPurchaseDate: Prisma.FieldRef<"PurchaseBOMStructure", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"PurchaseBOMStructure", 'DateTime'>

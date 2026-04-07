@@ -20,7 +20,7 @@ export interface MappedProjectBOMStructure {
   deletedBy: string | null
   deletedByName: string | null
   // ─── Execution fields (from BOMExecution, read-only on project side) ────────
-  execReservedQuantity: number | null
+  execStockReservedQuantity: number | null
   execIssuedQuantity: number | null
   execNotDeliverable: boolean
   execNotCorrect: boolean

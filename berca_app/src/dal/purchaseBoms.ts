@@ -33,15 +33,17 @@ const purchaseBOMInclude = {
         select: {id: true},
       },
       ProjectBOMStructure: {
-        include: {
+        select: {
+          Material: {select: {id: true, name: true, beNumber: true, shortDescription: true}},
           BOMExecution: {
             select: {
-              reservedQuantity: true,
+              stockReservedQuantity: true,
               issuedQuantity: true,
               notDeliverable: true,
               notCorrect: true,
               notCorrectReason: true,
               completedDate: true,
+              requiredQuantity: true,
             },
           },
         },

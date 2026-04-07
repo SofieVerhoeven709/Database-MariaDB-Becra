@@ -954,51 +954,52 @@ model InvoiceType {
 }
 
 model Material {
-  id                                                       String                @id @db.Char(36)
-  beNumber                                                 String?               @unique(map: "uq_material_beNumber") @db.VarChar(255)
-  name                                                     String?               @db.VarChar(255)
-  brandOrderNr                                             String?               @db.VarChar(255)
-  shortDescription                                         String                @db.VarChar(255)
-  longDescription                                          String?               @db.Text
-  preferredSupplier                                        String?               @db.VarChar(255)
-  brandName                                                String?               @db.VarChar(255)
-  warehousePlaceId                                         String?               @db.Char(36)
-  rejected                                                 Boolean?              @default(false)
-  isSerialTracked                                          Boolean               @default(false)
-  materialGroupIdA                                         String?               @db.Char(36)
-  materialGroupIdB                                         String?               @db.Char(36)
-  materialGroupIdC                                         String?               @db.Char(36)
-  materialGroupIdD                                         String?               @db.Char(36)
-  preferredSupplierCompanyId                               String?               @db.Char(36)
-  unitId                                                   String                @db.Char(36)
+  id                                                       String                 @id @db.Char(36)
+  beNumber                                                 String?                @unique(map: "uq_material_beNumber") @db.VarChar(255)
+  name                                                     String?                @db.VarChar(255)
+  brandOrderNr                                             String?                @db.VarChar(255)
+  shortDescription                                         String                 @db.VarChar(255)
+  longDescription                                          String?                @db.Text
+  preferredSupplier                                        String?                @db.VarChar(255)
+  brandName                                                String?                @db.VarChar(255)
+  warehousePlaceId                                         String?                @db.Char(36)
+  rejected                                                 Boolean?               @default(false)
+  isSerialTracked                                          Boolean                @default(false)
+  materialGroupIdA                                         String?                @db.Char(36)
+  materialGroupIdB                                         String?                @db.Char(36)
+  materialGroupIdC                                         String?                @db.Char(36)
+  materialGroupIdD                                         String?                @db.Char(36)
+  preferredSupplierCompanyId                               String?                @db.Char(36)
+  unitId                                                   String                 @db.Char(36)
   longLeadTime                                             Boolean?
-  hasAtex                                                  Boolean               @default(false)
-  hasCE                                                    Boolean               @default(false)
-  hasROHS                                                  Boolean               @default(false)
-  hasDS                                                    Boolean               @default(false)
-  hasDoc                                                   Boolean               @default(false)
-  has3DCAD                                                 Boolean               @default(false)
-  has2DCAD                                                 Boolean               @default(false)
-  hasBDOC                                                  Boolean               @default(false)
-  hasINSP                                                  Boolean               @default(false)
-  partApproved                                             Boolean               @default(false)
-  createdBy                                                String                @db.Char(36)
-  deleted                                                  Boolean               @default(false)
-  deletedAt                                                DateTime?             @db.DateTime(0)
-  deletedBy                                                String?               @db.Char(36)
-  targetId                                                 String                @db.Char(36)
-  Inventory_Inventory_materialIdToMaterial                 Inventory[]           @relation("Inventory_materialIdToMaterial")
-  Inventory_Inventory_beNumberToMaterial                   Inventory?            @relation("Inventory_beNumberToMaterial")
-  MaterialGroup_Material_materialGroupIdAToMaterialGroup   MaterialGroup?        @relation("Material_materialGroupIdAToMaterialGroup", fields: [materialGroupIdA], references: [id], onUpdate: Restrict, map: "Material_ibfk_1")
-  MaterialGroup_Material_materialGroupIdBToMaterialGroup   MaterialGroup?        @relation("Material_materialGroupIdBToMaterialGroup", fields: [materialGroupIdB], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
-  MaterialGroup_Material_materialGroupIdCToMaterialGroup   MaterialGroup?        @relation("Material_materialGroupIdCToMaterialGroup", fields: [materialGroupIdC], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
-  MaterialGroup_Material_materialGroupIdDToMaterialGroup   MaterialGroup?        @relation("Material_materialGroupIdDToMaterialGroup", fields: [materialGroupIdD], references: [id], onUpdate: Restrict, map: "Material_ibfk_4")
-  WarehousePlace                                           WarehousePlace?       @relation(fields: [warehousePlaceId], references: [id], onUpdate: Restrict, map: "Material_ibfk_5")
-  Unit                                                     Unit                  @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "Material_ibfk_6")
-  Employee                                                 Employee              @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_7")
-  Employee_Material_deletedByToEmployee                    Employee?             @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_8")
-  PreferredSupplierCompany                                 Company?              @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "fk_material_preferredSupplierCompanyId")
-  Target                                                   Target                @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_material_target")
+  hasAtex                                                  Boolean                @default(false)
+  hasCE                                                    Boolean                @default(false)
+  hasROHS                                                  Boolean                @default(false)
+  hasDS                                                    Boolean                @default(false)
+  hasDoc                                                   Boolean                @default(false)
+  has3DCAD                                                 Boolean                @default(false)
+  has2DCAD                                                 Boolean                @default(false)
+  hasBDOC                                                  Boolean                @default(false)
+  hasINSP                                                  Boolean                @default(false)
+  partApproved                                             Boolean                @default(false)
+  createdBy                                                String                 @db.Char(36)
+  deleted                                                  Boolean                @default(false)
+  deletedAt                                                DateTime?              @db.DateTime(0)
+  deletedBy                                                String?                @db.Char(36)
+  targetId                                                 String                 @db.Char(36)
+  Inventory_Inventory_materialIdToMaterial                 Inventory[]            @relation("Inventory_materialIdToMaterial")
+  Inventory_Inventory_beNumberToMaterial                   Inventory?             @relation("Inventory_beNumberToMaterial")
+  MaterialGroup_Material_materialGroupIdAToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdAToMaterialGroup", fields: [materialGroupIdA], references: [id], onUpdate: Restrict, map: "Material_ibfk_1")
+  MaterialGroup_Material_materialGroupIdBToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdBToMaterialGroup", fields: [materialGroupIdB], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
+  MaterialGroup_Material_materialGroupIdCToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdCToMaterialGroup", fields: [materialGroupIdC], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
+  MaterialGroup_Material_materialGroupIdDToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdDToMaterialGroup", fields: [materialGroupIdD], references: [id], onUpdate: Restrict, map: "Material_ibfk_4")
+  WarehousePlace                                           WarehousePlace?        @relation(fields: [warehousePlaceId], references: [id], onUpdate: Restrict, map: "Material_ibfk_5")
+  Unit                                                     Unit                   @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "Material_ibfk_6")
+  Employee                                                 Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_7")
+  Employee_Material_deletedByToEmployee                    Employee?              @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_8")
+  PreferredSupplierCompany                                 Company?               @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "fk_material_preferredSupplierCompanyId")
+  Target                                                   Target                 @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_material_target")
+  MaterialDemand                                           MaterialDemand[]
   MaterialLeadTime                                         MaterialLeadTime?
   MaterialMovement                                         MaterialMovement[]
   MaterialOther                                            MaterialOther[]
@@ -2009,7 +2010,7 @@ model WarehousePlace {
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
-  @@index([serialTrackedId], map: "serialTrackedId")
+  @@index([serialTrackedId], map: "fk_warehouseplace_serialtrack")
 }
 
 model WorkOrder {
@@ -2490,6 +2491,14 @@ model DocumentStructureTarget {
   @@index([targetId], map: "targetId")
 }
 
+model MaterialLeadTime {
+  id            String   @id @db.Char(36)
+  materialId    String   @unique(map: "materialId") @db.Char(36)
+  leadTimeValue Int
+  leadTimeUnit  String   @db.VarChar(10)
+  Material      Material @relation(fields: [materialId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialLeadTime_ibfk_1")
+}
+
 model ProjectBOM {
   id                                      String                @id @db.Char(36)
   projectBomNumber                        String                @db.VarChar(255)
@@ -2531,7 +2540,6 @@ model ProjectBOMStructure {
   additionalInfo                                   String?                @db.VarChar(255)
   description                                      String?                @db.VarChar(255)
   tag                                              String?                @db.VarChar(255)
-  requiredQuantity                                 Int?
   createdAt                                        DateTime               @db.DateTime(0)
   readyForPurchaseDate                             DateTime?              @db.DateTime(0)
   deletedAt                                        DateTime?              @db.DateTime(0)
@@ -2543,6 +2551,7 @@ model ProjectBOMStructure {
   parentStructureId                                String?                @db.Char(36)
   deletedBy                                        String?                @db.Char(36)
   BOMExecution                                     BOMExecution?
+  MaterialDemandSource                             MaterialDemandSource[]
   Material                                         Material               @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_1")
   ProjectBOM                                       ProjectBOM             @relation(fields: [projectBOMId], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_2")
   Employee_ProjectBOMStructure_createdByToEmployee Employee               @relation("ProjectBOMStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectBOMStructure_ibfk_3")
@@ -2600,7 +2609,6 @@ model PurchaseBOMStructure {
   additionalInfo                                    String?                @db.VarChar(255)
   description                                       String?                @db.VarChar(255)
   tag                                               String?                @db.VarChar(255)
-  requiredQuantity                                  Int?
   createdAt                                         DateTime               @db.DateTime(0)
   readyForPurchaseDate                              DateTime?              @db.DateTime(0)
   deletedAt                                         DateTime?              @db.DateTime(0)
@@ -2630,8 +2638,11 @@ model PurchaseBOMStructure {
 
 model BOMExecution {
   id                                        String              @id @db.Char(36)
-  reservedQuantity                          Int?                @default(0)
+  requiredQuantity                          Int
+  stockReservedQuantity                     Int?                @default(0)
   issuedQuantity                            Int?                @default(0)
+  purchaseOrderedQuantity                   Int?                @default(0)
+  purchaseReceivedQuantity                  Int?                @default(0)
   createdAt                                 DateTime            @db.DateTime(0)
   completedDate                             DateTime?           @db.DateTime(0)
   deletedAt                                 DateTime?           @db.DateTime(0)
@@ -2648,12 +2659,32 @@ model BOMExecution {
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
-model MaterialLeadTime {
-  id            String   @id @db.Char(36)
-  materialId    String   @unique(map: "materialId") @db.Char(36)
-  leadTimeValue Int
-  leadTimeUnit  String   @db.VarChar(10)
-  Material      Material @relation(fields: [materialId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialLeadTime_ibfk_1")
+}
+
+model MaterialDemand {
+  id                   String                 @id @db.Char(36)
+  materialId           String                 @db.Char(36)
+  totalRequiredQty     Int
+  reservedQty          Int?                   @default(0)
+  toPurchaseQty        Int?                   @default(0)
+  createdAt            DateTime               @db.DateTime(0)
+  Material             Material               @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "MaterialDemand_ibfk_1")
+  MaterialDemandSource MaterialDemandSource[]
+
+  @@index([materialId], map: "materialId")
+}
+
+model MaterialDemandSource {
+  id                    String              @id @db.Char(36)
+  materialDemandId      String              @db.Char(36)
+  projectBOMStructureId String              @db.Char(36)
+  requiredQty           Int
+  reservedQty           Int?                @default(0)
+  MaterialDemand        MaterialDemand      @relation(fields: [materialDemandId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialDemandSource_ibfk_1")
+  ProjectBOMStructure   ProjectBOMStructure @relation(fields: [projectBOMStructureId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialDemandSource_ibfk_2")
+
+  @@index([materialDemandId], map: "materialDemandId")
+  @@index([projectBOMStructureId], map: "projectBOMStructureId")
 }
 
 enum MaterialSerialTrack_inspectionIntervalUnit {

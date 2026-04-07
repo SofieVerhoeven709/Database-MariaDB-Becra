@@ -617,19 +617,27 @@ export function MaterialTable({
                         }}>
                         <Pencil className="h-3.5 w-3.5" />
                       </Button>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7"
-                        disabled={!m.partApproved}
-                        onClick={() => {
-                          setDialogMode('duplicate')
-                          setEditingMaterial(m)
-                          setDialogOpen(true)
-                        }}
-                        title={m.partApproved ? 'Copy row' : 'Approve this part first'}>
-                        <Copy className="h-3.5 w-3.5" />
-                      </Button>
+                      <span title={m.partApproved ? 'Copy row' : 'Part must be approved before copying'}>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7"
+                          onClick={() => {
+                            if (!m.partApproved) {
+                              setAlert({
+                                title: 'Copy not allowed',
+                                description: 'This part must be approved before it can be copied.',
+                                type: 'warning',
+                              })
+                              return
+                            }
+                            setDialogMode('duplicate')
+                            setEditingMaterial(m)
+                            setDialogOpen(true)
+                          }}>
+                          <Copy className="h-3.5 w-3.5" />
+                        </Button>
+                      </span>
                       <Button
                         size="icon"
                         variant="ghost"

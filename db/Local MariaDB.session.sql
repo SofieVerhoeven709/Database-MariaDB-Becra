@@ -219,6 +219,7 @@ CREATE TABLE
             has2DCAD BOOLEAN NOT NULL DEFAULT 0,
             hasBDOC BOOLEAN NOT NULL DEFAULT 0,
             hasINSP BOOLEAN NOT NULL DEFAULT 0,
+            partApproved BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
             FOREIGN KEY (materialGroupIdA) REFERENCES MaterialGroup (id) ON DELETE SET NULL,

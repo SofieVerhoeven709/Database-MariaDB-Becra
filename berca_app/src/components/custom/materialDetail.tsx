@@ -63,6 +63,7 @@ interface MappedMaterialDetail {
   brandName: string | null
   warehousePlace: string | null
   rejected: boolean | null
+  partApproved: boolean
   longLeadTime: boolean
   leadTimeValue: number | null
   leadTimeUnit: 'days' | 'weeks' | 'months' | null
@@ -166,6 +167,7 @@ export function MaterialDetail({
     brandName: material.brandName ?? '',
     warehousePlace: material.warehousePlace ?? '',
     rejected: material.rejected ?? false,
+    partApproved: material.partApproved ?? false,
     longLeadTime: material.longLeadTime ?? false,
     leadTimeValue: material.leadTimeValue ?? null,
     leadTimeUnit: (material.leadTimeUnit ?? null) as MappedMaterialDetail['leadTimeUnit'],
@@ -246,6 +248,7 @@ export function MaterialDetail({
       if (form.brandName) fd.append('brandName', form.brandName)
       if (form.warehousePlace) fd.append('warehousePlace', form.warehousePlace)
       fd.append('rejected', String(form.rejected))
+      fd.append('partApproved', String(form.partApproved))
       fd.append('longLeadTime', String(form.longLeadTime))
       if (form.longLeadTime) {
         if (form.leadTimeValue !== null) fd.append('leadTimeValue', String(form.leadTimeValue))
@@ -795,6 +798,18 @@ export function MaterialDetail({
                 </div>
               ) : (
                 <p className="text-sm">{material.isSerialTracked ? 'Yes' : 'No'}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Part Approved</Label>
+              {editing ? (
+                <div className="flex items-center gap-2 h-9">
+                  <Switch checked={form.partApproved} onCheckedChange={v => handleField('partApproved', v)} />
+                  <span className="text-sm text-muted-foreground">{form.partApproved ? 'Yes' : 'No'}</span>
+                </div>
+              ) : (
+                <p className="text-sm">{material.partApproved ? 'Yes' : 'No'}</p>
               )}
             </div>
 

@@ -80,6 +80,7 @@ export default async function MaterialPage({params}: PageProps) {
       parentBeNumbers: getParentBeNumbers(m),
       brandName: m.brandName ?? null,
       warehousePlace: m.warehousePlaceId ?? null,
+      partApproved: (m as any).partApproved ?? false,
       longLeadTime: m.longLeadTime ?? false,
       leadTimeValue: m.MaterialLeadTime?.leadTimeValue ?? null,
       leadTimeUnit: (m.MaterialLeadTime?.leadTimeUnit as 'days' | 'weeks' | 'months' | null) ?? null,

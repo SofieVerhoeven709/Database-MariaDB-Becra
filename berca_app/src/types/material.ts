@@ -15,6 +15,7 @@ export interface MappedMaterial {
   brandName: string | null
   warehousePlace: string | null
   rejected: boolean | null
+  partApproved: boolean
   longLeadTime: boolean
   leadTimeValue: number | null
   leadTimeUnit: 'days' | 'weeks' | 'months' | null

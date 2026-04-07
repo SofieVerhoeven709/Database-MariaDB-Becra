@@ -52,6 +52,7 @@ export type MaterialMinAggregateOutputType = {
   has2DCAD: boolean | null
   hasBDOC: boolean | null
   hasINSP: boolean | null
+  partApproved: boolean | null
   createdBy: string | null
   deleted: boolean | null
   deletedAt: Date | null
@@ -87,6 +88,7 @@ export type MaterialMaxAggregateOutputType = {
   has2DCAD: boolean | null
   hasBDOC: boolean | null
   hasINSP: boolean | null
+  partApproved: boolean | null
   createdBy: string | null
   deleted: boolean | null
   deletedAt: Date | null
@@ -122,6 +124,7 @@ export type MaterialCountAggregateOutputType = {
   has2DCAD: number
   hasBDOC: number
   hasINSP: number
+  partApproved: number
   createdBy: number
   deleted: number
   deletedAt: number
@@ -159,6 +162,7 @@ export type MaterialMinAggregateInputType = {
   has2DCAD?: true
   hasBDOC?: true
   hasINSP?: true
+  partApproved?: true
   createdBy?: true
   deleted?: true
   deletedAt?: true
@@ -194,6 +198,7 @@ export type MaterialMaxAggregateInputType = {
   has2DCAD?: true
   hasBDOC?: true
   hasINSP?: true
+  partApproved?: true
   createdBy?: true
   deleted?: true
   deletedAt?: true
@@ -229,6 +234,7 @@ export type MaterialCountAggregateInputType = {
   has2DCAD?: true
   hasBDOC?: true
   hasINSP?: true
+  partApproved?: true
   createdBy?: true
   deleted?: true
   deletedAt?: true
@@ -337,6 +343,7 @@ export type MaterialGroupByOutputType = {
   has2DCAD: boolean
   hasBDOC: boolean
   hasINSP: boolean
+  partApproved: boolean
   createdBy: string
   deleted: boolean
   deletedAt: Date | null
@@ -393,6 +400,7 @@ export type MaterialWhereInput = {
   has2DCAD?: Prisma.BoolFilter<"Material"> | boolean
   hasBDOC?: Prisma.BoolFilter<"Material"> | boolean
   hasINSP?: Prisma.BoolFilter<"Material"> | boolean
+  partApproved?: Prisma.BoolFilter<"Material"> | boolean
   createdBy?: Prisma.StringFilter<"Material"> | string
   deleted?: Prisma.BoolFilter<"Material"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Material"> | Date | string | null
@@ -449,6 +457,7 @@ export type MaterialOrderByWithRelationInput = {
   has2DCAD?: Prisma.SortOrder
   hasBDOC?: Prisma.SortOrder
   hasINSP?: Prisma.SortOrder
+  partApproved?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -509,6 +518,7 @@ export type MaterialWhereUniqueInput = Prisma.AtLeast<{
   has2DCAD?: Prisma.BoolFilter<"Material"> | boolean
   hasBDOC?: Prisma.BoolFilter<"Material"> | boolean
   hasINSP?: Prisma.BoolFilter<"Material"> | boolean
+  partApproved?: Prisma.BoolFilter<"Material"> | boolean
   createdBy?: Prisma.StringFilter<"Material"> | string
   deleted?: Prisma.BoolFilter<"Material"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Material"> | Date | string | null
@@ -565,6 +575,7 @@ export type MaterialOrderByWithAggregationInput = {
   has2DCAD?: Prisma.SortOrder
   hasBDOC?: Prisma.SortOrder
   hasINSP?: Prisma.SortOrder
+  partApproved?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -606,6 +617,7 @@ export type MaterialScalarWhereWithAggregatesInput = {
   has2DCAD?: Prisma.BoolWithAggregatesFilter<"Material"> | boolean
   hasBDOC?: Prisma.BoolWithAggregatesFilter<"Material"> | boolean
   hasINSP?: Prisma.BoolWithAggregatesFilter<"Material"> | boolean
+  partApproved?: Prisma.BoolWithAggregatesFilter<"Material"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"Material"> | string
   deleted?: Prisma.BoolWithAggregatesFilter<"Material"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Material"> | Date | string | null
@@ -634,6 +646,7 @@ export type MaterialCreateInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -687,6 +700,7 @@ export type MaterialUncheckedCreateInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -726,6 +740,7 @@ export type MaterialUpdateInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -779,6 +794,7 @@ export type MaterialUncheckedUpdateInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -825,6 +841,7 @@ export type MaterialCreateManyInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -853,6 +870,7 @@ export type MaterialUpdateManyMutationInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -885,6 +903,7 @@ export type MaterialUncheckedUpdateManyInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -941,6 +960,7 @@ export type MaterialCountOrderByAggregateInput = {
   has2DCAD?: Prisma.SortOrder
   hasBDOC?: Prisma.SortOrder
   hasINSP?: Prisma.SortOrder
+  partApproved?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -976,6 +996,7 @@ export type MaterialMaxOrderByAggregateInput = {
   has2DCAD?: Prisma.SortOrder
   hasBDOC?: Prisma.SortOrder
   hasINSP?: Prisma.SortOrder
+  partApproved?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -1011,6 +1032,7 @@ export type MaterialMinOrderByAggregateInput = {
   has2DCAD?: Prisma.SortOrder
   hasBDOC?: Prisma.SortOrder
   hasINSP?: Prisma.SortOrder
+  partApproved?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -1628,6 +1650,7 @@ export type MaterialCreateWithoutPreferredSupplierCompanyInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -1679,6 +1702,7 @@ export type MaterialUncheckedCreateWithoutPreferredSupplierCompanyInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -1754,6 +1778,7 @@ export type MaterialScalarWhereInput = {
   has2DCAD?: Prisma.BoolFilter<"Material"> | boolean
   hasBDOC?: Prisma.BoolFilter<"Material"> | boolean
   hasINSP?: Prisma.BoolFilter<"Material"> | boolean
+  partApproved?: Prisma.BoolFilter<"Material"> | boolean
   createdBy?: Prisma.StringFilter<"Material"> | string
   deleted?: Prisma.BoolFilter<"Material"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Material"> | Date | string | null
@@ -1782,6 +1807,7 @@ export type MaterialCreateWithoutEmployeeInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -1834,6 +1860,7 @@ export type MaterialUncheckedCreateWithoutEmployeeInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -1882,6 +1909,7 @@ export type MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -1934,6 +1962,7 @@ export type MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeI
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2014,6 +2043,7 @@ export type MaterialCreateWithoutInventory_Inventory_materialIdToMaterialInput =
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
@@ -2066,6 +2096,7 @@ export type MaterialUncheckedCreateWithoutInventory_Inventory_materialIdToMateri
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2109,6 +2140,7 @@ export type MaterialCreateWithoutInventory_Inventory_beNumberToMaterialInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -2161,6 +2193,7 @@ export type MaterialUncheckedCreateWithoutInventory_Inventory_beNumberToMaterial
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2215,6 +2248,7 @@ export type MaterialUpdateWithoutInventory_Inventory_materialIdToMaterialInput =
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
@@ -2267,6 +2301,7 @@ export type MaterialUncheckedUpdateWithoutInventory_Inventory_materialIdToMateri
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2316,6 +2351,7 @@ export type MaterialUpdateWithoutInventory_Inventory_beNumberToMaterialInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -2368,6 +2404,7 @@ export type MaterialUncheckedUpdateWithoutInventory_Inventory_beNumberToMaterial
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2406,6 +2443,7 @@ export type MaterialCreateWithoutMaterialSupplierInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -2458,6 +2496,7 @@ export type MaterialUncheckedCreateWithoutMaterialSupplierInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2512,6 +2551,7 @@ export type MaterialUpdateWithoutMaterialSupplierInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -2564,6 +2604,7 @@ export type MaterialUncheckedUpdateWithoutMaterialSupplierInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2602,6 +2643,7 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdAToMateri
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -2653,6 +2695,7 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2702,6 +2745,7 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdBToMateri
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -2753,6 +2797,7 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2802,6 +2847,7 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdCToMateri
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -2853,6 +2899,7 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2902,6 +2949,7 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdDToMateri
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -2953,6 +3001,7 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -3066,6 +3115,7 @@ export type MaterialCreateWithoutMaterialMovementInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -3118,6 +3168,7 @@ export type MaterialUncheckedCreateWithoutMaterialMovementInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -3172,6 +3223,7 @@ export type MaterialUpdateWithoutMaterialMovementInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -3224,6 +3276,7 @@ export type MaterialUncheckedUpdateWithoutMaterialMovementInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3262,6 +3315,7 @@ export type MaterialCreateWithoutMaterialOtherInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -3314,6 +3368,7 @@ export type MaterialUncheckedCreateWithoutMaterialOtherInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -3368,6 +3423,7 @@ export type MaterialUpdateWithoutMaterialOtherInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -3420,6 +3476,7 @@ export type MaterialUncheckedUpdateWithoutMaterialOtherInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3458,6 +3515,7 @@ export type MaterialCreateWithoutMaterialSerialTrackInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -3510,6 +3568,7 @@ export type MaterialUncheckedCreateWithoutMaterialSerialTrackInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -3564,6 +3623,7 @@ export type MaterialUpdateWithoutMaterialSerialTrackInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -3616,6 +3676,7 @@ export type MaterialUncheckedUpdateWithoutMaterialSerialTrackInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3654,6 +3715,7 @@ export type MaterialCreateWithoutMaterialStructure_MaterialStructure_materialIdT
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -3706,6 +3768,7 @@ export type MaterialUncheckedCreateWithoutMaterialStructure_MaterialStructure_ma
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -3749,6 +3812,7 @@ export type MaterialCreateWithoutMaterialStructure_MaterialStructure_beNumberToM
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -3801,6 +3865,7 @@ export type MaterialUncheckedCreateWithoutMaterialStructure_MaterialStructure_be
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -3855,6 +3920,7 @@ export type MaterialUpdateWithoutMaterialStructure_MaterialStructure_materialIdT
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -3907,6 +3973,7 @@ export type MaterialUncheckedUpdateWithoutMaterialStructure_MaterialStructure_ma
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3956,6 +4023,7 @@ export type MaterialUpdateWithoutMaterialStructure_MaterialStructure_beNumberToM
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -4008,6 +4076,7 @@ export type MaterialUncheckedUpdateWithoutMaterialStructure_MaterialStructure_be
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4046,6 +4115,7 @@ export type MaterialCreateWithoutProductInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -4098,6 +4168,7 @@ export type MaterialUncheckedCreateWithoutProductInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -4152,6 +4223,7 @@ export type MaterialUpdateWithoutProductInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -4204,6 +4276,7 @@ export type MaterialUncheckedUpdateWithoutProductInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4242,6 +4315,7 @@ export type MaterialCreateWithoutTargetInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -4294,6 +4368,7 @@ export type MaterialUncheckedCreateWithoutTargetInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -4358,6 +4433,7 @@ export type MaterialCreateWithoutUnitInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -4409,6 +4485,7 @@ export type MaterialUncheckedCreateWithoutUnitInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -4474,6 +4551,7 @@ export type MaterialCreateWithoutWarehousePlaceInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -4525,6 +4603,7 @@ export type MaterialUncheckedCreateWithoutWarehousePlaceInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -4590,6 +4669,7 @@ export type MaterialCreateWithoutWorkOrderStructureInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -4642,6 +4722,7 @@ export type MaterialUncheckedCreateWithoutWorkOrderStructureInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -4696,6 +4777,7 @@ export type MaterialUpdateWithoutWorkOrderStructureInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -4748,6 +4830,7 @@ export type MaterialUncheckedUpdateWithoutWorkOrderStructureInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4786,6 +4869,7 @@ export type MaterialCreateWithoutMaterialLeadTimeInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
@@ -4838,6 +4922,7 @@ export type MaterialUncheckedCreateWithoutMaterialLeadTimeInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -4892,6 +4977,7 @@ export type MaterialUpdateWithoutMaterialLeadTimeInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -4944,6 +5030,7 @@ export type MaterialUncheckedUpdateWithoutMaterialLeadTimeInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4988,6 +5075,7 @@ export type MaterialCreateManyPreferredSupplierCompanyInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -5016,6 +5104,7 @@ export type MaterialUpdateWithoutPreferredSupplierCompanyInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -5067,6 +5156,7 @@ export type MaterialUncheckedUpdateWithoutPreferredSupplierCompanyInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5112,6 +5202,7 @@ export type MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5147,6 +5238,7 @@ export type MaterialCreateManyEmployeeInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -5181,6 +5273,7 @@ export type MaterialCreateManyEmployee_Material_deletedByToEmployeeInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -5208,6 +5301,7 @@ export type MaterialUpdateWithoutEmployeeInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -5260,6 +5354,7 @@ export type MaterialUncheckedUpdateWithoutEmployeeInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5305,6 +5400,7 @@ export type MaterialUncheckedUpdateManyWithoutEmployeeInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5332,6 +5428,7 @@ export type MaterialUpdateWithoutEmployee_Material_deletedByToEmployeeInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -5384,6 +5481,7 @@ export type MaterialUncheckedUpdateWithoutEmployee_Material_deletedByToEmployeeI
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5429,6 +5527,7 @@ export type MaterialUncheckedUpdateManyWithoutEmployee_Material_deletedByToEmplo
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5462,6 +5561,7 @@ export type MaterialCreateManyMaterialGroup_Material_materialGroupIdAToMaterialG
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -5496,6 +5596,7 @@ export type MaterialCreateManyMaterialGroup_Material_materialGroupIdBToMaterialG
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -5530,6 +5631,7 @@ export type MaterialCreateManyMaterialGroup_Material_materialGroupIdCToMaterialG
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -5564,6 +5666,7 @@ export type MaterialCreateManyMaterialGroup_Material_materialGroupIdDToMaterialG
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -5592,6 +5695,7 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdAToMateri
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -5643,6 +5747,7 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5688,6 +5793,7 @@ export type MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGro
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5716,6 +5822,7 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdBToMateri
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -5767,6 +5874,7 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5812,6 +5920,7 @@ export type MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGro
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5840,6 +5949,7 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdCToMateri
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -5891,6 +6001,7 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5936,6 +6047,7 @@ export type MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGro
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5964,6 +6076,7 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdDToMateri
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -6015,6 +6128,7 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6060,6 +6174,7 @@ export type MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGro
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6095,6 +6210,7 @@ export type MaterialCreateManyTargetInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -6122,6 +6238,7 @@ export type MaterialUpdateWithoutTargetInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -6174,6 +6291,7 @@ export type MaterialUncheckedUpdateWithoutTargetInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6219,6 +6337,7 @@ export type MaterialUncheckedUpdateManyWithoutTargetInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6252,6 +6371,7 @@ export type MaterialCreateManyUnitInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -6280,6 +6400,7 @@ export type MaterialUpdateWithoutUnitInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -6331,6 +6452,7 @@ export type MaterialUncheckedUpdateWithoutUnitInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6376,6 +6498,7 @@ export type MaterialUncheckedUpdateManyWithoutUnitInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6410,6 +6533,7 @@ export type MaterialCreateManyWarehousePlaceInput = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -6438,6 +6562,7 @@ export type MaterialUpdateWithoutWarehousePlaceInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
@@ -6489,6 +6614,7 @@ export type MaterialUncheckedUpdateWithoutWarehousePlaceInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6534,6 +6660,7 @@ export type MaterialUncheckedUpdateManyWithoutWarehousePlaceInput = {
   has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6672,6 +6799,7 @@ export type MaterialSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy?: boolean
   deleted?: boolean
   deletedAt?: boolean
@@ -6731,6 +6859,7 @@ export type MaterialSelectScalar = {
   has2DCAD?: boolean
   hasBDOC?: boolean
   hasINSP?: boolean
+  partApproved?: boolean
   createdBy?: boolean
   deleted?: boolean
   deletedAt?: boolean
@@ -6738,7 +6867,7 @@ export type MaterialSelectScalar = {
   targetId?: boolean
 }
 
-export type MaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "beNumber" | "name" | "brandOrderNr" | "shortDescription" | "longDescription" | "preferredSupplier" | "brandName" | "warehousePlaceId" | "rejected" | "isSerialTracked" | "materialGroupIdA" | "materialGroupIdB" | "materialGroupIdC" | "materialGroupIdD" | "preferredSupplierCompanyId" | "unitId" | "longLeadTime" | "hasAtex" | "hasCE" | "hasROHS" | "hasDS" | "hasDoc" | "has3DCAD" | "has2DCAD" | "hasBDOC" | "hasINSP" | "createdBy" | "deleted" | "deletedAt" | "deletedBy" | "targetId", ExtArgs["result"]["material"]>
+export type MaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "beNumber" | "name" | "brandOrderNr" | "shortDescription" | "longDescription" | "preferredSupplier" | "brandName" | "warehousePlaceId" | "rejected" | "isSerialTracked" | "materialGroupIdA" | "materialGroupIdB" | "materialGroupIdC" | "materialGroupIdD" | "preferredSupplierCompanyId" | "unitId" | "longLeadTime" | "hasAtex" | "hasCE" | "hasROHS" | "hasDS" | "hasDoc" | "has3DCAD" | "has2DCAD" | "hasBDOC" | "hasINSP" | "partApproved" | "createdBy" | "deleted" | "deletedAt" | "deletedBy" | "targetId", ExtArgs["result"]["material"]>
 export type MaterialInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Inventory_Inventory_materialIdToMaterial?: boolean | Prisma.Material$Inventory_Inventory_materialIdToMaterialArgs<ExtArgs>
   Inventory_Inventory_beNumberToMaterial?: boolean | Prisma.Material$Inventory_Inventory_beNumberToMaterialArgs<ExtArgs>
@@ -6817,6 +6946,7 @@ export type $MaterialPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     has2DCAD: boolean
     hasBDOC: boolean
     hasINSP: boolean
+    partApproved: boolean
     createdBy: string
     deleted: boolean
     deletedAt: Date | null
@@ -7239,6 +7369,7 @@ export interface MaterialFieldRefs {
   readonly has2DCAD: Prisma.FieldRef<"Material", 'Boolean'>
   readonly hasBDOC: Prisma.FieldRef<"Material", 'Boolean'>
   readonly hasINSP: Prisma.FieldRef<"Material", 'Boolean'>
+  readonly partApproved: Prisma.FieldRef<"Material", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"Material", 'String'>
   readonly deleted: Prisma.FieldRef<"Material", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"Material", 'DateTime'>

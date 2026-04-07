@@ -971,6 +971,7 @@ model Material {
   has2DCAD                                                 Boolean               @default(false)
   hasBDOC                                                  Boolean               @default(false)
   hasINSP                                                  Boolean               @default(false)
+  partApproved                                             Boolean               @default(false)
   createdBy                                                String                @db.Char(36)
   deleted                                                  Boolean               @default(false)
   deletedAt                                                DateTime?             @db.DateTime(0)

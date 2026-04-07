@@ -46,6 +46,7 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     brandName: material.brandName ?? null,
     warehousePlace: material.warehousePlaceId ?? null,
     rejected: material.rejected ?? false,
+    partApproved: (material as any).partApproved ?? false,
     longLeadTime: material.longLeadTime ?? false,
     leadTimeValue: material.MaterialLeadTime?.leadTimeValue ?? null,
     leadTimeUnit: (material.MaterialLeadTime?.leadTimeUnit as 'days' | 'weeks' | 'months') ?? null,

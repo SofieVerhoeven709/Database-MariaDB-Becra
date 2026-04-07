@@ -224,6 +224,7 @@ const EMPTY_MATERIAL: MaterialFormState = {
   brandName: null,
   warehousePlace: null,
   rejected: false,
+  partApproved: false,
   longLeadTime: false,
   leadTimeValue: null,
   leadTimeUnit: null,
@@ -466,8 +467,8 @@ export function MaterialFormDialog({
           {/* Number Type */}
           <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">
             <div className="flex flex-col">
-              <Label className="text-xs text-muted-foreground">Nummer type</Label>
-              <p className="text-xs text-muted-foreground">Schakel tussen BE en IOS.</p>
+              <Label className="text-xs text-muted-foreground">Number type</Label>
+              <p className="text-xs text-muted-foreground">Switch between BE and IOS.</p>
             </div>
             <div className="flex items-center gap-2">
               <span
@@ -863,6 +864,13 @@ export function MaterialFormDialog({
               <div className="flex items-center gap-3 pt-1">
                 <Switch checked={form.rejected ?? false} onCheckedChange={v => update('rejected', v)} />
                 <span className="text-sm text-muted-foreground">{form.rejected ? 'Yes' : 'No'}</span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label className="text-xs text-muted-foreground">Part Approved</Label>
+              <div className="flex items-center gap-3 pt-1">
+                <Switch checked={form.partApproved ?? false} onCheckedChange={v => update('partApproved', v)} />
+                <span className="text-sm text-muted-foreground">{form.partApproved ? 'Yes' : 'No'}</span>
               </div>
             </div>
             <div className="flex flex-col gap-2">

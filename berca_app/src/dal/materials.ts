@@ -233,6 +233,7 @@ export async function createMaterial(data: {
   brandName?: string | null
   warehousePlace?: string | null
   rejected?: boolean | null
+  partApproved?: boolean
   longLeadTime?: boolean
   leadTimeValue?: number | null
   leadTimeUnit?: 'days' | 'weeks' | 'months' | null
@@ -406,6 +407,7 @@ export async function updateMaterial(
     brandName?: string | null
     warehousePlace?: string | null
     rejected?: boolean | null
+    canCopy?: boolean
     longLeadTime?: boolean
     leadTimeValue?: number | null
     leadTimeUnit?: 'days' | 'weeks' | 'months' | null

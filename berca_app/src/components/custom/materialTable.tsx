@@ -59,6 +59,7 @@ type SortField =
   | 'parentBeNumbers'
   | 'createdByName'
   | 'rejected'
+  | 'partApproved'
   | 'longLeadTime'
   | 'hasAtex'
   | 'hasCe'
@@ -200,6 +201,8 @@ export function MaterialTable({
       case 'hasBdoc':
       case 'hasInsp':
         return material[field] ? '1' : '0'
+      case 'partApproved':
+        return material.partApproved ? '1' : '0'
       default:
         return String(material[field] ?? '')
     }
@@ -261,6 +264,7 @@ export function MaterialTable({
         'brandName',
         'warehousePlace',
         'rejected',
+        'partApproved',
         'longLeadTime',
         'leadTimeValue',
         'leadTimeUnit',
@@ -393,6 +397,7 @@ export function MaterialTable({
     {key: 'parentBeNumbers', label: 'Parent Parts'},
     {key: 'createdByName', label: 'Created'},
     {key: 'rejected', label: 'Status'},
+    {key: 'partApproved', label: 'Approved'},
     {key: 'longLeadTime', label: 'Long Lead'},
   ]
 
@@ -554,6 +559,15 @@ export function MaterialTable({
                     )}
                   </TableCell>
                   <TableCell>
+                    {m.partApproved ? (
+                      <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-700 dark:text-emerald-400">
+                        Yes
+                      </Badge>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">No</span>
+                    )}
+                  </TableCell>
+                  <TableCell>
                     {m.longLeadTime ? (
                       <Badge variant="secondary" className="text-xs bg-amber-500/15 text-amber-700 dark:text-amber-400">
                         Yes
@@ -607,12 +621,13 @@ export function MaterialTable({
                         size="icon"
                         variant="ghost"
                         className="h-7 w-7"
+                        disabled={!m.partApproved}
                         onClick={() => {
                           setDialogMode('duplicate')
                           setEditingMaterial(m)
                           setDialogOpen(true)
                         }}
-                        title="Copy row">
+                        title={m.partApproved ? 'Copy row' : 'Approve this part first'}>
                         <Copy className="h-3.5 w-3.5" />
                       </Button>
                       <Button

@@ -7447,6 +7447,7 @@ export const MaterialScalarFieldEnum = {
   has2DCAD: 'has2DCAD',
   hasBDOC: 'hasBDOC',
   hasINSP: 'hasINSP',
+  partApproved: 'partApproved',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',

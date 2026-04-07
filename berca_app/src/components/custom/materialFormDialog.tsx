@@ -932,7 +932,7 @@ export function MaterialFormDialog({
                 <Select
                   value={form.leadTimeUnit ?? '__none__'}
                   onValueChange={value =>
-                    update('leadTimeUnit', value === '__none__' ? null : (value as 'days' | 'weeks'))
+                    update('leadTimeUnit', value === '__none__' ? null : (value as 'days' | 'weeks' | 'months'))
                   }>
                   <SelectTrigger className={inputStyles}>
                     <SelectValue placeholder="Select unit..." />
@@ -941,6 +941,7 @@ export function MaterialFormDialog({
                     <SelectItem value="__none__">None</SelectItem>
                     <SelectItem value="days">Days</SelectItem>
                     <SelectItem value="weeks">Weeks</SelectItem>
+                    <SelectItem value="months">Months</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

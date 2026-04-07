@@ -9,6 +9,7 @@ import {Alert} from '@/components/ui/alert'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
+import {MATERIAL_DOCUMENT_FLAGS} from '@/components/custom/materialDocumentFlags'
 import type {MappedMaterial} from '@/types/material'
 import type {WarehousePlaceOption} from '@/types/warehousePlace'
 import {createMaterialAction, updateMaterialAction, deleteMaterialAction} from '@/serverFunctions/materials'
@@ -57,9 +58,16 @@ type SortField =
   | 'unitName'
   | 'parentBeNumbers'
   | 'createdByName'
-  | 'createdAt'
   | 'rejected'
   | 'longLeadTime'
+  | 'hasAtex'
+  | 'hasCe'
+  | 'hasRohs'
+  | 'hasDs'
+  | 'has3dCad'
+  | 'has2dCad'
+  | 'hasBdoc'
+  | 'hasInsp'
 type SortDir = 'asc' | 'desc'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
@@ -183,6 +191,15 @@ export function MaterialTable({
         return getWarehousePart(material.warehousePlace, 'layer')
       case 'warehouseLayerPlace':
         return getWarehousePart(material.warehousePlace, 'layerPlace')
+      case 'hasAtex':
+      case 'hasCe':
+      case 'hasRohs':
+      case 'hasDs':
+      case 'has3dCad':
+      case 'has2dCad':
+      case 'hasBdoc':
+      case 'hasInsp':
+        return material[field] ? '1' : '0'
       default:
         return String(material[field] ?? '')
     }
@@ -379,29 +396,13 @@ export function MaterialTable({
     {key: 'longLeadTime', label: 'Long Lead'},
   ]
 
-  const renderDocumentFlags = (m: MappedMaterial) => {
-    const flags = [
-      {key: 'hasAtex', label: 'ATEX', active: m.hasAtex},
-      {key: 'hasCe', label: 'CE', active: m.hasCe},
-      {key: 'hasRohs', label: 'RoHS', active: m.hasRohs},
-      {key: 'hasDs', label: 'DS', active: m.hasDs},
-      {key: 'hasDoc', label: 'Doc', active: m.hasDoc},
-      {key: 'has3dCad', label: '3D', active: m.has3dCad},
-      {key: 'has2dCad', label: '2D', active: m.has2dCad},
-      {key: 'hasBdoc', label: 'Becra Doc', active: m.hasBdoc},
-      {key: 'hasInsp', label: 'Insp', active: m.hasInsp},
-    ]
-    return (
-      <div className="flex flex-wrap gap-1">
-        {flags.map(flag => (
-          <Badge
-            key={flag.key}
-            variant={flag.active ? 'default' : 'secondary'}
-            className={`text-xs ${flag.active ? 'bg-blue-500/20 text-blue-700 dark:text-blue-400' : 'bg-gray-500/10 text-gray-500'}`}>
-            {flag.label}
-          </Badge>
-        ))}
-      </div>
+  const renderDocumentFlag = (active: boolean) => {
+    return active ? (
+      <Badge variant="default" className="text-xs bg-blue-500/20 text-blue-700 dark:text-blue-400">
+        Yes
+      </Badge>
+    ) : (
+      <span className="text-xs text-muted-foreground">-</span>
     )
   }
 
@@ -471,9 +472,15 @@ export function MaterialTable({
                   <SortIcon field={col.key} sortField={sortField} sortDir={sortDir} />
                 </TableHead>
               ))}
-              <TableHead className="w-40 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                Document Flags
-              </TableHead>
+              {MATERIAL_DOCUMENT_FLAGS.map(flag => (
+                <TableHead
+                  key={flag.key}
+                  className="w-24 cursor-pointer select-none text-center text-xs font-semibold text-muted-foreground uppercase tracking-wide"
+                  onClick={() => handleSort(flag.key)}>
+                  {flag.label}
+                  <SortIcon field={flag.key} sortField={sortField} sortDir={sortDir} />
+                </TableHead>
+              ))}
               <TableHead className="w-25 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Serial Tracked
               </TableHead>
@@ -485,7 +492,7 @@ export function MaterialTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 2} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={columns.length + MATERIAL_DOCUMENT_FLAGS.length + 2} className="text-center text-muted-foreground py-10">
                   No materials found
                 </TableCell>
               </TableRow>
@@ -555,8 +562,11 @@ export function MaterialTable({
                       <span className="text-sm text-muted-foreground">No</span>
                     )}
                   </TableCell>
-                  {/* Document Flags Column */}
-                  <TableCell className="text-sm">{renderDocumentFlags(m)}</TableCell>
+                  {MATERIAL_DOCUMENT_FLAGS.map(flag => (
+                    <TableCell key={flag.key} className="text-sm text-center">
+                      {renderDocumentFlag(Boolean(m[flag.key]))}
+                    </TableCell>
+                  ))}
                   {/* Serial Tracked Button Column */}
                   <TableCell className="text-center">
                     <Button

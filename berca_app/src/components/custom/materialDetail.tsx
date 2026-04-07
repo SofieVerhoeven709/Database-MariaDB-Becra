@@ -12,6 +12,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Switch} from '@/components/ui/switch'
+import {MATERIAL_DOCUMENT_FLAGS} from '@/components/custom/materialDocumentFlags'
 import {updateMaterialAction} from '@/serverFunctions/materials'
 import type {WarehousePlaceOption} from '@/types/warehousePlace'
 
@@ -64,7 +65,7 @@ interface MappedMaterialDetail {
   rejected: boolean | null
   longLeadTime: boolean
   leadTimeValue: number | null
-  leadTimeUnit: 'days' | 'weeks' | null
+  leadTimeUnit: 'days' | 'weeks' | 'months' | null
   hasAtex: boolean
   hasCe: boolean
   hasRohs: boolean
@@ -167,7 +168,7 @@ export function MaterialDetail({
     rejected: material.rejected ?? false,
     longLeadTime: material.longLeadTime ?? false,
     leadTimeValue: material.leadTimeValue ?? null,
-    leadTimeUnit: material.leadTimeUnit ?? null,
+    leadTimeUnit: (material.leadTimeUnit ?? null) as MappedMaterialDetail['leadTimeUnit'],
     isSerialTracked: material.isSerialTracked ?? false,
     isParentPart: (material.parentBeNumbers && material.parentBeNumbers.length > 0) ?? false,
     hasAtex: material.hasAtex ?? false,
@@ -801,17 +802,7 @@ export function MaterialDetail({
             <div className="md:col-span-2">
               <h3 className="text-sm font-semibold mb-3">Document Flags</h3>
               <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
-                {[
-                  {key: 'hasAtex', label: 'ATEX'},
-                  {key: 'hasCe', label: 'CE'},
-                  {key: 'hasRohs', label: 'RoHS'},
-                  {key: 'hasDs', label: 'DS'},
-                  {key: 'hasDoc', label: 'Documentation'},
-                  {key: 'has3dCad', label: '3D CAD'},
-                  {key: 'has2dCad', label: '2D CAD'},
-                  {key: 'hasBdoc', label: 'Becra-Doc'},
-                  {key: 'hasInsp', label: 'Inspection'},
-                ].map(flag => (
+                {MATERIAL_DOCUMENT_FLAGS.map(flag => (
                   <div key={flag.key} className="flex flex-col gap-1.5">
                     <Label className="text-xs text-muted-foreground">{flag.label}</Label>
                     {editing ? (
@@ -865,7 +856,10 @@ export function MaterialDetail({
                     <Select
                       value={form.leadTimeUnit ?? '__none__'}
                       onValueChange={v =>
-                        handleField('leadTimeUnit', v === '__none__' ? null : (v as 'days' | 'weeks'))
+                        handleField(
+                          'leadTimeUnit',
+                          (v === '__none__' ? null : v) as unknown as (typeof form)['leadTimeUnit'],
+                        )
                       }>
                       <SelectTrigger className="bg-secondary border-border w-32">
                         <SelectValue placeholder="Unit" />
@@ -874,6 +868,7 @@ export function MaterialDetail({
                         <SelectItem value="__none__">None</SelectItem>
                         <SelectItem value="days">Days</SelectItem>
                         <SelectItem value="weeks">Weeks</SelectItem>
+                        <SelectItem value="months">Months</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

@@ -59,7 +59,7 @@ const leadTimeValueSchema = z.preprocess(
 
 const leadTimeUnitSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
-  z.enum(['days', 'weeks']).nullable().optional(),
+  z.enum(['days', 'weeks', 'months']).nullable().optional(),
 )
 
 const documentFlagSchema = z

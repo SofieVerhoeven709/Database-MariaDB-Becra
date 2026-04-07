@@ -235,7 +235,7 @@ export async function createMaterial(data: {
   rejected?: boolean | null
   longLeadTime?: boolean
   leadTimeValue?: number | null
-  leadTimeUnit?: 'days' | 'weeks' | null
+  leadTimeUnit?: 'days' | 'weeks' | 'months' | null
   hasAtex?: boolean
   hasCe?: boolean
   hasRohs?: boolean
@@ -408,7 +408,7 @@ export async function updateMaterial(
     rejected?: boolean | null
     longLeadTime?: boolean
     leadTimeValue?: number | null
-    leadTimeUnit?: 'days' | 'weeks' | null
+    leadTimeUnit?: 'days' | 'weeks' | 'months' | null
     hasAtex?: boolean
     hasCe?: boolean
     hasRohs?: boolean

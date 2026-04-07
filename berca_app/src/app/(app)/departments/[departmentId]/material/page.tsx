@@ -82,7 +82,7 @@ export default async function MaterialPage({params}: PageProps) {
       warehousePlace: m.warehousePlaceId ?? null,
       longLeadTime: m.longLeadTime ?? false,
       leadTimeValue: m.MaterialLeadTime?.leadTimeValue ?? null,
-      leadTimeUnit: (m.MaterialLeadTime?.leadTimeUnit as 'days' | 'weeks' | null) ?? null,
+      leadTimeUnit: (m.MaterialLeadTime?.leadTimeUnit as 'days' | 'weeks' | 'months' | null) ?? null,
       rejected: m.rejected ?? false,
       hasAtex: materialWithDocuments.hasAtex ?? false,
       hasCe: materialWithDocuments.hasCE ?? false,

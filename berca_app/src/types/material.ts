@@ -17,7 +17,7 @@ export interface MappedMaterial {
   rejected: boolean | null
   longLeadTime: boolean
   leadTimeValue: number | null
-  leadTimeUnit: 'days' | 'weeks' | null
+  leadTimeUnit: 'days' | 'weeks' | 'months' | null
   materialGroupIdA: string | null
   materialGroupIdB: string | null
   materialGroupIdC: string | null

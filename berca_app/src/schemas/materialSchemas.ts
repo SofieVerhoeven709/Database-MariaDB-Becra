@@ -59,8 +59,17 @@ const leadTimeValueSchema = z.preprocess(
 
 const leadTimeUnitSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
-  z.enum(['days', 'weeks']).nullable().optional(),
+  z.enum(['days', 'weeks', 'months']).nullable().optional(),
 )
+
+const documentFlagSchema = z
+  .preprocess(val => {
+    if (val === undefined) return false
+    if (val === 'false' || val === false || val === 0) return false
+    if (val === 'true' || val === true || val === 1) return true
+    return val
+  }, z.boolean())
+  .default(false)
 
 const materialSchemaBase = z.object({
   id: z.string().uuid(),
@@ -80,6 +89,14 @@ const materialSchemaBase = z.object({
   brandName: z.string().max(255).nullable().optional(),
   warehousePlace: nullableUuidSchema,
   rejected: booleanFromString,
+  partApproved: z
+    .preprocess(val => {
+      if (val === undefined) return false
+      if (val === 'false' || val === false || val === 0) return false
+      if (val === 'true' || val === true || val === 1) return true
+      return val
+    }, z.boolean())
+    .default(false),
   longLeadTime: z
     .preprocess(val => {
       if (val === undefined) return false
@@ -103,6 +120,15 @@ const materialSchemaBase = z.object({
       return val
     }, z.boolean())
     .default(false),
+  hasAtex: documentFlagSchema,
+  hasCe: documentFlagSchema,
+  hasRohs: documentFlagSchema,
+  hasDs: documentFlagSchema,
+  hasDoc: documentFlagSchema,
+  has3dCad: documentFlagSchema,
+  has2dCad: documentFlagSchema,
+  hasBdoc: documentFlagSchema,
+  hasInsp: documentFlagSchema,
   isParentPart: z
     .preprocess(val => {
       if (val === undefined) return false
@@ -115,23 +141,23 @@ const materialSchemaBase = z.object({
 
 function withLongLeadTimeValidation<T extends z.ZodTypeAny>(schema: T) {
   return schema.superRefine((data: any, ctx) => {
-  if (!data.longLeadTime) return
+    if (!data.longLeadTime) return
 
-  if (data.leadTimeValue == null) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ['leadTimeValue'],
-      message: 'Lead time value is required when long lead time is enabled.',
-    })
-  }
+    if (data.leadTimeValue == null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['leadTimeValue'],
+        message: 'Lead time value is required when long lead time is enabled.',
+      })
+    }
 
-  if (data.leadTimeUnit == null) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ['leadTimeUnit'],
-      message: 'Lead time unit is required when long lead time is enabled.',
-    })
-  }
+    if (data.leadTimeUnit == null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['leadTimeUnit'],
+        message: 'Lead time unit is required when long lead time is enabled.',
+      })
+    }
   })
 }
 

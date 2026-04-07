@@ -106,6 +106,33 @@ export type MaterialGroupOption = {
   groupD: string | null
 }
 
+type MaterialDocumentFlagInput = {
+  hasAtex?: boolean
+  hasCe?: boolean
+  hasRohs?: boolean
+  hasDs?: boolean
+  hasDoc?: boolean
+  has3dCad?: boolean
+  has2dCad?: boolean
+  hasBdoc?: boolean
+  hasInsp?: boolean
+}
+
+function toPrismaMaterialDocumentFlags(flags: MaterialDocumentFlagInput) {
+  const {hasAtex, hasCe, hasRohs, hasDs, hasDoc, has3dCad, has2dCad, hasBdoc, hasInsp} = flags
+  return {
+    hasAtex,
+    hasCE: hasCe,
+    hasROHS: hasRohs,
+    hasDS: hasDs,
+    hasDoc,
+    has3DCAD: has3dCad,
+    has2DCAD: has2dCad,
+    hasBDOC: hasBdoc,
+    hasINSP: hasInsp,
+  }
+}
+
 // Type for material with all relations included in getMaterialById
 export type MaterialWithRelations = Prisma.MaterialGetPayload<{
   include: {
@@ -265,9 +292,19 @@ export async function createMaterial(data: {
   brandName?: string | null
   warehousePlace?: string | null
   rejected?: boolean | null
+  partApproved?: boolean
   longLeadTime?: boolean
   leadTimeValue?: number | null
-  leadTimeUnit?: 'days' | 'weeks' | null
+  leadTimeUnit?: 'days' | 'weeks' | 'months' | null
+  hasAtex?: boolean
+  hasCe?: boolean
+  hasRohs?: boolean
+  hasDs?: boolean
+  hasDoc?: boolean
+  has3dCad?: boolean
+  has2dCad?: boolean
+  hasBdoc?: boolean
+  hasInsp?: boolean
   materialGroupIdA: string | null
   materialGroupIdB?: string | null
   materialGroupIdC?: string | null
@@ -288,6 +325,15 @@ export async function createMaterial(data: {
     leadTimeValue,
     leadTimeUnit,
     isParentPart,
+    hasAtex,
+    hasCe,
+    hasRohs,
+    hasDs,
+    hasDoc,
+    has3dCad,
+    has2dCad,
+    hasBdoc,
+    hasInsp,
     ...materialData
   } = data
 
@@ -305,6 +351,17 @@ export async function createMaterial(data: {
     const material = await tx.material.create({
       data: {
         ...materialData,
+        ...toPrismaMaterialDocumentFlags({
+          hasAtex,
+          hasCe,
+          hasRohs,
+          hasDs,
+          hasDoc,
+          has3dCad,
+          has2dCad,
+          hasBdoc,
+          hasInsp,
+        }),
         warehousePlaceId: warehousePlace ?? null,
         isSerialTracked: data.isSerialTracked ?? false,
         MaterialSupplier:
@@ -406,9 +463,19 @@ export async function updateMaterial(
     brandName?: string | null
     warehousePlace?: string | null
     rejected?: boolean | null
+    canCopy?: boolean
     longLeadTime?: boolean
     leadTimeValue?: number | null
-    leadTimeUnit?: 'days' | 'weeks' | null
+    leadTimeUnit?: 'days' | 'weeks' | 'months' | null
+    hasAtex?: boolean
+    hasCe?: boolean
+    hasRohs?: boolean
+    hasDs?: boolean
+    hasDoc?: boolean
+    has3dCad?: boolean
+    has2dCad?: boolean
+    hasBdoc?: boolean
+    hasInsp?: boolean
     materialGroupIdA?: string | null
     materialGroupIdB?: string | null
     materialGroupIdC?: string | null
@@ -428,6 +495,15 @@ export async function updateMaterial(
     leadTimeValue,
     leadTimeUnit,
     isParentPart,
+    hasAtex,
+    hasCe,
+    hasRohs,
+    hasDs,
+    hasDoc,
+    has3dCad,
+    has2dCad,
+    hasBdoc,
+    hasInsp,
     ...materialData
   } = data
 
@@ -463,6 +539,17 @@ export async function updateMaterial(
       where: {id},
       data: {
         ...materialData,
+        ...toPrismaMaterialDocumentFlags({
+          hasAtex,
+          hasCe,
+          hasRohs,
+          hasDs,
+          hasDoc,
+          has3dCad,
+          has2dCad,
+          hasBdoc,
+          hasInsp,
+        }),
         warehousePlaceId: warehousePlace !== undefined ? warehousePlace : undefined,
         MaterialSupplier:
           supplierCompanyIds === undefined

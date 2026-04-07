@@ -9,6 +9,7 @@ import {Alert} from '@/components/ui/alert'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
+import {MATERIAL_DOCUMENT_FLAGS} from '@/components/custom/materialDocumentFlags'
 import type {MappedMaterial} from '@/types/material'
 import type {WarehousePlaceOption} from '@/types/warehousePlace'
 import {createMaterialAction, updateMaterialAction, deleteMaterialAction} from '@/serverFunctions/materials'
@@ -57,9 +58,17 @@ type SortField =
   | 'unitName'
   | 'parentBeNumbers'
   | 'createdByName'
-  | 'createdAt'
   | 'rejected'
+  | 'partApproved'
   | 'longLeadTime'
+  | 'hasAtex'
+  | 'hasCe'
+  | 'hasRohs'
+  | 'hasDs'
+  | 'has3dCad'
+  | 'has2dCad'
+  | 'hasBdoc'
+  | 'hasInsp'
 type SortDir = 'asc' | 'desc'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
@@ -183,6 +192,17 @@ export function MaterialTable({
         return getWarehousePart(material.warehousePlace, 'layer')
       case 'warehouseLayerPlace':
         return getWarehousePart(material.warehousePlace, 'layerPlace')
+      case 'hasAtex':
+      case 'hasCe':
+      case 'hasRohs':
+      case 'hasDs':
+      case 'has3dCad':
+      case 'has2dCad':
+      case 'hasBdoc':
+      case 'hasInsp':
+        return material[field] ? '1' : '0'
+      case 'partApproved':
+        return material.partApproved ? '1' : '0'
       default:
         return String(material[field] ?? '')
     }
@@ -244,9 +264,19 @@ export function MaterialTable({
         'brandName',
         'warehousePlace',
         'rejected',
+        'partApproved',
         'longLeadTime',
         'leadTimeValue',
         'leadTimeUnit',
+        'hasAtex',
+        'hasCe',
+        'hasRohs',
+        'hasDs',
+        'hasDoc',
+        'has3dCad',
+        'has2dCad',
+        'hasBdoc',
+        'hasInsp',
         'materialGroupIdA',
         'materialGroupIdB',
         'materialGroupIdC',
@@ -367,8 +397,19 @@ export function MaterialTable({
     {key: 'parentBeNumbers', label: 'Parent Parts'},
     {key: 'createdByName', label: 'Created'},
     {key: 'rejected', label: 'Status'},
+    {key: 'partApproved', label: 'Approved'},
     {key: 'longLeadTime', label: 'Long Lead'},
   ]
+
+  const renderDocumentFlag = (active: boolean) => {
+    return active ? (
+      <Badge variant="default" className="text-xs bg-blue-500/20 text-blue-700 dark:text-blue-400">
+        Yes
+      </Badge>
+    ) : (
+      <span className="text-xs text-muted-foreground">-</span>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -436,6 +477,15 @@ export function MaterialTable({
                   <SortIcon field={col.key} sortField={sortField} sortDir={sortDir} />
                 </TableHead>
               ))}
+              {MATERIAL_DOCUMENT_FLAGS.map(flag => (
+                <TableHead
+                  key={flag.key}
+                  className="w-24 cursor-pointer select-none text-center text-xs font-semibold text-muted-foreground uppercase tracking-wide"
+                  onClick={() => handleSort(flag.key)}>
+                  {flag.label}
+                  <SortIcon field={flag.key} sortField={sortField} sortDir={sortDir} />
+                </TableHead>
+              ))}
               <TableHead className="w-25 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Serial Tracked
               </TableHead>
@@ -447,7 +497,7 @@ export function MaterialTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 2} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={columns.length + MATERIAL_DOCUMENT_FLAGS.length + 2} className="text-center text-muted-foreground py-10">
                   No materials found
                 </TableCell>
               </TableRow>
@@ -509,6 +559,15 @@ export function MaterialTable({
                     )}
                   </TableCell>
                   <TableCell>
+                    {m.partApproved ? (
+                      <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-700 dark:text-emerald-400">
+                        Yes
+                      </Badge>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">No</span>
+                    )}
+                  </TableCell>
+                  <TableCell>
                     {m.longLeadTime ? (
                       <Badge variant="secondary" className="text-xs bg-amber-500/15 text-amber-700 dark:text-amber-400">
                         Yes
@@ -517,6 +576,11 @@ export function MaterialTable({
                       <span className="text-sm text-muted-foreground">No</span>
                     )}
                   </TableCell>
+                  {MATERIAL_DOCUMENT_FLAGS.map(flag => (
+                    <TableCell key={flag.key} className="text-sm text-center">
+                      {renderDocumentFlag(Boolean(m[flag.key]))}
+                    </TableCell>
+                  ))}
                   {/* Serial Tracked Button Column */}
                   <TableCell className="text-center">
                     <Button
@@ -557,12 +621,13 @@ export function MaterialTable({
                         size="icon"
                         variant="ghost"
                         className="h-7 w-7"
+                        disabled={!m.partApproved}
                         onClick={() => {
                           setDialogMode('duplicate')
                           setEditingMaterial(m)
                           setDialogOpen(true)
                         }}
-                        title="Copy row">
+                        title={m.partApproved ? 'Copy row' : 'Approve this part first'}>
                         <Copy className="h-3.5 w-3.5" />
                       </Button>
                       <Button

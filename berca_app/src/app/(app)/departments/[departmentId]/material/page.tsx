@@ -27,6 +27,17 @@ function getParentBeNumbers(material: unknown): string[] {
 }
 
 type MaterialRow = Awaited<ReturnType<typeof getMaterials>>[number]
+type MaterialDocumentFlags = {
+  hasAtex: boolean
+  hasCE: boolean
+  hasROHS: boolean
+  hasDS: boolean
+  hasDoc: boolean
+  has3DCAD: boolean
+  has2DCAD: boolean
+  hasBDOC: boolean
+  hasINSP: boolean
+}
 
 export default async function MaterialPage({params}: PageProps) {
   const {departmentId} = await params
@@ -45,6 +56,7 @@ export default async function MaterialPage({params}: PageProps) {
   const groupById = new Map(groups.map(g => [g.id, g]))
 
   const mappedMaterials: MappedMaterial[] = materials.map((m: MaterialRow) => {
+    const materialWithDocuments = m as MaterialRow & MaterialDocumentFlags
     const createdByName = [m.Employee?.firstName, m.Employee?.lastName].filter(Boolean).join(' ').trim()
 
     const preferredSupplierEntry =
@@ -52,7 +64,7 @@ export default async function MaterialPage({params}: PageProps) {
       m.MaterialSupplier.find(s => s.isPreferred) ??
       null
 
-    const mapped: MappedMaterial = {
+    const mapped = {
       id: m.id,
       beNumber: m.beNumber ?? '',
       name: m.name ?? null,
@@ -68,10 +80,20 @@ export default async function MaterialPage({params}: PageProps) {
       parentBeNumbers: getParentBeNumbers(m),
       brandName: m.brandName ?? null,
       warehousePlace: m.warehousePlaceId ?? null,
+      partApproved: (m as any).partApproved ?? false,
       longLeadTime: m.longLeadTime ?? false,
       leadTimeValue: m.MaterialLeadTime?.leadTimeValue ?? null,
-      leadTimeUnit: (m.MaterialLeadTime?.leadTimeUnit as 'days' | 'weeks' | null) ?? null,
+      leadTimeUnit: (m.MaterialLeadTime?.leadTimeUnit as 'days' | 'weeks' | 'months' | null) ?? null,
       rejected: m.rejected ?? false,
+      hasAtex: materialWithDocuments.hasAtex ?? false,
+      hasCe: materialWithDocuments.hasCE ?? false,
+      hasRohs: materialWithDocuments.hasROHS ?? false,
+      hasDs: materialWithDocuments.hasDS ?? false,
+      hasDoc: materialWithDocuments.hasDoc ?? false,
+      has3dCad: materialWithDocuments.has3DCAD ?? false,
+      has2dCad: materialWithDocuments.has2DCAD ?? false,
+      hasBdoc: materialWithDocuments.hasBDOC ?? false,
+      hasInsp: materialWithDocuments.hasINSP ?? false,
       materialGroupIdA: m.materialGroupIdA ?? null,
       materialGroupIdB: m.materialGroupIdB ?? null,
       materialGroupIdC: m.materialGroupIdC ?? null,
@@ -101,7 +123,7 @@ export default async function MaterialPage({params}: PageProps) {
       serialTrackedId: m.MaterialSerialTrack[0]?.id ?? null,
       isParentPart: false,
     }
-    return mapped
+    return mapped as MappedMaterial
   })
 
   const mappedGroups = groups.map(g => ({

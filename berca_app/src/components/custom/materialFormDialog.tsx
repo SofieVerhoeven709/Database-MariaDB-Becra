@@ -36,6 +36,25 @@ interface ParentPartOption {
   shortDescription: string
 }
 
+type MaterialDocumentFlags = {
+  hasAtex: boolean
+  hasCe: boolean
+  hasRohs: boolean
+  hasDs: boolean
+  hasDoc: boolean
+  has3dCad: boolean
+  has2dCad: boolean
+  hasBdoc: boolean
+  hasInsp: boolean
+}
+
+type MaterialFormState = Partial<MappedMaterial> &
+  MaterialDocumentFlags & {
+    id: string
+    isSerialTracked: boolean
+    isParentPart: boolean
+  }
+
 interface MaterialFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -68,6 +87,30 @@ function normalizeMaterialNumber(value: string | null | undefined, kind: NumberK
   // Keep the last 6 digits and enforce series prefix: 1xxxxxx for BE, 4xxxxxx for IOS.
   const tail = digits.length > 6 ? digits.slice(-6) : digits.padStart(6, '0')
   return `${kind === 'IOS' ? '4' : '1'}${tail}`
+}
+
+const DOCUMENT_FLAGS: Array<{key: keyof MaterialDocumentFlags; label: string}> = [
+  {key: 'hasAtex', label: 'Atex'},
+  {key: 'hasCe', label: 'CE'},
+  {key: 'hasRohs', label: 'ROHS'},
+  {key: 'hasDs', label: 'DS'},
+  {key: 'hasDoc', label: 'Doc'},
+  {key: 'has3dCad', label: '3D CAD'},
+  {key: 'has2dCad', label: '2D CAD'},
+  {key: 'hasBdoc', label: 'BDOC'},
+  {key: 'hasInsp', label: 'INSP'},
+]
+
+const DEFAULT_DOCUMENT_FLAGS: MaterialDocumentFlags = {
+  hasAtex: false,
+  hasCe: false,
+  hasRohs: false,
+  hasDs: false,
+  hasDoc: false,
+  has3dCad: false,
+  has2dCad: false,
+  hasBdoc: false,
+  hasInsp: false,
 }
 
 interface PreferredSupplierPickerProps {
@@ -164,7 +207,7 @@ function PreferredSupplierPicker({
   )
 }
 
-const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean} = {
+const EMPTY_MATERIAL: MaterialFormState = {
   id: '',
   beNumber: '',
   name: null,
@@ -181,9 +224,11 @@ const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string; isSerialTracked: bo
   brandName: null,
   warehousePlace: null,
   rejected: false,
+  partApproved: false,
   longLeadTime: false,
   leadTimeValue: null,
   leadTimeUnit: null,
+  ...DEFAULT_DOCUMENT_FLAGS,
   materialGroupIdA: '',
   materialGroupIdB: null,
   materialGroupIdC: null,
@@ -210,17 +255,16 @@ export function MaterialFormDialog({
 }: MaterialFormDialogProps) {
   const resolvedMode: 'create' | 'edit' | 'duplicate' = mode ?? (material ? 'edit' : 'create')
   const isEditing = resolvedMode === 'edit' && material !== null
+  const parentPartLinkCount = parentPartBeNumbersInUse.length
 
-  const makeForm = (): Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean} =>
+  const makeForm = (): MaterialFormState =>
     material
       ? resolvedMode === 'duplicate'
-        ? {...material, id: crypto.randomUUID(), beNumber: ''}
-        : {...material}
+        ? {...DEFAULT_DOCUMENT_FLAGS, ...material, id: crypto.randomUUID(), beNumber: ''}
+        : {...DEFAULT_DOCUMENT_FLAGS, ...material}
       : {...EMPTY_MATERIAL, id: crypto.randomUUID()}
 
-  const [form, setForm] = useState<
-    Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean}
-  >(makeForm)
+  const [form, setForm] = useState<MaterialFormState>(makeForm)
   const [isParentPartEnabled, setIsParentPartEnabled] = useState(form.isParentPart ?? false)
   const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
   const [parentPartSearch, setParentPartSearch] = useState('')
@@ -251,6 +295,10 @@ export function MaterialFormDialog({
     if (field === 'isParentPart') {
       setIsParentPartEnabled(!!value)
     }
+  }
+
+  function updateFlag<K extends keyof MaterialDocumentFlags>(field: K, value: boolean) {
+    setForm(prev => ({...prev, [field]: value}))
   }
 
   function toggleSupplier(companyId: string) {
@@ -419,8 +467,8 @@ export function MaterialFormDialog({
           {/* Number Type */}
           <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">
             <div className="flex flex-col">
-              <Label className="text-xs text-muted-foreground">Nummer type</Label>
-              <p className="text-xs text-muted-foreground">Schakel tussen BE en IOS.</p>
+              <Label className="text-xs text-muted-foreground">Number type</Label>
+              <p className="text-xs text-muted-foreground">Switch between BE and IOS.</p>
             </div>
             <div className="flex items-center gap-2">
               <span
@@ -449,7 +497,7 @@ export function MaterialFormDialog({
             <Label htmlFor="beNumber" className="text-xs text-muted-foreground">
               {numberKind} Number
             </Label>
-            <p className="text-xs text-muted-foreground">Laat leeg voor automatische generatie</p>
+            <p className="text-xs text-muted-foreground">Leave empty for automatically generating of the number</p>
             <Input
               id="beNumber"
               className={inputStyles}
@@ -749,6 +797,13 @@ export function MaterialFormDialog({
               </Button>
             </div>
 
+            {parentPartLinkCount > 0 && (
+              <p className="text-xs text-muted-foreground">
+                {parentPartLinkCount} parent part link{parentPartLinkCount === 1 ? '' : 's'} are available in the
+                current list.
+              </p>
+            )}
+
             {hasParentParts && (
               <>
                 <Input
@@ -812,6 +867,13 @@ export function MaterialFormDialog({
               </div>
             </div>
             <div className="flex flex-col gap-2">
+              <Label className="text-xs text-muted-foreground">Part Approved</Label>
+              <div className="flex items-center gap-3 pt-1">
+                <Switch checked={form.partApproved ?? false} onCheckedChange={v => update('partApproved', v)} />
+                <span className="text-sm text-muted-foreground">{form.partApproved ? 'Yes' : 'No'}</span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
               <Label className="text-xs text-muted-foreground">Long Lead Time</Label>
               <div className="flex items-center gap-3 pt-1">
                 <Switch
@@ -826,6 +888,34 @@ export function MaterialFormDialog({
                 />
                 <span className="text-sm text-muted-foreground">{form.longLeadTime ? 'Yes' : 'No'}</span>
               </div>
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-border bg-secondary/20 p-4">
+            <div className="mb-3">
+              <Label className="text-xs text-muted-foreground">Document links</Label>
+              <p className="text-xs text-muted-foreground/80 mt-1">
+                Mark which document types are available for this material.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+              {DOCUMENT_FLAGS.map(flag => (
+                <div
+                  key={flag.key}
+                  className="flex items-center justify-between gap-3 rounded-md border border-border bg-background/40 px-3 py-2">
+                  <Label htmlFor={flag.key} className="text-sm text-foreground cursor-pointer">
+                    {flag.label}
+                  </Label>
+                  <div className="flex items-center gap-3">
+                    <Switch
+                      id={flag.key}
+                      checked={Boolean(form[flag.key])}
+                      onCheckedChange={v => updateFlag(flag.key, v)}
+                    />
+                    <span className="text-sm text-muted-foreground">{form[flag.key] ? 'Yes' : 'No'}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -849,7 +939,9 @@ export function MaterialFormDialog({
                 <Label className="text-xs text-muted-foreground">Lead Time Unit</Label>
                 <Select
                   value={form.leadTimeUnit ?? '__none__'}
-                  onValueChange={value => update('leadTimeUnit', value === '__none__' ? null : (value as 'days' | 'weeks'))}>
+                  onValueChange={value =>
+                    update('leadTimeUnit', value === '__none__' ? null : (value as 'days' | 'weeks' | 'months'))
+                  }>
                   <SelectTrigger className={inputStyles}>
                     <SelectValue placeholder="Select unit..." />
                   </SelectTrigger>
@@ -857,6 +949,7 @@ export function MaterialFormDialog({
                     <SelectItem value="__none__">None</SelectItem>
                     <SelectItem value="days">Days</SelectItem>
                     <SelectItem value="weeks">Weeks</SelectItem>
+                    <SelectItem value="months">Months</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

@@ -132,7 +132,6 @@ function toFormState(item: MaterialSerialTrackedFormValue | null, mode: 'create'
     return date.split('T')[0]
   }
 
-
   return {
     id: isDuplicate ? undefined : item.id,
     materialId: '',
@@ -161,7 +160,6 @@ function toFormState(item: MaterialSerialTrackedFormValue | null, mode: 'create'
     inspectionIntervalUnit: item.inspectionIntervalUnit ?? 'DAY',
   }
 }
-
 
 export function MaterialSerialTrackedFormDialog({
   open,

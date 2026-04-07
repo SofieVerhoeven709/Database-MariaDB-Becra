@@ -7,7 +7,6 @@ import {MaterialSerialTrackedFormDialog} from '@/components/custom/serialTracked
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 
-
 interface Props {
   item: any
   companies: {id: string; name: string}[]
@@ -19,7 +18,14 @@ interface Props {
   currentUserLevel: number
 }
 
-export function MaterialSerialTrackedDetail({item, companies, projects, materialGroups, warehousePlaces, materialOptions}: Props) {
+export function MaterialSerialTrackedDetail({
+  item,
+  companies,
+  projects,
+  materialGroups,
+  warehousePlaces,
+  materialOptions,
+}: Props) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [structure, setStructure] = useState<any[]>([])
 
@@ -49,11 +55,7 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
           <h1 className="text-xl font-semibold">Serial Tracked Item</h1>
           <p className="text-muted-foreground text-sm">BE Number: {item.beNumber ?? '-'}</p>
         </div>
-        <button
-          className="ml-4 rounded p-2 hover:bg-accent/20"
-          title="Edit"
-          onClick={() => setDialogOpen(true)}
-        >
+        <button className="ml-4 rounded p-2 hover:bg-accent/20" title="Edit" onClick={() => setDialogOpen(true)}>
           <Pencil className="h-5 w-5 text-accent" />
         </button>
       </div>
@@ -139,7 +141,14 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
                       <TableCell>{s.MaterialSerialTrack?.beNumber ?? '-'}</TableCell>
                       <TableCell>
                         {s.MaterialSerialTrack?.MaterialGroup
-                          ? [s.MaterialSerialTrack.MaterialGroup.groupA, s.MaterialSerialTrack.MaterialGroup.groupB, s.MaterialSerialTrack.MaterialGroup.groupC, s.MaterialSerialTrack.MaterialGroup.groupD].filter(Boolean).join(' / ')
+                          ? [
+                              s.MaterialSerialTrack.MaterialGroup.groupA,
+                              s.MaterialSerialTrack.MaterialGroup.groupB,
+                              s.MaterialSerialTrack.MaterialGroup.groupC,
+                              s.MaterialSerialTrack.MaterialGroup.groupD,
+                            ]
+                              .filter(Boolean)
+                              .join(' / ')
                           : '-'}
                       </TableCell>
                     </TableRow>

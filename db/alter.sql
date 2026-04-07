@@ -1124,4 +1124,3 @@ WHERE mst.deleted = 0
   AND mst.nextInspectionDate IS NOT NULL
   AND YEAR(mst.nextInspectionDate) = YEAR(CURDATE())
   AND MONTH(mst.nextInspectionDate) = MONTH(CURDATE());
-

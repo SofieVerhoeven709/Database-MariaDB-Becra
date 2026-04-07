@@ -1437,32 +1437,6 @@ CREATE TABLE
     ) ENGINE = InnoDB;
 
 CREATE TABLE
-    IF NOT EXISTS MaterialPrice (
-                                    id CHAR(36) NOT NULL PRIMARY KEY,
-    beNumber VARCHAR(255),
-    orderNr VARCHAR(255),
-    quoteBecra CHAR(36),
-    supplierOrderNr VARCHAR(255),
-    brandOrderNr VARCHAR(255),
-    shortDescription VARCHAR(255),
-    longDescription TEXT,
-    brandName VARCHAR(255),
-    updatedAt DATETIME,
-    rejected BOOLEAN,
-    additionalInfo VARCHAR(255),
-    unitPrice Decimal(10,2),
-    quantityPrice INT,
-    createdBy CHAR(36) NOT NULL,
-    FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-    deleted BOOLEAN NOT NULL DEFAULT 0,
-    deletedAt DATETIME,
-    deletedBy CHAR(36),
-    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-    companyId CHAR(36) NOT NULL,
-    FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
-    ) ENGINE = InnoDB;
-
-CREATE TABLE
     IF NOT EXISTS MaterialSerialTrack (
                                           id CHAR(36) NOT NULL PRIMARY KEY,
     materialId CHAR(36) NULL,
@@ -1651,29 +1625,6 @@ CREATE TABLE
     longDescription TEXT,
     createdAt DATETIME NOT NULL,
     createdBy CHAR(36) NOT NULL,
-    FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-    deleted BOOLEAN NOT NULL DEFAULT 0,
-    deletedAt DATETIME,
-    deletedBy CHAR(36),
-    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-    ) ENGINE = InnoDB;
-
-CREATE TABLE
-    IF NOT EXISTS QuoteSupplier (
-                                    id CHAR(36) NOT NULL PRIMARY KEY,
-    description TEXT,
-    projectId CHAR(36),
-    rejected BOOLEAN NOT NULL,
-    additionalInfo VARCHAR(255),
-    link VARCHAR(255),
-    documentPlaceId CHAR(36),
-    payementCondition VARCHAR(255),
-    acceptedForPOB BOOLEAN,
-    validUntill DATETIME,
-    deliveryTimeDays INT,
-    createdBy CHAR(36) NOT NULL,
-    FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT,
-    FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT,
     FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
     deleted BOOLEAN NOT NULL DEFAULT 0,
     deletedAt DATETIME,
@@ -1895,7 +1846,7 @@ WHERE mst.deleted = 0
     AND YEAR(mst.nextInspectionDate) = YEAR(CURDATE())
   AND MONTH(mst.nextInspectionDate) = MONTH(CURDATE());
 
-  CREATE TABLE
+CREATE TABLE
       IF NOT EXISTS ProjectBOM (
             id CHAR(36) NOT NULL PRIMARY KEY,
             projectBomNumber VARCHAR(255) NOT NULL,
@@ -1994,12 +1945,14 @@ CREATE TABLE
             projectBOMStructureId CHAR(36) NOT NULL,
             purchaseBOMStructureId CHAR(36),
             deletedBy CHAR(36),
+            quoteSupplierLineId CHAR(36),
             FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
             FOREIGN KEY (purchaseBOMId) REFERENCES PurchaseBOM (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
             FOREIGN KEY (projectBOMStructureId) REFERENCES ProjectBOMStructure (id) ON DELETE Restrict,
             FOREIGN KEY (purchaseBOMStructureId) REFERENCES PurchaseBOMStructure (id) ON DELETE CASCADE,
+            FOREIGN KEY (quoteSupplierLineId) REFERENCES QuoteSupplierLine(id) ON DELETE Restrict;
             UNIQUE(purchaseBOMId, projectBOMStructureId)
       ) ENGINE = InnoDB;
 
@@ -2033,9 +1986,9 @@ CREATE TABLE
             materialId CHAR(36) NOT NULL,
             totalRequiredQty INT NOT NULL,
             reservedQty INT DEFAULT 0,
-            toPurchaseQty INT DEFAULT 0,
             createdAt DATETIME NOT NULL,
-            FOREIGN KEY (materialId) REFERENCES Material(id) ON DELETE RESTRICT
+            FOREIGN KEY (materialId) REFERENCES Material(id) ON DELETE RESTRICT,
+            UNIQUE(materialId)
       )ENGINE = InnoDB;
 
 CREATE TABLE 
@@ -2048,3 +2001,56 @@ CREATE TABLE
             FOREIGN KEY (materialDemandId) REFERENCES MaterialDemand(id) ON DELETE CASCADE,
             FOREIGN KEY (projectBOMStructureId) REFERENCES ProjectBOMStructure(id) ON DELETE CASCADE
       )ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS QuoteSupplier (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            quoteNumber VarChar(255) NOT NULL,
+            quotationNumber VarChar(255),
+            description TEXT,
+            companyId CHAR(36) NOT NULL,
+            rejected BOOLEAN NOT NULL DEFAULT 0,
+            additionalInfo VARCHAR(255),
+            documentId CHAR(36),
+            acceptedForPOB BOOLEAN NOT NULL DEFAULT 0,
+            validUntill DATETIME,
+            deliveryTimeDays INT,
+            createdBy CHAR(36) NOT NULL,
+            paymentConditionId CHAR(36),
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
+            FOREIGN KEY (documentId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (paymentConditionId) REFERENCES PaymentCondition (id) ON DELETE RESTRICT,
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS PaymentCondition(
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            createdAt DATETIME NOT NULL,
+            deletedAt DATETIME,
+            createdBy CHAR(36) NOT NULL,
+            deletedBy CHAR(36),
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE 
+      IF NOT EXISTS QuoteSupplierLine (
+            id CHAR(36) PRIMARY KEY,
+            quoteSupplierId CHAR(36) NOT NULL,
+            materialId CHAR(36) NOT NULL,
+            materialDemandId CHAR(36),
+            quantity INT NOT NULL,
+            unitPrice DECIMAL(10,2) NOT NULL,
+            minQuantity INT,
+            selected BOOLEAN DEFAULT 0,
+            FOREIGN KEY (quoteSupplierId) REFERENCES QuoteSupplier(id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialId) REFERENCES Material(id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialDemandId) REFERENCES MaterialDemand(id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;

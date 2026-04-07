@@ -9,7 +9,7 @@ import {Label} from '@/components/ui/label'
 import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedProjectBOM, ProjectOption} from '@/types/projectBom'
-import {createProjectBOMAction, updateProjectBOMAction, searchProjectsAction} from '@/serverFunctions/projectBom'
+import {createProjectBOMAction, updateProjectBOMAction, searchProjectsAction} from '@/serverFunctions/projectBoms'
 import {generateBomNumber} from '@/lib/utils'
 
 interface ProjectBOMFormDialogProps {

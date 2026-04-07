@@ -31,7 +31,7 @@ import {
   softDeleteProjectBOMAction,
   hardDeleteProjectBOMAction,
   undeleteProjectBOMAction,
-} from '@/serverFunctions/projectBom'
+} from '@/serverFunctions/projectBoms'
 import {createContactAndReturnIdAction} from '@/serverFunctions/contacts'
 import type {Route} from 'next'
 import type {ProjectDetailData} from '@/extra/projectDetails'

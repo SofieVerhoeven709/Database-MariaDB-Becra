@@ -19,7 +19,7 @@ import {
   softDeleteProjectBOMStructureAction,
   hardDeleteProjectBOMStructureAction,
   restoreProjectBOMStructureAction,
-} from '@/serverFunctions/projectBom'
+} from '@/serverFunctions/projectBoms'
 import {ProjectBOMStructureFormDialog} from '@/components/custom/projectBomStructureFormDialog'
 
 function formatDate(date: string | null) {

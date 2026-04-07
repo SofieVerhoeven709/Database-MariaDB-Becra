@@ -15,7 +15,7 @@ import {
   softDeleteProjectBOMAction,
   hardDeleteProjectBOMAction,
   undeleteProjectBOMAction,
-} from '@/serverFunctions/projectBom'
+} from '@/serverFunctions/projectBoms'
 import {ProjectBOMFormDialog} from '@/components/custom/projectBomFormDialog'
 
 type SortField =

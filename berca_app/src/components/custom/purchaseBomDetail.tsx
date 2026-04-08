@@ -66,6 +66,7 @@ export function PurchaseBOMDetail({
   const [editClosed, setEditClosed] = useState(bom.closed)
   const [editMaterialClosed, setEditMaterialClosed] = useState(bom.materialClosed)
   const [editPurchased, setEditPurchased] = useState(bom.purchased ?? false)
+  const [editApprovedForQuote, setEditApprovedForQuote] = useState(bom.approvedForQuote ?? false)
 
   const parentBomOptions = allBOMs.filter(b => b.id !== bom.id)
   const parentBom = allBOMs.find(b => b.id === bom.purchaseBomId) ?? null
@@ -87,6 +88,7 @@ export function PurchaseBOMDetail({
         // the payload too so the UI reflects the correct value immediately on refresh
         materialClosed: editPurchased ? true : editMaterialClosed,
         purchased: editPurchased,
+        approvedForQuote: editApprovedForQuote,
       })
       setEditing(false)
       router.refresh()
@@ -106,6 +108,7 @@ export function PurchaseBOMDetail({
     setEditClosed(bom.closed)
     setEditMaterialClosed(bom.materialClosed)
     setEditPurchased(bom.purchased ?? false)
+    setEditApprovedForQuote(bom.approvedForQuote ?? false)
     setEditing(false)
   }
 
@@ -380,6 +383,20 @@ export function PurchaseBOMDetail({
               )}
             </div>
 
+            {/* Approved for Quote */}
+            <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2 max-w-xs">
+              <Label className="text-xs text-muted-foreground">Approved for Quote</Label>
+              {editing ? (
+                <Switch checked={editApprovedForQuote} onCheckedChange={setEditApprovedForQuote} />
+              ) : bom.approvedForQuote ? (
+                <Badge className="bg-accent/15 text-accent border-0 font-medium text-xs">Yes</Badge>
+              ) : (
+                <Badge variant="secondary" className="text-muted-foreground font-medium text-xs">
+                  No
+                </Badge>
+              )}
+            </div>
+
             {/* Purchased */}
             <div className="flex flex-col gap-1 rounded-lg border border-border bg-secondary px-3 py-2 max-w-xs">
               <div className="flex items-center justify-between">
@@ -477,6 +494,7 @@ export function PurchaseBOMDetail({
                       <TableHead className={thClass}>Ready Date</TableHead>
                       <TableHead className={`${thClass} border-l border-border/40`}>Res. Qty</TableHead>
                       <TableHead className={thClass}>Issued Qty</TableHead>
+                      <TableHead className={thClass}>Approved</TableHead>
                       <TableHead className={thClass}>Purchased</TableHead>
                       <TableHead className={thClass}>Added By</TableHead>
                       <TableHead className={thClass}>Added At</TableHead>
@@ -515,6 +533,15 @@ export function PurchaseBOMDetail({
                           {s.reservedQuantity ?? '—'}
                         </TableCell>
                         <TableCell className={tdClass}>{s.issuedQuantity ?? '—'}</TableCell>
+                        <TableCell>
+                          {s.approvedForQuote ? (
+                            <Badge className="text-xs bg-accent/15 text-accent border-0">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-xs text-muted-foreground/60">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
                         <TableCell>
                           {s.purchased ? (
                             <Badge className="text-xs bg-accent/15 text-accent border-0">Yes</Badge>

@@ -49,7 +49,9 @@ export function MaterialDemandTable({
   departmentId,
 }: MaterialDemandTableProps) {
   const router = useRouter()
-  const canCreate = currentUserLevel >= 60
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canEditRequiredQty = isAdmin || currentUserLevel >= 80
+  const canCreate = isAdmin || currentUserLevel >= 80
   const canEdit = currentUserLevel >= 40
 
   const [search, setSearch] = useState('')
@@ -121,9 +123,14 @@ export function MaterialDemandTable({
   async function handleUpdate(id: string) {
     const totalRequiredQty = Number.parseInt(editTotalRequiredQty, 10)
     const reservedQty = Number.parseInt(editReservedQty, 10)
+    const row = initialEntries.find(e => e.id === id)
+    const nextTotalRequiredQty = canEditRequiredQty
+      ? (Number.isNaN(totalRequiredQty) ? 0 : totalRequiredQty)
+      : (row?.totalRequiredQty ?? 0)
+
     await updateMaterialDemandAction({
       id,
-      totalRequiredQty: Number.isNaN(totalRequiredQty) ? 0 : totalRequiredQty,
+      totalRequiredQty: nextTotalRequiredQty,
       reservedQty: Number.isNaN(reservedQty) ? 0 : reservedQty,
     })
     cancelEdit()
@@ -260,7 +267,7 @@ export function MaterialDemandTable({
                       </Link>
                     </TableCell>
                     <TableCell className={tdClass}>
-                      {isEditing ? (
+                      {isEditing && canEditRequiredQty ? (
                         <Input
                           type="number"
                           min={0}

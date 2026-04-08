@@ -10,7 +10,15 @@ const REVALIDATE_PATH = '/departments/purchasing/materialDemand'
 export const createMaterialDemandAction = protectedServerFunction({
   schema: createMaterialDemandSchema,
   functionName: 'Create material demand action',
-  serverFn: async ({data, logger}) => {
+  serverFn: async ({data, logger, profile}) => {
+    const isManagerOrAdmin = profile.RoleLevelEmployee.some(
+      rle => rle.RoleLevel.Role.name === 'Administrator' || rle.RoleLevel.SubRole.level >= 80,
+    )
+
+    if (!isManagerOrAdmin) {
+      throw new Error('Only managers can create material demand rows.')
+    }
+
     const existing = await prismaClient.materialDemand.findFirst({
       where: {materialId: data.materialId},
       select: {id: true},
@@ -39,7 +47,24 @@ export const createMaterialDemandAction = protectedServerFunction({
 export const updateMaterialDemandAction = protectedServerFunction({
   schema: updateMaterialDemandSchema,
   functionName: 'Update material demand action',
-  serverFn: async ({data, logger}) => {
+  serverFn: async ({data, logger, profile}) => {
+    const isManagerOrAdmin = profile.RoleLevelEmployee.some(
+      rle => rle.RoleLevel.Role.name === 'Administrator' || rle.RoleLevel.SubRole.level >= 80,
+    )
+
+    const existing = await prismaClient.materialDemand.findUnique({
+      where: {id: data.id},
+      select: {totalRequiredQty: true},
+    })
+
+    if (!existing) {
+      throw new Error('Material demand row not found.')
+    }
+
+    if (!isManagerOrAdmin && data.totalRequiredQty !== existing.totalRequiredQty) {
+      throw new Error('Only managers can modify required quantity.')
+    }
+
     if (data.reservedQty > data.totalRequiredQty) {
       throw new Error('Reserved quantity cannot be greater than total required quantity.')
     }

@@ -43,6 +43,7 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
   const [issuedQuantity, setIssuedQuantity] = useState('')
   const [notDeliverable, setNotDeliverable] = useState(false)
   const [purchased, setPurchased] = useState(false)
+  const [approvedForQuote, setApprovedForQuote] = useState(false)
 
   useEffect(() => {
     if (structure) {
@@ -50,11 +51,13 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
       setIssuedQuantity(structure.issuedQuantity?.toString() ?? '')
       setNotDeliverable(structure.notDeliverable ?? false)
       setPurchased(structure.purchased ?? false)
+      setApprovedForQuote(structure.approvedForQuote ?? false)
     } else {
       setReservedQuantity('')
       setIssuedQuantity('')
       setNotDeliverable(false)
       setPurchased(false)
+      setApprovedForQuote(false)
     }
   }, [structure?.id, open])
 
@@ -69,6 +72,7 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
         issuedQuantity: issuedQuantity !== '' ? parseInt(issuedQuantity) : null,
         notDeliverable,
         purchased,
+        approvedForQuote,
       })
       onOpenChange(false)
       router.refresh()
@@ -79,16 +83,16 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-card border-border">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-border">
         <DialogHeader>
-          <DialogTitle className="text-foreground">Update Execution Quantities</DialogTitle>
+          <DialogTitle className="text-foreground">Approve & Execute Structure</DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-5 py-3">
-          {/* ── Read-only structural information ─────────────────────────────── */}
+          {/* ── Material & Structural Information ─────────────────────────────── */}
           <div className="rounded-lg border border-border/40 bg-secondary/20 px-4 py-3">
             <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wide">
-              Structure Info (read-only — managed from Project BOM)
+              Material Information
             </p>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="sm:col-span-2">
@@ -104,19 +108,38 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
                   }
                 />
               </div>
+              <ReadOnlyField label="Description" value={structure?.description} />
               <ReadOnlyField label="Short Description" value={structure?.shortDescription} />
               <ReadOnlyField label="Tag" value={structure?.tag} />
-              <ReadOnlyField label="Required Qty" value={structure?.requiredQuantity?.toString()} />
-              <ReadOnlyField
-                label="Ready for Purchase Date"
-                value={formatDate(structure?.readyForPurchaseDate ?? null)}
-              />
+              <ReadOnlyField label="Additional Info" value={structure?.additionalInfo} />
             </div>
           </div>
 
+           {/* ── Read-only structural information ─────────────────────────────── */}
+           <div className="rounded-lg border border-border/40 bg-secondary/20 px-4 py-3">
+             <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wide">
+               Specification (read-only — managed from Project BOM)
+             </p>
+             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+               <ReadOnlyField label="Required Qty" value={structure?.requiredQuantity?.toString()} />
+               <ReadOnlyField
+                 label="Ready for Purchase Date"
+                 value={formatDate(structure?.readyForPurchaseDate ?? null)}
+               />
+               <ReadOnlyField
+                 label="Created By"
+                 value={structure?.createdByName}
+               />
+               <ReadOnlyField
+                 label="Created At"
+                 value={formatDate(structure?.createdAt ?? null)}
+               />
+             </div>
+           </div>
+
           {/* ── Editable execution fields ─────────────────────────────────────── */}
           <div className="flex flex-col gap-3">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Execution Quantities</p>
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Execution & Approval</p>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
@@ -145,19 +168,40 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
               </div>
             </div>
 
-            {/* ── Status toggles ──────────────────────────────────────────────── */}
-            <div className="flex flex-col gap-2">
-              {/* Not Deliverable — editable */}
-              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
-                <Label className="text-xs text-muted-foreground">Not Deliverable</Label>
-                <Switch checked={notDeliverable} onCheckedChange={setNotDeliverable} />
-              </div>
+             {/* ── Status toggles ──────────────────────────────────────────────── */}
+             <div className="flex flex-col gap-2">
+               {/* Approved for Quote — editable */}
+               <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                 <div className="flex flex-col gap-0.5">
+                   <Label className="text-xs text-muted-foreground">Approved for Quote</Label>
+                   <p className="text-xs text-muted-foreground/60">
+                     Approve this structure for quotation and procurement
+                   </p>
+                 </div>
+                 <Switch checked={approvedForQuote} onCheckedChange={setApprovedForQuote} />
+               </div>
 
-              {/* Purchased — editable */}
-              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
-                <Label className="text-xs text-muted-foreground">Purchased</Label>
-                <Switch checked={purchased} onCheckedChange={setPurchased} />
-              </div>
+               {/* Not Deliverable — editable */}
+               <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                 <div className="flex flex-col gap-0.5">
+                   <Label className="text-xs text-muted-foreground">Not Deliverable</Label>
+                   <p className="text-xs text-muted-foreground/60">
+                     Mark if this material cannot be delivered for this project
+                   </p>
+                 </div>
+                 <Switch checked={notDeliverable} onCheckedChange={setNotDeliverable} />
+               </div>
+
+               {/* Purchased — editable */}
+               <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                 <div className="flex flex-col gap-0.5">
+                   <Label className="text-xs text-muted-foreground">Purchased</Label>
+                   <p className="text-xs text-muted-foreground/60">
+                     Mark when the material has been purchased and received
+                   </p>
+                 </div>
+                 <Switch checked={purchased} onCheckedChange={setPurchased} />
+               </div>
 
               {/* Not Correct — read-only status */}
               <div
@@ -167,7 +211,7 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
                     {structure?.notCorrect && <AlertCircle className="h-3.5 w-3.5 text-destructive" />}
-                    <Label className="text-xs text-muted-foreground">Not Correct</Label>
+                    <Label className="text-xs text-muted-foreground">Not Correct / Issue</Label>
                   </div>
                   <Switch checked={structure?.notCorrect ?? false} disabled />
                 </div>
@@ -178,6 +222,14 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
                   <p className="text-xs text-muted-foreground/60 italic pl-0.5">No reason provided</p>
                 )}
               </div>
+
+              {/* Completed Date — read-only */}
+              {structure?.completedDate && (
+                <ReadOnlyField
+                  label="Completed Date"
+                  value={formatDate(structure.completedDate)}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -190,7 +242,7 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
             onClick={handleSubmit}
             disabled={saving || !structure}
             className="bg-accent text-accent-foreground hover:bg-accent/80">
-            {saving ? 'Saving…' : 'Save Quantities'}
+            {saving ? 'Saving…' : 'Save Changes'}
           </Button>
         </DialogFooter>
       </DialogContent>

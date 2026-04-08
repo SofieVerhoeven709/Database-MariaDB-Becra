@@ -14,6 +14,7 @@ import {searchProjects, getDescendantBOMIds, getAncestorBOMIds} from '@/dal/proj
 import type {ProjectOption} from '@/types/projectBom'
 import {createTargetForType} from '@/dal/targets'
 import {createPurchaseBOMAction, createPurchaseBOMStructureAction} from '@/serverFunctions/purchaseBoms'
+import {ensureMaterialDemandForMaterial} from '@/dal/materialDemands'
 
 async function assertProjectBOMNotQuoteApproved(projectBOMId: string) {
   const purchase = await prismaClient.purchaseBOM.findFirst({
@@ -228,9 +229,10 @@ export const createProjectBOMStructureAction = protectedServerFunction({
     }
 
     const id = crypto.randomUUID()
+    const {requiredQuantity, ...structureData} = data
     await prismaClient.projectBOMStructure.create({
       data: {
-        ...data,
+        ...structureData,
         id,
         createdBy: profile.id,
         createdAt: new Date(),
@@ -239,11 +241,14 @@ export const createProjectBOMStructureAction = protectedServerFunction({
             id: crypto.randomUUID(),
             createdBy: profile.id,
             createdAt: new Date(),
-            requiredQuantity: data.requiredQuantity,
+            requiredQuantity,
           },
         },
       },
     })
+
+    await ensureMaterialDemandForMaterial(data.materialId)
+
     logger.info(`Project BOM structure created: ${id}`)
 
     // ── Reset readyForPurchase upward ────────────────────────────────────────

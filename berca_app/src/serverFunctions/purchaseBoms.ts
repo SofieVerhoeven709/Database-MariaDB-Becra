@@ -13,6 +13,7 @@ import {protectedServerFunction} from '@/lib/serverFunctions'
 import {searchProjects} from '@/dal/purchaseBoms'
 import type {ProjectOption} from '@/types/purchaseBom'
 import {createTargetForType} from '@/dal/targets'
+import {ensureMaterialDemandForMaterial, createMaterialDemandSourcesForProjectBOMStructures, validateMaterialDemandSourceAllocation} from '@/dal/materialDemands'
 
 // ─── PurchaseBOM CRUD ───────────────────────────────────────────────────────────
 
@@ -41,7 +42,7 @@ export const createPurchaseBOMAction = protectedServerFunction({
 export const updatePurchaseBOMAction = protectedServerFunction({
   schema: updatePurchaseBOMSchema,
   functionName: 'Update purchase BOM action',
-  serverFn: async ({data: {id, ...data}, logger}) => {
+  serverFn: async ({data: {id, ...data}, logger, profile}) => {
     // purchased=true forces materialClosed/closed=true on this BOM.
     const bomUpdateData = {
       ...data,
@@ -75,11 +76,79 @@ export const updatePurchaseBOMAction = protectedServerFunction({
 
     if (data.approvedForQuote === true) {
       // Approval releases this BOM for demand/quote flow and locks project-side structure edits.
+      // First, fetch all active PurchaseBOMStructures with their ProjectBOMStructure relations
+      const purchaseStructures = await prismaClient.purchaseBOMStructure.findMany({
+        where: {purchaseBOMId: id, deleted: false},
+        include: {
+          ProjectBOMStructure: {
+            select: {
+              id: true,
+              Material: {select: {id: true}},
+              BOMExecution: {select: {requiredQuantity: true}},
+            },
+          },
+        },
+      })
+
+      // Mark all structures as approvedForQuote
       await prismaClient.purchaseBOMStructure.updateMany({
         where: {purchaseBOMId: id, deleted: false},
         data: {approvedForQuote: true},
       })
       logger.info(`Marked all active structures as approvedForQuote for PurchaseBOM: ${id}`)
+
+      // Create MaterialDemandSource entries for tracking source allocations
+      const projectBomStructureIds = purchaseStructures
+        .filter(ps => ps.ProjectBOMStructure)
+        .map(ps => ps.ProjectBOMStructure!.id)
+
+      if (projectBomStructureIds.length > 0) {
+        try {
+          // Get or create MaterialDemandSourceType for ProjectBOMStructure
+          const sourceType = await prismaClient.materialDemandSourceType.upsert({
+            where: {name: 'ProjectBOMStructure'},
+            update: {},
+            create: {
+              id: crypto.randomUUID(),
+              name: 'ProjectBOMStructure',
+              description: 'Sources created when Project BOM structures are approved for purchase.',
+              createdAt: new Date(),
+              createdBy: profile.id,
+            },
+            select: {id: true},
+          })
+
+          const createdSources = await createMaterialDemandSourcesForProjectBOMStructures(
+            projectBomStructureIds,
+            sourceType.id,
+            profile.id,
+          )
+          logger.info(`Created ${createdSources.length} MaterialDemandSource entries for PurchaseBOM approval: ${id}`)
+
+          // Validate allocations don't exceed demands
+          const materials = new Set(
+            purchaseStructures
+              .filter(ps => ps.ProjectBOMStructure?.Material)
+              .map(ps => ps.ProjectBOMStructure!.Material!.id),
+          )
+
+          for (const materialId of materials) {
+            const demand = await prismaClient.materialDemand.findUnique({
+              where: {materialId},
+              select: {id: true},
+            })
+            if (demand) {
+              const validation = await validateMaterialDemandSourceAllocation(demand.id)
+              if (!validation.valid) {
+                logger.warn(`Source allocation validation warning: ${validation.message}`)
+              }
+            }
+          }
+        } catch (err) {
+          logger.error(`Failed to create MaterialDemandSource entries: ${err instanceof Error ? err.message : String(err)}`)
+          // Don't fail the whole approval, but log the issue
+        }
+      }
 
       if (updatedBom.projectBOMId) {
         await prismaClient.projectBOM.update({
@@ -147,6 +216,9 @@ export const createPurchaseBOMStructureAction = protectedServerFunction({
         createdAt: new Date(),
       },
     })
+
+    await ensureMaterialDemandForMaterial(data.materialId)
+
     logger.info(`Purchase BOM structure created: ${id}`)
     revalidatePath('/purchaseBOMs')
   },
@@ -155,7 +227,7 @@ export const createPurchaseBOMStructureAction = protectedServerFunction({
 export const updatePurchaseBOMStructureAction = protectedServerFunction({
   schema: updatePurchaseBOMStructureSchema,
   functionName: 'Update purchase BOM structure action',
-  serverFn: async ({data: {id, purchased, approvedForQuote, ...data}, logger}) => {
+  serverFn: async ({data: {id, purchased, approvedForQuote, ...data}, logger, profile}) => {
     // Update execution fields on BOMExecution
     await prismaClient.bOMExecution.update({
       where: {projectBOMStructureId: data.projectBOMStructureId},
@@ -177,6 +249,41 @@ export const updatePurchaseBOMStructureAction = protectedServerFunction({
       })
     }
 
+    // When approvedForQuote=true, create MaterialDemandSource entries for tracking
+    if (approvedForQuote === true) {
+      const sourceType = await prismaClient.materialDemandSourceType.upsert({
+        where: {name: 'ProjectBOMStructure'},
+        update: {},
+        create: {
+          id: crypto.randomUUID(),
+          name: 'ProjectBOMStructure',
+          description: 'Sources created when Project BOM structures are approved for purchase.',
+          createdAt: new Date(),
+          createdBy: profile.id,
+        },
+        select: {id: true},
+      })
+
+      const existingSource = await prismaClient.materialDemandSource.findFirst({
+        where: {
+          sourceTypeId: sourceType.id,
+          sourceReferenceId: data.projectBOMStructureId,
+        },
+        select: {id: true},
+      })
+
+      if (!existingSource) {
+        const created = await createMaterialDemandSourcesForProjectBOMStructures(
+          [data.projectBOMStructureId],
+          sourceType.id,
+          profile.id,
+        )
+        if (created.length > 0) {
+          logger.info(`Created ${created.length} MaterialDemandSource entry for approved structure: ${id}`)
+        }
+      }
+    }
+
     logger.info(`Purchase BOM structure updated: ${id}`)
     revalidatePath('/purchaseBOMs')
   },
@@ -186,6 +293,43 @@ export const softDeletePurchaseBOMStructureAction = protectedServerFunction({
   schema: purchaseBOMStructureIdSchema,
   functionName: 'Soft delete purchase BOM structure action',
   serverFn: async ({data: {id}, profile, logger}) => {
+    const structure = await prismaClient.purchaseBOMStructure.findUnique({
+      where: {id},
+      select: {projectBOMStructureId: true},
+    })
+
+    if (structure?.projectBOMStructureId) {
+      const sources = await prismaClient.materialDemandSource.findMany({
+        where: {sourceReferenceId: structure.projectBOMStructureId},
+        select: {materialDemandId: true, requiredQty: true},
+      })
+
+      if (sources.length > 0) {
+        const totalsByDemand = new Map<string, number>()
+        for (const src of sources) {
+          totalsByDemand.set(src.materialDemandId, (totalsByDemand.get(src.materialDemandId) ?? 0) + src.requiredQty)
+        }
+
+        await prismaClient.materialDemandSource.deleteMany({
+          where: {sourceReferenceId: structure.projectBOMStructureId},
+        })
+
+        for (const [materialDemandId, totalRequired] of totalsByDemand.entries()) {
+          const demand = await prismaClient.materialDemand.findUnique({
+            where: {id: materialDemandId},
+            select: {totalRequiredQty: true},
+          })
+          if (demand) {
+            const nextTotal = Math.max(0, demand.totalRequiredQty - totalRequired)
+            await prismaClient.materialDemand.update({
+              where: {id: materialDemandId},
+              data: {totalRequiredQty: nextTotal},
+            })
+          }
+        }
+      }
+    }
+
     await prismaClient.purchaseBOMStructure.update({
       where: {id},
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
@@ -199,6 +343,43 @@ export const hardDeletePurchaseBOMStructureAction = protectedServerFunction({
   schema: purchaseBOMStructureIdSchema,
   functionName: 'Hard delete purchase BOM structure action',
   serverFn: async ({data: {id}, logger}) => {
+    const structure = await prismaClient.purchaseBOMStructure.findUnique({
+      where: {id},
+      select: {projectBOMStructureId: true},
+    })
+
+    if (structure?.projectBOMStructureId) {
+      const sources = await prismaClient.materialDemandSource.findMany({
+        where: {sourceReferenceId: structure.projectBOMStructureId},
+        select: {materialDemandId: true, requiredQty: true},
+      })
+
+      if (sources.length > 0) {
+        const totalsByDemand = new Map<string, number>()
+        for (const src of sources) {
+          totalsByDemand.set(src.materialDemandId, (totalsByDemand.get(src.materialDemandId) ?? 0) + src.requiredQty)
+        }
+
+        await prismaClient.materialDemandSource.deleteMany({
+          where: {sourceReferenceId: structure.projectBOMStructureId},
+        })
+
+        for (const [materialDemandId, totalRequired] of totalsByDemand.entries()) {
+          const demand = await prismaClient.materialDemand.findUnique({
+            where: {id: materialDemandId},
+            select: {totalRequiredQty: true},
+          })
+          if (demand) {
+            const nextTotal = Math.max(0, demand.totalRequiredQty - totalRequired)
+            await prismaClient.materialDemand.update({
+              where: {id: materialDemandId},
+              data: {totalRequiredQty: nextTotal},
+            })
+          }
+        }
+      }
+    }
+
     await prismaClient.purchaseBOMStructure.delete({where: {id}})
     logger.info(`Purchase BOM structure hard deleted: ${id}`)
     revalidatePath('/purchaseBOMs')

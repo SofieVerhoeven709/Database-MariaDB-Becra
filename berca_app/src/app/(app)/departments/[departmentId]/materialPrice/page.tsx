@@ -16,7 +16,7 @@ export default async function MaterialPricePage({params}: PageProps) {
 
   const [department, entriesFromDAL, companiesRaw, profile] = await Promise.all([
     getDepartmentById(departmentId),
-    getMaterialPrices(),
+    getMaterialPrices({includeDeleted: true}),
     getCompanies(),
     getSessionProfileFromCookieOrThrow(),
   ])

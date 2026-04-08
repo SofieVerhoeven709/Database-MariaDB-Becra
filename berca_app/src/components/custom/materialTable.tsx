@@ -1,7 +1,7 @@
 'use client'
 
 import {useMemo, useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye, Copy} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye, Copy, Check} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -12,7 +12,12 @@ import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
 import {MATERIAL_DOCUMENT_FLAGS} from '@/components/custom/materialDocumentFlags'
 import type {MappedMaterial} from '@/types/material'
 import type {WarehousePlaceOption} from '@/types/warehousePlace'
-import {createMaterialAction, updateMaterialAction, deleteMaterialAction} from '@/serverFunctions/materials'
+import {
+  createMaterialAction,
+  updateMaterialAction,
+  deleteMaterialAction,
+  restoreMaterialAction,
+} from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
 
 interface MaterialGroup {
@@ -70,6 +75,7 @@ type SortField =
   | 'hasBdoc'
   | 'hasInsp'
 type SortDir = 'asc' | 'desc'
+type FilterStatus = 'all' | 'active' | 'deleted'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
 
@@ -119,6 +125,7 @@ export function MaterialTable({
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterRejected, setFilterRejected] = useState<FilterRejected>('all')
   const [filterNumberKind, setFilterNumberKind] = useState<FilterNumberKind>('all')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -209,6 +216,11 @@ export function MaterialTable({
   }
 
   const filtered = materials
+    .filter(m => {
+      if (filterStatus === 'active') return !m.deleted
+      if (filterStatus === 'deleted') return m.deleted
+      return true
+    })
     .filter(m => {
       if (filterNumberKind === 'all') return true
       return getNumberKind(m.beNumber) === filterNumberKind
@@ -351,6 +363,14 @@ export function MaterialTable({
     router.refresh()
   }
 
+  async function handleRestore(id: string) {
+    if (!confirm('Restore this material?')) return
+    const fd = new FormData()
+    fd.append('id', id)
+    await restoreMaterialAction({success: false}, fd)
+    router.refresh()
+  }
+
   async function handleViewSerialTracked(
     serialTrackedId: string | null,
     beNumber: string,
@@ -429,6 +449,17 @@ export function MaterialTable({
           />
         </div>
 
+        <Select value={filterStatus} onValueChange={v => setFilterStatus(v as FilterStatus)}>
+          <SelectTrigger className="w-36 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="active">Not deleted</SelectItem>
+            <SelectItem value="deleted">Deleted</SelectItem>
+          </SelectContent>
+        </Select>
+
         <Select value={filterNumberKind} onValueChange={v => setFilterNumberKind(v as FilterNumberKind)}>
           <SelectTrigger className="w-36 bg-secondary border-border">
             <SelectValue />
@@ -497,7 +528,9 @@ export function MaterialTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + MATERIAL_DOCUMENT_FLAGS.length + 2} className="text-center text-muted-foreground py-10">
+                <TableCell
+                  colSpan={columns.length + MATERIAL_DOCUMENT_FLAGS.length + 2}
+                  className="text-center text-muted-foreground py-10">
                   No materials found
                 </TableCell>
               </TableRow>
@@ -560,7 +593,9 @@ export function MaterialTable({
                   </TableCell>
                   <TableCell>
                     {m.partApproved ? (
-                      <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-700 dark:text-emerald-400">
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-emerald-500/15 text-emerald-700 dark:text-emerald-400">
                         Yes
                       </Badge>
                     ) : (
@@ -606,45 +641,58 @@ export function MaterialTable({
                         onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
                         <Eye className="h-3.5 w-3.5" />
                       </Button>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7"
-                        onClick={() => {
-                          setDialogMode('edit')
-                          setEditingMaterial(m)
-                          setDialogOpen(true)
-                        }}>
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      <span title={m.partApproved ? 'Copy row' : 'Part must be approved before copying'}>
+                      {m.deleted ? (
                         <Button
                           size="icon"
                           variant="ghost"
-                          className="h-7 w-7"
-                          onClick={() => {
-                            if (!m.partApproved) {
-                              setAlert({
-                                title: 'Copy not allowed',
-                                description: 'This part must be approved before it can be copied.',
-                                type: 'warning',
-                              })
-                              return
-                            }
-                            setDialogMode('duplicate')
-                            setEditingMaterial(m)
-                            setDialogOpen(true)
-                          }}>
-                          <Copy className="h-3.5 w-3.5" />
+                          className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                          title="Restore"
+                          onClick={() => handleRestore(m.id)}>
+                          <Check className="h-3.5 w-3.5" />
                         </Button>
-                      </span>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7 text-destructive hover:text-destructive"
-                        onClick={() => handleDelete(m.id)}>
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
+                      ) : (
+                        <>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7"
+                            onClick={() => {
+                              setDialogMode('edit')
+                              setEditingMaterial(m)
+                              setDialogOpen(true)
+                            }}>
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <span title={m.partApproved ? 'Copy row' : 'Part must be approved before copying'}>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7"
+                              onClick={() => {
+                                if (!m.partApproved) {
+                                  setAlert({
+                                    title: 'Copy not allowed',
+                                    description: 'This part must be approved before it can be copied.',
+                                    type: 'warning',
+                                  })
+                                  return
+                                }
+                                setDialogMode('duplicate')
+                                setEditingMaterial(m)
+                                setDialogOpen(true)
+                              }}>
+                              <Copy className="h-3.5 w-3.5" />
+                            </Button>
+                          </span>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(m.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>

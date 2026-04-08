@@ -74,3 +74,10 @@ export async function softDeleteMaterialPlace(id: string, deletedBy: string) {
   })
 }
 
+export async function restoreMaterialPlace(id: string) {
+  return prismaClient.warehousePlace.update({
+    where: {id},
+    data: {deleted: false, deletedAt: null, deletedBy: null},
+  })
+}
+

@@ -1,6 +1,6 @@
 'use client'
 import {useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Copy} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Copy, Check} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -12,6 +12,7 @@ import {
   createMaterialPlaceAction,
   updateMaterialPlaceAction,
   deleteMaterialPlaceAction,
+  restoreMaterialPlaceAction,
 } from '@/serverFunctions/materialPlaces'
 import {useRouter} from 'next/navigation'
 
@@ -121,6 +122,12 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
   async function handleDelete(id: string) {
     if (!confirm('Are you sure you want to delete this warehouse place?')) return
     await deleteMaterialPlaceAction({id})
+    router.refresh()
+  }
+
+  async function handleRestore(id: string) {
+    if (!confirm('Restore this warehouse place?')) return
+    await restoreMaterialPlaceAction({id})
     router.refresh()
   }
 
@@ -235,37 +242,48 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7"
-                        onClick={() => {
-                          setDialogMode('edit')
-                          setEditingItem(item)
-                          setDialogOpen(true)
-                        }}>
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      {!item.deleted && (
+                      {item.deleted ? (
                         <Button
                           size="icon"
                           variant="ghost"
-                          className="h-7 w-7"
-                          onClick={() => {
-                            setDialogMode('duplicate')
-                            setEditingItem(item)
-                            setDialogOpen(true)
-                          }}>
-                          <Copy className="h-3.5 w-3.5" />
+                          className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                          title="Restore"
+                          onClick={() => handleRestore(item.id)}>
+                          <Check className="h-3.5 w-3.5" />
                         </Button>
+                      ) : (
+                        <>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7"
+                            onClick={() => {
+                              setDialogMode('edit')
+                              setEditingItem(item)
+                              setDialogOpen(true)
+                            }}>
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7"
+                            onClick={() => {
+                              setDialogMode('duplicate')
+                              setEditingItem(item)
+                              setDialogOpen(true)
+                            }}>
+                            <Copy className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(item.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
                       )}
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7 text-destructive hover:text-destructive"
-                        onClick={() => handleDelete(item.id)}>
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>

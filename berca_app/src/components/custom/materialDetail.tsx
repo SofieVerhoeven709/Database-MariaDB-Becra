@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Pencil, X, Save} from 'lucide-react'
+import {ArrowLeft, Check, Pencil, X, Save} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -13,7 +13,7 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Switch} from '@/components/ui/switch'
 import {MATERIAL_DOCUMENT_FLAGS} from '@/components/custom/materialDocumentFlags'
-import {updateMaterialAction} from '@/serverFunctions/materials'
+import {updateMaterialAction, restoreMaterialAction} from '@/serverFunctions/materials'
 import type {WarehousePlaceOption} from '@/types/warehousePlace'
 
 interface InventoryItem {
@@ -152,6 +152,7 @@ export function MaterialDetail({
   const router = useRouter()
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [restoring, setRestoring] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
 
   const [form, setForm] = useState({
@@ -289,6 +290,19 @@ export function MaterialDetail({
     }
   }
 
+  async function handleRestore() {
+    if (!confirm('Restore this material?')) return
+    setRestoring(true)
+    try {
+      const fd = new FormData()
+      fd.append('id', material.id)
+      await restoreMaterialAction({success: false}, fd)
+      router.refresh()
+    } finally {
+      setRestoring(false)
+    }
+  }
+
   // Label functions for each level
   const selectedGroupA = materialGroups.find(g => g.id === form.materialGroupIdA) ?? null
   const selectedGroupB = materialGroups.find(g => g.id === form.materialGroupIdB) ?? null
@@ -404,14 +418,23 @@ export function MaterialDetail({
             <h1 className="text-xl font-bold leading-tight">{material.name ?? material.beNumber}</h1>
             <p className="text-sm text-muted-foreground font-mono">{material.beNumber}</p>
           </div>
-          {material.rejected ? (
-            <Badge variant="destructive">Rejected</Badge>
-          ) : (
-            <Badge className="bg-green-500/15 text-green-700 dark:text-green-400 border-0">Active</Badge>
-          )}
+          <div className="flex items-center gap-2 flex-wrap">
+            {material.deleted ? (
+              <Badge variant="destructive">Deleted</Badge>
+            ) : material.rejected ? (
+              <Badge variant="destructive">Rejected</Badge>
+            ) : (
+              <Badge className="bg-green-500/15 text-green-700 dark:text-green-400 border-0">Active</Badge>
+            )}
+          </div>
         </div>
         <div className="flex gap-2">
-          {editing ? (
+          {material.deleted ? (
+            <Button size="sm" onClick={handleRestore} disabled={restoring} className="bg-green-600 hover:bg-green-700">
+              <Check className="h-3.5 w-3.5 mr-1" />
+              {restoring ? 'Restoring…' : 'Restore'}
+            </Button>
+          ) : editing ? (
             <>
               <Button
                 variant="outline"
@@ -437,6 +460,15 @@ export function MaterialDetail({
           )}
         </div>
       </div>
+
+      {material.deleted && (
+        <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+          This material is soft deleted. You can restore it using the button above.
+          <div className="mt-1 text-xs text-muted-foreground">
+            Deleted at: {formatDate(material.deletedAt)} · Deleted by: {material.deletedBy ?? '-'}
+          </div>
+        </div>
+      )}
 
       {saveError && (
         <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-2 text-sm text-destructive">

@@ -7,6 +7,7 @@ import {
   materialPriceIdSchema,
 } from '@/schemas/materialPriceSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
+import {softDeleteMaterialPrice, hardDeleteMaterialPrice, restoreMaterialPrice} from '@/dal/materialPrices'
 
 const REVALIDATE_PATH = '/departments/purchasing/materialPrice'
 
@@ -103,11 +104,19 @@ export const softDeleteMaterialPriceAction = protectedServerFunction({
   functionName: 'Soft delete material price action',
   serverFn: async ({data, profile, logger}) => {
     const {id} = data
-    await prismaClient.materialPrice.update({
-      where: {id},
-      data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
-    })
+    await softDeleteMaterialPrice(id, profile.id)
     logger.info(`Material price soft deleted: ${id}`)
+    revalidatePath(REVALIDATE_PATH)
+  },
+})
+
+export const restoreMaterialPriceAction = protectedServerFunction({
+  schema: materialPriceIdSchema,
+  functionName: 'Restore material price action',
+  serverFn: async ({data, logger}) => {
+    const {id} = data
+    await restoreMaterialPrice(id)
+    logger.info(`Material price restored: ${id}`)
     revalidatePath(REVALIDATE_PATH)
   },
 })
@@ -117,7 +126,7 @@ export const hardDeleteMaterialPriceAction = protectedServerFunction({
   functionName: 'Hard delete material price action',
   serverFn: async ({data, logger}) => {
     const {id} = data
-    await prismaClient.materialPrice.delete({where: {id}})
+    await hardDeleteMaterialPrice(id)
     logger.info(`Material price hard deleted: ${id}`)
     revalidatePath(REVALIDATE_PATH)
   },

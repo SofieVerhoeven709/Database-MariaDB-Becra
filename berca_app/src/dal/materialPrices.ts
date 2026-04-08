@@ -8,9 +8,10 @@ export type MaterialPriceWithRelations = MaterialPrice & {
   // beNumber on MaterialPrice is just a plain string; we look up the material manually in the mapper
 }
 
-export async function getMaterialPrices(): Promise<MaterialPriceWithRelations[]> {
+export async function getMaterialPrices(options?: {includeDeleted?: boolean}): Promise<MaterialPriceWithRelations[]> {
+  const includeDeleted = options?.includeDeleted ?? false
   return prismaClient.materialPrice.findMany({
-    where: {deleted: false},
+    where: includeDeleted ? undefined : {deleted: false},
     include: {
       Employee: {select: {id: true, firstName: true, lastName: true}},
       Company: {select: {id: true, name: true}},
@@ -84,6 +85,13 @@ export async function softDeleteMaterialPrice(id: string, deletedBy: string) {
   return prismaClient.materialPrice.update({
     where: {id},
     data: {deleted: true, deletedAt: new Date(), deletedBy},
+  })
+}
+
+export async function restoreMaterialPrice(id: string) {
+  return prismaClient.materialPrice.update({
+    where: {id},
+    data: {deleted: false, deletedAt: null, deletedBy: null},
   })
 }
 

@@ -44,7 +44,7 @@ export default async function MaterialPage({params}: PageProps) {
 
   const [department, materials, groups, units, supplierCompanies, warehousePlaces] = await Promise.all([
     getDepartmentById(departmentId),
-    getMaterials(),
+    getMaterials({includeDeleted: true}),
     getMaterialGroups(),
     getUnits(),
     getSupplierCompanies(),

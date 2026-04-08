@@ -356,7 +356,14 @@ export function MaterialTable({
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('Are you sure you want to delete this material?')) return
+    const target = materials.find(m => m.id === id)
+    if (!target) return
+
+    const confirmText = target.deleted
+      ? 'This material is already soft deleted. Permanently delete it?'
+      : 'Are you sure you want to delete this material?'
+
+    if (!confirm(confirmText)) return
     const fd = new FormData()
     fd.append('id', id)
     await deleteMaterialAction({success: false}, fd)
@@ -642,14 +649,24 @@ export function MaterialTable({
                         <Eye className="h-3.5 w-3.5" />
                       </Button>
                       {m.deleted ? (
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
-                          title="Restore"
-                          onClick={() => handleRestore(m.id)}>
-                          <Check className="h-3.5 w-3.5" />
-                        </Button>
+                        <>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                            title="Restore"
+                            onClick={() => handleRestore(m.id)}>
+                            <Check className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:text-destructive"
+                            title="Permanently delete"
+                            onClick={() => handleDelete(m.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
                       ) : (
                         <>
                           <Button

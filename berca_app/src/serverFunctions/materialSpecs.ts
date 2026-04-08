@@ -6,6 +6,7 @@ import {
   createMaterialGroup,
   updateMaterialGroup,
   softDeleteMaterialGroup,
+  restoreMaterialGroup,
   createUnit,
   updateUnit,
   softDeleteUnit,
@@ -61,6 +62,18 @@ export const deleteMaterialGroupAction = protectedFormAction({
   serverFn: async ({data, profile, logger}) => {
     await softDeleteMaterialGroup(data.id, profile.id)
     logger.info(`MaterialGroup soft-deleted: ${data.id}`)
+    revalidatePath(REVALIDATE)
+    revalidatePath(REVALIDATE_MATERIAL)
+  },
+})
+
+export const restoreMaterialGroupAction = protectedFormAction({
+  schema: deleteMaterialGroupSchema,
+  functionName: 'Restore material group',
+  globalErrorMessage: 'Could not restore the material group, please try again.',
+  serverFn: async ({data, logger}) => {
+    await restoreMaterialGroup(data.id)
+    logger.info(`MaterialGroup restored: ${data.id}`)
     revalidatePath(REVALIDATE)
     revalidatePath(REVALIDATE_MATERIAL)
   },

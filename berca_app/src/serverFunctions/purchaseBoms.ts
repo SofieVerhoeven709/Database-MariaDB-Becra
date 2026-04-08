@@ -10,7 +10,7 @@ import {
   createPurchaseBOMStructureSchema,
 } from '@/schemas/purchaseBomSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
-import {searchProjects, getDescendantBOMIds, getAncestorBOMIds} from '@/dal/purchaseBoms'
+import {searchProjects} from '@/dal/purchaseBoms'
 import type {ProjectOption} from '@/types/purchaseBom'
 import {createTargetForType} from '@/dal/targets'
 
@@ -42,10 +42,10 @@ export const updatePurchaseBOMAction = protectedServerFunction({
   schema: updatePurchaseBOMSchema,
   functionName: 'Update purchase BOM action',
   serverFn: async ({data: {id, ...data}, logger}) => {
-    // purchased=true forces materialClosed=true on this BOM only — no descendant cascade.
+    // purchased=true forces materialClosed/closed=true on this BOM.
     const bomUpdateData = {
       ...data,
-      ...(data.purchased === true ? {materialClosed: true} : {}),
+      ...(data.purchased === true ? {materialClosed: true, closed: true} : {}),
     }
 
     const updatedBom = await prismaClient.purchaseBOM.update({
@@ -70,6 +70,23 @@ export const updatePurchaseBOMAction = protectedServerFunction({
           data: {materialClosed: true},
         })
         logger.info(`Set materialClosed=true on ProjectBOM: ${updatedBom.projectBOMId}`)
+      }
+    }
+
+    if (data.approvedForQuote === true) {
+      // Approval releases this BOM for demand/quote flow and locks project-side structure edits.
+      await prismaClient.purchaseBOMStructure.updateMany({
+        where: {purchaseBOMId: id, deleted: false},
+        data: {approvedForQuote: true},
+      })
+      logger.info(`Marked all active structures as approvedForQuote for PurchaseBOM: ${id}`)
+
+      if (updatedBom.projectBOMId) {
+        await prismaClient.projectBOM.update({
+          where: {id: updatedBom.projectBOMId},
+          data: {readyForPurchase: true},
+        })
+        logger.info(`Set readyForPurchase=true on ProjectBOM: ${updatedBom.projectBOMId}`)
       }
     }
 
@@ -138,7 +155,7 @@ export const createPurchaseBOMStructureAction = protectedServerFunction({
 export const updatePurchaseBOMStructureAction = protectedServerFunction({
   schema: updatePurchaseBOMStructureSchema,
   functionName: 'Update purchase BOM structure action',
-  serverFn: async ({data: {id, purchased, ...data}, logger}) => {
+  serverFn: async ({data: {id, purchased, approvedForQuote, ...data}, logger}) => {
     // Update execution fields on BOMExecution
     await prismaClient.bOMExecution.update({
       where: {projectBOMStructureId: data.projectBOMStructureId},
@@ -149,11 +166,14 @@ export const updatePurchaseBOMStructureAction = protectedServerFunction({
       },
     })
 
-    // Update purchased flag directly on PurchaseBOMStructure — no roll-up logic
-    if (purchased !== undefined) {
+    // Update purchased/approved flags directly on PurchaseBOMStructure — no roll-up logic
+    if (purchased !== undefined || approvedForQuote !== undefined) {
       await prismaClient.purchaseBOMStructure.update({
         where: {id},
-        data: {purchased},
+        data: {
+          ...(purchased !== undefined ? {purchased} : {}),
+          ...(approvedForQuote !== undefined ? {approvedForQuote} : {}),
+        },
       })
     }
 

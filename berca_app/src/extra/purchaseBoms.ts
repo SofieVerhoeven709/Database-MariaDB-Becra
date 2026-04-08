@@ -20,6 +20,7 @@ type PurchaseBOMStructureRaw = {
   // those live on ProjectBOMStructure / BOMExecution. We read them from the joined
   // ProjectBOMStructure below.
   deleted: boolean
+  approvedForQuote: boolean
   purchased: boolean
   deletedAt: Date | null
   deletedBy: string | null
@@ -39,6 +40,7 @@ type ChildBOMRaw = {
   shortDescription: string
   closed: boolean
   materialClosed: boolean
+  approvedForQuote: boolean
   purchased: boolean
   deleted: boolean
   PurchaseBOMStructure: {id: string}[]
@@ -58,6 +60,7 @@ type PurchaseBOMRaw = {
   createdBy: string
   closed: boolean
   materialClosed: boolean
+  approvedForQuote: boolean
   deleted: boolean
   purchased: boolean
   deletedAt: Date | null
@@ -89,6 +92,7 @@ function mapStructure(r: PurchaseBOMStructureRaw): MappedPurchaseBOMStructure {
     createdBy: r.createdBy,
     createdByName: `${r.Employee_PurchaseBOMStructure_createdByToEmployee.firstName} ${r.Employee_PurchaseBOMStructure_createdByToEmployee.lastName}`,
     deleted: r.deleted,
+    approvedForQuote: r.approvedForQuote,
     purchased: r.purchased,
     deletedAt: r.deletedAt?.toISOString() ?? null,
     deletedBy: r.deletedBy,
@@ -114,6 +118,7 @@ function mapChild(r: ChildBOMRaw): ChildPurchaseBOM {
     structureCount: r.PurchaseBOMStructure.length,
     closed: r.closed,
     purchased: r.purchased,
+    approvedForQuote: r.approvedForQuote,
     materialClosed: r.materialClosed,
     deleted: r.deleted,
   }
@@ -138,6 +143,7 @@ export function mapPurchaseBOM(r: PurchaseBOMRaw): MappedPurchaseBOM {
     createdByName: `${r.Employee_PurchaseBOM_createdByToEmployee.firstName} ${r.Employee_PurchaseBOM_createdByToEmployee.lastName}`,
     closed: r.closed,
     materialClosed: r.materialClosed,
+    approvedForQuote: r.approvedForQuote,
     deleted: r.deleted,
     purchased: r.purchased,
     deletedAt: r.deletedAt?.toISOString() ?? null,

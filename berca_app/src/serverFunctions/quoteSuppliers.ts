@@ -9,6 +9,51 @@ import {
 import {protectedServerFunction} from '@/lib/serverFunctions'
 
 const REVALIDATE_PATH = '/departments/purchasing/orderQuote'
+const QUOTE_NUMBER_BASE = 1_000_000
+const QUOTE_NUMBER_PREFIX = 'Q'
+
+function parseQuoteNumber(value: string | null | undefined): number | null {
+  if (!value) return null
+  const match = /^Q(\d+)$/.exec(value.trim().toUpperCase())
+  if (!match) return null
+  const parsed = Number.parseInt(match[1], 10)
+  return Number.isFinite(parsed) ? parsed : null
+}
+
+function formatQuoteNumber(n: number): string {
+  return `${QUOTE_NUMBER_PREFIX}${n}`
+}
+
+async function quoteNumberExists(quoteNumber: string): Promise<boolean> {
+  const existing = await prismaClient.quoteSupplier.findFirst({
+    where: {quoteNumber},
+    select: {id: true},
+  })
+  return !!existing
+}
+
+async function getNextQuoteNumber(): Promise<string> {
+  const rows = await prismaClient.quoteSupplier.findMany({
+    select: {quoteNumber: true},
+  })
+
+  const max = rows.reduce((acc, row) => {
+    const parsed = parseQuoteNumber(row.quoteNumber)
+    return parsed !== null && parsed > acc ? parsed : acc
+  }, QUOTE_NUMBER_BASE - 1)
+
+  return formatQuoteNumber(Math.max(QUOTE_NUMBER_BASE, max + 1))
+}
+
+async function getNextAvailableQuoteNumber(): Promise<string> {
+  let candidate = await getNextQuoteNumber()
+  let parsed = parseQuoteNumber(candidate) ?? QUOTE_NUMBER_BASE
+  while (await quoteNumberExists(candidate)) {
+    parsed += 1
+    candidate = formatQuoteNumber(parsed)
+  }
+  return candidate
+}
 
 function toDate(val: string | null | undefined): Date | null {
   if (!val) return null
@@ -20,22 +65,33 @@ export const createQuoteSupplierAction = protectedServerFunction({
   schema: createQuoteSupplierSchema,
   functionName: 'Create quote supplier action',
   serverFn: async ({data, profile, logger}) => {
+    const id = crypto.randomUUID()
+    const manualQuoteNumber = data.quoteNumber.trim()
+    const hasManualOverride = manualQuoteNumber.length > 0
+    const quoteNumber = hasManualOverride ? manualQuoteNumber : await getNextAvailableQuoteNumber()
+
+    if (hasManualOverride && (await quoteNumberExists(quoteNumber))) {
+      throw new Error(`Quote number ${quoteNumber} already exists.`)
+    }
+
     logger.info(`Creating quote supplier, createdBy: ${profile.id}`)
     await prismaClient.quoteSupplier.create({
       data: {
-        id: crypto.randomUUID(),
+        id,
+        quoteNumber,
+        quotationNumber: data.quotationNumber ?? null,
+        companyId: data.companyId,
         description: data.description ?? null,
-        projectId: data.projectId ?? null,
         rejected: data.rejected ?? false,
         additionalInfo: data.additionalInfo ?? null,
-        link: data.link ?? null,
-        payementCondition: data.payementCondition ?? null,
-        acceptedForPOB: data.acceptedForPOB ?? null,
+        acceptedForPOB: data.acceptedForPOB ?? false,
         validUntill: toDate(data.validUntill),
         deliveryTimeDays: data.deliveryTimeDays ?? null,
+        paymentConditionId: data.paymentConditionId ?? null,
         createdBy: profile.id,
       },
     })
+    logger.info(`Quote supplier created: ${id}`)
     revalidatePath(REVALIDATE_PATH)
   },
 })
@@ -43,20 +99,20 @@ export const createQuoteSupplierAction = protectedServerFunction({
 export const updateQuoteSupplierAction = protectedServerFunction({
   schema: updateQuoteSupplierSchema,
   functionName: 'Update quote supplier action',
-  serverFn: async ({data, logger}) => {
-    const {id, ...rest} = data
+  serverFn: async ({data: {id, ...data}, logger}) => {
     await prismaClient.quoteSupplier.update({
       where: {id},
       data: {
-        description: rest.description ?? null,
-        projectId: rest.projectId ?? null,
-        rejected: rest.rejected ?? false,
-        additionalInfo: rest.additionalInfo ?? null,
-        link: rest.link ?? null,
-        payementCondition: rest.payementCondition ?? null,
-        acceptedForPOB: rest.acceptedForPOB ?? null,
-        validUntill: toDate(rest.validUntill),
-        deliveryTimeDays: rest.deliveryTimeDays ?? null,
+        quoteNumber: data.quoteNumber,
+        quotationNumber: data.quotationNumber ?? null,
+        companyId: data.companyId,
+        description: data.description ?? null,
+        rejected: data.rejected ?? false,
+        additionalInfo: data.additionalInfo ?? null,
+        acceptedForPOB: data.acceptedForPOB ?? false,
+        validUntill: toDate(data.validUntill),
+        deliveryTimeDays: data.deliveryTimeDays ?? null,
+        paymentConditionId: data.paymentConditionId ?? null,
       },
     })
     logger.info(`Quote supplier updated: ${id}`)
@@ -85,6 +141,19 @@ export const hardDeleteQuoteSupplierAction = protectedServerFunction({
     const {id} = data
     await prismaClient.quoteSupplier.delete({where: {id}})
     logger.info(`Quote supplier hard deleted: ${id}`)
+    revalidatePath(REVALIDATE_PATH)
+  },
+})
+
+export const undeleteQuoteSupplierAction = protectedServerFunction({
+  schema: quoteSupplierIdSchema,
+  functionName: 'Undelete quote supplier action',
+  serverFn: async ({data: {id}, logger}) => {
+    await prismaClient.quoteSupplier.update({
+      where: {id},
+      data: {deleted: false, deletedAt: null, deletedBy: null},
+    })
+    logger.info(`Quote supplier undeleted: ${id}`)
     revalidatePath(REVALIDATE_PATH)
   },
 })

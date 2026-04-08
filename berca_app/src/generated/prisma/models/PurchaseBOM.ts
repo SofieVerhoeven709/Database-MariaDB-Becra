@@ -37,6 +37,7 @@ export type PurchaseBOMMinAggregateOutputType = {
   deletedAt: Date | null
   closed: boolean | null
   materialClosed: boolean | null
+  approvedForQuote: boolean | null
   purchased: boolean | null
   deleted: boolean | null
   createdBy: string | null
@@ -59,6 +60,7 @@ export type PurchaseBOMMaxAggregateOutputType = {
   deletedAt: Date | null
   closed: boolean | null
   materialClosed: boolean | null
+  approvedForQuote: boolean | null
   purchased: boolean | null
   deleted: boolean | null
   createdBy: string | null
@@ -81,6 +83,7 @@ export type PurchaseBOMCountAggregateOutputType = {
   deletedAt: number
   closed: number
   materialClosed: number
+  approvedForQuote: number
   purchased: number
   deleted: number
   createdBy: number
@@ -105,6 +108,7 @@ export type PurchaseBOMMinAggregateInputType = {
   deletedAt?: true
   closed?: true
   materialClosed?: true
+  approvedForQuote?: true
   purchased?: true
   deleted?: true
   createdBy?: true
@@ -127,6 +131,7 @@ export type PurchaseBOMMaxAggregateInputType = {
   deletedAt?: true
   closed?: true
   materialClosed?: true
+  approvedForQuote?: true
   purchased?: true
   deleted?: true
   createdBy?: true
@@ -149,6 +154,7 @@ export type PurchaseBOMCountAggregateInputType = {
   deletedAt?: true
   closed?: true
   materialClosed?: true
+  approvedForQuote?: true
   purchased?: true
   deleted?: true
   createdBy?: true
@@ -244,6 +250,7 @@ export type PurchaseBOMGroupByOutputType = {
   deletedAt: Date | null
   closed: boolean
   materialClosed: boolean
+  approvedForQuote: boolean
   purchased: boolean
   deleted: boolean
   createdBy: string
@@ -287,6 +294,7 @@ export type PurchaseBOMWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseBOM"> | Date | string | null
   closed?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   materialClosed?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
+  approvedForQuote?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   purchased?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   deleted?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   createdBy?: Prisma.StringFilter<"PurchaseBOM"> | string
@@ -318,6 +326,7 @@ export type PurchaseBOMOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   closed?: Prisma.SortOrder
   materialClosed?: Prisma.SortOrder
+  approvedForQuote?: Prisma.SortOrder
   purchased?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -354,6 +363,7 @@ export type PurchaseBOMWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseBOM"> | Date | string | null
   closed?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   materialClosed?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
+  approvedForQuote?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   purchased?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   deleted?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   createdBy?: Prisma.StringFilter<"PurchaseBOM"> | string
@@ -384,6 +394,7 @@ export type PurchaseBOMOrderByWithAggregationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   closed?: Prisma.SortOrder
   materialClosed?: Prisma.SortOrder
+  approvedForQuote?: Prisma.SortOrder
   purchased?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -412,6 +423,7 @@ export type PurchaseBOMScalarWhereWithAggregatesInput = {
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseBOM"> | Date | string | null
   closed?: Prisma.BoolWithAggregatesFilter<"PurchaseBOM"> | boolean
   materialClosed?: Prisma.BoolWithAggregatesFilter<"PurchaseBOM"> | boolean
+  approvedForQuote?: Prisma.BoolWithAggregatesFilter<"PurchaseBOM"> | boolean
   purchased?: Prisma.BoolWithAggregatesFilter<"PurchaseBOM"> | boolean
   deleted?: Prisma.BoolWithAggregatesFilter<"PurchaseBOM"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"PurchaseBOM"> | string
@@ -433,6 +445,7 @@ export type PurchaseBOMCreateInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseBOMInput
@@ -459,6 +472,7 @@ export type PurchaseBOMUncheckedCreateInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -483,6 +497,7 @@ export type PurchaseBOMUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseBOMNestedInput
@@ -509,6 +524,7 @@ export type PurchaseBOMUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -534,6 +550,7 @@ export type PurchaseBOMCreateManyInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -555,6 +572,7 @@ export type PurchaseBOMUpdateManyMutationInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
@@ -572,6 +590,7 @@ export type PurchaseBOMUncheckedUpdateManyInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -615,6 +634,7 @@ export type PurchaseBOMCountOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
   closed?: Prisma.SortOrder
   materialClosed?: Prisma.SortOrder
+  approvedForQuote?: Prisma.SortOrder
   purchased?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -637,6 +657,7 @@ export type PurchaseBOMMaxOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
   closed?: Prisma.SortOrder
   materialClosed?: Prisma.SortOrder
+  approvedForQuote?: Prisma.SortOrder
   purchased?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -659,6 +680,7 @@ export type PurchaseBOMMinOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
   closed?: Prisma.SortOrder
   materialClosed?: Prisma.SortOrder
+  approvedForQuote?: Prisma.SortOrder
   purchased?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -971,6 +993,7 @@ export type PurchaseBOMCreateWithoutEmployee_PurchaseBOM_createdByToEmployeeInpu
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseBOMInput
@@ -996,6 +1019,7 @@ export type PurchaseBOMUncheckedCreateWithoutEmployee_PurchaseBOM_createdByToEmp
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   projectId: string
@@ -1029,6 +1053,7 @@ export type PurchaseBOMCreateWithoutEmployee_PurchaseBOM_deletedByToEmployeeInpu
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseBOMInput
@@ -1054,6 +1079,7 @@ export type PurchaseBOMUncheckedCreateWithoutEmployee_PurchaseBOM_deletedByToEmp
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -1107,6 +1133,7 @@ export type PurchaseBOMScalarWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseBOM"> | Date | string | null
   closed?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   materialClosed?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
+  approvedForQuote?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   purchased?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   deleted?: Prisma.BoolFilter<"PurchaseBOM"> | boolean
   createdBy?: Prisma.StringFilter<"PurchaseBOM"> | string
@@ -1144,6 +1171,7 @@ export type PurchaseBOMCreateWithoutProjectInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseBOMInput
@@ -1169,6 +1197,7 @@ export type PurchaseBOMUncheckedCreateWithoutProjectInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -1218,6 +1247,7 @@ export type PurchaseBOMCreateWithoutTargetInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseBOMInput
@@ -1243,6 +1273,7 @@ export type PurchaseBOMUncheckedCreateWithoutTargetInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -1292,6 +1323,7 @@ export type PurchaseBOMCreateWithoutProjectBOMInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseBOMInput
@@ -1317,6 +1349,7 @@ export type PurchaseBOMUncheckedCreateWithoutProjectBOMInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -1356,6 +1389,7 @@ export type PurchaseBOMUpdateWithoutProjectBOMInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseBOMNestedInput
@@ -1381,6 +1415,7 @@ export type PurchaseBOMUncheckedUpdateWithoutProjectBOMInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1404,6 +1439,7 @@ export type PurchaseBOMCreateWithoutOther_PurchaseBOMInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseBOMInput
@@ -1429,6 +1465,7 @@ export type PurchaseBOMUncheckedCreateWithoutOther_PurchaseBOMInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -1457,6 +1494,7 @@ export type PurchaseBOMCreateWithoutPurchaseBOMInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseBOMInput
@@ -1481,6 +1519,7 @@ export type PurchaseBOMUncheckedCreateWithoutPurchaseBOMInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -1526,6 +1565,7 @@ export type PurchaseBOMUpdateWithoutOther_PurchaseBOMInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseBOMNestedInput
@@ -1551,6 +1591,7 @@ export type PurchaseBOMUncheckedUpdateWithoutOther_PurchaseBOMInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1590,6 +1631,7 @@ export type PurchaseBOMCreateWithoutPurchaseBOMStructureInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseBOMInput
@@ -1615,6 +1657,7 @@ export type PurchaseBOMUncheckedCreateWithoutPurchaseBOMStructureInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -1654,6 +1697,7 @@ export type PurchaseBOMUpdateWithoutPurchaseBOMStructureInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseBOMNestedInput
@@ -1679,6 +1723,7 @@ export type PurchaseBOMUncheckedUpdateWithoutPurchaseBOMStructureInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1702,6 +1747,7 @@ export type PurchaseBOMCreateWithoutIncomingDeliveryInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   Project: Prisma.ProjectCreateNestedOneWithoutPurchaseBOMInput
@@ -1727,6 +1773,7 @@ export type PurchaseBOMUncheckedCreateWithoutIncomingDeliveryInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -1766,6 +1813,7 @@ export type PurchaseBOMUpdateWithoutIncomingDeliveryInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Project?: Prisma.ProjectUpdateOneRequiredWithoutPurchaseBOMNestedInput
@@ -1791,6 +1839,7 @@ export type PurchaseBOMUncheckedUpdateWithoutIncomingDeliveryInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1815,6 +1864,7 @@ export type PurchaseBOMCreateManyEmployee_PurchaseBOM_createdByToEmployeeInput =
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   projectId: string
@@ -1836,6 +1886,7 @@ export type PurchaseBOMCreateManyEmployee_PurchaseBOM_deletedByToEmployeeInput =
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -1856,6 +1907,7 @@ export type PurchaseBOMUpdateWithoutEmployee_PurchaseBOM_createdByToEmployeeInpu
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseBOMNestedInput
@@ -1881,6 +1933,7 @@ export type PurchaseBOMUncheckedUpdateWithoutEmployee_PurchaseBOM_createdByToEmp
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1905,6 +1958,7 @@ export type PurchaseBOMUncheckedUpdateManyWithoutEmployee_PurchaseBOM_createdByT
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1925,6 +1979,7 @@ export type PurchaseBOMUpdateWithoutEmployee_PurchaseBOM_deletedByToEmployeeInpu
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseBOMNestedInput
@@ -1950,6 +2005,7 @@ export type PurchaseBOMUncheckedUpdateWithoutEmployee_PurchaseBOM_deletedByToEmp
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1974,6 +2030,7 @@ export type PurchaseBOMUncheckedUpdateManyWithoutEmployee_PurchaseBOM_deletedByT
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1995,6 +2052,7 @@ export type PurchaseBOMCreateManyProjectInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -2015,6 +2073,7 @@ export type PurchaseBOMUpdateWithoutProjectInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseBOMNestedInput
@@ -2040,6 +2099,7 @@ export type PurchaseBOMUncheckedUpdateWithoutProjectInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2064,6 +2124,7 @@ export type PurchaseBOMUncheckedUpdateManyWithoutProjectInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2085,6 +2146,7 @@ export type PurchaseBOMCreateManyTargetInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -2105,6 +2167,7 @@ export type PurchaseBOMUpdateWithoutTargetInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseBOMNestedInput
@@ -2130,6 +2193,7 @@ export type PurchaseBOMUncheckedUpdateWithoutTargetInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2154,6 +2218,7 @@ export type PurchaseBOMUncheckedUpdateManyWithoutTargetInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2174,6 +2239,7 @@ export type PurchaseBOMCreateManyPurchaseBOMInput = {
   deletedAt?: Date | string | null
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy: string
@@ -2195,6 +2261,7 @@ export type PurchaseBOMUpdateWithoutPurchaseBOMInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseBOMNestedInput
@@ -2219,6 +2286,7 @@ export type PurchaseBOMUncheckedUpdateWithoutPurchaseBOMInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2243,6 +2311,7 @@ export type PurchaseBOMUncheckedUpdateManyWithoutPurchaseBOMInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2314,6 +2383,7 @@ export type PurchaseBOMSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   deletedAt?: boolean
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy?: boolean
@@ -2348,6 +2418,7 @@ export type PurchaseBOMSelectScalar = {
   deletedAt?: boolean
   closed?: boolean
   materialClosed?: boolean
+  approvedForQuote?: boolean
   purchased?: boolean
   deleted?: boolean
   createdBy?: boolean
@@ -2357,7 +2428,7 @@ export type PurchaseBOMSelectScalar = {
   deletedBy?: boolean
 }
 
-export type PurchaseBOMOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseBomNumber" | "purchaseBomId" | "additionalInfo" | "description" | "shortDescription" | "startDate" | "endDate" | "createdAt" | "deletedAt" | "closed" | "materialClosed" | "purchased" | "deleted" | "createdBy" | "projectId" | "projectBOMId" | "targetId" | "deletedBy", ExtArgs["result"]["purchaseBOM"]>
+export type PurchaseBOMOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseBomNumber" | "purchaseBomId" | "additionalInfo" | "description" | "shortDescription" | "startDate" | "endDate" | "createdAt" | "deletedAt" | "closed" | "materialClosed" | "approvedForQuote" | "purchased" | "deleted" | "createdBy" | "projectId" | "projectBOMId" | "targetId" | "deletedBy", ExtArgs["result"]["purchaseBOM"]>
 export type PurchaseBOMInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   IncomingDelivery?: boolean | Prisma.PurchaseBOM$IncomingDeliveryArgs<ExtArgs>
   Project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -2397,6 +2468,7 @@ export type $PurchaseBOMPayload<ExtArgs extends runtime.Types.Extensions.Interna
     deletedAt: Date | null
     closed: boolean
     materialClosed: boolean
+    approvedForQuote: boolean
     purchased: boolean
     deleted: boolean
     createdBy: string
@@ -2794,6 +2866,7 @@ export interface PurchaseBOMFieldRefs {
   readonly deletedAt: Prisma.FieldRef<"PurchaseBOM", 'DateTime'>
   readonly closed: Prisma.FieldRef<"PurchaseBOM", 'Boolean'>
   readonly materialClosed: Prisma.FieldRef<"PurchaseBOM", 'Boolean'>
+  readonly approvedForQuote: Prisma.FieldRef<"PurchaseBOM", 'Boolean'>
   readonly purchased: Prisma.FieldRef<"PurchaseBOM", 'Boolean'>
   readonly deleted: Prisma.FieldRef<"PurchaseBOM", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"PurchaseBOM", 'String'>

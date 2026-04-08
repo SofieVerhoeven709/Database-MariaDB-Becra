@@ -242,7 +242,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     DeliveryNoteSupplier: {
       select: {id: true; supplierNN: true; information: true; createdAt: true; Company: {select: {name: true}}}
     }
-    QuoteSupplier: {select: {id: true; description: true; Project: {select: {projectName: true; projectNumber: true}}}}
+    QuoteSupplier: {select: {id: true; description: true; Company: {select: {name: true; number: true}}}}
     WorkOrderStructure: {
       select: {id: true; shortDescription: true; createdAt: true; WorkOrder: {select: {workOrderNumber: true}}}
     }
@@ -288,7 +288,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         id: true
         description: true
         deletedAt: true
-        Project: {select: {projectName: true; projectNumber: true}}
+        Company: {select: {name: true; number: true}}
       }
     }
     WorkOrderStructure_WorkOrderStructure_deletedByToEmployee: {
@@ -642,7 +642,7 @@ export function mapEmployeeDetail(
     ...e.QuoteSupplier.map(q => ({
       id: q.id,
       type: 'Quote' as const,
-      label: q.Project ? `${q.Project.projectNumber} — ${q.Project.projectName}` : '(no project)',
+      label: q.Company ? `${q.Company.number ?? ''} — ${q.Company.name}`.trim().replace(/^—\s*/, '') : '(no supplier)',
       detail: q.description ?? null,
       date: null,
       deletedAt: null,
@@ -808,7 +808,7 @@ export function mapEmployeeDetail(
     ...e.QuoteSupplier_QuoteSupplier_deletedByToEmployee.map(q => ({
       id: q.id,
       type: 'Quote' as const,
-      label: q.Project ? `${q.Project.projectNumber} — ${q.Project.projectName}` : '(no project)',
+      label: q.Company ? `${q.Company.number ?? ''} — ${q.Company.name}`.trim().replace(/^—\s*/, '') : '(no supplier)',
       detail: q.description ?? null,
       date: null,
       deletedAt: q.deletedAt?.toISOString() ?? null,

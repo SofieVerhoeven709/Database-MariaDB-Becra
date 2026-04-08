@@ -15,6 +15,31 @@ import type {ProjectOption} from '@/types/projectBom'
 import {createTargetForType} from '@/dal/targets'
 import {createPurchaseBOMAction, createPurchaseBOMStructureAction} from '@/serverFunctions/purchaseBoms'
 
+async function assertProjectBOMNotQuoteApproved(projectBOMId: string) {
+  const purchase = await prismaClient.purchaseBOM.findFirst({
+    where: {projectBOMId},
+    select: {approvedForQuote: true},
+  })
+
+  if (purchase?.approvedForQuote) {
+    throw new Error('Cannot modify project BOM structures after purchase BOM is approved for quote.')
+  }
+}
+
+async function assertProjectBOMStructureNotQuoteApproved(projectBOMStructureId: string) {
+  const purchaseStructure = await prismaClient.purchaseBOMStructure.findFirst({
+    where: {projectBOMStructureId},
+    select: {
+      approvedForQuote: true,
+      PurchaseBOM: {select: {approvedForQuote: true}},
+    },
+  })
+
+  if (purchaseStructure?.approvedForQuote || purchaseStructure?.PurchaseBOM.approvedForQuote) {
+    throw new Error('Cannot modify this project BOM structure because it is approved for quote on the purchase side.')
+  }
+}
+
 // ─── ProjectBOM CRUD ───────────────────────────────────────────────────────────
 
 export const createProjectBOMAction = protectedServerFunction({
@@ -98,6 +123,7 @@ export const updateProjectBOMAction = protectedServerFunction({
           endDate: data.endDate,
           closed: data.closed,
           materialClosed: data.materialClosed,
+          approvedForQuote: false,
           purchased: false,
         }
       } else {
@@ -111,6 +137,7 @@ export const updateProjectBOMAction = protectedServerFunction({
           startDate: data.startDate,
           endDate: data.endDate,
           closed: data.closed,
+          approvedForQuote: false,
           purchased: false,
           materialClosed: data.materialClosed,
         }
@@ -132,6 +159,7 @@ export const updateProjectBOMAction = protectedServerFunction({
             additionalInfo: structure.additionalInfo,
             description: structure.description,
             tag: structure.tag,
+            approvedForQuote: false,
             purchased: false,
             readyForPurchaseDate: structure.readyForPurchaseDate,
           }
@@ -188,6 +216,8 @@ export const createProjectBOMStructureAction = protectedServerFunction({
   schema: createProjectBOMStructureSchema,
   functionName: 'Create project BOM structure action',
   serverFn: async ({data, logger, profile}) => {
+    await assertProjectBOMNotQuoteApproved(data.projectBOMId)
+
     const bom = await prismaClient.projectBOM.findUniqueOrThrow({
       where: {id: data.projectBOMId},
       select: {materialClosed: true, readyForPurchase: true, projectId: true},
@@ -237,7 +267,9 @@ export const createProjectBOMStructureAction = protectedServerFunction({
 export const updateProjectBOMStructureAction = protectedServerFunction({
   schema: updateProjectBOMStructureSchema,
   functionName: 'Update project BOM structure action',
-  serverFn: async ({data: {id, ...data}, logger, profile}) => {
+  serverFn: async ({data: {id, ...data}, logger}) => {
+    await assertProjectBOMStructureNotQuoteApproved(id)
+
     // Fetch the current structure so we can check what's changing
     const existing = await prismaClient.projectBOMStructure.findUniqueOrThrow({
       where: {id},
@@ -269,6 +301,7 @@ export const updateProjectBOMStructureAction = protectedServerFunction({
           startDate: projectBom.startDate,
           endDate: projectBom.endDate,
           closed: projectBom.closed,
+          approvedForQuote: false,
           purchased: false,
           materialClosed: projectBom.materialClosed,
         }
@@ -293,6 +326,7 @@ export const updateProjectBOMStructureAction = protectedServerFunction({
         additionalInfo: data.additionalInfo,
         description: data.description,
         tag: data.tag,
+        approvedForQuote: false,
         purchased: false,
         requiredQuantity: data.requiredQuantity,
         readyForPurchaseDate: data.readyForPurchaseDate,
@@ -311,6 +345,8 @@ export const softDeleteProjectBOMStructureAction = protectedServerFunction({
   schema: projectBOMStructureIdSchema,
   functionName: 'Soft delete project BOM structure action',
   serverFn: async ({data: {id}, profile, logger}) => {
+    await assertProjectBOMStructureNotQuoteApproved(id)
+
     await prismaClient.projectBOMStructure.update({
       where: {id},
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
@@ -326,6 +362,8 @@ export const hardDeleteProjectBOMStructureAction = protectedServerFunction({
   schema: projectBOMStructureIdSchema,
   functionName: 'Hard delete project BOM structure action',
   serverFn: async ({data: {id}, logger}) => {
+    await assertProjectBOMStructureNotQuoteApproved(id)
+
     await prismaClient.projectBOMStructure.delete({where: {id}})
     logger.info(`Project BOM structure hard deleted: ${id}`)
     revalidatePath('/projectBOMs')
@@ -336,7 +374,9 @@ export const hardDeleteProjectBOMStructureAction = protectedServerFunction({
 export const restoreProjectBOMStructureAction = protectedServerFunction({
   schema: projectBOMStructureIdSchema,
   functionName: 'Restore project BOM structure action',
-  serverFn: async ({data: {id}, logger, profile}) => {
+  serverFn: async ({data: {id}, logger}) => {
+    await assertProjectBOMStructureNotQuoteApproved(id)
+
     await prismaClient.projectBOMStructure.update({
       where: {id},
       data: {deleted: false, deletedAt: null, deletedBy: null},

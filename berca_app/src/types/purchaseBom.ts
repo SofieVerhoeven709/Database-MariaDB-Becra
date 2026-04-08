@@ -19,6 +19,7 @@ export interface MappedPurchaseBOMStructure {
   createdBy: string
   createdByName: string
   deleted: boolean
+  approvedForQuote: boolean
   purchased: boolean
   deletedAt: string | null
   deletedBy: string | null
@@ -40,6 +41,7 @@ export interface ChildPurchaseBOM {
   structureCount: number
   closed: boolean
   purchased: boolean
+  approvedForQuote: boolean
   materialClosed: boolean
   deleted: boolean
 }
@@ -63,6 +65,7 @@ export interface MappedPurchaseBOM {
   createdByName: string
   closed: boolean
   materialClosed: boolean
+  approvedForQuote: boolean
   deleted: boolean
   purchased: boolean
   deletedAt: string | null

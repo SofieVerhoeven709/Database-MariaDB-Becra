@@ -467,7 +467,7 @@ export async function getEmployeeDetail(id: string) {
           select: {
             id: true,
             description: true,
-            Project: {select: {projectName: true, projectNumber: true}},
+            Company: {select: {name: true, number: true}},
           },
         },
         WorkOrderStructure: {
@@ -932,7 +932,7 @@ export async function getEmployeeDetail(id: string) {
             id: true,
             description: true,
             deletedAt: true,
-            Project: {select: {projectName: true, projectNumber: true}},
+            Company: {select: {name: true, number: true}},
           },
         },
         WorkOrderStructure_WorkOrderStructure_deletedByToEmployee: {

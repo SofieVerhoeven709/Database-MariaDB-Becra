@@ -1,9 +1,9 @@
-import {getQuoteSuppliers} from '@/dal/quoteSuppliers'
+import {getQuoteSuppliers, getPaymentConditionOptions} from '@/dal/quoteSuppliers'
 import {mapQuoteSupplier} from '@/extra/quoteSuppliers'
 import {QuoteSupplierTable} from '@/components/custom/quoteSupplierTable'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
-import {getProjects} from '@/dal/projects'
+import {getSupplierCompanies} from '@/dal/companies'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
@@ -14,10 +14,11 @@ interface PageProps {
 export default async function OrderQuotePage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [department, entriesFromDAL, projectsRaw, profile] = await Promise.all([
+  const [department, entriesFromDAL, companiesRaw, paymentConditionsRaw, profile] = await Promise.all([
     getDepartmentById(departmentId),
     getQuoteSuppliers(),
-    getProjects(),
+    getSupplierCompanies(),
+    getPaymentConditionOptions(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
@@ -28,9 +29,12 @@ export default async function OrderQuotePage({params}: PageProps) {
   const entries = entriesFromDAL.map(mapQuoteSupplier)
   const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'orderQuote')
 
-  const projectOptions = projectsRaw
-    .filter(p => !p.deleted)
-    .map(p => ({id: p.id, name: `${p.projectNumber} – ${p.projectName}`}))
+  const companyOptions = companiesRaw
+    .map(c => ({id: c.id, name: c.name}))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  const paymentConditionOptions = paymentConditionsRaw
+    .map(pc => ({id: pc.id, name: pc.name}))
     .sort((a, b) => a.name.localeCompare(b.name))
 
   return (
@@ -56,7 +60,8 @@ export default async function OrderQuotePage({params}: PageProps) {
 
         <QuoteSupplierTable
           initialEntries={entries}
-          projects={projectOptions}
+          companies={companyOptions}
+          paymentConditions={paymentConditionOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
         />

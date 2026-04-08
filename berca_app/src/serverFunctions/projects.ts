@@ -107,7 +107,6 @@ export const hardDeleteProjectAction = protectedServerFunction({
       prismaClient.projectContact.count({where: {projectId: id}}),
       prismaClient.purchase.count({where: {projectId: id}}),
       prismaClient.purchaseDetail.count({where: {projectId: id}}),
-      prismaClient.quoteSupplier.count({where: {projectId: id}}),
       prismaClient.workOrder.count({where: {projectId: id}}),
       // Add other tables referencing projectId if needed
     ])

@@ -495,7 +495,9 @@ export const ModelName = {
   MaterialDemandSource: 'MaterialDemandSource',
   MaterialDemandSourceType: 'MaterialDemandSourceType',
   PaymentCondition: 'PaymentCondition',
-  QuoteSupplierLine: 'QuoteSupplierLine'
+  QuoteSupplierLine: 'QuoteSupplierLine',
+  IncomingDelivery: 'IncomingDelivery',
+  IncomingDeliveryLine: 'IncomingDeliveryLine'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -511,7 +513,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -7511,6 +7513,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    IncomingDelivery: {
+      payload: Prisma.$IncomingDeliveryPayload<ExtArgs>
+      fields: Prisma.IncomingDeliveryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IncomingDeliveryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IncomingDeliveryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryPayload>
+        }
+        findFirst: {
+          args: Prisma.IncomingDeliveryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IncomingDeliveryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryPayload>
+        }
+        findMany: {
+          args: Prisma.IncomingDeliveryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryPayload>[]
+        }
+        create: {
+          args: Prisma.IncomingDeliveryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryPayload>
+        }
+        createMany: {
+          args: Prisma.IncomingDeliveryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.IncomingDeliveryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryPayload>
+        }
+        update: {
+          args: Prisma.IncomingDeliveryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryPayload>
+        }
+        deleteMany: {
+          args: Prisma.IncomingDeliveryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IncomingDeliveryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.IncomingDeliveryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryPayload>
+        }
+        aggregate: {
+          args: Prisma.IncomingDeliveryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIncomingDelivery>
+        }
+        groupBy: {
+          args: Prisma.IncomingDeliveryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IncomingDeliveryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IncomingDeliveryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IncomingDeliveryCountAggregateOutputType> | number
+        }
+      }
+    }
+    IncomingDeliveryLine: {
+      payload: Prisma.$IncomingDeliveryLinePayload<ExtArgs>
+      fields: Prisma.IncomingDeliveryLineFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IncomingDeliveryLineFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryLinePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IncomingDeliveryLineFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryLinePayload>
+        }
+        findFirst: {
+          args: Prisma.IncomingDeliveryLineFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryLinePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IncomingDeliveryLineFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryLinePayload>
+        }
+        findMany: {
+          args: Prisma.IncomingDeliveryLineFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryLinePayload>[]
+        }
+        create: {
+          args: Prisma.IncomingDeliveryLineCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryLinePayload>
+        }
+        createMany: {
+          args: Prisma.IncomingDeliveryLineCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.IncomingDeliveryLineDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryLinePayload>
+        }
+        update: {
+          args: Prisma.IncomingDeliveryLineUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryLinePayload>
+        }
+        deleteMany: {
+          args: Prisma.IncomingDeliveryLineDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IncomingDeliveryLineUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.IncomingDeliveryLineUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomingDeliveryLinePayload>
+        }
+        aggregate: {
+          args: Prisma.IncomingDeliveryLineAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIncomingDeliveryLine>
+        }
+        groupBy: {
+          args: Prisma.IncomingDeliveryLineGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IncomingDeliveryLineGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IncomingDeliveryLineCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IncomingDeliveryLineCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -9424,6 +9558,48 @@ export const QuoteSupplierLineScalarFieldEnum = {
 export type QuoteSupplierLineScalarFieldEnum = (typeof QuoteSupplierLineScalarFieldEnum)[keyof typeof QuoteSupplierLineScalarFieldEnum]
 
 
+export const IncomingDeliveryScalarFieldEnum = {
+  id: 'id',
+  incomingDeliveryNumber: 'incomingDeliveryNumber',
+  purchaseBOMId: 'purchaseBOMId',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  status: 'status',
+  deliveryDate: 'deliveryDate',
+  receivedAt: 'receivedAt',
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt',
+  deleted: 'deleted',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IncomingDeliveryScalarFieldEnum = (typeof IncomingDeliveryScalarFieldEnum)[keyof typeof IncomingDeliveryScalarFieldEnum]
+
+
+export const IncomingDeliveryLineScalarFieldEnum = {
+  id: 'id',
+  incomingDeliveryId: 'incomingDeliveryId',
+  purchaseBOMStructureId: 'purchaseBOMStructureId',
+  quoteSupplierLineId: 'quoteSupplierLineId',
+  materialId: 'materialId',
+  orderedQty: 'orderedQty',
+  deliveredQty: 'deliveredQty',
+  acceptedQty: 'acceptedQty',
+  rejectedQty: 'rejectedQty',
+  backorderQty: 'backorderQty',
+  unitPrice: 'unitPrice',
+  lineStatus: 'lineStatus',
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt',
+  deleted: 'deleted',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IncomingDeliveryLineScalarFieldEnum = (typeof IncomingDeliveryLineScalarFieldEnum)[keyof typeof IncomingDeliveryLineScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -10846,6 +11022,34 @@ export const QuoteSupplierLineOrderByRelevanceFieldEnum = {
 export type QuoteSupplierLineOrderByRelevanceFieldEnum = (typeof QuoteSupplierLineOrderByRelevanceFieldEnum)[keyof typeof QuoteSupplierLineOrderByRelevanceFieldEnum]
 
 
+export const IncomingDeliveryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  incomingDeliveryNumber: 'incomingDeliveryNumber',
+  purchaseBOMId: 'purchaseBOMId',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  status: 'status',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IncomingDeliveryOrderByRelevanceFieldEnum = (typeof IncomingDeliveryOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryOrderByRelevanceFieldEnum]
+
+
+export const IncomingDeliveryLineOrderByRelevanceFieldEnum = {
+  id: 'id',
+  incomingDeliveryId: 'incomingDeliveryId',
+  purchaseBOMStructureId: 'purchaseBOMStructureId',
+  quoteSupplierLineId: 'quoteSupplierLineId',
+  materialId: 'materialId',
+  lineStatus: 'lineStatus',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IncomingDeliveryLineOrderByRelevanceFieldEnum = (typeof IncomingDeliveryLineOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryLineOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -11093,6 +11297,8 @@ export type GlobalOmitConfig = {
   materialDemandSourceType?: Prisma.MaterialDemandSourceTypeOmit
   paymentCondition?: Prisma.PaymentConditionOmit
   quoteSupplierLine?: Prisma.QuoteSupplierLineOmit
+  incomingDelivery?: Prisma.IncomingDeliveryOmit
+  incomingDeliveryLine?: Prisma.IncomingDeliveryLineOmit
 }
 
 /* Types for Logging */

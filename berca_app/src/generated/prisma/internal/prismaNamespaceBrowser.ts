@@ -154,7 +154,9 @@ export const ModelName = {
   MaterialDemandSource: 'MaterialDemandSource',
   MaterialDemandSourceType: 'MaterialDemandSourceType',
   PaymentCondition: 'PaymentCondition',
-  QuoteSupplierLine: 'QuoteSupplierLine'
+  QuoteSupplierLine: 'QuoteSupplierLine',
+  IncomingDelivery: 'IncomingDelivery',
+  IncomingDeliveryLine: 'IncomingDeliveryLine'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2047,6 +2049,48 @@ export const QuoteSupplierLineScalarFieldEnum = {
 export type QuoteSupplierLineScalarFieldEnum = (typeof QuoteSupplierLineScalarFieldEnum)[keyof typeof QuoteSupplierLineScalarFieldEnum]
 
 
+export const IncomingDeliveryScalarFieldEnum = {
+  id: 'id',
+  incomingDeliveryNumber: 'incomingDeliveryNumber',
+  purchaseBOMId: 'purchaseBOMId',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  status: 'status',
+  deliveryDate: 'deliveryDate',
+  receivedAt: 'receivedAt',
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt',
+  deleted: 'deleted',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IncomingDeliveryScalarFieldEnum = (typeof IncomingDeliveryScalarFieldEnum)[keyof typeof IncomingDeliveryScalarFieldEnum]
+
+
+export const IncomingDeliveryLineScalarFieldEnum = {
+  id: 'id',
+  incomingDeliveryId: 'incomingDeliveryId',
+  purchaseBOMStructureId: 'purchaseBOMStructureId',
+  quoteSupplierLineId: 'quoteSupplierLineId',
+  materialId: 'materialId',
+  orderedQty: 'orderedQty',
+  deliveredQty: 'deliveredQty',
+  acceptedQty: 'acceptedQty',
+  rejectedQty: 'rejectedQty',
+  backorderQty: 'backorderQty',
+  unitPrice: 'unitPrice',
+  lineStatus: 'lineStatus',
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt',
+  deleted: 'deleted',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IncomingDeliveryLineScalarFieldEnum = (typeof IncomingDeliveryLineScalarFieldEnum)[keyof typeof IncomingDeliveryLineScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3467,4 +3511,32 @@ export const QuoteSupplierLineOrderByRelevanceFieldEnum = {
 } as const
 
 export type QuoteSupplierLineOrderByRelevanceFieldEnum = (typeof QuoteSupplierLineOrderByRelevanceFieldEnum)[keyof typeof QuoteSupplierLineOrderByRelevanceFieldEnum]
+
+
+export const IncomingDeliveryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  incomingDeliveryNumber: 'incomingDeliveryNumber',
+  purchaseBOMId: 'purchaseBOMId',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  status: 'status',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IncomingDeliveryOrderByRelevanceFieldEnum = (typeof IncomingDeliveryOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryOrderByRelevanceFieldEnum]
+
+
+export const IncomingDeliveryLineOrderByRelevanceFieldEnum = {
+  id: 'id',
+  incomingDeliveryId: 'incomingDeliveryId',
+  purchaseBOMStructureId: 'purchaseBOMStructureId',
+  quoteSupplierLineId: 'quoteSupplierLineId',
+  materialId: 'materialId',
+  lineStatus: 'lineStatus',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IncomingDeliveryLineOrderByRelevanceFieldEnum = (typeof IncomingDeliveryLineOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryLineOrderByRelevanceFieldEnum]
 

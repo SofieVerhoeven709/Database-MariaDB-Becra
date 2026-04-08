@@ -2096,3 +2096,52 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 ALTER TABLE PurchaseBOMStructure ADD CONSTRAINT fk_quoteSupplierLine_purchaseBomStructure FOREIGN KEY (quoteSupplierLineId) REFERENCES QuoteSupplierLine(id) ON DELETE RESTRICT;
+
+CREATE TABLE
+      IF NOT EXISTS IncomingDelivery (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            incomingDeliveryNumber VARCHAR(255) NOT NULL,
+            purchaseBOMId CHAR(36) NOT NULL,
+            additionalInfo VARCHAR(255),
+            description VARCHAR(255),
+            status VARCHAR(50) NOT NULL DEFAULT 'DRAFT',
+            deliveryDate DATETIME NOT NULL,
+            receivedAt DATETIME,
+            createdAt DATETIME NOT NULL,
+            deletedAt DATETIME,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            createdBy CHAR(36) NOT NULL,
+            deletedBy CHAR(36),
+            FOREIGN KEY (purchaseBOMId) REFERENCES PurchaseBOM (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            UNIQUE(incomingDeliveryNumber)
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS IncomingDeliveryLine (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            incomingDeliveryId CHAR(36) NOT NULL,
+            purchaseBOMStructureId CHAR(36) NOT NULL,
+            quoteSupplierLineId CHAR(36),
+            materialId CHAR(36) NOT NULL,
+            orderedQty INT NOT NULL,
+            deliveredQty INT NOT NULL,
+            acceptedQty INT NOT NULL,
+            rejectedQty INT NOT NULL DEFAULT 0,
+            backorderQty INT NOT NULL DEFAULT 0,
+            unitPrice DECIMAL(10,2),
+            lineStatus VARCHAR(50) NOT NULL DEFAULT 'RECEIVED',
+            createdAt DATETIME NOT NULL,
+            deletedAt DATETIME,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            createdBy CHAR(36) NOT NULL,
+            deletedBy CHAR(36),
+            FOREIGN KEY (incomingDeliveryId) REFERENCES IncomingDelivery (id) ON DELETE CASCADE,
+            FOREIGN KEY (purchaseBOMStructureId) REFERENCES PurchaseBOMStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (quoteSupplierLineId) REFERENCES QuoteSupplierLine (id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            UNIQUE(incomingDeliveryId, purchaseBOMStructureId)
+      ) ENGINE = InnoDB;

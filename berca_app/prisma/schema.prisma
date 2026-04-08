@@ -408,6 +408,10 @@ model Employee {
   Function_Function_deletedByToEmployee                                             Function[]                       @relation("Function_deletedByToEmployee")
   HourType                                                                          HourType[]
   HourType_HourType_deletedByToEmployee                                             HourType[]                       @relation("HourType_deletedByToEmployee")
+  IncomingDelivery_IncomingDelivery_createdByToEmployee                             IncomingDelivery[]               @relation("IncomingDelivery_createdByToEmployee")
+  IncomingDelivery_IncomingDelivery_deletedByToEmployee                             IncomingDelivery[]               @relation("IncomingDelivery_deletedByToEmployee")
+  IncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployee                     IncomingDeliveryLine[]           @relation("IncomingDeliveryLine_createdByToEmployee")
+  IncomingDeliveryLine_IncomingDeliveryLine_deletedByToEmployee                     IncomingDeliveryLine[]           @relation("IncomingDeliveryLine_deletedByToEmployee")
   Inventory                                                                         Inventory[]
   Inventory_Inventory_deletedByToEmployee                                           Inventory[]                      @relation("Inventory_deletedByToEmployee")
   InventoryChange                                                                   InventoryChange[]
@@ -992,6 +996,7 @@ model Material {
   deletedAt                                                DateTime?              @db.DateTime(0)
   deletedBy                                                String?                @db.Char(36)
   targetId                                                 String                 @db.Char(36)
+  IncomingDeliveryLine                                     IncomingDeliveryLine[]
   Inventory_Inventory_materialIdToMaterial                 Inventory[]            @relation("Inventory_materialIdToMaterial")
   Inventory_Inventory_beNumberToMaterial                   Inventory?             @relation("Inventory_beNumberToMaterial")
   MaterialGroup_Material_materialGroupIdAToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdAToMaterialGroup", fields: [materialGroupIdA], references: [id], onUpdate: Restrict, map: "Material_ibfk_1")
@@ -2595,6 +2600,7 @@ model PurchaseBOM {
   projectBOMId                             String                 @unique(map: "projectBOMId") @db.Char(36)
   targetId                                 String                 @db.Char(36)
   deletedBy                                String?                @db.Char(36)
+  IncomingDelivery                         IncomingDelivery[]
   Project                                  Project                @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_1")
   Employee_PurchaseBOM_createdByToEmployee Employee               @relation("PurchaseBOM_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_2")
   Employee_PurchaseBOM_deletedByToEmployee Employee?              @relation("PurchaseBOM_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_3")
@@ -2629,6 +2635,7 @@ model PurchaseBOMStructure {
   purchaseBOMStructureId                            String?                @db.Char(36)
   deletedBy                                         String?                @db.Char(36)
   quoteSupplierLineId                               String?                @db.Char(36)
+  IncomingDeliveryLine                              IncomingDeliveryLine[]
   Material                                          Material               @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_1")
   PurchaseBOM                                       PurchaseBOM            @relation(fields: [purchaseBOMId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_2")
   Employee_PurchaseBOMStructure_createdByToEmployee Employee               @relation("PurchaseBOMStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_3")
@@ -2738,6 +2745,7 @@ model QuoteSupplierLine {
   unitPrice            Decimal                @db.Decimal(10, 2)
   minQuantity          Int?
   selected             Boolean?               @default(false)
+  IncomingDeliveryLine IncomingDeliveryLine[]
   PurchaseBOMStructure PurchaseBOMStructure[]
   QuoteSupplier        QuoteSupplier          @relation(fields: [quoteSupplierId], references: [id], onUpdate: Restrict, map: "QuoteSupplierLine_ibfk_1")
   Material             Material               @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "QuoteSupplierLine_ibfk_2")
@@ -2746,6 +2754,63 @@ model QuoteSupplierLine {
   @@index([materialDemandId], map: "materialDemandId")
   @@index([materialId], map: "materialId")
   @@index([quoteSupplierId], map: "quoteSupplierId")
+}
+
+model IncomingDelivery {
+  id                                            String                 @id @db.Char(36)
+  incomingDeliveryNumber                        String                 @unique(map: "incomingDeliveryNumber") @db.VarChar(255)
+  purchaseBOMId                                 String                 @db.Char(36)
+  additionalInfo                                String?                @db.VarChar(255)
+  description                                   String?                @db.VarChar(255)
+  status                                        String                 @default("DRAFT") @db.VarChar(50)
+  deliveryDate                                  DateTime               @db.DateTime(0)
+  receivedAt                                    DateTime?              @db.DateTime(0)
+  createdAt                                     DateTime               @db.DateTime(0)
+  deletedAt                                     DateTime?              @db.DateTime(0)
+  deleted                                       Boolean                @default(false)
+  createdBy                                     String                 @db.Char(36)
+  deletedBy                                     String?                @db.Char(36)
+  PurchaseBOM                                   PurchaseBOM            @relation(fields: [purchaseBOMId], references: [id], onUpdate: Restrict, map: "IncomingDelivery_ibfk_1")
+  Employee_IncomingDelivery_createdByToEmployee Employee               @relation("IncomingDelivery_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "IncomingDelivery_ibfk_2")
+  Employee_IncomingDelivery_deletedByToEmployee Employee?              @relation("IncomingDelivery_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "IncomingDelivery_ibfk_3")
+  IncomingDeliveryLine                          IncomingDeliveryLine[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([purchaseBOMId], map: "purchaseBOMId")
+}
+
+model IncomingDeliveryLine {
+  id                                                String               @id @db.Char(36)
+  incomingDeliveryId                                String               @db.Char(36)
+  purchaseBOMStructureId                            String               @db.Char(36)
+  quoteSupplierLineId                               String?              @db.Char(36)
+  materialId                                        String               @db.Char(36)
+  orderedQty                                        Int
+  deliveredQty                                      Int
+  acceptedQty                                       Int
+  rejectedQty                                       Int                  @default(0)
+  backorderQty                                      Int                  @default(0)
+  unitPrice                                         Decimal?             @db.Decimal(10, 2)
+  lineStatus                                        String               @default("RECEIVED") @db.VarChar(50)
+  createdAt                                         DateTime             @db.DateTime(0)
+  deletedAt                                         DateTime?            @db.DateTime(0)
+  deleted                                           Boolean              @default(false)
+  createdBy                                         String               @db.Char(36)
+  deletedBy                                         String?              @db.Char(36)
+  IncomingDelivery                                  IncomingDelivery     @relation(fields: [incomingDeliveryId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "IncomingDeliveryLine_ibfk_1")
+  PurchaseBOMStructure                              PurchaseBOMStructure @relation(fields: [purchaseBOMStructureId], references: [id], onUpdate: Restrict, map: "IncomingDeliveryLine_ibfk_2")
+  QuoteSupplierLine                                 QuoteSupplierLine?   @relation(fields: [quoteSupplierLineId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "IncomingDeliveryLine_ibfk_3")
+  Material                                          Material             @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "IncomingDeliveryLine_ibfk_4")
+  Employee_IncomingDeliveryLine_createdByToEmployee Employee             @relation("IncomingDeliveryLine_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "IncomingDeliveryLine_ibfk_5")
+  Employee_IncomingDeliveryLine_deletedByToEmployee Employee?            @relation("IncomingDeliveryLine_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "IncomingDeliveryLine_ibfk_6")
+
+  @@unique([incomingDeliveryId, purchaseBOMStructureId], map: "incomingDeliveryId")
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([materialId], map: "materialId")
+  @@index([purchaseBOMStructureId], map: "purchaseBOMStructureId")
+  @@index([quoteSupplierLineId], map: "quoteSupplierLineId")
 }
 
 enum MaterialSerialTrack_inspectionIntervalUnit {

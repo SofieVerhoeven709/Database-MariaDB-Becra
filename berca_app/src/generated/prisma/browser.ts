@@ -547,3 +547,13 @@ export type PaymentCondition = Prisma.PaymentConditionModel
  * 
  */
 export type QuoteSupplierLine = Prisma.QuoteSupplierLineModel
+/**
+ * Model IncomingDelivery
+ * 
+ */
+export type IncomingDelivery = Prisma.IncomingDeliveryModel
+/**
+ * Model IncomingDeliveryLine
+ * 
+ */
+export type IncomingDeliveryLine = Prisma.IncomingDeliveryLineModel

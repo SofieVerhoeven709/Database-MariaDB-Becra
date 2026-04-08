@@ -344,6 +344,13 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       owner: 'purchasing',
     },
     {
+      id: 'materialDemand',
+      name: 'Material Demand',
+      description: 'Review and organize demand before grouping quote requests by supplier',
+      icon: 'ClipboardList',
+      owner: 'purchasing',
+    },
+    {
       id: 'purchaseBom',
       name: 'Purchase Bill Of Material',
       description: 'Maintain purchasing bill of materials',

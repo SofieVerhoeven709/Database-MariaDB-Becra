@@ -551,7 +551,7 @@ export function MaterialFormDialog({
           {/* Short Description */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="shortDescription" className="text-xs text-muted-foreground">
-              Short Description
+              Short Description *
             </Label>
             <Input
               id="shortDescription"
@@ -559,6 +559,7 @@ export function MaterialFormDialog({
               value={form.shortDescription ?? ''}
               onChange={e => update('shortDescription', e.target.value)}
               placeholder="Short description"
+              required
             />
           </div>
           {/* Long Description */}

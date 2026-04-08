@@ -80,6 +80,18 @@ export function softDeleteMaterialGroup(id: string, deletedBy: string) {
   )
 }
 
+export function restoreMaterialGroup(id: string) {
+  return prismaClient.$executeRaw(
+    PrismaClientLib.sql`
+      UPDATE MaterialGroup
+      SET deleted = 0,
+          deletedAt = NULL,
+          deletedBy = NULL
+      WHERE id = ${id}
+    `,
+  )
+}
+
 // ─── Unit ────────────────────────────────────────────────────────────────────
 
 export type UnitWithCreator = Unit & {

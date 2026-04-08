@@ -16,6 +16,7 @@ import {
   createMaterialGroupAction,
   updateMaterialGroupAction,
   deleteMaterialGroupAction,
+  restoreMaterialGroupAction,
   createUnitAction,
   updateUnitAction,
   deleteUnitAction,
@@ -186,6 +187,15 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
     )
   }
 
+  async function handleRestore(id: string) {
+    if (!confirm('Restore this material group?')) return
+
+    const fd = new FormData()
+    fd.append('id', id)
+    await restoreMaterialGroupAction({success: false}, fd)
+    setGroups(prev => prev.map(g => (g.id === id ? {...g, deleted: false} : g)))
+  }
+
   const filtered = groups
     .filter(g => {
       if (statusFilter === 'active') return !g.deleted
@@ -293,19 +303,42 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
-                      <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(g)}>
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openDuplicate(g)}>
-                        <Copy className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7 text-destructive hover:text-destructive"
-                        onClick={() => handleDelete(g.id)}>
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
+                      {g.deleted ? (
+                        <>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                            title="Restore"
+                            onClick={() => handleRestore(g.id)}>
+                            <Check className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:text-destructive"
+                            title="Permanently delete"
+                            onClick={() => handleDelete(g.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(g)}>
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openDuplicate(g)}>
+                            <Copy className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(g.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>

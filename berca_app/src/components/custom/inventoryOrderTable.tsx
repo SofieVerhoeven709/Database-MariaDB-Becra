@@ -81,11 +81,12 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
     if (editing) {
       await updateInventoryOrderAction({
         id: e.id, inventoryId: e.inventoryId, orderNumber: e.orderNumber,
+        requestedQty: e.requestedQty,
         orderDate: e.orderDate, shortDescription: e.shortDescription, longDescription: e.longDescription,
       })
     } else {
       await createInventoryOrderAction({
-        inventoryId: e.inventoryId, orderNumber: e.orderNumber,
+        inventoryId: e.inventoryId, orderNumber: e.orderNumber, requestedQty: e.requestedQty,
         orderDate: e.orderDate, shortDescription: e.shortDescription, longDescription: e.longDescription,
       })
     }
@@ -130,6 +131,9 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
               <TableHead className={thClass} onClick={() => toggleSort('orderNumber')}>
                 Order # <SortIcon field="orderNumber" sortField={sortField} sortDir={sortDir} />
               </TableHead>
+              <TableHead className={thClass}>
+                Qty
+              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('inventoryBeNumber')}>
                 Inventory Item <SortIcon field="inventoryBeNumber" sortField={sortField} sortDir={sortDir} />
               </TableHead>
@@ -143,7 +147,7 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="h-28 text-center text-muted-foreground">
+                <TableCell colSpan={7} className="h-28 text-center text-muted-foreground">
                   No order requests found.
                 </TableCell>
               </TableRow>
@@ -151,6 +155,7 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
               <TableRow key={entry.id} className="border-border/40 hover:bg-secondary/50">
                 <TableCell className={tdClass}>{formatDate(entry.orderDate)}</TableCell>
                 <TableCell className={`${tdClass} font-medium text-foreground`}>{entry.orderNumber}</TableCell>
+                <TableCell className={tdClass}>{entry.requestedQty}</TableCell>
                 <TableCell className={tdClass}>
                   <div className="flex flex-col gap-0.5">
                     <span>{entry.inventoryBeNumber ?? '—'}</span>

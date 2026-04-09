@@ -26,7 +26,7 @@ interface Props {
 function empty(): MappedInventoryOrder {
   return {
     id: '', inventoryId: '', inventoryBeNumber: null, inventoryDescription: null,
-    orderNumber: '', orderDate: new Date().toISOString().split('T')[0],
+    orderNumber: '', requestedQty: 1, orderDate: new Date().toISOString().split('T')[0],
     shortDescription: '', longDescription: null,
     createdAt: '', createdBy: '', createdByName: '', deleted: false, deletedAt: null, deletedBy: null,
   }
@@ -45,7 +45,7 @@ export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories
   }
 
   async function handleSubmit() {
-    if (!form.inventoryId || !form.orderNumber.trim() || !form.orderDate || !form.shortDescription.trim()) {
+    if (!form.inventoryId || !form.orderNumber.trim() || !form.requestedQty || form.requestedQty < 1 || !form.orderDate || !form.shortDescription.trim()) {
       return
     }
     setSaving(true)
@@ -58,7 +58,7 @@ export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories
   }
 
   const canSubmit = Boolean(
-    form.inventoryId && form.orderNumber.trim() && form.orderDate && form.shortDescription.trim()
+    form.inventoryId && form.orderNumber.trim() && form.requestedQty >= 1 && form.orderDate && form.shortDescription.trim()
   )
 
   return (
@@ -88,6 +88,13 @@ export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories
             <Label htmlFor="orderNumber">Order Number</Label>
             <Input id="orderNumber" value={form.orderNumber} onChange={e => set('orderNumber', e.target.value)}
               placeholder="e.g. ORD-2026-001" className="bg-secondary border-border" />
+          </div>
+
+          <div className="grid gap-1.5">
+            <Label htmlFor="requestedQty">Requested Quantity</Label>
+            <Input id="requestedQty" type="number" min={1} value={form.requestedQty}
+              onChange={e => set('requestedQty', Number.parseInt(e.target.value, 10) || 0)}
+              className="bg-secondary border-border" />
           </div>
 
           <div className="grid gap-1.5">

@@ -15,6 +15,7 @@ export function mapInventoryOrder(o: InventoryOrderWithRelations): MappedInvento
     inventoryBeNumber: o.Inventory.beNumber ?? null,
     inventoryDescription: o.Inventory.shortDescription ?? null,
     orderNumber: o.orderNumber,
+    requestedQty: o.requestedQty ?? 1,
     orderDate: o.orderDate.toISOString(),
     shortDescription: o.shortDescription,
     longDescription: o.longDescription ?? null,

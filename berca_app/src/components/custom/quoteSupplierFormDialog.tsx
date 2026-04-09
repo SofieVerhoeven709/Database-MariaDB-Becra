@@ -27,6 +27,7 @@ interface Props {
   companies: CompanyOption[]
   paymentConditions: PaymentConditionOption[]
   defaultQuoteNumber: string
+  defaultCompanyId?: string
   canEditNumber: boolean
   onSave: (entry: MappedQuoteSupplier) => Promise<void>
 }
@@ -62,6 +63,7 @@ export function QuoteSupplierFormDialog({
   companies,
   paymentConditions,
   defaultQuoteNumber,
+  defaultCompanyId,
   canEditNumber,
   onSave,
 }: Props) {
@@ -77,9 +79,9 @@ export function QuoteSupplierFormDialog({
       setSaveError(null)
       return
     }
-    setForm({...empty(), quoteNumber: defaultQuoteNumber})
+    setForm({...empty(), quoteNumber: defaultQuoteNumber, companyId: defaultCompanyId ?? ''})
     setSaveError(null)
-  }, [open, entry, defaultQuoteNumber])
+  }, [open, entry, defaultQuoteNumber, defaultCompanyId])
 
   function set<K extends keyof MappedQuoteSupplier>(key: K, value: MappedQuoteSupplier[K]) {
     setForm(prev => ({...prev, [key]: value}))

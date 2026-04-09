@@ -4,6 +4,7 @@ export interface MappedInventoryOrder {
   inventoryBeNumber: string | null
   inventoryDescription: string | null
   orderNumber: string
+  requestedQty: number
   orderDate: string
   shortDescription: string
   longDescription: string | null

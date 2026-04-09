@@ -10,6 +10,8 @@ import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
+import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog'
+import {Label} from '@/components/ui/label'
 import type {MappedMaterialDemand, MaterialDemandMaterialOption} from '@/types/materialDemand'
 import {createMaterialDemandAction, updateMaterialDemandAction} from '@/serverFunctions/materialDemands'
 import {createInventoryOrderAction} from '@/serverFunctions/inventoryOrders'
@@ -22,6 +24,7 @@ type RankingPolicy = 'best-price' | 'fastest-delivery' | 'balanced'
 interface MaterialDemandTableProps {
   initialEntries: MappedMaterialDemand[]
   materials: MaterialDemandMaterialOption[]
+  suppliers: {id: string; name: string}[]
   currentUserRole: string
   currentUserLevel: number
   departmentId: string
@@ -102,6 +105,7 @@ function generateLowStockRequestNumber(entry: MappedMaterialDemand) {
 export function MaterialDemandTable({
   initialEntries,
   materials,
+  suppliers,
   currentUserRole,
   currentUserLevel,
   departmentId,
@@ -129,6 +133,8 @@ export function MaterialDemandTable({
   const [lineActionLoadingId, setLineActionLoadingId] = useState<string | null>(null)
   const [rankingPolicy, setRankingPolicy] = useState<RankingPolicy>('balanced')
   const [showEligibleOnly, setShowEligibleOnly] = useState(false)
+  const [lowStockRequestDialog, setLowStockRequestDialog] = useState<{entry: MappedMaterialDemand; qty: string} | null>(null)
+  const [makeQuoteDialog, setMakeQuoteDialog] = useState<{entry: MappedMaterialDemand; supplierId: string} | null>(null)
 
   const usedMaterialIds = useMemo(() => new Set(initialEntries.map(e => e.materialId)), [initialEntries])
   const availableMaterials = useMemo(
@@ -143,6 +149,17 @@ export function MaterialDemandTable({
       return (entry.materialBeNumber ?? '').toLowerCase().includes(q) || (entry.materialName ?? '').toLowerCase().includes(q)
     })
     .sort((a, b) => {
+      // Primary sort: low-stock items first
+      const aIsLowStock = a.isLowStock ? 0 : 1
+      const bIsLowStock = b.isLowStock ? 0 : 1
+      if (aIsLowStock !== bIsLowStock) return aIsLowStock - bIsLowStock
+
+      // Secondary sort: items with required quantities first
+      const aHasRequired = a.totalRequiredQty > 0 ? 0 : 1
+      const bHasRequired = b.totalRequiredQty > 0 ? 0 : 1
+      if (aHasRequired !== bHasRequired) return aHasRequired - bHasRequired
+
+      // Tertiary sort: apply user's sort preference
       const dir = sortDir === 'asc' ? 1 : -1
       const cmpStr = (x: string | null | undefined, y: string | null | undefined) => dir * (x ?? '').localeCompare(y ?? '')
       switch (sortField) {
@@ -215,6 +232,39 @@ export function MaterialDemandTable({
   }
 
   async function handleLowStockRequest(entry: MappedMaterialDemand) {
+    // Open dialog to let user specify quantity
+    setLowStockRequestDialog({
+      entry,
+      qty: String(entry.suggestedRequestQty),
+    })
+  }
+
+  function openMakeQuoteDialog(entry: MappedMaterialDemand) {
+    setMakeQuoteDialog({entry, supplierId: '__none__'})
+  }
+
+  function continueToQuotePage() {
+    if (!makeQuoteDialog) return
+    if (!makeQuoteDialog.supplierId || makeQuoteDialog.supplierId === '__none__') {
+      setActionError('Please select a supplier first.')
+      return
+    }
+
+    const {entry, supplierId} = makeQuoteDialog
+    setMakeQuoteDialog(null)
+    setActionError(null)
+    router.push(`/departments/${departmentId}/orderQuote?materialId=${entry.materialId}&supplierId=${supplierId}` as Route)
+  }
+
+  async function submitLowStockRequest() {
+    if (!lowStockRequestDialog) return
+    const {entry, qty} = lowStockRequestDialog
+    const requestedQty = Number.parseInt(qty, 10)
+    if (Number.isNaN(requestedQty) || requestedQty < 1) {
+      setActionError('Please enter a valid quantity (at least 1).')
+      return
+    }
+
     try {
       if (!entry.requestInventoryId) {
         setActionError('No inventory row linked to this material. Please create inventory first.')
@@ -224,9 +274,10 @@ export function MaterialDemandTable({
       const result = await createInventoryOrderAction({
         inventoryId: entry.requestInventoryId,
         orderNumber: generateLowStockRequestNumber(entry),
+        requestedQty,
         orderDate: new Date().toISOString().slice(0, 10),
         shortDescription: `Low-stock request for ${entry.materialBeNumber ?? entry.materialId}`,
-        longDescription: `Stock ${entry.stockQuantity} is at/below minimum ${entry.minimumStockQuantity}. __REQUESTED_QTY__:${entry.suggestedRequestQty}`,
+        longDescription: `Stock ${entry.stockQuantity} is at/below minimum ${entry.minimumStockQuantity}.`,
       })
 
       const error = extractActionError(result)
@@ -236,6 +287,7 @@ export function MaterialDemandTable({
       }
 
       setActionError(null)
+      setLowStockRequestDialog(null)
       router.refresh()
     } catch (error) {
       setActionError(error instanceof Error ? error.message : 'Could not create approval request.')
@@ -493,6 +545,12 @@ export function MaterialDemandTable({
                       <TableCell className={tdClass}>{formatDate(entry.createdAt)}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={() => openMakeQuoteDialog(entry)}
+                            className="inline-flex h-7 items-center rounded-md border border-accent/50 bg-accent/10 px-2 text-[11px] font-medium text-accent hover:bg-accent/20">
+                            Make Quote
+                          </button>
                           {entry.isLowStock && (
                             <Button
                               size="sm"
@@ -538,7 +596,14 @@ export function MaterialDemandTable({
                                   <TableHead className="text-xs">Delivery</TableHead>
                                   <TableHead className="text-xs">Valid Until</TableHead>
                                   <TableHead className="text-xs">Status</TableHead>
-                                  <TableHead className="text-xs w-28">Select</TableHead>
+                                  <TableHead className="text-xs w-28">
+                                    <button
+                                      type="button"
+                                      onClick={() => openMakeQuoteDialog(entry)}
+                                      className="inline-flex h-6 items-center rounded-md border border-accent bg-accent/10 px-2 text-xs text-accent hover:bg-accent/20 font-medium">
+                                      New Quote
+                                    </button>
+                                  </TableHead>
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
@@ -547,11 +612,19 @@ export function MaterialDemandTable({
                                     <TableCell colSpan={9} className="text-xs text-muted-foreground py-4">
                                       <div className="flex items-center justify-between gap-3">
                                         <span>No eligible quote options for this material yet.</span>
-                                        <Link
-                                          href={`/departments/${departmentId}/orderQuote` as Route}
-                                          className="inline-flex h-7 items-center rounded-md border border-border px-2.5 text-xs text-foreground hover:bg-secondary">
-                                          Request/Manage Quotes
-                                        </Link>
+                                        <div className="flex gap-2">
+                                          <button
+                                            type="button"
+                                            onClick={() => openMakeQuoteDialog(entry)}
+                                            className="inline-flex h-7 items-center rounded-md border border-accent bg-accent/10 px-2.5 text-xs text-accent hover:bg-accent/20 font-medium">
+                                            Create Quote
+                                          </button>
+                                          <Link
+                                            href={`/departments/${departmentId}/orderQuote` as Route}
+                                            className="inline-flex h-7 items-center rounded-md border border-border px-2.5 text-xs text-foreground hover:bg-secondary">
+                                            All Quotes
+                                          </Link>
+                                        </div>
                                       </div>
                                     </TableCell>
                                   </TableRow>
@@ -593,7 +666,7 @@ export function MaterialDemandTable({
                                         <Button
                                           size="sm"
                                           variant={isSelected ? 'secondary' : 'outline'}
-                                          className="h-7 text-xs"
+                                          className="h-7 text-xs w-full"
                                           disabled={isLoading || (!isSelected && !canSelect)}
                                           onClick={() => handleQuoteLineSelection(entry.id, option.id, !isSelected)}>
                                           {isLoading ? 'Saving…' : isSelected ? 'Selected' : 'Select'}
@@ -619,6 +692,82 @@ export function MaterialDemandTable({
       <p className="text-xs text-muted-foreground">
         Demand rows are unique per material. Auto-create/remove on material lifecycle can be added next.
       </p>
+
+      {/* Low-stock request dialog */}
+      <Dialog open={!!lowStockRequestDialog} onOpenChange={open => !open && setLowStockRequestDialog(null)}>
+        <DialogContent className="bg-card border-border">
+          <DialogHeader>
+            <DialogTitle>Request Stock Replenishment</DialogTitle>
+            <DialogDescription>
+              How much would you like to request for {lowStockRequestDialog?.entry.materialBeNumber ?? lowStockRequestDialog?.entry.materialId}?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="rounded-md bg-secondary/50 p-3 text-xs text-muted-foreground space-y-1">
+              <p><strong>Current stock:</strong> {lowStockRequestDialog?.entry.stockQuantity}</p>
+              <p><strong>Minimum required:</strong> {lowStockRequestDialog?.entry.minimumStockQuantity}</p>
+              <p><strong>Suggested:</strong> {lowStockRequestDialog?.entry.suggestedRequestQty}</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="requestQty" className="text-xs">Quantity to request</Label>
+              <Input
+                id="requestQty"
+                type="number"
+                min={1}
+                value={lowStockRequestDialog?.qty ?? ''}
+                onChange={e => {
+                  if (lowStockRequestDialog) {
+                    setLowStockRequestDialog({...lowStockRequestDialog, qty: e.target.value})
+                  }
+                }}
+                className="bg-secondary border-border"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setLowStockRequestDialog(null)}>Cancel</Button>
+            <Button onClick={submitLowStockRequest} className="bg-amber-600 hover:bg-amber-700 text-white">
+              Submit Request
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!makeQuoteDialog} onOpenChange={open => !open && setMakeQuoteDialog(null)}>
+        <DialogContent className="bg-card border-border">
+          <DialogHeader>
+            <DialogTitle>Select Supplier</DialogTitle>
+            <DialogDescription>
+              Choose a supplier for {makeQuoteDialog?.entry.materialBeNumber ?? makeQuoteDialog?.entry.materialId}, then continue to quotes.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="makeQuoteSupplier" className="text-xs">Supplier</Label>
+            <Select
+              value={makeQuoteDialog?.supplierId ?? '__none__'}
+              onValueChange={value => {
+                if (!makeQuoteDialog) return
+                setMakeQuoteDialog({...makeQuoteDialog, supplierId: value})
+              }}>
+              <SelectTrigger id="makeQuoteSupplier" className="bg-secondary border-border">
+                <SelectValue placeholder="Select supplier" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                <SelectItem value="__none__">— Select supplier —</SelectItem>
+                {suppliers.map(supplier => (
+                  <SelectItem key={supplier.id} value={supplier.id}>
+                    {supplier.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setMakeQuoteDialog(null)}>Cancel</Button>
+            <Button onClick={continueToQuotePage}>Continue to Quotes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

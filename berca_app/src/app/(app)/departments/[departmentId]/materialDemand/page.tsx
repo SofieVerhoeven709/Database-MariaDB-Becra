@@ -5,6 +5,7 @@ import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {getSupplierCompanies} from '@/dal/companies'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -13,10 +14,11 @@ interface PageProps {
 export default async function MaterialDemandPage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [department, demandsFromDAL, materialsRaw, profile] = await Promise.all([
+  const [department, demandsFromDAL, materialsRaw, supplierCompaniesRaw, profile] = await Promise.all([
     getDepartmentById(departmentId),
     getMaterialDemands(),
     getMaterialDemandMaterialOptions(),
+    getSupplierCompanies(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
@@ -25,6 +27,9 @@ export default async function MaterialDemandPage({params}: PageProps) {
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'materialDemand')
   const entries = demandsFromDAL.map(mapMaterialDemand)
+  const suppliers = supplierCompaniesRaw
+    .map(s => ({id: s.id, name: s.name}))
+    .sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -53,6 +58,7 @@ export default async function MaterialDemandPage({params}: PageProps) {
         <MaterialDemandTable
           initialEntries={entries}
           materials={materialsRaw}
+          suppliers={suppliers}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           departmentId={departmentId}

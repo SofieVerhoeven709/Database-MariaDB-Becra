@@ -59,6 +59,7 @@ export const createInventoryOrderAction = protectedServerFunction({
         id: crypto.randomUUID(),
         inventoryId: data.inventoryId,
         orderNumber: data.orderNumber,
+        requestedQty: data.requestedQty,
         orderDate: toDate(data.orderDate),
         shortDescription: data.shortDescription,
         longDescription: data.longDescription ?? null,
@@ -79,6 +80,7 @@ export const updateInventoryOrderAction = protectedServerFunction({
       data: {
         inventoryId: rest.inventoryId,
         orderNumber: rest.orderNumber,
+        requestedQty: rest.requestedQty,
         orderDate: toDate(rest.orderDate),
         shortDescription: rest.shortDescription,
         longDescription: rest.longDescription ?? null,
@@ -116,7 +118,8 @@ export const approveInventoryOrderAction = protectedServerFunction({
 
     const materialDemand = await ensureMaterialDemandForMaterial(order.Inventory.materialId)
     const fallbackQty = Math.max(1, order.Inventory.minQuantityInStock - order.Inventory.quantityInStock)
-    const requestedQty = Math.max(resolveRequestedQtyFromDescription(order.longDescription), fallbackQty)
+    const legacyRequestedQty = resolveRequestedQtyFromDescription(order.longDescription)
+    const requestedQty = Math.max(order.requestedQty ?? 1, legacyRequestedQty, fallbackQty)
 
     await prismaClient.$transaction(async tx => {
       await tx.inventoryOrder.update({

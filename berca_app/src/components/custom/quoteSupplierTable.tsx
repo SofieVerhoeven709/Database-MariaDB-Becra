@@ -55,6 +55,8 @@ interface Props {
   paymentConditions: PaymentConditionOption[]
   currentUserRole: string
   currentUserLevel: number
+  defaultMaterialId?: string
+  defaultSupplierId?: string
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -75,6 +77,8 @@ export function QuoteSupplierTable({
   paymentConditions,
   currentUserRole,
   currentUserLevel,
+  defaultMaterialId,
+  defaultSupplierId,
 }: Props) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -90,6 +94,7 @@ export function QuoteSupplierTable({
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<MappedQuoteSupplier | null>(null)
+  const [showCreateWithMaterial, setShowCreateWithMaterial] = useState(!!defaultMaterialId)
 
   const highestQuoteNumber = initialEntries.reduce((max, entry) => {
     const parsed = parseQuoteNumber(entry.quoteNumber)
@@ -219,6 +224,38 @@ export function QuoteSupplierTable({
         </div>
       </div>
 
+      {defaultMaterialId && showCreateWithMaterial && (
+        <div className="rounded-lg border border-accent/30 bg-accent/5 px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div>
+              <p className="text-sm font-medium text-foreground">Create a new quote for this material</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Add quote lines and pricing information for the selected material</p>
+              {defaultSupplierId && (
+                <p className="text-xs text-muted-foreground mt-0.5">Supplier will be preselected in the form.</p>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setShowCreateWithMaterial(false)}
+              className="text-xs">
+              Dismiss
+            </Button>
+            <Button
+              size="sm"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 text-xs"
+              onClick={() => {
+                setEditing(null)
+                setDialogOpen(true)
+              }}>
+              Create Quote
+            </Button>
+          </div>
+        </div>
+      )}
+
       <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
         <Table>
           <TableHeader>
@@ -322,6 +359,7 @@ export function QuoteSupplierTable({
         companies={companies}
         paymentConditions={paymentConditions}
         defaultQuoteNumber={defaultQuoteNumber}
+        defaultCompanyId={!editing ? defaultSupplierId : undefined}
         canEditNumber={canEditNumber}
         onSave={handleSave}
       />

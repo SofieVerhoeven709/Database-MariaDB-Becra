@@ -11,6 +11,10 @@ export interface MappedInventoryOrder {
   createdAt: string
   createdBy: string
   createdByName: string
+  approved: boolean
+  approvedAt: string | null
+  approvedBy: string | null
+  approvedByName: string | null
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null

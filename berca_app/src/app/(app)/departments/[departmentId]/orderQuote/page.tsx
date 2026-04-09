@@ -1,5 +1,5 @@
-import {getQuoteSuppliers, getPaymentConditionOptions} from '@/dal/quoteSuppliers'
-import {mapQuoteSupplier} from '@/extra/quoteSuppliers'
+import {getQuoteSuppliers, getPaymentConditionOptions, getPaymentConditions} from '@/dal/quoteSuppliers'
+import {mapPaymentCondition, mapQuoteSupplier} from '@/extra/quoteSuppliers'
 import {QuoteSupplierTable} from '@/components/custom/quoteSupplierTable'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
@@ -10,18 +10,20 @@ import {getMaterialById} from '@/dal/materials'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
-  searchParams?: Promise<{materialId?: string; materialDemandId?: string; supplierId?: string}>
+  searchParams?: Promise<{materialId?: string; materialDemandId?: string; supplierId?: string; quoteQty?: string}>
 }
 
 export default async function OrderQuotePage({params, searchParams}: PageProps) {
   const {departmentId} = await params
-  const {materialId, materialDemandId, supplierId} = (await searchParams) ?? {}
+  const {materialId, materialDemandId, supplierId, quoteQty} = (await searchParams) ?? {}
+  const initialQuoteQty = quoteQty ? Number.parseInt(quoteQty, 10) : undefined
 
-  const [department, entriesFromDAL, companiesRaw, paymentConditionsRaw, profile, materialData] = await Promise.all([
+  const [department, entriesFromDAL, companiesRaw, paymentConditionsRaw, paymentConditionRowsRaw, profile, materialData] = await Promise.all([
     getDepartmentById(departmentId),
     getQuoteSuppliers(),
     getSupplierCompanies(),
     getPaymentConditionOptions(),
+    getPaymentConditions(),
     getSessionProfileFromCookieOrThrow(),
     materialId ? getMaterialById(materialId) : Promise.resolve(null),
   ])
@@ -39,6 +41,10 @@ export default async function OrderQuotePage({params, searchParams}: PageProps) 
 
   const paymentConditionOptions = paymentConditionsRaw
     .map(pc => ({id: pc.id, name: pc.name}))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  const paymentConditionRows = paymentConditionRowsRaw
+    .map(mapPaymentCondition)
     .sort((a, b) => a.name.localeCompare(b.name))
 
   const selectedSupplier = supplierId ? companyOptions.find(c => c.id === supplierId) ?? null : null
@@ -82,11 +88,13 @@ export default async function OrderQuotePage({params, searchParams}: PageProps) 
           initialEntries={entries}
           companies={companyOptions}
           paymentConditions={paymentConditionOptions}
+          paymentConditionRows={paymentConditionRows}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           departmentId={departmentId}
           defaultMaterialId={materialId}
           defaultMaterialDemandId={materialDemandId}
+          defaultInitialQuantity={Number.isFinite(initialQuoteQty) ? initialQuoteQty : undefined}
           defaultSupplierId={selectedSupplier?.id}
         />
       </div>

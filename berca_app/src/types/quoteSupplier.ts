@@ -8,7 +8,7 @@ export interface MappedQuoteSupplier {
   rejected: boolean
   additionalInfo: string | null
   acceptedForPOB: boolean
-  validUntill: string | null
+  validUntil: string | null
   deliveryTimeDays: number | null
   paymentConditionId: string | null
   paymentConditionName: string | null
@@ -19,6 +19,7 @@ export interface MappedQuoteSupplier {
   deletedBy: string | null
   deletedByName: string | null
   lineCount: number
+  executed: boolean
 }
 
 export interface MappedQuoteSupplierDetailLine {
@@ -37,4 +38,16 @@ export interface MappedQuoteSupplierDetailLine {
 
 export interface MappedQuoteSupplierDetail extends MappedQuoteSupplier {
   lines: MappedQuoteSupplierDetailLine[]
+}
+
+export interface MappedPaymentCondition {
+  id: string
+  name: string
+  deleted: boolean
+  createdAt: string
+  createdBy: string
+  createdByName: string
+  deletedAt: string | null
+  deletedBy: string | null
+  deletedByName: string | null
 }

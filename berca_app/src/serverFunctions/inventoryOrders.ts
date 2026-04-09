@@ -7,7 +7,7 @@ import {
   inventoryOrderIdSchema,
 } from '@/schemas/inventoryOrderSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
-import {ensureMaterialDemandForMaterial} from '@/dal/materialDemands'
+import {createMaterialDemandSourceForInventoryOrder} from '@/dal/materialDemands'
 
 const REVALIDATE_PATH = '/departments/purchasing/orderRequests'
 const REVALIDATE_MATERIAL_DEMAND = '/departments/purchasing/materialDemand'
@@ -44,6 +44,7 @@ export const createInventoryOrderAction = protectedServerFunction({
     const existingPending = await prismaClient.inventoryOrder.findFirst({
       where: {
         deleted: false,
+        approved: false,
         Inventory: {is: {materialId: inventory.materialId}},
       },
       select: {id: true},
@@ -116,7 +117,10 @@ export const approveInventoryOrderAction = protectedServerFunction({
       throw new Error('Inventory order is already processed.')
     }
 
-    const materialDemand = await ensureMaterialDemandForMaterial(order.Inventory.materialId)
+    if (order.approved) {
+      throw new Error('Inventory order is already approved.')
+    }
+
     const fallbackQty = Math.max(1, order.Inventory.minQuantityInStock - order.Inventory.quantityInStock)
     const legacyRequestedQty = resolveRequestedQtyFromDescription(order.longDescription)
     const requestedQty = Math.max(order.requestedQty ?? 1, legacyRequestedQty, fallbackQty)
@@ -125,17 +129,18 @@ export const approveInventoryOrderAction = protectedServerFunction({
       await tx.inventoryOrder.update({
         where: {id},
         data: {
-          deleted: true,
-          deletedAt: new Date(),
-          deletedBy: profile.id,
+          approved: true,
+          approvedAt: new Date(),
+          approvedBy: profile.id,
         },
       })
 
-      await tx.materialDemand.update({
-        where: {id: materialDemand.id},
-        data: {
-          totalRequiredQty: {increment: requestedQty},
-        },
+      await createMaterialDemandSourceForInventoryOrder({
+        materialId: order.Inventory.materialId,
+        inventoryOrderId: id,
+        requiredQty: requestedQty,
+        createdBy: profile.id,
+        tx,
       })
     })
 

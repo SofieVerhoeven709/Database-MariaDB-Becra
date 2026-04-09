@@ -43,7 +43,7 @@ function empty(): MappedQuoteSupplier {
     rejected: false,
     additionalInfo: null,
     acceptedForPOB: false,
-    validUntill: null,
+    validUntil: null,
     deliveryTimeDays: null,
     paymentConditionId: null,
     paymentConditionName: null,
@@ -54,6 +54,7 @@ function empty(): MappedQuoteSupplier {
     deletedBy: null,
     deletedByName: null,
     lineCount: 0,
+    executed: false,
   }
 }
 
@@ -175,12 +176,12 @@ export function QuoteSupplierFormDialog({
           </div>
 
           <div className="grid gap-1.5">
-            <Label htmlFor="validUntill">Valid Until</Label>
+            <Label htmlFor="validUntil">Valid Until</Label>
             <Input
-              id="validUntill"
+              id="validUntil"
               type="date"
-              value={form.validUntill ? form.validUntill.split('T')[0] : ''}
-              onChange={e => set('validUntill', e.target.value || null)}
+              value={form.validUntil ? form.validUntil.split('T')[0] : ''}
+              onChange={e => set('validUntil', e.target.value || null)}
               className="bg-secondary border-border"
             />
           </div>

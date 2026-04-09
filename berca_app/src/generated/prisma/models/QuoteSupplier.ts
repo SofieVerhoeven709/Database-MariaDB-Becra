@@ -44,7 +44,8 @@ export type QuoteSupplierMinAggregateOutputType = {
   additionalInfo: string | null
   documentId: string | null
   acceptedForPOB: boolean | null
-  validUntill: Date | null
+  executed: boolean | null
+  validUntil: Date | null
   deliveryTimeDays: number | null
   createdBy: string | null
   paymentConditionId: string | null
@@ -63,7 +64,8 @@ export type QuoteSupplierMaxAggregateOutputType = {
   additionalInfo: string | null
   documentId: string | null
   acceptedForPOB: boolean | null
-  validUntill: Date | null
+  executed: boolean | null
+  validUntil: Date | null
   deliveryTimeDays: number | null
   createdBy: string | null
   paymentConditionId: string | null
@@ -82,7 +84,8 @@ export type QuoteSupplierCountAggregateOutputType = {
   additionalInfo: number
   documentId: number
   acceptedForPOB: number
-  validUntill: number
+  executed: number
+  validUntil: number
   deliveryTimeDays: number
   createdBy: number
   paymentConditionId: number
@@ -111,7 +114,8 @@ export type QuoteSupplierMinAggregateInputType = {
   additionalInfo?: true
   documentId?: true
   acceptedForPOB?: true
-  validUntill?: true
+  executed?: true
+  validUntil?: true
   deliveryTimeDays?: true
   createdBy?: true
   paymentConditionId?: true
@@ -130,7 +134,8 @@ export type QuoteSupplierMaxAggregateInputType = {
   additionalInfo?: true
   documentId?: true
   acceptedForPOB?: true
-  validUntill?: true
+  executed?: true
+  validUntil?: true
   deliveryTimeDays?: true
   createdBy?: true
   paymentConditionId?: true
@@ -149,7 +154,8 @@ export type QuoteSupplierCountAggregateInputType = {
   additionalInfo?: true
   documentId?: true
   acceptedForPOB?: true
-  validUntill?: true
+  executed?: true
+  validUntil?: true
   deliveryTimeDays?: true
   createdBy?: true
   paymentConditionId?: true
@@ -255,7 +261,8 @@ export type QuoteSupplierGroupByOutputType = {
   additionalInfo: string | null
   documentId: string | null
   acceptedForPOB: boolean
-  validUntill: Date | null
+  executed: boolean
+  validUntil: Date | null
   deliveryTimeDays: number | null
   createdBy: string
   paymentConditionId: string | null
@@ -297,7 +304,8 @@ export type QuoteSupplierWhereInput = {
   additionalInfo?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   documentId?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   acceptedForPOB?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
-  validUntill?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  executed?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  validUntil?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
   deliveryTimeDays?: Prisma.IntNullableFilter<"QuoteSupplier"> | number | null
   createdBy?: Prisma.StringFilter<"QuoteSupplier"> | string
   paymentConditionId?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
@@ -322,7 +330,8 @@ export type QuoteSupplierOrderByWithRelationInput = {
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   documentId?: Prisma.SortOrderInput | Prisma.SortOrder
   acceptedForPOB?: Prisma.SortOrder
-  validUntill?: Prisma.SortOrderInput | Prisma.SortOrder
+  executed?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryTimeDays?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   paymentConditionId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -351,7 +360,8 @@ export type QuoteSupplierWhereUniqueInput = Prisma.AtLeast<{
   additionalInfo?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   documentId?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   acceptedForPOB?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
-  validUntill?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  executed?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  validUntil?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
   deliveryTimeDays?: Prisma.IntNullableFilter<"QuoteSupplier"> | number | null
   createdBy?: Prisma.StringFilter<"QuoteSupplier"> | string
   paymentConditionId?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
@@ -376,7 +386,8 @@ export type QuoteSupplierOrderByWithAggregationInput = {
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   documentId?: Prisma.SortOrderInput | Prisma.SortOrder
   acceptedForPOB?: Prisma.SortOrder
-  validUntill?: Prisma.SortOrderInput | Prisma.SortOrder
+  executed?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryTimeDays?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   paymentConditionId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -403,7 +414,8 @@ export type QuoteSupplierScalarWhereWithAggregatesInput = {
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
   documentId?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
   acceptedForPOB?: Prisma.BoolWithAggregatesFilter<"QuoteSupplier"> | boolean
-  validUntill?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
+  executed?: Prisma.BoolWithAggregatesFilter<"QuoteSupplier"> | boolean
+  validUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
   deliveryTimeDays?: Prisma.IntNullableWithAggregatesFilter<"QuoteSupplier"> | number | null
   createdBy?: Prisma.StringWithAggregatesFilter<"QuoteSupplier"> | string
   paymentConditionId?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
@@ -420,7 +432,8 @@ export type QuoteSupplierCreateInput = {
   rejected?: boolean
   additionalInfo?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -442,7 +455,8 @@ export type QuoteSupplierUncheckedCreateInput = {
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
@@ -460,7 +474,8 @@ export type QuoteSupplierUpdateInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -482,7 +497,8 @@ export type QuoteSupplierUncheckedUpdateInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -502,7 +518,8 @@ export type QuoteSupplierCreateManyInput = {
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
@@ -519,7 +536,8 @@ export type QuoteSupplierUpdateManyMutationInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -535,7 +553,8 @@ export type QuoteSupplierUncheckedUpdateManyInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -570,7 +589,8 @@ export type QuoteSupplierCountOrderByAggregateInput = {
   additionalInfo?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   acceptedForPOB?: Prisma.SortOrder
-  validUntill?: Prisma.SortOrder
+  executed?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
   deliveryTimeDays?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   paymentConditionId?: Prisma.SortOrder
@@ -593,7 +613,8 @@ export type QuoteSupplierMaxOrderByAggregateInput = {
   additionalInfo?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   acceptedForPOB?: Prisma.SortOrder
-  validUntill?: Prisma.SortOrder
+  executed?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
   deliveryTimeDays?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   paymentConditionId?: Prisma.SortOrder
@@ -612,7 +633,8 @@ export type QuoteSupplierMinOrderByAggregateInput = {
   additionalInfo?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   acceptedForPOB?: Prisma.SortOrder
-  validUntill?: Prisma.SortOrder
+  executed?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
   deliveryTimeDays?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   paymentConditionId?: Prisma.SortOrder
@@ -862,7 +884,8 @@ export type QuoteSupplierCreateWithoutCompanyInput = {
   rejected?: boolean
   additionalInfo?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -882,7 +905,8 @@ export type QuoteSupplierUncheckedCreateWithoutCompanyInput = {
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
@@ -931,7 +955,8 @@ export type QuoteSupplierScalarWhereInput = {
   additionalInfo?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   documentId?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   acceptedForPOB?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
-  validUntill?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  executed?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  validUntil?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
   deliveryTimeDays?: Prisma.IntNullableFilter<"QuoteSupplier"> | number | null
   createdBy?: Prisma.StringFilter<"QuoteSupplier"> | string
   paymentConditionId?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
@@ -948,7 +973,8 @@ export type QuoteSupplierCreateWithoutDocumentStructureInput = {
   rejected?: boolean
   additionalInfo?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -968,7 +994,8 @@ export type QuoteSupplierUncheckedCreateWithoutDocumentStructureInput = {
   rejected?: boolean
   additionalInfo?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
@@ -1012,7 +1039,8 @@ export type QuoteSupplierCreateWithoutEmployeeInput = {
   rejected?: boolean
   additionalInfo?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -1033,7 +1061,8 @@ export type QuoteSupplierUncheckedCreateWithoutEmployeeInput = {
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   paymentConditionId?: string | null
   deleted?: boolean
@@ -1060,7 +1089,8 @@ export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_deletedByToEmployee
   rejected?: boolean
   additionalInfo?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -1081,7 +1111,8 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_deletedByT
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
@@ -1140,7 +1171,8 @@ export type QuoteSupplierCreateWithoutPaymentConditionInput = {
   rejected?: boolean
   additionalInfo?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -1161,7 +1193,8 @@ export type QuoteSupplierUncheckedCreateWithoutPaymentConditionInput = {
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   deleted?: boolean
@@ -1204,7 +1237,8 @@ export type QuoteSupplierCreateWithoutQuoteSupplierLineInput = {
   rejected?: boolean
   additionalInfo?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -1225,7 +1259,8 @@ export type QuoteSupplierUncheckedCreateWithoutQuoteSupplierLineInput = {
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
@@ -1258,7 +1293,8 @@ export type QuoteSupplierUpdateWithoutQuoteSupplierLineInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1279,7 +1315,8 @@ export type QuoteSupplierUncheckedUpdateWithoutQuoteSupplierLineInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1297,7 +1334,8 @@ export type QuoteSupplierCreateManyCompanyInput = {
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
@@ -1314,7 +1352,8 @@ export type QuoteSupplierUpdateWithoutCompanyInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1334,7 +1373,8 @@ export type QuoteSupplierUncheckedUpdateWithoutCompanyInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1353,7 +1393,8 @@ export type QuoteSupplierUncheckedUpdateManyWithoutCompanyInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1371,7 +1412,8 @@ export type QuoteSupplierCreateManyDocumentStructureInput = {
   rejected?: boolean
   additionalInfo?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
@@ -1388,7 +1430,8 @@ export type QuoteSupplierUpdateWithoutDocumentStructureInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1408,7 +1451,8 @@ export type QuoteSupplierUncheckedUpdateWithoutDocumentStructureInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1427,7 +1471,8 @@ export type QuoteSupplierUncheckedUpdateManyWithoutDocumentStructureInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1446,7 +1491,8 @@ export type QuoteSupplierCreateManyEmployeeInput = {
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   paymentConditionId?: string | null
   deleted?: boolean
@@ -1464,7 +1510,8 @@ export type QuoteSupplierCreateManyEmployee_QuoteSupplier_deletedByToEmployeeInp
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
@@ -1480,7 +1527,8 @@ export type QuoteSupplierUpdateWithoutEmployeeInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1501,7 +1549,8 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployeeInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1520,7 +1569,8 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployeeInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1536,7 +1586,8 @@ export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_deletedByToEmployee
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1557,7 +1608,8 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_deletedByT
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1576,7 +1628,8 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_delete
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1594,7 +1647,8 @@ export type QuoteSupplierCreateManyPaymentConditionInput = {
   additionalInfo?: string | null
   documentId?: string | null
   acceptedForPOB?: boolean
-  validUntill?: Date | string | null
+  executed?: boolean
+  validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   deleted?: boolean
@@ -1610,7 +1664,8 @@ export type QuoteSupplierUpdateWithoutPaymentConditionInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1631,7 +1686,8 @@ export type QuoteSupplierUncheckedUpdateWithoutPaymentConditionInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1650,7 +1706,8 @@ export type QuoteSupplierUncheckedUpdateManyWithoutPaymentConditionInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntill?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1699,7 +1756,8 @@ export type QuoteSupplierSelect<ExtArgs extends runtime.Types.Extensions.Interna
   additionalInfo?: boolean
   documentId?: boolean
   acceptedForPOB?: boolean
-  validUntill?: boolean
+  executed?: boolean
+  validUntil?: boolean
   deliveryTimeDays?: boolean
   createdBy?: boolean
   paymentConditionId?: boolean
@@ -1727,7 +1785,8 @@ export type QuoteSupplierSelectScalar = {
   additionalInfo?: boolean
   documentId?: boolean
   acceptedForPOB?: boolean
-  validUntill?: boolean
+  executed?: boolean
+  validUntil?: boolean
   deliveryTimeDays?: boolean
   createdBy?: boolean
   paymentConditionId?: boolean
@@ -1736,7 +1795,7 @@ export type QuoteSupplierSelectScalar = {
   deletedBy?: boolean
 }
 
-export type QuoteSupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "quotationNumber" | "description" | "companyId" | "rejected" | "additionalInfo" | "documentId" | "acceptedForPOB" | "validUntill" | "deliveryTimeDays" | "createdBy" | "paymentConditionId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["quoteSupplier"]>
+export type QuoteSupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "quotationNumber" | "description" | "companyId" | "rejected" | "additionalInfo" | "documentId" | "acceptedForPOB" | "executed" | "validUntil" | "deliveryTimeDays" | "createdBy" | "paymentConditionId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["quoteSupplier"]>
 export type QuoteSupplierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   DocumentStructure?: boolean | Prisma.QuoteSupplier$DocumentStructureArgs<ExtArgs>
@@ -1767,7 +1826,8 @@ export type $QuoteSupplierPayload<ExtArgs extends runtime.Types.Extensions.Inter
     additionalInfo: string | null
     documentId: string | null
     acceptedForPOB: boolean
-    validUntill: Date | null
+    executed: boolean
+    validUntil: Date | null
     deliveryTimeDays: number | null
     createdBy: string
     paymentConditionId: string | null
@@ -2158,7 +2218,8 @@ export interface QuoteSupplierFieldRefs {
   readonly additionalInfo: Prisma.FieldRef<"QuoteSupplier", 'String'>
   readonly documentId: Prisma.FieldRef<"QuoteSupplier", 'String'>
   readonly acceptedForPOB: Prisma.FieldRef<"QuoteSupplier", 'Boolean'>
-  readonly validUntill: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
+  readonly executed: Prisma.FieldRef<"QuoteSupplier", 'Boolean'>
+  readonly validUntil: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
   readonly deliveryTimeDays: Prisma.FieldRef<"QuoteSupplier", 'Int'>
   readonly createdBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
   readonly paymentConditionId: Prisma.FieldRef<"QuoteSupplier", 'String'>

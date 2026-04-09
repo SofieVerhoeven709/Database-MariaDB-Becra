@@ -34,8 +34,10 @@ type MaterialDemandWithRelations = Prisma.MaterialDemandGetPayload<{
           select: {
             quoteNumber: true
             companyId: true
-            validUntill: true
+            validUntil: true
             deliveryTimeDays: true
+            executed: true
+            acceptedForPOB: true
             rejected: true
             deleted: true
             Company: {
@@ -62,8 +64,8 @@ function isDateStillValid(isoOrDate: Date | null): boolean {
 }
 
 function compareBestQuoteCandidate(
-  a: {unitPrice: number; deliveryTimeDays: number | null; validUntill: string | null},
-  b: {unitPrice: number; deliveryTimeDays: number | null; validUntill: string | null},
+  a: {unitPrice: number; deliveryTimeDays: number | null; validUntil: string | null},
+  b: {unitPrice: number; deliveryTimeDays: number | null; validUntil: string | null},
 ) {
   if (a.unitPrice !== b.unitPrice) return a.unitPrice - b.unitPrice
 
@@ -71,8 +73,8 @@ function compareBestQuoteCandidate(
   const bDelivery = b.deliveryTimeDays ?? Number.MAX_SAFE_INTEGER
   if (aDelivery !== bDelivery) return aDelivery - bDelivery
 
-  const aValid = a.validUntill ? new Date(a.validUntill).getTime() : Number.MIN_SAFE_INTEGER
-  const bValid = b.validUntill ? new Date(b.validUntill).getTime() : Number.MIN_SAFE_INTEGER
+  const aValid = a.validUntil ? new Date(a.validUntil).getTime() : Number.MIN_SAFE_INTEGER
+  const bValid = b.validUntil ? new Date(b.validUntil).getTime() : Number.MIN_SAFE_INTEGER
   return bValid - aValid
 }
 
@@ -85,8 +87,12 @@ export function mapMaterialDemand(row: MaterialDemandWithRelations): MappedMater
   const suggestedRequestQty = Math.max(minimumStockQuantity - stockQuantity, 1)
 
   const quoteOptions = row.QuoteSupplierLine.map(line => {
-    const isCurrentlyValid = isDateStillValid(line.QuoteSupplier.validUntill)
-    const isEligibleForBest = !line.QuoteSupplier.deleted && !line.QuoteSupplier.rejected && isCurrentlyValid
+    const isCurrentlyValid = isDateStillValid(line.QuoteSupplier.validUntil)
+    const isEligibleForBest =
+      !line.QuoteSupplier.deleted &&
+      !line.QuoteSupplier.rejected &&
+      !(line.QuoteSupplier.executed && line.QuoteSupplier.acceptedForPOB) &&
+      isCurrentlyValid
 
     return {
       id: line.id,
@@ -98,9 +104,11 @@ export function mapMaterialDemand(row: MaterialDemandWithRelations): MappedMater
       unitPrice: line.unitPrice.toNumber(),
       minQuantity: line.minQuantity,
       selected: line.selected ?? false,
+      executed: line.QuoteSupplier.executed,
+      acceptedForPOB: line.QuoteSupplier.acceptedForPOB,
       rejected: line.QuoteSupplier.rejected,
       deleted: line.QuoteSupplier.deleted,
-      validUntill: line.QuoteSupplier.validUntill?.toISOString() ?? null,
+      validUntil: line.QuoteSupplier.validUntil?.toISOString() ?? null,
       deliveryTimeDays: line.QuoteSupplier.deliveryTimeDays ?? null,
       isCurrentlyValid,
       isEligibleForBest,

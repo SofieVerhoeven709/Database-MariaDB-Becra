@@ -5,6 +5,7 @@ import {useRouter} from 'next/navigation'
 import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Check} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {InventoryOrderFormDialog, type InventoryOption} from '@/components/custom/inventoryOrderFormDialog'
 import type {MappedInventoryOrder} from '@/types/inventoryOrder'
@@ -18,6 +19,7 @@ import {
 
 type SortField = 'orderDate' | 'orderNumber' | 'shortDescription' | 'inventoryBeNumber'
 type SortDir = 'asc' | 'desc'
+type ApprovalFilter = 'all' | 'approved' | 'not-approved'
 
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '—'
@@ -44,6 +46,7 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
   const [search, setSearch] = useState('')
+  const [approvalFilter, setApprovalFilter] = useState<ApprovalFilter>('not-approved')
   const [sortField, setSortField] = useState<SortField>('orderDate')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -51,6 +54,8 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
 
   const filtered = initialEntries
     .filter(e => {
+      if (approvalFilter === 'approved' && !e.approved) return false
+      if (approvalFilter === 'not-approved' && e.approved) return false
       if (!search) return true
       const q = search.toLowerCase()
       return (
@@ -74,7 +79,10 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
 
   function toggleSort(field: SortField) {
     if (sortField === field) setSortDir(prev => (prev === 'asc' ? 'desc' : 'asc'))
-    else { setSortField(field); setSortDir('asc') }
+    else {
+      setSortField(field)
+      setSortDir('asc')
+    }
   }
 
   async function handleSave(e: MappedInventoryOrder) {
@@ -114,6 +122,16 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
             className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60" />
         </div>
         <div className="flex items-center gap-3">
+          <Select value={approvalFilter} onValueChange={v => setApprovalFilter(v as ApprovalFilter)}>
+            <SelectTrigger className="w-40 bg-secondary border-border">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-border">
+              <SelectItem value="not-approved">Not Approved</SelectItem>
+              <SelectItem value="approved">Approved</SelectItem>
+              <SelectItem value="all">All</SelectItem>
+            </SelectContent>
+          </Select>
           <span className="text-xs uppercase tracking-wide text-muted-foreground">{filtered.length} / {initialEntries.length}</span>
           <Button onClick={() => { setEditing(null); setDialogOpen(true) }} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
             <Plus className="h-4 w-4" /> New Request
@@ -165,10 +183,21 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
                   </div>
                 </TableCell>
                 <TableCell className={`${tdClass} max-w-50 truncate`}>{entry.shortDescription}</TableCell>
-                <TableCell className={tdClass}>{entry.createdByName}</TableCell>
+                <TableCell className={tdClass}>
+                  <div className="flex flex-col gap-0.5">
+                    <span>{entry.createdByName}</span>
+                    <span className="text-[11px] text-muted-foreground">
+                      {entry.approved ? `Approved${entry.approvedByName ? ` by ${entry.approvedByName}` : ''}` : 'Not approved'}
+                    </span>
+                  </div>
+                </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="icon" className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10"
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10"
+                      disabled={entry.approved}
                       onClick={() => handleApprove(entry.id)}>
                       <Check className="h-3.5 w-3.5" />
                     </Button>

@@ -34,7 +34,12 @@ const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 
 function extractActionError(result: unknown): string | null {
-  if (!result || typeof result !== 'object' || !('success' in result) || (result as {success?: boolean}).success !== false) {
+  if (
+    !result ||
+    typeof result !== 'object' ||
+    !('success' in result) ||
+    (result as {success?: boolean}).success !== false
+  ) {
     return null
   }
 
@@ -89,7 +94,11 @@ function compareQuoteOptions(
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
-  return sortDir === 'asc' ? <ChevronUp className="inline h-3.5 w-3.5 ml-1" /> : <ChevronDown className="inline h-3.5 w-3.5 ml-1" />
+  return sortDir === 'asc' ? (
+    <ChevronUp className="inline h-3.5 w-3.5 ml-1" />
+  ) : (
+    <ChevronDown className="inline h-3.5 w-3.5 ml-1" />
+  )
 }
 
 function materialLabel(m: MaterialDemandMaterialOption) {
@@ -97,7 +106,10 @@ function materialLabel(m: MaterialDemandMaterialOption) {
 }
 
 function generateLowStockRequestNumber(entry: MappedMaterialDemand) {
-  const suffix = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 12)
+  const suffix = new Date()
+    .toISOString()
+    .replace(/[-:.TZ]/g, '')
+    .slice(0, 12)
   const materialToken = (entry.materialBeNumber ?? entry.materialId.slice(0, 6)).replace(/\s+/g, '')
   return `REQ-${materialToken}-${suffix}`
 }
@@ -133,12 +145,17 @@ export function MaterialDemandTable({
   const [lineActionLoadingId, setLineActionLoadingId] = useState<string | null>(null)
   const [rankingPolicy, setRankingPolicy] = useState<RankingPolicy>('balanced')
   const [showEligibleOnly, setShowEligibleOnly] = useState(false)
-  const [lowStockRequestDialog, setLowStockRequestDialog] = useState<{entry: MappedMaterialDemand; qty: string} | null>(null)
+  const [lowStockRequestDialog, setLowStockRequestDialog] = useState<{entry: MappedMaterialDemand; qty: string} | null>(
+    null,
+  )
   const [makeQuoteDialog, setMakeQuoteDialog] = useState<{entry: MappedMaterialDemand; supplierId: string} | null>(null)
 
   const usedMaterialIds = useMemo(() => new Set(initialEntries.map(e => e.materialId)), [initialEntries])
   const availableMaterials = useMemo(
-    () => materials.filter(m => !usedMaterialIds.has(m.id)).sort((a, b) => materialLabel(a).localeCompare(materialLabel(b))),
+    () =>
+      materials
+        .filter(m => !usedMaterialIds.has(m.id))
+        .sort((a, b) => materialLabel(a).localeCompare(materialLabel(b))),
     [materials, usedMaterialIds],
   )
 
@@ -146,7 +163,9 @@ export function MaterialDemandTable({
     .filter(entry => {
       if (!search) return true
       const q = search.toLowerCase()
-      return (entry.materialBeNumber ?? '').toLowerCase().includes(q) || (entry.materialName ?? '').toLowerCase().includes(q)
+      return (
+        (entry.materialBeNumber ?? '').toLowerCase().includes(q) || (entry.materialName ?? '').toLowerCase().includes(q)
+      )
     })
     .sort((a, b) => {
       // Primary sort: low-stock items first
@@ -161,7 +180,8 @@ export function MaterialDemandTable({
 
       // Tertiary sort: apply user's sort preference
       const dir = sortDir === 'asc' ? 1 : -1
-      const cmpStr = (x: string | null | undefined, y: string | null | undefined) => dir * (x ?? '').localeCompare(y ?? '')
+      const cmpStr = (x: string | null | undefined, y: string | null | undefined) =>
+        dir * (x ?? '').localeCompare(y ?? '')
       switch (sortField) {
         case 'material':
           return cmpStr(a.materialBeNumber ?? a.materialName, b.materialBeNumber ?? b.materialName)
@@ -232,6 +252,17 @@ export function MaterialDemandTable({
   }
 
   async function handleLowStockRequest(entry: MappedMaterialDemand) {
+    const hasManualDemandWithoutSources = entry.totalRequiredQty > 0 && entry.sourceCount === 0
+    if (hasManualDemandWithoutSources) {
+      setActionError('Order request is disabled: one has already been approved.')
+      return
+    }
+
+    if (entry.pendingRequestCount > 0) {
+      setActionError('An order request is already pending approval for this material.')
+      return
+    }
+
     // Open dialog to let user specify quantity
     setLowStockRequestDialog({
       entry,
@@ -240,6 +271,11 @@ export function MaterialDemandTable({
   }
 
   function openMakeQuoteDialog(entry: MappedMaterialDemand) {
+    const hasBlockingQuote = entry.quoteOptions.some(option => !option.deleted && !(option.executed && option.acceptedForPOB))
+    if (hasBlockingQuote) {
+      setActionError('A quote already exists for this demand. Create another quote from the existing quote detail if needed.')
+      return
+    }
     setMakeQuoteDialog({entry, supplierId: '__none__'})
   }
 
@@ -251,10 +287,11 @@ export function MaterialDemandTable({
     }
 
     const {entry, supplierId} = makeQuoteDialog
+    const initialQuoteQty = Math.max(entry.totalRequiredQty, 1)
     setMakeQuoteDialog(null)
     setActionError(null)
     router.push(
-      `/departments/${departmentId}/orderQuote?materialId=${entry.materialId}&materialDemandId=${entry.id}&supplierId=${supplierId}` as Route,
+      `/departments/${departmentId}/orderQuote?materialId=${entry.materialId}&materialDemandId=${entry.id}&supplierId=${supplierId}&quoteQty=${initialQuoteQty}` as Route,
     )
   }
 
@@ -302,7 +339,9 @@ export function MaterialDemandTable({
       const reservedQty = Number.parseInt(editReservedQty, 10)
       const row = initialEntries.find(e => e.id === id)
       const nextTotalRequiredQty = canEditRequiredQty
-        ? (Number.isNaN(totalRequiredQty) ? 0 : totalRequiredQty)
+        ? Number.isNaN(totalRequiredQty)
+          ? 0
+          : totalRequiredQty
         : (row?.totalRequiredQty ?? 0)
 
       const result = await updateMaterialDemandAction({
@@ -383,9 +422,13 @@ export function MaterialDemandTable({
             {showEligibleOnly ? 'Eligible only: ON' : 'Eligible only: OFF'}
           </Button>
 
-          <span className="text-xs uppercase tracking-wide text-muted-foreground">{filtered.length} / {initialEntries.length}</span>
+          <span className="text-xs uppercase tracking-wide text-muted-foreground">
+            {filtered.length} / {initialEntries.length}
+          </span>
           {canCreate && (
-            <Button onClick={() => setCreating(v => !v)} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+            <Button
+              onClick={() => setCreating(v => !v)}
+              className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
               <Plus className="h-4 w-4" />
               New Demand
             </Button>
@@ -403,7 +446,9 @@ export function MaterialDemandTable({
         <div className="rounded-xl border border-border/60 bg-card p-4">
           <div className="grid gap-3 md:grid-cols-4">
             <div className="md:col-span-2">
-              <Select value={newMaterialId || '__none__'} onValueChange={v => setNewMaterialId(v === '__none__' ? '' : v)}>
+              <Select
+                value={newMaterialId || '__none__'}
+                onValueChange={v => setNewMaterialId(v === '__none__' ? '' : v)}>
                 <SelectTrigger className="bg-secondary border-border">
                   <SelectValue placeholder="Select material" />
                 </SelectTrigger>
@@ -435,8 +480,17 @@ export function MaterialDemandTable({
             />
           </div>
           <div className="mt-3 flex justify-end gap-2">
-            <Button variant="outline" onClick={() => { setActionError(null); setCreating(false) }}>Cancel</Button>
-            <Button onClick={handleCreate} disabled={!newMaterialId}>Create demand row</Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setActionError(null)
+                setCreating(false)
+              }}>
+              Cancel
+            </Button>
+            <Button onClick={handleCreate} disabled={!newMaterialId}>
+              Create demand row
+            </Button>
           </div>
         </div>
       )}
@@ -463,7 +517,9 @@ export function MaterialDemandTable({
               <TableHead className={thClass} onClick={() => toggleSort('createdAt')}>
                 Created At <SortIcon field="createdAt" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className="w-24"><span className="sr-only">Actions</span></TableHead>
+              <TableHead className="w-24">
+                <span className="sr-only">Actions</span>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -478,22 +534,31 @@ export function MaterialDemandTable({
                 const isEditing = editingId === entry.id
                 const materialHref = `/departments/${departmentId}/material/${entry.materialId}` as Route
                 const isExpanded = expandedDemandIds.has(entry.id)
+                const hasManualDemandWithoutSources = entry.totalRequiredQty > 0 && entry.sourceCount === 0
+                const hasBlockingQuote = entry.quoteOptions.some(option => !option.deleted && !(option.executed && option.acceptedForPOB))
                 const quoteOptions = [...entry.quoteOptions].sort((a, b) => compareQuoteOptions(a, b, rankingPolicy))
-                const visibleQuoteOptions = showEligibleOnly ? quoteOptions.filter(option => option.isEligibleForBest) : quoteOptions
+                const visibleQuoteOptions = showEligibleOnly
+                  ? quoteOptions.filter(option => option.isEligibleForBest)
+                  : quoteOptions
                 const bestOptionId = quoteOptions.find(option => option.isEligibleForBest)?.id ?? null
                 return (
                   <Fragment key={entry.id}>
                     <TableRow key={entry.id} className="border-border/40 hover:bg-secondary/50">
                       <TableCell className={tdClass}>
                         <Link href={materialHref} className="hover:text-accent hover:underline transition-colors">
-                          <div className={`flex flex-col gap-0.5 rounded-md px-2 py-1 ${entry.isLowStock ? 'border border-amber-500/70 bg-amber-500/10' : ''}`}>
+                          <div
+                            className={`flex flex-col gap-0.5 rounded-md px-2 py-1 ${entry.isLowStock ? 'border border-amber-500/70 bg-amber-500/10' : ''}`}>
                             <div className="flex items-center gap-2">
                               <span className="text-foreground font-medium">{entry.materialBeNumber ?? '—'}</span>
                               {entry.isLowStock && (
-                                <Badge className="text-[10px] border border-amber-500/30 bg-amber-500/10 text-amber-700">Low stock</Badge>
+                                <Badge className="text-[10px] border border-amber-500/30 bg-amber-500/10 text-amber-700">
+                                  Low stock
+                                </Badge>
                               )}
                             </div>
-                            <span className="text-xs text-muted-foreground">{entry.materialShortDescription ?? entry.materialName ?? entry.materialId}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {entry.materialShortDescription ?? entry.materialName ?? entry.materialId}
+                            </span>
                             <span className="text-[11px] text-muted-foreground">
                               Stock {entry.stockQuantity} / Min {entry.minimumStockQuantity}
                             </span>
@@ -510,7 +575,9 @@ export function MaterialDemandTable({
                             className="h-8 bg-secondary border-border"
                           />
                         ) : (
-                          <Badge variant="secondary" className="text-xs">{entry.totalRequiredQty}</Badge>
+                          <Badge variant="secondary" className="text-xs">
+                            {entry.totalRequiredQty}
+                          </Badge>
                         )}
                       </TableCell>
                       <TableCell className={tdClass}>
@@ -523,7 +590,9 @@ export function MaterialDemandTable({
                             className="h-8 bg-secondary border-border"
                           />
                         ) : (
-                          <Badge variant="outline" className="text-xs border-border">{entry.reservedQty}</Badge>
+                          <Badge variant="outline" className="text-xs border-border">
+                            {entry.reservedQty}
+                          </Badge>
                         )}
                       </TableCell>
                       <TableCell className={tdClass}>{entry.sourceCount}</TableCell>
@@ -540,7 +609,9 @@ export function MaterialDemandTable({
                             </Button>
                           )}
                           {bestOptionId && (
-                            <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">Best</Badge>
+                            <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">
+                              Best
+                            </Badge>
                           )}
                         </div>
                       </TableCell>
@@ -549,32 +620,56 @@ export function MaterialDemandTable({
                         <div className="flex items-center gap-1">
                           <button
                             type="button"
+                            disabled={hasBlockingQuote}
                             onClick={() => openMakeQuoteDialog(entry)}
-                            className="inline-flex h-7 items-center rounded-md border border-accent/50 bg-accent/10 px-2 text-[11px] font-medium text-accent hover:bg-accent/20">
-                            Make Quote
+                            className="inline-flex h-7 items-center rounded-md border border-accent/50 bg-accent/10 px-2 text-[11px] font-medium text-accent hover:bg-accent/20 disabled:opacity-50 disabled:cursor-not-allowed">
+                            {hasBlockingQuote ? 'Quote exists' : 'Make Quote'}
                           </button>
                           {entry.isLowStock && (
                             <Button
                               size="sm"
                               variant="outline"
                               className="h-7 px-2 text-[11px] border-amber-500/60 text-amber-700 hover:bg-amber-500/10"
-                              disabled={entry.pendingRequestCount > 0 || !entry.requestInventoryId}
+                              disabled={
+                                entry.pendingRequestCount > 0 ||
+                                hasManualDemandWithoutSources ||
+                                !entry.requestInventoryId
+                              }
                               onClick={() => handleLowStockRequest(entry)}>
-                              {entry.pendingRequestCount > 0 ? 'Pending approval' : 'Request approval'}
+                              {entry.pendingRequestCount > 0
+                                ? 'Pending approval'
+                                : hasManualDemandWithoutSources
+                                  ? 'Demand on row'
+                                  : 'Request approval'}
                             </Button>
                           )}
                           {isEditing ? (
                             <>
-                              <Button size="icon" variant="ghost" className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10" onClick={() => handleUpdate(entry.id)}>
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10"
+                                onClick={() => handleUpdate(entry.id)}>
                                 <Check className="h-3.5 w-3.5" />
                               </Button>
-                              <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:bg-secondary" onClick={() => { setActionError(null); cancelEdit() }}>
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-7 w-7 text-muted-foreground hover:bg-secondary"
+                                onClick={() => {
+                                  setActionError(null)
+                                  cancelEdit()
+                                }}>
                                 <X className="h-3.5 w-3.5" />
                               </Button>
                             </>
                           ) : (
                             canEdit && (
-                              <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary" onClick={() => startEdit(entry)}>
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                onClick={() => startEdit(entry)}>
                                 <Pencil className="h-3.5 w-3.5" />
                               </Button>
                             )
@@ -601,9 +696,10 @@ export function MaterialDemandTable({
                                   <TableHead className="text-xs w-28">
                                     <button
                                       type="button"
+                                      disabled={hasBlockingQuote}
                                       onClick={() => openMakeQuoteDialog(entry)}
-                                      className="inline-flex h-6 items-center rounded-md border border-accent bg-accent/10 px-2 text-xs text-accent hover:bg-accent/20 font-medium">
-                                      New Quote
+                                      className="inline-flex h-6 items-center rounded-md border border-accent bg-accent/10 px-2 text-xs text-accent hover:bg-accent/20 font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+                                      {hasBlockingQuote ? 'Quote exists' : 'New Quote'}
                                     </button>
                                   </TableHead>
                                 </TableRow>
@@ -617,9 +713,10 @@ export function MaterialDemandTable({
                                         <div className="flex gap-2">
                                           <button
                                             type="button"
+                                            disabled={hasBlockingQuote}
                                             onClick={() => openMakeQuoteDialog(entry)}
-                                            className="inline-flex h-7 items-center rounded-md border border-accent bg-accent/10 px-2.5 text-xs text-accent hover:bg-accent/20 font-medium">
-                                            Create Quote
+                                            className="inline-flex h-7 items-center rounded-md border border-accent bg-accent/10 px-2.5 text-xs text-accent hover:bg-accent/20 font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+                                            {hasBlockingQuote ? 'Quote exists' : 'Create Quote'}
                                           </button>
                                           <Link
                                             href={`/departments/${departmentId}/orderQuote` as Route}
@@ -639,28 +736,55 @@ export function MaterialDemandTable({
 
                                   return (
                                     <TableRow key={option.id} className="border-border/30">
-                                      <TableCell className="text-xs text-muted-foreground">{option.quoteNumber}</TableCell>
-                                      <TableCell className="text-xs text-muted-foreground">{option.supplierCompanyName}</TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">
+                                        {option.quoteNumber}
+                                      </TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">
+                                        {option.supplierCompanyName}
+                                      </TableCell>
                                       <TableCell className="text-xs text-muted-foreground">{option.quantity}</TableCell>
-                                      <TableCell className="text-xs text-muted-foreground">{option.minQuantity ?? '—'}</TableCell>
-                                      <TableCell className="text-xs text-muted-foreground">{formatMoney(option.unitPrice)}</TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">
+                                        {option.minQuantity ?? '—'}
+                                      </TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">
+                                        {formatMoney(option.unitPrice)}
+                                      </TableCell>
                                       <TableCell className="text-xs text-muted-foreground">
                                         {option.deliveryTimeDays !== null ? `${option.deliveryTimeDays} day(s)` : '—'}
                                       </TableCell>
-                                      <TableCell className="text-xs text-muted-foreground">{formatDate(option.validUntill)}</TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">
+                                        {formatDate(option.validUntil)}
+                                      </TableCell>
                                       <TableCell>
                                         <div className="flex items-center gap-1.5">
                                           {option.id === bestOptionId && (
-                                            <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">Best</Badge>
+                                            <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">
+                                              Best
+                                            </Badge>
+                                          )}
+                                          {option.executed && (
+                                            <Badge
+                                              variant="outline"
+                                              className="text-[10px] border-slate-500/40 text-slate-700">
+                                              Sent
+                                            </Badge>
                                           )}
                                           {!option.isCurrentlyValid && (
-                                            <Badge variant="outline" className="text-[10px] border-amber-500/40 text-amber-700">Expired</Badge>
+                                            <Badge
+                                              variant="outline"
+                                              className="text-[10px] border-amber-500/40 text-amber-700">
+                                              Expired
+                                            </Badge>
                                           )}
                                           {option.rejected && (
-                                            <Badge className="text-[10px] bg-red-500/15 text-red-700 border border-red-500/30">Rejected</Badge>
+                                            <Badge className="text-[10px] bg-red-500/15 text-red-700 border border-red-500/30">
+                                              Rejected
+                                            </Badge>
                                           )}
                                           {option.deleted && (
-                                            <Badge variant="outline" className="text-[10px]">Deleted</Badge>
+                                            <Badge variant="outline" className="text-[10px]">
+                                              Deleted
+                                            </Badge>
                                           )}
                                         </div>
                                       </TableCell>
@@ -701,17 +825,26 @@ export function MaterialDemandTable({
           <DialogHeader>
             <DialogTitle>Request Stock Replenishment</DialogTitle>
             <DialogDescription>
-              How much would you like to request for {lowStockRequestDialog?.entry.materialBeNumber ?? lowStockRequestDialog?.entry.materialId}?
+              How much would you like to request for{' '}
+              {lowStockRequestDialog?.entry.materialBeNumber ?? lowStockRequestDialog?.entry.materialId}?
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="rounded-md bg-secondary/50 p-3 text-xs text-muted-foreground space-y-1">
-              <p><strong>Current stock:</strong> {lowStockRequestDialog?.entry.stockQuantity}</p>
-              <p><strong>Minimum required:</strong> {lowStockRequestDialog?.entry.minimumStockQuantity}</p>
-              <p><strong>Suggested:</strong> {lowStockRequestDialog?.entry.suggestedRequestQty}</p>
+              <p>
+                <strong>Current stock:</strong> {lowStockRequestDialog?.entry.stockQuantity}
+              </p>
+              <p>
+                <strong>Minimum required:</strong> {lowStockRequestDialog?.entry.minimumStockQuantity}
+              </p>
+              <p>
+                <strong>Suggested:</strong> {lowStockRequestDialog?.entry.suggestedRequestQty}
+              </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="requestQty" className="text-xs">Quantity to request</Label>
+              <Label htmlFor="requestQty" className="text-xs">
+                Quantity to request
+              </Label>
               <Input
                 id="requestQty"
                 type="number"
@@ -727,7 +860,9 @@ export function MaterialDemandTable({
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setLowStockRequestDialog(null)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setLowStockRequestDialog(null)}>
+              Cancel
+            </Button>
             <Button onClick={submitLowStockRequest} className="bg-amber-600 hover:bg-amber-700 text-white">
               Submit Request
             </Button>
@@ -740,11 +875,14 @@ export function MaterialDemandTable({
           <DialogHeader>
             <DialogTitle>Select Supplier</DialogTitle>
             <DialogDescription>
-              Choose a supplier for {makeQuoteDialog?.entry.materialBeNumber ?? makeQuoteDialog?.entry.materialId}, then continue to quotes.
+              Choose a supplier for {makeQuoteDialog?.entry.materialBeNumber ?? makeQuoteDialog?.entry.materialId}, then
+              continue to quotes.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-2">
-            <Label htmlFor="makeQuoteSupplier" className="text-xs">Supplier</Label>
+            <Label htmlFor="makeQuoteSupplier" className="text-xs">
+              Supplier
+            </Label>
             <Select
               value={makeQuoteDialog?.supplierId ?? '__none__'}
               onValueChange={value => {
@@ -765,7 +903,9 @@ export function MaterialDemandTable({
             </Select>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setMakeQuoteDialog(null)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setMakeQuoteDialog(null)}>
+              Cancel
+            </Button>
             <Button onClick={continueToQuotePage}>Continue to Quotes</Button>
           </DialogFooter>
         </DialogContent>
@@ -773,4 +913,3 @@ export function MaterialDemandTable({
     </div>
   )
 }
-

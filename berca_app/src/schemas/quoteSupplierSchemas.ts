@@ -9,7 +9,7 @@ export const quoteSupplierSchema = z.object({
   rejected: z.boolean().default(false),
   additionalInfo: z.string().max(255).nullable().optional(),
   acceptedForPOB: z.boolean().default(false),
-  validUntill: z.string().nullable().optional(),
+  validUntil: z.string().nullable().optional(),
   deliveryTimeDays: z.coerce.number().int().nullable().optional(),
   paymentConditionId: z.string().nullable().optional(),
   createdBy: z.string(),
@@ -24,6 +24,10 @@ export const createQuoteSupplierSchema = quoteSupplierSchema.omit({
   deleted: true,
   deletedAt: true,
   deletedBy: true,
+}).extend({
+  initialMaterialId: z.string().uuid().optional(),
+  initialMaterialDemandId: z.string().uuid().optional(),
+  initialQuantity: z.coerce.number().int().positive().optional(),
 })
 
 export const updateQuoteSupplierSchema = quoteSupplierSchema.pick({
@@ -35,10 +39,24 @@ export const updateQuoteSupplierSchema = quoteSupplierSchema.pick({
   rejected: true,
   additionalInfo: true,
   acceptedForPOB: true,
-  validUntill: true,
+  validUntil: true,
   deliveryTimeDays: true,
   paymentConditionId: true,
 })
 
 export const quoteSupplierIdSchema = quoteSupplierSchema.pick({id: true})
+
+export const paymentConditionSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(1).max(255),
+})
+
+export const createPaymentConditionSchema = paymentConditionSchema.pick({name: true})
+export const updatePaymentConditionSchema = paymentConditionSchema
+export const paymentConditionIdSchema = paymentConditionSchema.pick({id: true})
+
+export const quoteSupplierExecutedSchema = z.object({
+  id: z.string().uuid(),
+  executed: z.boolean(),
+})
 

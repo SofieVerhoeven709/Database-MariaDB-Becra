@@ -28,7 +28,9 @@ function empty(): MappedInventoryOrder {
     id: '', inventoryId: '', inventoryBeNumber: null, inventoryDescription: null,
     orderNumber: '', requestedQty: 1, orderDate: new Date().toISOString().split('T')[0],
     shortDescription: '', longDescription: null,
-    createdAt: '', createdBy: '', createdByName: '', deleted: false, deletedAt: null, deletedBy: null,
+    createdAt: '', createdBy: '', createdByName: '',
+    approved: false, approvedAt: null, approvedBy: null, approvedByName: null,
+    deleted: false, deletedAt: null, deletedBy: null,
   }
 }
 

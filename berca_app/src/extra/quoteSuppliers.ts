@@ -1,5 +1,5 @@
 import type {Prisma} from '@/generated/prisma/client'
-import type {MappedQuoteSupplier, MappedQuoteSupplierDetail} from '@/types/quoteSupplier'
+import type {MappedPaymentCondition, MappedQuoteSupplier, MappedQuoteSupplierDetail} from '@/types/quoteSupplier'
 
 type QuoteSupplierWithRelations = Prisma.QuoteSupplierGetPayload<{
   include: {
@@ -9,7 +9,7 @@ type QuoteSupplierWithRelations = Prisma.QuoteSupplierGetPayload<{
     PaymentCondition: {select: {id: true; name: true}}
     _count: {select: {QuoteSupplierLine: true}}
   }
-}>
+}> & {executed?: boolean | number | null}
 
 type QuoteSupplierDetailWithRelations = Prisma.QuoteSupplierGetPayload<{
   include: {
@@ -30,6 +30,13 @@ type QuoteSupplierDetailWithRelations = Prisma.QuoteSupplierGetPayload<{
       }
     }
   }
+}> & {executed?: boolean | number | null}
+
+type PaymentConditionWithRelations = Prisma.PaymentConditionGetPayload<{
+  include: {
+    Employee_PaymentCondition_createdByToEmployee: {select: {id: true; firstName: true; lastName: true}}
+    Employee_PaymentCondition_deletedByToEmployee: {select: {id: true; firstName: true; lastName: true}}
+  }
 }>
 
 export function mapQuoteSupplier(q: QuoteSupplierWithRelations): MappedQuoteSupplier {
@@ -43,7 +50,7 @@ export function mapQuoteSupplier(q: QuoteSupplierWithRelations): MappedQuoteSupp
     rejected: q.rejected,
     additionalInfo: q.additionalInfo ?? null,
     acceptedForPOB: q.acceptedForPOB,
-    validUntill: q.validUntill?.toISOString() ?? null,
+    validUntil: q.validUntil?.toISOString() ?? null,
     deliveryTimeDays: q.deliveryTimeDays ?? null,
     paymentConditionId: q.paymentConditionId ?? null,
     paymentConditionName: q.PaymentCondition?.name ?? null,
@@ -56,6 +63,7 @@ export function mapQuoteSupplier(q: QuoteSupplierWithRelations): MappedQuoteSupp
       ? `${q.Employee_QuoteSupplier_deletedByToEmployee.firstName} ${q.Employee_QuoteSupplier_deletedByToEmployee.lastName}`
       : null,
     lineCount: q._count.QuoteSupplierLine,
+    executed: !!q.executed,
   }
 }
 
@@ -77,6 +85,22 @@ export function mapQuoteSupplierDetail(q: QuoteSupplierDetailWithRelations): Map
       minQuantity: line.minQuantity ?? null,
       selected: !!line.selected,
     })),
+  }
+}
+
+export function mapPaymentCondition(row: PaymentConditionWithRelations): MappedPaymentCondition {
+  return {
+    id: row.id,
+    name: row.name,
+    deleted: row.deleted,
+    createdAt: row.createdAt.toISOString(),
+    createdBy: row.createdBy,
+    createdByName: `${row.Employee_PaymentCondition_createdByToEmployee.firstName} ${row.Employee_PaymentCondition_createdByToEmployee.lastName}`,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
+    deletedBy: row.deletedBy ?? null,
+    deletedByName: row.Employee_PaymentCondition_deletedByToEmployee
+      ? `${row.Employee_PaymentCondition_deletedByToEmployee.firstName} ${row.Employee_PaymentCondition_deletedByToEmployee.lastName}`
+      : null,
   }
 }
 

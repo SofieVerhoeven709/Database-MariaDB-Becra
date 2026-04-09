@@ -218,7 +218,7 @@ export function QuoteSupplierDetail({
           <div>
             <h1 className="text-lg font-semibold text-foreground">{quote.quoteNumber}</h1>
             <p className="text-sm text-muted-foreground">
-              {quote.companyName} | {quote.lineCount} line(s) | Valid until {formatDate(quote.validUntill)}
+              {quote.companyName} | {quote.lineCount} line(s) | Valid until {formatDate(quote.validUntil)}
             </p>
           </div>
         </div>

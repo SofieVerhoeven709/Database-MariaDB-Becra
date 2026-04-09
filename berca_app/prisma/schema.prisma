@@ -1640,7 +1640,8 @@ model QuoteSupplier {
   additionalInfo                             String?             @db.VarChar(255)
   documentId                                 String?             @db.Char(36)
   acceptedForPOB                             Boolean             @default(false)
-  validUntill                                DateTime?           @db.DateTime(0)
+  executed                                   Boolean             @default(false)
+  validUntil                                 DateTime?           @db.DateTime(0)
   deliveryTimeDays                           Int?
   createdBy                                  String              @db.Char(36)
   paymentConditionId                         String?             @db.Char(36)

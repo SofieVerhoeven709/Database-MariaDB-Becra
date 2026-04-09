@@ -34,6 +34,24 @@ export const createQuoteSupplierLineAction = protectedServerFunction({
   schema: createQuoteSupplierLineSchema,
   functionName: 'Create quote supplier line action',
   serverFn: async ({data, logger, profile}) => {
+    if (data.materialDemandId) {
+      const existingForDemand = await prismaClient.quoteSupplierLine.findMany({
+        where: {materialDemandId: data.materialDemandId},
+        select: {
+          QuoteSupplier: {
+            select: {
+              deleted: true,
+              executed: true,
+              acceptedForPOB: true,
+            },
+          },
+        },
+      })
+      if (existingForDemand.some(line => !line.QuoteSupplier.deleted && !(line.QuoteSupplier.executed && line.QuoteSupplier.acceptedForPOB))) {
+        throw new Error('A quote line already exists for this material demand.')
+      }
+    }
+
     const id = crypto.randomUUID()
 
     const created = await prismaClient.quoteSupplierLine.create({

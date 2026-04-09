@@ -1,4 +1,5 @@
 import 'server-only'
+import type {Prisma} from '@/generated/prisma/client'
 import {prismaClient} from '@/dal/prismaClient'
 
 const materialDemandInclude = {
@@ -16,7 +17,7 @@ const materialDemandInclude = {
           quantityInStock: true,
           minQuantityInStock: true,
           InventoryOrder: {
-            where: {deleted: false},
+            where: {deleted: false, approved: false},
             select: {id: true},
           },
         },
@@ -36,8 +37,9 @@ const materialDemandInclude = {
         select: {
           quoteNumber: true,
           companyId: true,
-          validUntill: true,
+          validUntil: true,
           deliveryTimeDays: true,
+          executed: true,
           rejected: true,
           deleted: true,
           Company: {
@@ -72,8 +74,9 @@ export async function getMaterialDemandMaterialOptions() {
   })
 }
 
-export async function ensureMaterialDemandForMaterial(materialId: string) {
-  return prismaClient.materialDemand.upsert({
+export async function ensureMaterialDemandForMaterial(materialId: string, tx?: Prisma.TransactionClient) {
+  const db = tx ?? prismaClient
+  return db.materialDemand.upsert({
     where: {materialId},
     update: {},
     create: {
@@ -84,6 +87,91 @@ export async function ensureMaterialDemandForMaterial(materialId: string) {
       createdAt: new Date(),
     },
   })
+}
+
+export async function ensureMaterialDemandSourceType(
+  name: string,
+  createdBy: string,
+  description?: string,
+  tx?: Prisma.TransactionClient,
+) {
+  const db = tx ?? prismaClient
+  const existing = await db.materialDemandSourceType.findFirst({where: {name}, select: {id: true}})
+  if (existing) return existing.id
+
+  const created = await db.materialDemandSourceType.create({
+    data: {
+      id: crypto.randomUUID(),
+      name,
+      description: description ?? null,
+      createdAt: new Date(),
+      createdBy,
+    },
+    select: {id: true},
+  })
+  return created.id
+}
+
+export async function createMaterialDemandSourceForInventoryOrder(params: {
+  materialId: string
+  inventoryOrderId: string
+  requiredQty: number
+  createdBy: string
+  tx?: Prisma.TransactionClient
+}) {
+  const db = params.tx ?? prismaClient
+  const materialDemand = await ensureMaterialDemandForMaterial(params.materialId, db)
+  const sourceTypeId = await ensureMaterialDemandSourceType(
+    'InventoryOrder',
+    params.createdBy,
+    'Approved inventory order request',
+    db,
+  )
+
+  const existing = await db.materialDemandSource.findFirst({
+    where: {sourceTypeId, sourceReferenceId: params.inventoryOrderId},
+    select: {id: true, requiredQty: true, reservedQty: true, materialDemandId: true},
+  })
+
+  if (existing) {
+    const delta = params.requiredQty - existing.requiredQty
+    if (delta !== 0) {
+      await db.materialDemandSource.update({
+        where: {id: existing.id},
+        data: {requiredQty: params.requiredQty},
+      })
+      if (delta !== 0) {
+        await db.materialDemand.update({
+          where: {id: existing.materialDemandId},
+          data: {totalRequiredQty: {increment: delta}},
+        })
+      }
+    }
+    return existing.id
+  }
+
+  const source = await db.materialDemandSource.create({
+    data: {
+      id: crypto.randomUUID(),
+      materialDemandId: materialDemand.id,
+      sourceTypeId,
+      sourceReferenceId: params.inventoryOrderId,
+      requiredQty: params.requiredQty,
+      reservedQty: 0,
+      createdAt: new Date(),
+      createdBy: params.createdBy,
+    },
+    select: {id: true},
+  })
+
+  if (params.requiredQty > 0) {
+    await db.materialDemand.update({
+      where: {id: materialDemand.id},
+      data: {totalRequiredQty: {increment: params.requiredQty}},
+    })
+  }
+
+  return source.id
 }
 
 export async function removeMaterialDemandForMaterial(materialId: string) {

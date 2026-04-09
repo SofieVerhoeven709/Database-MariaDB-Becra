@@ -16,6 +16,7 @@ import {selectQuoteSupplierLineAction} from '@/serverFunctions/quoteSupplierLine
 
 type SortField = 'material' | 'totalRequiredQty' | 'reservedQty' | 'sourceCount' | 'quoteLineCount' | 'createdAt'
 type SortDir = 'asc' | 'desc'
+type RankingPolicy = 'best-price' | 'fastest-delivery' | 'balanced'
 
 interface MaterialDemandTableProps {
   initialEntries: MappedMaterialDemand[]
@@ -49,6 +50,37 @@ function formatMoney(value: number) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value)
+}
+
+function deliveryRank(days: number | null) {
+  return days ?? Number.MAX_SAFE_INTEGER
+}
+
+function compareQuoteOptions(
+  a: {unitPrice: number; deliveryTimeDays: number | null; isEligibleForBest: boolean},
+  b: {unitPrice: number; deliveryTimeDays: number | null; isEligibleForBest: boolean},
+  policy: RankingPolicy,
+) {
+  const aBucket = a.isEligibleForBest ? 0 : 1
+  const bBucket = b.isEligibleForBest ? 0 : 1
+  if (aBucket !== bBucket) return aBucket - bBucket
+
+  if (policy === 'fastest-delivery') {
+    const byDelivery = deliveryRank(a.deliveryTimeDays) - deliveryRank(b.deliveryTimeDays)
+    if (byDelivery !== 0) return byDelivery
+    return a.unitPrice - b.unitPrice
+  }
+
+  if (policy === 'balanced') {
+    const aScore = a.unitPrice + deliveryRank(a.deliveryTimeDays) * 0.02
+    const bScore = b.unitPrice + deliveryRank(b.deliveryTimeDays) * 0.02
+    if (aScore !== bScore) return aScore - bScore
+    return a.unitPrice - b.unitPrice
+  }
+
+  const byPrice = a.unitPrice - b.unitPrice
+  if (byPrice !== 0) return byPrice
+  return deliveryRank(a.deliveryTimeDays) - deliveryRank(b.deliveryTimeDays)
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -88,6 +120,8 @@ export function MaterialDemandTable({
   const [editReservedQty, setEditReservedQty] = useState<string>('0')
   const [expandedDemandIds, setExpandedDemandIds] = useState<Set<string>>(new Set())
   const [lineActionLoadingId, setLineActionLoadingId] = useState<string | null>(null)
+  const [rankingPolicy, setRankingPolicy] = useState<RankingPolicy>('balanced')
+  const [showEligibleOnly, setShowEligibleOnly] = useState(false)
 
   const usedMaterialIds = useMemo(() => new Set(initialEntries.map(e => e.materialId)), [initialEntries])
   const availableMaterials = useMemo(
@@ -242,6 +276,24 @@ export function MaterialDemandTable({
           />
         </div>
         <div className="flex items-center gap-3">
+          <Select value={rankingPolicy} onValueChange={value => setRankingPolicy(value as RankingPolicy)}>
+            <SelectTrigger className="w-44 bg-secondary border-border h-9">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-border">
+              <SelectItem value="balanced">Best: Balanced</SelectItem>
+              <SelectItem value="best-price">Best: Lowest Price</SelectItem>
+              <SelectItem value="fastest-delivery">Best: Fastest Delivery</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Button
+            variant={showEligibleOnly ? 'secondary' : 'outline'}
+            className="h-9 text-xs"
+            onClick={() => setShowEligibleOnly(v => !v)}>
+            {showEligibleOnly ? 'Eligible only: ON' : 'Eligible only: OFF'}
+          </Button>
+
           <span className="text-xs uppercase tracking-wide text-muted-foreground">{filtered.length} / {initialEntries.length}</span>
           {canCreate && (
             <Button onClick={() => setCreating(v => !v)} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
@@ -337,6 +389,9 @@ export function MaterialDemandTable({
                 const isEditing = editingId === entry.id
                 const materialHref = `/departments/${departmentId}/material/${entry.materialId}` as Route
                 const isExpanded = expandedDemandIds.has(entry.id)
+                const quoteOptions = [...entry.quoteOptions].sort((a, b) => compareQuoteOptions(a, b, rankingPolicy))
+                const visibleQuoteOptions = showEligibleOnly ? quoteOptions.filter(option => option.isEligibleForBest) : quoteOptions
+                const bestOptionId = quoteOptions.find(option => option.isEligibleForBest)?.id ?? null
                 return (
                   <Fragment key={entry.id}>
                     <TableRow key={entry.id} className="border-border/40 hover:bg-secondary/50">
@@ -387,7 +442,7 @@ export function MaterialDemandTable({
                               {isExpanded ? 'Hide' : 'Compare'}
                             </Button>
                           )}
-                          {entry.bestQuoteLineId && (
+                          {bestOptionId && (
                             <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">Best</Badge>
                           )}
                         </div>
@@ -415,7 +470,7 @@ export function MaterialDemandTable({
                       </TableCell>
                     </TableRow>
 
-                    {isExpanded && entry.quoteOptions.length > 0 && (
+                    {isExpanded && (
                       <TableRow className="bg-secondary/20">
                         <TableCell colSpan={7} className="py-3">
                           <div className="rounded-lg border border-border/50 bg-card overflow-x-auto">
@@ -434,9 +489,25 @@ export function MaterialDemandTable({
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
-                                {entry.quoteOptions.map(option => {
+                                {visibleQuoteOptions.length === 0 && (
+                                  <TableRow>
+                                    <TableCell colSpan={9} className="text-xs text-muted-foreground py-4">
+                                      <div className="flex items-center justify-between gap-3">
+                                        <span>No eligible quote options for this material yet.</span>
+                                        <Link
+                                          href={`/departments/${departmentId}/orderQuote` as Route}
+                                          className="inline-flex h-7 items-center rounded-md border border-border px-2.5 text-xs text-foreground hover:bg-secondary">
+                                          Request/Manage Quotes
+                                        </Link>
+                                      </div>
+                                    </TableCell>
+                                  </TableRow>
+                                )}
+
+                                {visibleQuoteOptions.map(option => {
                                   const isSelected = entry.selectedQuoteLineIds.includes(option.id)
                                   const isLoading = lineActionLoadingId === option.id
+                                  const canSelect = option.isCurrentlyValid && !option.rejected && !option.deleted
 
                                   return (
                                     <TableRow key={option.id} className="border-border/30">
@@ -451,7 +522,7 @@ export function MaterialDemandTable({
                                       <TableCell className="text-xs text-muted-foreground">{formatDate(option.validUntill)}</TableCell>
                                       <TableCell>
                                         <div className="flex items-center gap-1.5">
-                                          {option.id === entry.bestQuoteLineId && (
+                                          {option.id === bestOptionId && (
                                             <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">Best</Badge>
                                           )}
                                           {!option.isCurrentlyValid && (
@@ -470,7 +541,7 @@ export function MaterialDemandTable({
                                           size="sm"
                                           variant={isSelected ? 'secondary' : 'outline'}
                                           className="h-7 text-xs"
-                                          disabled={isLoading}
+                                          disabled={isLoading || (!isSelected && !canSelect)}
                                           onClick={() => handleQuoteLineSelection(entry.id, option.id, !isSelected)}>
                                           {isLoading ? 'Saving…' : isSelected ? 'Selected' : 'Select'}
                                         </Button>

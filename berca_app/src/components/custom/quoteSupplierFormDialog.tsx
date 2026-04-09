@@ -53,6 +53,7 @@ function empty(): MappedQuoteSupplier {
     deletedAt: null,
     deletedBy: null,
     deletedByName: null,
+    lineCount: 0,
   }
 }
 

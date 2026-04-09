@@ -253,7 +253,9 @@ export function MaterialDemandTable({
     const {entry, supplierId} = makeQuoteDialog
     setMakeQuoteDialog(null)
     setActionError(null)
-    router.push(`/departments/${departmentId}/orderQuote?materialId=${entry.materialId}&supplierId=${supplierId}` as Route)
+    router.push(
+      `/departments/${departmentId}/orderQuote?materialId=${entry.materialId}&materialDemandId=${entry.id}&supplierId=${supplierId}` as Route,
+    )
   }
 
   async function submitLowStockRequest() {

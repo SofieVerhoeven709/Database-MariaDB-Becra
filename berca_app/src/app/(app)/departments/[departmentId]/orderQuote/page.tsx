@@ -10,12 +10,12 @@ import {getMaterialById} from '@/dal/materials'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
-  searchParams?: Promise<{materialId?: string; supplierId?: string}>
+  searchParams?: Promise<{materialId?: string; materialDemandId?: string; supplierId?: string}>
 }
 
 export default async function OrderQuotePage({params, searchParams}: PageProps) {
   const {departmentId} = await params
-  const {materialId, supplierId} = (await searchParams) ?? {}
+  const {materialId, materialDemandId, supplierId} = (await searchParams) ?? {}
 
   const [department, entriesFromDAL, companiesRaw, paymentConditionsRaw, profile, materialData] = await Promise.all([
     getDepartmentById(departmentId),
@@ -84,7 +84,9 @@ export default async function OrderQuotePage({params, searchParams}: PageProps) 
           paymentConditions={paymentConditionOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          departmentId={departmentId}
           defaultMaterialId={materialId}
+          defaultMaterialDemandId={materialDemandId}
           defaultSupplierId={selectedSupplier?.id}
         />
       </div>

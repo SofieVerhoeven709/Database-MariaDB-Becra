@@ -8,6 +8,23 @@ const quoteSupplierInclude = {
   Employee_QuoteSupplier_deletedByToEmployee: employeeSelect,
   Company: {select: {id: true, name: true, number: true}},
   PaymentCondition: {select: {id: true, name: true}},
+  _count: {select: {QuoteSupplierLine: true}},
+} as const
+
+const quoteSupplierDetailInclude = {
+  ...quoteSupplierInclude,
+  QuoteSupplierLine: {
+    include: {
+      Material: {select: {id: true, beNumber: true, name: true, shortDescription: true}},
+      MaterialDemand: {
+        select: {
+          id: true,
+          Material: {select: {id: true, beNumber: true, name: true, shortDescription: true}},
+        },
+      },
+    },
+    orderBy: {id: 'asc'},
+  },
 } as const
 
 export async function getQuoteSuppliers() {
@@ -18,7 +35,7 @@ export async function getQuoteSuppliers() {
 }
 
 export async function getQuoteSupplierById(id: string) {
-  return prismaClient.quoteSupplier.findUnique({where: {id}, include: quoteSupplierInclude})
+  return prismaClient.quoteSupplier.findUnique({where: {id}, include: quoteSupplierDetailInclude})
 }
 
 export async function getPaymentConditionOptions() {

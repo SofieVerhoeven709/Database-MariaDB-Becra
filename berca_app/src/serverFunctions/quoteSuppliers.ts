@@ -8,7 +8,7 @@ import {
 } from '@/schemas/quoteSupplierSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 
-const REVALIDATE_PATH = '/departments/purchasing/orderQuote'
+const REVALIDATE_DEPARTMENTS_PATH = '/departments'
 const QUOTE_NUMBER_BASE = 1_000_000
 const QUOTE_NUMBER_PREFIX = 'Q'
 
@@ -107,7 +107,7 @@ export const createQuoteSupplierAction = protectedServerFunction({
       },
     })
     logger.info(`Quote supplier created: ${id}`)
-    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
 
@@ -141,7 +141,7 @@ export const updateQuoteSupplierAction = protectedServerFunction({
       },
     })
     logger.info(`Quote supplier updated: ${id}`)
-    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
 
@@ -155,7 +155,7 @@ export const softDeleteQuoteSupplierAction = protectedServerFunction({
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
     })
     logger.info(`Quote supplier soft deleted: ${id}`)
-    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
 
@@ -166,7 +166,7 @@ export const hardDeleteQuoteSupplierAction = protectedServerFunction({
     const {id} = data
     await prismaClient.quoteSupplier.delete({where: {id}})
     logger.info(`Quote supplier hard deleted: ${id}`)
-    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
 
@@ -179,7 +179,7 @@ export const undeleteQuoteSupplierAction = protectedServerFunction({
       data: {deleted: false, deletedAt: null, deletedBy: null},
     })
     logger.info(`Quote supplier undeleted: ${id}`)
-    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
 

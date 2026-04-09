@@ -18,4 +18,23 @@ export interface MappedQuoteSupplier {
   deletedAt: string | null
   deletedBy: string | null
   deletedByName: string | null
+  lineCount: number
+}
+
+export interface MappedQuoteSupplierDetailLine {
+  id: string
+  materialId: string
+  materialBeNumber: string | null
+  materialName: string | null
+  materialShortDescription: string | null
+  materialDemandId: string | null
+  materialDemandLabel: string | null
+  quantity: number
+  unitPrice: number
+  minQuantity: number | null
+  selected: boolean
+}
+
+export interface MappedQuoteSupplierDetail extends MappedQuoteSupplier {
+  lines: MappedQuoteSupplierDetailLine[]
 }

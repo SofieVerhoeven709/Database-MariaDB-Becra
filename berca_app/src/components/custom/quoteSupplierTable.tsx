@@ -1,6 +1,8 @@
 'use client'
 
 import {useState} from 'react'
+import Link from 'next/link'
+import type {Route} from 'next'
 import {useRouter} from 'next/navigation'
 import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
@@ -56,7 +58,9 @@ interface Props {
   currentUserRole: string
   currentUserLevel: number
   defaultMaterialId?: string
+  defaultMaterialDemandId?: string
   defaultSupplierId?: string
+  departmentId: string
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -79,6 +83,7 @@ export function QuoteSupplierTable({
   currentUserLevel,
   defaultMaterialId,
   defaultSupplierId,
+  departmentId,
 }: Props) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -155,10 +160,14 @@ export function QuoteSupplierTable({
       deliveryTimeDays: e.deliveryTimeDays,
       paymentConditionId: e.paymentConditionId,
     }
-    const result = editing ? await updateQuoteSupplierAction({id: e.id, ...payload}) : await createQuoteSupplierAction(payload)
+    const result = editing
+      ? await updateQuoteSupplierAction({id: e.id, ...payload})
+      : await createQuoteSupplierAction(payload)
     const error = extractActionError(result)
     if (error) throw new Error(error)
     setEditing(null)
+
+
     router.refresh()
   }
 
@@ -274,6 +283,7 @@ export function QuoteSupplierTable({
               <TableHead className={thClass} onClick={() => toggleSort('deliveryTimeDays')}>
                 Delivery (days) <SortIcon field="deliveryTimeDays" sortField={sortField} sortDir={sortDir} />
               </TableHead>
+              <TableHead className="text-xs whitespace-nowrap">Lines</TableHead>
               <TableHead className="text-xs whitespace-nowrap">Payment</TableHead>
               <TableHead className="text-xs whitespace-nowrap">Created By</TableHead>
               {filterDeleted !== 'not-deleted' && (
@@ -288,18 +298,25 @@ export function QuoteSupplierTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={filterDeleted !== 'not-deleted' ? 11 : 9} className="h-28 text-center text-muted-foreground">
+                <TableCell colSpan={filterDeleted !== 'not-deleted' ? 12 : 10} className="h-28 text-center text-muted-foreground">
                   No supplier quotes found.
                 </TableCell>
               </TableRow>
             ) : filtered.map(entry => (
               <TableRow key={entry.id} className={`border-border/40 hover:bg-secondary/50 ${entry.deleted ? 'opacity-50' : ''}`}>
                 <TableCell>{statusBadge(entry)}</TableCell>
-                <TableCell className={tdClass}>{entry.quoteNumber}</TableCell>
+                <TableCell className={tdClass}>
+                  <Link
+                    href={`/departments/${departmentId}/orderQuote/${entry.id}` as Route}
+                    className="text-foreground hover:text-accent hover:underline">
+                    {entry.quoteNumber}
+                  </Link>
+                </TableCell>
                 <TableCell className={tdClass}>{entry.companyName}</TableCell>
                 <TableCell className={`${tdClass} max-w-50 truncate`}>{entry.description ?? '—'}</TableCell>
                 <TableCell className={tdClass}>{formatDate(entry.validUntill)}</TableCell>
                 <TableCell className={tdClass}>{entry.deliveryTimeDays ?? '—'}</TableCell>
+                <TableCell className={tdClass}>{entry.lineCount}</TableCell>
                 <TableCell className={tdClass}>{entry.paymentConditionName ?? '—'}</TableCell>
                 <TableCell className={tdClass}>{entry.createdByName}</TableCell>
                 {filterDeleted !== 'not-deleted' && (

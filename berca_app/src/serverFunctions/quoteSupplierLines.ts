@@ -10,7 +10,7 @@ import {
   quoteSupplierLineIdSchema,
 } from '@/schemas/quoteSupplierLineSchemas'
 
-const REVALIDATE_PATH = '/departments/purchasing'
+const REVALIDATE_DEPARTMENTS_PATH = '/departments'
 
 async function resyncMaterialDemand(materialDemandId: string | null | undefined, logger: {warn: (message: string) => void}) {
   if (!materialDemandId) return
@@ -59,7 +59,7 @@ export const createQuoteSupplierLineAction = protectedServerFunction({
       `under quote ${created.QuoteSupplier.id}`,
     )
 
-    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
 
@@ -95,7 +95,7 @@ export const selectQuoteSupplierLineAction = protectedServerFunction({
       `${selected ? 'Selected' : 'Deselected'} QuoteSupplierLine ${id} for MaterialDemand ${demandId}`,
     )
 
-    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
 
@@ -132,7 +132,7 @@ export const updateQuoteSupplierLineAction = protectedServerFunction({
       }
     }
 
-    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
 
@@ -159,7 +159,7 @@ export const deleteQuoteSupplierLineAction = protectedServerFunction({
     }
     logger.info(`Deleted QuoteSupplierLine: ${id}`)
 
-    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
 

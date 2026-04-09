@@ -1,6 +1,6 @@
 'use client'
 
-import {useMemo, useState} from 'react'
+import {Fragment, useMemo, useState} from 'react'
 import Link from 'next/link'
 import type {Route} from 'next'
 import {useRouter} from 'next/navigation'
@@ -12,6 +12,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {Badge} from '@/components/ui/badge'
 import type {MappedMaterialDemand, MaterialDemandMaterialOption} from '@/types/materialDemand'
 import {createMaterialDemandAction, updateMaterialDemandAction} from '@/serverFunctions/materialDemands'
+import {selectQuoteSupplierLineAction} from '@/serverFunctions/quoteSupplierLines'
 
 type SortField = 'material' | 'totalRequiredQty' | 'reservedQty' | 'sourceCount' | 'quoteLineCount' | 'createdAt'
 type SortDir = 'asc' | 'desc'
@@ -27,9 +28,27 @@ interface MaterialDemandTableProps {
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 
+function extractActionError(result: unknown): string | null {
+  if (!result || typeof result !== 'object' || !('success' in result) || (result as {success?: boolean}).success !== false) {
+    return null
+  }
+
+  const errors = (result as {errors?: {global?: string[]; message?: string[]}}).errors
+  return errors?.message?.[0] ?? errors?.global?.[0] ?? 'Could not save material demand.'
+}
+
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '—'
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function formatMoney(value: number) {
+  return new Intl.NumberFormat('nl-BE', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value)
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -62,10 +81,13 @@ export function MaterialDemandTable({
   const [newMaterialId, setNewMaterialId] = useState<string>('')
   const [newTotalRequiredQty, setNewTotalRequiredQty] = useState<string>('0')
   const [newReservedQty, setNewReservedQty] = useState<string>('0')
+  const [actionError, setActionError] = useState<string | null>(null)
 
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editTotalRequiredQty, setEditTotalRequiredQty] = useState<string>('0')
   const [editReservedQty, setEditReservedQty] = useState<string>('0')
+  const [expandedDemandIds, setExpandedDemandIds] = useState<Set<string>>(new Set())
+  const [lineActionLoadingId, setLineActionLoadingId] = useState<string | null>(null)
 
   const usedMaterialIds = useMemo(() => new Set(initialEntries.map(e => e.materialId)), [initialEntries])
   const availableMaterials = useMemo(
@@ -120,39 +142,91 @@ export function MaterialDemandTable({
     setEditReservedQty('0')
   }
 
-  async function handleUpdate(id: string) {
-    const totalRequiredQty = Number.parseInt(editTotalRequiredQty, 10)
-    const reservedQty = Number.parseInt(editReservedQty, 10)
-    const row = initialEntries.find(e => e.id === id)
-    const nextTotalRequiredQty = canEditRequiredQty
-      ? (Number.isNaN(totalRequiredQty) ? 0 : totalRequiredQty)
-      : (row?.totalRequiredQty ?? 0)
-
-    await updateMaterialDemandAction({
-      id,
-      totalRequiredQty: nextTotalRequiredQty,
-      reservedQty: Number.isNaN(reservedQty) ? 0 : reservedQty,
+  function toggleQuotes(demandId: string) {
+    setExpandedDemandIds(prev => {
+      const next = new Set(prev)
+      if (next.has(demandId)) next.delete(demandId)
+      else next.add(demandId)
+      return next
     })
-    cancelEdit()
-    router.refresh()
+  }
+
+  async function handleQuoteLineSelection(demandId: string, lineId: string, selected: boolean) {
+    try {
+      setLineActionLoadingId(lineId)
+      const result = await selectQuoteSupplierLineAction({
+        id: lineId,
+        selected,
+        materialDemandId: demandId,
+      })
+      const error = extractActionError(result)
+      if (error) {
+        setActionError(error)
+        return
+      }
+      setActionError(null)
+      router.refresh()
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : 'Could not update quote selection.')
+    } finally {
+      setLineActionLoadingId(null)
+    }
+  }
+
+  async function handleUpdate(id: string) {
+    try {
+      const totalRequiredQty = Number.parseInt(editTotalRequiredQty, 10)
+      const reservedQty = Number.parseInt(editReservedQty, 10)
+      const row = initialEntries.find(e => e.id === id)
+      const nextTotalRequiredQty = canEditRequiredQty
+        ? (Number.isNaN(totalRequiredQty) ? 0 : totalRequiredQty)
+        : (row?.totalRequiredQty ?? 0)
+
+      const result = await updateMaterialDemandAction({
+        id,
+        totalRequiredQty: nextTotalRequiredQty,
+        reservedQty: Number.isNaN(reservedQty) ? 0 : reservedQty,
+      })
+      const error = extractActionError(result)
+      if (error) {
+        setActionError(error)
+        return
+      }
+      setActionError(null)
+      cancelEdit()
+      router.refresh()
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : 'Could not save material demand.')
+    }
   }
 
   async function handleCreate() {
-    if (!newMaterialId) return
-    const totalRequiredQty = Number.parseInt(newTotalRequiredQty, 10)
-    const reservedQty = Number.parseInt(newReservedQty, 10)
+    try {
+      if (!newMaterialId) return
+      const totalRequiredQty = Number.parseInt(newTotalRequiredQty, 10)
+      const reservedQty = Number.parseInt(newReservedQty, 10)
 
-    await createMaterialDemandAction({
-      materialId: newMaterialId,
-      totalRequiredQty: Number.isNaN(totalRequiredQty) ? 0 : totalRequiredQty,
-      reservedQty: Number.isNaN(reservedQty) ? 0 : reservedQty,
-    })
+      const result = await createMaterialDemandAction({
+        materialId: newMaterialId,
+        totalRequiredQty: Number.isNaN(totalRequiredQty) ? 0 : totalRequiredQty,
+        reservedQty: Number.isNaN(reservedQty) ? 0 : reservedQty,
+      })
 
-    setNewMaterialId('')
-    setNewTotalRequiredQty('0')
-    setNewReservedQty('0')
-    setCreating(false)
-    router.refresh()
+      const error = extractActionError(result)
+      if (error) {
+        setActionError(error)
+        return
+      }
+
+      setNewMaterialId('')
+      setNewTotalRequiredQty('0')
+      setNewReservedQty('0')
+      setActionError(null)
+      setCreating(false)
+      router.refresh()
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : 'Could not save material demand.')
+    }
   }
 
   return (
@@ -177,6 +251,12 @@ export function MaterialDemandTable({
           )}
         </div>
       </div>
+
+      {actionError && (
+        <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {actionError}
+        </div>
+      )}
 
       {creating && canCreate && (
         <div className="rounded-xl border border-border/60 bg-card p-4">
@@ -214,7 +294,7 @@ export function MaterialDemandTable({
             />
           </div>
           <div className="mt-3 flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setCreating(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => { setActionError(null); setCreating(false) }}>Cancel</Button>
             <Button onClick={handleCreate} disabled={!newMaterialId}>Create demand row</Button>
           </div>
         </div>
@@ -256,66 +336,155 @@ export function MaterialDemandTable({
               filtered.map(entry => {
                 const isEditing = editingId === entry.id
                 const materialHref = `/departments/${departmentId}/material/${entry.materialId}` as Route
+                const isExpanded = expandedDemandIds.has(entry.id)
                 return (
-                  <TableRow key={entry.id} className="border-border/40 hover:bg-secondary/50">
-                    <TableCell className={tdClass}>
-                      <Link href={materialHref} className="hover:text-accent hover:underline transition-colors">
-                        <div className="flex flex-col gap-0.5">
-                          <span className="text-foreground font-medium">{entry.materialBeNumber ?? '—'}</span>
-                          <span className="text-xs text-muted-foreground">{entry.materialShortDescription ?? entry.materialName ?? entry.materialId}</span>
-                        </div>
-                      </Link>
-                    </TableCell>
-                    <TableCell className={tdClass}>
-                      {isEditing && canEditRequiredQty ? (
-                        <Input
-                          type="number"
-                          min={0}
-                          value={editTotalRequiredQty}
-                          onChange={e => setEditTotalRequiredQty(e.target.value)}
-                          className="h-8 bg-secondary border-border"
-                        />
-                      ) : (
-                        <Badge variant="secondary" className="text-xs">{entry.totalRequiredQty}</Badge>
-                      )}
-                    </TableCell>
-                    <TableCell className={tdClass}>
-                      {isEditing ? (
-                        <Input
-                          type="number"
-                          min={0}
-                          value={editReservedQty}
-                          onChange={e => setEditReservedQty(e.target.value)}
-                          className="h-8 bg-secondary border-border"
-                        />
-                      ) : (
-                        <Badge variant="outline" className="text-xs border-border">{entry.reservedQty}</Badge>
-                      )}
-                    </TableCell>
-                    <TableCell className={tdClass}>{entry.sourceCount}</TableCell>
-                    <TableCell className={tdClass}>{entry.quoteLineCount}</TableCell>
-                    <TableCell className={tdClass}>{formatDate(entry.createdAt)}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1">
-                        {isEditing ? (
-                          <>
-                            <Button size="icon" variant="ghost" className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10" onClick={() => handleUpdate(entry.id)}>
-                              <Check className="h-3.5 w-3.5" />
-                            </Button>
-                            <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:bg-secondary" onClick={cancelEdit}>
-                              <X className="h-3.5 w-3.5" />
-                            </Button>
-                          </>
+                  <Fragment key={entry.id}>
+                    <TableRow key={entry.id} className="border-border/40 hover:bg-secondary/50">
+                      <TableCell className={tdClass}>
+                        <Link href={materialHref} className="hover:text-accent hover:underline transition-colors">
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-foreground font-medium">{entry.materialBeNumber ?? '—'}</span>
+                            <span className="text-xs text-muted-foreground">{entry.materialShortDescription ?? entry.materialName ?? entry.materialId}</span>
+                          </div>
+                        </Link>
+                      </TableCell>
+                      <TableCell className={tdClass}>
+                        {isEditing && canEditRequiredQty ? (
+                          <Input
+                            type="number"
+                            min={0}
+                            value={editTotalRequiredQty}
+                            onChange={e => setEditTotalRequiredQty(e.target.value)}
+                            className="h-8 bg-secondary border-border"
+                          />
                         ) : (
-                          canEdit && (
-                            <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary" onClick={() => startEdit(entry)}>
-                              <Pencil className="h-3.5 w-3.5" />
-                            </Button>
-                          )
+                          <Badge variant="secondary" className="text-xs">{entry.totalRequiredQty}</Badge>
                         )}
-                      </div>
-                    </TableCell>
-                  </TableRow>
+                      </TableCell>
+                      <TableCell className={tdClass}>
+                        {isEditing ? (
+                          <Input
+                            type="number"
+                            min={0}
+                            value={editReservedQty}
+                            onChange={e => setEditReservedQty(e.target.value)}
+                            className="h-8 bg-secondary border-border"
+                          />
+                        ) : (
+                          <Badge variant="outline" className="text-xs border-border">{entry.reservedQty}</Badge>
+                        )}
+                      </TableCell>
+                      <TableCell className={tdClass}>{entry.sourceCount}</TableCell>
+                      <TableCell className={tdClass}>
+                        <div className="flex items-center gap-2">
+                          <span>{entry.quoteLineCount}</span>
+                          {entry.quoteLineCount > 0 && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="h-7 px-2 text-xs"
+                              onClick={() => toggleQuotes(entry.id)}>
+                              {isExpanded ? 'Hide' : 'Compare'}
+                            </Button>
+                          )}
+                          {entry.bestQuoteLineId && (
+                            <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">Best</Badge>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className={tdClass}>{formatDate(entry.createdAt)}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          {isEditing ? (
+                            <>
+                              <Button size="icon" variant="ghost" className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10" onClick={() => handleUpdate(entry.id)}>
+                                <Check className="h-3.5 w-3.5" />
+                              </Button>
+                              <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:bg-secondary" onClick={() => { setActionError(null); cancelEdit() }}>
+                                <X className="h-3.5 w-3.5" />
+                              </Button>
+                            </>
+                          ) : (
+                            canEdit && (
+                              <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary" onClick={() => startEdit(entry)}>
+                                <Pencil className="h-3.5 w-3.5" />
+                              </Button>
+                            )
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+
+                    {isExpanded && entry.quoteOptions.length > 0 && (
+                      <TableRow className="bg-secondary/20">
+                        <TableCell colSpan={7} className="py-3">
+                          <div className="rounded-lg border border-border/50 bg-card overflow-x-auto">
+                            <Table>
+                              <TableHeader>
+                                <TableRow className="border-border/50">
+                                  <TableHead className="text-xs">Quote</TableHead>
+                                  <TableHead className="text-xs">Supplier</TableHead>
+                                  <TableHead className="text-xs">Qty</TableHead>
+                                  <TableHead className="text-xs">Min Qty</TableHead>
+                                  <TableHead className="text-xs">Unit Price</TableHead>
+                                  <TableHead className="text-xs">Delivery</TableHead>
+                                  <TableHead className="text-xs">Valid Until</TableHead>
+                                  <TableHead className="text-xs">Status</TableHead>
+                                  <TableHead className="text-xs w-28">Select</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {entry.quoteOptions.map(option => {
+                                  const isSelected = entry.selectedQuoteLineIds.includes(option.id)
+                                  const isLoading = lineActionLoadingId === option.id
+
+                                  return (
+                                    <TableRow key={option.id} className="border-border/30">
+                                      <TableCell className="text-xs text-muted-foreground">{option.quoteNumber}</TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">{option.supplierCompanyName}</TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">{option.quantity}</TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">{option.minQuantity ?? '—'}</TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">{formatMoney(option.unitPrice)}</TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">
+                                        {option.deliveryTimeDays !== null ? `${option.deliveryTimeDays} day(s)` : '—'}
+                                      </TableCell>
+                                      <TableCell className="text-xs text-muted-foreground">{formatDate(option.validUntill)}</TableCell>
+                                      <TableCell>
+                                        <div className="flex items-center gap-1.5">
+                                          {option.id === entry.bestQuoteLineId && (
+                                            <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">Best</Badge>
+                                          )}
+                                          {!option.isCurrentlyValid && (
+                                            <Badge variant="outline" className="text-[10px] border-amber-500/40 text-amber-700">Expired</Badge>
+                                          )}
+                                          {option.rejected && (
+                                            <Badge className="text-[10px] bg-red-500/15 text-red-700 border border-red-500/30">Rejected</Badge>
+                                          )}
+                                          {option.deleted && (
+                                            <Badge variant="outline" className="text-[10px]">Deleted</Badge>
+                                          )}
+                                        </div>
+                                      </TableCell>
+                                      <TableCell>
+                                        <Button
+                                          size="sm"
+                                          variant={isSelected ? 'secondary' : 'outline'}
+                                          className="h-7 text-xs"
+                                          disabled={isLoading}
+                                          onClick={() => handleQuoteLineSelection(entry.id, option.id, !isSelected)}>
+                                          {isLoading ? 'Saving…' : isSelected ? 'Selected' : 'Select'}
+                                        </Button>
+                                      </TableCell>
+                                    </TableRow>
+                                  )
+                                })}
+                              </TableBody>
+                            </Table>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </Fragment>
                 )
               })
             )}

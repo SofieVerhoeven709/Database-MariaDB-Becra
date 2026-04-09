@@ -4,7 +4,32 @@ import {prismaClient} from '@/dal/prismaClient'
 const materialDemandInclude = {
   Material: {select: {id: true, beNumber: true, name: true, shortDescription: true}},
   MaterialDemandSource: {select: {id: true}},
-  QuoteSupplierLine: {select: {id: true}},
+  QuoteSupplierLine: {
+    select: {
+      id: true,
+      quoteSupplierId: true,
+      quantity: true,
+      unitPrice: true,
+      minQuantity: true,
+      selected: true,
+      QuoteSupplier: {
+        select: {
+          quoteNumber: true,
+          companyId: true,
+          validUntill: true,
+          deliveryTimeDays: true,
+          rejected: true,
+          deleted: true,
+          Company: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: {selected: 'desc'},
+  },
 } as const
 
 export async function getMaterialDemands() {
@@ -49,6 +74,73 @@ export async function removeMaterialDemandForMaterial(materialId: string) {
       OR: [{reservedQty: 0}, {reservedQty: null}],
     },
   })
+}
+
+export async function syncMaterialDemandReservations(materialDemandId: string) {
+  const demand = await prismaClient.materialDemand.findUnique({
+    where: {id: materialDemandId},
+    select: {
+      id: true,
+      totalRequiredQty: true,
+      MaterialDemandSource: {
+        select: {
+          id: true,
+          requiredQty: true,
+          reservedQty: true,
+          createdAt: true,
+        },
+        orderBy: [{createdAt: 'asc'}, {id: 'asc'}],
+      },
+      QuoteSupplierLine: {
+        where: {selected: true},
+        select: {quantity: true},
+      },
+    },
+  })
+
+  if (!demand) {
+    throw new Error('MaterialDemand not found')
+  }
+
+  const selectedQty = demand.QuoteSupplierLine.reduce((sum, line) => sum + line.quantity, 0)
+
+  if (selectedQty > demand.totalRequiredQty) {
+    throw new Error('Selected quote quantities cannot exceed the total required quantity.')
+  }
+
+  let remainingQty = selectedQty
+  const nextReservations = demand.MaterialDemandSource.map(source => {
+    const nextReservedQty = Math.min(source.requiredQty, remainingQty)
+    remainingQty -= nextReservedQty
+    return {
+      id: source.id,
+      reservedQty: nextReservedQty,
+      currentReservedQty: source.reservedQty ?? 0,
+    }
+  })
+
+  await prismaClient.$transaction(async tx => {
+    await tx.materialDemand.update({
+      where: {id: materialDemandId},
+      data: {reservedQty: selectedQty},
+    })
+
+    for (const source of nextReservations) {
+      if (source.currentReservedQty !== source.reservedQty) {
+        await tx.materialDemandSource.update({
+          where: {id: source.id},
+          data: {reservedQty: source.reservedQty},
+        })
+      }
+    }
+  })
+
+  return {
+    selectedQty,
+    allocatedQty: selectedQty - remainingQty,
+    unallocatedQty: remainingQty,
+    sourceCount: demand.MaterialDemandSource.length,
+  }
 }
 
 // ─── MaterialDemandSource tracking ──────────────────────────────────────────────
@@ -208,10 +300,7 @@ export async function validateMaterialDemandSourceAllocation(materialDemandId: s
   const demand = await prismaClient.materialDemand.findUnique({
     where: {id: materialDemandId},
     include: {
-      MaterialDemandSource: {
-        where: {createdAt: {gte: new Date(Date.now() - 24 * 60 * 60 * 1000)}}, // Last 24h
-        select: {requiredQty: true},
-      },
+      MaterialDemandSource: {select: {requiredQty: true}},
     },
   })
 

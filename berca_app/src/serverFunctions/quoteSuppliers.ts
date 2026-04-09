@@ -32,6 +32,17 @@ async function quoteNumberExists(quoteNumber: string): Promise<boolean> {
   return !!existing
 }
 
+async function quoteNumberExistsExcludingId(quoteNumber: string, excludeId: string): Promise<boolean> {
+  const existing = await prismaClient.quoteSupplier.findFirst({
+    where: {
+      quoteNumber,
+      NOT: {id: excludeId},
+    },
+    select: {id: true},
+  })
+  return !!existing
+}
+
 async function getNextQuoteNumber(): Promise<string> {
   const rows = await prismaClient.quoteSupplier.findMany({
     select: {quoteNumber: true},
@@ -61,12 +72,16 @@ function toDate(val: string | null | undefined): Date | null {
   return isNaN(d.getTime()) ? null : d
 }
 
+function normalizeQuoteNumber(value: string | null | undefined): string {
+  return value?.trim() ?? ''
+}
+
 export const createQuoteSupplierAction = protectedServerFunction({
   schema: createQuoteSupplierSchema,
   functionName: 'Create quote supplier action',
   serverFn: async ({data, profile, logger}) => {
     const id = crypto.randomUUID()
-    const manualQuoteNumber = data.quoteNumber.trim()
+    const manualQuoteNumber = normalizeQuoteNumber(data.quoteNumber)
     const hasManualOverride = manualQuoteNumber.length > 0
     const quoteNumber = hasManualOverride ? manualQuoteNumber : await getNextAvailableQuoteNumber()
 
@@ -100,10 +115,20 @@ export const updateQuoteSupplierAction = protectedServerFunction({
   schema: updateQuoteSupplierSchema,
   functionName: 'Update quote supplier action',
   serverFn: async ({data: {id, ...data}, logger}) => {
+    const quoteNumber = normalizeQuoteNumber(data.quoteNumber)
+
+    if (!quoteNumber) {
+      throw new Error('Quote number cannot be empty.')
+    }
+
+    if (await quoteNumberExistsExcludingId(quoteNumber, id)) {
+      throw new Error(`Quote number ${quoteNumber} already exists.`)
+    }
+
     await prismaClient.quoteSupplier.update({
       where: {id},
       data: {
-        quoteNumber: data.quoteNumber,
+        quoteNumber,
         quotationNumber: data.quotationNumber ?? null,
         companyId: data.companyId,
         description: data.description ?? null,

@@ -67,15 +67,18 @@ export function QuoteSupplierFormDialog({
 }: Props) {
   const [form, setForm] = useState<MappedQuoteSupplier>(empty())
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
   const isEdit = !!entry
 
   useEffect(() => {
     if (!open) return
     if (entry) {
       setForm(entry)
+      setSaveError(null)
       return
     }
     setForm({...empty(), quoteNumber: defaultQuoteNumber})
+    setSaveError(null)
   }, [open, entry, defaultQuoteNumber])
 
   function set<K extends keyof MappedQuoteSupplier>(key: K, value: MappedQuoteSupplier[K]) {
@@ -85,8 +88,11 @@ export function QuoteSupplierFormDialog({
   async function handleSubmit() {
     setSaving(true)
     try {
+      setSaveError(null)
       await onSave(form)
       onOpenChange(false)
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : 'Could not save quote supplier.')
     } finally {
       setSaving(false)
     }
@@ -100,6 +106,12 @@ export function QuoteSupplierFormDialog({
         </DialogHeader>
 
         <div className="grid gap-4 py-2">
+          {saveError && (
+            <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              {saveError}
+            </div>
+          )}
+
           <div className="grid gap-1.5">
             <Label htmlFor="quoteNumber">Quote Number</Label>
             {!isEdit || canEditNumber ? (

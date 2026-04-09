@@ -46,7 +46,7 @@ export const updatePurchaseBOMAction = protectedServerFunction({
     // purchased=true forces materialClosed/closed=true on this BOM.
     const bomUpdateData = {
       ...data,
-      ...(data.purchased === true ? {materialClosed: true, closed: true} : {}),
+      ...(data.purchased ? {materialClosed: true, closed: true} : {}),
     }
 
     const updatedBom = await prismaClient.purchaseBOM.update({
@@ -56,7 +56,7 @@ export const updatePurchaseBOMAction = protectedServerFunction({
     })
     logger.info(`Purchase BOM updated: ${id}`)
 
-    if (data.purchased === true) {
+    if (data.purchased) {
       // Mark every active structure on THIS BOM as purchased
       await prismaClient.purchaseBOMStructure.updateMany({
         where: {purchaseBOMId: id, deleted: false},
@@ -317,10 +317,10 @@ export const softDeletePurchaseBOMStructureAction = protectedServerFunction({
         for (const [materialDemandId, totalRequired] of totalsByDemand.entries()) {
           const demand = await prismaClient.materialDemand.findUnique({
             where: {id: materialDemandId},
-            select: {totalRequiredQty: true},
+            select: {totalRequiredQty: true, reservedQty: true},
           })
           if (demand) {
-            const nextTotal = Math.max(0, demand.totalRequiredQty - totalRequired)
+            const nextTotal = Math.max(demand.reservedQty ?? 0, demand.totalRequiredQty - totalRequired, 0)
             await prismaClient.materialDemand.update({
               where: {id: materialDemandId},
               data: {totalRequiredQty: nextTotal},
@@ -367,10 +367,10 @@ export const hardDeletePurchaseBOMStructureAction = protectedServerFunction({
         for (const [materialDemandId, totalRequired] of totalsByDemand.entries()) {
           const demand = await prismaClient.materialDemand.findUnique({
             where: {id: materialDemandId},
-            select: {totalRequiredQty: true},
+            select: {totalRequiredQty: true, reservedQty: true},
           })
           if (demand) {
-            const nextTotal = Math.max(0, demand.totalRequiredQty - totalRequired)
+            const nextTotal = Math.max(demand.reservedQty ?? 0, demand.totalRequiredQty - totalRequired, 0)
             await prismaClient.materialDemand.update({
               where: {id: materialDemandId},
               data: {totalRequiredQty: nextTotal},

@@ -60,6 +60,15 @@ interface Props {
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 
+function extractActionError(result: unknown): string | null {
+  if (!result || typeof result !== 'object' || !('success' in result) || (result as {success?: boolean}).success !== false) {
+    return null
+  }
+
+  const errors = (result as {errors?: {global?: string[]; message?: string[]}}).errors
+  return errors?.message?.[0] ?? errors?.global?.[0] ?? 'Could not save quote supplier.'
+}
+
 export function QuoteSupplierTable({
   initialEntries,
   companies,
@@ -141,8 +150,9 @@ export function QuoteSupplierTable({
       deliveryTimeDays: e.deliveryTimeDays,
       paymentConditionId: e.paymentConditionId,
     }
-    if (editing) await updateQuoteSupplierAction({id: e.id, ...payload})
-    else await createQuoteSupplierAction(payload)
+    const result = editing ? await updateQuoteSupplierAction({id: e.id, ...payload}) : await createQuoteSupplierAction(payload)
+    const error = extractActionError(result)
+    if (error) throw new Error(error)
     setEditing(null)
     router.refresh()
   }
@@ -220,7 +230,7 @@ export function QuoteSupplierTable({
               <TableHead className={thClass} onClick={() => toggleSort('companyName')}>
                 Supplier <SortIcon field="companyName" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className="text-xs whitespace-nowrap max-w-[200px]">Description</TableHead>
+              <TableHead className="text-xs whitespace-nowrap max-w-50">Description</TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('validUntill')}>
                 Valid Until <SortIcon field="validUntill" sortField={sortField} sortDir={sortDir} />
               </TableHead>
@@ -250,7 +260,7 @@ export function QuoteSupplierTable({
                 <TableCell>{statusBadge(entry)}</TableCell>
                 <TableCell className={tdClass}>{entry.quoteNumber}</TableCell>
                 <TableCell className={tdClass}>{entry.companyName}</TableCell>
-                <TableCell className={`${tdClass} max-w-[200px] truncate`}>{entry.description ?? '—'}</TableCell>
+                <TableCell className={`${tdClass} max-w-50 truncate`}>{entry.description ?? '—'}</TableCell>
                 <TableCell className={tdClass}>{formatDate(entry.validUntill)}</TableCell>
                 <TableCell className={tdClass}>{entry.deliveryTimeDays ?? '—'}</TableCell>
                 <TableCell className={tdClass}>{entry.paymentConditionName ?? '—'}</TableCell>

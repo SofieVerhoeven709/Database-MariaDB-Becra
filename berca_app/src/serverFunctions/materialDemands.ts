@@ -28,6 +28,10 @@ export const createMaterialDemandAction = protectedServerFunction({
       throw new Error('A material demand row already exists for this material.')
     }
 
+    if ((data.reservedQty ?? 0) > data.totalRequiredQty) {
+      throw new Error('Reserved quantity cannot be greater than total required quantity.')
+    }
+
     const id = crypto.randomUUID()
     await prismaClient.materialDemand.create({
       data: {
@@ -51,10 +55,11 @@ export const updateMaterialDemandAction = protectedServerFunction({
     const isManagerOrAdmin = profile.RoleLevelEmployee.some(
       rle => rle.RoleLevel.Role.name === 'Administrator' || rle.RoleLevel.SubRole.level >= 80,
     )
+    const canEditReservedQty = isManagerOrAdmin || profile.RoleLevelEmployee.some(rle => rle.RoleLevel.SubRole.level >= 40)
 
     const existing = await prismaClient.materialDemand.findUnique({
       where: {id: data.id},
-      select: {totalRequiredQty: true},
+      select: {totalRequiredQty: true, reservedQty: true},
     })
 
     if (!existing) {
@@ -63,6 +68,10 @@ export const updateMaterialDemandAction = protectedServerFunction({
 
     if (!isManagerOrAdmin && data.totalRequiredQty !== existing.totalRequiredQty) {
       throw new Error('Only managers can modify required quantity.')
+    }
+
+    if (!canEditReservedQty && data.reservedQty !== (existing.reservedQty ?? 0)) {
+      throw new Error('Only editors can modify reserved quantity.')
     }
 
     if (data.reservedQty > data.totalRequiredQty) {

@@ -21,7 +21,7 @@ export const updateQuoteSupplierLineSchema = z.object({
 export const selectQuoteSupplierLineSchema = z.object({
   id: z.string().uuid(),
   selected: z.boolean(),
-  materialDemandId: z.string().uuid(),
+  materialDemandId: z.string().uuid().optional(),
 })
 
 export const quoteSupplierLineIdSchema = z.object({

@@ -9,6 +9,27 @@ export interface MappedMaterialDemand {
   createdAt: string
   sourceCount: number
   quoteLineCount: number
+  selectedQuoteLineIds: string[]
+  bestQuoteLineId: string | null
+  quoteOptions: MaterialDemandQuoteOption[]
+}
+
+export interface MaterialDemandQuoteOption {
+  id: string
+  quoteSupplierId: string
+  quoteNumber: string
+  supplierCompanyId: string
+  supplierCompanyName: string
+  quantity: number
+  unitPrice: number
+  minQuantity: number | null
+  selected: boolean
+  rejected: boolean
+  deleted: boolean
+  validUntill: string | null
+  deliveryTimeDays: number | null
+  isCurrentlyValid: boolean
+  isEligibleForBest: boolean
 }
 
 export interface MaterialDemandMaterialOption {

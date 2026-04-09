@@ -2,6 +2,7 @@
 import {revalidatePath} from 'next/cache'
 import {prismaClient} from '@/dal/prismaClient'
 import {protectedServerFunction} from '@/lib/serverFunctions'
+import {syncMaterialDemandReservations} from '@/dal/materialDemands'
 import {
   createQuoteSupplierLineSchema,
   updateQuoteSupplierLineSchema,
@@ -10,6 +11,17 @@ import {
 } from '@/schemas/quoteSupplierLineSchemas'
 
 const REVALIDATE_PATH = '/departments/purchasing'
+
+async function resyncMaterialDemand(materialDemandId: string | null | undefined, logger: {warn: (message: string) => void}) {
+  if (!materialDemandId) return
+
+  const result = await syncMaterialDemandReservations(materialDemandId)
+  if (result.unallocatedQty > 0 && result.sourceCount > 0) {
+    logger.warn(
+      `MaterialDemand ${materialDemandId} has ${result.unallocatedQty} selected unit(s) without enough source capacity to distribute them.`,
+    )
+  }
+}
 
 // ─── Actions ───────────────────────────────────────────────────────────────────
 
@@ -60,13 +72,12 @@ export const selectQuoteSupplierLineAction = protectedServerFunction({
   schema: selectQuoteSupplierLineSchema,
   functionName: 'Select quote supplier line action',
   serverFn: async ({data: {id, selected, materialDemandId}, logger}) => {
-    // Fetch the quote line to get quantity info
     const quoteLine = await prismaClient.quoteSupplierLine.findUniqueOrThrow({
       where: {id},
       select: {quantity: true, materialDemandId: true},
     })
 
-    const demandId = materialDemandId || quoteLine.materialDemandId
+    const demandId = quoteLine.materialDemandId || materialDemandId
     if (!demandId) {
       logger.warn(`Cannot select quote line ${id}: no materialDemandId associated`)
       return
@@ -78,53 +89,11 @@ export const selectQuoteSupplierLineAction = protectedServerFunction({
       data: {selected},
     })
 
-    // Update MaterialDemandSource reserved qty based on selection status
-    if (selected) {
-      // When selecting, get the ProjectBOMStructure ID from the quote (if available)
-      // and update the MaterialDemandSource for that source
-      const quoteLineWithSource = await prismaClient.quoteSupplierLine.findUnique({
-        where: {id},
-        include: {
-          QuoteSupplier: {
-            select: {
-              // If needed, include project/source reference here
-              id: true,
-            },
-          },
-        },
-      })
+    await resyncMaterialDemand(demandId, logger)
 
-      // For now, update all MaterialDemandSource records for this material demand
-      // In a more sophisticated system, you'd track which source this quote line fulfills
-      await prismaClient.materialDemandSource.updateMany({
-        where: {materialDemandId: demandId},
-        data: {
-          reservedQty: {
-            increment: quoteLine.quantity,
-          },
-        },
-      })
-
-      logger.info(
-        `Selected QuoteSupplierLine ${id}: reserved ${quoteLine.quantity} units ` +
-        `for MaterialDemand ${demandId}`,
-      )
-    } else {
-      // When deselecting, decrement the reserved qty
-      await prismaClient.materialDemandSource.updateMany({
-        where: {materialDemandId: demandId},
-        data: {
-          reservedQty: {
-            decrement: quoteLine.quantity,
-          },
-        },
-      })
-
-      logger.info(
-        `Deselected QuoteSupplierLine ${id}: freed ${quoteLine.quantity} units ` +
-        `for MaterialDemand ${demandId}`,
-      )
-    }
+    logger.info(
+      `${selected ? 'Selected' : 'Deselected'} QuoteSupplierLine ${id} for MaterialDemand ${demandId}`,
+    )
 
     revalidatePath(REVALIDATE_PATH)
   },
@@ -151,25 +120,15 @@ export const updateQuoteSupplierLineAction = protectedServerFunction({
 
     logger.info(`Updated QuoteSupplierLine: ${id}`)
 
-    // If quantity changed and line is selected, update MaterialDemandSource
-    if (updates.quantity && updates.quantity !== current.quantity && current.selected) {
-      const demandId = current.materialDemandId
-      if (demandId) {
-        const quantityDelta = updates.quantity - current.quantity
+    const affectedDemandIds = new Set<string>()
+    if (current.materialDemandId) affectedDemandIds.add(current.materialDemandId)
+    if (updated.materialDemandId && updated.materialDemandId !== current.materialDemandId) {
+      affectedDemandIds.add(updated.materialDemandId)
+    }
 
-        await prismaClient.materialDemandSource.updateMany({
-          where: {materialDemandId: demandId},
-          data: {
-            reservedQty: {
-              increment: quantityDelta,
-            },
-          },
-        })
-
-        logger.info(
-          `Quantity changed for selected QuoteSupplierLine ${id}: ` +
-          `adjusted MaterialDemandSource reservation by ${quantityDelta} units`,
-        )
+    if (current.selected || updates.selected !== undefined || updates.quantity !== undefined || updates.materialDemandId !== undefined) {
+      for (const demandId of affectedDemandIds) {
+        await resyncMaterialDemand(demandId, logger)
       }
     }
 
@@ -191,25 +150,13 @@ export const deleteQuoteSupplierLineAction = protectedServerFunction({
       select: {selected: true, quantity: true, materialDemandId: true},
     })
 
-    // Clear any reservations if this line was selected
-    if (quoteLine.selected && quoteLine.materialDemandId) {
-      await prismaClient.materialDemandSource.updateMany({
-        where: {materialDemandId: quoteLine.materialDemandId},
-        data: {
-          reservedQty: {
-            decrement: quoteLine.quantity,
-          },
-        },
-      })
-
-      logger.info(
-        `Cleared ${quoteLine.quantity} unit reservation from MaterialDemandSource ` +
-        `for deleted QuoteSupplierLine ${id}`,
-      )
-    }
+    const demandId = quoteLine.materialDemandId
 
     // Delete the line
     await prismaClient.quoteSupplierLine.delete({where: {id}})
+    if (quoteLine.selected && demandId) {
+      await resyncMaterialDemand(demandId, logger)
+    }
     logger.info(`Deleted QuoteSupplierLine: ${id}`)
 
     revalidatePath(REVALIDATE_PATH)

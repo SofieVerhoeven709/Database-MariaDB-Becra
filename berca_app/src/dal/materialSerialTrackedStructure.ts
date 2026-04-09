@@ -94,8 +94,10 @@ export async function getSerialTrackedStructuresBySerialTrackedIds(serialTracked
     select: {
       id: true,
       serialTrackedId: true,
+      beNumber: true,
       shortDescription: true,
       longDescription: true,
+      quantityRequired: true,
     },
   })
 }

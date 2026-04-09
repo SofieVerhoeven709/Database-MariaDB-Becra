@@ -64,6 +64,13 @@ export type MappedMaterialSerialTracked = {
   inspectionIntervalUnit?: string | null
 }
 
+export type InspectionItem = {
+  id: string
+  beNumber: string | null
+  shortDescription: string | null
+  quantityRequired: number | null
+}
+
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
   return sortDir === 'asc' ? (
@@ -126,6 +133,8 @@ interface SerialTrackedTableProps {
     longDescription: string | null
     materialGroupId: string
   }[]
+  inspectionItemsBySerialTrackedId?: Record<string, InspectionItem[]>
+  inspectionWarningDays?: number
 }
 
 export function SerialTrackedTable({
@@ -138,6 +147,8 @@ export function SerialTrackedTable({
   warehousePlaceOptions,
   departmentId,
   materialOptions,
+  inspectionItemsBySerialTrackedId,
+  inspectionWarningDays,
 }: SerialTrackedTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -158,6 +169,24 @@ export function SerialTrackedTable({
   const companyMap = new Map(companyOptions.map(c => [c.id, c.name]))
   const projectMap = new Map(projectOptions.map(p => [p.id, p.name]))
   const materialGroupMap = new Map(materialGroupOptions.map(mg => [mg.id, mg.name]))
+
+  const inspectionWarningWindowDays = inspectionWarningDays ?? 0
+
+  function getInspectionStatus(nextInspectionDate?: string | null): 'none' | 'overdue' | 'upcoming' | 'ok' {
+    if (!nextInspectionDate || inspectionWarningWindowDays <= 0) return 'none'
+
+    const targetDate = new Date(nextInspectionDate)
+    if (Number.isNaN(targetDate.getTime())) return 'none'
+
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    targetDate.setHours(0, 0, 0, 0)
+
+    const diffDays = Math.ceil((targetDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+    if (diffDays < 0) return 'overdue'
+    if (diffDays <= inspectionWarningWindowDays) return 'upcoming'
+    return 'ok'
+  }
 
   function toggleSort(field: SortField) {
     if (sortField === field) {
@@ -230,6 +259,15 @@ export function SerialTrackedTable({
       }
     })
 
+  const overdueCount = filtered.reduce(
+    (count, item) => (getInspectionStatus(item.nextInspectionDate) === 'overdue' ? count + 1 : count),
+    0,
+  )
+  const upcomingCount = filtered.reduce(
+    (count, item) => (getInspectionStatus(item.nextInspectionDate) === 'upcoming' ? count + 1 : count),
+    0,
+  )
+
   async function handleSoftDelete(item: MappedMaterialSerialTracked) {
     await deleteMaterialSerialTrackedAction({id: item.id})
     router.refresh()
@@ -246,10 +284,22 @@ export function SerialTrackedTable({
   }
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
-  const colCount = showDeletedCols ? 20 : 17
+  const showInspectionItemsColumn = Boolean(inspectionItemsBySerialTrackedId)
+  const showInspectionStatusColumn = inspectionWarningWindowDays > 0
+  const colCount =
+    (showDeletedCols ? 20 : 17) + (showInspectionItemsColumn ? 1 : 0) + (showInspectionStatusColumn ? 1 : 0)
 
   return (
     <div className="flex flex-col gap-6">
+      {inspectionWarningWindowDays > 0 && (overdueCount > 0 || upcomingCount > 0) && (
+        <div className="rounded-lg border border-border/60 bg-secondary/40 px-4 py-3 text-sm text-foreground">
+          {overdueCount > 0 && `${overdueCount} inspection${overdueCount === 1 ? '' : 's'} overdue`}
+          {overdueCount > 0 && upcomingCount > 0 && ' - '}
+          {upcomingCount > 0 &&
+            `${upcomingCount} inspection${upcomingCount === 1 ? '' : 's'} within ${inspectionWarningWindowDays} day${inspectionWarningWindowDays === 1 ? '' : 's'}`}
+        </div>
+      )}
+
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative max-w-sm flex-1">
@@ -325,6 +375,8 @@ export function SerialTrackedTable({
               <TableHead className="whitespace-nowrap text-xs">Last Inspection</TableHead>
               <TableHead className="whitespace-nowrap text-xs">Inspection Interval</TableHead>
               <TableHead className="whitespace-nowrap text-xs">Next Inspection</TableHead>
+              {showInspectionStatusColumn && <TableHead className="whitespace-nowrap text-xs">Inspection Status</TableHead>}
+              {showInspectionItemsColumn && <TableHead className="whitespace-nowrap text-xs">Inspection Items</TableHead>}
               <Th field="rejected" label="Rejected" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdBy" label="Created By" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
 
@@ -387,6 +439,37 @@ export function SerialTrackedTable({
                     {formatInspectionInterval(item.inspectionIntervalValue, item.inspectionIntervalUnit)}
                   </TableCell>
                   <TableCell className={tdClass}>{formatDate(item.nextInspectionDate)}</TableCell>
+                  {showInspectionStatusColumn && (
+                    <TableCell>
+                      {(() => {
+                        const status = getInspectionStatus(item.nextInspectionDate)
+                        if (status === 'overdue') {
+                          return <Badge variant="destructive">Overdue</Badge>
+                        }
+                        if (status === 'upcoming') {
+                          return <Badge variant="secondary">Inspection soon</Badge>
+                        }
+                        return <span className="text-sm text-muted-foreground">-</span>
+                      })()}
+                    </TableCell>
+                  )}
+                  {showInspectionItemsColumn && (
+                    <TableCell className={tdClass}>
+                      {(() => {
+                        const inspectionItems = inspectionItemsBySerialTrackedId?.[item.id] ?? []
+                        if (inspectionItems.length === 0) return '-'
+
+                        return inspectionItems
+                          .map(i => {
+                            const label = [i.beNumber, i.shortDescription].filter(Boolean).join(' - ')
+                            if (!label) return null
+                            return i.quantityRequired ? `${label} (x${i.quantityRequired})` : label
+                          })
+                          .filter(Boolean)
+                          .join(', ')
+                      })()}
+                    </TableCell>
+                  )}
 
                   <TableCell>
                     <YesNoBadge value={!!item.rejected} />

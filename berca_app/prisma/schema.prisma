@@ -417,6 +417,7 @@ model Employee {
   InventoryChange                                                                   InventoryChange[]
   InventoryChange_InventoryChange_deletedByToEmployee                               InventoryChange[]                @relation("InventoryChange_deletedByToEmployee")
   InventoryOrder                                                                    InventoryOrder[]
+  InventoryOrder_InventoryOrder_approvedByToEmployee                                InventoryOrder[]                 @relation("InventoryOrder_approvedByToEmployee")
   InventoryOrder_InventoryOrder_deletedByToEmployee                                 InventoryOrder[]                 @relation("InventoryOrder_deletedByToEmployee")
   InventoryStructure                                                                InventoryStructure[]
   InventoryStructure_InventoryStructure_deletedByToEmployee                         InventoryStructure[]             @relation("InventoryStructure_deletedByToEmployee")
@@ -779,24 +780,30 @@ model InventoryChange {
 }
 
 model InventoryOrder {
-  id                                          String    @id @db.Char(36)
-  inventoryId                                 String    @db.Char(36)
-  orderNumber                                 String    @db.VarChar(255)
-  orderDate                                   DateTime  @db.DateTime(0)
-  shortDescription                            String    @db.VarChar(255)
-  longDescription                             String?   @db.Text
-  createdAt                                   DateTime  @default(now()) @db.Timestamp(0)
-  createdBy                                   String    @db.Char(36)
-  deleted                                     Boolean   @default(false)
-  deletedAt                                   DateTime? @db.DateTime(0)
-  deletedBy                                   String?   @db.Char(36)
-  Inventory                                   Inventory @relation(fields: [inventoryId], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_1")
-  Employee                                    Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_2")
-  Employee_InventoryOrder_deletedByToEmployee Employee? @relation("InventoryOrder_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_3")
+  id                                           String    @id @db.Char(36)
+  inventoryId                                  String    @db.Char(36)
+  orderNumber                                  String    @db.VarChar(255)
+  requestedQty                                 Int       @default(1)
+  orderDate                                    DateTime  @db.DateTime(0)
+  shortDescription                             String    @db.VarChar(255)
+  longDescription                              String?   @db.Text
+  approved                                     Boolean   @default(false)
+  approvedAt                                   DateTime? @db.DateTime(0)
+  approvedBy                                   String?   @db.Char(36)
+  createdAt                                    DateTime  @default(now()) @db.DateTime(0)
+  createdBy                                    String    @db.Char(36)
+  deleted                                      Boolean   @default(false)
+  deletedAt                                    DateTime? @db.DateTime(0)
+  deletedBy                                    String?   @db.Char(36)
+  Inventory                                    Inventory @relation(fields: [inventoryId], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_1")
+  Employee                                     Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_2")
+  Employee_InventoryOrder_approvedByToEmployee Employee? @relation("InventoryOrder_approvedByToEmployee", fields: [approvedBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_3")
+  Employee_InventoryOrder_deletedByToEmployee  Employee? @relation("InventoryOrder_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_4")
 
   @@index([createdBy], map: "createdBy")
   @@index([inventoryId], map: "inventoryId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([approvedBy], map: "approvedBy")
 }
 
 model InventoryStructure {

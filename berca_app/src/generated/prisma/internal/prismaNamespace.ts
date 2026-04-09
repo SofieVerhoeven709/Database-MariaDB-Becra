@@ -8098,9 +8098,13 @@ export const InventoryOrderScalarFieldEnum = {
   id: 'id',
   inventoryId: 'inventoryId',
   orderNumber: 'orderNumber',
+  requestedQty: 'requestedQty',
   orderDate: 'orderDate',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  approved: 'approved',
+  approvedAt: 'approvedAt',
+  approvedBy: 'approvedBy',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
   deleted: 'deleted',
@@ -9920,6 +9924,7 @@ export const InventoryOrderOrderByRelevanceFieldEnum = {
   orderNumber: 'orderNumber',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  approvedBy: 'approvedBy',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
 } as const

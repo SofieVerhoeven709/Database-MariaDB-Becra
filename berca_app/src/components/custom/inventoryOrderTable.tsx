@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Check} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
@@ -13,6 +13,7 @@ import {
   updateInventoryOrderAction,
   softDeleteInventoryOrderAction,
   hardDeleteInventoryOrderAction,
+  approveInventoryOrderAction,
 } from '@/serverFunctions/inventoryOrders'
 
 type SortField = 'orderDate' | 'orderNumber' | 'shortDescription' | 'inventoryBeNumber'
@@ -98,6 +99,11 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
     router.refresh()
   }
 
+  async function handleApprove(id: string) {
+    await approveInventoryOrderAction({id})
+    router.refresh()
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -153,10 +159,14 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
                     )}
                   </div>
                 </TableCell>
-                <TableCell className={`${tdClass} max-w-[200px] truncate`}>{entry.shortDescription}</TableCell>
+                <TableCell className={`${tdClass} max-w-50 truncate`}>{entry.shortDescription}</TableCell>
                 <TableCell className={tdClass}>{entry.createdByName}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-1">
+                    <Button variant="ghost" size="icon" className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10"
+                      onClick={() => handleApprove(entry.id)}>
+                      <Check className="h-3.5 w-3.5" />
+                    </Button>
                     <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
                       onClick={() => { setEditing(entry); setDialogOpen(true) }}>
                       <Pencil className="h-3.5 w-3.5" />

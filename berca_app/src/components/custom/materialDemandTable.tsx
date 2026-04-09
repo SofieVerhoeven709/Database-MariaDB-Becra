@@ -12,6 +12,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {Badge} from '@/components/ui/badge'
 import type {MappedMaterialDemand, MaterialDemandMaterialOption} from '@/types/materialDemand'
 import {createMaterialDemandAction, updateMaterialDemandAction} from '@/serverFunctions/materialDemands'
+import {createInventoryOrderAction} from '@/serverFunctions/inventoryOrders'
 import {selectQuoteSupplierLineAction} from '@/serverFunctions/quoteSupplierLines'
 
 type SortField = 'material' | 'totalRequiredQty' | 'reservedQty' | 'sourceCount' | 'quoteLineCount' | 'createdAt'
@@ -90,6 +91,12 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
 
 function materialLabel(m: MaterialDemandMaterialOption) {
   return [m.beNumber, m.shortDescription ?? m.name].filter(Boolean).join(' — ') || m.id
+}
+
+function generateLowStockRequestNumber(entry: MappedMaterialDemand) {
+  const suffix = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 12)
+  const materialToken = (entry.materialBeNumber ?? entry.materialId.slice(0, 6)).replace(/\s+/g, '')
+  return `REQ-${materialToken}-${suffix}`
 }
 
 export function MaterialDemandTable({
@@ -204,6 +211,34 @@ export function MaterialDemandTable({
       setActionError(error instanceof Error ? error.message : 'Could not update quote selection.')
     } finally {
       setLineActionLoadingId(null)
+    }
+  }
+
+  async function handleLowStockRequest(entry: MappedMaterialDemand) {
+    try {
+      if (!entry.requestInventoryId) {
+        setActionError('No inventory row linked to this material. Please create inventory first.')
+        return
+      }
+
+      const result = await createInventoryOrderAction({
+        inventoryId: entry.requestInventoryId,
+        orderNumber: generateLowStockRequestNumber(entry),
+        orderDate: new Date().toISOString().slice(0, 10),
+        shortDescription: `Low-stock request for ${entry.materialBeNumber ?? entry.materialId}`,
+        longDescription: `Stock ${entry.stockQuantity} is at/below minimum ${entry.minimumStockQuantity}. __REQUESTED_QTY__:${entry.suggestedRequestQty}`,
+      })
+
+      const error = extractActionError(result)
+      if (error) {
+        setActionError(error)
+        return
+      }
+
+      setActionError(null)
+      router.refresh()
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : 'Could not create approval request.')
     }
   }
 
@@ -397,9 +432,17 @@ export function MaterialDemandTable({
                     <TableRow key={entry.id} className="border-border/40 hover:bg-secondary/50">
                       <TableCell className={tdClass}>
                         <Link href={materialHref} className="hover:text-accent hover:underline transition-colors">
-                          <div className="flex flex-col gap-0.5">
-                            <span className="text-foreground font-medium">{entry.materialBeNumber ?? '—'}</span>
+                          <div className={`flex flex-col gap-0.5 rounded-md px-2 py-1 ${entry.isLowStock ? 'border border-amber-500/70 bg-amber-500/10' : ''}`}>
+                            <div className="flex items-center gap-2">
+                              <span className="text-foreground font-medium">{entry.materialBeNumber ?? '—'}</span>
+                              {entry.isLowStock && (
+                                <Badge className="text-[10px] border border-amber-500/30 bg-amber-500/10 text-amber-700">Low stock</Badge>
+                              )}
+                            </div>
                             <span className="text-xs text-muted-foreground">{entry.materialShortDescription ?? entry.materialName ?? entry.materialId}</span>
+                            <span className="text-[11px] text-muted-foreground">
+                              Stock {entry.stockQuantity} / Min {entry.minimumStockQuantity}
+                            </span>
                           </div>
                         </Link>
                       </TableCell>
@@ -450,6 +493,16 @@ export function MaterialDemandTable({
                       <TableCell className={tdClass}>{formatDate(entry.createdAt)}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
+                          {entry.isLowStock && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="h-7 px-2 text-[11px] border-amber-500/60 text-amber-700 hover:bg-amber-500/10"
+                              disabled={entry.pendingRequestCount > 0 || !entry.requestInventoryId}
+                              onClick={() => handleLowStockRequest(entry)}>
+                              {entry.pendingRequestCount > 0 ? 'Pending approval' : 'Request approval'}
+                            </Button>
+                          )}
                           {isEditing ? (
                             <>
                               <Button size="icon" variant="ghost" className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10" onClick={() => handleUpdate(entry.id)}>

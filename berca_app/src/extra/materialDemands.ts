@@ -3,7 +3,24 @@ import type {MappedMaterialDemand} from '@/types/materialDemand'
 
 type MaterialDemandWithRelations = Prisma.MaterialDemandGetPayload<{
   include: {
-    Material: {select: {id: true; beNumber: true; name: true; shortDescription: true}}
+    Material: {
+      select: {
+        id: true
+        beNumber: true
+        name: true
+        shortDescription: true
+        Inventory_Inventory_materialIdToMaterial: {
+          where: {deleted: false}
+          orderBy: [{quantityInStock: 'asc'}, {createdAt: 'asc'}]
+          select: {
+            id: true
+            quantityInStock: true
+            minQuantityInStock: true
+            InventoryOrder: {where: {deleted: false}, select: {id: true}}
+          }
+        }
+      }
+    }
     MaterialDemandSource: {select: {id: true}}
     QuoteSupplierLine: {
       select: {
@@ -60,6 +77,13 @@ function compareBestQuoteCandidate(
 }
 
 export function mapMaterialDemand(row: MaterialDemandWithRelations): MappedMaterialDemand {
+  const inventories = row.Material.Inventory_Inventory_materialIdToMaterial
+  const stockQuantity = inventories.reduce((sum, inv) => sum + inv.quantityInStock, 0)
+  const minimumStockQuantity = inventories.reduce((sum, inv) => sum + inv.minQuantityInStock, 0)
+  const requestInventory = inventories[0] ?? null
+  const pendingRequestCount = inventories.reduce((sum, inv) => sum + inv.InventoryOrder.length, 0)
+  const suggestedRequestQty = Math.max(minimumStockQuantity - stockQuantity, 1)
+
   const quoteOptions = row.QuoteSupplierLine.map(line => {
     const isCurrentlyValid = isDateStillValid(line.QuoteSupplier.validUntill)
     const isEligibleForBest = !line.QuoteSupplier.deleted && !line.QuoteSupplier.rejected && isCurrentlyValid
@@ -91,6 +115,12 @@ export function mapMaterialDemand(row: MaterialDemandWithRelations): MappedMater
     materialBeNumber: row.Material.beNumber,
     materialName: row.Material.name,
     materialShortDescription: row.Material.shortDescription,
+    stockQuantity,
+    minimumStockQuantity,
+    isLowStock: stockQuantity <= minimumStockQuantity,
+    requestInventoryId: requestInventory?.id ?? null,
+    suggestedRequestQty,
+    pendingRequestCount,
     totalRequiredQty: row.totalRequiredQty,
     reservedQty: row.reservedQty ?? 0,
     createdAt: row.createdAt.toISOString(),

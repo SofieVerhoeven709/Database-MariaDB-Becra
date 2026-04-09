@@ -1231,24 +1231,6 @@ CREATE TABLE
     ) ENGINE = InnoDB;
 
 CREATE TABLE
-    IF NOT EXISTS InventoryOrder (
-                                     id CHAR(36) NOT NULL PRIMARY KEY,
-    inventoryId CHAR(36) NOT NULL,
-    orderNumber VARCHAR(255) NOT NULL,
-    orderDate DATETIME NOT NULL,
-    shortDescription VARCHAR(255) NOT NULL,
-    longDescription TEXT,
-    createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    createdBy CHAR(36) NOT NULL,
-    FOREIGN KEY (inventoryId) REFERENCES Inventory (id) ON DELETE RESTRICT,
-    FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-    deleted BOOLEAN NOT NULL DEFAULT 0,
-    deletedAt DATETIME,
-    deletedBy CHAR(36),
-    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-    ) ENGINE = InnoDB;
-
-CREATE TABLE
     IF NOT EXISTS MaterialCode (
                                    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(255),
@@ -2146,4 +2128,27 @@ CREATE TABLE
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
             UNIQUE(incomingDeliveryId, purchaseBOMStructureId)
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS InventoryOrder (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            inventoryId CHAR(36) NOT NULL,
+            orderNumber VARCHAR(255) NOT NULL,
+            requestedQty INT NOT NULL DEFAULT 1,
+            orderDate DATETIME NOT NULL,
+            shortDescription VARCHAR(255) NOT NULL,
+            longDescription TEXT,
+            approved BOOLEAN NOT NULL DEFAULT 0,
+            approvedAt DATETIME,
+            approvedBy CHAR(36),
+            createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            createdBy CHAR(36) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (inventoryId) REFERENCES Inventory (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (approvedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;

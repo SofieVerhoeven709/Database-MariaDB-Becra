@@ -4,6 +4,12 @@ export interface MappedMaterialDemand {
   materialBeNumber: string | null
   materialName: string | null
   materialShortDescription: string | null
+  stockQuantity: number
+  minimumStockQuantity: number
+  isLowStock: boolean
+  requestInventoryId: string | null
+  suggestedRequestQty: number
+  pendingRequestCount: number
   totalRequiredQty: number
   reservedQty: number
   createdAt: string

@@ -2,7 +2,27 @@ import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 
 const materialDemandInclude = {
-  Material: {select: {id: true, beNumber: true, name: true, shortDescription: true}},
+  Material: {
+    select: {
+      id: true,
+      beNumber: true,
+      name: true,
+      shortDescription: true,
+      Inventory_Inventory_materialIdToMaterial: {
+        where: {deleted: false},
+        orderBy: {quantityInStock: 'asc'},
+        select: {
+          id: true,
+          quantityInStock: true,
+          minQuantityInStock: true,
+          InventoryOrder: {
+            where: {deleted: false},
+            select: {id: true},
+          },
+        },
+      },
+    },
+  },
   MaterialDemandSource: {select: {id: true}},
   QuoteSupplierLine: {
     select: {

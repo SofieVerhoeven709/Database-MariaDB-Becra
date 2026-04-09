@@ -1,16 +1,10 @@
+import {DepartmentActionPlaceholder} from '@/components/custom/departmentActionPlaceholder'
+
 interface PageProps {
-  params: {departmentSlug: string; actionSlug: string}
+  params: Promise<{departmentId: string}>
 }
 
-export default function ActionPage({params}: PageProps) {
-  const {departmentSlug, actionSlug} = params
-
-  return (
-    <div>
-      <h1>
-        {departmentSlug} / {actionSlug}
-      </h1>
-      {/* dynamically render the action */}
-    </div>
-  )
+export default async function StrategyPage({params}: PageProps) {
+  const {departmentId} = await params
+  return <DepartmentActionPlaceholder pageTitle="Strategy" departmentId={departmentId} />
 }

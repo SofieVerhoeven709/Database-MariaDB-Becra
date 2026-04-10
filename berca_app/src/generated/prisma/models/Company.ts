@@ -1269,12 +1269,10 @@ export type CompanyCreateNestedOneWithoutPurchaseInput = {
   connect?: Prisma.CompanyWhereUniqueInput
 }
 
-export type CompanyUpdateOneWithoutPurchaseNestedInput = {
+export type CompanyUpdateOneRequiredWithoutPurchaseNestedInput = {
   create?: Prisma.XOR<Prisma.CompanyCreateWithoutPurchaseInput, Prisma.CompanyUncheckedCreateWithoutPurchaseInput>
   connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutPurchaseInput
   upsert?: Prisma.CompanyUpsertWithoutPurchaseInput
-  disconnect?: Prisma.CompanyWhereInput | boolean
-  delete?: Prisma.CompanyWhereInput | boolean
   connect?: Prisma.CompanyWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutPurchaseInput, Prisma.CompanyUpdateWithoutPurchaseInput>, Prisma.CompanyUncheckedUpdateWithoutPurchaseInput>
 }

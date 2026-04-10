@@ -933,7 +933,7 @@ export function MaterialFormDialog({
                   className={inputStyles}
                   value={form.leadTimeValue ?? ''}
                   onChange={e => update('leadTimeValue', e.target.value ? Number(e.target.value) : null)}
-                  placeholder="bijv. 5"
+                  placeholder="5"
                 />
               </div>
               <div className="flex flex-col gap-2">

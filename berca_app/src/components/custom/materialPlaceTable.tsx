@@ -141,7 +141,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px]">
+        <div className="relative flex-1 min-w-50">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             className="pl-9 bg-secondary border-border"
@@ -151,7 +151,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
           />
         </div>
         <Select value={deletedFilter} onValueChange={v => setDeletedFilter(v as DeletedFilter)}>
-          <SelectTrigger className="w-[180px] bg-secondary border-border">
+          <SelectTrigger className="w-45 bg-secondary border-border">
             <SelectValue placeholder="Filter status" />
           </SelectTrigger>
           <SelectContent>
@@ -191,7 +191,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Status</TableHead>
-              <TableHead className="w-[90px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <TableHead className="w-22.5 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
             </TableRow>
@@ -213,7 +213,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
                   <TableCell className="text-sm">{item.place ?? <span className="text-muted-foreground">-</span>}</TableCell>
                   <TableCell className="text-sm font-semibold">{item.quantityInStock}</TableCell>
                   <TableCell
-                    className="text-sm text-muted-foreground max-w-[200px] truncate"
+                    className="text-sm text-muted-foreground max-w-50 truncate"
                     title={item.information ?? ''}>
                     {item.information ?? <span className="text-muted-foreground">-</span>}
                   </TableCell>

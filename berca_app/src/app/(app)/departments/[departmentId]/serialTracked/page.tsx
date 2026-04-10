@@ -11,6 +11,7 @@ import {mapMaterialSerialTracked} from '@/extra/serialTracked'
 import {Tabs, TabsList, TabsTrigger, TabsContent} from '@/components/ui/tabs'
 import {Table, TableHeader, TableRow, TableHead, TableBody, TableCell} from '@/components/ui/table'
 import {getSerialTrackedStructuresBySerialTrackedIds} from '@/dal/materialSerialTrackedStructure'
+import {AppSettings} from '@/constants'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -93,6 +94,8 @@ export default async function SerialTrackedPage({params}: PageProps) {
       serialTrackedBeNumber: serialTrackedBeNumberById.get(s.serialTrackedId) ?? '-',
     }))
 
+    const inspectionWarningDays = AppSettings.inspectionReminderMonths * 30
+
     return (
       <main className="px-6 py-8 lg:px-10 lg:py-10">
         <div className="mx-auto max-w-6xl">
@@ -116,6 +119,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
                 currentUserLevel={currentUserLevel}
                 departmentId={departmentId}
                 materialOptions={materialOptions}
+                inspectionWarningDays={inspectionWarningDays}
               />
             </TabsContent>
             <TabsContent value="structure">

@@ -23,7 +23,10 @@ export default async function MaterialPlacePage() {
           Assign and maintain warehouse storage locations across shelves, columns and layers.
         </p>
       </div>
-      <MaterialPlaceTable initialItems={mappedPlaces} materials={materialOptions} />
+      <MaterialPlaceTable
+        initialItems={mappedPlaces}
+        materials={materialOptions}
+      />
     </div>
   )
 }

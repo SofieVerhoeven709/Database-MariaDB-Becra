@@ -31,6 +31,7 @@ type SortField =
 
 type SortDir = 'asc' | 'desc'
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
+type InspectionStatusFilter = 'all' | 'overdue' | 'upcoming' | 'ok' | 'none'
 
 export type MappedMaterialSerialTracked = {
   id: string
@@ -156,6 +157,7 @@ export function SerialTrackedTable({
 
   const [search, setSearch] = useState('')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
+  const [inspectionStatusFilter, setInspectionStatusFilter] = useState<InspectionStatusFilter>('all')
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -201,6 +203,12 @@ export function SerialTrackedTable({
     .filter(item => {
       if (filterDeleted === 'not-deleted' && item.deleted) return false
       if (filterDeleted === 'deleted' && !item.deleted) return false
+
+      if (inspectionStatusFilter !== 'all') {
+        const status = getInspectionStatus(item.nextInspectionDate)
+        if (status !== inspectionStatusFilter) return false
+      }
+
       if (!search) return true
 
       const q = search.toLowerCase()
@@ -322,6 +330,23 @@ export function SerialTrackedTable({
               <SelectItem value="all">Show All</SelectItem>
             </SelectContent>
           </Select>
+
+          {showInspectionStatusColumn && (
+            <Select
+              value={inspectionStatusFilter}
+              onValueChange={v => setInspectionStatusFilter(v as InspectionStatusFilter)}>
+              <SelectTrigger className="w-42 border-border bg-secondary">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="border-border bg-card">
+                <SelectItem value="all">All inspections</SelectItem>
+                <SelectItem value="overdue">Overdue</SelectItem>
+                <SelectItem value="upcoming">Inspection soon</SelectItem>
+                <SelectItem value="ok">OK</SelectItem>
+                <SelectItem value="none">No reminder date</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
         </div>
 
         {canDelete && (

@@ -13,6 +13,7 @@ import {mapMaterialSerialTracked} from '@/extra/serialTracked'
 import {mapWorkOrder} from '@/extra/workOrders'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {AppSettings} from '@/constants'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -107,6 +108,8 @@ export default async function MaintenancePage({params}: PageProps) {
       materialGroupId: m.materialGroupIdA ?? '',
     }))
 
+    const inspectionWarningDays = AppSettings.inspectionReminderMonths * 30
+
     return (
       <main className="px-6 py-8 lg:px-10 lg:py-10">
         <div className="mx-auto max-w-6xl">
@@ -135,7 +138,7 @@ export default async function MaintenancePage({params}: PageProps) {
                 departmentId={departmentId}
                 materialOptions={materialOptions}
                 inspectionItemsBySerialTrackedId={inspectionItemsBySerialTrackedId}
-                inspectionWarningDays={30}
+                inspectionWarningDays={inspectionWarningDays}
               />
             </TabsContent>
 

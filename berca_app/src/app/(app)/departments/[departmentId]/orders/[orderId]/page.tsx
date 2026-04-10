@@ -1,10 +1,14 @@
 import {notFound} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {ArrowLeft, Building2, Calendar, Package, Tag, User} from 'lucide-react'
+import {ArrowLeft, Building2, Calendar, CreditCard, FileText, User} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
-import {getPurchaseById, getPurchaseDetails} from '@/dal/purchases'
-import {getProjects} from '@/dal/projects'
+import {
+  getPurchaseById,
+  getPurchaseDetails,
+  getPurchaseDetailMaterialOptions,
+  getPurchaseDetailMaterialDemandOptions,
+} from '@/dal/purchases'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapPurchaseDetail} from '@/extra/purchases'
 import type {MappedPurchaseDetail} from '@/types/purchase'
@@ -22,21 +26,22 @@ function formatDate(date: Date | null | undefined) {
 }
 
 const STATUS_COLOR: Record<string, string> = {
-  Pending: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/30',
-  Ordered: 'bg-blue-500/10 text-blue-600 border-blue-500/30',
-  Delivered: 'bg-green-500/10 text-green-600 border-green-500/30',
-  Cancelled: 'bg-red-500/10 text-red-600 border-red-500/30',
-  'On Hold': 'bg-orange-500/10 text-orange-600 border-orange-500/30',
+  DRAFT: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/30',
+  SENT: 'bg-blue-500/10 text-blue-600 border-blue-500/30',
+  PARTIAL_RECEIVED: 'bg-cyan-500/10 text-cyan-600 border-cyan-500/30',
+  CLOSED: 'bg-green-500/10 text-green-600 border-green-500/30',
+  CANCELLED: 'bg-red-500/10 text-red-600 border-red-500/30',
 }
 
 export default async function PurchaseOrderDetailPage({params}: Props) {
   const {departmentId, orderId} = await params
 
-  const [department, purchase, detailsRaw, projectsRaw, profile] = await Promise.all([
+  const [department, purchase, detailsRaw, materialsRaw, demandsRaw, profile] = await Promise.all([
     getDepartmentById(departmentId),
     getPurchaseById(orderId),
     getPurchaseDetails(orderId),
-    getProjects(),
+    getPurchaseDetailMaterialOptions(),
+    getPurchaseDetailMaterialDemandOptions(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
@@ -48,10 +53,26 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
 
   const details: MappedPurchaseDetail[] = detailsRaw.map(d => mapPurchaseDetail(d))
 
-  const projectOptions = projectsRaw
-    .filter(p => !p.deleted)
-    .map(p => ({id: p.id, name: `${p.projectNumber} – ${p.projectName}`}))
+  const materialOptions = materialsRaw
+    .map(m => ({id: m.id, name: `${m.beNumber} - ${m.name ?? m.shortDescription ?? 'Unnamed material'}`}))
     .sort((a, b) => a.name.localeCompare(b.name))
+
+  const materialDemandOptions = demandsRaw
+    .map(d => ({
+      id: d.id,
+      name: `${d.Material?.beNumber ?? 'N/A'} - ${d.Material?.name ?? d.Material?.shortDescription ?? 'Demand'}`,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  const quoteLineOptions = (purchase.QuoteSupplier?.QuoteSupplierLine ?? []).map(line => ({
+    id: line.id,
+    name: `${line.Material?.beNumber ?? 'N/A'} - ${line.Material?.name ?? line.Material?.shortDescription ?? 'Line'} (${line.quantity})`,
+    materialId: line.materialId,
+    materialDemandId: line.materialDemandId,
+    quantity: line.quantity,
+    unitPrice: line.unitPrice?.toString() ?? '0.00',
+    minQuantity: line.minQuantity ?? null,
+  }))
 
   const createdByName = `${purchase.Employee.firstName} ${purchase.Employee.lastName}`
 
@@ -69,7 +90,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="space-y-1">
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h1 className="text-xl font-semibold text-foreground">{purchase.orderNumber ?? 'Unnamed Order'}</h1>
+                <h1 className="text-xl font-semibold text-foreground">{purchase.purchaseNumber ?? 'Unnamed Order'}</h1>
                 {purchase.status && (
                   <Badge
                     className={`border text-xs font-medium ${
@@ -98,17 +119,17 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
-                <Package className="h-3 w-3" /> Project
+                <FileText className="h-3 w-3" /> Quote
               </span>
               <span className="text-sm text-foreground">
-                {purchase.Project ? `${purchase.Project.projectNumber} – ${purchase.Project.projectName}` : '—'}
+                {purchase.QuoteSupplier?.quoteNumber ?? 'Manual purchase'}
               </span>
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
-                <Tag className="h-3 w-3" /> Brand
+                <CreditCard className="h-3 w-3" /> Payment
               </span>
-              <span className="text-sm text-foreground">{purchase.brandName ?? '—'}</span>
+              <span className="text-sm text-foreground">{purchase.PaymentCondition?.name ?? '—'}</span>
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
@@ -118,14 +139,12 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
           </div>
 
-          {(purchase.preferredSupplier ?? purchase.additionalInfo) && (
+          {(purchase.shortDescription ?? purchase.additionalInfo) && (
             <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border/50">
-              {purchase.preferredSupplier && (
+              {purchase.shortDescription && (
                 <div className="flex flex-col gap-1">
-                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                    Preferred Supplier
-                  </span>
-                  <span className="text-sm text-foreground">{purchase.preferredSupplier}</span>
+                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Short Description</span>
+                  <span className="text-sm text-foreground">{purchase.shortDescription}</span>
                 </div>
               )}
               {purchase.additionalInfo && (
@@ -141,7 +160,9 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
         <PurchaseDetailTable
           purchaseId={orderId}
           initialDetails={details}
-          projects={projectOptions}
+          materialOptions={materialOptions}
+          materialDemandOptions={materialDemandOptions}
+          quoteLineOptions={quoteLineOptions}
           isAdmin={isAdmin}
         />
       </div>

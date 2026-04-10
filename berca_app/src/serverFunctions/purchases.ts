@@ -24,6 +24,13 @@ function toDate(val: string | null | undefined): Date | null {
   return isNaN(d.getTime()) ? null : d
 }
 
+function toDecimalString(val: string | number | null | undefined): string {
+  if (val == null || val === '') return '0.00'
+  const n = typeof val === 'number' ? val : Number.parseFloat(val)
+  if (!Number.isFinite(n)) return '0.00'
+  return n.toFixed(2)
+}
+
 export const createPurchaseAction = protectedServerFunction({
   schema: createPurchaseSchema,
   functionName: 'Create purchase action',
@@ -33,14 +40,12 @@ export const createPurchaseAction = protectedServerFunction({
     await prismaClient.purchase.create({
       data: {
         id: crypto.randomUUID(),
-        orderNumber: d.orderNumber ?? null,
-        brandName: d.brandName ?? null,
-        brandOrderNumber: d.brandOrderNumber ?? null,
-        purchaseDate: toDate(d.purchaseDate),
-        status: d.status ?? null,
-        companyId: d.companyId ?? null,
-        projectId: d.projectId ?? null,
-        preferredSupplier: d.preferredSupplier ?? null,
+        purchaseNumber: d.purchaseNumber,
+        purchaseDate: toDate(d.purchaseDate) ?? new Date(),
+        status: d.status ?? 'DRAFT',
+        companyId: d.companyId,
+        quoteSupplierId: d.quoteSupplierId ?? null,
+        paymentConditionId: d.paymentConditionId ?? null,
         shortDescription: d.shortDescription ?? null,
         description: d.description ?? null,
         additionalInfo: d.additionalInfo ?? null,
@@ -60,8 +65,7 @@ export const updatePurchaseAction = protectedServerFunction({
       where: {id},
       data: {
         ...rest,
-        purchaseDate: toDate(purchaseDate),
-        updatedAt: new Date(),
+        purchaseDate: toDate(purchaseDate) ?? new Date(),
       },
     })
     logger.info(`Purchase updated: ${id}`)
@@ -115,12 +119,13 @@ export const createPurchaseDetailAction = protectedServerFunction({
       data: {
         id: crypto.randomUUID(),
         purchaseId: data.purchaseId,
-        projectId: data.projectId ?? null,
-        beNumber: data.beNumber ?? null,
-        unitPrice: data.unitPrice ?? null,
-        quantity: data.quantity ?? null,
-        totalCost: data.totalCost ?? null,
-        status: data.status ?? null,
+        quoteSupplierLineId: data.quoteSupplierLineId ?? null,
+        materialId: data.materialId,
+        materialDemandId: data.materialDemandId ?? null,
+        unitPrice: toDecimalString(data.unitPrice),
+        quantity: data.quantity,
+        minQuantity: data.minQuantity ?? null,
+        lineStatus: data.lineStatus ?? 'OPEN',
         additionalInfo: data.additionalInfo ?? null,
         createdBy: profile.id,
       },
@@ -136,7 +141,10 @@ export const updatePurchaseDetailAction = protectedServerFunction({
     const {id, purchaseId, ...rest} = data
     await prismaClient.purchaseDetail.update({
       where: {id},
-      data: {...rest, updatedAt: new Date()},
+      data: {
+        ...rest,
+        unitPrice: toDecimalString(rest.unitPrice),
+      },
     })
     logger.info(`Purchase detail updated: ${id}`)
     revalidateDetail(purchaseId)

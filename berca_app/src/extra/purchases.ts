@@ -4,7 +4,8 @@ import type {MappedPurchase, MappedPurchaseDetail} from '@/types/purchase'
 type PurchaseWithRelations = Prisma.PurchaseGetPayload<{
   include: {
     Company: true
-    Project: {select: {id: true; projectNumber: true; projectName: true}}
+    QuoteSupplier: {select: {id: true; quoteNumber: true}}
+    PaymentCondition: {select: {id: true; name: true}}
     Employee: {select: {id: true; firstName: true; lastName: true}}
   }
 }>
@@ -12,20 +13,21 @@ type PurchaseWithRelations = Prisma.PurchaseGetPayload<{
 export function mapPurchase(p: PurchaseWithRelations): MappedPurchase {
   return {
     id: p.id,
-    orderNumber: p.orderNumber,
-    brandName: p.brandName,
+    purchaseNumber: p.purchaseNumber,
     purchaseDate: p.purchaseDate?.toISOString() ?? null,
-    status: p.status,
+    status: p.status ?? 'DRAFT',
     companyId: p.companyId,
     companyName: p.Company?.name ?? null,
-    projectId: p.projectId,
-    projectNumber: p.Project?.projectNumber ?? null,
-    projectName: p.Project?.projectName ?? null,
-    updatedAt: p.updatedAt?.toISOString() ?? null,
+    quoteSupplierId: p.quoteSupplierId,
+    quoteNumber: p.QuoteSupplier?.quoteNumber ?? null,
+    paymentConditionId: p.paymentConditionId,
+    paymentConditionName: p.PaymentCondition?.name ?? null,
+    shortDescription: p.shortDescription,
+    createdAt: p.createdAt?.toISOString() ?? null,
     createdBy: p.createdBy,
     createdByName: `${p.Employee.firstName} ${p.Employee.lastName}`,
-    preferredSupplier: p.preferredSupplier,
     description: p.description,
+    additionalInfo: p.additionalInfo,
     deleted: p.deleted,
     deletedAt: p.deletedAt?.toISOString() ?? null,
     deletedBy: p.deletedBy,
@@ -35,7 +37,7 @@ export function mapPurchase(p: PurchaseWithRelations): MappedPurchase {
 type PurchaseDetailWithRelations = Prisma.PurchaseDetailGetPayload<{
   include: {
     Employee: {select: {id: true; firstName: true; lastName: true}}
-    Project: {select: {id: true; projectNumber: true; projectName: true}}
+    Material: {select: {id: true; beNumber: true; name: true; shortDescription: true}}
   }
 }>
 
@@ -43,16 +45,18 @@ export function mapPurchaseDetail(d: PurchaseDetailWithRelations): MappedPurchas
   return {
     id: d.id,
     purchaseId: d.purchaseId,
-    projectId: d.projectId,
-    projectNumber: d.Project?.projectNumber ?? null,
-    projectName: d.Project?.projectName ?? null,
-    beNumber: d.beNumber,
+    quoteSupplierLineId: d.quoteSupplierLineId,
+    materialId: d.materialId,
+    materialLabel: [d.Material?.beNumber, d.Material?.name ?? d.Material?.shortDescription]
+      .filter(Boolean)
+      .join(' - '),
+    materialDemandId: d.materialDemandId,
     unitPrice: d.unitPrice?.toString() ?? null,
-    quantity: d.quantity,
-    totalCost: d.totalCost?.toString() ?? null,
-    status: d.status,
+    quantity: d.quantity ?? 0,
+    minQuantity: d.minQuantity,
+    lineStatus: d.lineStatus ?? 'OPEN',
     additionalInfo: d.additionalInfo,
-    updatedAt: d.updatedAt?.toISOString() ?? null,
+    createdAt: d.createdAt?.toISOString() ?? null,
     createdBy: d.createdBy,
     createdByName: `${d.Employee.firstName} ${d.Employee.lastName}`,
     deleted: d.deleted,

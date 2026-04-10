@@ -1,16 +1,14 @@
 import {z} from 'zod/v4'
 
 export const createPurchaseSchema = z.object({
-  orderNumber: z.string().max(255).nullable().optional(),
-  brandName: z.string().max(255).nullable().optional(),
-  brandOrderNumber: z.string().max(255).nullable().optional(),
-  purchaseDate: z.string().nullable().optional(),
-  status: z.string().max(255).nullable().optional(),
-  companyId: z.string().nullable().optional(),
-  projectId: z.string().nullable().optional(),
-  preferredSupplier: z.string().max(255).nullable().optional(),
+  purchaseNumber: z.string().max(255),
+  purchaseDate: z.string(),
+  status: z.string().max(50).optional(),
+  companyId: z.string(),
+  quoteSupplierId: z.string().nullable().optional(),
+  paymentConditionId: z.string().nullable().optional(),
   shortDescription: z.string().max(255).nullable().optional(),
-  description: z.string().max(255).nullable().optional(),
+  description: z.string().nullable().optional(),
   additionalInfo: z.string().max(255).nullable().optional(),
 })
 
@@ -22,12 +20,13 @@ export const purchaseIdSchema = z.object({id: z.string()})
 
 export const createPurchaseDetailSchema = z.object({
   purchaseId: z.string(),
-  projectId: z.string().nullable().optional(),
-  beNumber: z.string().max(255).nullable().optional(),
-  unitPrice: z.string().nullable().optional(),
-  quantity: z.number().int().nullable().optional(),
-  totalCost: z.string().nullable().optional(),
-  status: z.string().max(255).nullable().optional(),
+  quoteSupplierLineId: z.string().nullable().optional(),
+  materialId: z.string(),
+  materialDemandId: z.string().nullable().optional(),
+  unitPrice: z.union([z.string(), z.number()]),
+  quantity: z.number().int().min(1),
+  minQuantity: z.number().int().min(0).nullable().optional(),
+  lineStatus: z.string().max(50).optional(),
   additionalInfo: z.string().max(255).nullable().optional(),
 })
 

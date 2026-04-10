@@ -6,7 +6,11 @@ import {Plus, Pencil, Trash2} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
-import {PurchaseDetailFormDialog, type DetailOption} from '@/components/custom/purchaseDetailFormDialog'
+import {
+  PurchaseDetailFormDialog,
+  type DetailOption,
+  type QuoteLineOption,
+} from '@/components/custom/purchaseDetailFormDialog'
 import type {MappedPurchaseDetail} from '@/types/purchase'
 import {
   createPurchaseDetailAction,
@@ -18,7 +22,9 @@ import {
 interface PurchaseDetailTableProps {
   purchaseId: string
   initialDetails: MappedPurchaseDetail[]
-  projects: DetailOption[]
+  materialOptions: DetailOption[]
+  materialDemandOptions: DetailOption[]
+  quoteLineOptions: QuoteLineOption[]
   isAdmin: boolean
 }
 
@@ -35,17 +41,23 @@ function formatDate(iso: string | null | undefined) {
 }
 
 const STATUS_COLOR: Record<string, string> = {
-  Pending: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/30',
-  Ordered: 'bg-blue-500/10 text-blue-600 border-blue-500/30',
-  Delivered: 'bg-green-500/10 text-green-600 border-green-500/30',
-  Cancelled: 'bg-red-500/10 text-red-600 border-red-500/30',
-  'On Hold': 'bg-orange-500/10 text-orange-600 border-orange-500/30',
+  OPEN: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/30',
+  ORDERED: 'bg-blue-500/10 text-blue-600 border-blue-500/30',
+  RECEIVED: 'bg-green-500/10 text-green-600 border-green-500/30',
+  CANCELLED: 'bg-red-500/10 text-red-600 border-red-500/30',
 }
 
 const thClass = 'text-xs whitespace-nowrap'
 const tdClass = 'text-sm text-muted-foreground whitespace-nowrap'
 
-export function PurchaseDetailTable({purchaseId, initialDetails, projects, isAdmin}: PurchaseDetailTableProps) {
+export function PurchaseDetailTable({
+  purchaseId,
+  initialDetails,
+  materialOptions,
+  materialDemandOptions,
+  quoteLineOptions,
+  isAdmin,
+}: PurchaseDetailTableProps) {
   const router = useRouter()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<MappedPurchaseDetail | null>(null)
@@ -55,23 +67,25 @@ export function PurchaseDetailTable({purchaseId, initialDetails, projects, isAdm
       await updatePurchaseDetailAction({
         id: d.id,
         purchaseId,
-        projectId: d.projectId,
-        beNumber: d.beNumber,
-        unitPrice: d.unitPrice,
+        quoteSupplierLineId: d.quoteSupplierLineId,
+        materialId: d.materialId,
+        materialDemandId: d.materialDemandId,
+        unitPrice: d.unitPrice ?? '0.00',
         quantity: d.quantity,
-        totalCost: d.totalCost,
-        status: d.status,
+        minQuantity: d.minQuantity,
+        lineStatus: d.lineStatus,
         additionalInfo: d.additionalInfo,
       })
     } else {
       await createPurchaseDetailAction({
         purchaseId,
-        projectId: d.projectId,
-        beNumber: d.beNumber,
-        unitPrice: d.unitPrice,
+        quoteSupplierLineId: d.quoteSupplierLineId,
+        materialId: d.materialId,
+        materialDemandId: d.materialDemandId,
+        unitPrice: d.unitPrice ?? '0.00',
         quantity: d.quantity,
-        totalCost: d.totalCost,
-        status: d.status,
+        minQuantity: d.minQuantity,
+        lineStatus: d.lineStatus,
         additionalInfo: d.additionalInfo,
       })
     }
@@ -89,9 +103,12 @@ export function PurchaseDetailTable({purchaseId, initialDetails, projects, isAdm
   }
 
   const totalValue = initialDetails.reduce((sum, d) => {
-    const cost = d.totalCost != null ? parseFloat(d.totalCost) : 0
+    const unit = d.unitPrice != null ? parseFloat(d.unitPrice) : 0
+    const cost = unit * d.quantity
     return sum + (isNaN(cost) ? 0 : cost)
   }, 0)
+
+  const demandLabelById = new Map(materialDemandOptions.map(option => [option.id, option.name]))
 
   return (
     <div className="flex flex-col gap-4">
@@ -125,14 +142,14 @@ export function PurchaseDetailTable({purchaseId, initialDetails, projects, isAdm
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
-              <TableHead className={thClass}>BE Number</TableHead>
-              <TableHead className={thClass}>Project</TableHead>
+              <TableHead className={thClass}>Material</TableHead>
+              <TableHead className={thClass}>Demand</TableHead>
               <TableHead className={thClass}>Unit Price</TableHead>
               <TableHead className={thClass}>Qty</TableHead>
-              <TableHead className={thClass}>Total Cost</TableHead>
-              <TableHead className={thClass}>Status</TableHead>
+              <TableHead className={thClass}>Min Qty</TableHead>
+              <TableHead className={thClass}>Line Status</TableHead>
               <TableHead className={thClass}>Additional Info</TableHead>
-              <TableHead className={thClass}>Updated By</TableHead>
+              <TableHead className={thClass}>Created By</TableHead>
               <TableHead className="w-20">
                 <span className="sr-only">Actions</span>
               </TableHead>
@@ -148,33 +165,18 @@ export function PurchaseDetailTable({purchaseId, initialDetails, projects, isAdm
             ) : (
               initialDetails.map(d => (
                 <TableRow key={d.id} className="border-border/40 hover:bg-secondary/50">
-                  <TableCell className={`${tdClass} font-medium text-foreground`}>{d.beNumber ?? '—'}</TableCell>
+                  <TableCell className={`${tdClass} font-medium text-foreground`}>{d.materialLabel}</TableCell>
                   <TableCell className={tdClass}>
-                    {d.projectNumber ? (
-                      <div className="flex flex-col gap-0.5">
-                        <Badge
-                          variant="outline"
-                          className="border-border text-muted-foreground font-normal whitespace-nowrap w-fit">
-                          {d.projectNumber}
-                        </Badge>
-                        {d.projectName && (
-                          <span className="text-[11px] text-muted-foreground truncate max-w-[140px]">
-                            {d.projectName}
-                          </span>
-                        )}
-                      </div>
-                    ) : (
-                      '—'
-                    )}
+                    {d.materialDemandId ? demandLabelById.get(d.materialDemandId) ?? d.materialDemandId : '—'}
                   </TableCell>
                   <TableCell className={tdClass}>{formatCurrency(d.unitPrice)}</TableCell>
-                  <TableCell className={tdClass}>{d.quantity ?? '—'}</TableCell>
-                  <TableCell className={`${tdClass} font-medium`}>{formatCurrency(d.totalCost)}</TableCell>
+                  <TableCell className={tdClass}>{d.quantity}</TableCell>
+                  <TableCell className={tdClass}>{d.minQuantity ?? '—'}</TableCell>
                   <TableCell>
-                    {d.status ? (
+                    {d.lineStatus ? (
                       <Badge
-                        className={`border text-xs font-medium ${STATUS_COLOR[d.status] ?? 'bg-accent/10 text-accent border-0'}`}>
-                        {d.status}
+                        className={`border text-xs font-medium ${STATUS_COLOR[d.lineStatus] ?? 'bg-accent/10 text-accent border-0'}`}>
+                        {d.lineStatus}
                       </Badge>
                     ) : (
                       <span className="text-muted-foreground text-sm">—</span>
@@ -184,7 +186,7 @@ export function PurchaseDetailTable({purchaseId, initialDetails, projects, isAdm
                   <TableCell className={tdClass}>
                     <div className="flex flex-col gap-0.5">
                       <span className="text-foreground">{d.createdByName}</span>
-                      <span className="text-[11px] text-muted-foreground">{formatDate(d.updatedAt)}</span>
+                      <span className="text-[11px] text-muted-foreground">{formatDate(d.createdAt)}</span>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -220,7 +222,9 @@ export function PurchaseDetailTable({purchaseId, initialDetails, projects, isAdm
         onOpenChange={setDialogOpen}
         detail={editing}
         purchaseId={purchaseId}
-        projects={projects}
+        materialOptions={materialOptions}
+        materialDemandOptions={materialDemandOptions}
+        quoteLineOptions={quoteLineOptions}
         onSave={handleSave}
       />
     </div>

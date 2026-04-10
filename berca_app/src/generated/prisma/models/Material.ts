@@ -409,6 +409,7 @@ export type MaterialWhereInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineListRelationFilter
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryListRelationFilter
   Inventory_Inventory_beNumberToMaterial?: Prisma.XOR<Prisma.InventoryNullableScalarRelationFilter, Prisma.InventoryWhereInput> | null
+  InventoryOrder?: Prisma.InventoryOrderListRelationFilter
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
@@ -471,6 +472,7 @@ export type MaterialOrderByWithRelationInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineOrderByRelationAggregateInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryOrderByRelationAggregateInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryOrderByWithRelationInput
+  InventoryOrder?: Prisma.InventoryOrderOrderByRelationAggregateInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupOrderByWithRelationInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupOrderByWithRelationInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupOrderByWithRelationInput
@@ -537,6 +539,7 @@ export type MaterialWhereUniqueInput = Prisma.AtLeast<{
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineListRelationFilter
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryListRelationFilter
   Inventory_Inventory_beNumberToMaterial?: Prisma.XOR<Prisma.InventoryNullableScalarRelationFilter, Prisma.InventoryWhereInput> | null
+  InventoryOrder?: Prisma.InventoryOrderListRelationFilter
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
@@ -667,6 +670,7 @@ export type MaterialCreateInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -729,6 +733,7 @@ export type MaterialUncheckedCreateInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -771,6 +776,7 @@ export type MaterialUpdateInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -833,6 +839,7 @@ export type MaterialUncheckedUpdateInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -1232,6 +1239,20 @@ export type MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMateri
   upsert?: Prisma.MaterialUpsertWithoutInventory_Inventory_beNumberToMaterialInput
   connect?: Prisma.MaterialWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialUpdateToOneWithWhereWithoutInventory_Inventory_beNumberToMaterialInput, Prisma.MaterialUpdateWithoutInventory_Inventory_beNumberToMaterialInput>, Prisma.MaterialUncheckedUpdateWithoutInventory_Inventory_beNumberToMaterialInput>
+}
+
+export type MaterialCreateNestedOneWithoutInventoryOrderInput = {
+  create?: Prisma.XOR<Prisma.MaterialCreateWithoutInventoryOrderInput, Prisma.MaterialUncheckedCreateWithoutInventoryOrderInput>
+  connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutInventoryOrderInput
+  connect?: Prisma.MaterialWhereUniqueInput
+}
+
+export type MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialCreateWithoutInventoryOrderInput, Prisma.MaterialUncheckedCreateWithoutInventoryOrderInput>
+  connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutInventoryOrderInput
+  upsert?: Prisma.MaterialUpsertWithoutInventoryOrderInput
+  connect?: Prisma.MaterialWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialUpdateToOneWithWhereWithoutInventoryOrderInput, Prisma.MaterialUpdateWithoutInventoryOrderInput>, Prisma.MaterialUncheckedUpdateWithoutInventoryOrderInput>
 }
 
 export type NullableBoolFieldUpdateOperationsInput = {
@@ -1761,6 +1782,7 @@ export type MaterialCreateWithoutPreferredSupplierCompanyInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -1821,6 +1843,7 @@ export type MaterialUncheckedCreateWithoutPreferredSupplierCompanyInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -1928,6 +1951,7 @@ export type MaterialCreateWithoutEmployeeInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -1988,6 +2012,7 @@ export type MaterialUncheckedCreateWithoutEmployeeInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -2040,6 +2065,7 @@ export type MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -2100,6 +2126,7 @@ export type MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeI
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -2183,6 +2210,7 @@ export type MaterialCreateWithoutInventory_Inventory_materialIdToMaterialInput =
   deletedAt?: Date | string | null
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -2244,6 +2272,7 @@ export type MaterialUncheckedCreateWithoutInventory_Inventory_materialIdToMateri
   targetId: string
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -2290,6 +2319,7 @@ export type MaterialCreateWithoutInventory_Inventory_beNumberToMaterialInput = {
   deletedAt?: Date | string | null
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -2351,6 +2381,7 @@ export type MaterialUncheckedCreateWithoutInventory_Inventory_beNumberToMaterial
   targetId: string
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -2408,6 +2439,7 @@ export type MaterialUpdateWithoutInventory_Inventory_materialIdToMaterialInput =
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -2469,6 +2501,7 @@ export type MaterialUncheckedUpdateWithoutInventory_Inventory_materialIdToMateri
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -2521,6 +2554,7 @@ export type MaterialUpdateWithoutInventory_Inventory_beNumberToMaterialInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -2582,6 +2616,231 @@ export type MaterialUncheckedUpdateWithoutInventory_Inventory_beNumberToMaterial
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
+  MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
+  MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
+  MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
+  MaterialOther?: Prisma.MaterialOtherUncheckedUpdateManyWithoutMaterialNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialNestedInput
+  MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUncheckedUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
+  MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureUncheckedUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialNestedInput
+  MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutMaterialNestedInput
+  Product?: Prisma.ProductUncheckedUpdateManyWithoutMaterialNestedInput
+  ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutMaterialNestedInput
+  PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutMaterialNestedInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutMaterialNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutMaterialNestedInput
+}
+
+export type MaterialCreateWithoutInventoryOrderInput = {
+  id: string
+  beNumber?: string | null
+  name?: string | null
+  brandOrderNr?: string | null
+  shortDescription: string
+  longDescription?: string | null
+  preferredSupplier?: string | null
+  brandName?: string | null
+  rejected?: boolean | null
+  isSerialTracked?: boolean
+  longLeadTime?: boolean | null
+  hasAtex?: boolean
+  hasCE?: boolean
+  hasROHS?: boolean
+  hasDS?: boolean
+  hasDoc?: boolean
+  has3DCAD?: boolean
+  has2DCAD?: boolean
+  hasBDOC?: boolean
+  hasINSP?: boolean
+  partApproved?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
+  Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
+  Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
+  MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
+  MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
+  MaterialGroup_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdDToMaterialGroupInput
+  WarehousePlace?: Prisma.WarehousePlaceCreateNestedOneWithoutMaterialInput
+  Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
+  PreferredSupplierCompany?: Prisma.CompanyCreateNestedOneWithoutMaterial_Material_preferredSupplierCompanyIdToCompanyInput
+  Target: Prisma.TargetCreateNestedOneWithoutMaterialInput
+  MaterialDemand?: Prisma.MaterialDemandCreateNestedOneWithoutMaterialInput
+  MaterialLeadTime?: Prisma.MaterialLeadTimeCreateNestedOneWithoutMaterialInput
+  MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
+  MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialInput
+  MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
+  MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput
+  MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutMaterialInput
+  Product?: Prisma.ProductCreateNestedManyWithoutMaterialInput
+  ProjectBOMStructure?: Prisma.ProjectBOMStructureCreateNestedManyWithoutMaterialInput
+  PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutMaterialInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutMaterialInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutMaterialInput
+}
+
+export type MaterialUncheckedCreateWithoutInventoryOrderInput = {
+  id: string
+  beNumber?: string | null
+  name?: string | null
+  brandOrderNr?: string | null
+  shortDescription: string
+  longDescription?: string | null
+  preferredSupplier?: string | null
+  brandName?: string | null
+  warehousePlaceId?: string | null
+  rejected?: boolean | null
+  isSerialTracked?: boolean
+  materialGroupIdA?: string | null
+  materialGroupIdB?: string | null
+  materialGroupIdC?: string | null
+  materialGroupIdD?: string | null
+  preferredSupplierCompanyId?: string | null
+  unitId: string
+  longLeadTime?: boolean | null
+  hasAtex?: boolean
+  hasCE?: boolean
+  hasROHS?: boolean
+  hasDS?: boolean
+  hasDoc?: boolean
+  has3DCAD?: boolean
+  has2DCAD?: boolean
+  hasBDOC?: boolean
+  hasINSP?: boolean
+  partApproved?: boolean
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  targetId: string
+  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
+  Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
+  Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
+  MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
+  MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
+  MaterialOther?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutMaterialInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialInput
+  MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
+  MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput
+  MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutMaterialInput
+  Product?: Prisma.ProductUncheckedCreateNestedManyWithoutMaterialInput
+  ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutMaterialInput
+  PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutMaterialInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutMaterialInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutMaterialInput
+}
+
+export type MaterialCreateOrConnectWithoutInventoryOrderInput = {
+  where: Prisma.MaterialWhereUniqueInput
+  create: Prisma.XOR<Prisma.MaterialCreateWithoutInventoryOrderInput, Prisma.MaterialUncheckedCreateWithoutInventoryOrderInput>
+}
+
+export type MaterialUpsertWithoutInventoryOrderInput = {
+  update: Prisma.XOR<Prisma.MaterialUpdateWithoutInventoryOrderInput, Prisma.MaterialUncheckedUpdateWithoutInventoryOrderInput>
+  create: Prisma.XOR<Prisma.MaterialCreateWithoutInventoryOrderInput, Prisma.MaterialUncheckedCreateWithoutInventoryOrderInput>
+  where?: Prisma.MaterialWhereInput
+}
+
+export type MaterialUpdateToOneWithWhereWithoutInventoryOrderInput = {
+  where?: Prisma.MaterialWhereInput
+  data: Prisma.XOR<Prisma.MaterialUpdateWithoutInventoryOrderInput, Prisma.MaterialUncheckedUpdateWithoutInventoryOrderInput>
+}
+
+export type MaterialUpdateWithoutInventoryOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isSerialTracked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longLeadTime?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasAtex?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasCE?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasROHS?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasDS?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasDoc?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  has3DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
+  Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
+  Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
+  MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
+  MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
+  MaterialGroup_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdDToMaterialGroupNestedInput
+  WarehousePlace?: Prisma.WarehousePlaceUpdateOneWithoutMaterialNestedInput
+  Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
+  PreferredSupplierCompany?: Prisma.CompanyUpdateOneWithoutMaterial_Material_preferredSupplierCompanyIdToCompanyNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutMaterialNestedInput
+  MaterialDemand?: Prisma.MaterialDemandUpdateOneWithoutMaterialNestedInput
+  MaterialLeadTime?: Prisma.MaterialLeadTimeUpdateOneWithoutMaterialNestedInput
+  MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
+  MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialNestedInput
+  MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
+  MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialNestedInput
+  MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutMaterialNestedInput
+  Product?: Prisma.ProductUpdateManyWithoutMaterialNestedInput
+  ProjectBOMStructure?: Prisma.ProjectBOMStructureUpdateManyWithoutMaterialNestedInput
+  PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutMaterialNestedInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutMaterialNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutMaterialNestedInput
+}
+
+export type MaterialUncheckedUpdateWithoutInventoryOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isSerialTracked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialGroupIdA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialGroupIdB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialGroupIdC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialGroupIdD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplierCompanyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  longLeadTime?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  hasAtex?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasCE?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasROHS?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasDS?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasDoc?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  has3DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  has2DCAD?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasBDOC?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasINSP?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  partApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
+  Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
+  Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -2624,6 +2883,7 @@ export type MaterialCreateWithoutMaterialSupplierInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -2685,6 +2945,7 @@ export type MaterialUncheckedCreateWithoutMaterialSupplierInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -2742,6 +3003,7 @@ export type MaterialUpdateWithoutMaterialSupplierInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -2803,6 +3065,7 @@ export type MaterialUncheckedUpdateWithoutMaterialSupplierInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -2844,6 +3107,7 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdAToMateri
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdDToMaterialGroupInput
@@ -2904,6 +3168,7 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -2956,6 +3221,7 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdBToMateri
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdDToMaterialGroupInput
@@ -3016,6 +3282,7 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -3068,6 +3335,7 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdCToMateri
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdDToMaterialGroupInput
@@ -3128,6 +3396,7 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -3180,6 +3449,7 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdDToMateri
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -3240,6 +3510,7 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -3356,6 +3627,7 @@ export type MaterialCreateWithoutMaterialMovementInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -3417,6 +3689,7 @@ export type MaterialUncheckedCreateWithoutMaterialMovementInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutMaterialInput
@@ -3474,6 +3747,7 @@ export type MaterialUpdateWithoutMaterialMovementInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -3535,6 +3809,7 @@ export type MaterialUncheckedUpdateWithoutMaterialMovementInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUncheckedUpdateManyWithoutMaterialNestedInput
@@ -3576,6 +3851,7 @@ export type MaterialCreateWithoutMaterialOtherInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -3637,6 +3913,7 @@ export type MaterialUncheckedCreateWithoutMaterialOtherInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -3694,6 +3971,7 @@ export type MaterialUpdateWithoutMaterialOtherInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -3755,6 +4033,7 @@ export type MaterialUncheckedUpdateWithoutMaterialOtherInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -3796,6 +4075,7 @@ export type MaterialCreateWithoutMaterialSerialTrackInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -3857,6 +4137,7 @@ export type MaterialUncheckedCreateWithoutMaterialSerialTrackInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -3914,6 +4195,7 @@ export type MaterialUpdateWithoutMaterialSerialTrackInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -3975,6 +4257,7 @@ export type MaterialUncheckedUpdateWithoutMaterialSerialTrackInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -4016,6 +4299,7 @@ export type MaterialCreateWithoutMaterialStructure_MaterialStructure_materialIdT
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -4077,6 +4361,7 @@ export type MaterialUncheckedCreateWithoutMaterialStructure_MaterialStructure_ma
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -4123,6 +4408,7 @@ export type MaterialCreateWithoutMaterialStructure_MaterialStructure_beNumberToM
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -4184,6 +4470,7 @@ export type MaterialUncheckedCreateWithoutMaterialStructure_MaterialStructure_be
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -4241,6 +4528,7 @@ export type MaterialUpdateWithoutMaterialStructure_MaterialStructure_materialIdT
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -4302,6 +4590,7 @@ export type MaterialUncheckedUpdateWithoutMaterialStructure_MaterialStructure_ma
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -4354,6 +4643,7 @@ export type MaterialUpdateWithoutMaterialStructure_MaterialStructure_beNumberToM
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -4415,6 +4705,7 @@ export type MaterialUncheckedUpdateWithoutMaterialStructure_MaterialStructure_be
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -4456,6 +4747,7 @@ export type MaterialCreateWithoutProductInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -4517,6 +4809,7 @@ export type MaterialUncheckedCreateWithoutProductInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -4574,6 +4867,7 @@ export type MaterialUpdateWithoutProductInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -4635,6 +4929,7 @@ export type MaterialUncheckedUpdateWithoutProductInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -4676,6 +4971,7 @@ export type MaterialCreateWithoutTargetInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -4736,6 +5032,7 @@ export type MaterialUncheckedCreateWithoutTargetInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -4804,6 +5101,7 @@ export type MaterialCreateWithoutUnitInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -4864,6 +5162,7 @@ export type MaterialUncheckedCreateWithoutUnitInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -4932,6 +5231,7 @@ export type MaterialCreateWithoutWarehousePlaceInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -4992,6 +5292,7 @@ export type MaterialUncheckedCreateWithoutWarehousePlaceInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -5060,6 +5361,7 @@ export type MaterialCreateWithoutWorkOrderStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -5121,6 +5423,7 @@ export type MaterialUncheckedCreateWithoutWorkOrderStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -5178,6 +5481,7 @@ export type MaterialUpdateWithoutWorkOrderStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -5239,6 +5543,7 @@ export type MaterialUncheckedUpdateWithoutWorkOrderStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -5280,6 +5585,7 @@ export type MaterialCreateWithoutMaterialLeadTimeInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -5341,6 +5647,7 @@ export type MaterialUncheckedCreateWithoutMaterialLeadTimeInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutMaterialInput
@@ -5398,6 +5705,7 @@ export type MaterialUpdateWithoutMaterialLeadTimeInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -5459,6 +5767,7 @@ export type MaterialUncheckedUpdateWithoutMaterialLeadTimeInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUncheckedUpdateManyWithoutMaterialNestedInput
@@ -5500,6 +5809,7 @@ export type MaterialCreateWithoutProjectBOMStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -5561,6 +5871,7 @@ export type MaterialUncheckedCreateWithoutProjectBOMStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -5618,6 +5929,7 @@ export type MaterialUpdateWithoutProjectBOMStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -5679,6 +5991,7 @@ export type MaterialUncheckedUpdateWithoutProjectBOMStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -5720,6 +6033,7 @@ export type MaterialCreateWithoutPurchaseBOMStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -5781,6 +6095,7 @@ export type MaterialUncheckedCreateWithoutPurchaseBOMStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -5838,6 +6153,7 @@ export type MaterialUpdateWithoutPurchaseBOMStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -5899,6 +6215,7 @@ export type MaterialUncheckedUpdateWithoutPurchaseBOMStructureInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -5940,6 +6257,7 @@ export type MaterialCreateWithoutMaterialDemandInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -6001,6 +6319,7 @@ export type MaterialUncheckedCreateWithoutMaterialDemandInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutMaterialInput
@@ -6058,6 +6377,7 @@ export type MaterialUpdateWithoutMaterialDemandInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -6119,6 +6439,7 @@ export type MaterialUncheckedUpdateWithoutMaterialDemandInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUncheckedUpdateManyWithoutMaterialNestedInput
@@ -6160,6 +6481,7 @@ export type MaterialCreateWithoutQuoteSupplierLineInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -6221,6 +6543,7 @@ export type MaterialUncheckedCreateWithoutQuoteSupplierLineInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutMaterialInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -6278,6 +6601,7 @@ export type MaterialUpdateWithoutQuoteSupplierLineInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -6339,6 +6663,7 @@ export type MaterialUncheckedUpdateWithoutQuoteSupplierLineInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -6379,6 +6704,7 @@ export type MaterialCreateWithoutIncomingDeliveryLineInput = {
   deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutMaterialInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput
@@ -6440,6 +6766,7 @@ export type MaterialUncheckedCreateWithoutIncomingDeliveryLineInput = {
   targetId: string
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutMaterialInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedCreateNestedOneWithoutMaterialInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedCreateNestedOneWithoutMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -6497,6 +6824,7 @@ export type MaterialUpdateWithoutIncomingDeliveryLineInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -6558,6 +6886,7 @@ export type MaterialUncheckedUpdateWithoutIncomingDeliveryLineInput = {
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -6635,6 +6964,7 @@ export type MaterialUpdateWithoutPreferredSupplierCompanyInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -6695,6 +7025,7 @@ export type MaterialUncheckedUpdateWithoutPreferredSupplierCompanyInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -6842,6 +7173,7 @@ export type MaterialUpdateWithoutEmployeeInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -6902,6 +7234,7 @@ export type MaterialUncheckedUpdateWithoutEmployeeInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -6979,6 +7312,7 @@ export type MaterialUpdateWithoutEmployee_Material_deletedByToEmployeeInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -7039,6 +7373,7 @@ export type MaterialUncheckedUpdateWithoutEmployee_Material_deletedByToEmployeeI
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -7256,6 +7591,7 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdAToMateri
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdDToMaterialGroupNestedInput
@@ -7316,6 +7652,7 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -7393,6 +7730,7 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdBToMateri
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdDToMaterialGroupNestedInput
@@ -7453,6 +7791,7 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -7530,6 +7869,7 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdCToMateri
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdDToMaterialGroupNestedInput
@@ -7590,6 +7930,7 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -7667,6 +8008,7 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdDToMateri
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -7727,6 +8069,7 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -7839,6 +8182,7 @@ export type MaterialUpdateWithoutTargetInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -7899,6 +8243,7 @@ export type MaterialUncheckedUpdateWithoutTargetInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -8011,6 +8356,7 @@ export type MaterialUpdateWithoutUnitInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -8071,6 +8417,7 @@ export type MaterialUncheckedUpdateWithoutUnitInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -8183,6 +8530,7 @@ export type MaterialUpdateWithoutWarehousePlaceInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutMaterialNestedInput
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdAToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdBToMaterialGroupNestedInput
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterial_Material_materialGroupIdCToMaterialGroupNestedInput
@@ -8243,6 +8591,7 @@ export type MaterialUncheckedUpdateWithoutWarehousePlaceInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialNestedInput
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialDemand?: Prisma.MaterialDemandUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialLeadTime?: Prisma.MaterialLeadTimeUncheckedUpdateOneWithoutMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -8301,6 +8650,7 @@ export type MaterialUncheckedUpdateManyWithoutWarehousePlaceInput = {
 export type MaterialCountOutputType = {
   IncomingDeliveryLine: number
   Inventory_Inventory_materialIdToMaterial: number
+  InventoryOrder: number
   MaterialMovement: number
   MaterialOther: number
   MaterialSerialTrack: number
@@ -8317,6 +8667,7 @@ export type MaterialCountOutputType = {
 export type MaterialCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   IncomingDeliveryLine?: boolean | MaterialCountOutputTypeCountIncomingDeliveryLineArgs
   Inventory_Inventory_materialIdToMaterial?: boolean | MaterialCountOutputTypeCountInventory_Inventory_materialIdToMaterialArgs
+  InventoryOrder?: boolean | MaterialCountOutputTypeCountInventoryOrderArgs
   MaterialMovement?: boolean | MaterialCountOutputTypeCountMaterialMovementArgs
   MaterialOther?: boolean | MaterialCountOutputTypeCountMaterialOtherArgs
   MaterialSerialTrack?: boolean | MaterialCountOutputTypeCountMaterialSerialTrackArgs
@@ -8352,6 +8703,13 @@ export type MaterialCountOutputTypeCountIncomingDeliveryLineArgs<ExtArgs extends
  */
 export type MaterialCountOutputTypeCountInventory_Inventory_materialIdToMaterialArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.InventoryWhereInput
+}
+
+/**
+ * MaterialCountOutputType without action
+ */
+export type MaterialCountOutputTypeCountInventoryOrderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InventoryOrderWhereInput
 }
 
 /**
@@ -8469,6 +8827,7 @@ export type MaterialSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   IncomingDeliveryLine?: boolean | Prisma.Material$IncomingDeliveryLineArgs<ExtArgs>
   Inventory_Inventory_materialIdToMaterial?: boolean | Prisma.Material$Inventory_Inventory_materialIdToMaterialArgs<ExtArgs>
   Inventory_Inventory_beNumberToMaterial?: boolean | Prisma.Material$Inventory_Inventory_beNumberToMaterialArgs<ExtArgs>
+  InventoryOrder?: boolean | Prisma.Material$InventoryOrderArgs<ExtArgs>
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: boolean | Prisma.Material$MaterialGroup_Material_materialGroupIdAToMaterialGroupArgs<ExtArgs>
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: boolean | Prisma.Material$MaterialGroup_Material_materialGroupIdBToMaterialGroupArgs<ExtArgs>
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: boolean | Prisma.Material$MaterialGroup_Material_materialGroupIdCToMaterialGroupArgs<ExtArgs>
@@ -8538,6 +8897,7 @@ export type MaterialInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   IncomingDeliveryLine?: boolean | Prisma.Material$IncomingDeliveryLineArgs<ExtArgs>
   Inventory_Inventory_materialIdToMaterial?: boolean | Prisma.Material$Inventory_Inventory_materialIdToMaterialArgs<ExtArgs>
   Inventory_Inventory_beNumberToMaterial?: boolean | Prisma.Material$Inventory_Inventory_beNumberToMaterialArgs<ExtArgs>
+  InventoryOrder?: boolean | Prisma.Material$InventoryOrderArgs<ExtArgs>
   MaterialGroup_Material_materialGroupIdAToMaterialGroup?: boolean | Prisma.Material$MaterialGroup_Material_materialGroupIdAToMaterialGroupArgs<ExtArgs>
   MaterialGroup_Material_materialGroupIdBToMaterialGroup?: boolean | Prisma.Material$MaterialGroup_Material_materialGroupIdBToMaterialGroupArgs<ExtArgs>
   MaterialGroup_Material_materialGroupIdCToMaterialGroup?: boolean | Prisma.Material$MaterialGroup_Material_materialGroupIdCToMaterialGroupArgs<ExtArgs>
@@ -8570,6 +8930,7 @@ export type $MaterialPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     IncomingDeliveryLine: Prisma.$IncomingDeliveryLinePayload<ExtArgs>[]
     Inventory_Inventory_materialIdToMaterial: Prisma.$InventoryPayload<ExtArgs>[]
     Inventory_Inventory_beNumberToMaterial: Prisma.$InventoryPayload<ExtArgs> | null
+    InventoryOrder: Prisma.$InventoryOrderPayload<ExtArgs>[]
     MaterialGroup_Material_materialGroupIdAToMaterialGroup: Prisma.$MaterialGroupPayload<ExtArgs> | null
     MaterialGroup_Material_materialGroupIdBToMaterialGroup: Prisma.$MaterialGroupPayload<ExtArgs> | null
     MaterialGroup_Material_materialGroupIdCToMaterialGroup: Prisma.$MaterialGroupPayload<ExtArgs> | null
@@ -8971,6 +9332,7 @@ export interface Prisma__MaterialClient<T, Null = never, ExtArgs extends runtime
   IncomingDeliveryLine<T extends Prisma.Material$IncomingDeliveryLineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$IncomingDeliveryLineArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncomingDeliveryLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Inventory_Inventory_materialIdToMaterial<T extends Prisma.Material$Inventory_Inventory_materialIdToMaterialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$Inventory_Inventory_materialIdToMaterialArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Inventory_Inventory_beNumberToMaterial<T extends Prisma.Material$Inventory_Inventory_beNumberToMaterialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$Inventory_Inventory_beNumberToMaterialArgs<ExtArgs>>): Prisma.Prisma__InventoryClient<runtime.Types.Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  InventoryOrder<T extends Prisma.Material$InventoryOrderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$InventoryOrderArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MaterialGroup_Material_materialGroupIdAToMaterialGroup<T extends Prisma.Material$MaterialGroup_Material_materialGroupIdAToMaterialGroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$MaterialGroup_Material_materialGroupIdAToMaterialGroupArgs<ExtArgs>>): Prisma.Prisma__MaterialGroupClient<runtime.Types.Result.GetResult<Prisma.$MaterialGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   MaterialGroup_Material_materialGroupIdBToMaterialGroup<T extends Prisma.Material$MaterialGroup_Material_materialGroupIdBToMaterialGroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$MaterialGroup_Material_materialGroupIdBToMaterialGroupArgs<ExtArgs>>): Prisma.Prisma__MaterialGroupClient<runtime.Types.Result.GetResult<Prisma.$MaterialGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   MaterialGroup_Material_materialGroupIdCToMaterialGroup<T extends Prisma.Material$MaterialGroup_Material_materialGroupIdCToMaterialGroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$MaterialGroup_Material_materialGroupIdCToMaterialGroupArgs<ExtArgs>>): Prisma.Prisma__MaterialGroupClient<runtime.Types.Result.GetResult<Prisma.$MaterialGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -9463,6 +9825,30 @@ export type Material$Inventory_Inventory_beNumberToMaterialArgs<ExtArgs extends 
    */
   include?: Prisma.InventoryInclude<ExtArgs> | null
   where?: Prisma.InventoryWhereInput
+}
+
+/**
+ * Material.InventoryOrder
+ */
+export type Material$InventoryOrderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InventoryOrder
+   */
+  select?: Prisma.InventoryOrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InventoryOrder
+   */
+  omit?: Prisma.InventoryOrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryOrderInclude<ExtArgs> | null
+  where?: Prisma.InventoryOrderWhereInput
+  orderBy?: Prisma.InventoryOrderOrderByWithRelationInput | Prisma.InventoryOrderOrderByWithRelationInput[]
+  cursor?: Prisma.InventoryOrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InventoryOrderScalarFieldEnum | Prisma.InventoryOrderScalarFieldEnum[]
 }
 
 /**

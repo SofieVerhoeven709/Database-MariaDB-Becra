@@ -19,3 +19,8 @@ export const updateMaterialDemandSchema = materialDemandSchema.pick({
   reservedQty: true,
 })
 
+export const removeMaterialDemandSourceSchema = z.object({
+  materialDemandId: z.string(),
+  sourceId: z.string(),
+})
+

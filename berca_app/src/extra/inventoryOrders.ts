@@ -5,16 +5,18 @@ type InventoryOrderWithRelations = Prisma.InventoryOrderGetPayload<{
   include: {
     Employee: {select: {id: true; firstName: true; lastName: true}}
     Employee_InventoryOrder_approvedByToEmployee: {select: {id: true; firstName: true; lastName: true}}
-    Inventory: {select: {id: true; beNumber: true; shortDescription: true}}
+    Employee_InventoryOrder_rejectedByToEmployee: {select: {id: true; firstName: true; lastName: true}}
+    Employee_InventoryOrder_deletedByToEmployee: {select: {id: true; firstName: true; lastName: true}}
+    Material: {select: {id: true; beNumber: true; shortDescription: true}}
   }
 }>
 
 export function mapInventoryOrder(o: InventoryOrderWithRelations): MappedInventoryOrder {
   return {
     id: o.id,
-    inventoryId: o.inventoryId,
-    inventoryBeNumber: o.Inventory.beNumber ?? null,
-    inventoryDescription: o.Inventory.shortDescription ?? null,
+    materialId: o.materialId,
+    inventoryBeNumber: o.Material.beNumber ?? null,
+    inventoryDescription: o.Material.shortDescription ?? null,
     orderNumber: o.orderNumber,
     requestedQty: o.requestedQty ?? 1,
     orderDate: o.orderDate.toISOString(),
@@ -29,9 +31,18 @@ export function mapInventoryOrder(o: InventoryOrderWithRelations): MappedInvento
     approvedByName: o.Employee_InventoryOrder_approvedByToEmployee
       ? `${o.Employee_InventoryOrder_approvedByToEmployee.firstName} ${o.Employee_InventoryOrder_approvedByToEmployee.lastName}`
       : null,
+    rejected: o.rejected ?? false,
+    rejectedAt: o.rejectedAt?.toISOString() ?? null,
+    rejectedBy: o.rejectedBy ?? null,
+    rejectedByName: o.Employee_InventoryOrder_rejectedByToEmployee
+      ? `${o.Employee_InventoryOrder_rejectedByToEmployee.firstName} ${o.Employee_InventoryOrder_rejectedByToEmployee.lastName}`
+      : null,
     deleted: o.deleted,
     deletedAt: o.deletedAt?.toISOString() ?? null,
     deletedBy: o.deletedBy ?? null,
+    deletedByName: o.Employee_InventoryOrder_deletedByToEmployee
+      ? `${o.Employee_InventoryOrder_deletedByToEmployee.firstName} ${o.Employee_InventoryOrder_deletedByToEmployee.lastName}`
+      : null,
   }
 }
 

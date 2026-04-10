@@ -587,7 +587,6 @@ export type InventoryChangeScalarFieldEnum = (typeof InventoryChangeScalarFieldE
 
 export const InventoryOrderScalarFieldEnum = {
   id: 'id',
-  inventoryId: 'inventoryId',
   orderNumber: 'orderNumber',
   requestedQty: 'requestedQty',
   orderDate: 'orderDate',
@@ -600,7 +599,11 @@ export const InventoryOrderScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  rejected: 'rejected',
+  rejectedAt: 'rejectedAt',
+  rejectedBy: 'rejectedBy',
+  materialId: 'materialId'
 } as const
 
 export type InventoryOrderScalarFieldEnum = (typeof InventoryOrderScalarFieldEnum)[keyof typeof InventoryOrderScalarFieldEnum]
@@ -2412,13 +2415,14 @@ export type InventoryChangeOrderByRelevanceFieldEnum = (typeof InventoryChangeOr
 
 export const InventoryOrderOrderByRelevanceFieldEnum = {
   id: 'id',
-  inventoryId: 'inventoryId',
   orderNumber: 'orderNumber',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   approvedBy: 'approvedBy',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  rejectedBy: 'rejectedBy',
+  materialId: 'materialId'
 } as const
 
 export type InventoryOrderOrderByRelevanceFieldEnum = (typeof InventoryOrderOrderByRelevanceFieldEnum)[keyof typeof InventoryOrderOrderByRelevanceFieldEnum]

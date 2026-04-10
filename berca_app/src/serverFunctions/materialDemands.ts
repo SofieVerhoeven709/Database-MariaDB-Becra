@@ -3,7 +3,11 @@
 import {revalidatePath} from 'next/cache'
 import {prismaClient} from '@/dal/prismaClient'
 import {protectedServerFunction} from '@/lib/serverFunctions'
-import {createMaterialDemandSchema, updateMaterialDemandSchema} from '@/schemas/materialDemandSchemas'
+import {
+  createMaterialDemandSchema,
+  updateMaterialDemandSchema,
+  removeMaterialDemandSourceSchema,
+} from '@/schemas/materialDemandSchemas'
 
 const REVALIDATE_PATH = '/departments/purchasing/materialDemand'
 
@@ -87,6 +91,76 @@ export const updateMaterialDemandAction = protectedServerFunction({
     })
 
     logger.info(`Material demand updated: ${data.id}`)
+    revalidatePath(REVALIDATE_PATH)
+  },
+})
+
+export const removeMaterialDemandSourceAction = protectedServerFunction({
+  schema: removeMaterialDemandSourceSchema,
+  functionName: 'Remove material demand source action',
+  serverFn: async ({data, logger, profile}) => {
+    const isManagerOrAdmin = profile.RoleLevelEmployee.some(
+      rle => rle.RoleLevel.Role.name === 'Administrator' || rle.RoleLevel.SubRole.level >= 80,
+    )
+
+    if (!isManagerOrAdmin) {
+      throw new Error('Only managers can remove source lines.')
+    }
+
+    await prismaClient.$transaction(async tx => {
+      const source = await tx.materialDemandSource.findFirst({
+        where: {
+          id: data.sourceId,
+          materialDemandId: data.materialDemandId,
+        },
+        select: {
+          id: true,
+          materialDemandId: true,
+          requiredQty: true,
+          reservedQty: true,
+        },
+      })
+
+      if (!source) {
+        throw new Error('Source line not found.')
+      }
+
+      const demand = await tx.materialDemand.findUnique({
+        where: {id: data.materialDemandId},
+        select: {
+          id: true,
+          totalRequiredQty: true,
+          QuoteSupplierLine: {
+            where: {selected: true},
+            select: {quantity: true},
+          },
+        },
+      })
+
+      if (!demand) {
+        throw new Error('Material demand row not found.')
+      }
+
+      const selectedQty = demand.QuoteSupplierLine.reduce((sum, line) => sum + line.quantity, 0)
+      const nextTotalRequiredQty = Math.max(demand.totalRequiredQty - source.requiredQty, 0)
+
+      if (selectedQty > nextTotalRequiredQty) {
+        throw new Error(
+          `Cannot remove this source line. Selected quote quantity (${selectedQty}) would exceed required quantity (${nextTotalRequiredQty}).`,
+        )
+      }
+
+      await tx.materialDemandSource.delete({where: {id: source.id}})
+      await tx.materialDemand.update({
+        where: {id: data.materialDemandId},
+        data: {
+          totalRequiredQty: nextTotalRequiredQty,
+          reservedQty: selectedQty,
+        },
+      })
+    })
+
+    logger.info(`Material demand source removed: ${data.sourceId}`)
     revalidatePath(REVALIDATE_PATH)
   },
 })

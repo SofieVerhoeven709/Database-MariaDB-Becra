@@ -1,6 +1,8 @@
 import type {Prisma} from '@/generated/prisma/client'
 import type {MappedMaterialDemand} from '@/types/materialDemand'
 
+type SourceLabelMap = Record<string, string>
+
 type MaterialDemandWithRelations = Prisma.MaterialDemandGetPayload<{
   include: {
     Material: {
@@ -9,6 +11,25 @@ type MaterialDemandWithRelations = Prisma.MaterialDemandGetPayload<{
         beNumber: true
         name: true
         shortDescription: true
+        InventoryOrder: {
+          where: {deleted: false}
+          select: {
+            id: true
+            approved: true
+            shortDescription: true
+          }
+        }
+        MaterialSupplier: {
+          select: {
+            companyId: true
+            Company: {
+              select: {
+                supplier: true
+                deleted: true
+              }
+            }
+          }
+        }
         Inventory_Inventory_materialIdToMaterial: {
           where: {deleted: false}
           orderBy: [{quantityInStock: 'asc'}, {createdAt: 'asc'}]
@@ -16,12 +37,24 @@ type MaterialDemandWithRelations = Prisma.MaterialDemandGetPayload<{
             id: true
             quantityInStock: true
             minQuantityInStock: true
-            InventoryOrder: {where: {deleted: false}, select: {id: true}}
           }
         }
       }
     }
-    MaterialDemandSource: {select: {id: true}}
+    MaterialDemandSource: {
+      select: {
+        id: true
+        sourceReferenceId: true
+        requiredQty: true
+        reservedQty: true
+        createdAt: true
+        MaterialDemandSourceType: {
+          select: {
+            name: true
+          }
+        }
+      }
+    }
     QuoteSupplierLine: {
       select: {
         id: true
@@ -78,13 +111,31 @@ function compareBestQuoteCandidate(
   return bValid - aValid
 }
 
-export function mapMaterialDemand(row: MaterialDemandWithRelations): MappedMaterialDemand {
+function isLowStockInventoryOrder(order: {shortDescription: string | null | undefined}) {
+  return (order.shortDescription ?? '').toLowerCase().startsWith('low-stock request for')
+}
+
+function sourceLabelKey(sourceTypeName: string, sourceReferenceId: string | null) {
+  if (!sourceReferenceId) return null
+  return `${sourceTypeName.toLowerCase()}:${sourceReferenceId}`
+}
+
+export function mapMaterialDemand(row: MaterialDemandWithRelations, sourceLabels: SourceLabelMap = {}): MappedMaterialDemand {
   const inventories = row.Material.Inventory_Inventory_materialIdToMaterial
   const stockQuantity = inventories.reduce((sum, inv) => sum + inv.quantityInStock, 0)
-  const minimumStockQuantity = inventories.reduce((sum, inv) => sum + inv.minQuantityInStock, 0)
-  const requestInventory = inventories[0] ?? null
-  const pendingRequestCount = inventories.reduce((sum, inv) => sum + inv.InventoryOrder.length, 0)
+  const minimumStockQuantity = inventories.reduce((sum, inv) => sum + (inv.minQuantityInStock ?? 0), 0)
+  const hasMinimumStock = inventories.some(inv => (inv.minQuantityInStock ?? 0) > 0)
+  const lowStockOrders = row.Material.InventoryOrder.filter(isLowStockInventoryOrder)
+  const existingLowStockRequestCount = lowStockOrders.length
+  const approvedLowStockRequestCount = lowStockOrders.reduce(
+    (sum, order) => sum + (order.approved ? 1 : 0),
+    0,
+  )
+  const pendingLowStockRequestCount = Math.max(existingLowStockRequestCount - approvedLowStockRequestCount, 0)
   const suggestedRequestQty = Math.max(minimumStockQuantity - stockQuantity, 1)
+  const eligibleSupplierCompanyIds = row.Material.MaterialSupplier
+    .filter(link => link.Company.supplier && !link.Company.deleted)
+    .map(link => link.companyId)
 
   const quoteOptions = row.QuoteSupplierLine.map(line => {
     const isCurrentlyValid = isDateStillValid(line.QuoteSupplier.validUntil)
@@ -115,6 +166,19 @@ export function mapMaterialDemand(row: MaterialDemandWithRelations): MappedMater
     }
   }).sort((a, b) => compareBestQuoteCandidate(a, b))
 
+  const sources = row.MaterialDemandSource.map(source => {
+    const key = sourceLabelKey(source.MaterialDemandSourceType.name, source.sourceReferenceId)
+    return {
+      id: source.id,
+      sourceTypeName: source.MaterialDemandSourceType.name,
+      sourceReferenceId: source.sourceReferenceId,
+      sourceReferenceLabel: key ? (sourceLabels[key] ?? source.sourceReferenceId ?? '—') : '—',
+      requiredQty: source.requiredQty,
+      reservedQty: source.reservedQty ?? 0,
+      createdAt: source.createdAt.toISOString(),
+    }
+  })
+
   const bestOption = quoteOptions.find(option => option.isEligibleForBest) ?? null
 
   return {
@@ -125,14 +189,19 @@ export function mapMaterialDemand(row: MaterialDemandWithRelations): MappedMater
     materialShortDescription: row.Material.shortDescription,
     stockQuantity,
     minimumStockQuantity,
-    isLowStock: stockQuantity <= minimumStockQuantity,
-    requestInventoryId: requestInventory?.id ?? null,
+    hasMinimumStock,
+    isLowStock: hasMinimumStock && stockQuantity <= minimumStockQuantity,
+    requestInventoryId: null,
     suggestedRequestQty,
-    pendingRequestCount,
+    pendingLowStockRequestCount,
+    existingLowStockRequestCount,
+    approvedLowStockRequestCount,
+    eligibleSupplierCompanyIds,
     totalRequiredQty: row.totalRequiredQty,
     reservedQty: row.reservedQty ?? 0,
     createdAt: row.createdAt.toISOString(),
-    sourceCount: row.MaterialDemandSource.length,
+    sourceCount: sources.length,
+    sources,
     quoteLineCount: row.QuoteSupplierLine.length,
     selectedQuoteLineIds: quoteOptions.filter(option => option.selected).map(option => option.id),
     bestQuoteLineId: bestOption?.id ?? null,

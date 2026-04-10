@@ -11,7 +11,7 @@ import type {MappedInventoryOrder} from '@/types/inventoryOrder'
 
 export interface InventoryOption {
   id: string
-  beNumber: string
+  beNumber: string | null
   shortDescription: string
 }
 
@@ -25,29 +25,43 @@ interface Props {
 
 function empty(): MappedInventoryOrder {
   return {
-    id: '', inventoryId: '', inventoryBeNumber: null, inventoryDescription: null,
+    id: '', materialId: '', inventoryBeNumber: null, inventoryDescription: null,
     orderNumber: '', requestedQty: 1, orderDate: new Date().toISOString().split('T')[0],
     shortDescription: '', longDescription: null,
     createdAt: '', createdBy: '', createdByName: '',
     approved: false, approvedAt: null, approvedBy: null, approvedByName: null,
-    deleted: false, deletedAt: null, deletedBy: null,
+    rejected: false, rejectedAt: null, rejectedBy: null, rejectedByName: null,
+    deleted: false, deletedAt: null, deletedBy: null, deletedByName: null,
   }
 }
 
 export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories, onSave}: Props) {
   const [form, setForm] = useState<MappedInventoryOrder>(empty())
   const [saving, setSaving] = useState(false)
+  const [materialSearch, setMaterialSearch] = useState('')
 
   useEffect(() => {
-    if (open) setForm(entry ?? empty())
+    if (open) {
+      setForm(entry ?? empty())
+      setMaterialSearch('')
+    }
   }, [open, entry])
+
+  const filteredInventories = inventories.filter(i => {
+    if (!materialSearch) return true
+    const q = materialSearch.toLowerCase()
+    return (
+      (i.beNumber ?? '').toLowerCase().includes(q) ||
+      (i.shortDescription ?? '').toLowerCase().includes(q)
+    )
+  })
 
   function set<K extends keyof MappedInventoryOrder>(key: K, value: MappedInventoryOrder[K]) {
     setForm(prev => ({...prev, [key]: value}))
   }
 
   async function handleSubmit() {
-    if (!form.inventoryId || !form.orderNumber.trim() || !form.requestedQty || form.requestedQty < 1 || !form.orderDate || !form.shortDescription.trim()) {
+    if (!form.materialId || !form.orderNumber.trim() || !form.requestedQty || form.requestedQty < 1 || !form.orderDate || !form.shortDescription.trim()) {
       return
     }
     setSaving(true)
@@ -60,7 +74,7 @@ export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories
   }
 
   const canSubmit = Boolean(
-    form.inventoryId && form.orderNumber.trim() && form.requestedQty >= 1 && form.orderDate && form.shortDescription.trim()
+    form.materialId && form.orderNumber.trim() && form.requestedQty >= 1 && form.orderDate && form.shortDescription.trim()
   )
 
   return (
@@ -73,15 +87,25 @@ export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories
         <div className="grid gap-4 py-2">
           <div className="grid gap-1.5">
             <Label>Inventory Item</Label>
-            <Select value={form.inventoryId || '__none__'} onValueChange={v => set('inventoryId', v === '__none__' ? '' : v)}>
+            <Input
+              value={materialSearch}
+              onChange={e => setMaterialSearch(e.target.value)}
+              placeholder="Search by number or name..."
+              className="bg-secondary border-border"
+            />
+            <Select value={form.materialId || '__none__'} onValueChange={v => set('materialId', v === '__none__' ? '' : v)}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select inventory item" />
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
                 <SelectItem value="__none__">— Select item —</SelectItem>
-                {inventories.map(i => (
-                  <SelectItem key={i.id} value={i.id}>{i.beNumber} – {i.shortDescription}</SelectItem>
-                ))}
+                {filteredInventories.length === 0 ? (
+                  <SelectItem value="__no_results__" disabled>No matching materials found</SelectItem>
+                ) : (
+                  filteredInventories.map(i => (
+                    <SelectItem key={i.id} value={i.id}>{i.beNumber ?? '—'} – {i.shortDescription}</SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
           </div>

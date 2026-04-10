@@ -9,6 +9,21 @@ const materialDemandInclude = {
       beNumber: true,
       name: true,
       shortDescription: true,
+      InventoryOrder: {
+        where: {deleted: false},
+        select: {id: true, approved: true, shortDescription: true},
+      },
+      MaterialSupplier: {
+        select: {
+          companyId: true,
+          Company: {
+            select: {
+              supplier: true,
+              deleted: true,
+            },
+          },
+        },
+      },
       Inventory_Inventory_materialIdToMaterial: {
         where: {deleted: false},
         orderBy: {quantityInStock: 'asc'},
@@ -16,15 +31,25 @@ const materialDemandInclude = {
           id: true,
           quantityInStock: true,
           minQuantityInStock: true,
-          InventoryOrder: {
-            where: {deleted: false, approved: false},
-            select: {id: true},
-          },
         },
       },
     },
   },
-  MaterialDemandSource: {select: {id: true}},
+  MaterialDemandSource: {
+    select: {
+      id: true,
+      sourceReferenceId: true,
+      requiredQty: true,
+      reservedQty: true,
+      createdAt: true,
+      MaterialDemandSourceType: {
+        select: {
+          name: true,
+        },
+      },
+    },
+    orderBy: {createdAt: 'desc'},
+  },
   QuoteSupplierLine: {
     select: {
       id: true,
@@ -59,6 +84,55 @@ export async function getMaterialDemands() {
     include: materialDemandInclude,
     orderBy: [{Material: {beNumber: 'asc'}}, {createdAt: 'desc'}],
   })
+}
+
+export async function getMaterialDemandSourceReferenceLabels(
+  entries: Array<{sourceTypeName: string; sourceReferenceId: string | null}>,
+) {
+  const labels: Record<string, string> = {}
+  const inventoryOrderIds = new Set<string>()
+  const projectStructureIds = new Set<string>()
+
+  for (const entry of entries) {
+    if (!entry.sourceReferenceId) continue
+    const typeName = (entry.sourceTypeName ?? '').toLowerCase()
+    if (typeName === 'inventoryorder') {
+      inventoryOrderIds.add(entry.sourceReferenceId)
+    } else if (typeName === 'projectbomstructure') {
+      projectStructureIds.add(entry.sourceReferenceId)
+    }
+  }
+
+  if (inventoryOrderIds.size > 0) {
+    const inventoryOrders = await prismaClient.inventoryOrder.findMany({
+      where: {id: {in: [...inventoryOrderIds]}},
+      select: {
+        id: true,
+        orderNumber: true,
+        shortDescription: true,
+      },
+    })
+
+    for (const order of inventoryOrders) {
+      labels[`inventoryorder:${order.id}`] = order.shortDescription?.trim() || order.orderNumber
+    }
+  }
+
+  if (projectStructureIds.size > 0) {
+    const structures = await prismaClient.projectBOMStructure.findMany({
+      where: {id: {in: [...projectStructureIds]}},
+      select: {
+        id: true,
+        shortDescription: true,
+      },
+    })
+
+    for (const structure of structures) {
+      labels[`projectbomstructure:${structure.id}`] = structure.shortDescription?.trim() || structure.id
+    }
+  }
+
+  return labels
 }
 
 export async function getMaterialDemandMaterialOptions() {
@@ -172,6 +246,57 @@ export async function createMaterialDemandSourceForInventoryOrder(params: {
   }
 
   return source.id
+}
+
+export async function removeMaterialDemandSourceForInventoryOrder(params: {
+  inventoryOrderId: string
+  tx?: Prisma.TransactionClient
+}) {
+  const db = params.tx ?? prismaClient
+
+  const sourceType = await db.materialDemandSourceType.findFirst({
+    where: {name: 'InventoryOrder'},
+    select: {id: true},
+  })
+
+  if (!sourceType) {
+    return {removed: false}
+  }
+
+  const source = await db.materialDemandSource.findFirst({
+    where: {sourceTypeId: sourceType.id, sourceReferenceId: params.inventoryOrderId},
+    select: {id: true, materialDemandId: true, requiredQty: true, reservedQty: true},
+  })
+
+  if (!source) {
+    return {removed: false}
+  }
+
+  const demand = await db.materialDemand.findUnique({
+    where: {id: source.materialDemandId},
+    select: {id: true, totalRequiredQty: true, reservedQty: true},
+  })
+
+  if (!demand) {
+    await db.materialDemandSource.delete({where: {id: source.id}})
+    return {removed: true}
+  }
+
+  const nextTotalRequiredQty = Math.max(demand.totalRequiredQty - source.requiredQty, 0)
+  const currentReservedQty = demand.reservedQty ?? 0
+  const sourceReservedQty = source.reservedQty ?? 0
+  const nextReservedQty = Math.max(currentReservedQty - sourceReservedQty, 0)
+
+  await db.materialDemand.update({
+    where: {id: demand.id},
+    data: {
+      totalRequiredQty: nextTotalRequiredQty,
+      reservedQty: nextReservedQty,
+    },
+  })
+
+  await db.materialDemandSource.delete({where: {id: source.id}})
+  return {removed: true}
 }
 
 export async function removeMaterialDemandForMaterial(materialId: string) {

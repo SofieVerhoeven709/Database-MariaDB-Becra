@@ -5,19 +5,20 @@ const employeeSelect = {select: {id: true, firstName: true, lastName: true}} as 
 const include = {
   Employee: employeeSelect,
   Employee_InventoryOrder_approvedByToEmployee: employeeSelect,
-  Inventory: {select: {id: true, beNumber: true, shortDescription: true}},
+  Employee_InventoryOrder_rejectedByToEmployee: employeeSelect,
+  Employee_InventoryOrder_deletedByToEmployee: employeeSelect,
+  Material: {select: {id: true, beNumber: true, shortDescription: true}},
 } as const
 
 export async function getInventoryOrders() {
   return prismaClient.inventoryOrder.findMany({
-    where: {deleted: false},
     include,
     orderBy: {orderDate: 'desc'},
   })
 }
 
 export async function getInventoryForPicker() {
-  return prismaClient.inventory.findMany({
+  return prismaClient.material.findMany({
     where: {deleted: false},
     select: {id: true, beNumber: true, shortDescription: true},
     orderBy: {beNumber: 'asc'},

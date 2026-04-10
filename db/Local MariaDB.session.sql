@@ -2134,7 +2134,7 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS InventoryOrder (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            inventoryId CHAR(36) NOT NULL,
+            materialId CHAR(36) NOT NULL,
             orderNumber VARCHAR(255) NOT NULL,
             requestedQty INT NOT NULL DEFAULT 1,
             orderDate DATETIME NOT NULL,
@@ -2143,13 +2143,20 @@ CREATE TABLE
             approved BOOLEAN NOT NULL DEFAULT 0,
             approvedAt DATETIME,
             approvedBy CHAR(36),
+            rejected BOOLEAN NOT NULL DEFAULT 0,
+            rejectedAt DATETIME,
+            rejectedBy CHAR(36),
             createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             createdBy CHAR(36) NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (inventoryId) REFERENCES Inventory (id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (approvedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (rejectedBy) REFERENCES Employee (id) ON DELETE SET NULL,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
+
+
+      

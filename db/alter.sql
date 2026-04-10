@@ -1462,4 +1462,98 @@ ALTER TABLE PurchaseBOMStructure
     DROP FOREIGN KEY IF EXISTS fk_quoteSupplierLine_purchaseBomStructure;
 
 ALTER TABLE PurchaseBOMStructure
-    ADD CONSTRAINT fk_quoteSupplierL
+    ADD CONSTRAINT fk_quoteSupplierLine_purchaseBomStructure
+    FOREIGN KEY (quoteSupplierLineId) REFERENCES QuoteSupplierLine (id) ON DELETE RESTRICT;
+
+
+-- InventoryOrder.rejected
+ALTER TABLE InventoryOrder
+    ADD COLUMN IF NOT EXISTS rejected BOOLEAN NOT NULL DEFAULT 0;
+
+-- InventoryOrder.rejectedAt
+ALTER TABLE InventoryOrder
+    ADD COLUMN IF NOT EXISTS rejectedAt DATETIME NULL;
+
+-- InventoryOrder.rejectedBy
+ALTER TABLE InventoryOrder
+    ADD COLUMN IF NOT EXISTS rejectedBy CHAR(36) NULL;
+
+ALTER TABLE InventoryOrder
+    DROP FOREIGN KEY IF EXISTS fk_inventoryOrder_rejectedBy;
+
+ALTER TABLE InventoryOrder
+    ADD CONSTRAINT fk_inventoryOrder_rejectedBy
+    FOREIGN KEY (rejectedBy) REFERENCES Employee (id) ON DELETE SET NULL;
+
+-- ============================================
+-- ALTER version for existing database migration
+-- inventoryId -> materialId + FK switch
+-- ============================================
+
+-- 1) Add new materialId column
+ALTER TABLE InventoryOrder
+    ADD COLUMN IF NOT EXISTS materialId CHAR(36) NULL;
+
+-- 2) Backfill materialId from existing inventoryId
+SET @hasInventoryId := (
+  SELECT COUNT(*)
+  FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'InventoryOrder'
+    AND COLUMN_NAME = 'inventoryId'
+);
+
+SET @sql := IF(
+  @hasInventoryId > 0,
+  'UPDATE InventoryOrder io
+   JOIN Inventory i ON i.id = io.inventoryId
+   SET io.materialId = i.materialId
+   WHERE io.materialId IS NULL',
+  'SELECT ''Skip backfill: inventoryId does not exist'' AS info'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+
+-- 3) Ensure required fields exist (safe for older DBs)
+ALTER TABLE InventoryOrder
+    ADD COLUMN IF NOT EXISTS rejected BOOLEAN NOT NULL DEFAULT 0;
+
+ALTER TABLE InventoryOrder
+    ADD COLUMN IF NOT EXISTS rejectedAt DATETIME NULL;
+
+ALTER TABLE InventoryOrder
+    ADD COLUMN IF NOT EXISTS rejectedBy CHAR(36) NULL;
+
+-- 4) Drop old FK(s) tied to inventoryId (name can vary by DB)
+ALTER TABLE InventoryOrder
+    DROP FOREIGN KEY IF EXISTS InventoryOrder_ibfk_1;
+
+ALTER TABLE InventoryOrder
+    DROP FOREIGN KEY IF EXISTS fk_inventoryOrder_inventoryId;
+
+-- 5) Add/refresh rejectedBy FK
+ALTER TABLE InventoryOrder
+    DROP FOREIGN KEY IF EXISTS fk_inventoryOrder_rejectedBy;
+
+ALTER TABLE InventoryOrder
+    ADD CONSTRAINT fk_inventoryOrder_rejectedBy
+    FOREIGN KEY (rejectedBy) REFERENCES Employee (id) ON DELETE SET NULL;
+
+-- 6) Make materialId required after backfill
+ALTER TABLE InventoryOrder
+    MODIFY COLUMN materialId CHAR(36) NOT NULL;
+
+-- 7) Add/refresh material FK
+ALTER TABLE InventoryOrder
+    DROP FOREIGN KEY IF EXISTS fk_inventoryOrder_materialId;
+
+ALTER TABLE InventoryOrder
+    ADD CONSTRAINT fk_inventoryOrder_materialId
+    FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT;
+
+-- 8) Optional: remove old inventoryId column once app no longer uses it
+ALTER TABLE InventoryOrder
+    DROP COLUMN IF EXISTS inventoryId;

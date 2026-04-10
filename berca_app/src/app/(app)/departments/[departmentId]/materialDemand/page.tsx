@@ -1,4 +1,8 @@
-import {getMaterialDemands, getMaterialDemandMaterialOptions} from '@/dal/materialDemands'
+import {
+  getMaterialDemands,
+  getMaterialDemandMaterialOptions,
+  getMaterialDemandSourceReferenceLabels,
+} from '@/dal/materialDemands'
 import {mapMaterialDemand} from '@/extra/materialDemands'
 import {MaterialDemandTable} from '@/components/custom/materialDemandTable'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
@@ -26,7 +30,14 @@ export default async function MaterialDemandPage({params}: PageProps) {
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'materialDemand')
-  const entries = demandsFromDAL.map(mapMaterialDemand)
+  const sourceLabelEntries = demandsFromDAL.flatMap(demand =>
+    demand.MaterialDemandSource.map(source => ({
+      sourceTypeName: source.MaterialDemandSourceType.name,
+      sourceReferenceId: source.sourceReferenceId,
+    })),
+  )
+  const sourceReferenceLabels = await getMaterialDemandSourceReferenceLabels(sourceLabelEntries)
+  const entries = demandsFromDAL.map(demand => mapMaterialDemand(demand, sourceReferenceLabels))
   const suppliers = supplierCompaniesRaw
     .map(s => ({id: s.id, name: s.name}))
     .sort((a, b) => a.name.localeCompare(b.name))

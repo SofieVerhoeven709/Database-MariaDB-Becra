@@ -7,7 +7,7 @@ import {
   inventoryOrderIdSchema,
 } from '@/schemas/inventoryOrderSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
-import {createMaterialDemandSourceForInventoryOrder} from '@/dal/materialDemands'
+import {createMaterialDemandSourceForInventoryOrder, removeMaterialDemandSourceForInventoryOrder} from '@/dal/materialDemands'
 
 const REVALIDATE_PATH = '/departments/purchasing/orderRequests'
 const REVALIDATE_MATERIAL_DEMAND = '/departments/purchasing/materialDemand'
@@ -28,37 +28,45 @@ function resolveRequestedQtyFromDescription(longDescription: string | null | und
   return Number.isNaN(qty) || qty < 1 ? 1 : qty
 }
 
+function isLowStockRequestDescription(shortDescription: string | null | undefined): boolean {
+  return (shortDescription ?? '').toLowerCase().startsWith('low-stock request for')
+}
+
 export const createInventoryOrderAction = protectedServerFunction({
   schema: createInventoryOrderSchema,
   functionName: 'Create inventory order action',
   serverFn: async ({data, profile, logger}) => {
-    const inventory = await prismaClient.inventory.findUnique({
-      where: {id: data.inventoryId},
-      select: {materialId: true},
-    })
-
-    if (!inventory) {
-      throw new Error('Inventory item not found.')
-    }
-
-    const existingPending = await prismaClient.inventoryOrder.findFirst({
-      where: {
-        deleted: false,
-        approved: false,
-        Inventory: {is: {materialId: inventory.materialId}},
-      },
+    const material = await prismaClient.material.findUnique({
+      where: {id: data.materialId},
       select: {id: true},
     })
 
-    if (existingPending) {
-      throw new Error('There is already a pending request for this material.')
+    if (!material) {
+      throw new Error('Material not found.')
+    }
+
+    if (isLowStockRequestDescription(data.shortDescription)) {
+      const existingPendingLowStock = await prismaClient.inventoryOrder.findFirst({
+        where: {
+          deleted: false,
+          approved: false,
+          rejected: false,
+          shortDescription: {startsWith: 'Low-stock request for'},
+          materialId: material.id,
+        },
+        select: {id: true},
+      })
+
+      if (existingPendingLowStock) {
+        throw new Error('There is already a pending low-stock request for this material.')
+      }
     }
 
     logger.info(`Creating inventory order, createdBy: ${profile.id}`)
     await prismaClient.inventoryOrder.create({
       data: {
         id: crypto.randomUUID(),
-        inventoryId: data.inventoryId,
+        materialId: data.materialId,
         orderNumber: data.orderNumber,
         requestedQty: data.requestedQty,
         orderDate: toDate(data.orderDate),
@@ -79,7 +87,7 @@ export const updateInventoryOrderAction = protectedServerFunction({
     await prismaClient.inventoryOrder.update({
       where: {id},
       data: {
-        inventoryId: rest.inventoryId,
+        materialId: rest.materialId,
         orderNumber: rest.orderNumber,
         requestedQty: rest.requestedQty,
         orderDate: toDate(rest.orderDate),
@@ -98,14 +106,14 @@ export const approveInventoryOrderAction = protectedServerFunction({
   serverFn: async ({data: {id}, profile, logger}) => {
     const order = await prismaClient.inventoryOrder.findUnique({
       where: {id},
-      include: {
-        Inventory: {
-          select: {
-            materialId: true,
-            quantityInStock: true,
-            minQuantityInStock: true,
-          },
-        },
+      select: {
+        id: true,
+        materialId: true,
+        deleted: true,
+        rejected: true,
+        approved: true,
+        longDescription: true,
+        requestedQty: true,
       },
     })
 
@@ -117,13 +125,16 @@ export const approveInventoryOrderAction = protectedServerFunction({
       throw new Error('Inventory order is already processed.')
     }
 
+    if (order.rejected) {
+      throw new Error('Inventory order is already rejected.')
+    }
+
     if (order.approved) {
       throw new Error('Inventory order is already approved.')
     }
 
-    const fallbackQty = Math.max(1, order.Inventory.minQuantityInStock - order.Inventory.quantityInStock)
     const legacyRequestedQty = resolveRequestedQtyFromDescription(order.longDescription)
-    const requestedQty = Math.max(order.requestedQty ?? 1, legacyRequestedQty, fallbackQty)
+    const requestedQty = Math.max(order.requestedQty ?? 1, legacyRequestedQty)
 
     await prismaClient.$transaction(async tx => {
       await tx.inventoryOrder.update({
@@ -136,7 +147,7 @@ export const approveInventoryOrderAction = protectedServerFunction({
       })
 
       await createMaterialDemandSourceForInventoryOrder({
-        materialId: order.Inventory.materialId,
+        materialId: order.materialId,
         inventoryOrderId: id,
         requiredQty: requestedQty,
         createdBy: profile.id,
@@ -155,11 +166,69 @@ export const softDeleteInventoryOrderAction = protectedServerFunction({
   functionName: 'Soft delete inventory order action',
   serverFn: async ({data, profile, logger}) => {
     const {id} = data
+    await prismaClient.$transaction(async tx => {
+      const order = await tx.inventoryOrder.findUnique({
+        where: {id},
+        select: {id: true, deleted: true},
+      })
+
+      if (!order) {
+        throw new Error('Inventory order not found.')
+      }
+
+      if (order.deleted) {
+        throw new Error('Inventory order is already deleted.')
+      }
+
+      await tx.inventoryOrder.update({
+        where: {id},
+        data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
+      })
+
+      await removeMaterialDemandSourceForInventoryOrder({inventoryOrderId: id, tx})
+    })
+
+    logger.info(`Inventory order soft deleted: ${id}`)
+    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_MATERIAL_DEMAND)
+  },
+})
+
+export const rejectInventoryOrderAction = protectedServerFunction({
+  schema: inventoryOrderIdSchema,
+  functionName: 'Reject inventory order action',
+  serverFn: async ({data: {id}, profile, logger}) => {
+    const order = await prismaClient.inventoryOrder.findUnique({
+      where: {id},
+      select: {id: true, deleted: true, approved: true, rejected: true},
+    })
+
+    if (!order) {
+      throw new Error('Inventory order not found.')
+    }
+
+    if (order.deleted) {
+      throw new Error('Inventory order is already deleted.')
+    }
+
+    if (order.approved) {
+      throw new Error('Approved inventory orders cannot be rejected.')
+    }
+
+    if (order.rejected) {
+      throw new Error('Inventory order is already rejected.')
+    }
+
     await prismaClient.inventoryOrder.update({
       where: {id},
-      data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
+      data: {
+        rejected: true,
+        rejectedAt: new Date(),
+        rejectedBy: profile.id,
+      },
     })
-    logger.info(`Inventory order soft deleted: ${id}`)
+
+    logger.info(`Inventory order rejected: ${id}`)
     revalidatePath(REVALIDATE_PATH)
   },
 })
@@ -169,8 +238,83 @@ export const hardDeleteInventoryOrderAction = protectedServerFunction({
   functionName: 'Hard delete inventory order action',
   serverFn: async ({data, logger}) => {
     const {id} = data
-    await prismaClient.inventoryOrder.delete({where: {id}})
+    await prismaClient.$transaction(async tx => {
+      const order = await tx.inventoryOrder.findUnique({
+        where: {id},
+        select: {id: true, deleted: true},
+      })
+
+      if (!order) {
+        throw new Error('Inventory order not found.')
+      }
+
+      if (!order.deleted) {
+        throw new Error('Hard delete is blocked. Soft delete this order request first.')
+      }
+
+      await removeMaterialDemandSourceForInventoryOrder({inventoryOrderId: id, tx})
+      await tx.inventoryOrder.delete({where: {id}})
+    })
+
     logger.info(`Inventory order hard deleted: ${id}`)
     revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_MATERIAL_DEMAND)
   },
 })
+
+export const undeleteInventoryOrderAction = protectedServerFunction({
+  schema: inventoryOrderIdSchema,
+  functionName: 'Undelete inventory order action',
+  serverFn: async ({data, profile, logger}) => {
+    const {id} = data
+
+    await prismaClient.$transaction(async tx => {
+      const order = await tx.inventoryOrder.findUnique({
+        where: {id},
+        select: {
+          id: true,
+          materialId: true,
+          deleted: true,
+          approved: true,
+          longDescription: true,
+          requestedQty: true,
+        },
+      })
+
+      if (!order) {
+        throw new Error('Inventory order not found.')
+      }
+
+      if (!order.deleted) {
+        throw new Error('Inventory order is not deleted.')
+      }
+
+      await tx.inventoryOrder.update({
+        where: {id},
+        data: {
+          deleted: false,
+          deletedAt: null,
+          deletedBy: null,
+        },
+      })
+
+      if (order.approved) {
+        const legacyRequestedQty = resolveRequestedQtyFromDescription(order.longDescription)
+        const requestedQty = Math.max(order.requestedQty ?? 1, legacyRequestedQty)
+
+        await createMaterialDemandSourceForInventoryOrder({
+          materialId: order.materialId,
+          inventoryOrderId: id,
+          requiredQty: requestedQty,
+          createdBy: profile.id,
+          tx,
+        })
+      }
+    })
+
+    logger.info(`Inventory order restored: ${id}`)
+    revalidatePath(REVALIDATE_PATH)
+    revalidatePath(REVALIDATE_MATERIAL_DEMAND)
+  },
+})
+

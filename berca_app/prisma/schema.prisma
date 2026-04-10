@@ -419,6 +419,7 @@ model Employee {
   InventoryOrder                                                                    InventoryOrder[]
   InventoryOrder_InventoryOrder_approvedByToEmployee                                InventoryOrder[]                 @relation("InventoryOrder_approvedByToEmployee")
   InventoryOrder_InventoryOrder_deletedByToEmployee                                 InventoryOrder[]                 @relation("InventoryOrder_deletedByToEmployee")
+  InventoryOrder_InventoryOrder_rejectedByToEmployee                                InventoryOrder[]                 @relation("InventoryOrder_rejectedByToEmployee")
   InventoryStructure                                                                InventoryStructure[]
   InventoryStructure_InventoryStructure_deletedByToEmployee                         InventoryStructure[]             @relation("InventoryStructure_deletedByToEmployee")
   InvoiceIn                                                                         InvoiceIn[]
@@ -744,7 +745,6 @@ model Inventory {
   Employee                                Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Inventory_ibfk_3")
   Employee_Inventory_deletedByToEmployee  Employee?            @relation("Inventory_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Inventory_ibfk_4")
   InventoryChange                         InventoryChange[]
-  InventoryOrder                          InventoryOrder[]
   InventoryStructure                      InventoryStructure[]
 
   @@index([createdBy], map: "createdBy")
@@ -781,7 +781,6 @@ model InventoryChange {
 
 model InventoryOrder {
   id                                           String    @id @db.Char(36)
-  inventoryId                                  String    @db.Char(36)
   orderNumber                                  String    @db.VarChar(255)
   requestedQty                                 Int       @default(1)
   orderDate                                    DateTime  @db.DateTime(0)
@@ -795,15 +794,21 @@ model InventoryOrder {
   deleted                                      Boolean   @default(false)
   deletedAt                                    DateTime? @db.DateTime(0)
   deletedBy                                    String?   @db.Char(36)
-  Inventory                                    Inventory @relation(fields: [inventoryId], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_1")
+  rejected                                     Boolean   @default(false)
+  rejectedAt                                   DateTime? @db.DateTime(0)
+  rejectedBy                                   String?   @db.Char(36)
+  materialId                                   String    @db.Char(36)
   Employee                                     Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_2")
   Employee_InventoryOrder_approvedByToEmployee Employee? @relation("InventoryOrder_approvedByToEmployee", fields: [approvedBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_3")
   Employee_InventoryOrder_deletedByToEmployee  Employee? @relation("InventoryOrder_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_4")
+  Material                                     Material  @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "fk_inventoryOrder_materialId")
+  Employee_InventoryOrder_rejectedByToEmployee Employee? @relation("InventoryOrder_rejectedByToEmployee", fields: [rejectedBy], references: [id], onUpdate: Restrict, map: "fk_inventoryOrder_rejectedBy")
 
   @@index([createdBy], map: "createdBy")
-  @@index([inventoryId], map: "inventoryId")
   @@index([deletedBy], map: "deletedBy")
   @@index([approvedBy], map: "approvedBy")
+  @@index([rejectedBy], map: "fk_inventoryOrder_rejectedBy")
+  @@index([materialId], map: "fk_inventoryOrder_materialId")
 }
 
 model InventoryStructure {
@@ -1006,6 +1011,7 @@ model Material {
   IncomingDeliveryLine                                     IncomingDeliveryLine[]
   Inventory_Inventory_materialIdToMaterial                 Inventory[]            @relation("Inventory_materialIdToMaterial")
   Inventory_Inventory_beNumberToMaterial                   Inventory?             @relation("Inventory_beNumberToMaterial")
+  InventoryOrder                                           InventoryOrder[]
   MaterialGroup_Material_materialGroupIdAToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdAToMaterialGroup", fields: [materialGroupIdA], references: [id], onUpdate: Restrict, map: "Material_ibfk_1")
   MaterialGroup_Material_materialGroupIdBToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdBToMaterialGroup", fields: [materialGroupIdB], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
   MaterialGroup_Material_materialGroupIdCToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdCToMaterialGroup", fields: [materialGroupIdC], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")

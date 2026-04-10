@@ -1,10 +1,10 @@
 'use client'
 
-import {Fragment, useMemo, useState} from 'react'
+import {Fragment, useEffect, useMemo, useState} from 'react'
 import Link from 'next/link'
 import type {Route} from 'next'
 import {useRouter} from 'next/navigation'
-import {Search, ChevronDown, ChevronUp, Pencil, Check, X, Plus} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Pencil, Check, X, Plus, Trash2} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -13,7 +13,11 @@ import {Badge} from '@/components/ui/badge'
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog'
 import {Label} from '@/components/ui/label'
 import type {MappedMaterialDemand, MaterialDemandMaterialOption} from '@/types/materialDemand'
-import {createMaterialDemandAction, updateMaterialDemandAction} from '@/serverFunctions/materialDemands'
+import {
+  createMaterialDemandAction,
+  updateMaterialDemandAction,
+  removeMaterialDemandSourceAction,
+} from '@/serverFunctions/materialDemands'
 import {createInventoryOrderAction} from '@/serverFunctions/inventoryOrders'
 import {selectQuoteSupplierLineAction} from '@/serverFunctions/quoteSupplierLines'
 
@@ -114,6 +118,49 @@ function generateLowStockRequestNumber(entry: MappedMaterialDemand) {
   return `REQ-${materialToken}-${suffix}`
 }
 
+function getQuoteState(entry: MappedMaterialDemand): {label: string; className: string} {
+  const activeOptions = entry.quoteOptions.filter(option => !option.deleted)
+  if (activeOptions.length === 0) {
+    return {
+      label: 'No quote',
+      className: 'border border-border text-muted-foreground',
+    }
+  }
+
+  if (activeOptions.some(option => option.acceptedForPOB)) {
+    return {
+      label: 'Approved quote',
+      className: 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-700',
+    }
+  }
+
+  if (activeOptions.some(option => option.executed && option.isCurrentlyValid)) {
+    return {
+      label: 'Sent to supplier',
+      className: 'border border-sky-500/30 bg-sky-500/10 text-sky-700',
+    }
+  }
+
+  if (activeOptions.some(option => option.executed && !option.isCurrentlyValid)) {
+    return {
+      label: 'Sent (expired)',
+      className: 'border border-amber-500/30 bg-amber-500/10 text-amber-700',
+    }
+  }
+
+  if (activeOptions.some(option => option.rejected)) {
+    return {
+      label: 'Rejected',
+      className: 'border border-red-500/30 bg-red-500/10 text-red-700',
+    }
+  }
+
+  return {
+    label: 'Draft quote',
+    className: 'border border-violet-500/30 bg-violet-500/10 text-violet-700',
+  }
+}
+
 export function MaterialDemandTable({
   initialEntries,
   materials,
@@ -127,6 +174,7 @@ export function MaterialDemandTable({
   const canEditRequiredQty = isAdmin || currentUserLevel >= 80
   const canCreate = isAdmin || currentUserLevel >= 80
   const canEdit = currentUserLevel >= 40
+  const canDeleteSource = isAdmin || currentUserLevel >= 80
 
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('material')
@@ -142,7 +190,15 @@ export function MaterialDemandTable({
   const [editTotalRequiredQty, setEditTotalRequiredQty] = useState<string>('0')
   const [editReservedQty, setEditReservedQty] = useState<string>('0')
   const [expandedDemandIds, setExpandedDemandIds] = useState<Set<string>>(new Set())
+  const [expandedSourceDemandIds, setExpandedSourceDemandIds] = useState<Set<string>>(new Set())
   const [lineActionLoadingId, setLineActionLoadingId] = useState<string | null>(null)
+  const [sourceActionLoadingId, setSourceActionLoadingId] = useState<string | null>(null)
+  const [removeSourceDialog, setRemoveSourceDialog] = useState<{
+    entryId: string
+    sourceId: string
+    sourceLabel: string
+    sourceCount: number
+  } | null>(null)
   const [rankingPolicy, setRankingPolicy] = useState<RankingPolicy>('balanced')
   const [showEligibleOnly, setShowEligibleOnly] = useState(false)
   const [lowStockRequestDialog, setLowStockRequestDialog] = useState<{entry: MappedMaterialDemand; qty: string} | null>(
@@ -158,6 +214,10 @@ export function MaterialDemandTable({
         .sort((a, b) => materialLabel(a).localeCompare(materialLabel(b))),
     [materials, usedMaterialIds],
   )
+  const eligibleSuppliersForDialog = useMemo(() => {
+    if (!makeQuoteDialog) return []
+    return suppliers.filter(supplier => makeQuoteDialog.entry.eligibleSupplierCompanyIds.includes(supplier.id))
+  }, [makeQuoteDialog, suppliers])
 
   const filtered = initialEntries
     .filter(entry => {
@@ -200,6 +260,15 @@ export function MaterialDemandTable({
       }
     })
 
+  useEffect(() => {
+    const demandIdsWithSources = new Set(initialEntries.filter(entry => entry.sourceCount > 0).map(entry => entry.id))
+    setExpandedSourceDemandIds(prev => {
+      const next = new Set([...prev].filter(id => demandIdsWithSources.has(id)))
+      const unchanged = next.size === prev.size && [...next].every(id => prev.has(id))
+      return unchanged ? prev : next
+    })
+  }, [initialEntries])
+
   function toggleSort(field: SortField) {
     if (sortField === field) setSortDir(prev => (prev === 'asc' ? 'desc' : 'asc'))
     else {
@@ -229,6 +298,15 @@ export function MaterialDemandTable({
     })
   }
 
+  function toggleSources(demandId: string) {
+    setExpandedSourceDemandIds(prev => {
+      const next = new Set(prev)
+      if (next.has(demandId)) next.delete(demandId)
+      else next.add(demandId)
+      return next
+    })
+  }
+
   async function handleQuoteLineSelection(demandId: string, lineId: string, selected: boolean) {
     try {
       setLineActionLoadingId(lineId)
@@ -251,15 +329,52 @@ export function MaterialDemandTable({
     }
   }
 
+  async function handleRemoveSource() {
+    if (!removeSourceDialog) return
+    try {
+      setSourceActionLoadingId(removeSourceDialog.sourceId)
+      const result = await removeMaterialDemandSourceAction({
+        materialDemandId: removeSourceDialog.entryId,
+        sourceId: removeSourceDialog.sourceId,
+      })
+      const error = extractActionError(result)
+      if (error) {
+        setActionError(error)
+        return
+      }
+
+      if (removeSourceDialog.sourceCount <= 1) {
+        setExpandedSourceDemandIds(prev => {
+          const next = new Set(prev)
+          next.delete(removeSourceDialog.entryId)
+          return next
+        })
+      }
+
+      setActionError(null)
+      setRemoveSourceDialog(null)
+      router.refresh()
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : 'Could not remove source line.')
+    } finally {
+      setSourceActionLoadingId(null)
+    }
+  }
+
   async function handleLowStockRequest(entry: MappedMaterialDemand) {
+    if (!entry.hasMinimumStock) {
+      setActionError('This material does not have a minimum stock configured.')
+      return
+    }
+
     const hasManualDemandWithoutSources = entry.totalRequiredQty > 0 && entry.sourceCount === 0
     if (hasManualDemandWithoutSources) {
       setActionError('Order request is disabled: one has already been approved.')
       return
     }
 
-    if (entry.pendingRequestCount > 0) {
-      setActionError('An order request is already pending approval for this material.')
+    if (entry.existingLowStockRequestCount > 0) {
+      setActionError('A low-stock order request already exists for this material.')
       return
     }
 
@@ -276,6 +391,12 @@ export function MaterialDemandTable({
       setActionError('A quote already exists for this demand. Create another quote from the existing quote detail if needed.')
       return
     }
+
+    if (entry.eligibleSupplierCompanyIds.length === 0) {
+      setActionError('No suppliers are linked to this material. Add a material supplier first.')
+      return
+    }
+
     setMakeQuoteDialog({entry, supplierId: '__none__'})
   }
 
@@ -287,6 +408,11 @@ export function MaterialDemandTable({
     }
 
     const {entry, supplierId} = makeQuoteDialog
+    if (!entry.eligibleSupplierCompanyIds.includes(supplierId)) {
+      setActionError('Selected supplier is not linked to this material.')
+      return
+    }
+
     const initialQuoteQty = Math.max(entry.totalRequiredQty, 1)
     setMakeQuoteDialog(null)
     setActionError(null)
@@ -305,13 +431,8 @@ export function MaterialDemandTable({
     }
 
     try {
-      if (!entry.requestInventoryId) {
-        setActionError('No inventory row linked to this material. Please create inventory first.')
-        return
-      }
-
       const result = await createInventoryOrderAction({
-        inventoryId: entry.requestInventoryId,
+        materialId: entry.materialId,
         orderNumber: generateLowStockRequestNumber(entry),
         requestedQty,
         orderDate: new Date().toISOString().slice(0, 10),
@@ -534,8 +655,10 @@ export function MaterialDemandTable({
                 const isEditing = editingId === entry.id
                 const materialHref = `/departments/${departmentId}/material/${entry.materialId}` as Route
                 const isExpanded = expandedDemandIds.has(entry.id)
+                const isSourcesExpanded = expandedSourceDemandIds.has(entry.id)
                 const hasManualDemandWithoutSources = entry.totalRequiredQty > 0 && entry.sourceCount === 0
                 const hasBlockingQuote = entry.quoteOptions.some(option => !option.deleted && !(option.executed && option.acceptedForPOB))
+                const quoteState = getQuoteState(entry)
                 const quoteOptions = [...entry.quoteOptions].sort((a, b) => compareQuoteOptions(a, b, rankingPolicy))
                 const visibleQuoteOptions = showEligibleOnly
                   ? quoteOptions.filter(option => option.isEligibleForBest)
@@ -560,7 +683,7 @@ export function MaterialDemandTable({
                               {entry.materialShortDescription ?? entry.materialName ?? entry.materialId}
                             </span>
                             <span className="text-[11px] text-muted-foreground">
-                              Stock {entry.stockQuantity} / Min {entry.minimumStockQuantity}
+                              Stock {entry.stockQuantity} / Min {entry.hasMinimumStock ? entry.minimumStockQuantity : '—'}
                             </span>
                           </div>
                         </Link>
@@ -595,7 +718,20 @@ export function MaterialDemandTable({
                           </Badge>
                         )}
                       </TableCell>
-                      <TableCell className={tdClass}>{entry.sourceCount}</TableCell>
+                      <TableCell className={tdClass}>
+                        <div className="flex items-center gap-2">
+                          <span>{entry.sourceCount}</span>
+                          {entry.sourceCount > 0 && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="h-7 px-2 text-xs"
+                              onClick={() => toggleSources(entry.id)}>
+                              {isSourcesExpanded ? 'Hide' : 'Sources'}
+                            </Button>
+                          )}
+                        </div>
+                      </TableCell>
                       <TableCell className={tdClass}>
                         <div className="flex items-center gap-2">
                           <span>{entry.quoteLineCount}</span>
@@ -625,19 +761,19 @@ export function MaterialDemandTable({
                             className="inline-flex h-7 items-center rounded-md border border-accent/50 bg-accent/10 px-2 text-[11px] font-medium text-accent hover:bg-accent/20 disabled:opacity-50 disabled:cursor-not-allowed">
                             {hasBlockingQuote ? 'Quote exists' : 'Make Quote'}
                           </button>
-                          {entry.isLowStock && (
+                          <Badge className={`text-[10px] ${quoteState.className}`}>{quoteState.label}</Badge>
+                          {entry.isLowStock && entry.hasMinimumStock && (
                             <Button
                               size="sm"
                               variant="outline"
                               className="h-7 px-2 text-[11px] border-amber-500/60 text-amber-700 hover:bg-amber-500/10"
                               disabled={
-                                entry.pendingRequestCount > 0 ||
-                                hasManualDemandWithoutSources ||
-                                !entry.requestInventoryId
+                                entry.existingLowStockRequestCount > 0 ||
+                                hasManualDemandWithoutSources
                               }
                               onClick={() => handleLowStockRequest(entry)}>
-                              {entry.pendingRequestCount > 0
-                                ? 'Pending approval'
+                              {entry.existingLowStockRequestCount > 0
+                                ? 'Request exists'
                                 : hasManualDemandWithoutSources
                                   ? 'Demand on row'
                                   : 'Request approval'}
@@ -677,6 +813,70 @@ export function MaterialDemandTable({
                         </div>
                       </TableCell>
                     </TableRow>
+
+                    {isSourcesExpanded && (
+                      <TableRow className="bg-secondary/20">
+                        <TableCell colSpan={7} className="py-3">
+                          <div className="rounded-lg border border-border/50 bg-card overflow-x-auto">
+                            <Table>
+                              <TableHeader>
+                                <TableRow className="border-border/50">
+                                  <TableHead className="text-xs">Type</TableHead>
+                                  <TableHead className="text-xs">Reference</TableHead>
+                                  <TableHead className="text-xs">Required</TableHead>
+                                  <TableHead className="text-xs">Reserved</TableHead>
+                                  <TableHead className="text-xs">Created</TableHead>
+                                  <TableHead className="text-xs w-24">
+                                    <span className="sr-only">Actions</span>
+                                  </TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {entry.sources.length === 0 ? (
+                                  <TableRow>
+                                    <TableCell colSpan={6} className="text-xs text-muted-foreground py-4">
+                                      No source lines found.
+                                    </TableCell>
+                                  </TableRow>
+                                ) : (
+                                  entry.sources.map(source => {
+                                    const isRemoving = sourceActionLoadingId === source.id
+                                    return (
+                                      <TableRow key={source.id} className="border-border/30">
+                                        <TableCell className="text-xs text-muted-foreground">{source.sourceTypeName}</TableCell>
+                                        <TableCell className="text-xs text-muted-foreground">{source.sourceReferenceLabel}</TableCell>
+                                        <TableCell className="text-xs text-muted-foreground">{source.requiredQty}</TableCell>
+                                        <TableCell className="text-xs text-muted-foreground">{source.reservedQty}</TableCell>
+                                        <TableCell className="text-xs text-muted-foreground">{formatDate(source.createdAt)}</TableCell>
+                                        <TableCell>
+                                          {canDeleteSource && (
+                                            <Button
+                                              size="icon"
+                                              variant="ghost"
+                                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                              disabled={isRemoving}
+                                              onClick={() =>
+                                                setRemoveSourceDialog({
+                                                  entryId: entry.id,
+                                                  sourceId: source.id,
+                                                  sourceLabel: source.sourceReferenceLabel,
+                                                  sourceCount: entry.sourceCount,
+                                                })
+                                              }>
+                                              <Trash2 className="h-3.5 w-3.5" />
+                                            </Button>
+                                          )}
+                                        </TableCell>
+                                      </TableRow>
+                                    )
+                                  })
+                                )}
+                              </TableBody>
+                            </Table>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
 
                     {isExpanded && (
                       <TableRow className="bg-secondary/20">
@@ -835,7 +1035,7 @@ export function MaterialDemandTable({
                 <strong>Current stock:</strong> {lowStockRequestDialog?.entry.stockQuantity}
               </p>
               <p>
-                <strong>Minimum required:</strong> {lowStockRequestDialog?.entry.minimumStockQuantity}
+                <strong>Minimum required:</strong> {lowStockRequestDialog?.entry.hasMinimumStock ? lowStockRequestDialog?.entry.minimumStockQuantity : '—'}
               </p>
               <p>
                 <strong>Suggested:</strong> {lowStockRequestDialog?.entry.suggestedRequestQty}
@@ -894,7 +1094,7 @@ export function MaterialDemandTable({
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
                 <SelectItem value="__none__">— Select supplier —</SelectItem>
-                {suppliers.map(supplier => (
+                {eligibleSuppliersForDialog.map(supplier => (
                   <SelectItem key={supplier.id} value={supplier.id}>
                     {supplier.name}
                   </SelectItem>
@@ -907,6 +1107,28 @@ export function MaterialDemandTable({
               Cancel
             </Button>
             <Button onClick={continueToQuotePage}>Continue to Quotes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!removeSourceDialog} onOpenChange={open => !open && setRemoveSourceDialog(null)}>
+        <DialogContent className="bg-card border-border">
+          <DialogHeader>
+            <DialogTitle>Remove source line</DialogTitle>
+            <DialogDescription>
+              Remove source <strong>{removeSourceDialog?.sourceLabel ?? '—'}</strong>? This will decrease required quantity.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setRemoveSourceDialog(null)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={sourceActionLoadingId !== null}
+              onClick={handleRemoveSource}>
+              {sourceActionLoadingId ? 'Removing…' : 'Remove source'}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -2140,6 +2140,9 @@ CREATE TABLE
             approved BOOLEAN NOT NULL DEFAULT 0,
             approvedAt DATETIME,
             approvedBy CHAR(36),
+            rejected BOOLEAN NOT NULL DEFAULT 0,
+            rejectedAt DATETIME,
+            rejectedBy CHAR(36),
             createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             createdBy CHAR(36) NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -2148,5 +2151,6 @@ CREATE TABLE
             FOREIGN KEY (inventoryId) REFERENCES Inventory (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (approvedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (rejectedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;

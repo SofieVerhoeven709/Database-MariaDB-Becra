@@ -6,14 +6,19 @@ export interface MappedMaterialDemand {
   materialShortDescription: string | null
   stockQuantity: number
   minimumStockQuantity: number
+  hasMinimumStock: boolean
   isLowStock: boolean
   requestInventoryId: string | null
   suggestedRequestQty: number
-  pendingRequestCount: number
+  pendingLowStockRequestCount: number
+  existingLowStockRequestCount: number
+  approvedLowStockRequestCount: number
+  eligibleSupplierCompanyIds: string[]
   totalRequiredQty: number
   reservedQty: number
   createdAt: string
   sourceCount: number
+  sources: MaterialDemandSourceEntry[]
   quoteLineCount: number
   selectedQuoteLineIds: string[]
   bestQuoteLineId: string | null
@@ -45,5 +50,15 @@ export interface MaterialDemandMaterialOption {
   beNumber: string | null
   name: string | null
   shortDescription: string | null
+}
+
+export interface MaterialDemandSourceEntry {
+  id: string
+  sourceTypeName: string
+  sourceReferenceId: string | null
+  sourceReferenceLabel: string
+  requiredQty: number
+  reservedQty: number
+  createdAt: string
 }
 

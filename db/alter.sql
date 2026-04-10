@@ -1557,3 +1557,73 @@ ALTER TABLE InventoryOrder
 -- 8) Optional: remove old inventoryId column once app no longer uses it
 ALTER TABLE InventoryOrder
     DROP COLUMN IF EXISTS inventoryId;
+
+-- =========================================================
+-- TEST ENV HARD RESET: Purchase + PurchaseDetail
+-- Data in these 2 tables will be lost
+-- =========================================================
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS PurchaseDetail;
+DROP TABLE IF EXISTS Purchase;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- =========================================================
+-- Recreate Purchase (order header)
+-- =========================================================
+CREATE TABLE
+      IF NOT EXISTS Purchase (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            purchaseNumber VARCHAR(255) NOT NULL,
+            purchaseDate DATETIME NOT NULL,
+            companyId CHAR(36) NOT NULL,
+            quoteSupplierId CHAR(36),
+            paymentConditionId CHAR(36),
+            status VARCHAR(50) NOT NULL DEFAULT 'DRAFT',
+            shortDescription VARCHAR(255),
+            description TEXT,
+            additionalInfo VARCHAR(255),
+            createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            createdBy CHAR(36) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
+            FOREIGN KEY (quoteSupplierId) REFERENCES QuoteSupplier (id) ON DELETE SET NULL,
+            FOREIGN KEY (paymentConditionId) REFERENCES PaymentCondition (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            UNIQUE (purchaseNumber)
+      ) ENGINE = InnoDB;
+
+
+-- =========================================================
+-- Recreate PurchaseDetail (order lines)
+-- =========================================================
+CREATE TABLE
+      IF NOT EXISTS PurchaseDetail (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            purchaseId CHAR(36) NOT NULL,
+            quoteSupplierLineId CHAR(36),
+            materialId CHAR(36) NOT NULL,
+            materialDemandId CHAR(36),
+            quantity INT NOT NULL,
+            unitPrice DECIMAL(10,2) NOT NULL,
+            minQuantity INT,
+            lineStatus VARCHAR(50) NOT NULL DEFAULT 'OPEN',
+            additionalInfo VARCHAR(255),
+            createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            createdBy CHAR(36) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (purchaseId) REFERENCES Purchase (id) ON DELETE CASCADE,
+            FOREIGN KEY (quoteSupplierLineId) REFERENCES QuoteSupplierLine (id) ON DELETE SET NULL,
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialDemandId) REFERENCES MaterialDemand (id) ON DELETE SET NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;

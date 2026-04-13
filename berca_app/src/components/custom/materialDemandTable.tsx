@@ -134,14 +134,21 @@ function getQuoteState(entry: MappedMaterialDemand): {label: string; className: 
     }
   }
 
-  if (activeOptions.some(option => option.executed && option.isCurrentlyValid)) {
+  if (activeOptions.some(option => option.received)) {
+    return {
+      label: 'Received quote',
+      className: 'border border-blue-500/30 bg-blue-500/10 text-blue-700',
+    }
+  }
+
+  if (activeOptions.some(option => option.sent && option.isCurrentlyValid)) {
     return {
       label: 'Sent to supplier',
       className: 'border border-sky-500/30 bg-sky-500/10 text-sky-700',
     }
   }
 
-  if (activeOptions.some(option => option.executed && !option.isCurrentlyValid)) {
+  if (activeOptions.some(option => option.sent && !option.isCurrentlyValid)) {
     return {
       label: 'Sent (expired)',
       className: 'border border-amber-500/30 bg-amber-500/10 text-amber-700',
@@ -386,7 +393,7 @@ export function MaterialDemandTable({
   }
 
   function openMakeQuoteDialog(entry: MappedMaterialDemand) {
-    const hasBlockingQuote = entry.quoteOptions.some(option => !option.deleted && !(option.executed && option.acceptedForPOB))
+    const hasBlockingQuote = entry.quoteOptions.some(option => !option.deleted && !(option.sent && option.acceptedForPOB))
     if (hasBlockingQuote) {
       setActionError('A quote already exists for this demand. Create another quote from the existing quote detail if needed.')
       return
@@ -657,7 +664,7 @@ export function MaterialDemandTable({
                 const isExpanded = expandedDemandIds.has(entry.id)
                 const isSourcesExpanded = expandedSourceDemandIds.has(entry.id)
                 const hasManualDemandWithoutSources = entry.totalRequiredQty > 0 && entry.sourceCount === 0
-                const hasBlockingQuote = entry.quoteOptions.some(option => !option.deleted && !(option.executed && option.acceptedForPOB))
+                const hasBlockingQuote = entry.quoteOptions.some(option => !option.deleted && !(option.sent && option.acceptedForPOB))
                 const quoteState = getQuoteState(entry)
                 const quoteOptions = [...entry.quoteOptions].sort((a, b) => compareQuoteOptions(a, b, rankingPolicy))
                 const visibleQuoteOptions = showEligibleOnly
@@ -962,11 +969,18 @@ export function MaterialDemandTable({
                                               Best
                                             </Badge>
                                           )}
-                                          {option.executed && (
+                                          {option.sent && (
                                             <Badge
                                               variant="outline"
                                               className="text-[10px] border-slate-500/40 text-slate-700">
                                               Sent
+                                            </Badge>
+                                          )}
+                                          {option.received && (
+                                            <Badge
+                                              variant="outline"
+                                              className="text-[10px] border-blue-500/40 text-blue-700">
+                                              Received
                                             </Badge>
                                           )}
                                           {!option.isCurrentlyValid && (

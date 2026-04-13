@@ -55,8 +55,13 @@ export const createPaymentConditionSchema = paymentConditionSchema.pick({name: t
 export const updatePaymentConditionSchema = paymentConditionSchema
 export const paymentConditionIdSchema = paymentConditionSchema.pick({id: true})
 
-export const quoteSupplierExecutedSchema = z.object({
+export const quoteSupplierSentSchema = z.object({
   id: z.string().uuid(),
-  executed: z.boolean(),
+  sent: z.boolean(),
+})
+
+export const quoteSupplierReceivedSchema = z.object({
+  id: z.string().uuid(),
+  received: z.boolean(),
 })
 

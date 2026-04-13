@@ -10,7 +10,7 @@ import {
   getPurchaseDetailMaterialDemandOptions,
 } from '@/dal/purchases'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
-import {mapPurchaseDetail} from '@/extra/purchases'
+import {mapPurchaseDetail, normalizePurchaseStatus} from '@/extra/purchases'
 import type {MappedPurchaseDetail} from '@/types/purchase'
 import {PurchaseDetailTable} from '@/components/custom/purchaseDetailTable'
 import {getDepartmentById} from '@/dal/department'
@@ -27,7 +27,7 @@ function formatDate(date: Date | null | undefined) {
 
 const STATUS_COLOR: Record<string, string> = {
   DRAFT: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/30',
-  SENT: 'bg-blue-500/10 text-blue-600 border-blue-500/30',
+  ORDERED: 'bg-blue-500/10 text-blue-600 border-blue-500/30',
   PARTIAL_RECEIVED: 'bg-cyan-500/10 text-cyan-600 border-cyan-500/30',
   CLOSED: 'bg-green-500/10 text-green-600 border-green-500/30',
   CANCELLED: 'bg-red-500/10 text-red-600 border-red-500/30',
@@ -75,6 +75,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
   }))
 
   const createdByName = `${purchase.Employee.firstName} ${purchase.Employee.lastName}`
+  const normalizedStatus = normalizePurchaseStatus(purchase.status)
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -91,12 +92,12 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             <div className="space-y-1">
               <div className="flex items-center gap-2.5 flex-wrap">
                 <h1 className="text-xl font-semibold text-foreground">{purchase.purchaseNumber ?? 'Unnamed Order'}</h1>
-                {purchase.status && (
+                {normalizedStatus && (
                   <Badge
                     className={`border text-xs font-medium ${
-                      STATUS_COLOR[purchase.status] ?? 'bg-accent/10 text-accent border-0'
+                      STATUS_COLOR[normalizedStatus] ?? 'bg-accent/10 text-accent border-0'
                     }`}>
-                    {purchase.status}
+                    {normalizedStatus}
                   </Badge>
                 )}
               </div>
@@ -164,6 +165,8 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
           materialDemandOptions={materialDemandOptions}
           quoteLineOptions={quoteLineOptions}
           isAdmin={isAdmin}
+          purchaseStatus={normalizedStatus}
+          currentUserLevel={currentUserLevel}
         />
       </div>
     </main>

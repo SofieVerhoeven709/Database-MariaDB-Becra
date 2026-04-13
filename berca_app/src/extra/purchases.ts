@@ -10,12 +10,19 @@ type PurchaseWithRelations = Prisma.PurchaseGetPayload<{
   }
 }>
 
+const PURCHASE_STATUSES = new Set(['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'CLOSED', 'CANCELLED'])
+
+export function normalizePurchaseStatus(status: string | null | undefined): string {
+  if (!status) return 'DRAFT'
+  return PURCHASE_STATUSES.has(status) ? status : 'ORDERED'
+}
+
 export function mapPurchase(p: PurchaseWithRelations): MappedPurchase {
   return {
     id: p.id,
     purchaseNumber: p.purchaseNumber,
     purchaseDate: p.purchaseDate?.toISOString() ?? null,
-    status: p.status ?? 'DRAFT',
+    status: normalizePurchaseStatus(p.status),
     companyId: p.companyId,
     companyName: p.Company?.name ?? null,
     quoteSupplierId: p.quoteSupplierId,

@@ -9,7 +9,7 @@ type QuoteSupplierWithRelations = Prisma.QuoteSupplierGetPayload<{
     PaymentCondition: {select: {id: true; name: true}}
     _count: {select: {QuoteSupplierLine: true}}
   }
-}> & {executed?: boolean | number | null}
+}>
 
 type QuoteSupplierDetailWithRelations = Prisma.QuoteSupplierGetPayload<{
   include: {
@@ -30,7 +30,7 @@ type QuoteSupplierDetailWithRelations = Prisma.QuoteSupplierGetPayload<{
       }
     }
   }
-}> & {executed?: boolean | number | null}
+}>
 
 type PaymentConditionWithRelations = Prisma.PaymentConditionGetPayload<{
   include: {
@@ -63,7 +63,8 @@ export function mapQuoteSupplier(q: QuoteSupplierWithRelations): MappedQuoteSupp
       ? `${q.Employee_QuoteSupplier_deletedByToEmployee.firstName} ${q.Employee_QuoteSupplier_deletedByToEmployee.lastName}`
       : null,
     lineCount: q._count.QuoteSupplierLine,
-    executed: !!q.executed,
+    sent: q.sent,
+    received: q.received,
   }
 }
 

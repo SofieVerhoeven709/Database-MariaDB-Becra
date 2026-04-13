@@ -64,7 +64,9 @@ const materialDemandInclude = {
           companyId: true,
           validUntil: true,
           deliveryTimeDays: true,
-          executed: true,
+          sent: true,
+          received: true,
+          acceptedForPOB: true,
           rejected: true,
           deleted: true,
           Company: {

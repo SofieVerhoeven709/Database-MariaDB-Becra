@@ -14,6 +14,23 @@ import {searchProjects} from '@/dal/purchaseBoms'
 import type {ProjectOption} from '@/types/purchaseBom'
 import {createTargetForType} from '@/dal/targets'
 import {ensureMaterialDemandForMaterial, createMaterialDemandSourcesForProjectBOMStructures, validateMaterialDemandSourceAllocation} from '@/dal/materialDemands'
+import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+
+const OPEN_WORK_ORDER_ERROR =
+  'No open work order with material closed = false was found for this project. Please ask a manager to open a new work order and retry approval.'
+
+async function findOpenWorkOrderForProject(projectId: string) {
+  return prismaClient.workOrder.findFirst({
+    where: {
+      projectId,
+      deleted: false,
+      completed: false,
+      hoursMaterialClosed: false,
+    },
+    orderBy: {createdAt: 'asc'},
+    select: {id: true},
+  })
+}
 
 // ─── PurchaseBOM CRUD ───────────────────────────────────────────────────────────
 
@@ -43,6 +60,19 @@ export const updatePurchaseBOMAction = protectedServerFunction({
   schema: updatePurchaseBOMSchema,
   functionName: 'Update purchase BOM action',
   serverFn: async ({data: {id, ...data}, logger, profile}) => {
+    const existingBom = await prismaClient.purchaseBOM.findUnique({
+      where: {id},
+      select: {projectId: true, projectBOMId: true, approvedForQuote: true},
+    })
+    if (!existingBom) throw new Error('Purchase BOM not found.')
+
+    const approvingNow = data.approvedForQuote === true && !existingBom.approvedForQuote
+    const openWorkOrder = approvingNow ? await findOpenWorkOrderForProject(existingBom.projectId) : null
+
+    if (approvingNow && !openWorkOrder) {
+      throw new Error(OPEN_WORK_ORDER_ERROR)
+    }
+
     // purchased=true forces materialClosed/closed=true on this BOM.
     const bomUpdateData = {
       ...data,
@@ -74,7 +104,7 @@ export const updatePurchaseBOMAction = protectedServerFunction({
       }
     }
 
-    if (data.approvedForQuote === true) {
+    if (approvingNow) {
       // Approval releases this BOM for demand/quote flow and locks project-side structure edits.
       // First, fetch all active PurchaseBOMStructures with their ProjectBOMStructure relations
       const purchaseStructures = await prismaClient.purchaseBOMStructure.findMany({
@@ -89,6 +119,49 @@ export const updatePurchaseBOMAction = protectedServerFunction({
           },
         },
       })
+
+      if (openWorkOrder) {
+        const sourceClientNumbers = purchaseStructures.map(s => `PBOMS:${s.id}`)
+        const existingWorkOrderStructures = await prismaClient.workOrderStructure.findMany({
+          where: {
+            workOrderId: openWorkOrder.id,
+            deleted: false,
+            clientNumber: {in: sourceClientNumbers},
+          },
+          select: {clientNumber: true},
+        })
+
+        const existingClientNumbers = new Set(existingWorkOrderStructures.map(row => row.clientNumber))
+        let createdWorkOrderStructures = 0
+
+        for (const structure of purchaseStructures) {
+          const clientNumber = `PBOMS:${structure.id}`
+          if (existingClientNumbers.has(clientNumber)) continue
+
+          const target = await createTargetForType('WorkOrderStructure', profile.id)
+          await prismaClient.workOrderStructure.create({
+            data: {
+              id: crypto.randomUUID(),
+              clientNumber,
+              workOrderId: openWorkOrder.id,
+              materialId: structure.materialId,
+              tag: structure.tag?.slice(0, 100) ?? null,
+              quantity: structure.ProjectBOMStructure?.BOMExecution?.requiredQuantity ?? null,
+              shortDescription: structure.shortDescription?.slice(0, 100) ?? null,
+              longDescription: structure.description ?? null,
+              additionalInfo: structure.additionalInfo ?? null,
+              createdAt: new Date(),
+              createdBy: profile.id,
+              targetId: target.id,
+            },
+          })
+          createdWorkOrderStructures++
+        }
+
+        logger.info(
+          `Created ${createdWorkOrderStructures} work order structure(s) on approval for PurchaseBOM ${id} in WorkOrder ${openWorkOrder.id}`,
+        )
+      }
 
       // Mark all structures as approvedForQuote
       await prismaClient.purchaseBOMStructure.updateMany({
@@ -156,6 +229,12 @@ export const updatePurchaseBOMAction = protectedServerFunction({
           data: {readyForPurchase: true},
         })
         logger.info(`Set readyForPurchase=true on ProjectBOM: ${updatedBom.projectBOMId}`)
+      }
+
+      revalidatePath('/workOrder')
+      revalidatePath(`/departments/project/project/${existingBom.projectId}`)
+      if (openWorkOrder) {
+        revalidatePath(`/departments/project/project/${existingBom.projectId}/workOrder/${openWorkOrder.id}`)
       }
     }
 
@@ -403,3 +482,10 @@ export const restorePurchaseBOMStructureAction = protectedServerFunction({
 export async function searchPurchasesAction(query: string): Promise<ProjectOption[]> {
   return searchProjects(query)
 }
+
+export async function hasOpenWorkOrderForProjectAction(projectId: string): Promise<boolean> {
+  await getSessionProfileFromCookieOrThrow()
+  const openWorkOrder = await findOpenWorkOrderForProject(projectId)
+  return Boolean(openWorkOrder)
+}
+

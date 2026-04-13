@@ -344,6 +344,13 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       owner: 'purchasing',
     },
     {
+      id: 'incomingDeliveries',
+      name: 'Incoming Deliveries',
+      description: 'Receive and match supplier deliveries against purchase sources',
+      icon: 'Truck',
+      owner: 'purchasing',
+    },
+    {
       id: 'materialDemand',
       name: 'Material Demand',
       description: 'Review and organize demand before grouping quote requests by supplier',

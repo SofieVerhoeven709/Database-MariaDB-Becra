@@ -19,7 +19,8 @@ export interface MappedQuoteSupplier {
   deletedBy: string | null
   deletedByName: string | null
   lineCount: number
-  executed: boolean
+  sent: boolean
+  received: boolean
 }
 
 export interface MappedQuoteSupplierDetailLine {

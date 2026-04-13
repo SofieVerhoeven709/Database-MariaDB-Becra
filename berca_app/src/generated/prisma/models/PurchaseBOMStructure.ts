@@ -286,7 +286,6 @@ export type PurchaseBOMStructureWhereInput = {
   purchaseBOMStructureId?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
   deletedBy?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
   quoteSupplierLineId?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineListRelationFilter
   Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
   PurchaseBOM?: Prisma.XOR<Prisma.PurchaseBOMScalarRelationFilter, Prisma.PurchaseBOMWhereInput>
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -316,7 +315,6 @@ export type PurchaseBOMStructureOrderByWithRelationInput = {
   purchaseBOMStructureId?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   quoteSupplierLineId?: Prisma.SortOrderInput | Prisma.SortOrder
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineOrderByRelationAggregateInput
   Material?: Prisma.MaterialOrderByWithRelationInput
   PurchaseBOM?: Prisma.PurchaseBOMOrderByWithRelationInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
@@ -351,7 +349,6 @@ export type PurchaseBOMStructureWhereUniqueInput = Prisma.AtLeast<{
   purchaseBOMStructureId?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
   deletedBy?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
   quoteSupplierLineId?: Prisma.StringNullableFilter<"PurchaseBOMStructure"> | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineListRelationFilter
   Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
   PurchaseBOM?: Prisma.XOR<Prisma.PurchaseBOMScalarRelationFilter, Prisma.PurchaseBOMWhereInput>
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -422,7 +419,6 @@ export type PurchaseBOMStructureCreateInput = {
   purchased?: boolean
   approvedForQuote?: boolean
   deleted?: boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
@@ -452,7 +448,6 @@ export type PurchaseBOMStructureUncheckedCreateInput = {
   purchaseBOMStructureId?: string | null
   deletedBy?: string | null
   quoteSupplierLineId?: string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
 }
 
@@ -468,7 +463,6 @@ export type PurchaseBOMStructureUpdateInput = {
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
@@ -498,7 +492,6 @@ export type PurchaseBOMStructureUncheckedUpdateInput = {
   purchaseBOMStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
 }
 
@@ -645,11 +638,6 @@ export type PurchaseBOMStructureMinOrderByAggregateInput = {
   purchaseBOMStructureId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
   quoteSupplierLineId?: Prisma.SortOrder
-}
-
-export type PurchaseBOMStructureScalarRelationFilter = {
-  is?: Prisma.PurchaseBOMStructureWhereInput
-  isNot?: Prisma.PurchaseBOMStructureWhereInput
 }
 
 export type PurchaseBOMStructureCreateNestedManyWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeInput = {
@@ -962,20 +950,6 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNeste
   deleteMany?: Prisma.PurchaseBOMStructureScalarWhereInput | Prisma.PurchaseBOMStructureScalarWhereInput[]
 }
 
-export type PurchaseBOMStructureCreateNestedOneWithoutIncomingDeliveryLineInput = {
-  create?: Prisma.XOR<Prisma.PurchaseBOMStructureCreateWithoutIncomingDeliveryLineInput, Prisma.PurchaseBOMStructureUncheckedCreateWithoutIncomingDeliveryLineInput>
-  connectOrCreate?: Prisma.PurchaseBOMStructureCreateOrConnectWithoutIncomingDeliveryLineInput
-  connect?: Prisma.PurchaseBOMStructureWhereUniqueInput
-}
-
-export type PurchaseBOMStructureUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput = {
-  create?: Prisma.XOR<Prisma.PurchaseBOMStructureCreateWithoutIncomingDeliveryLineInput, Prisma.PurchaseBOMStructureUncheckedCreateWithoutIncomingDeliveryLineInput>
-  connectOrCreate?: Prisma.PurchaseBOMStructureCreateOrConnectWithoutIncomingDeliveryLineInput
-  upsert?: Prisma.PurchaseBOMStructureUpsertWithoutIncomingDeliveryLineInput
-  connect?: Prisma.PurchaseBOMStructureWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PurchaseBOMStructureUpdateToOneWithWhereWithoutIncomingDeliveryLineInput, Prisma.PurchaseBOMStructureUpdateWithoutIncomingDeliveryLineInput>, Prisma.PurchaseBOMStructureUncheckedUpdateWithoutIncomingDeliveryLineInput>
-}
-
 export type PurchaseBOMStructureCreateWithoutEmployee_PurchaseBOMStructure_createdByToEmployeeInput = {
   id: string
   shortDescription?: string | null
@@ -988,7 +962,6 @@ export type PurchaseBOMStructureCreateWithoutEmployee_PurchaseBOMStructure_creat
   purchased?: boolean
   approvedForQuote?: boolean
   deleted?: boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeInput
@@ -1016,7 +989,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutEmployee_PurchaseBOMStruct
   purchaseBOMStructureId?: string | null
   deletedBy?: string | null
   quoteSupplierLineId?: string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
 }
 
@@ -1042,7 +1014,6 @@ export type PurchaseBOMStructureCreateWithoutEmployee_PurchaseBOMStructure_delet
   purchased?: boolean
   approvedForQuote?: boolean
   deleted?: boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
@@ -1070,7 +1041,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutEmployee_PurchaseBOMStruct
   projectBOMStructureId: string
   purchaseBOMStructureId?: string | null
   quoteSupplierLineId?: string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
 }
 
@@ -1152,7 +1122,6 @@ export type PurchaseBOMStructureCreateWithoutMaterialInput = {
   purchased?: boolean
   approvedForQuote?: boolean
   deleted?: boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
   Employee_PurchaseBOMStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeInput
@@ -1180,7 +1149,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutMaterialInput = {
   purchaseBOMStructureId?: string | null
   deletedBy?: string | null
   quoteSupplierLineId?: string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
 }
 
@@ -1222,7 +1190,6 @@ export type PurchaseBOMStructureCreateWithoutProjectBOMStructureInput = {
   purchased?: boolean
   approvedForQuote?: boolean
   deleted?: boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
@@ -1250,7 +1217,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutProjectBOMStructureInput =
   purchaseBOMStructureId?: string | null
   deletedBy?: string | null
   quoteSupplierLineId?: string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
 }
 
@@ -1292,7 +1258,6 @@ export type PurchaseBOMStructureCreateWithoutPurchaseBOMInput = {
   purchased?: boolean
   approvedForQuote?: boolean
   deleted?: boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
   Employee_PurchaseBOMStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeInput
@@ -1320,7 +1285,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutPurchaseBOMInput = {
   purchaseBOMStructureId?: string | null
   deletedBy?: string | null
   quoteSupplierLineId?: string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
 }
 
@@ -1362,7 +1326,6 @@ export type PurchaseBOMStructureCreateWithoutOther_PurchaseBOMStructureInput = {
   purchased?: boolean
   approvedForQuote?: boolean
   deleted?: boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
@@ -1391,7 +1354,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutOther_PurchaseBOMStructure
   purchaseBOMStructureId?: string | null
   deletedBy?: string | null
   quoteSupplierLineId?: string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
 }
 
 export type PurchaseBOMStructureCreateOrConnectWithoutOther_PurchaseBOMStructureInput = {
@@ -1411,7 +1373,6 @@ export type PurchaseBOMStructureCreateWithoutPurchaseBOMStructureInput = {
   purchased?: boolean
   approvedForQuote?: boolean
   deleted?: boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
@@ -1439,7 +1400,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutPurchaseBOMStructureInput 
   projectBOMStructureId: string
   deletedBy?: string | null
   quoteSupplierLineId?: string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
 }
 
@@ -1476,7 +1436,6 @@ export type PurchaseBOMStructureUpdateWithoutOther_PurchaseBOMStructureInput = {
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
@@ -1505,7 +1464,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutOther_PurchaseBOMStructure
   purchaseBOMStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
 }
 
 export type PurchaseBOMStructureUpsertWithWhereUniqueWithoutPurchaseBOMStructureInput = {
@@ -1536,7 +1494,6 @@ export type PurchaseBOMStructureCreateWithoutQuoteSupplierLineInput = {
   purchased?: boolean
   approvedForQuote?: boolean
   deleted?: boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseBOMStructureInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
   PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
   Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
@@ -1564,7 +1521,6 @@ export type PurchaseBOMStructureUncheckedCreateWithoutQuoteSupplierLineInput = {
   projectBOMStructureId: string
   purchaseBOMStructureId?: string | null
   deletedBy?: string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
 }
 
@@ -1592,110 +1548,6 @@ export type PurchaseBOMStructureUpdateWithWhereUniqueWithoutQuoteSupplierLineInp
 export type PurchaseBOMStructureUpdateManyWithWhereWithoutQuoteSupplierLineInput = {
   where: Prisma.PurchaseBOMStructureScalarWhereInput
   data: Prisma.XOR<Prisma.PurchaseBOMStructureUpdateManyMutationInput, Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineInput>
-}
-
-export type PurchaseBOMStructureCreateWithoutIncomingDeliveryLineInput = {
-  id: string
-  shortDescription?: string | null
-  additionalInfo?: string | null
-  description?: string | null
-  tag?: string | null
-  createdAt: Date | string
-  readyForPurchaseDate?: Date | string | null
-  deletedAt?: Date | string | null
-  purchased?: boolean
-  approvedForQuote?: boolean
-  deleted?: boolean
-  Material: Prisma.MaterialCreateNestedOneWithoutPurchaseBOMStructureInput
-  PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutPurchaseBOMStructureInput
-  Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeInput
-  Employee_PurchaseBOMStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeInput
-  ProjectBOMStructure: Prisma.ProjectBOMStructureCreateNestedOneWithoutPurchaseBOMStructureInput
-  PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedOneWithoutOther_PurchaseBOMStructureInput
-  other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutPurchaseBOMStructureInput
-  QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedOneWithoutPurchaseBOMStructureInput
-}
-
-export type PurchaseBOMStructureUncheckedCreateWithoutIncomingDeliveryLineInput = {
-  id: string
-  shortDescription?: string | null
-  additionalInfo?: string | null
-  description?: string | null
-  tag?: string | null
-  createdAt: Date | string
-  readyForPurchaseDate?: Date | string | null
-  deletedAt?: Date | string | null
-  purchased?: boolean
-  approvedForQuote?: boolean
-  deleted?: boolean
-  createdBy: string
-  materialId: string
-  purchaseBOMId: string
-  projectBOMStructureId: string
-  purchaseBOMStructureId?: string | null
-  deletedBy?: string | null
-  quoteSupplierLineId?: string | null
-  other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutPurchaseBOMStructureInput
-}
-
-export type PurchaseBOMStructureCreateOrConnectWithoutIncomingDeliveryLineInput = {
-  where: Prisma.PurchaseBOMStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.PurchaseBOMStructureCreateWithoutIncomingDeliveryLineInput, Prisma.PurchaseBOMStructureUncheckedCreateWithoutIncomingDeliveryLineInput>
-}
-
-export type PurchaseBOMStructureUpsertWithoutIncomingDeliveryLineInput = {
-  update: Prisma.XOR<Prisma.PurchaseBOMStructureUpdateWithoutIncomingDeliveryLineInput, Prisma.PurchaseBOMStructureUncheckedUpdateWithoutIncomingDeliveryLineInput>
-  create: Prisma.XOR<Prisma.PurchaseBOMStructureCreateWithoutIncomingDeliveryLineInput, Prisma.PurchaseBOMStructureUncheckedCreateWithoutIncomingDeliveryLineInput>
-  where?: Prisma.PurchaseBOMStructureWhereInput
-}
-
-export type PurchaseBOMStructureUpdateToOneWithWhereWithoutIncomingDeliveryLineInput = {
-  where?: Prisma.PurchaseBOMStructureWhereInput
-  data: Prisma.XOR<Prisma.PurchaseBOMStructureUpdateWithoutIncomingDeliveryLineInput, Prisma.PurchaseBOMStructureUncheckedUpdateWithoutIncomingDeliveryLineInput>
-}
-
-export type PurchaseBOMStructureUpdateWithoutIncomingDeliveryLineInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
-  PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
-  Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
-  Employee_PurchaseBOMStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeNestedInput
-  ProjectBOMStructure?: Prisma.ProjectBOMStructureUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
-  PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateOneWithoutOther_PurchaseBOMStructureNestedInput
-  other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutPurchaseBOMStructureNestedInput
-  QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateOneWithoutPurchaseBOMStructureNestedInput
-}
-
-export type PurchaseBOMStructureUncheckedUpdateWithoutIncomingDeliveryLineInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  readyForPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
-  projectBOMStructureId?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseBOMStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
 }
 
 export type PurchaseBOMStructureCreateManyEmployee_PurchaseBOMStructure_createdByToEmployeeInput = {
@@ -1750,7 +1602,6 @@ export type PurchaseBOMStructureUpdateWithoutEmployee_PurchaseBOMStructure_creat
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeNestedInput
@@ -1778,7 +1629,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutEmployee_PurchaseBOMStruct
   purchaseBOMStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
 }
 
@@ -1814,7 +1664,6 @@ export type PurchaseBOMStructureUpdateWithoutEmployee_PurchaseBOMStructure_delet
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
@@ -1842,7 +1691,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutEmployee_PurchaseBOMStruct
   projectBOMStructureId?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseBOMStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
 }
 
@@ -1898,7 +1746,6 @@ export type PurchaseBOMStructureUpdateWithoutMaterialInput = {
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
   Employee_PurchaseBOMStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeNestedInput
@@ -1926,7 +1773,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutMaterialInput = {
   purchaseBOMStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
 }
 
@@ -1982,7 +1828,6 @@ export type PurchaseBOMStructureUpdateWithoutProjectBOMStructureInput = {
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
@@ -2010,7 +1855,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutProjectBOMStructureInput =
   purchaseBOMStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
 }
 
@@ -2066,7 +1910,6 @@ export type PurchaseBOMStructureUpdateWithoutPurchaseBOMInput = {
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
   Employee_PurchaseBOMStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployeeNestedInput
@@ -2094,7 +1937,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutPurchaseBOMInput = {
   purchaseBOMStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
 }
 
@@ -2150,7 +1992,6 @@ export type PurchaseBOMStructureUpdateWithoutPurchaseBOMStructureInput = {
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
@@ -2178,7 +2019,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutPurchaseBOMStructureInput 
   projectBOMStructureId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
 }
 
@@ -2234,7 +2074,6 @@ export type PurchaseBOMStructureUpdateWithoutQuoteSupplierLineInput = {
   purchased?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedForQuote?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseBOMStructureNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutPurchaseBOMStructureNestedInput
   Employee_PurchaseBOMStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployeeNestedInput
@@ -2262,7 +2101,6 @@ export type PurchaseBOMStructureUncheckedUpdateWithoutQuoteSupplierLineInput = {
   projectBOMStructureId?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseBOMStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
   other_PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutPurchaseBOMStructureNestedInput
 }
 
@@ -2292,12 +2130,10 @@ export type PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineInput
  */
 
 export type PurchaseBOMStructureCountOutputType = {
-  IncomingDeliveryLine: number
   other_PurchaseBOMStructure: number
 }
 
 export type PurchaseBOMStructureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  IncomingDeliveryLine?: boolean | PurchaseBOMStructureCountOutputTypeCountIncomingDeliveryLineArgs
   other_PurchaseBOMStructure?: boolean | PurchaseBOMStructureCountOutputTypeCountOther_PurchaseBOMStructureArgs
 }
 
@@ -2309,13 +2145,6 @@ export type PurchaseBOMStructureCountOutputTypeDefaultArgs<ExtArgs extends runti
    * Select specific fields to fetch from the PurchaseBOMStructureCountOutputType
    */
   select?: Prisma.PurchaseBOMStructureCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * PurchaseBOMStructureCountOutputType without action
- */
-export type PurchaseBOMStructureCountOutputTypeCountIncomingDeliveryLineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.IncomingDeliveryLineWhereInput
 }
 
 /**
@@ -2345,7 +2174,6 @@ export type PurchaseBOMStructureSelect<ExtArgs extends runtime.Types.Extensions.
   purchaseBOMStructureId?: boolean
   deletedBy?: boolean
   quoteSupplierLineId?: boolean
-  IncomingDeliveryLine?: boolean | Prisma.PurchaseBOMStructure$IncomingDeliveryLineArgs<ExtArgs>
   Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   PurchaseBOM?: boolean | Prisma.PurchaseBOMDefaultArgs<ExtArgs>
   Employee_PurchaseBOMStructure_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -2382,7 +2210,6 @@ export type PurchaseBOMStructureSelectScalar = {
 
 export type PurchaseBOMStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shortDescription" | "additionalInfo" | "description" | "tag" | "createdAt" | "readyForPurchaseDate" | "deletedAt" | "purchased" | "approvedForQuote" | "deleted" | "createdBy" | "materialId" | "purchaseBOMId" | "projectBOMStructureId" | "purchaseBOMStructureId" | "deletedBy" | "quoteSupplierLineId", ExtArgs["result"]["purchaseBOMStructure"]>
 export type PurchaseBOMStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  IncomingDeliveryLine?: boolean | Prisma.PurchaseBOMStructure$IncomingDeliveryLineArgs<ExtArgs>
   Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   PurchaseBOM?: boolean | Prisma.PurchaseBOMDefaultArgs<ExtArgs>
   Employee_PurchaseBOMStructure_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -2397,7 +2224,6 @@ export type PurchaseBOMStructureInclude<ExtArgs extends runtime.Types.Extensions
 export type $PurchaseBOMStructurePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PurchaseBOMStructure"
   objects: {
-    IncomingDeliveryLine: Prisma.$IncomingDeliveryLinePayload<ExtArgs>[]
     Material: Prisma.$MaterialPayload<ExtArgs>
     PurchaseBOM: Prisma.$PurchaseBOMPayload<ExtArgs>
     Employee_PurchaseBOMStructure_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
@@ -2766,7 +2592,6 @@ readonly fields: PurchaseBOMStructureFieldRefs;
  */
 export interface Prisma__PurchaseBOMStructureClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  IncomingDeliveryLine<T extends Prisma.PurchaseBOMStructure$IncomingDeliveryLineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseBOMStructure$IncomingDeliveryLineArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncomingDeliveryLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Material<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   PurchaseBOM<T extends Prisma.PurchaseBOMDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseBOMDefaultArgs<ExtArgs>>): Prisma.Prisma__PurchaseBOMClient<runtime.Types.Result.GetResult<Prisma.$PurchaseBOMPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_PurchaseBOMStructure_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -3162,30 +2987,6 @@ export type PurchaseBOMStructureDeleteManyArgs<ExtArgs extends runtime.Types.Ext
    * Limit how many PurchaseBOMStructures to delete.
    */
   limit?: number
-}
-
-/**
- * PurchaseBOMStructure.IncomingDeliveryLine
- */
-export type PurchaseBOMStructure$IncomingDeliveryLineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the IncomingDeliveryLine
-   */
-  select?: Prisma.IncomingDeliveryLineSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the IncomingDeliveryLine
-   */
-  omit?: Prisma.IncomingDeliveryLineOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.IncomingDeliveryLineInclude<ExtArgs> | null
-  where?: Prisma.IncomingDeliveryLineWhereInput
-  orderBy?: Prisma.IncomingDeliveryLineOrderByWithRelationInput | Prisma.IncomingDeliveryLineOrderByWithRelationInput[]
-  cursor?: Prisma.IncomingDeliveryLineWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.IncomingDeliveryLineScalarFieldEnum | Prisma.IncomingDeliveryLineScalarFieldEnum[]
 }
 
 /**

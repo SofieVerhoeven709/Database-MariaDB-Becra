@@ -557,3 +557,8 @@ export type IncomingDelivery = Prisma.IncomingDeliveryModel
  * 
  */
 export type IncomingDeliveryLine = Prisma.IncomingDeliveryLineModel
+/**
+ * Model IncomingDeliveryLineAllocation
+ * 
+ */
+export type IncomingDeliveryLineAllocation = Prisma.IncomingDeliveryLineAllocationModel

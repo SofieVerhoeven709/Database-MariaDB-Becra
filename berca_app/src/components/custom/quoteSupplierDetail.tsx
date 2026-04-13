@@ -47,6 +47,14 @@ function materialLabel(m: {beNumber: string | null; shortDescription: string | n
   return [m.beNumber, m.shortDescription ?? m.name].filter(Boolean).join(' — ') || m.id
 }
 
+function getLifecycleStatus(quote: MappedQuoteSupplierDetail): 'pending' | 'sent' | 'received' | 'approved' | 'rejected' {
+  if (quote.rejected) return 'rejected'
+  if (quote.acceptedForPOB) return 'approved'
+  if (quote.received) return 'received'
+  if (quote.sent) return 'sent'
+  return 'pending'
+}
+
 export function QuoteSupplierDetail({
   quote,
   departmentId,
@@ -57,9 +65,11 @@ export function QuoteSupplierDetail({
   defaultMaterialDemandId,
 }: QuoteSupplierDetailProps) {
   const router = useRouter()
-  const canEditLines = currentUserLevel >= 40
-  const canCreateLines = currentUserLevel >= 60
-  const canDeleteLines = currentUserLevel >= 80
+  const isApprovedLocked = quote.acceptedForPOB && currentUserLevel < 80
+  const canEditLines = currentUserLevel >= 40 && !isApprovedLocked
+  const canCreateLines = currentUserLevel >= 60 && !quote.sent && !isApprovedLocked
+  const canDeleteLines = currentUserLevel >= 80 && !isApprovedLocked
+  const lifecycleStatus = getLifecycleStatus(quote)
 
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
@@ -223,15 +233,59 @@ export function QuoteSupplierDetail({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {quote.rejected && <Badge className="bg-red-500/15 text-red-700 border border-red-500/30">Rejected</Badge>}
-          {quote.acceptedForPOB && <Badge className="bg-green-500/15 text-green-700 border border-green-500/30">Accepted</Badge>}
-          {!quote.rejected && !quote.acceptedForPOB && (
+          {lifecycleStatus === 'rejected' && <Badge className="bg-red-500/15 text-red-700 border border-red-500/30">Rejected</Badge>}
+          {lifecycleStatus === 'approved' && <Badge className="bg-green-500/15 text-green-700 border border-green-500/30">Approved</Badge>}
+          {lifecycleStatus === 'received' && <Badge className="bg-blue-500/15 text-blue-700 border border-blue-500/30">Received</Badge>}
+          {lifecycleStatus === 'sent' && <Badge className="bg-slate-500/15 text-slate-700 border border-slate-500/30">Sent</Badge>}
+          {lifecycleStatus === 'pending' && (
             <Badge className="bg-yellow-500/15 text-yellow-700 border border-yellow-500/30">Pending</Badge>
           )}
         </div>
       </div>
 
       {error && <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">{error}</div>}
+
+      <div className="rounded-xl border border-border/60 bg-card p-4">
+        <h2 className="text-sm font-medium text-foreground mb-3">Quote details</h2>
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="text-sm text-muted-foreground">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Quotation number</span>
+            <div className="text-foreground mt-0.5">{quote.quotationNumber ?? '—'}</div>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Payment condition</span>
+            <div className="text-foreground mt-0.5">{quote.paymentConditionName ?? '—'}</div>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Delivery time</span>
+            <div className="text-foreground mt-0.5">{quote.deliveryTimeDays !== null ? `${quote.deliveryTimeDays} day(s)` : '—'}</div>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Valid until</span>
+            <div className="text-foreground mt-0.5">{formatDate(quote.validUntil)}</div>
+          </div>
+          <div className="md:col-span-2 text-sm text-muted-foreground">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Description</span>
+            <div className="text-foreground mt-0.5 whitespace-pre-wrap">{quote.description ?? '—'}</div>
+          </div>
+          <div className="md:col-span-2 text-sm text-muted-foreground">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Additional info</span>
+            <div className="text-foreground mt-0.5 whitespace-pre-wrap">{quote.additionalInfo ?? '—'}</div>
+          </div>
+        </div>
+      </div>
+
+      {quote.sent && (
+        <div className="rounded-md border border-sky-500/30 bg-sky-500/10 px-3 py-2 text-sm text-sky-800">
+          This quote is sent. You can no longer add new line items.
+        </div>
+      )}
+
+      {isApprovedLocked && (
+        <div className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-800">
+          This quote is approved. Only managers can edit it.
+        </div>
+      )}
 
       {canCreateLines && (
         <div className="rounded-xl border border-border/60 bg-card p-4">

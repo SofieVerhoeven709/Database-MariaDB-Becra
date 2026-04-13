@@ -19,6 +19,10 @@ import {
   hardDeletePurchaseDetailAction,
 } from '@/serverFunctions/purchases'
 
+function isOrderedNotSentStatus(status: string | null | undefined): boolean {
+  return status === 'ORDERED'
+}
+
 interface PurchaseDetailTableProps {
   purchaseId: string
   initialDetails: MappedPurchaseDetail[]
@@ -26,6 +30,8 @@ interface PurchaseDetailTableProps {
   materialDemandOptions: DetailOption[]
   quoteLineOptions: QuoteLineOption[]
   isAdmin: boolean
+  purchaseStatus: string
+  currentUserLevel: number
 }
 
 function formatCurrency(val: string | number | null | undefined) {
@@ -57,10 +63,13 @@ export function PurchaseDetailTable({
   materialDemandOptions,
   quoteLineOptions,
   isAdmin,
+  purchaseStatus,
+  currentUserLevel,
 }: PurchaseDetailTableProps) {
   const router = useRouter()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<MappedPurchaseDetail | null>(null)
+  const isOrderedLocked = isOrderedNotSentStatus(purchaseStatus) && currentUserLevel < 80
 
   async function handleSave(d: MappedPurchaseDetail) {
     if (editing) {
@@ -127,6 +136,7 @@ export function PurchaseDetailTable({
         </div>
         <Button
           size="sm"
+          disabled={isOrderedLocked}
           onClick={() => {
             setEditing(null)
             setDialogOpen(true)
@@ -136,6 +146,12 @@ export function PurchaseDetailTable({
           Add Line Item
         </Button>
       </div>
+
+      {isOrderedLocked && (
+        <div className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-800">
+          This purchase is ordered. Only managers can edit line items.
+        </div>
+      )}
 
       {/* Table */}
       <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
@@ -195,6 +211,7 @@ export function PurchaseDetailTable({
                         variant="ghost"
                         size="icon"
                         className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          disabled={isOrderedLocked}
                         onClick={() => {
                           setEditing(d)
                           setDialogOpen(true)
@@ -205,6 +222,7 @@ export function PurchaseDetailTable({
                         variant="ghost"
                         size="icon"
                         className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                          disabled={isOrderedLocked}
                         onClick={() => handleDelete(d.id)}>
                         <Trash2 className="h-3.5 w-3.5" />
                       </Button>

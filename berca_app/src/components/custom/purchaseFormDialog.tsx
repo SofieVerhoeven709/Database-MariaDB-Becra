@@ -7,6 +7,7 @@ import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedPurchase} from '@/types/purchase'
+import {generatePurchaseNumber} from '@/lib/utils'
 
 export interface PurchaseOption {
   id: string
@@ -23,12 +24,12 @@ interface PurchaseFormDialogProps {
   onSave: (purchase: MappedPurchase) => Promise<void>
 }
 
-const STATUS_OPTIONS = ['DRAFT', 'SENT', 'PARTIAL_RECEIVED', 'CLOSED', 'CANCELLED']
+const STATUS_OPTIONS = ['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'CLOSED', 'CANCELLED']
 
 function emptyPurchase(): MappedPurchase {
   return {
     id: '',
-    purchaseNumber: '',
+    purchaseNumber: generatePurchaseNumber(),
     purchaseDate: new Date().toISOString(),
     status: 'DRAFT',
     companyId: '',
@@ -95,13 +96,25 @@ export function PurchaseFormDialog({
           {/* Purchase number */}
           <div className="grid gap-1.5">
             <Label htmlFor="purchaseNumber">Purchase Number</Label>
-            <Input
-              id="purchaseNumber"
-              value={form.purchaseNumber ?? ''}
-              onChange={e => set('purchaseNumber', e.target.value)}
-              placeholder="e.g. PO-2026-001"
-              className="bg-secondary border-border"
-            />
+            <div className="flex gap-2">
+              <Input
+                id="purchaseNumber"
+                value={form.purchaseNumber ?? ''}
+                onChange={e => set('purchaseNumber', e.target.value)}
+                placeholder="e.g. PO2026041301"
+                className="bg-secondary border-border flex-1"
+              />
+              {!isEdit && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="h-10 px-3 border-border text-xs shrink-0"
+                  onClick={() => set('purchaseNumber', generatePurchaseNumber())}>
+                  Regenerate
+                </Button>
+              )}
+            </div>
           </div>
 
           {/* Purchase date */}

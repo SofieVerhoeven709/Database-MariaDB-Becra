@@ -27,7 +27,7 @@ export type AggregateIncomingDelivery = {
 export type IncomingDeliveryMinAggregateOutputType = {
   id: string | null
   incomingDeliveryNumber: string | null
-  purchaseBOMId: string | null
+  purchaseId: string | null
   additionalInfo: string | null
   description: string | null
   status: string | null
@@ -43,7 +43,7 @@ export type IncomingDeliveryMinAggregateOutputType = {
 export type IncomingDeliveryMaxAggregateOutputType = {
   id: string | null
   incomingDeliveryNumber: string | null
-  purchaseBOMId: string | null
+  purchaseId: string | null
   additionalInfo: string | null
   description: string | null
   status: string | null
@@ -59,7 +59,7 @@ export type IncomingDeliveryMaxAggregateOutputType = {
 export type IncomingDeliveryCountAggregateOutputType = {
   id: number
   incomingDeliveryNumber: number
-  purchaseBOMId: number
+  purchaseId: number
   additionalInfo: number
   description: number
   status: number
@@ -77,7 +77,7 @@ export type IncomingDeliveryCountAggregateOutputType = {
 export type IncomingDeliveryMinAggregateInputType = {
   id?: true
   incomingDeliveryNumber?: true
-  purchaseBOMId?: true
+  purchaseId?: true
   additionalInfo?: true
   description?: true
   status?: true
@@ -93,7 +93,7 @@ export type IncomingDeliveryMinAggregateInputType = {
 export type IncomingDeliveryMaxAggregateInputType = {
   id?: true
   incomingDeliveryNumber?: true
-  purchaseBOMId?: true
+  purchaseId?: true
   additionalInfo?: true
   description?: true
   status?: true
@@ -109,7 +109,7 @@ export type IncomingDeliveryMaxAggregateInputType = {
 export type IncomingDeliveryCountAggregateInputType = {
   id?: true
   incomingDeliveryNumber?: true
-  purchaseBOMId?: true
+  purchaseId?: true
   additionalInfo?: true
   description?: true
   status?: true
@@ -198,7 +198,7 @@ export type IncomingDeliveryGroupByArgs<ExtArgs extends runtime.Types.Extensions
 export type IncomingDeliveryGroupByOutputType = {
   id: string
   incomingDeliveryNumber: string
-  purchaseBOMId: string
+  purchaseId: string | null
   additionalInfo: string | null
   description: string | null
   status: string
@@ -235,7 +235,7 @@ export type IncomingDeliveryWhereInput = {
   NOT?: Prisma.IncomingDeliveryWhereInput | Prisma.IncomingDeliveryWhereInput[]
   id?: Prisma.StringFilter<"IncomingDelivery"> | string
   incomingDeliveryNumber?: Prisma.StringFilter<"IncomingDelivery"> | string
-  purchaseBOMId?: Prisma.StringFilter<"IncomingDelivery"> | string
+  purchaseId?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
   description?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
   status?: Prisma.StringFilter<"IncomingDelivery"> | string
@@ -246,7 +246,7 @@ export type IncomingDeliveryWhereInput = {
   deleted?: Prisma.BoolFilter<"IncomingDelivery"> | boolean
   createdBy?: Prisma.StringFilter<"IncomingDelivery"> | string
   deletedBy?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
-  PurchaseBOM?: Prisma.XOR<Prisma.PurchaseBOMScalarRelationFilter, Prisma.PurchaseBOMWhereInput>
+  Purchase?: Prisma.XOR<Prisma.PurchaseNullableScalarRelationFilter, Prisma.PurchaseWhereInput> | null
   Employee_IncomingDelivery_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_IncomingDelivery_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineListRelationFilter
@@ -255,7 +255,7 @@ export type IncomingDeliveryWhereInput = {
 export type IncomingDeliveryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   incomingDeliveryNumber?: Prisma.SortOrder
-  purchaseBOMId?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -266,7 +266,7 @@ export type IncomingDeliveryOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  PurchaseBOM?: Prisma.PurchaseBOMOrderByWithRelationInput
+  Purchase?: Prisma.PurchaseOrderByWithRelationInput
   Employee_IncomingDelivery_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_IncomingDelivery_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineOrderByRelationAggregateInput
@@ -279,7 +279,7 @@ export type IncomingDeliveryWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.IncomingDeliveryWhereInput | Prisma.IncomingDeliveryWhereInput[]
   OR?: Prisma.IncomingDeliveryWhereInput[]
   NOT?: Prisma.IncomingDeliveryWhereInput | Prisma.IncomingDeliveryWhereInput[]
-  purchaseBOMId?: Prisma.StringFilter<"IncomingDelivery"> | string
+  purchaseId?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
   description?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
   status?: Prisma.StringFilter<"IncomingDelivery"> | string
@@ -290,7 +290,7 @@ export type IncomingDeliveryWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"IncomingDelivery"> | boolean
   createdBy?: Prisma.StringFilter<"IncomingDelivery"> | string
   deletedBy?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
-  PurchaseBOM?: Prisma.XOR<Prisma.PurchaseBOMScalarRelationFilter, Prisma.PurchaseBOMWhereInput>
+  Purchase?: Prisma.XOR<Prisma.PurchaseNullableScalarRelationFilter, Prisma.PurchaseWhereInput> | null
   Employee_IncomingDelivery_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_IncomingDelivery_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineListRelationFilter
@@ -299,7 +299,7 @@ export type IncomingDeliveryWhereUniqueInput = Prisma.AtLeast<{
 export type IncomingDeliveryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   incomingDeliveryNumber?: Prisma.SortOrder
-  purchaseBOMId?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -321,7 +321,7 @@ export type IncomingDeliveryScalarWhereWithAggregatesInput = {
   NOT?: Prisma.IncomingDeliveryScalarWhereWithAggregatesInput | Prisma.IncomingDeliveryScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"IncomingDelivery"> | string
   incomingDeliveryNumber?: Prisma.StringWithAggregatesFilter<"IncomingDelivery"> | string
-  purchaseBOMId?: Prisma.StringWithAggregatesFilter<"IncomingDelivery"> | string
+  purchaseId?: Prisma.StringNullableWithAggregatesFilter<"IncomingDelivery"> | string | null
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"IncomingDelivery"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"IncomingDelivery"> | string | null
   status?: Prisma.StringWithAggregatesFilter<"IncomingDelivery"> | string
@@ -345,7 +345,7 @@ export type IncomingDeliveryCreateInput = {
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutIncomingDeliveryInput
+  Purchase?: Prisma.PurchaseCreateNestedOneWithoutIncomingDeliveryInput
   Employee_IncomingDelivery_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutIncomingDelivery_IncomingDelivery_createdByToEmployeeInput
   Employee_IncomingDelivery_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutIncomingDelivery_IncomingDelivery_deletedByToEmployeeInput
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutIncomingDeliveryInput
@@ -354,7 +354,7 @@ export type IncomingDeliveryCreateInput = {
 export type IncomingDeliveryUncheckedCreateInput = {
   id: string
   incomingDeliveryNumber: string
-  purchaseBOMId: string
+  purchaseId?: string | null
   additionalInfo?: string | null
   description?: string | null
   status?: string
@@ -379,7 +379,7 @@ export type IncomingDeliveryUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutIncomingDeliveryNestedInput
+  Purchase?: Prisma.PurchaseUpdateOneWithoutIncomingDeliveryNestedInput
   Employee_IncomingDelivery_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutIncomingDelivery_IncomingDelivery_createdByToEmployeeNestedInput
   Employee_IncomingDelivery_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutIncomingDelivery_IncomingDelivery_deletedByToEmployeeNestedInput
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutIncomingDeliveryNestedInput
@@ -388,7 +388,7 @@ export type IncomingDeliveryUpdateInput = {
 export type IncomingDeliveryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   incomingDeliveryNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -405,7 +405,7 @@ export type IncomingDeliveryUncheckedUpdateInput = {
 export type IncomingDeliveryCreateManyInput = {
   id: string
   incomingDeliveryNumber: string
-  purchaseBOMId: string
+  purchaseId?: string | null
   additionalInfo?: string | null
   description?: string | null
   status?: string
@@ -434,7 +434,7 @@ export type IncomingDeliveryUpdateManyMutationInput = {
 export type IncomingDeliveryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   incomingDeliveryNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -466,7 +466,7 @@ export type IncomingDeliveryOrderByRelevanceInput = {
 export type IncomingDeliveryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   incomingDeliveryNumber?: Prisma.SortOrder
-  purchaseBOMId?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -482,7 +482,7 @@ export type IncomingDeliveryCountOrderByAggregateInput = {
 export type IncomingDeliveryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   incomingDeliveryNumber?: Prisma.SortOrder
-  purchaseBOMId?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -498,7 +498,7 @@ export type IncomingDeliveryMaxOrderByAggregateInput = {
 export type IncomingDeliveryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   incomingDeliveryNumber?: Prisma.SortOrder
-  purchaseBOMId?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -600,45 +600,45 @@ export type IncomingDeliveryUncheckedUpdateManyWithoutEmployee_IncomingDelivery_
   deleteMany?: Prisma.IncomingDeliveryScalarWhereInput | Prisma.IncomingDeliveryScalarWhereInput[]
 }
 
-export type IncomingDeliveryCreateNestedManyWithoutPurchaseBOMInput = {
-  create?: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseBOMInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput> | Prisma.IncomingDeliveryCreateWithoutPurchaseBOMInput[] | Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput[]
-  connectOrCreate?: Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseBOMInput | Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseBOMInput[]
-  createMany?: Prisma.IncomingDeliveryCreateManyPurchaseBOMInputEnvelope
+export type IncomingDeliveryCreateNestedManyWithoutPurchaseInput = {
+  create?: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseInput> | Prisma.IncomingDeliveryCreateWithoutPurchaseInput[] | Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseInput[]
+  connectOrCreate?: Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseInput | Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseInput[]
+  createMany?: Prisma.IncomingDeliveryCreateManyPurchaseInputEnvelope
   connect?: Prisma.IncomingDeliveryWhereUniqueInput | Prisma.IncomingDeliveryWhereUniqueInput[]
 }
 
-export type IncomingDeliveryUncheckedCreateNestedManyWithoutPurchaseBOMInput = {
-  create?: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseBOMInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput> | Prisma.IncomingDeliveryCreateWithoutPurchaseBOMInput[] | Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput[]
-  connectOrCreate?: Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseBOMInput | Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseBOMInput[]
-  createMany?: Prisma.IncomingDeliveryCreateManyPurchaseBOMInputEnvelope
+export type IncomingDeliveryUncheckedCreateNestedManyWithoutPurchaseInput = {
+  create?: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseInput> | Prisma.IncomingDeliveryCreateWithoutPurchaseInput[] | Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseInput[]
+  connectOrCreate?: Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseInput | Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseInput[]
+  createMany?: Prisma.IncomingDeliveryCreateManyPurchaseInputEnvelope
   connect?: Prisma.IncomingDeliveryWhereUniqueInput | Prisma.IncomingDeliveryWhereUniqueInput[]
 }
 
-export type IncomingDeliveryUpdateManyWithoutPurchaseBOMNestedInput = {
-  create?: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseBOMInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput> | Prisma.IncomingDeliveryCreateWithoutPurchaseBOMInput[] | Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput[]
-  connectOrCreate?: Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseBOMInput | Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseBOMInput[]
-  upsert?: Prisma.IncomingDeliveryUpsertWithWhereUniqueWithoutPurchaseBOMInput | Prisma.IncomingDeliveryUpsertWithWhereUniqueWithoutPurchaseBOMInput[]
-  createMany?: Prisma.IncomingDeliveryCreateManyPurchaseBOMInputEnvelope
+export type IncomingDeliveryUpdateManyWithoutPurchaseNestedInput = {
+  create?: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseInput> | Prisma.IncomingDeliveryCreateWithoutPurchaseInput[] | Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseInput[]
+  connectOrCreate?: Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseInput | Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseInput[]
+  upsert?: Prisma.IncomingDeliveryUpsertWithWhereUniqueWithoutPurchaseInput | Prisma.IncomingDeliveryUpsertWithWhereUniqueWithoutPurchaseInput[]
+  createMany?: Prisma.IncomingDeliveryCreateManyPurchaseInputEnvelope
   set?: Prisma.IncomingDeliveryWhereUniqueInput | Prisma.IncomingDeliveryWhereUniqueInput[]
   disconnect?: Prisma.IncomingDeliveryWhereUniqueInput | Prisma.IncomingDeliveryWhereUniqueInput[]
   delete?: Prisma.IncomingDeliveryWhereUniqueInput | Prisma.IncomingDeliveryWhereUniqueInput[]
   connect?: Prisma.IncomingDeliveryWhereUniqueInput | Prisma.IncomingDeliveryWhereUniqueInput[]
-  update?: Prisma.IncomingDeliveryUpdateWithWhereUniqueWithoutPurchaseBOMInput | Prisma.IncomingDeliveryUpdateWithWhereUniqueWithoutPurchaseBOMInput[]
-  updateMany?: Prisma.IncomingDeliveryUpdateManyWithWhereWithoutPurchaseBOMInput | Prisma.IncomingDeliveryUpdateManyWithWhereWithoutPurchaseBOMInput[]
+  update?: Prisma.IncomingDeliveryUpdateWithWhereUniqueWithoutPurchaseInput | Prisma.IncomingDeliveryUpdateWithWhereUniqueWithoutPurchaseInput[]
+  updateMany?: Prisma.IncomingDeliveryUpdateManyWithWhereWithoutPurchaseInput | Prisma.IncomingDeliveryUpdateManyWithWhereWithoutPurchaseInput[]
   deleteMany?: Prisma.IncomingDeliveryScalarWhereInput | Prisma.IncomingDeliveryScalarWhereInput[]
 }
 
-export type IncomingDeliveryUncheckedUpdateManyWithoutPurchaseBOMNestedInput = {
-  create?: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseBOMInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput> | Prisma.IncomingDeliveryCreateWithoutPurchaseBOMInput[] | Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput[]
-  connectOrCreate?: Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseBOMInput | Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseBOMInput[]
-  upsert?: Prisma.IncomingDeliveryUpsertWithWhereUniqueWithoutPurchaseBOMInput | Prisma.IncomingDeliveryUpsertWithWhereUniqueWithoutPurchaseBOMInput[]
-  createMany?: Prisma.IncomingDeliveryCreateManyPurchaseBOMInputEnvelope
+export type IncomingDeliveryUncheckedUpdateManyWithoutPurchaseNestedInput = {
+  create?: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseInput> | Prisma.IncomingDeliveryCreateWithoutPurchaseInput[] | Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseInput[]
+  connectOrCreate?: Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseInput | Prisma.IncomingDeliveryCreateOrConnectWithoutPurchaseInput[]
+  upsert?: Prisma.IncomingDeliveryUpsertWithWhereUniqueWithoutPurchaseInput | Prisma.IncomingDeliveryUpsertWithWhereUniqueWithoutPurchaseInput[]
+  createMany?: Prisma.IncomingDeliveryCreateManyPurchaseInputEnvelope
   set?: Prisma.IncomingDeliveryWhereUniqueInput | Prisma.IncomingDeliveryWhereUniqueInput[]
   disconnect?: Prisma.IncomingDeliveryWhereUniqueInput | Prisma.IncomingDeliveryWhereUniqueInput[]
   delete?: Prisma.IncomingDeliveryWhereUniqueInput | Prisma.IncomingDeliveryWhereUniqueInput[]
   connect?: Prisma.IncomingDeliveryWhereUniqueInput | Prisma.IncomingDeliveryWhereUniqueInput[]
-  update?: Prisma.IncomingDeliveryUpdateWithWhereUniqueWithoutPurchaseBOMInput | Prisma.IncomingDeliveryUpdateWithWhereUniqueWithoutPurchaseBOMInput[]
-  updateMany?: Prisma.IncomingDeliveryUpdateManyWithWhereWithoutPurchaseBOMInput | Prisma.IncomingDeliveryUpdateManyWithWhereWithoutPurchaseBOMInput[]
+  update?: Prisma.IncomingDeliveryUpdateWithWhereUniqueWithoutPurchaseInput | Prisma.IncomingDeliveryUpdateWithWhereUniqueWithoutPurchaseInput[]
+  updateMany?: Prisma.IncomingDeliveryUpdateManyWithWhereWithoutPurchaseInput | Prisma.IncomingDeliveryUpdateManyWithWhereWithoutPurchaseInput[]
   deleteMany?: Prisma.IncomingDeliveryScalarWhereInput | Prisma.IncomingDeliveryScalarWhereInput[]
 }
 
@@ -667,7 +667,7 @@ export type IncomingDeliveryCreateWithoutEmployee_IncomingDelivery_createdByToEm
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutIncomingDeliveryInput
+  Purchase?: Prisma.PurchaseCreateNestedOneWithoutIncomingDeliveryInput
   Employee_IncomingDelivery_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutIncomingDelivery_IncomingDelivery_deletedByToEmployeeInput
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutIncomingDeliveryInput
 }
@@ -675,7 +675,7 @@ export type IncomingDeliveryCreateWithoutEmployee_IncomingDelivery_createdByToEm
 export type IncomingDeliveryUncheckedCreateWithoutEmployee_IncomingDelivery_createdByToEmployeeInput = {
   id: string
   incomingDeliveryNumber: string
-  purchaseBOMId: string
+  purchaseId?: string | null
   additionalInfo?: string | null
   description?: string | null
   status?: string
@@ -709,7 +709,7 @@ export type IncomingDeliveryCreateWithoutEmployee_IncomingDelivery_deletedByToEm
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutIncomingDeliveryInput
+  Purchase?: Prisma.PurchaseCreateNestedOneWithoutIncomingDeliveryInput
   Employee_IncomingDelivery_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutIncomingDelivery_IncomingDelivery_createdByToEmployeeInput
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutIncomingDeliveryInput
 }
@@ -717,7 +717,7 @@ export type IncomingDeliveryCreateWithoutEmployee_IncomingDelivery_deletedByToEm
 export type IncomingDeliveryUncheckedCreateWithoutEmployee_IncomingDelivery_deletedByToEmployeeInput = {
   id: string
   incomingDeliveryNumber: string
-  purchaseBOMId: string
+  purchaseId?: string | null
   additionalInfo?: string | null
   description?: string | null
   status?: string
@@ -762,7 +762,7 @@ export type IncomingDeliveryScalarWhereInput = {
   NOT?: Prisma.IncomingDeliveryScalarWhereInput | Prisma.IncomingDeliveryScalarWhereInput[]
   id?: Prisma.StringFilter<"IncomingDelivery"> | string
   incomingDeliveryNumber?: Prisma.StringFilter<"IncomingDelivery"> | string
-  purchaseBOMId?: Prisma.StringFilter<"IncomingDelivery"> | string
+  purchaseId?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
   description?: Prisma.StringNullableFilter<"IncomingDelivery"> | string | null
   status?: Prisma.StringFilter<"IncomingDelivery"> | string
@@ -791,7 +791,7 @@ export type IncomingDeliveryUpdateManyWithWhereWithoutEmployee_IncomingDelivery_
   data: Prisma.XOR<Prisma.IncomingDeliveryUpdateManyMutationInput, Prisma.IncomingDeliveryUncheckedUpdateManyWithoutEmployee_IncomingDelivery_deletedByToEmployeeInput>
 }
 
-export type IncomingDeliveryCreateWithoutPurchaseBOMInput = {
+export type IncomingDeliveryCreateWithoutPurchaseInput = {
   id: string
   incomingDeliveryNumber: string
   additionalInfo?: string | null
@@ -807,7 +807,7 @@ export type IncomingDeliveryCreateWithoutPurchaseBOMInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutIncomingDeliveryInput
 }
 
-export type IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput = {
+export type IncomingDeliveryUncheckedCreateWithoutPurchaseInput = {
   id: string
   incomingDeliveryNumber: string
   additionalInfo?: string | null
@@ -823,30 +823,30 @@ export type IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutIncomingDeliveryInput
 }
 
-export type IncomingDeliveryCreateOrConnectWithoutPurchaseBOMInput = {
+export type IncomingDeliveryCreateOrConnectWithoutPurchaseInput = {
   where: Prisma.IncomingDeliveryWhereUniqueInput
-  create: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseBOMInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput>
+  create: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseInput>
 }
 
-export type IncomingDeliveryCreateManyPurchaseBOMInputEnvelope = {
-  data: Prisma.IncomingDeliveryCreateManyPurchaseBOMInput | Prisma.IncomingDeliveryCreateManyPurchaseBOMInput[]
+export type IncomingDeliveryCreateManyPurchaseInputEnvelope = {
+  data: Prisma.IncomingDeliveryCreateManyPurchaseInput | Prisma.IncomingDeliveryCreateManyPurchaseInput[]
   skipDuplicates?: boolean
 }
 
-export type IncomingDeliveryUpsertWithWhereUniqueWithoutPurchaseBOMInput = {
+export type IncomingDeliveryUpsertWithWhereUniqueWithoutPurchaseInput = {
   where: Prisma.IncomingDeliveryWhereUniqueInput
-  update: Prisma.XOR<Prisma.IncomingDeliveryUpdateWithoutPurchaseBOMInput, Prisma.IncomingDeliveryUncheckedUpdateWithoutPurchaseBOMInput>
-  create: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseBOMInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseBOMInput>
+  update: Prisma.XOR<Prisma.IncomingDeliveryUpdateWithoutPurchaseInput, Prisma.IncomingDeliveryUncheckedUpdateWithoutPurchaseInput>
+  create: Prisma.XOR<Prisma.IncomingDeliveryCreateWithoutPurchaseInput, Prisma.IncomingDeliveryUncheckedCreateWithoutPurchaseInput>
 }
 
-export type IncomingDeliveryUpdateWithWhereUniqueWithoutPurchaseBOMInput = {
+export type IncomingDeliveryUpdateWithWhereUniqueWithoutPurchaseInput = {
   where: Prisma.IncomingDeliveryWhereUniqueInput
-  data: Prisma.XOR<Prisma.IncomingDeliveryUpdateWithoutPurchaseBOMInput, Prisma.IncomingDeliveryUncheckedUpdateWithoutPurchaseBOMInput>
+  data: Prisma.XOR<Prisma.IncomingDeliveryUpdateWithoutPurchaseInput, Prisma.IncomingDeliveryUncheckedUpdateWithoutPurchaseInput>
 }
 
-export type IncomingDeliveryUpdateManyWithWhereWithoutPurchaseBOMInput = {
+export type IncomingDeliveryUpdateManyWithWhereWithoutPurchaseInput = {
   where: Prisma.IncomingDeliveryScalarWhereInput
-  data: Prisma.XOR<Prisma.IncomingDeliveryUpdateManyMutationInput, Prisma.IncomingDeliveryUncheckedUpdateManyWithoutPurchaseBOMInput>
+  data: Prisma.XOR<Prisma.IncomingDeliveryUpdateManyMutationInput, Prisma.IncomingDeliveryUncheckedUpdateManyWithoutPurchaseInput>
 }
 
 export type IncomingDeliveryCreateWithoutIncomingDeliveryLineInput = {
@@ -860,7 +860,7 @@ export type IncomingDeliveryCreateWithoutIncomingDeliveryLineInput = {
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  PurchaseBOM: Prisma.PurchaseBOMCreateNestedOneWithoutIncomingDeliveryInput
+  Purchase?: Prisma.PurchaseCreateNestedOneWithoutIncomingDeliveryInput
   Employee_IncomingDelivery_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutIncomingDelivery_IncomingDelivery_createdByToEmployeeInput
   Employee_IncomingDelivery_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutIncomingDelivery_IncomingDelivery_deletedByToEmployeeInput
 }
@@ -868,7 +868,7 @@ export type IncomingDeliveryCreateWithoutIncomingDeliveryLineInput = {
 export type IncomingDeliveryUncheckedCreateWithoutIncomingDeliveryLineInput = {
   id: string
   incomingDeliveryNumber: string
-  purchaseBOMId: string
+  purchaseId?: string | null
   additionalInfo?: string | null
   description?: string | null
   status?: string
@@ -908,7 +908,7 @@ export type IncomingDeliveryUpdateWithoutIncomingDeliveryLineInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutIncomingDeliveryNestedInput
+  Purchase?: Prisma.PurchaseUpdateOneWithoutIncomingDeliveryNestedInput
   Employee_IncomingDelivery_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutIncomingDelivery_IncomingDelivery_createdByToEmployeeNestedInput
   Employee_IncomingDelivery_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutIncomingDelivery_IncomingDelivery_deletedByToEmployeeNestedInput
 }
@@ -916,7 +916,7 @@ export type IncomingDeliveryUpdateWithoutIncomingDeliveryLineInput = {
 export type IncomingDeliveryUncheckedUpdateWithoutIncomingDeliveryLineInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   incomingDeliveryNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -932,7 +932,7 @@ export type IncomingDeliveryUncheckedUpdateWithoutIncomingDeliveryLineInput = {
 export type IncomingDeliveryCreateManyEmployee_IncomingDelivery_createdByToEmployeeInput = {
   id: string
   incomingDeliveryNumber: string
-  purchaseBOMId: string
+  purchaseId?: string | null
   additionalInfo?: string | null
   description?: string | null
   status?: string
@@ -947,7 +947,7 @@ export type IncomingDeliveryCreateManyEmployee_IncomingDelivery_createdByToEmplo
 export type IncomingDeliveryCreateManyEmployee_IncomingDelivery_deletedByToEmployeeInput = {
   id: string
   incomingDeliveryNumber: string
-  purchaseBOMId: string
+  purchaseId?: string | null
   additionalInfo?: string | null
   description?: string | null
   status?: string
@@ -970,7 +970,7 @@ export type IncomingDeliveryUpdateWithoutEmployee_IncomingDelivery_createdByToEm
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutIncomingDeliveryNestedInput
+  Purchase?: Prisma.PurchaseUpdateOneWithoutIncomingDeliveryNestedInput
   Employee_IncomingDelivery_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutIncomingDelivery_IncomingDelivery_deletedByToEmployeeNestedInput
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutIncomingDeliveryNestedInput
 }
@@ -978,7 +978,7 @@ export type IncomingDeliveryUpdateWithoutEmployee_IncomingDelivery_createdByToEm
 export type IncomingDeliveryUncheckedUpdateWithoutEmployee_IncomingDelivery_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   incomingDeliveryNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -994,7 +994,7 @@ export type IncomingDeliveryUncheckedUpdateWithoutEmployee_IncomingDelivery_crea
 export type IncomingDeliveryUncheckedUpdateManyWithoutEmployee_IncomingDelivery_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   incomingDeliveryNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1017,7 +1017,7 @@ export type IncomingDeliveryUpdateWithoutEmployee_IncomingDelivery_deletedByToEm
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  PurchaseBOM?: Prisma.PurchaseBOMUpdateOneRequiredWithoutIncomingDeliveryNestedInput
+  Purchase?: Prisma.PurchaseUpdateOneWithoutIncomingDeliveryNestedInput
   Employee_IncomingDelivery_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutIncomingDelivery_IncomingDelivery_createdByToEmployeeNestedInput
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutIncomingDeliveryNestedInput
 }
@@ -1025,7 +1025,7 @@ export type IncomingDeliveryUpdateWithoutEmployee_IncomingDelivery_deletedByToEm
 export type IncomingDeliveryUncheckedUpdateWithoutEmployee_IncomingDelivery_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   incomingDeliveryNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1041,7 +1041,7 @@ export type IncomingDeliveryUncheckedUpdateWithoutEmployee_IncomingDelivery_dele
 export type IncomingDeliveryUncheckedUpdateManyWithoutEmployee_IncomingDelivery_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   incomingDeliveryNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseBOMId?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1053,7 +1053,7 @@ export type IncomingDeliveryUncheckedUpdateManyWithoutEmployee_IncomingDelivery_
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type IncomingDeliveryCreateManyPurchaseBOMInput = {
+export type IncomingDeliveryCreateManyPurchaseInput = {
   id: string
   incomingDeliveryNumber: string
   additionalInfo?: string | null
@@ -1068,7 +1068,7 @@ export type IncomingDeliveryCreateManyPurchaseBOMInput = {
   deletedBy?: string | null
 }
 
-export type IncomingDeliveryUpdateWithoutPurchaseBOMInput = {
+export type IncomingDeliveryUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   incomingDeliveryNumber?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1084,7 +1084,7 @@ export type IncomingDeliveryUpdateWithoutPurchaseBOMInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutIncomingDeliveryNestedInput
 }
 
-export type IncomingDeliveryUncheckedUpdateWithoutPurchaseBOMInput = {
+export type IncomingDeliveryUncheckedUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   incomingDeliveryNumber?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1100,7 +1100,7 @@ export type IncomingDeliveryUncheckedUpdateWithoutPurchaseBOMInput = {
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutIncomingDeliveryNestedInput
 }
 
-export type IncomingDeliveryUncheckedUpdateManyWithoutPurchaseBOMInput = {
+export type IncomingDeliveryUncheckedUpdateManyWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   incomingDeliveryNumber?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1149,7 +1149,7 @@ export type IncomingDeliveryCountOutputTypeCountIncomingDeliveryLineArgs<ExtArgs
 export type IncomingDeliverySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   incomingDeliveryNumber?: boolean
-  purchaseBOMId?: boolean
+  purchaseId?: boolean
   additionalInfo?: boolean
   description?: boolean
   status?: boolean
@@ -1160,7 +1160,7 @@ export type IncomingDeliverySelect<ExtArgs extends runtime.Types.Extensions.Inte
   deleted?: boolean
   createdBy?: boolean
   deletedBy?: boolean
-  PurchaseBOM?: boolean | Prisma.PurchaseBOMDefaultArgs<ExtArgs>
+  Purchase?: boolean | Prisma.IncomingDelivery$PurchaseArgs<ExtArgs>
   Employee_IncomingDelivery_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_IncomingDelivery_deletedByToEmployee?: boolean | Prisma.IncomingDelivery$Employee_IncomingDelivery_deletedByToEmployeeArgs<ExtArgs>
   IncomingDeliveryLine?: boolean | Prisma.IncomingDelivery$IncomingDeliveryLineArgs<ExtArgs>
@@ -1172,7 +1172,7 @@ export type IncomingDeliverySelect<ExtArgs extends runtime.Types.Extensions.Inte
 export type IncomingDeliverySelectScalar = {
   id?: boolean
   incomingDeliveryNumber?: boolean
-  purchaseBOMId?: boolean
+  purchaseId?: boolean
   additionalInfo?: boolean
   description?: boolean
   status?: boolean
@@ -1185,9 +1185,9 @@ export type IncomingDeliverySelectScalar = {
   deletedBy?: boolean
 }
 
-export type IncomingDeliveryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "incomingDeliveryNumber" | "purchaseBOMId" | "additionalInfo" | "description" | "status" | "deliveryDate" | "receivedAt" | "createdAt" | "deletedAt" | "deleted" | "createdBy" | "deletedBy", ExtArgs["result"]["incomingDelivery"]>
+export type IncomingDeliveryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "incomingDeliveryNumber" | "purchaseId" | "additionalInfo" | "description" | "status" | "deliveryDate" | "receivedAt" | "createdAt" | "deletedAt" | "deleted" | "createdBy" | "deletedBy", ExtArgs["result"]["incomingDelivery"]>
 export type IncomingDeliveryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  PurchaseBOM?: boolean | Prisma.PurchaseBOMDefaultArgs<ExtArgs>
+  Purchase?: boolean | Prisma.IncomingDelivery$PurchaseArgs<ExtArgs>
   Employee_IncomingDelivery_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_IncomingDelivery_deletedByToEmployee?: boolean | Prisma.IncomingDelivery$Employee_IncomingDelivery_deletedByToEmployeeArgs<ExtArgs>
   IncomingDeliveryLine?: boolean | Prisma.IncomingDelivery$IncomingDeliveryLineArgs<ExtArgs>
@@ -1197,7 +1197,7 @@ export type IncomingDeliveryInclude<ExtArgs extends runtime.Types.Extensions.Int
 export type $IncomingDeliveryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "IncomingDelivery"
   objects: {
-    PurchaseBOM: Prisma.$PurchaseBOMPayload<ExtArgs>
+    Purchase: Prisma.$PurchasePayload<ExtArgs> | null
     Employee_IncomingDelivery_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_IncomingDelivery_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     IncomingDeliveryLine: Prisma.$IncomingDeliveryLinePayload<ExtArgs>[]
@@ -1205,7 +1205,7 @@ export type $IncomingDeliveryPayload<ExtArgs extends runtime.Types.Extensions.In
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     incomingDeliveryNumber: string
-    purchaseBOMId: string
+    purchaseId: string | null
     additionalInfo: string | null
     description: string | null
     status: string
@@ -1556,7 +1556,7 @@ readonly fields: IncomingDeliveryFieldRefs;
  */
 export interface Prisma__IncomingDeliveryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  PurchaseBOM<T extends Prisma.PurchaseBOMDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseBOMDefaultArgs<ExtArgs>>): Prisma.Prisma__PurchaseBOMClient<runtime.Types.Result.GetResult<Prisma.$PurchaseBOMPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Purchase<T extends Prisma.IncomingDelivery$PurchaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IncomingDelivery$PurchaseArgs<ExtArgs>>): Prisma.Prisma__PurchaseClient<runtime.Types.Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_IncomingDelivery_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_IncomingDelivery_deletedByToEmployee<T extends Prisma.IncomingDelivery$Employee_IncomingDelivery_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IncomingDelivery$Employee_IncomingDelivery_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   IncomingDeliveryLine<T extends Prisma.IncomingDelivery$IncomingDeliveryLineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IncomingDelivery$IncomingDeliveryLineArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncomingDeliveryLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1591,7 +1591,7 @@ export interface Prisma__IncomingDeliveryClient<T, Null = never, ExtArgs extends
 export interface IncomingDeliveryFieldRefs {
   readonly id: Prisma.FieldRef<"IncomingDelivery", 'String'>
   readonly incomingDeliveryNumber: Prisma.FieldRef<"IncomingDelivery", 'String'>
-  readonly purchaseBOMId: Prisma.FieldRef<"IncomingDelivery", 'String'>
+  readonly purchaseId: Prisma.FieldRef<"IncomingDelivery", 'String'>
   readonly additionalInfo: Prisma.FieldRef<"IncomingDelivery", 'String'>
   readonly description: Prisma.FieldRef<"IncomingDelivery", 'String'>
   readonly status: Prisma.FieldRef<"IncomingDelivery", 'String'>
@@ -1942,6 +1942,25 @@ export type IncomingDeliveryDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many IncomingDeliveries to delete.
    */
   limit?: number
+}
+
+/**
+ * IncomingDelivery.Purchase
+ */
+export type IncomingDelivery$PurchaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Purchase
+   */
+  select?: Prisma.PurchaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Purchase
+   */
+  omit?: Prisma.PurchaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseInclude<ExtArgs> | null
+  where?: Prisma.PurchaseWhereInput
 }
 
 /**

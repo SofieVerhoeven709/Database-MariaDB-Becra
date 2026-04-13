@@ -9,8 +9,15 @@ import {Label} from '@/components/ui/label'
 import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedPurchaseBOM, ProjectOption} from '@/types/purchaseBom'
-import {updatePurchaseBOMAction, searchPurchasesAction} from '@/serverFunctions/purchaseBoms'
+import {
+  updatePurchaseBOMAction,
+  searchPurchasesAction,
+  hasOpenWorkOrderForProjectAction,
+} from '@/serverFunctions/purchaseBoms'
 import {generateBomNumber} from '@/lib/utils'
+
+const OPEN_WORK_ORDER_ERROR =
+  'No open work order with material closed = false was found for this project. Please ask a manager to open a new work order and retry approval.'
 
 interface PurchaseBOMFormDialogProps {
   open: boolean
@@ -66,6 +73,7 @@ export function PurchaseBOMFormDialog({
   const [closed, setClosed] = useState(false)
   const [materialClosed, setMaterialClosed] = useState(false)
   const [purchased, setPurchased] = useState(false)
+  const [approvedForQuote, setApprovedForQuote] = useState(false)
 
   // ─── Purchase search (create mode only) ───────────────────────────────────────
   const [purchaseQuery, setPurchaseQuery] = useState('')
@@ -90,6 +98,7 @@ export function PurchaseBOMFormDialog({
       setClosed(bom.closed)
       setMaterialClosed(bom.materialClosed)
       setPurchased(bom.purchased ?? false)
+      setApprovedForQuote(bom.approvedForQuote ?? false)
       setParentBomId(bom.purchaseBomId ?? 'none')
     } else {
       setDescription('')
@@ -102,6 +111,7 @@ export function PurchaseBOMFormDialog({
       setClosed(false)
       setMaterialClosed(false)
       setPurchased(false)
+      setApprovedForQuote(false)
       setParentBomId('none')
       setPurchaseQuery('')
       setProjectResults([])
@@ -133,6 +143,14 @@ export function PurchaseBOMFormDialog({
 
     setSaving(true)
     try {
+      if (isEdit && !bom.approvedForQuote && approvedForQuote) {
+        const hasOpenWorkOrder = await hasOpenWorkOrderForProjectAction(bom.projectId)
+        if (!hasOpenWorkOrder) {
+          window.alert(OPEN_WORK_ORDER_ERROR)
+          return
+        }
+      }
+
       const payload = {
         description: description.trim() || null,
         shortDescription: shortDescription.trim(),
@@ -144,6 +162,7 @@ export function PurchaseBOMFormDialog({
         closed,
         materialClosed: purchased ? true : materialClosed,
         purchased,
+        approvedForQuote,
       }
 
       if (isEdit) {
@@ -376,6 +395,14 @@ export function PurchaseBOMFormDialog({
                     }}
                   />
                 </div>
+              </div>
+            )}
+
+            {/* Approved for Quote — edit mode only */}
+            {isEdit && (
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <Label className="text-xs text-muted-foreground">Approved for Quote</Label>
+                <Switch checked={approvedForQuote} onCheckedChange={setApprovedForQuote} />
               </div>
             )}
           </div>

@@ -19,6 +19,7 @@ import {
   softDeletePurchaseBOMStructureAction,
   hardDeletePurchaseBOMStructureAction,
   restorePurchaseBOMStructureAction,
+  hasOpenWorkOrderForProjectAction,
 } from '@/serverFunctions/purchaseBoms'
 import {PurchaseBOMStructureFormDialog} from '@/components/custom/purchaseBomStructureFormDialog'
 
@@ -74,6 +75,16 @@ export function PurchaseBOMDetail({
   async function handleSave() {
     setSaving(true)
     try {
+      if (!bom.approvedForQuote && editApprovedForQuote) {
+        const hasOpenWorkOrder = await hasOpenWorkOrderForProjectAction(bom.projectId)
+        if (!hasOpenWorkOrder) {
+          window.alert(
+            'No open work order with material closed = false was found for this project. Please ask a manager to open a new work order and retry approval.',
+          )
+          return
+        }
+      }
+
       await updatePurchaseBOMAction({
         id: bom.id,
         description: editDescription.trim() || null,

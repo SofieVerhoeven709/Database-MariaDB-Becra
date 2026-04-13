@@ -69,7 +69,8 @@ type MaterialDemandWithRelations = Prisma.MaterialDemandGetPayload<{
             companyId: true
             validUntil: true
             deliveryTimeDays: true
-            executed: true
+            sent: true
+            received: true
             acceptedForPOB: true
             rejected: true
             deleted: true
@@ -120,29 +121,29 @@ function sourceLabelKey(sourceTypeName: string, sourceReferenceId: string | null
   return `${sourceTypeName.toLowerCase()}:${sourceReferenceId}`
 }
 
-export function mapMaterialDemand(row: MaterialDemandWithRelations, sourceLabels: SourceLabelMap = {}): MappedMaterialDemand {
+export function mapMaterialDemand(
+  row: MaterialDemandWithRelations,
+  sourceLabels: SourceLabelMap = {},
+): MappedMaterialDemand {
   const inventories = row.Material.Inventory_Inventory_materialIdToMaterial
   const stockQuantity = inventories.reduce((sum, inv) => sum + inv.quantityInStock, 0)
   const minimumStockQuantity = inventories.reduce((sum, inv) => sum + (inv.minQuantityInStock ?? 0), 0)
   const hasMinimumStock = inventories.some(inv => (inv.minQuantityInStock ?? 0) > 0)
   const lowStockOrders = row.Material.InventoryOrder.filter(isLowStockInventoryOrder)
   const existingLowStockRequestCount = lowStockOrders.length
-  const approvedLowStockRequestCount = lowStockOrders.reduce(
-    (sum, order) => sum + (order.approved ? 1 : 0),
-    0,
-  )
+  const approvedLowStockRequestCount = lowStockOrders.reduce((sum, order) => sum + (order.approved ? 1 : 0), 0)
   const pendingLowStockRequestCount = Math.max(existingLowStockRequestCount - approvedLowStockRequestCount, 0)
   const suggestedRequestQty = Math.max(minimumStockQuantity - stockQuantity, 1)
-  const eligibleSupplierCompanyIds = row.Material.MaterialSupplier
-    .filter(link => link.Company.supplier && !link.Company.deleted)
-    .map(link => link.companyId)
+  const eligibleSupplierCompanyIds = row.Material.MaterialSupplier.filter(
+    link => link.Company.supplier && !link.Company.deleted,
+  ).map(link => link.companyId)
 
   const quoteOptions = row.QuoteSupplierLine.map(line => {
     const isCurrentlyValid = isDateStillValid(line.QuoteSupplier.validUntil)
     const isEligibleForBest =
       !line.QuoteSupplier.deleted &&
       !line.QuoteSupplier.rejected &&
-      !(line.QuoteSupplier.executed && line.QuoteSupplier.acceptedForPOB) &&
+      !(line.QuoteSupplier.sent && line.QuoteSupplier.acceptedForPOB) &&
       isCurrentlyValid
 
     return {
@@ -155,7 +156,8 @@ export function mapMaterialDemand(row: MaterialDemandWithRelations, sourceLabels
       unitPrice: line.unitPrice.toNumber(),
       minQuantity: line.minQuantity,
       selected: line.selected ?? false,
-      executed: line.QuoteSupplier.executed,
+      sent: line.QuoteSupplier.sent,
+      received: line.QuoteSupplier.received,
       acceptedForPOB: line.QuoteSupplier.acceptedForPOB,
       rejected: line.QuoteSupplier.rejected,
       deleted: line.QuoteSupplier.deleted,
@@ -208,4 +210,3 @@ export function mapMaterialDemand(row: MaterialDemandWithRelations, sourceLabels
     quoteOptions,
   }
 }
-

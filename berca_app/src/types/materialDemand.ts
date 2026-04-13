@@ -35,7 +35,8 @@ export interface MaterialDemandQuoteOption {
   unitPrice: number
   minQuantity: number | null
   selected: boolean
-  executed: boolean
+  sent: boolean
+  received: boolean
   acceptedForPOB: boolean
   rejected: boolean
   deleted: boolean

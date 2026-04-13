@@ -10,6 +10,7 @@ import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {PurchaseFormDialog, type PurchaseOption} from '@/components/custom/purchaseFormDialog'
+import {normalizePurchaseStatus} from '@/extra/purchases'
 import type {MappedPurchase} from '@/types/purchase'
 import {
   createPurchaseAction,
@@ -21,6 +22,11 @@ import {
 type SortField = 'purchaseNumber' | 'purchaseDate' | 'companyName' | 'quote' | 'status' | 'createdBy'
 type SortDir = 'asc' | 'desc'
 type StatusFilter = string
+
+function isOrderedNotSentStatus(status: string | null | undefined): boolean {
+  const normalized = normalizePurchaseStatus(status)
+  return normalized === 'ORDERED'
+}
 
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '-'
@@ -60,6 +66,7 @@ export function PurchaseTable({
 }: PurchaseTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canManageOrderedPurchases = currentUserLevel >= 80
 
   const statusOptions = useMemo(() => {
     const statuses = new Set<string>()
@@ -245,6 +252,8 @@ export function PurchaseTable({
               filtered.map(purchase => {
                 const secondaryLabel = purchase.shortDescription ?? purchase.paymentConditionName ?? ''
                 const detailHref = `/departments/${departmentId}/orders/${purchase.id}` as Route
+                const isOrderedNotSent = isOrderedNotSentStatus(purchase.status)
+                const canMutatePurchase = !isOrderedNotSent || canManageOrderedPurchases
                 return (
                   <TableRow
                     key={purchase.id}
@@ -298,6 +307,7 @@ export function PurchaseTable({
                           variant="ghost"
                           size="icon"
                           className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          disabled={!canMutatePurchase}
                           onClick={() => {
                             setEditing(purchase)
                             setDialogOpen(true)
@@ -308,6 +318,7 @@ export function PurchaseTable({
                           variant="ghost"
                           size="icon"
                           className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                          disabled={!canMutatePurchase}
                           onClick={() => (isAdmin ? handleHardDelete(purchase.id) : handleSoftDelete(purchase.id))}>
                           <Trash2 className="h-3.5 w-3.5" />
                         </Button>

@@ -28,12 +28,13 @@ import {
   softDeletePaymentConditionAction,
   hardDeletePaymentConditionAction,
   undeletePaymentConditionAction,
-  setQuoteSupplierExecutedAction,
+  setQuoteSupplierSentAction,
+  setQuoteSupplierReceivedAction,
 } from '@/serverFunctions/quoteSuppliers'
 
 type SortField = 'quoteNumber' | 'companyName' | 'validUntil' | 'deliveryTimeDays'
 type SortDir = 'asc' | 'desc'
-type StatusFilter = 'all' | 'accepted' | 'rejected' | 'pending'
+type StatusFilter = 'all' | 'pending' | 'sent' | 'received' | 'approved' | 'rejected'
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 type ExecutionFilter = 'all' | 'executed' | 'active'
 
@@ -107,6 +108,7 @@ export function QuoteSupplierTable({
   const canEdit = currentUserLevel >= 40
   const canCreate = currentUserLevel >= 60
   const canDelete = currentUserLevel >= 80
+  const canManageApprovedQuotes = currentUserLevel >= 80
   const canEditNumber = currentUserLevel >= 80
 
   // Quotes tab state
@@ -135,15 +137,15 @@ export function QuoteSupplierTable({
 
   const filtered = initialEntries
     .filter(e => {
+      const lifecycle = getLifecycleStatus(e)
+
       if (filterDeleted === 'not-deleted' && e.deleted) return false
       if (filterDeleted === 'deleted' && !e.deleted) return false
 
-      if (executionFilter === 'executed' && !e.executed) return false
-      if (executionFilter === 'active' && e.executed) return false
+      if (executionFilter === 'executed' && !e.sent) return false
+      if (executionFilter === 'active' && e.sent) return false
 
-      if (statusFilter === 'accepted' && !e.acceptedForPOB) return false
-      if (statusFilter === 'rejected' && !e.rejected) return false
-      if (statusFilter === 'pending' && (e.rejected || e.acceptedForPOB)) return false
+      if (statusFilter !== 'all' && lifecycle !== statusFilter) return false
 
       if (paymentConditionFilter === PAYMENT_FILTER_NONE && e.paymentConditionId !== null) return false
       if (
@@ -245,9 +247,19 @@ export function QuoteSupplierTable({
   }
 
   async function handleExecutedToggle(entry: MappedQuoteSupplier) {
-    const result = await setQuoteSupplierExecutedAction({
+    const result = await setQuoteSupplierSentAction({
       id: entry.id,
-      executed: !entry.executed,
+      sent: !entry.sent,
+    })
+    const error = extractActionError(result)
+    if (error) throw new Error(error)
+    router.refresh()
+  }
+
+  async function handleReceivedToggle(entry: MappedQuoteSupplier) {
+    const result = await setQuoteSupplierReceivedAction({
+      id: entry.id,
+      received: !entry.received,
     })
     const error = extractActionError(result)
     if (error) throw new Error(error)
@@ -261,15 +273,30 @@ export function QuoteSupplierTable({
     return validDate.getTime() < Date.now()
   }
 
+  function getLifecycleStatus(entry: MappedQuoteSupplier): Exclude<StatusFilter, 'all'> {
+    if (entry.rejected) return 'rejected'
+    if (entry.acceptedForPOB) return 'approved'
+    if (entry.received) return 'received'
+    if (entry.sent) return 'sent'
+    return 'pending'
+  }
+
   function statusBadge(e: MappedQuoteSupplier) {
-    if (e.rejected) return <Badge className="border text-xs bg-red-500/10 text-red-600 border-red-500/30">Rejected</Badge>
-    if (isExpiredWhenApproved(e)) {
+    const status = getLifecycleStatus(e)
+
+    if (status === 'rejected') return <Badge className="border text-xs bg-red-500/10 text-red-600 border-red-500/30">Rejected</Badge>
+    if (status === 'approved' && isExpiredWhenApproved(e)) {
       return <Badge className="border text-xs bg-orange-500/10 text-orange-700 border-orange-500/30">Expired</Badge>
     }
-    if (e.executed) {
-      return <Badge className="border text-xs bg-slate-500/15 text-slate-700 border-slate-500/30">Executed</Badge>
+    if (status === 'approved') {
+      return <Badge className="border text-xs bg-green-500/10 text-green-600 border-green-500/30">Approved</Badge>
     }
-    if (e.acceptedForPOB) return <Badge className="border text-xs bg-green-500/10 text-green-600 border-green-500/30">Accepted</Badge>
+    if (status === 'received') {
+      return <Badge className="border text-xs bg-blue-500/10 text-blue-700 border-blue-500/30">Received</Badge>
+    }
+    if (status === 'sent') {
+      return <Badge className="border text-xs bg-slate-500/15 text-slate-700 border-slate-500/30">Sent</Badge>
+    }
     return <Badge className="border text-xs bg-yellow-500/10 text-yellow-600 border-yellow-500/30">Pending</Badge>
   }
 
@@ -320,7 +347,9 @@ export function QuoteSupplierTable({
                 <SelectContent className="bg-card border-border">
                   <SelectItem value="all">All statuses</SelectItem>
                   <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="accepted">Accepted</SelectItem>
+                  <SelectItem value="sent">Sent</SelectItem>
+                  <SelectItem value="received">Received</SelectItem>
+                  <SelectItem value="approved">Approved</SelectItem>
                   <SelectItem value="rejected">Rejected</SelectItem>
                 </SelectContent>
               </Select>
@@ -435,6 +464,7 @@ export function QuoteSupplierTable({
                   </TableRow>
                 ) : (
                   filtered.map(entry => (
+
                     <TableRow key={entry.id} className={`border-border/40 hover:bg-secondary/50 ${entry.deleted ? 'opacity-50' : ''}`}>
                       <TableCell>{statusBadge(entry)}</TableCell>
                       <TableCell className={tdClass}>
@@ -459,16 +489,25 @@ export function QuoteSupplierTable({
                       )}
                       <TableCell>
                         <div className="flex items-center gap-1">
-                          {!entry.deleted && canEdit && (
+                          {!entry.deleted && canEdit && (!entry.acceptedForPOB || canManageApprovedQuotes) && (
                             <Button
-                              variant={entry.executed ? 'secondary' : 'outline'}
+                              variant={entry.sent ? 'secondary' : 'outline'}
                               size="sm"
                               className="h-7 text-[11px]"
                               onClick={() => handleExecutedToggle(entry)}>
-                              {entry.executed ? 'Sent' : 'Mark Sent'}
+                              {entry.sent ? 'Sent' : 'Mark Sent'}
                             </Button>
                           )}
-                          {!entry.deleted && canEdit && (
+                          {!entry.deleted && canEdit && (!entry.acceptedForPOB || canManageApprovedQuotes) && entry.sent && !entry.rejected && !entry.acceptedForPOB && (
+                            <Button
+                              variant={entry.received ? 'secondary' : 'outline'}
+                              size="sm"
+                              className="h-7 text-[11px]"
+                              onClick={() => handleReceivedToggle(entry)}>
+                              {entry.received ? 'Received' : 'Mark Received'}
+                            </Button>
+                          )}
+                          {!entry.deleted && canEdit && (!entry.acceptedForPOB || canManageApprovedQuotes) && (
                             <Button
                               variant="ghost"
                               size="icon"

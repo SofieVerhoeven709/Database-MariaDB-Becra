@@ -63,6 +63,34 @@ export function generateCompanyNumber() {
   return `CO${year}${month}${day}${random}`
 }
 
+export function generatePurchaseNumber() {
+  const now = new Date()
+
+  const year = now.getFullYear().toString() // 2026
+  const month = String(now.getMonth() + 1).padStart(2, '0') // 02
+  const day = String(now.getDate()).padStart(2, '0') // 24
+
+  const random = Math.floor(Math.random() * 100)
+    .toString()
+    .padStart(2, '0') // two random digits
+
+  return `PO${year}${month}${day}${random}`
+}
+
+export function generateIncomingDeliveryNumber() {
+  const now = new Date()
+
+  const year = now.getFullYear().toString() // 2026
+  const month = String(now.getMonth() + 1).padStart(2, '0') // 02
+  const day = String(now.getDate()).padStart(2, '0') // 24
+
+  const random = Math.floor(Math.random() * 100)
+    .toString()
+    .padStart(2, '0') // two random digits
+
+  return `DEL${year}${month}${day}${random}`
+}
+
 export function generateTrainingNumber() {
   const now = new Date()
 

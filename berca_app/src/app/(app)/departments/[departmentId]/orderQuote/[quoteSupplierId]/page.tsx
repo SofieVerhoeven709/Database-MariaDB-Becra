@@ -5,7 +5,7 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getQuoteSupplierById} from '@/dal/quoteSuppliers'
 import {mapQuoteSupplierDetail} from '@/extra/quoteSuppliers'
 import {QuoteSupplierDetail} from '@/components/custom/quoteSupplierDetail'
-import {getMaterials} from '@/dal/materials'
+import {getMaterialsForSupplierCompany} from '@/dal/materials'
 import {getMaterialDemands} from '@/dal/materialDemands'
 
 interface PageProps {
@@ -17,16 +17,17 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
   const {departmentId, quoteSupplierId} = await params
   const {materialId, materialDemandId} = (await searchParams) ?? {}
 
-  const [department, quoteRaw, materialsRaw, demandsRaw, profile] = await Promise.all([
+  const [department, quoteRaw, demandsRaw, profile] = await Promise.all([
     getDepartmentById(departmentId),
     getQuoteSupplierById(quoteSupplierId),
-    getMaterials(),
     getMaterialDemands(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
   if (!department) return <p>Department not found</p>
   if (!quoteRaw) notFound()
+
+  const materialsRaw = await getMaterialsForSupplierCompany(quoteRaw.companyId)
 
   const quote = mapQuoteSupplierDetail(quoteRaw)
   const {currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
@@ -38,11 +39,21 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
     shortDescription: material.shortDescription ?? null,
   }))
 
-  const materialDemandOptions = demandsRaw.map(demand => ({
+  const allowedMaterialIds = new Set(materialOptions.map(material => material.id))
+
+  const materialDemandOptions = demandsRaw
+    .filter(demand => allowedMaterialIds.has(demand.materialId))
+    .map(demand => ({
     id: demand.id,
     materialId: demand.materialId,
     label: `${demand.Material.beNumber ?? '—'} — ${demand.Material.shortDescription ?? demand.Material.name ?? demand.id}`,
-  }))
+    }))
+
+  const safeDefaultMaterialId = materialId && allowedMaterialIds.has(materialId) ? materialId : undefined
+  const safeDefaultMaterialDemandId =
+    materialDemandId && materialDemandOptions.some(option => option.id === materialDemandId)
+      ? materialDemandId
+      : undefined
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -53,8 +64,8 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
           currentUserLevel={currentUserLevel}
           materialOptions={materialOptions}
           materialDemandOptions={materialDemandOptions}
-          defaultMaterialId={materialId}
-          defaultMaterialDemandId={materialDemandId}
+          defaultMaterialId={safeDefaultMaterialId}
+          defaultMaterialDemandId={safeDefaultMaterialDemandId}
         />
       </div>
     </main>

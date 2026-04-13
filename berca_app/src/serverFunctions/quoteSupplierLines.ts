@@ -12,6 +12,67 @@ import {
 
 const REVALIDATE_DEPARTMENTS_PATH = '/departments'
 
+function getHighestRoleLevel(profile: {RoleLevelEmployee: Array<{RoleLevel: {SubRole: {level: number}}}>}): number {
+  return Math.max(0, ...profile.RoleLevelEmployee.map(row => row.RoleLevel.SubRole.level))
+}
+
+function assertCanEditApprovedQuote(profile: {RoleLevelEmployee: Array<{RoleLevel: {SubRole: {level: number}}}>}) {
+  if (getHighestRoleLevel(profile) < 80) {
+    throw new Error('Only managers can edit an approved quote.')
+  }
+}
+
+async function assertQuoteLineMutationAllowedByQuoteId(
+  quoteSupplierId: string,
+  profile: {RoleLevelEmployee: Array<{RoleLevel: {SubRole: {level: number}}}>},
+) {
+  const quote = await prismaClient.quoteSupplier.findUnique({
+    where: {id: quoteSupplierId},
+    select: {acceptedForPOB: true},
+  })
+  if (!quote) throw new Error('Quote supplier not found.')
+  if (quote.acceptedForPOB) assertCanEditApprovedQuote(profile)
+}
+
+async function assertQuoteLineMutationAllowedByLineId(
+  lineId: string,
+  profile: {RoleLevelEmployee: Array<{RoleLevel: {SubRole: {level: number}}}>},
+) {
+  const line = await prismaClient.quoteSupplierLine.findUnique({
+    where: {id: lineId},
+    select: {QuoteSupplier: {select: {acceptedForPOB: true}}},
+  })
+  if (!line) throw new Error('Quote line not found.')
+  if (line.QuoteSupplier.acceptedForPOB) assertCanEditApprovedQuote(profile)
+}
+
+async function assertMaterialIsSupplierLinked(quoteSupplierId: string, materialId: string) {
+  const quote = await prismaClient.quoteSupplier.findUnique({
+    where: {id: quoteSupplierId},
+    select: {id: true, companyId: true, sent: true},
+  })
+
+  if (!quote) {
+    throw new Error('Quote supplier not found.')
+  }
+
+  if (quote.sent) {
+    throw new Error('Cannot add new lines after the quote is sent.')
+  }
+
+  const supplierLink = await prismaClient.materialSupplier.findFirst({
+    where: {
+      materialId,
+      companyId: quote.companyId,
+    },
+    select: {id: true},
+  })
+
+  if (!supplierLink) {
+    throw new Error('Selected material is not linked to this quote supplier.')
+  }
+}
+
 async function resyncMaterialDemand(materialDemandId: string | null | undefined, logger: {warn: (message: string) => void}) {
   if (!materialDemandId) return
 
@@ -34,6 +95,9 @@ export const createQuoteSupplierLineAction = protectedServerFunction({
   schema: createQuoteSupplierLineSchema,
   functionName: 'Create quote supplier line action',
   serverFn: async ({data, logger, profile}) => {
+    await assertQuoteLineMutationAllowedByQuoteId(data.quoteSupplierId, profile)
+    await assertMaterialIsSupplierLinked(data.quoteSupplierId, data.materialId)
+
     if (data.materialDemandId) {
       const existingForDemand = await prismaClient.quoteSupplierLine.findMany({
         where: {materialDemandId: data.materialDemandId},
@@ -41,13 +105,13 @@ export const createQuoteSupplierLineAction = protectedServerFunction({
           QuoteSupplier: {
             select: {
               deleted: true,
-              executed: true,
+              sent: true,
               acceptedForPOB: true,
             },
           },
         },
       })
-      if (existingForDemand.some(line => !line.QuoteSupplier.deleted && !(line.QuoteSupplier.executed && line.QuoteSupplier.acceptedForPOB))) {
+      if (existingForDemand.some(line => !line.QuoteSupplier.deleted && !(line.QuoteSupplier.sent && line.QuoteSupplier.acceptedForPOB))) {
         throw new Error('A quote line already exists for this material demand.')
       }
     }
@@ -89,7 +153,8 @@ export const createQuoteSupplierLineAction = protectedServerFunction({
 export const selectQuoteSupplierLineAction = protectedServerFunction({
   schema: selectQuoteSupplierLineSchema,
   functionName: 'Select quote supplier line action',
-  serverFn: async ({data: {id, selected, materialDemandId}, logger}) => {
+  serverFn: async ({data: {id, selected, materialDemandId}, logger, profile}) => {
+    await assertQuoteLineMutationAllowedByLineId(id, profile)
     const quoteLine = await prismaClient.quoteSupplierLine.findUniqueOrThrow({
       where: {id},
       select: {quantity: true, materialDemandId: true},
@@ -124,7 +189,8 @@ export const selectQuoteSupplierLineAction = protectedServerFunction({
 export const updateQuoteSupplierLineAction = protectedServerFunction({
   schema: updateQuoteSupplierLineSchema,
   functionName: 'Update quote supplier line action',
-  serverFn: async ({data: {id, ...updates}, logger}) => {
+  serverFn: async ({data: {id, ...updates}, logger, profile}) => {
+    await assertQuoteLineMutationAllowedByLineId(id, profile)
     // Fetch current state to detect changes
     const current = await prismaClient.quoteSupplierLine.findUniqueOrThrow({
       where: {id},
@@ -161,7 +227,8 @@ export const updateQuoteSupplierLineAction = protectedServerFunction({
 export const deleteQuoteSupplierLineAction = protectedServerFunction({
   schema: quoteSupplierLineIdSchema,
   functionName: 'Delete quote supplier line action',
-  serverFn: async ({data: {id}, logger}) => {
+  serverFn: async ({data: {id}, logger, profile}) => {
+    await assertQuoteLineMutationAllowedByLineId(id, profile)
     // Fetch to check if it's selected and has a demand
     const quoteLine = await prismaClient.quoteSupplierLine.findUniqueOrThrow({
       where: {id},

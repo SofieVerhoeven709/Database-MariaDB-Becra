@@ -12,8 +12,8 @@ import {
   deleteWarehousePlaceAction,
 } from '@/serverFunctions/warehousePlaces'
 import {useRouter} from 'next/navigation'
-
-type SortField = 'abbreviation' | 'beNumber' | 'place' | 'quantityInStock'
+/* type SortField = 'abbreviation' | 'beNumber' | 'place' | 'quantityInStock'*/
+type SortField = 'abbreviation' | 'beNumber' | 'xCoordinate' | 'yCoordinate' | 'zCoordinate' | 'quantityInStock'
 type SortDir = 'asc' | 'desc'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -63,9 +63,27 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
         (i.information ?? '').toLowerCase().includes(q)
       )
     })
-    .sort((a, b) => {
+    /*.sort((a, b) => {
       const aVal = String(a[sortField] ?? '')
       const bVal = String(b[sortField] ?? '')
+      return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
+    })*/
+    .sort((a, b) => {
+      const sortValue = (item: MappedWarehousePlace) => {
+        switch (sortField) {
+          case 'xCoordinate':
+            return String(item.place ?? '')
+          case 'yCoordinate':
+            return String(item.shelf ?? '')
+          case 'zCoordinate':
+            return String(item.column ?? '')
+          default:
+            return String(item[sortField] ?? '')
+        }
+      }
+
+      const aVal = sortValue(a)
+      const bVal = sortValue(b)
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
 
@@ -111,7 +129,12 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
   const columns: {key: SortField; label: string}[] = [
     {key: 'abbreviation', label: 'Abbreviation'},
     {key: 'beNumber', label: 'Material Number (BE/IOS)'},
-    {key: 'place', label: 'Place'},
+    /*{key: 'place', label: 'Place'},*/
+    /*{key: 'shelf', label: 'Shelf'},*/
+    /*{key: 'column', label: 'Column'},*/
+    {key: 'xCoordinate', label: 'X'},
+    {key: 'yCoordinate', label: 'Y'},
+    {key: 'zCoordinate', label: 'Z'},
     {key: 'quantityInStock', label: 'Qty In Stock'},
   ]
 
@@ -178,6 +201,12 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
                   <TableCell className="text-sm">
                     {item.place ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
+                  <TableCell className="text-sm">
+                    {item.shelf ?? <span className="text-muted-foreground">—</span>}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {item.column ?? <span className="text-muted-foreground">—</span>}
+                  </TableCell>
                   <TableCell className="text-sm font-semibold">{item.quantityInStock}</TableCell>
                   <TableCell
                     className="text-sm text-muted-foreground max-w-[200px] truncate"
@@ -205,6 +234,23 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
                       </Button>
                     </div>
                   </TableCell>
+                  {/*
+                  <TableCell className="text-sm">
+                    {item.place ?? <span className="text-muted-foreground">—</span>}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {item.shelf ?? <span className="text-muted-foreground">—</span>}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {item.column ?? <span className="text-muted-foreground">—</span>}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {item.layer ?? <span className="text-muted-foreground">—</span>}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {item.layerPlace ?? <span className="text-muted-foreground">—</span>}
+                  </TableCell>
+                  */}
                 </TableRow>
               ))
             )}

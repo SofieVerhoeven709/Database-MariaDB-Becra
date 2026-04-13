@@ -43,13 +43,16 @@ function MaterialNumberPicker({selectedBeNumber, materials, inputStyles, onSelec
 
   const displayValue = isFocused
     ? search
-    : search || (selectedMaterial ? `${selectedMaterial.beNumber} - ${selectedMaterial.name ?? selectedMaterial.shortDescription}` : selectedBeNumber)
+    : search ||
+      (selectedMaterial
+        ? `${selectedMaterial.beNumber} - ${selectedMaterial.name ?? selectedMaterial.shortDescription}`
+        : selectedBeNumber)
 
   return (
     <div className="relative">
       <Input
         className={inputStyles}
-        placeholder="Type materiaalnummer of naam..."
+        placeholder="Type materialnumber or name..."
         value={displayValue}
         onChange={e => {
           setSearch(e.target.value)
@@ -74,7 +77,7 @@ function MaterialNumberPicker({selectedBeNumber, materials, inputStyles, onSelec
               setIsOpen(false)
               setIsFocused(false)
             }}>
-            Geen materiaal
+            No material
           </div>
           {filtered.map(m => (
             <div
@@ -89,7 +92,7 @@ function MaterialNumberPicker({selectedBeNumber, materials, inputStyles, onSelec
               {m.beNumber} - {m.name ?? m.shortDescription}
             </div>
           ))}
-          {filtered.length === 0 && <div className="px-2 py-1.5 text-xs text-muted-foreground">Geen materiaal gevonden</div>}
+          {filtered.length === 0 && <div className="px-2 py-1.5 text-xs text-muted-foreground">No material found</div>}
         </div>
       )}
     </div>
@@ -138,7 +141,6 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
       setNewMaterialName('')
       setNewMaterialShortDescription('')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, item?.id])
 
   useEffect(() => {
@@ -169,11 +171,11 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
     const name = newMaterialName.trim()
 
     if (!/^(1\d{6}|4\d{6})$/.test(beNumber)) {
-      setMaterialError('Gebruik een geldig BE/IOS nummer (1000000 of 4000000 reeks).')
+      setMaterialError('Use a valid BE/IOS number (1000000 or 4000000).')
       return
     }
     if (!shortDescription) {
-      setMaterialError('Short description is verplicht.')
+      setMaterialError('Short description is mandatory.')
       return
     }
 
@@ -201,7 +203,7 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
       setNewMaterialName('')
       setNewMaterialShortDescription('')
     } catch (err) {
-      setMaterialError(err instanceof Error ? err.message : 'Kon materiaal niet aanmaken.')
+      setMaterialError(err instanceof Error ? err.message : "Couldn't create material, please try again.")
     } finally {
       setCreatingMaterial(false)
     }
@@ -248,7 +250,7 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
               />
               <div className="pt-1">
                 <Button type="button" variant="outline" size="sm" onClick={() => setShowCreateMaterial(v => !v)}>
-                  {showCreateMaterial ? 'Annuleer nieuw materiaal' : 'Nieuw materiaal aanmaken'}
+                  {showCreateMaterial ? 'Cancel new material' : 'Create new material'}
                 </Button>
               </div>
               {showCreateMaterial && (
@@ -256,27 +258,27 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="flex flex-col gap-1">
                       <Label htmlFor="new-material-be" className="text-xs text-muted-foreground">
-                        BE/IOS nummer *
+                        BE/IOS nummer
                       </Label>
                       <Input
                         id="new-material-be"
                         className={inputStyles}
                         value={newMaterialBeNumber}
                         onChange={e => setNewMaterialBeNumber(e.target.value)}
-                        placeholder="1000001 of 4000001"
+                        placeholder="1000001 or 4000001"
                         disabled={creatingMaterial}
                       />
                     </div>
                     <div className="flex flex-col gap-1">
                       <Label htmlFor="new-material-name" className="text-xs text-muted-foreground">
-                        Naam
+                        Name
                       </Label>
                       <Input
                         id="new-material-name"
                         className={inputStyles}
                         value={newMaterialName}
                         onChange={e => setNewMaterialName(e.target.value)}
-                        placeholder="Optioneel"
+                        placeholder="Optional"
                         disabled={creatingMaterial}
                       />
                     </div>
@@ -290,14 +292,14 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
                       className={inputStyles}
                       value={newMaterialShortDescription}
                       onChange={e => setNewMaterialShortDescription(e.target.value)}
-                      placeholder="Korte omschrijving"
+                      placeholder="Short Description"
                       disabled={creatingMaterial}
                     />
                   </div>
                   {materialError && <p className="text-xs text-destructive">{materialError}</p>}
                   <div className="flex justify-end">
                     <Button type="button" size="sm" onClick={handleCreateMaterial} disabled={creatingMaterial}>
-                      {creatingMaterial ? 'Aanmaken...' : 'Materiaal aanmaken en selecteren'}
+                      {creatingMaterial ? 'Creating...' : 'Creating material and selecting'}
                     </Button>
                   </div>
                 </div>
@@ -305,7 +307,51 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
             </div>
           </div>
 
-          {/* Place + Shelf */}
+          {/* X + Y */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="wp-x" className="text-xs text-muted-foreground">
+                X
+              </Label>
+              <Input
+                id="wp-x"
+                className={inputStyles}
+                value={form.place ?? ''}
+                onChange={e => update('place', e.target.value)}
+                placeholder="e.g. Warehouse A"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="wp-y" className="text-xs text-muted-foreground">
+                Y
+              </Label>
+              <Input
+                id="wp-y"
+                className={inputStyles}
+                value={form.shelf ?? ''}
+                onChange={e => update('shelf', e.target.value)}
+                placeholder="e.g. Shelf 1"
+              />
+            </div>
+          </div>
+
+          {/* Z */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="wp-z" className="text-xs text-muted-foreground">
+              Z
+            </Label>
+            <Input
+              id="wp-z"
+              className={inputStyles}
+              value={form.column ?? ''}
+              onChange={e => update('column', e.target.value)}
+              placeholder="e.g. Column B"
+            />
+          </div>
+
+          {/*
+          Legacy location fields kept as fallback for later use:
+
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="wp-place" className="text-xs text-muted-foreground">
@@ -333,7 +379,6 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
             </div>
           </div>
 
-          {/* Shelf + Column */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="wp-shelf" className="text-xs text-muted-foreground">
@@ -361,7 +406,6 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
             </div>
           </div>
 
-          {/* Layer + Layer Place */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="wp-layer" className="text-xs text-muted-foreground">
@@ -388,11 +432,12 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
               />
             </div>
           </div>
+          */}
 
           {/* Quantity in Stock */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="wp-quantityInStock" className="text-xs text-muted-foreground">
-              Quantity in Stock *
+              Quantity in Stock
             </Label>
             <Input
               id="wp-quantityInStock"
@@ -401,7 +446,7 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
               className={inputStyles}
               value={form.quantityInStock ?? 0}
               onChange={e => update('quantityInStock', Number(e.target.value))}
-              required
+              /*required*/
             />
           </div>
 

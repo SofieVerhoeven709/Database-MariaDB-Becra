@@ -48,6 +48,7 @@ type MaterialDemandWithRelations = Prisma.MaterialDemandGetPayload<{
         requiredQty: true
         reservedQty: true
         createdAt: true
+        fulfilled: true
         MaterialDemandSourceType: {
           select: {
             name: true
@@ -178,6 +179,7 @@ export function mapMaterialDemand(
       requiredQty: source.requiredQty,
       reservedQty: source.reservedQty ?? 0,
       createdAt: source.createdAt.toISOString(),
+      fulfilled: source.fulfilled ?? false,
     }
   })
 
@@ -210,3 +212,4 @@ export function mapMaterialDemand(
     quoteOptions,
   }
 }
+

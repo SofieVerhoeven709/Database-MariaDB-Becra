@@ -101,6 +101,8 @@ export const updatePurchaseBOMStructureSchema = purchaseBOMStructureSchema.pick(
   purchased: true,
 }).extend({
   approvedForQuote: z.boolean().optional(),
+  notCorrect: z.boolean().optional(),
+  notCorrectReason: z.string().max(255).nullable().optional(),
 })
 
 export const purchaseBOMStructureIdSchema = purchaseBOMStructureSchema.pick({id: true})

@@ -14,6 +14,7 @@ import {
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {INCOMING_PERMISSION_LEVELS} from '@/constants'
 import {generateIncomingDeliveryNumber} from '@/lib/utils'
+import {syncMaterialDemandFromIncomingAllocations} from '@/dal/materialDemands'
 
 const REVALIDATE_BASE = '/departments'
 
@@ -88,6 +89,8 @@ async function ensurePendingIncomingLinesFromPurchase(incomingDeliveryId: string
       backorderQty: 0,
       unitPrice: detail.unitPrice,
       lineStatus: 'PENDING',
+      notCorrect: false,
+      notCorrectReason: null,
       createdAt: new Date(),
       createdBy,
     })),
@@ -244,6 +247,8 @@ export const createIncomingDeliveryLineAction = protectedServerFunction({
         backorderQty: data.backorderQty ?? 0,
         unitPrice: toDecimalString(data.unitPrice),
         lineStatus: data.lineStatus ?? 'RECEIVED',
+        notCorrect: data.notCorrect ?? false,
+        notCorrectReason: data.notCorrect ? (data.notCorrectReason ?? null) : null,
         createdAt: new Date(),
         createdBy: profile.id,
       },
@@ -272,6 +277,8 @@ export const updateIncomingDeliveryLineAction = protectedServerFunction({
         backorderQty: data.backorderQty ?? 0,
         unitPrice: toDecimalString(data.unitPrice),
         lineStatus: data.lineStatus ?? 'RECEIVED',
+        notCorrect: data.notCorrect ?? false,
+        notCorrectReason: data.notCorrect ? (data.notCorrectReason ?? null) : null,
       },
     })
 
@@ -302,7 +309,7 @@ export const createIncomingDeliveryLineAllocationAction = protectedServerFunctio
   serverFn: async ({data, profile, logger}) => {
     assertMinRoleLevel(profile, INCOMING_PERMISSION_LEVELS.addSourceLink, 'You do not have permission to add source links.')
 
-    await prismaClient.incomingDeliveryLineAllocation.create({
+    const allocation = await prismaClient.incomingDeliveryLineAllocation.create({
       data: {
         id: crypto.randomUUID(),
         incomingDeliveryLineId: data.incomingDeliveryLineId,
@@ -311,12 +318,22 @@ export const createIncomingDeliveryLineAllocationAction = protectedServerFunctio
         createdAt: new Date(),
         createdBy: profile.id,
       },
+      include: {
+        MaterialDemandSource: {
+          select: {materialDemandId: true},
+        },
+      },
     })
 
     const line = await prismaClient.incomingDeliveryLine.findUnique({
       where: {id: data.incomingDeliveryLineId},
       select: {incomingDeliveryId: true},
     })
+
+    // Sync the material demand fulfillment status
+    if (allocation.MaterialDemandSource) {
+      await syncMaterialDemandFromIncomingAllocations(allocation.MaterialDemandSource.materialDemandId, profile.id)
+    }
 
     logger.info(`Incoming delivery line allocation created for line ${data.incomingDeliveryLineId}`)
     revalidateIncomingDeliveryRoutes(line?.incomingDeliveryId)
@@ -329,10 +346,26 @@ export const softDeleteIncomingDeliveryLineAllocationAction = protectedServerFun
   serverFn: async ({data: {id, incomingDeliveryId}, profile, logger}) => {
     assertMinRoleLevel(profile, INCOMING_PERMISSION_LEVELS.deleteSourceLink, 'You do not have permission to delete source links.')
 
+    const allocation = await prismaClient.incomingDeliveryLineAllocation.findUnique({
+      where: {id},
+      select: {materialDemandSourceId: true},
+    })
+
     await prismaClient.incomingDeliveryLineAllocation.update({
       where: {id},
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
     })
+
+    // Sync the material demand fulfillment status
+    if (allocation?.materialDemandSourceId) {
+      const source = await prismaClient.materialDemandSource.findUnique({
+        where: {id: allocation.materialDemandSourceId},
+        select: {materialDemandId: true},
+      })
+      if (source) {
+        await syncMaterialDemandFromIncomingAllocations(source.materialDemandId, profile.id)
+      }
+    }
 
     logger.info(`Incoming delivery line allocation soft deleted: ${id}`)
     revalidateIncomingDeliveryRoutes(incomingDeliveryId)

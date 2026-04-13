@@ -128,6 +128,7 @@ export const createQuoteSupplierLineAction = protectedServerFunction({
         unitPrice: data.unitPrice,
         minQuantity: data.minQuantity ?? null,
         selected: false,
+        notDeliverable: data.notDeliverable ?? false,
       },
       include: {
         QuoteSupplier: {select: {id: true}},

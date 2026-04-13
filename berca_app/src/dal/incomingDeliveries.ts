@@ -9,7 +9,7 @@ export async function getIncomingDeliveries() {
       Employee_IncomingDelivery_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       IncomingDeliveryLine: {
         where: {deleted: false},
-        select: {id: true, orderedQty: true, acceptedQty: true, backorderQty: true},
+        select: {id: true, orderedQty: true, acceptedQty: true, backorderQty: true, notCorrect: true, notCorrectReason: true},
       },
     },
   })

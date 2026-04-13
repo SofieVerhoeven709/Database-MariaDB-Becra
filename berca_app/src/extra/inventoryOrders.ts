@@ -37,6 +37,10 @@ export function mapInventoryOrder(o: InventoryOrderWithRelations): MappedInvento
     rejectedByName: o.Employee_InventoryOrder_rejectedByToEmployee
       ? `${o.Employee_InventoryOrder_rejectedByToEmployee.firstName} ${o.Employee_InventoryOrder_rejectedByToEmployee.lastName}`
       : null,
+    notDeliverable: o.notDeliverable,
+    notCorrect: o.notCorrect,
+    notCorrectReason: o.notCorrectReason ?? null,
+    snapshotTakenAt: o.snapshotTakenAt?.toISOString() ?? null,
     deleted: o.deleted,
     deletedAt: o.deletedAt?.toISOString() ?? null,
     deletedBy: o.deletedBy ?? null,

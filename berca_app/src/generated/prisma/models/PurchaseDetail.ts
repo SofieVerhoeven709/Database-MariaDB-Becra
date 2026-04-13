@@ -54,6 +54,7 @@ export type PurchaseDetailMinAggregateOutputType = {
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
+  notDeliverable: boolean | null
 }
 
 export type PurchaseDetailMaxAggregateOutputType = {
@@ -72,6 +73,7 @@ export type PurchaseDetailMaxAggregateOutputType = {
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
+  notDeliverable: boolean | null
 }
 
 export type PurchaseDetailCountAggregateOutputType = {
@@ -90,6 +92,7 @@ export type PurchaseDetailCountAggregateOutputType = {
   deleted: number
   deletedAt: number
   deletedBy: number
+  notDeliverable: number
   _all: number
 }
 
@@ -122,6 +125,7 @@ export type PurchaseDetailMinAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
+  notDeliverable?: true
 }
 
 export type PurchaseDetailMaxAggregateInputType = {
@@ -140,6 +144,7 @@ export type PurchaseDetailMaxAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
+  notDeliverable?: true
 }
 
 export type PurchaseDetailCountAggregateInputType = {
@@ -158,6 +163,7 @@ export type PurchaseDetailCountAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
+  notDeliverable?: true
   _all?: true
 }
 
@@ -263,6 +269,7 @@ export type PurchaseDetailGroupByOutputType = {
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
+  notDeliverable: boolean
   _count: PurchaseDetailCountAggregateOutputType | null
   _avg: PurchaseDetailAvgAggregateOutputType | null
   _sum: PurchaseDetailSumAggregateOutputType | null
@@ -304,6 +311,7 @@ export type PurchaseDetailWhereInput = {
   deleted?: Prisma.BoolFilter<"PurchaseDetail"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseDetail"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  notDeliverable?: Prisma.BoolFilter<"PurchaseDetail"> | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineListRelationFilter
   Purchase?: Prisma.XOR<Prisma.PurchaseScalarRelationFilter, Prisma.PurchaseWhereInput>
   QuoteSupplierLine?: Prisma.XOR<Prisma.QuoteSupplierLineNullableScalarRelationFilter, Prisma.QuoteSupplierLineWhereInput> | null
@@ -329,6 +337,7 @@ export type PurchaseDetailOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineOrderByRelationAggregateInput
   Purchase?: Prisma.PurchaseOrderByWithRelationInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineOrderByWithRelationInput
@@ -358,6 +367,7 @@ export type PurchaseDetailWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"PurchaseDetail"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseDetail"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  notDeliverable?: Prisma.BoolFilter<"PurchaseDetail"> | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineListRelationFilter
   Purchase?: Prisma.XOR<Prisma.PurchaseScalarRelationFilter, Prisma.PurchaseWhereInput>
   QuoteSupplierLine?: Prisma.XOR<Prisma.QuoteSupplierLineNullableScalarRelationFilter, Prisma.QuoteSupplierLineWhereInput> | null
@@ -383,6 +393,7 @@ export type PurchaseDetailOrderByWithAggregationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
   _count?: Prisma.PurchaseDetailCountOrderByAggregateInput
   _avg?: Prisma.PurchaseDetailAvgOrderByAggregateInput
   _max?: Prisma.PurchaseDetailMaxOrderByAggregateInput
@@ -409,6 +420,7 @@ export type PurchaseDetailScalarWhereWithAggregatesInput = {
   deleted?: Prisma.BoolWithAggregatesFilter<"PurchaseDetail"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseDetail"> | Date | string | null
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
+  notDeliverable?: Prisma.BoolWithAggregatesFilter<"PurchaseDetail"> | boolean
 }
 
 export type PurchaseDetailCreateInput = {
@@ -421,6 +433,7 @@ export type PurchaseDetailCreateInput = {
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseDetailInput
   Purchase: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedOneWithoutPurchaseDetailInput
@@ -446,6 +459,7 @@ export type PurchaseDetailUncheckedCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseDetailInput
 }
 
@@ -459,6 +473,7 @@ export type PurchaseDetailUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseDetailNestedInput
   Purchase?: Prisma.PurchaseUpdateOneRequiredWithoutPurchaseDetailNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateOneWithoutPurchaseDetailNestedInput
@@ -484,6 +499,7 @@ export type PurchaseDetailUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseDetailNestedInput
 }
 
@@ -503,6 +519,7 @@ export type PurchaseDetailCreateManyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
 }
 
 export type PurchaseDetailUpdateManyMutationInput = {
@@ -515,6 +532,7 @@ export type PurchaseDetailUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PurchaseDetailUncheckedUpdateManyInput = {
@@ -533,6 +551,7 @@ export type PurchaseDetailUncheckedUpdateManyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PurchaseDetailListRelationFilter = {
@@ -567,6 +586,7 @@ export type PurchaseDetailCountOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
 }
 
 export type PurchaseDetailAvgOrderByAggregateInput = {
@@ -591,6 +611,7 @@ export type PurchaseDetailMaxOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
 }
 
 export type PurchaseDetailMinOrderByAggregateInput = {
@@ -609,6 +630,7 @@ export type PurchaseDetailMinOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
 }
 
 export type PurchaseDetailSumOrderByAggregateInput = {
@@ -908,6 +930,7 @@ export type PurchaseDetailCreateWithoutEmployeeInput = {
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseDetailInput
   Purchase: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedOneWithoutPurchaseDetailInput
@@ -931,6 +954,7 @@ export type PurchaseDetailUncheckedCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseDetailInput
 }
 
@@ -954,6 +978,7 @@ export type PurchaseDetailCreateWithoutEmployee_PurchaseDetail_deletedByToEmploy
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseDetailInput
   Purchase: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedOneWithoutPurchaseDetailInput
@@ -977,6 +1002,7 @@ export type PurchaseDetailUncheckedCreateWithoutEmployee_PurchaseDetail_deletedB
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseDetailInput
 }
 
@@ -1025,6 +1051,7 @@ export type PurchaseDetailScalarWhereInput = {
   deleted?: Prisma.BoolFilter<"PurchaseDetail"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"PurchaseDetail"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  notDeliverable?: Prisma.BoolFilter<"PurchaseDetail"> | boolean
 }
 
 export type PurchaseDetailUpsertWithWhereUniqueWithoutEmployee_PurchaseDetail_deletedByToEmployeeInput = {
@@ -1053,6 +1080,7 @@ export type PurchaseDetailCreateWithoutMaterialInput = {
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseDetailInput
   Purchase: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedOneWithoutPurchaseDetailInput
@@ -1076,6 +1104,7 @@ export type PurchaseDetailUncheckedCreateWithoutMaterialInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseDetailInput
 }
 
@@ -1115,6 +1144,7 @@ export type PurchaseDetailCreateWithoutPurchaseInput = {
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseDetailInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedOneWithoutPurchaseDetailInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseDetailInput
@@ -1138,6 +1168,7 @@ export type PurchaseDetailUncheckedCreateWithoutPurchaseInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseDetailInput
 }
 
@@ -1177,6 +1208,7 @@ export type PurchaseDetailCreateWithoutMaterialDemandInput = {
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseDetailInput
   Purchase: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedOneWithoutPurchaseDetailInput
@@ -1200,6 +1232,7 @@ export type PurchaseDetailUncheckedCreateWithoutMaterialDemandInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseDetailInput
 }
 
@@ -1239,6 +1272,7 @@ export type PurchaseDetailCreateWithoutQuoteSupplierLineInput = {
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineCreateNestedManyWithoutPurchaseDetailInput
   Purchase: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseDetailInput
@@ -1262,6 +1296,7 @@ export type PurchaseDetailUncheckedCreateWithoutQuoteSupplierLineInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedCreateNestedManyWithoutPurchaseDetailInput
 }
 
@@ -1301,6 +1336,7 @@ export type PurchaseDetailCreateWithoutIncomingDeliveryLineInput = {
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  notDeliverable?: boolean
   Purchase: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedOneWithoutPurchaseDetailInput
   Material: Prisma.MaterialCreateNestedOneWithoutPurchaseDetailInput
@@ -1325,6 +1361,7 @@ export type PurchaseDetailUncheckedCreateWithoutIncomingDeliveryLineInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
 }
 
 export type PurchaseDetailCreateOrConnectWithoutIncomingDeliveryLineInput = {
@@ -1353,6 +1390,7 @@ export type PurchaseDetailUpdateWithoutIncomingDeliveryLineInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUpdateOneRequiredWithoutPurchaseDetailNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateOneWithoutPurchaseDetailNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseDetailNestedInput
@@ -1377,6 +1415,7 @@ export type PurchaseDetailUncheckedUpdateWithoutIncomingDeliveryLineInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PurchaseDetailCreateManyEmployeeInput = {
@@ -1394,6 +1433,7 @@ export type PurchaseDetailCreateManyEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
 }
 
 export type PurchaseDetailCreateManyEmployee_PurchaseDetail_deletedByToEmployeeInput = {
@@ -1411,6 +1451,7 @@ export type PurchaseDetailCreateManyEmployee_PurchaseDetail_deletedByToEmployeeI
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
+  notDeliverable?: boolean
 }
 
 export type PurchaseDetailUpdateWithoutEmployeeInput = {
@@ -1423,6 +1464,7 @@ export type PurchaseDetailUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseDetailNestedInput
   Purchase?: Prisma.PurchaseUpdateOneRequiredWithoutPurchaseDetailNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateOneWithoutPurchaseDetailNestedInput
@@ -1446,6 +1488,7 @@ export type PurchaseDetailUncheckedUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseDetailNestedInput
 }
 
@@ -1464,6 +1507,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PurchaseDetailUpdateWithoutEmployee_PurchaseDetail_deletedByToEmployeeInput = {
@@ -1476,6 +1520,7 @@ export type PurchaseDetailUpdateWithoutEmployee_PurchaseDetail_deletedByToEmploy
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseDetailNestedInput
   Purchase?: Prisma.PurchaseUpdateOneRequiredWithoutPurchaseDetailNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateOneWithoutPurchaseDetailNestedInput
@@ -1499,6 +1544,7 @@ export type PurchaseDetailUncheckedUpdateWithoutEmployee_PurchaseDetail_deletedB
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseDetailNestedInput
 }
 
@@ -1517,6 +1563,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutEmployee_PurchaseDetail_dele
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PurchaseDetailCreateManyMaterialInput = {
@@ -1534,6 +1581,7 @@ export type PurchaseDetailCreateManyMaterialInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
 }
 
 export type PurchaseDetailUpdateWithoutMaterialInput = {
@@ -1546,6 +1594,7 @@ export type PurchaseDetailUpdateWithoutMaterialInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseDetailNestedInput
   Purchase?: Prisma.PurchaseUpdateOneRequiredWithoutPurchaseDetailNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateOneWithoutPurchaseDetailNestedInput
@@ -1569,6 +1618,7 @@ export type PurchaseDetailUncheckedUpdateWithoutMaterialInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseDetailNestedInput
 }
 
@@ -1587,6 +1637,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutMaterialInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PurchaseDetailCreateManyPurchaseInput = {
@@ -1604,6 +1655,7 @@ export type PurchaseDetailCreateManyPurchaseInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
 }
 
 export type PurchaseDetailUpdateWithoutPurchaseInput = {
@@ -1616,6 +1668,7 @@ export type PurchaseDetailUpdateWithoutPurchaseInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseDetailNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateOneWithoutPurchaseDetailNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseDetailNestedInput
@@ -1639,6 +1692,7 @@ export type PurchaseDetailUncheckedUpdateWithoutPurchaseInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseDetailNestedInput
 }
 
@@ -1657,6 +1711,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutPurchaseInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PurchaseDetailCreateManyMaterialDemandInput = {
@@ -1674,6 +1729,7 @@ export type PurchaseDetailCreateManyMaterialDemandInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
 }
 
 export type PurchaseDetailUpdateWithoutMaterialDemandInput = {
@@ -1686,6 +1742,7 @@ export type PurchaseDetailUpdateWithoutMaterialDemandInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseDetailNestedInput
   Purchase?: Prisma.PurchaseUpdateOneRequiredWithoutPurchaseDetailNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateOneWithoutPurchaseDetailNestedInput
@@ -1709,6 +1766,7 @@ export type PurchaseDetailUncheckedUpdateWithoutMaterialDemandInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseDetailNestedInput
 }
 
@@ -1727,6 +1785,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutMaterialDemandInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PurchaseDetailCreateManyQuoteSupplierLineInput = {
@@ -1744,6 +1803,7 @@ export type PurchaseDetailCreateManyQuoteSupplierLineInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  notDeliverable?: boolean
 }
 
 export type PurchaseDetailUpdateWithoutQuoteSupplierLineInput = {
@@ -1756,6 +1816,7 @@ export type PurchaseDetailUpdateWithoutQuoteSupplierLineInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUpdateManyWithoutPurchaseDetailNestedInput
   Purchase?: Prisma.PurchaseUpdateOneRequiredWithoutPurchaseDetailNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutPurchaseDetailNestedInput
@@ -1779,6 +1840,7 @@ export type PurchaseDetailUncheckedUpdateWithoutQuoteSupplierLineInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   IncomingDeliveryLine?: Prisma.IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseDetailNestedInput
 }
 
@@ -1797,6 +1859,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -1846,6 +1909,7 @@ export type PurchaseDetailSelect<ExtArgs extends runtime.Types.Extensions.Intern
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
+  notDeliverable?: boolean
   IncomingDeliveryLine?: boolean | Prisma.PurchaseDetail$IncomingDeliveryLineArgs<ExtArgs>
   Purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
   QuoteSupplierLine?: boolean | Prisma.PurchaseDetail$QuoteSupplierLineArgs<ExtArgs>
@@ -1874,9 +1938,10 @@ export type PurchaseDetailSelectScalar = {
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
+  notDeliverable?: boolean
 }
 
-export type PurchaseDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseId" | "quoteSupplierLineId" | "materialId" | "materialDemandId" | "quantity" | "unitPrice" | "minQuantity" | "lineStatus" | "additionalInfo" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["purchaseDetail"]>
+export type PurchaseDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseId" | "quoteSupplierLineId" | "materialId" | "materialDemandId" | "quantity" | "unitPrice" | "minQuantity" | "lineStatus" | "additionalInfo" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy" | "notDeliverable", ExtArgs["result"]["purchaseDetail"]>
 export type PurchaseDetailInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   IncomingDeliveryLine?: boolean | Prisma.PurchaseDetail$IncomingDeliveryLineArgs<ExtArgs>
   Purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
@@ -1915,6 +1980,7 @@ export type $PurchaseDetailPayload<ExtArgs extends runtime.Types.Extensions.Inte
     deleted: boolean
     deletedAt: Date | null
     deletedBy: string | null
+    notDeliverable: boolean
   }, ExtArgs["result"]["purchaseDetail"]>
   composites: {}
 }
@@ -2306,6 +2372,7 @@ export interface PurchaseDetailFieldRefs {
   readonly deleted: Prisma.FieldRef<"PurchaseDetail", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"PurchaseDetail", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"PurchaseDetail", 'String'>
+  readonly notDeliverable: Prisma.FieldRef<"PurchaseDetail", 'Boolean'>
 }
     
 

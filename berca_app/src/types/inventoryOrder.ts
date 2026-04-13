@@ -19,6 +19,10 @@ export interface MappedInventoryOrder {
   rejectedAt: string | null
   rejectedBy: string | null
   rejectedByName: string | null
+  notDeliverable: boolean
+  notCorrect: boolean
+  notCorrectReason: string | null
+  snapshotTakenAt: string | null
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null

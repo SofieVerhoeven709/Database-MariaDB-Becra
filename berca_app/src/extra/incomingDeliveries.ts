@@ -11,7 +11,7 @@ type IncomingDeliveryWithRelations = Prisma.IncomingDeliveryGetPayload<{
   include: {
     Purchase: {select: {id: true; purchaseNumber: true}}
     Employee_IncomingDelivery_createdByToEmployee: {select: {id: true; firstName: true; lastName: true}}
-    IncomingDeliveryLine: {select: {id: true; orderedQty: true; acceptedQty: true; backorderQty: true}}
+    IncomingDeliveryLine: {select: {id: true; orderedQty: true; acceptedQty: true; backorderQty: true; notCorrect: true; notCorrectReason: true}}
   }
 }>
 
@@ -60,6 +60,16 @@ type IncomingDeliveryLineWithRelations = Prisma.IncomingDeliveryLineGetPayload<{
               }
             }
           }
+          select: {
+            id: true
+            fulfilled: true
+            fulfilledAt: true
+            fulfilledBy: true
+            requiredQty: true
+            reservedQty: true
+            MaterialDemandSourceType: true
+            MaterialDemand: true
+          }
         }
         Employee_IncomingDeliveryLineAllocation_createdByToEmployee: {select: {id: true; firstName: true; lastName: true}}
       }
@@ -87,6 +97,8 @@ export function mapIncomingDeliveryLine(line: IncomingDeliveryLineWithRelations)
     deleted: line.deleted,
     deletedAt: line.deletedAt?.toISOString() ?? null,
     deletedBy: line.deletedBy,
+    notCorrect: line.notCorrect,
+    notCorrectReason: line.notCorrectReason ?? null,
     allocationCount: line.IncomingDeliveryLineAllocation.length,
   }
 }
@@ -107,6 +119,9 @@ export function mapIncomingDeliveryLineAllocation(
     deleted: allocation.deleted,
     deletedAt: allocation.deletedAt?.toISOString() ?? null,
     deletedBy: allocation.deletedBy,
+    fulfilled: allocation.MaterialDemandSource.fulfilled,
+    fulfilledAt: allocation.MaterialDemandSource.fulfilledAt?.toISOString() ?? null,
+    fulfilledBy: allocation.MaterialDemandSource.fulfilledBy,
   }
 }
 

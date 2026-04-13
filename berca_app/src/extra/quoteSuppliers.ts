@@ -85,6 +85,7 @@ export function mapQuoteSupplierDetail(q: QuoteSupplierDetailWithRelations): Map
       unitPrice: Number(line.unitPrice),
       minQuantity: line.minQuantity ?? null,
       selected: !!line.selected,
+      notDeliverable: line.notDeliverable,
     })),
   }
 }

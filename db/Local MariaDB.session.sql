@@ -1755,6 +1755,7 @@ CREATE TABLE
             minQuantity INT,
             lineStatus VARCHAR(50) NOT NULL DEFAULT 'OPEN',
             additionalInfo VARCHAR(255),
+            notDeliverable BOOLEAN NOT NULL DEFAULT 0,
             createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             createdBy CHAR(36) NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -2085,8 +2086,7 @@ CREATE TABLE
             FOREIGN KEY (receivedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-
-CREATE TABLE 
+CREATE TABLE
       IF NOT EXISTS QuoteSupplierLine (
             id CHAR(36) PRIMARY KEY,
             quoteSupplierId CHAR(36) NOT NULL,
@@ -2096,6 +2096,7 @@ CREATE TABLE
             unitPrice DECIMAL(10,2) NOT NULL,
             minQuantity INT,
             selected BOOLEAN DEFAULT 0,
+            notDeliverable BOOLEAN NOT NULL DEFAULT 0,
             FOREIGN KEY (quoteSupplierId) REFERENCES QuoteSupplier(id) ON DELETE RESTRICT,
             FOREIGN KEY (materialId) REFERENCES Material(id) ON DELETE RESTRICT,
             FOREIGN KEY (materialDemandId) REFERENCES MaterialDemand(id) ON DELETE SET NULL
@@ -2106,6 +2107,7 @@ ALTER TABLE PurchaseDetail ADD CONSTRAINT fk_quoteSupplierLine_purchaseDetail FO
 ALTER TABLE Purchase ADD CONSTRAINT fk_quoteSupplier_purchase FOREIGN KEY (quoteSupplierId) REFERENCES QuoteSupplier(id) ON DELETE SET NULL;
 ALTER TABLE PurchaseDetail ADD CONSTRAINT fk_materialDemand_purchaseDetail FOREIGN KEY (materialDemandId) REFERENCES MaterialDemand(id) ON DELETE SET NULL;
 ALTER TABLE Purchase ADD CONSTRAINT fk_paymentCondition_purchase FOREIGN KEY (paymentConditionId) REFERENCES PaymentCondition (id) ON DELETE RESTRICT;
+
 
 CREATE TABLE
       IF NOT EXISTS InventoryOrder (
@@ -2122,6 +2124,9 @@ CREATE TABLE
             rejected BOOLEAN NOT NULL DEFAULT 0,
             rejectedAt DATETIME,
             rejectedBy CHAR(36),
+            notDeliverable BOOLEAN NOT NULL DEFAULT 0,
+            notCorrect BOOLEAN NOT NULL DEFAULT 0,
+            notCorrectReason TEXT,
             createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             createdBy CHAR(36) NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -2155,7 +2160,6 @@ CREATE TABLE
             UNIQUE(incomingDeliveryNumber)
       ) ENGINE = InnoDB;
 
-
 CREATE TABLE
       IF NOT EXISTS IncomingDeliveryLine (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -2169,6 +2173,8 @@ CREATE TABLE
             backorderQty INT NOT NULL DEFAULT 0,
             unitPrice DECIMAL(10,2),
             lineStatus VARCHAR(50) NOT NULL DEFAULT 'RECEIVED',
+            notCorrect BOOLEAN NOT NULL DEFAULT 0,
+            notCorrectReason TEXT,
             createdAt DATETIME NOT NULL,
             deletedAt DATETIME,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -2180,7 +2186,6 @@ CREATE TABLE
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
-
 
 CREATE TABLE
       IF NOT EXISTS IncomingDeliveryLineAllocation (

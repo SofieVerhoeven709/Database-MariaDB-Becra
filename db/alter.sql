@@ -1402,7 +1402,7 @@ CREATE TABLE
             FOREIGN KEY (receivedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-CREATE TABLE 
+CREATE TABLE
       IF NOT EXISTS QuoteSupplierLine (
             id CHAR(36) PRIMARY KEY,
             quoteSupplierId CHAR(36) NOT NULL,
@@ -1412,6 +1412,7 @@ CREATE TABLE
             unitPrice DECIMAL(10,2) NOT NULL,
             minQuantity INT,
             selected BOOLEAN DEFAULT 0,
+            notDeliverable BOOLEAN NOT NULL DEFAULT 0,
             FOREIGN KEY (quoteSupplierId) REFERENCES QuoteSupplier(id) ON DELETE RESTRICT,
             FOREIGN KEY (materialId) REFERENCES Material(id) ON DELETE RESTRICT,
             FOREIGN KEY (materialDemandId) REFERENCES MaterialDemand(id) ON DELETE SET NULL
@@ -1421,7 +1422,7 @@ CREATE TABLE
       IF NOT EXISTS IncomingDelivery (
             id CHAR(36) NOT NULL PRIMARY KEY,
             incomingDeliveryNumber VARCHAR(255) NOT NULL,
-            purchaseBOMId CHAR(36) NOT NULL,
+            purchaseId CHAR(36),
             additionalInfo VARCHAR(255),
             description VARCHAR(255),
             status VARCHAR(50) NOT NULL DEFAULT 'DRAFT',
@@ -1432,7 +1433,7 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             deletedBy CHAR(36),
-            FOREIGN KEY (purchaseBOMId) REFERENCES PurchaseBOM (id) ON DELETE RESTRICT,
+            FOREIGN KEY (purchaseId) REFERENCES Purchase (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
             UNIQUE(incomingDeliveryNumber)
@@ -1442,8 +1443,7 @@ CREATE TABLE
       IF NOT EXISTS IncomingDeliveryLine (
             id CHAR(36) NOT NULL PRIMARY KEY,
             incomingDeliveryId CHAR(36) NOT NULL,
-            purchaseBOMStructureId CHAR(36) NOT NULL,
-            quoteSupplierLineId CHAR(36),
+            purchaseDetailId CHAR(36),
             materialId CHAR(36) NOT NULL,
             orderedQty INT NOT NULL,
             deliveredQty INT NOT NULL,
@@ -1452,18 +1452,36 @@ CREATE TABLE
             backorderQty INT NOT NULL DEFAULT 0,
             unitPrice DECIMAL(10,2),
             lineStatus VARCHAR(50) NOT NULL DEFAULT 'RECEIVED',
+            notCorrect BOOLEAN NOT NULL DEFAULT 0,
+            notCorrectReason TEXT,
             createdAt DATETIME NOT NULL,
             deletedAt DATETIME,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             deletedBy CHAR(36),
             FOREIGN KEY (incomingDeliveryId) REFERENCES IncomingDelivery (id) ON DELETE CASCADE,
-            FOREIGN KEY (purchaseBOMStructureId) REFERENCES PurchaseBOMStructure (id) ON DELETE RESTRICT,
-            FOREIGN KEY (quoteSupplierLineId) REFERENCES QuoteSupplierLine (id) ON DELETE RESTRICT,
+            FOREIGN KEY (purchaseDetailId) REFERENCES PurchaseDetail (id) ON DELETE RESTRICT,
             FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS IncomingDeliveryLineAllocation (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            incomingDeliveryLineId CHAR(36) NOT NULL,
+            materialDemandSourceId CHAR(36) NOT NULL,
+            allocatedQty INT NOT NULL,
+            createdAt DATETIME NOT NULL,
+            createdBy CHAR(36) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (incomingDeliveryLineId) REFERENCES IncomingDeliveryLine (id) ON DELETE CASCADE,
+            FOREIGN KEY (materialDemandSourceId) REFERENCES MaterialDemandSource (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            UNIQUE(incomingDeliveryId, purchaseBOMStructureId)
+            UNIQUE (incomingDeliveryLineId, materialDemandSourceId)
       ) ENGINE = InnoDB;
 
 
@@ -1571,11 +1589,6 @@ ALTER TABLE InventoryOrder
 ALTER TABLE InventoryOrder
     DROP COLUMN IF EXISTS inventoryId;
 
--- =========================================================
--- TEST ENV HARD RESET: Purchase + PurchaseDetail
--- Data in these 2 tables will be lost
--- =========================================================
-
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS PurchaseDetail;
@@ -1583,10 +1596,6 @@ DROP TABLE IF EXISTS Purchase;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-
--- =========================================================
--- Recreate Purchase (order header)
--- =========================================================
 CREATE TABLE
       IF NOT EXISTS Purchase (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -1612,10 +1621,6 @@ CREATE TABLE
             UNIQUE (purchaseNumber)
       ) ENGINE = InnoDB;
 
-
--- =========================================================
--- Recreate PurchaseDetail (order lines)
--- =========================================================
 CREATE TABLE
       IF NOT EXISTS PurchaseDetail (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -1626,6 +1631,7 @@ CREATE TABLE
             quantity INT NOT NULL,
             unitPrice DECIMAL(10,2) NOT NULL,
             minQuantity INT,
+            notDeliverable BOOLEAN NOT NULL DEFAULT 0,
             lineStatus VARCHAR(50) NOT NULL DEFAULT 'OPEN',
             additionalInfo VARCHAR(255),
             createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1640,3 +1646,105 @@ CREATE TABLE
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS InventoryOrder (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NOT NULL,
+            orderNumber VARCHAR(255) NOT NULL,
+            requestedQty INT NOT NULL DEFAULT 1,
+            orderDate DATETIME NOT NULL,
+            shortDescription VARCHAR(255) NOT NULL,
+            longDescription TEXT,
+            approved BOOLEAN NOT NULL DEFAULT 0,
+            approvedAt DATETIME,
+            approvedBy CHAR(36),
+            rejected BOOLEAN NOT NULL DEFAULT 0,
+            rejectedAt DATETIME,
+            rejectedBy CHAR(36),
+            notDeliverable BOOLEAN NOT NULL DEFAULT 0,
+            notCorrect BOOLEAN NOT NULL DEFAULT 0,
+            notCorrectReason TEXT,
+            createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            createdBy CHAR(36) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (approvedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (rejectedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS IncomingDelivery (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            incomingDeliveryNumber VARCHAR(255) NOT NULL,
+            purchaseId CHAR(36),
+            additionalInfo VARCHAR(255),
+            description VARCHAR(255),
+            status VARCHAR(50) NOT NULL DEFAULT 'DRAFT',
+            deliveryDate DATETIME NOT NULL,
+            receivedAt DATETIME,
+            createdAt DATETIME NOT NULL,
+            deletedAt DATETIME,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            createdBy CHAR(36) NOT NULL,
+            deletedBy CHAR(36),
+            FOREIGN KEY (purchaseId) REFERENCES Purchase (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            UNIQUE(incomingDeliveryNumber)
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS IncomingDeliveryLine (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            incomingDeliveryId CHAR(36) NOT NULL,
+            purchaseDetailId CHAR(36),
+            materialId CHAR(36) NOT NULL,
+            orderedQty INT NOT NULL,
+            deliveredQty INT NOT NULL,
+            acceptedQty INT NOT NULL,
+            rejectedQty INT NOT NULL DEFAULT 0,
+            backorderQty INT NOT NULL DEFAULT 0,
+            unitPrice DECIMAL(10,2),
+            lineStatus VARCHAR(50) NOT NULL DEFAULT 'RECEIVED',
+            notCorrect BOOLEAN NOT NULL DEFAULT 0,
+            notCorrectReason TEXT,
+            createdAt DATETIME NOT NULL,
+            deletedAt DATETIME,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            createdBy CHAR(36) NOT NULL,
+            deletedBy CHAR(36),
+            FOREIGN KEY (incomingDeliveryId) REFERENCES IncomingDelivery (id) ON DELETE CASCADE,
+            FOREIGN KEY (purchaseDetailId) REFERENCES PurchaseDetail (id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS IncomingDeliveryLineAllocation (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            incomingDeliveryLineId CHAR(36) NOT NULL,
+            materialDemandSourceId CHAR(36) NOT NULL,
+            allocatedQty INT NOT NULL,
+            createdAt DATETIME NOT NULL,
+            createdBy CHAR(36) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (incomingDeliveryLineId) REFERENCES IncomingDeliveryLine (id) ON DELETE CASCADE,
+            FOREIGN KEY (materialDemandSourceId) REFERENCES MaterialDemandSource (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            UNIQUE (incomingDeliveryLineId, materialDemandSourceId)
+      ) ENGINE = InnoDB;
+
+ALTER TABLE InventoryOrder
+    ADD COLUMN IF NOT EXISTS notDeliverable BOOLEAN NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS notCorrect BOOLEAN NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS notCorrectReason TEXT NULL,
+    ADD COLUMN IF NOT EXISTS snapshotTakenAt DATETIME NULL;

@@ -57,6 +57,7 @@ export async function ensurePurchaseFromApprovedQuote(quoteSupplierId: string, c
           quantity: true,
           unitPrice: true,
           minQuantity: true,
+          notDeliverable: true,
         },
       },
     },
@@ -108,6 +109,7 @@ export async function ensurePurchaseFromApprovedQuote(quoteSupplierId: string, c
           unitPrice: line.unitPrice,
           minQuantity: line.minQuantity,
           lineStatus: 'OPEN',
+          notDeliverable: line.notDeliverable,
           createdBy,
         })),
       })
@@ -153,6 +155,7 @@ export async function getPurchaseById(id: string) {
               quantity: true,
               unitPrice: true,
               minQuantity: true,
+              notDeliverable: true,
               Material: {select: {id: true, beNumber: true, name: true, shortDescription: true}},
             },
             orderBy: {id: 'asc'},

@@ -61,5 +61,6 @@ export interface MaterialDemandSourceEntry {
   requiredQty: number
   reservedQty: number
   createdAt: string
+  fulfilled: boolean
 }
 

@@ -63,6 +63,7 @@ export function mapPurchaseDetail(d: PurchaseDetailWithRelations): MappedPurchas
     minQuantity: d.minQuantity,
     lineStatus: d.lineStatus ?? 'OPEN',
     additionalInfo: d.additionalInfo,
+    notDeliverable: d.notDeliverable,
     createdAt: d.createdAt?.toISOString() ?? null,
     createdBy: d.createdBy,
     createdByName: `${d.Employee.firstName} ${d.Employee.lastName}`,

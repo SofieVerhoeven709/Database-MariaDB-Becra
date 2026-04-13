@@ -35,6 +35,7 @@ export interface MappedQuoteSupplierDetailLine {
   unitPrice: number
   minQuantity: number | null
   selected: boolean
+  notDeliverable: boolean
 }
 
 export interface MappedQuoteSupplierDetail extends MappedQuoteSupplier {

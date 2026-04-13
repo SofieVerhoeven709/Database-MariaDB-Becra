@@ -4,6 +4,7 @@ import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
 import {Plus, Pencil, Trash2, Link2} from 'lucide-react'
 import {Button} from '@/components/ui/button'
+import {Checkbox} from '@/components/ui/checkbox'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -56,6 +57,8 @@ interface LineFormState {
   backorderQty: string
   unitPrice: string
   lineStatus: string
+  notCorrect: boolean
+  notCorrectReason: string
 }
 
 function emptyLineForm(): LineFormState {
@@ -69,6 +72,8 @@ function emptyLineForm(): LineFormState {
     backorderQty: '0',
     unitPrice: '',
     lineStatus: 'RECEIVED',
+    notCorrect: false,
+    notCorrectReason: '',
   }
 }
 
@@ -124,6 +129,8 @@ export function IncomingDeliveryDetailTable({
       backorderQty: String(line.backorderQty),
       unitPrice: line.unitPrice ?? '',
       lineStatus: line.lineStatus,
+      notCorrect: line.notCorrect,
+      notCorrectReason: line.notCorrectReason ?? '',
     })
   }
 
@@ -148,6 +155,8 @@ export function IncomingDeliveryDetailTable({
       backorderQty: Number.parseInt(form.backorderQty, 10) || 0,
       unitPrice: form.unitPrice || null,
       lineStatus: form.lineStatus,
+      notCorrect: form.notCorrect,
+      notCorrectReason: form.notCorrect ? form.notCorrectReason || null : null,
     }
 
     setSaving(true)
@@ -277,6 +286,29 @@ export function IncomingDeliveryDetailTable({
           </div>
         </div>
 
+        <div className="grid gap-3 md:grid-cols-[auto_1fr] items-end">
+          <div className="flex items-center gap-2 rounded-md border border-border/60 bg-secondary/30 px-3 py-2">
+            <Checkbox
+              id="notCorrect"
+              checked={form.notCorrect}
+              onCheckedChange={checked => setForm(prev => ({...prev, notCorrect: checked === true, notCorrectReason: checked === true ? prev.notCorrectReason : ''}))}
+            />
+            <Label htmlFor="notCorrect" className="text-sm font-normal cursor-pointer">
+              Not correct
+            </Label>
+          </div>
+          <div className="grid gap-1.5">
+            <Label>Reason</Label>
+            <Input
+              value={form.notCorrectReason}
+              onChange={e => setForm(prev => ({...prev, notCorrectReason: e.target.value}))}
+              placeholder="Reason for correction"
+              disabled={!form.notCorrect}
+              className="bg-secondary border-border"
+            />
+          </div>
+        </div>
+
         <div className="grid gap-3 md:grid-cols-6">
           <div className="grid gap-1.5">
             <Label>Ordered</Label>
@@ -333,6 +365,7 @@ export function IncomingDeliveryDetailTable({
               <TableHead className="text-xs">Backorder</TableHead>
               <TableHead className="text-xs">Unit Price</TableHead>
               <TableHead className="text-xs">Status</TableHead>
+              <TableHead className="text-xs">Flags</TableHead>
               <TableHead className="text-xs">Links</TableHead>
               <TableHead className="w-28"><span className="sr-only">Actions</span></TableHead>
             </TableRow>
@@ -340,7 +373,7 @@ export function IncomingDeliveryDetailTable({
           <TableBody>
             {lines.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={9} className="h-24 text-center text-muted-foreground">No incoming lines yet.</TableCell>
+                <TableCell colSpan={10} className="h-24 text-center text-muted-foreground">No incoming lines yet.</TableCell>
               </TableRow>
             ) : (
               lines.map(line => (
@@ -353,6 +386,9 @@ export function IncomingDeliveryDetailTable({
                   <TableCell className="text-sm text-muted-foreground">{formatMoney(line.unitPrice)}</TableCell>
                   <TableCell>
                     <Badge variant="outline" className="text-[11px]">{line.lineStatus}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    {line.notCorrect ? <Badge variant="destructive" className="text-[10px]">Not correct</Badge> : '—'}
                   </TableCell>
                   <TableCell>
                     <Button
@@ -434,6 +470,7 @@ export function IncomingDeliveryDetailTable({
                 <TableRow className="hover:bg-transparent border-border/60">
                   <TableHead className="text-xs">Source</TableHead>
                   <TableHead className="text-xs">Allocated Qty</TableHead>
+                  <TableHead className="text-xs">Status</TableHead>
                   <TableHead className="text-xs">Created</TableHead>
                   <TableHead className="w-20"><span className="sr-only">Actions</span></TableHead>
                 </TableRow>
@@ -448,6 +485,15 @@ export function IncomingDeliveryDetailTable({
                     <TableRow key={allocation.id} className="border-border/40">
                       <TableCell className="text-sm text-muted-foreground">{allocation.materialDemandSourceLabel}</TableCell>
                       <TableCell className="text-sm text-muted-foreground">{allocation.allocatedQty}</TableCell>
+                      <TableCell className="text-sm">
+                        {allocation.fulfilled ? (
+                          <Badge variant="secondary" className="text-[11px] bg-green-500/20 text-green-700">
+                            Fulfilled
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline" className="text-[11px]">Pending</Badge>
+                        )}
+                      </TableCell>
                       <TableCell className="text-sm text-muted-foreground">
                         {allocation.createdByName} · {formatDate(allocation.createdAt)}
                       </TableCell>

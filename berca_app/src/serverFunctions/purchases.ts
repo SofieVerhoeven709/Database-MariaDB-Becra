@@ -319,6 +319,7 @@ export const createPurchaseDetailAction = protectedServerFunction({
         minQuantity: data.minQuantity ?? null,
         lineStatus: data.lineStatus ?? 'OPEN',
         additionalInfo: data.additionalInfo ?? null,
+        notDeliverable: data.notDeliverable ?? false,
         createdBy: profile.id,
       },
     })
@@ -337,6 +338,7 @@ export const updatePurchaseDetailAction = protectedServerFunction({
       data: {
         ...rest,
         unitPrice: toDecimalString(rest.unitPrice),
+        notDeliverable: rest.notDeliverable ?? false,
       },
     })
     logger.info(`Purchase detail updated: ${id}`)

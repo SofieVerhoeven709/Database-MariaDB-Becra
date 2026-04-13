@@ -72,6 +72,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
     quantity: line.quantity,
     unitPrice: line.unitPrice?.toString() ?? '0.00',
     minQuantity: line.minQuantity ?? null,
+    notDeliverable: line.notDeliverable,
   }))
 
   const createdByName = `${purchase.Employee.firstName} ${purchase.Employee.lastName}`

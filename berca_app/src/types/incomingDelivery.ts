@@ -39,6 +39,8 @@ export interface MappedIncomingDeliveryLine {
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
+  notCorrect: boolean
+  notCorrectReason: string | null
   allocationCount: number
 }
 
@@ -54,6 +56,9 @@ export interface MappedIncomingDeliveryLineAllocation {
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
+  fulfilled: boolean
+  fulfilledAt: string | null
+  fulfilledBy: string | null
 }
 
 export interface IncomingDeliveryOption {

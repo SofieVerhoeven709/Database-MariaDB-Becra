@@ -5,6 +5,7 @@ import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from '@/
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
+import {Checkbox} from '@/components/ui/checkbox'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedPurchaseDetail} from '@/types/purchase'
 
@@ -19,6 +20,7 @@ export interface QuoteLineOption extends DetailOption {
   quantity: number
   unitPrice: string
   minQuantity: number | null
+  notDeliverable: boolean
 }
 
 interface PurchaseDetailFormDialogProps {
@@ -47,6 +49,7 @@ function emptyDetail(purchaseId: string): MappedPurchaseDetail {
     minQuantity: null,
     lineStatus: 'OPEN',
     additionalInfo: null,
+    notDeliverable: false,
     createdAt: null,
     createdBy: '',
     createdByName: '',
@@ -91,6 +94,7 @@ export function PurchaseDetailFormDialog({
           next.unitPrice = line.unitPrice
           next.minQuantity = line.minQuantity
           next.materialLabel = line.name
+          next.notDeliverable = line.notDeliverable ?? false
         }
       }
       return next
@@ -239,6 +243,17 @@ export function PurchaseDetailFormDialog({
               placeholder="Any extra notes"
               className="bg-secondary border-border"
             />
+          </div>
+
+          <div className="flex items-center gap-2 rounded-md border border-border/60 bg-secondary/30 px-3 py-2">
+            <Checkbox
+              id="notDeliverable"
+              checked={form.notDeliverable}
+              onCheckedChange={checked => set('notDeliverable', checked === true)}
+            />
+            <Label htmlFor="notDeliverable" className="text-sm font-normal cursor-pointer">
+              Not deliverable
+            </Label>
           </div>
         </div>
 

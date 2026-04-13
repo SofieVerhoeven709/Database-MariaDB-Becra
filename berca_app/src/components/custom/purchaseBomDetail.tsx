@@ -502,6 +502,8 @@ export function PurchaseBOMDetail({
                       <TableHead className={thClass}>Tag</TableHead>
                       <TableHead className={thClass}>Req. Qty</TableHead>
                       <TableHead className={thClass}>Not Deliv.</TableHead>
+                      <TableHead className={thClass}>Not Corr.</TableHead>
+                      <TableHead className={thClass}>Issue Reason</TableHead>
                       <TableHead className={thClass}>Ready Date</TableHead>
                       <TableHead className={`${thClass} border-l border-border/40`}>Res. Qty</TableHead>
                       <TableHead className={thClass}>Issued Qty</TableHead>
@@ -538,6 +540,18 @@ export function PurchaseBOMDetail({
                               No
                             </Badge>
                           )}
+                        </TableCell>
+                        <TableCell>
+                          {s.notCorrect ? (
+                            <Badge className="text-xs text-orange-600 bg-orange-600/15 border-0">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-xs text-muted-foreground/60">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-sm text-muted-foreground max-w-64 truncate" title={s.notCorrectReason ?? undefined}>
+                          {s.notCorrectReason ?? '—'}
                         </TableCell>
                         <TableCell className={tdClass}>{formatDate(s.readyForPurchaseDate)}</TableCell>
                         <TableCell className={`${tdClass} border-l border-border/40`}>

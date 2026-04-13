@@ -42,6 +42,7 @@ const materialDemandInclude = {
       requiredQty: true,
       reservedQty: true,
       createdAt: true,
+      fulfilled: true,
       MaterialDemandSourceType: {
         select: {
           name: true,
@@ -81,9 +82,15 @@ const materialDemandInclude = {
   },
 } as const
 
-export async function getMaterialDemands() {
+export async function getMaterialDemands(includeFulfilled = false) {
   return prismaClient.materialDemand.findMany({
-    include: materialDemandInclude,
+    include: {
+      ...materialDemandInclude,
+      MaterialDemandSource: {
+        ...materialDemandInclude.MaterialDemandSource,
+        where: includeFulfilled ? {} : {fulfilled: false},
+      },
+    },
     orderBy: [{Material: {beNumber: 'asc'}}, {createdAt: 'desc'}],
   })
 }
@@ -298,6 +305,14 @@ export async function removeMaterialDemandSourceForInventoryOrder(params: {
   })
 
   await db.materialDemandSource.delete({where: {id: source.id}})
+
+  if (nextTotalRequiredQty === 0 && nextReservedQty === 0) {
+    const sourceCount = await db.materialDemandSource.count({where: {materialDemandId: demand.id}})
+    if (sourceCount === 0) {
+      await db.materialDemand.delete({where: {id: demand.id}})
+    }
+  }
+
   return {removed: true}
 }
 
@@ -376,6 +391,99 @@ export async function syncMaterialDemandReservations(materialDemandId: string) {
     unallocatedQty: remainingQty,
     sourceCount: demand.MaterialDemandSource.length,
   }
+}
+
+export async function syncMaterialDemandFromIncomingAllocations(
+  materialDemandId: string,
+  employeeId: string,
+  tx?: Prisma.TransactionClient,
+) {
+  const apply = async (db: Prisma.TransactionClient | typeof prismaClient) => {
+    const demand = await db.materialDemand.findUnique({
+      where: {id: materialDemandId},
+      select: {
+        id: true,
+        totalRequiredQty: true,
+        MaterialDemandSource: {
+          select: {
+            id: true,
+            requiredQty: true,
+            reservedQty: true,
+            fulfilled: true,
+            fulfilledAt: true,
+            fulfilledBy: true,
+            IncomingDeliveryLineAllocation: {
+              where: {deleted: false},
+              select: {
+                allocatedQty: true,
+              },
+            },
+          },
+          orderBy: [{createdAt: 'asc'}, {id: 'asc'}],
+        },
+      },
+    })
+
+    if (!demand) {
+      throw new Error('MaterialDemand not found')
+    }
+
+    const now = new Date()
+    let nextTotalRequiredQty = 0
+
+    for (const source of demand.MaterialDemandSource) {
+      const allocatedQty = source.IncomingDeliveryLineAllocation.reduce((sum, allocation) => sum + allocation.allocatedQty, 0)
+      const nextReservedQty = Math.min(source.requiredQty, allocatedQty)
+      const nextOutstandingQty = Math.max(source.requiredQty - nextReservedQty, 0)
+      const nextFulfilled = nextOutstandingQty === 0
+
+      nextTotalRequiredQty += nextOutstandingQty
+
+      const updates: {
+        reservedQty?: number
+        fulfilled?: boolean
+        fulfilledAt?: Date | null
+        fulfilledBy?: string | null
+      } = {}
+
+      if ((source.reservedQty ?? 0) !== nextReservedQty) {
+        updates.reservedQty = nextReservedQty
+      }
+
+      if ((source.fulfilled ?? false) !== nextFulfilled) {
+        updates.fulfilled = nextFulfilled
+      }
+
+      if (nextFulfilled) {
+        if (!source.fulfilledAt) {
+          updates.fulfilledAt = now
+          updates.fulfilledBy = employeeId
+        }
+      } else {
+        if (source.fulfilledAt !== null || source.fulfilledBy !== null) {
+          updates.fulfilledAt = null
+          updates.fulfilledBy = null
+        }
+      }
+
+      if (Object.keys(updates).length > 0) {
+        await db.materialDemandSource.update({
+          where: {id: source.id},
+          data: updates,
+        })
+      }
+    }
+
+    if (demand.totalRequiredQty !== nextTotalRequiredQty) {
+      await db.materialDemand.update({
+        where: {id: demand.id},
+        data: {totalRequiredQty: nextTotalRequiredQty},
+      })
+    }
+    return {materialDemandId: demand.id, totalRequiredQty: nextTotalRequiredQty}
+  }
+
+  return tx ? apply(tx) : prismaClient.$transaction(apply)
 }
 
 // ─── MaterialDemandSource tracking ──────────────────────────────────────────────

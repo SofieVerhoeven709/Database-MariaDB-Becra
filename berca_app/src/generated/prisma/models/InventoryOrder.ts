@@ -53,6 +53,10 @@ export type InventoryOrderMinAggregateOutputType = {
   rejectedAt: Date | null
   rejectedBy: string | null
   materialId: string | null
+  notDeliverable: boolean | null
+  notCorrect: boolean | null
+  notCorrectReason: string | null
+  snapshotTakenAt: Date | null
 }
 
 export type InventoryOrderMaxAggregateOutputType = {
@@ -74,6 +78,10 @@ export type InventoryOrderMaxAggregateOutputType = {
   rejectedAt: Date | null
   rejectedBy: string | null
   materialId: string | null
+  notDeliverable: boolean | null
+  notCorrect: boolean | null
+  notCorrectReason: string | null
+  snapshotTakenAt: Date | null
 }
 
 export type InventoryOrderCountAggregateOutputType = {
@@ -95,6 +103,10 @@ export type InventoryOrderCountAggregateOutputType = {
   rejectedAt: number
   rejectedBy: number
   materialId: number
+  notDeliverable: number
+  notCorrect: number
+  notCorrectReason: number
+  snapshotTakenAt: number
   _all: number
 }
 
@@ -126,6 +138,10 @@ export type InventoryOrderMinAggregateInputType = {
   rejectedAt?: true
   rejectedBy?: true
   materialId?: true
+  notDeliverable?: true
+  notCorrect?: true
+  notCorrectReason?: true
+  snapshotTakenAt?: true
 }
 
 export type InventoryOrderMaxAggregateInputType = {
@@ -147,6 +163,10 @@ export type InventoryOrderMaxAggregateInputType = {
   rejectedAt?: true
   rejectedBy?: true
   materialId?: true
+  notDeliverable?: true
+  notCorrect?: true
+  notCorrectReason?: true
+  snapshotTakenAt?: true
 }
 
 export type InventoryOrderCountAggregateInputType = {
@@ -168,6 +188,10 @@ export type InventoryOrderCountAggregateInputType = {
   rejectedAt?: true
   rejectedBy?: true
   materialId?: true
+  notDeliverable?: true
+  notCorrect?: true
+  notCorrectReason?: true
+  snapshotTakenAt?: true
   _all?: true
 }
 
@@ -276,6 +300,10 @@ export type InventoryOrderGroupByOutputType = {
   rejectedAt: Date | null
   rejectedBy: string | null
   materialId: string
+  notDeliverable: boolean
+  notCorrect: boolean
+  notCorrectReason: string | null
+  snapshotTakenAt: Date | null
   _count: InventoryOrderCountAggregateOutputType | null
   _avg: InventoryOrderAvgAggregateOutputType | null
   _sum: InventoryOrderSumAggregateOutputType | null
@@ -320,6 +348,10 @@ export type InventoryOrderWhereInput = {
   rejectedAt?: Prisma.DateTimeNullableFilter<"InventoryOrder"> | Date | string | null
   rejectedBy?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
   materialId?: Prisma.StringFilter<"InventoryOrder"> | string
+  notDeliverable?: Prisma.BoolFilter<"InventoryOrder"> | boolean
+  notCorrect?: Prisma.BoolFilter<"InventoryOrder"> | boolean
+  notCorrectReason?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
+  snapshotTakenAt?: Prisma.DateTimeNullableFilter<"InventoryOrder"> | Date | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
@@ -346,6 +378,10 @@ export type InventoryOrderOrderByWithRelationInput = {
   rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   rejectedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   materialId?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  snapshotTakenAt?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
@@ -376,6 +412,10 @@ export type InventoryOrderWhereUniqueInput = Prisma.AtLeast<{
   rejectedAt?: Prisma.DateTimeNullableFilter<"InventoryOrder"> | Date | string | null
   rejectedBy?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
   materialId?: Prisma.StringFilter<"InventoryOrder"> | string
+  notDeliverable?: Prisma.BoolFilter<"InventoryOrder"> | boolean
+  notCorrect?: Prisma.BoolFilter<"InventoryOrder"> | boolean
+  notCorrectReason?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
+  snapshotTakenAt?: Prisma.DateTimeNullableFilter<"InventoryOrder"> | Date | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
@@ -402,6 +442,10 @@ export type InventoryOrderOrderByWithAggregationInput = {
   rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   rejectedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   materialId?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  snapshotTakenAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.InventoryOrderCountOrderByAggregateInput
   _avg?: Prisma.InventoryOrderAvgOrderByAggregateInput
   _max?: Prisma.InventoryOrderMaxOrderByAggregateInput
@@ -431,6 +475,10 @@ export type InventoryOrderScalarWhereWithAggregatesInput = {
   rejectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"InventoryOrder"> | Date | string | null
   rejectedBy?: Prisma.StringNullableWithAggregatesFilter<"InventoryOrder"> | string | null
   materialId?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
+  notDeliverable?: Prisma.BoolWithAggregatesFilter<"InventoryOrder"> | boolean
+  notCorrect?: Prisma.BoolWithAggregatesFilter<"InventoryOrder"> | boolean
+  notCorrectReason?: Prisma.StringNullableWithAggregatesFilter<"InventoryOrder"> | string | null
+  snapshotTakenAt?: Prisma.DateTimeNullableWithAggregatesFilter<"InventoryOrder"> | Date | string | null
 }
 
 export type InventoryOrderCreateInput = {
@@ -447,6 +495,10 @@ export type InventoryOrderCreateInput = {
   deletedAt?: Date | string | null
   rejected?: boolean
   rejectedAt?: Date | string | null
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeInput
@@ -473,6 +525,10 @@ export type InventoryOrderUncheckedCreateInput = {
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
   materialId: string
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderUpdateInput = {
@@ -489,6 +545,10 @@ export type InventoryOrderUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeNestedInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeNestedInput
@@ -515,6 +575,10 @@ export type InventoryOrderUncheckedUpdateInput = {
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderCreateManyInput = {
@@ -536,6 +600,10 @@ export type InventoryOrderCreateManyInput = {
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
   materialId: string
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderUpdateManyMutationInput = {
@@ -552,6 +620,10 @@ export type InventoryOrderUpdateManyMutationInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderUncheckedUpdateManyInput = {
@@ -573,6 +645,10 @@ export type InventoryOrderUncheckedUpdateManyInput = {
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderListRelationFilter = {
@@ -610,6 +686,10 @@ export type InventoryOrderCountOrderByAggregateInput = {
   rejectedAt?: Prisma.SortOrder
   rejectedBy?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrder
+  snapshotTakenAt?: Prisma.SortOrder
 }
 
 export type InventoryOrderAvgOrderByAggregateInput = {
@@ -635,6 +715,10 @@ export type InventoryOrderMaxOrderByAggregateInput = {
   rejectedAt?: Prisma.SortOrder
   rejectedBy?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrder
+  snapshotTakenAt?: Prisma.SortOrder
 }
 
 export type InventoryOrderMinOrderByAggregateInput = {
@@ -656,6 +740,10 @@ export type InventoryOrderMinOrderByAggregateInput = {
   rejectedAt?: Prisma.SortOrder
   rejectedBy?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrder
+  snapshotTakenAt?: Prisma.SortOrder
 }
 
 export type InventoryOrderSumOrderByAggregateInput = {
@@ -886,6 +974,10 @@ export type InventoryOrderCreateWithoutEmployeeInput = {
   deletedAt?: Date | string | null
   rejected?: boolean
   rejectedAt?: Date | string | null
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeInput
   Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
@@ -910,6 +1002,10 @@ export type InventoryOrderUncheckedCreateWithoutEmployeeInput = {
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
   materialId: string
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderCreateOrConnectWithoutEmployeeInput = {
@@ -936,6 +1032,10 @@ export type InventoryOrderCreateWithoutEmployee_InventoryOrder_approvedByToEmplo
   deletedAt?: Date | string | null
   rejected?: boolean
   rejectedAt?: Date | string | null
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeInput
   Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
@@ -960,6 +1060,10 @@ export type InventoryOrderUncheckedCreateWithoutEmployee_InventoryOrder_approved
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
   materialId: string
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderCreateOrConnectWithoutEmployee_InventoryOrder_approvedByToEmployeeInput = {
@@ -986,6 +1090,10 @@ export type InventoryOrderCreateWithoutEmployee_InventoryOrder_deletedByToEmploy
   deletedAt?: Date | string | null
   rejected?: boolean
   rejectedAt?: Date | string | null
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeInput
   Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
@@ -1010,6 +1118,10 @@ export type InventoryOrderUncheckedCreateWithoutEmployee_InventoryOrder_deletedB
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
   materialId: string
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderCreateOrConnectWithoutEmployee_InventoryOrder_deletedByToEmployeeInput = {
@@ -1036,6 +1148,10 @@ export type InventoryOrderCreateWithoutEmployee_InventoryOrder_rejectedByToEmplo
   deletedAt?: Date | string | null
   rejected?: boolean
   rejectedAt?: Date | string | null
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeInput
@@ -1060,6 +1176,10 @@ export type InventoryOrderUncheckedCreateWithoutEmployee_InventoryOrder_rejected
   rejected?: boolean
   rejectedAt?: Date | string | null
   materialId: string
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderCreateOrConnectWithoutEmployee_InventoryOrder_rejectedByToEmployeeInput = {
@@ -1110,6 +1230,10 @@ export type InventoryOrderScalarWhereInput = {
   rejectedAt?: Prisma.DateTimeNullableFilter<"InventoryOrder"> | Date | string | null
   rejectedBy?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
   materialId?: Prisma.StringFilter<"InventoryOrder"> | string
+  notDeliverable?: Prisma.BoolFilter<"InventoryOrder"> | boolean
+  notCorrect?: Prisma.BoolFilter<"InventoryOrder"> | boolean
+  notCorrectReason?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
+  snapshotTakenAt?: Prisma.DateTimeNullableFilter<"InventoryOrder"> | Date | string | null
 }
 
 export type InventoryOrderUpsertWithWhereUniqueWithoutEmployee_InventoryOrder_approvedByToEmployeeInput = {
@@ -1174,6 +1298,10 @@ export type InventoryOrderCreateWithoutMaterialInput = {
   deletedAt?: Date | string | null
   rejected?: boolean
   rejectedAt?: Date | string | null
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeInput
@@ -1198,6 +1326,10 @@ export type InventoryOrderUncheckedCreateWithoutMaterialInput = {
   rejected?: boolean
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderCreateOrConnectWithoutMaterialInput = {
@@ -1244,6 +1376,10 @@ export type InventoryOrderCreateManyEmployeeInput = {
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
   materialId: string
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderCreateManyEmployee_InventoryOrder_approvedByToEmployeeInput = {
@@ -1264,6 +1400,10 @@ export type InventoryOrderCreateManyEmployee_InventoryOrder_approvedByToEmployee
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
   materialId: string
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderCreateManyEmployee_InventoryOrder_deletedByToEmployeeInput = {
@@ -1284,6 +1424,10 @@ export type InventoryOrderCreateManyEmployee_InventoryOrder_deletedByToEmployeeI
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
   materialId: string
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderCreateManyEmployee_InventoryOrder_rejectedByToEmployeeInput = {
@@ -1304,6 +1448,10 @@ export type InventoryOrderCreateManyEmployee_InventoryOrder_rejectedByToEmployee
   rejected?: boolean
   rejectedAt?: Date | string | null
   materialId: string
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderUpdateWithoutEmployeeInput = {
@@ -1320,6 +1468,10 @@ export type InventoryOrderUpdateWithoutEmployeeInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeNestedInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
@@ -1344,6 +1496,10 @@ export type InventoryOrderUncheckedUpdateWithoutEmployeeInput = {
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderUncheckedUpdateManyWithoutEmployeeInput = {
@@ -1364,6 +1520,10 @@ export type InventoryOrderUncheckedUpdateManyWithoutEmployeeInput = {
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderUpdateWithoutEmployee_InventoryOrder_approvedByToEmployeeInput = {
@@ -1380,6 +1540,10 @@ export type InventoryOrderUpdateWithoutEmployee_InventoryOrder_approvedByToEmplo
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
@@ -1404,6 +1568,10 @@ export type InventoryOrderUncheckedUpdateWithoutEmployee_InventoryOrder_approved
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderUncheckedUpdateManyWithoutEmployee_InventoryOrder_approvedByToEmployeeInput = {
@@ -1424,6 +1592,10 @@ export type InventoryOrderUncheckedUpdateManyWithoutEmployee_InventoryOrder_appr
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderUpdateWithoutEmployee_InventoryOrder_deletedByToEmployeeInput = {
@@ -1440,6 +1612,10 @@ export type InventoryOrderUpdateWithoutEmployee_InventoryOrder_deletedByToEmploy
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
@@ -1464,6 +1640,10 @@ export type InventoryOrderUncheckedUpdateWithoutEmployee_InventoryOrder_deletedB
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderUncheckedUpdateManyWithoutEmployee_InventoryOrder_deletedByToEmployeeInput = {
@@ -1484,6 +1664,10 @@ export type InventoryOrderUncheckedUpdateManyWithoutEmployee_InventoryOrder_dele
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderUpdateWithoutEmployee_InventoryOrder_rejectedByToEmployeeInput = {
@@ -1500,6 +1684,10 @@ export type InventoryOrderUpdateWithoutEmployee_InventoryOrder_rejectedByToEmplo
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeNestedInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeNestedInput
@@ -1524,6 +1712,10 @@ export type InventoryOrderUncheckedUpdateWithoutEmployee_InventoryOrder_rejected
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderUncheckedUpdateManyWithoutEmployee_InventoryOrder_rejectedByToEmployeeInput = {
@@ -1544,6 +1736,10 @@ export type InventoryOrderUncheckedUpdateManyWithoutEmployee_InventoryOrder_reje
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderCreateManyMaterialInput = {
@@ -1564,6 +1760,10 @@ export type InventoryOrderCreateManyMaterialInput = {
   rejected?: boolean
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
+  snapshotTakenAt?: Date | string | null
 }
 
 export type InventoryOrderUpdateWithoutMaterialInput = {
@@ -1580,6 +1780,10 @@ export type InventoryOrderUpdateWithoutMaterialInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeNestedInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeNestedInput
@@ -1604,6 +1808,10 @@ export type InventoryOrderUncheckedUpdateWithoutMaterialInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryOrderUncheckedUpdateManyWithoutMaterialInput = {
@@ -1624,6 +1832,10 @@ export type InventoryOrderUncheckedUpdateManyWithoutMaterialInput = {
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshotTakenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -1647,6 +1859,10 @@ export type InventoryOrderSelect<ExtArgs extends runtime.Types.Extensions.Intern
   rejectedAt?: boolean
   rejectedBy?: boolean
   materialId?: boolean
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: boolean
+  snapshotTakenAt?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_InventoryOrder_approvedByToEmployee?: boolean | Prisma.InventoryOrder$Employee_InventoryOrder_approvedByToEmployeeArgs<ExtArgs>
   Employee_InventoryOrder_deletedByToEmployee?: boolean | Prisma.InventoryOrder$Employee_InventoryOrder_deletedByToEmployeeArgs<ExtArgs>
@@ -1675,9 +1891,13 @@ export type InventoryOrderSelectScalar = {
   rejectedAt?: boolean
   rejectedBy?: boolean
   materialId?: boolean
+  notDeliverable?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: boolean
+  snapshotTakenAt?: boolean
 }
 
-export type InventoryOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "requestedQty" | "orderDate" | "shortDescription" | "longDescription" | "approved" | "approvedAt" | "approvedBy" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy" | "rejected" | "rejectedAt" | "rejectedBy" | "materialId", ExtArgs["result"]["inventoryOrder"]>
+export type InventoryOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "requestedQty" | "orderDate" | "shortDescription" | "longDescription" | "approved" | "approvedAt" | "approvedBy" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy" | "rejected" | "rejectedAt" | "rejectedBy" | "materialId" | "notDeliverable" | "notCorrect" | "notCorrectReason" | "snapshotTakenAt", ExtArgs["result"]["inventoryOrder"]>
 export type InventoryOrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_InventoryOrder_approvedByToEmployee?: boolean | Prisma.InventoryOrder$Employee_InventoryOrder_approvedByToEmployeeArgs<ExtArgs>
@@ -1714,6 +1934,10 @@ export type $InventoryOrderPayload<ExtArgs extends runtime.Types.Extensions.Inte
     rejectedAt: Date | null
     rejectedBy: string | null
     materialId: string
+    notDeliverable: boolean
+    notCorrect: boolean
+    notCorrectReason: string | null
+    snapshotTakenAt: Date | null
   }, ExtArgs["result"]["inventoryOrder"]>
   composites: {}
 }
@@ -2106,6 +2330,10 @@ export interface InventoryOrderFieldRefs {
   readonly rejectedAt: Prisma.FieldRef<"InventoryOrder", 'DateTime'>
   readonly rejectedBy: Prisma.FieldRef<"InventoryOrder", 'String'>
   readonly materialId: Prisma.FieldRef<"InventoryOrder", 'String'>
+  readonly notDeliverable: Prisma.FieldRef<"InventoryOrder", 'Boolean'>
+  readonly notCorrect: Prisma.FieldRef<"InventoryOrder", 'Boolean'>
+  readonly notCorrectReason: Prisma.FieldRef<"InventoryOrder", 'String'>
+  readonly snapshotTakenAt: Prisma.FieldRef<"InventoryOrder", 'DateTime'>
 }
     
 

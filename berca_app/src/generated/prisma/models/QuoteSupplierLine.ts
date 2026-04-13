@@ -47,6 +47,7 @@ export type QuoteSupplierLineMinAggregateOutputType = {
   unitPrice: runtime.Decimal | null
   minQuantity: number | null
   selected: boolean | null
+  notDeliverable: boolean | null
 }
 
 export type QuoteSupplierLineMaxAggregateOutputType = {
@@ -58,6 +59,7 @@ export type QuoteSupplierLineMaxAggregateOutputType = {
   unitPrice: runtime.Decimal | null
   minQuantity: number | null
   selected: boolean | null
+  notDeliverable: boolean | null
 }
 
 export type QuoteSupplierLineCountAggregateOutputType = {
@@ -69,6 +71,7 @@ export type QuoteSupplierLineCountAggregateOutputType = {
   unitPrice: number
   minQuantity: number
   selected: number
+  notDeliverable: number
   _all: number
 }
 
@@ -94,6 +97,7 @@ export type QuoteSupplierLineMinAggregateInputType = {
   unitPrice?: true
   minQuantity?: true
   selected?: true
+  notDeliverable?: true
 }
 
 export type QuoteSupplierLineMaxAggregateInputType = {
@@ -105,6 +109,7 @@ export type QuoteSupplierLineMaxAggregateInputType = {
   unitPrice?: true
   minQuantity?: true
   selected?: true
+  notDeliverable?: true
 }
 
 export type QuoteSupplierLineCountAggregateInputType = {
@@ -116,6 +121,7 @@ export type QuoteSupplierLineCountAggregateInputType = {
   unitPrice?: true
   minQuantity?: true
   selected?: true
+  notDeliverable?: true
   _all?: true
 }
 
@@ -214,6 +220,7 @@ export type QuoteSupplierLineGroupByOutputType = {
   unitPrice: runtime.Decimal
   minQuantity: number | null
   selected: boolean | null
+  notDeliverable: boolean
   _count: QuoteSupplierLineCountAggregateOutputType | null
   _avg: QuoteSupplierLineAvgAggregateOutputType | null
   _sum: QuoteSupplierLineSumAggregateOutputType | null
@@ -248,6 +255,7 @@ export type QuoteSupplierLineWhereInput = {
   unitPrice?: Prisma.DecimalFilter<"QuoteSupplierLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.IntNullableFilter<"QuoteSupplierLine"> | number | null
   selected?: Prisma.BoolNullableFilter<"QuoteSupplierLine"> | boolean | null
+  notDeliverable?: Prisma.BoolFilter<"QuoteSupplierLine"> | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureListRelationFilter
   PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
   QuoteSupplier?: Prisma.XOR<Prisma.QuoteSupplierScalarRelationFilter, Prisma.QuoteSupplierWhereInput>
@@ -264,6 +272,7 @@ export type QuoteSupplierLineOrderByWithRelationInput = {
   unitPrice?: Prisma.SortOrder
   minQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   selected?: Prisma.SortOrderInput | Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureOrderByRelationAggregateInput
   PurchaseDetail?: Prisma.PurchaseDetailOrderByRelationAggregateInput
   QuoteSupplier?: Prisma.QuoteSupplierOrderByWithRelationInput
@@ -284,6 +293,7 @@ export type QuoteSupplierLineWhereUniqueInput = Prisma.AtLeast<{
   unitPrice?: Prisma.DecimalFilter<"QuoteSupplierLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.IntNullableFilter<"QuoteSupplierLine"> | number | null
   selected?: Prisma.BoolNullableFilter<"QuoteSupplierLine"> | boolean | null
+  notDeliverable?: Prisma.BoolFilter<"QuoteSupplierLine"> | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureListRelationFilter
   PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
   QuoteSupplier?: Prisma.XOR<Prisma.QuoteSupplierScalarRelationFilter, Prisma.QuoteSupplierWhereInput>
@@ -300,6 +310,7 @@ export type QuoteSupplierLineOrderByWithAggregationInput = {
   unitPrice?: Prisma.SortOrder
   minQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   selected?: Prisma.SortOrderInput | Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
   _count?: Prisma.QuoteSupplierLineCountOrderByAggregateInput
   _avg?: Prisma.QuoteSupplierLineAvgOrderByAggregateInput
   _max?: Prisma.QuoteSupplierLineMaxOrderByAggregateInput
@@ -319,6 +330,7 @@ export type QuoteSupplierLineScalarWhereWithAggregatesInput = {
   unitPrice?: Prisma.DecimalWithAggregatesFilter<"QuoteSupplierLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.IntNullableWithAggregatesFilter<"QuoteSupplierLine"> | number | null
   selected?: Prisma.BoolNullableWithAggregatesFilter<"QuoteSupplierLine"> | boolean | null
+  notDeliverable?: Prisma.BoolWithAggregatesFilter<"QuoteSupplierLine"> | boolean
 }
 
 export type QuoteSupplierLineCreateInput = {
@@ -327,6 +339,7 @@ export type QuoteSupplierLineCreateInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutQuoteSupplierLineInput
   QuoteSupplier: Prisma.QuoteSupplierCreateNestedOneWithoutQuoteSupplierLineInput
@@ -343,6 +356,7 @@ export type QuoteSupplierLineUncheckedCreateInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
@@ -353,6 +367,7 @@ export type QuoteSupplierLineUpdateInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutQuoteSupplierLineNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -369,6 +384,7 @@ export type QuoteSupplierLineUncheckedUpdateInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
@@ -382,6 +398,7 @@ export type QuoteSupplierLineCreateManyInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
 }
 
 export type QuoteSupplierLineUpdateManyMutationInput = {
@@ -390,6 +407,7 @@ export type QuoteSupplierLineUpdateManyMutationInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type QuoteSupplierLineUncheckedUpdateManyInput = {
@@ -401,6 +419,7 @@ export type QuoteSupplierLineUncheckedUpdateManyInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type QuoteSupplierLineListRelationFilter = {
@@ -433,6 +452,7 @@ export type QuoteSupplierLineCountOrderByAggregateInput = {
   unitPrice?: Prisma.SortOrder
   minQuantity?: Prisma.SortOrder
   selected?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
 }
 
 export type QuoteSupplierLineAvgOrderByAggregateInput = {
@@ -450,6 +470,7 @@ export type QuoteSupplierLineMaxOrderByAggregateInput = {
   unitPrice?: Prisma.SortOrder
   minQuantity?: Prisma.SortOrder
   selected?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
 }
 
 export type QuoteSupplierLineMinOrderByAggregateInput = {
@@ -461,6 +482,7 @@ export type QuoteSupplierLineMinOrderByAggregateInput = {
   unitPrice?: Prisma.SortOrder
   minQuantity?: Prisma.SortOrder
   selected?: Prisma.SortOrder
+  notDeliverable?: Prisma.SortOrder
 }
 
 export type QuoteSupplierLineSumOrderByAggregateInput = {
@@ -633,6 +655,7 @@ export type QuoteSupplierLineCreateWithoutMaterialInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutQuoteSupplierLineInput
   QuoteSupplier: Prisma.QuoteSupplierCreateNestedOneWithoutQuoteSupplierLineInput
@@ -647,6 +670,7 @@ export type QuoteSupplierLineUncheckedCreateWithoutMaterialInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
@@ -689,6 +713,7 @@ export type QuoteSupplierLineScalarWhereInput = {
   unitPrice?: Prisma.DecimalFilter<"QuoteSupplierLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.IntNullableFilter<"QuoteSupplierLine"> | number | null
   selected?: Prisma.BoolNullableFilter<"QuoteSupplierLine"> | boolean | null
+  notDeliverable?: Prisma.BoolFilter<"QuoteSupplierLine"> | boolean
 }
 
 export type QuoteSupplierLineCreateWithoutPurchaseDetailInput = {
@@ -697,6 +722,7 @@ export type QuoteSupplierLineCreateWithoutPurchaseDetailInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutQuoteSupplierLineInput
   QuoteSupplier: Prisma.QuoteSupplierCreateNestedOneWithoutQuoteSupplierLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutQuoteSupplierLineInput
@@ -712,6 +738,7 @@ export type QuoteSupplierLineUncheckedCreateWithoutPurchaseDetailInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
 
@@ -737,6 +764,7 @@ export type QuoteSupplierLineUpdateWithoutPurchaseDetailInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutQuoteSupplierLineNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -752,6 +780,7 @@ export type QuoteSupplierLineUncheckedUpdateWithoutPurchaseDetailInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
 
@@ -761,6 +790,7 @@ export type QuoteSupplierLineCreateWithoutQuoteSupplierInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutQuoteSupplierLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutQuoteSupplierLineInput
@@ -775,6 +805,7 @@ export type QuoteSupplierLineUncheckedCreateWithoutQuoteSupplierInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
@@ -811,6 +842,7 @@ export type QuoteSupplierLineCreateWithoutPurchaseBOMStructureInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutQuoteSupplierLineInput
   QuoteSupplier: Prisma.QuoteSupplierCreateNestedOneWithoutQuoteSupplierLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutQuoteSupplierLineInput
@@ -826,6 +858,7 @@ export type QuoteSupplierLineUncheckedCreateWithoutPurchaseBOMStructureInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
 
@@ -851,6 +884,7 @@ export type QuoteSupplierLineUpdateWithoutPurchaseBOMStructureInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutQuoteSupplierLineNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -866,6 +900,7 @@ export type QuoteSupplierLineUncheckedUpdateWithoutPurchaseBOMStructureInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
 
@@ -875,6 +910,7 @@ export type QuoteSupplierLineCreateWithoutMaterialDemandInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutQuoteSupplierLineInput
   QuoteSupplier: Prisma.QuoteSupplierCreateNestedOneWithoutQuoteSupplierLineInput
@@ -889,6 +925,7 @@ export type QuoteSupplierLineUncheckedCreateWithoutMaterialDemandInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
@@ -927,6 +964,7 @@ export type QuoteSupplierLineCreateManyMaterialInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
 }
 
 export type QuoteSupplierLineUpdateWithoutMaterialInput = {
@@ -935,6 +973,7 @@ export type QuoteSupplierLineUpdateWithoutMaterialInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutQuoteSupplierLineNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -949,6 +988,7 @@ export type QuoteSupplierLineUncheckedUpdateWithoutMaterialInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
@@ -961,6 +1001,7 @@ export type QuoteSupplierLineUncheckedUpdateManyWithoutMaterialInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type QuoteSupplierLineCreateManyQuoteSupplierInput = {
@@ -971,6 +1012,7 @@ export type QuoteSupplierLineCreateManyQuoteSupplierInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
 }
 
 export type QuoteSupplierLineUpdateWithoutQuoteSupplierInput = {
@@ -979,6 +1021,7 @@ export type QuoteSupplierLineUpdateWithoutQuoteSupplierInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutQuoteSupplierLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -993,6 +1036,7 @@ export type QuoteSupplierLineUncheckedUpdateWithoutQuoteSupplierInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
@@ -1005,6 +1049,7 @@ export type QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type QuoteSupplierLineCreateManyMaterialDemandInput = {
@@ -1015,6 +1060,7 @@ export type QuoteSupplierLineCreateManyMaterialDemandInput = {
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   selected?: boolean | null
+  notDeliverable?: boolean
 }
 
 export type QuoteSupplierLineUpdateWithoutMaterialDemandInput = {
@@ -1023,6 +1069,7 @@ export type QuoteSupplierLineUpdateWithoutMaterialDemandInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutQuoteSupplierLineNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -1037,6 +1084,7 @@ export type QuoteSupplierLineUncheckedUpdateWithoutMaterialDemandInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
@@ -1049,6 +1097,7 @@ export type QuoteSupplierLineUncheckedUpdateManyWithoutMaterialDemandInput = {
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -1100,6 +1149,7 @@ export type QuoteSupplierLineSelect<ExtArgs extends runtime.Types.Extensions.Int
   unitPrice?: boolean
   minQuantity?: boolean
   selected?: boolean
+  notDeliverable?: boolean
   PurchaseBOMStructure?: boolean | Prisma.QuoteSupplierLine$PurchaseBOMStructureArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.QuoteSupplierLine$PurchaseDetailArgs<ExtArgs>
   QuoteSupplier?: boolean | Prisma.QuoteSupplierDefaultArgs<ExtArgs>
@@ -1119,9 +1169,10 @@ export type QuoteSupplierLineSelectScalar = {
   unitPrice?: boolean
   minQuantity?: boolean
   selected?: boolean
+  notDeliverable?: boolean
 }
 
-export type QuoteSupplierLineOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteSupplierId" | "materialId" | "materialDemandId" | "quantity" | "unitPrice" | "minQuantity" | "selected", ExtArgs["result"]["quoteSupplierLine"]>
+export type QuoteSupplierLineOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteSupplierId" | "materialId" | "materialDemandId" | "quantity" | "unitPrice" | "minQuantity" | "selected" | "notDeliverable", ExtArgs["result"]["quoteSupplierLine"]>
 export type QuoteSupplierLineInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   PurchaseBOMStructure?: boolean | Prisma.QuoteSupplierLine$PurchaseBOMStructureArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.QuoteSupplierLine$PurchaseDetailArgs<ExtArgs>
@@ -1149,6 +1200,7 @@ export type $QuoteSupplierLinePayload<ExtArgs extends runtime.Types.Extensions.I
     unitPrice: runtime.Decimal
     minQuantity: number | null
     selected: boolean | null
+    notDeliverable: boolean
   }, ExtArgs["result"]["quoteSupplierLine"]>
   composites: {}
 }
@@ -1531,6 +1583,7 @@ export interface QuoteSupplierLineFieldRefs {
   readonly unitPrice: Prisma.FieldRef<"QuoteSupplierLine", 'Decimal'>
   readonly minQuantity: Prisma.FieldRef<"QuoteSupplierLine", 'Int'>
   readonly selected: Prisma.FieldRef<"QuoteSupplierLine", 'Boolean'>
+  readonly notDeliverable: Prisma.FieldRef<"QuoteSupplierLine", 'Boolean'>
 }
     
 

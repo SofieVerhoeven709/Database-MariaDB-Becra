@@ -7,6 +7,7 @@ export const createQuoteSupplierLineSchema = z.object({
   quantity: z.number().int().positive(),
   unitPrice: z.number().positive(),
   minQuantity: z.number().int().nonnegative().optional(),
+  notDeliverable: z.boolean().optional(),
 })
 
 export const updateQuoteSupplierLineSchema = z.object({
@@ -16,6 +17,7 @@ export const updateQuoteSupplierLineSchema = z.object({
   minQuantity: z.number().int().nonnegative().optional(),
   selected: z.boolean().optional(),
   materialDemandId: z.string().uuid().optional(),
+  notDeliverable: z.boolean().optional(),
 })
 
 export const selectQuoteSupplierLineSchema = z.object({

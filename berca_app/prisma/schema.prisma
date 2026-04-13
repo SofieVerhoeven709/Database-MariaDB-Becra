@@ -805,6 +805,10 @@ model InventoryOrder {
   rejectedAt                                   DateTime? @db.DateTime(0)
   rejectedBy                                   String?   @db.Char(36)
   materialId                                   String    @db.Char(36)
+  notDeliverable                               Boolean   @default(false)
+  notCorrect                                   Boolean   @default(false)
+  notCorrectReason                             String?   @db.Text
+  snapshotTakenAt                              DateTime? @db.DateTime(0)
   Employee                                     Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_2")
   Employee_InventoryOrder_approvedByToEmployee Employee? @relation("InventoryOrder_approvedByToEmployee", fields: [approvedBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_3")
   Employee_InventoryOrder_deletedByToEmployee  Employee? @relation("InventoryOrder_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_4")
@@ -1614,6 +1618,7 @@ model PurchaseDetail {
   deleted                                     Boolean                @default(false)
   deletedAt                                   DateTime?              @db.DateTime(0)
   deletedBy                                   String?                @db.Char(36)
+  notDeliverable                              Boolean                @default(false)
   IncomingDeliveryLine                        IncomingDeliveryLine[]
   Purchase                                    Purchase               @relation(fields: [purchaseId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "PurchaseDetail_ibfk_1")
   QuoteSupplierLine                           QuoteSupplierLine?     @relation(fields: [quoteSupplierLineId], references: [id], onUpdate: Restrict, map: "PurchaseDetail_ibfk_2")
@@ -2794,6 +2799,7 @@ model QuoteSupplierLine {
   unitPrice            Decimal                @db.Decimal(10, 2)
   minQuantity          Int?
   selected             Boolean?               @default(false)
+  notDeliverable       Boolean                @default(false)
   PurchaseBOMStructure PurchaseBOMStructure[]
   PurchaseDetail       PurchaseDetail[]
   QuoteSupplier        QuoteSupplier          @relation(fields: [quoteSupplierId], references: [id], onUpdate: Restrict, map: "QuoteSupplierLine_ibfk_1")
@@ -2846,6 +2852,8 @@ model IncomingDeliveryLine {
   deleted                                           Boolean                          @default(false)
   createdBy                                         String                           @db.Char(36)
   deletedBy                                         String?                          @db.Char(36)
+  notCorrect                                        Boolean                          @default(false)
+  notCorrectReason                                  String?                          @db.Text
   IncomingDelivery                                  IncomingDelivery                 @relation(fields: [incomingDeliveryId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "IncomingDeliveryLine_ibfk_1")
   PurchaseDetail                                    PurchaseDetail?                  @relation(fields: [purchaseDetailId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "IncomingDeliveryLine_ibfk_2")
   Material                                          Material                         @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "IncomingDeliveryLine_ibfk_4")

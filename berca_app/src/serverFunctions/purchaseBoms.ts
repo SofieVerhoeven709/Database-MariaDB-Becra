@@ -306,7 +306,7 @@ export const createPurchaseBOMStructureAction = protectedServerFunction({
 export const updatePurchaseBOMStructureAction = protectedServerFunction({
   schema: updatePurchaseBOMStructureSchema,
   functionName: 'Update purchase BOM structure action',
-  serverFn: async ({data: {id, purchased, approvedForQuote, ...data}, logger, profile}) => {
+  serverFn: async ({data: {id, purchased, approvedForQuote, notCorrect, notCorrectReason, ...data}, logger, profile}) => {
     // Update execution fields on BOMExecution
     await prismaClient.bOMExecution.update({
       where: {projectBOMStructureId: data.projectBOMStructureId},
@@ -314,6 +314,10 @@ export const updatePurchaseBOMStructureAction = protectedServerFunction({
         stockReservedQuantity: data.stockReservedQuantity,
         issuedQuantity: data.issuedQuantity,
         notDeliverable: data.notDeliverable,
+        ...(notCorrect !== undefined ? {notCorrect} : {}),
+        ...(notCorrect !== undefined
+          ? {notCorrectReason: notCorrect ? (notCorrectReason?.trim() || null) : null}
+          : {}),
       },
     })
 

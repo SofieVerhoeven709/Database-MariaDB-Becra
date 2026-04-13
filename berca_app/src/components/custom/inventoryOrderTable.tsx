@@ -181,6 +181,32 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
     return <Badge className="text-[10px] bg-amber-500/15 text-amber-700 border border-amber-500/30">Pending</Badge>
   }
 
+  function renderFlags(entry: MappedInventoryOrder) {
+    if (!entry.notDeliverable && !entry.notCorrect) return '—'
+
+    return (
+      <div className="flex max-w-64 flex-col gap-1">
+        <div className="flex flex-wrap items-center gap-1">
+          {entry.notDeliverable && (
+            <Badge variant="destructive" className="text-[10px] h-5 px-1.5">
+              Not deliverable
+            </Badge>
+          )}
+          {entry.notCorrect && (
+            <Badge className="text-[10px] h-5 px-1.5 bg-orange-600/15 text-orange-700 border border-orange-600/30">
+              Not correct
+            </Badge>
+          )}
+        </div>
+        {entry.notCorrect && entry.notCorrectReason && (
+          <span className="text-[11px] text-muted-foreground truncate" title={entry.notCorrectReason}>
+            Reason: {entry.notCorrectReason}
+          </span>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -240,13 +266,14 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
                 Description <SortIcon field="shortDescription" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className="text-xs whitespace-nowrap">Created / Decision</TableHead>
+              <TableHead className="text-xs whitespace-nowrap">Flags</TableHead>
               <TableHead className="w-20"><span className="sr-only">Actions</span></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="h-28 text-center text-muted-foreground">
+                <TableCell colSpan={9} className="h-28 text-center text-muted-foreground">
                   No order requests found.
                 </TableCell>
               </TableRow>
@@ -283,9 +310,13 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
                         Deleted{entry.deletedByName ? ` by ${entry.deletedByName}` : ''}
                       </span>
                     )}
+                    {entry.snapshotTakenAt && (
+                      <span className="text-[11px] text-muted-foreground">Snapshot {formatDate(entry.snapshotTakenAt)}</span>
+                    )}
                     {!entry.approved && !entry.deleted && <span className="text-[11px] text-muted-foreground">Waiting approval</span>}
                   </div>
                 </TableCell>
+                <TableCell className={tdClass}>{renderFlags(entry)}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-1">
                     {entry.deleted ? (

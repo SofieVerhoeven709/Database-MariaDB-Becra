@@ -71,6 +71,7 @@ function Th({
 function BOMStatusBadges({bom}: {bom: MappedPurchaseBOM}) {
   const activeStructures = bom.structures.filter(s => !s.deleted)
   const anyNotDeliverable = activeStructures.some(s => s.notDeliverable)
+  const anyNotCorrect = activeStructures.some(s => s.notCorrect)
   const fullyIssued =
     activeStructures.length > 0 &&
     activeStructures.every(
@@ -107,6 +108,12 @@ function BOMStatusBadges({bom}: {bom: MappedPurchaseBOM}) {
     badges.push(
       <Badge key="nd" variant="secondary" className="text-xs text-red-600 bg-red-600/15">
         Not Deliverable
+      </Badge>,
+    )
+  if (anyNotCorrect)
+    badges.push(
+      <Badge key="nc" variant="secondary" className="text-xs text-orange-600 bg-orange-600/15">
+        Not Correct
       </Badge>,
     )
 

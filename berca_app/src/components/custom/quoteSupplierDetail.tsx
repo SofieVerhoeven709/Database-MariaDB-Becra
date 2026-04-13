@@ -7,6 +7,7 @@ import {useRouter} from 'next/navigation'
 import {ArrowLeft, Check, Pencil, Trash2, X} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
+import {Checkbox} from '@/components/ui/checkbox'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -80,10 +81,12 @@ export function QuoteSupplierDetail({
   const [newQuantity, setNewQuantity] = useState('1')
   const [newUnitPrice, setNewUnitPrice] = useState('')
   const [newMinQuantity, setNewMinQuantity] = useState('')
+  const [newNotDeliverable, setNewNotDeliverable] = useState(false)
 
   const [editQuantity, setEditQuantity] = useState('1')
   const [editUnitPrice, setEditUnitPrice] = useState('')
   const [editMinQuantity, setEditMinQuantity] = useState('')
+  const [editNotDeliverable, setEditNotDeliverable] = useState(false)
 
   const demandOptionsForSelectedMaterial = useMemo(() => {
     if (!newMaterialId || newMaterialId === '__none__') return materialDemandOptions
@@ -95,6 +98,7 @@ export function QuoteSupplierDetail({
     setEditQuantity(String(line.quantity))
     setEditUnitPrice(String(line.unitPrice))
     setEditMinQuantity(line.minQuantity !== null ? String(line.minQuantity) : '')
+    setEditNotDeliverable(line.notDeliverable)
   }
 
   function cancelEdit() {
@@ -102,6 +106,7 @@ export function QuoteSupplierDetail({
     setEditQuantity('1')
     setEditUnitPrice('')
     setEditMinQuantity('')
+    setEditNotDeliverable(false)
   }
 
   async function handleCreateLine() {
@@ -135,12 +140,14 @@ export function QuoteSupplierDetail({
         quantity,
         unitPrice,
         minQuantity,
+        notDeliverable: newNotDeliverable,
       })
 
       setError(null)
       setNewQuantity('1')
       setNewUnitPrice('')
       setNewMinQuantity('')
+      setNewNotDeliverable(false)
       router.refresh()
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not create quote line.')
@@ -174,6 +181,7 @@ export function QuoteSupplierDetail({
         quantity,
         unitPrice,
         minQuantity,
+        notDeliverable: editNotDeliverable,
       })
 
       setError(null)
@@ -346,6 +354,16 @@ export function QuoteSupplierDetail({
               <Label className="text-xs">Min Qty (optional)</Label>
               <Input type="number" min={0} value={newMinQuantity} onChange={e => setNewMinQuantity(e.target.value)} className="bg-secondary border-border mt-1" />
             </div>
+            <div className="flex items-center gap-2 rounded-md border border-border/60 bg-secondary/30 px-3 py-2">
+              <Checkbox
+                id="newNotDeliverable"
+                checked={newNotDeliverable}
+                onCheckedChange={checked => setNewNotDeliverable(checked === true)}
+              />
+              <Label htmlFor="newNotDeliverable" className="text-xs font-normal cursor-pointer">
+                Not deliverable
+              </Label>
+            </div>
             <Button onClick={handleCreateLine} disabled={submitting}>Add Line</Button>
           </div>
         </div>
@@ -360,6 +378,7 @@ export function QuoteSupplierDetail({
               <TableHead className="text-xs">Qty</TableHead>
               <TableHead className="text-xs">Min Qty</TableHead>
               <TableHead className="text-xs">Unit Price</TableHead>
+              <TableHead className="text-xs">Flags</TableHead>
               <TableHead className="text-xs">Selected</TableHead>
               <TableHead className="w-24"><span className="sr-only">Actions</span></TableHead>
             </TableRow>
@@ -367,7 +386,7 @@ export function QuoteSupplierDetail({
           <TableBody>
             {quote.lines.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="h-24 text-center text-muted-foreground text-sm">
+                <TableCell colSpan={8} className="h-24 text-center text-muted-foreground text-sm">
                   No quote lines yet. Add one or more lines above.
                 </TableCell>
               </TableRow>
@@ -402,6 +421,18 @@ export function QuoteSupplierDetail({
                         <Input type="number" step="0.01" min={0.01} value={editUnitPrice} onChange={e => setEditUnitPrice(e.target.value)} className="h-8 bg-secondary border-border" />
                       ) : (
                         formatMoney(line.unitPrice)
+                      )}
+                    </TableCell>
+                    <TableCell className="text-sm text-muted-foreground">
+                      {isEditing ? (
+                        <div className="flex items-center gap-2">
+                          <Checkbox checked={editNotDeliverable} onCheckedChange={checked => setEditNotDeliverable(checked === true)} />
+                          <span className="text-xs">Not deliverable</span>
+                        </div>
+                      ) : line.notDeliverable ? (
+                        <Badge variant="destructive" className="text-[10px]">Not deliverable</Badge>
+                      ) : (
+                        '—'
                       )}
                     </TableCell>
                     <TableCell>

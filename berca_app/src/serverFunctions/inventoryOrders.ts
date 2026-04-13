@@ -143,6 +143,7 @@ export const approveInventoryOrderAction = protectedServerFunction({
           approved: true,
           approvedAt: new Date(),
           approvedBy: profile.id,
+          snapshotTakenAt: new Date(),
         },
       })
 

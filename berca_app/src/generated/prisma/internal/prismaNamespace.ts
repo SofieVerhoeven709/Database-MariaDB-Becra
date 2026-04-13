@@ -8179,7 +8179,11 @@ export const InventoryOrderScalarFieldEnum = {
   rejected: 'rejected',
   rejectedAt: 'rejectedAt',
   rejectedBy: 'rejectedBy',
-  materialId: 'materialId'
+  materialId: 'materialId',
+  notDeliverable: 'notDeliverable',
+  notCorrect: 'notCorrect',
+  notCorrectReason: 'notCorrectReason',
+  snapshotTakenAt: 'snapshotTakenAt'
 } as const
 
 export type InventoryOrderScalarFieldEnum = (typeof InventoryOrderScalarFieldEnum)[keyof typeof InventoryOrderScalarFieldEnum]
@@ -8766,7 +8770,8 @@ export const PurchaseDetailScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  notDeliverable: 'notDeliverable'
 } as const
 
 export type PurchaseDetailScalarFieldEnum = (typeof PurchaseDetailScalarFieldEnum)[keyof typeof PurchaseDetailScalarFieldEnum]
@@ -9639,7 +9644,8 @@ export const QuoteSupplierLineScalarFieldEnum = {
   quantity: 'quantity',
   unitPrice: 'unitPrice',
   minQuantity: 'minQuantity',
-  selected: 'selected'
+  selected: 'selected',
+  notDeliverable: 'notDeliverable'
 } as const
 
 export type QuoteSupplierLineScalarFieldEnum = (typeof QuoteSupplierLineScalarFieldEnum)[keyof typeof QuoteSupplierLineScalarFieldEnum]
@@ -9680,7 +9686,9 @@ export const IncomingDeliveryLineScalarFieldEnum = {
   deletedAt: 'deletedAt',
   deleted: 'deleted',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  notCorrect: 'notCorrect',
+  notCorrectReason: 'notCorrectReason'
 } as const
 
 export type IncomingDeliveryLineScalarFieldEnum = (typeof IncomingDeliveryLineScalarFieldEnum)[keyof typeof IncomingDeliveryLineScalarFieldEnum]
@@ -10022,7 +10030,8 @@ export const InventoryOrderOrderByRelevanceFieldEnum = {
   createdBy: 'createdBy',
   deletedBy: 'deletedBy',
   rejectedBy: 'rejectedBy',
-  materialId: 'materialId'
+  materialId: 'materialId',
+  notCorrectReason: 'notCorrectReason'
 } as const
 
 export type InventoryOrderOrderByRelevanceFieldEnum = (typeof InventoryOrderOrderByRelevanceFieldEnum)[keyof typeof InventoryOrderOrderByRelevanceFieldEnum]
@@ -11149,7 +11158,8 @@ export const IncomingDeliveryLineOrderByRelevanceFieldEnum = {
   materialId: 'materialId',
   lineStatus: 'lineStatus',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  notCorrectReason: 'notCorrectReason'
 } as const
 
 export type IncomingDeliveryLineOrderByRelevanceFieldEnum = (typeof IncomingDeliveryLineOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryLineOrderByRelevanceFieldEnum]

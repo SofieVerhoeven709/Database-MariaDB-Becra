@@ -61,6 +61,8 @@ export type IncomingDeliveryLineMinAggregateOutputType = {
   deleted: boolean | null
   createdBy: string | null
   deletedBy: string | null
+  notCorrect: boolean | null
+  notCorrectReason: string | null
 }
 
 export type IncomingDeliveryLineMaxAggregateOutputType = {
@@ -80,6 +82,8 @@ export type IncomingDeliveryLineMaxAggregateOutputType = {
   deleted: boolean | null
   createdBy: string | null
   deletedBy: string | null
+  notCorrect: boolean | null
+  notCorrectReason: string | null
 }
 
 export type IncomingDeliveryLineCountAggregateOutputType = {
@@ -99,6 +103,8 @@ export type IncomingDeliveryLineCountAggregateOutputType = {
   deleted: number
   createdBy: number
   deletedBy: number
+  notCorrect: number
+  notCorrectReason: number
   _all: number
 }
 
@@ -138,6 +144,8 @@ export type IncomingDeliveryLineMinAggregateInputType = {
   deleted?: true
   createdBy?: true
   deletedBy?: true
+  notCorrect?: true
+  notCorrectReason?: true
 }
 
 export type IncomingDeliveryLineMaxAggregateInputType = {
@@ -157,6 +165,8 @@ export type IncomingDeliveryLineMaxAggregateInputType = {
   deleted?: true
   createdBy?: true
   deletedBy?: true
+  notCorrect?: true
+  notCorrectReason?: true
 }
 
 export type IncomingDeliveryLineCountAggregateInputType = {
@@ -176,6 +186,8 @@ export type IncomingDeliveryLineCountAggregateInputType = {
   deleted?: true
   createdBy?: true
   deletedBy?: true
+  notCorrect?: true
+  notCorrectReason?: true
   _all?: true
 }
 
@@ -282,6 +294,8 @@ export type IncomingDeliveryLineGroupByOutputType = {
   deleted: boolean
   createdBy: string
   deletedBy: string | null
+  notCorrect: boolean
+  notCorrectReason: string | null
   _count: IncomingDeliveryLineCountAggregateOutputType | null
   _avg: IncomingDeliveryLineAvgAggregateOutputType | null
   _sum: IncomingDeliveryLineSumAggregateOutputType | null
@@ -324,6 +338,8 @@ export type IncomingDeliveryLineWhereInput = {
   deleted?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
   createdBy?: Prisma.StringFilter<"IncomingDeliveryLine"> | string
   deletedBy?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
+  notCorrect?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
+  notCorrectReason?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
   IncomingDelivery?: Prisma.XOR<Prisma.IncomingDeliveryScalarRelationFilter, Prisma.IncomingDeliveryWhereInput>
   PurchaseDetail?: Prisma.XOR<Prisma.PurchaseDetailNullableScalarRelationFilter, Prisma.PurchaseDetailWhereInput> | null
   Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
@@ -349,6 +365,8 @@ export type IncomingDeliveryLineOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrderInput | Prisma.SortOrder
   IncomingDelivery?: Prisma.IncomingDeliveryOrderByWithRelationInput
   PurchaseDetail?: Prisma.PurchaseDetailOrderByWithRelationInput
   Material?: Prisma.MaterialOrderByWithRelationInput
@@ -378,6 +396,8 @@ export type IncomingDeliveryLineWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
   createdBy?: Prisma.StringFilter<"IncomingDeliveryLine"> | string
   deletedBy?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
+  notCorrect?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
+  notCorrectReason?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
   IncomingDelivery?: Prisma.XOR<Prisma.IncomingDeliveryScalarRelationFilter, Prisma.IncomingDeliveryWhereInput>
   PurchaseDetail?: Prisma.XOR<Prisma.PurchaseDetailNullableScalarRelationFilter, Prisma.PurchaseDetailWhereInput> | null
   Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
@@ -403,6 +423,8 @@ export type IncomingDeliveryLineOrderByWithAggregationInput = {
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.IncomingDeliveryLineCountOrderByAggregateInput
   _avg?: Prisma.IncomingDeliveryLineAvgOrderByAggregateInput
   _max?: Prisma.IncomingDeliveryLineMaxOrderByAggregateInput
@@ -430,6 +452,8 @@ export type IncomingDeliveryLineScalarWhereWithAggregatesInput = {
   deleted?: Prisma.BoolWithAggregatesFilter<"IncomingDeliveryLine"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"IncomingDeliveryLine"> | string
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"IncomingDeliveryLine"> | string | null
+  notCorrect?: Prisma.BoolWithAggregatesFilter<"IncomingDeliveryLine"> | boolean
+  notCorrectReason?: Prisma.StringNullableWithAggregatesFilter<"IncomingDeliveryLine"> | string | null
 }
 
 export type IncomingDeliveryLineCreateInput = {
@@ -444,6 +468,8 @@ export type IncomingDeliveryLineCreateInput = {
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
@@ -469,6 +495,8 @@ export type IncomingDeliveryLineUncheckedCreateInput = {
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -484,6 +512,8 @@ export type IncomingDeliveryLineUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
@@ -509,6 +539,8 @@ export type IncomingDeliveryLineUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -529,6 +561,8 @@ export type IncomingDeliveryLineCreateManyInput = {
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineUpdateManyMutationInput = {
@@ -543,6 +577,8 @@ export type IncomingDeliveryLineUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineUncheckedUpdateManyInput = {
@@ -562,6 +598,8 @@ export type IncomingDeliveryLineUncheckedUpdateManyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineListRelationFilter = {
@@ -597,6 +635,8 @@ export type IncomingDeliveryLineCountOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrder
 }
 
 export type IncomingDeliveryLineAvgOrderByAggregateInput = {
@@ -625,6 +665,8 @@ export type IncomingDeliveryLineMaxOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrder
 }
 
 export type IncomingDeliveryLineMinOrderByAggregateInput = {
@@ -644,6 +686,8 @@ export type IncomingDeliveryLineMinOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrder
 }
 
 export type IncomingDeliveryLineSumOrderByAggregateInput = {
@@ -896,6 +940,8 @@ export type IncomingDeliveryLineCreateWithoutEmployee_IncomingDeliveryLine_creat
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
@@ -919,6 +965,8 @@ export type IncomingDeliveryLineUncheckedCreateWithoutEmployee_IncomingDeliveryL
   deletedAt?: Date | string | null
   deleted?: boolean
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -944,6 +992,8 @@ export type IncomingDeliveryLineCreateWithoutEmployee_IncomingDeliveryLine_delet
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
@@ -967,6 +1017,8 @@ export type IncomingDeliveryLineUncheckedCreateWithoutEmployee_IncomingDeliveryL
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -1016,6 +1068,8 @@ export type IncomingDeliveryLineScalarWhereInput = {
   deleted?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
   createdBy?: Prisma.StringFilter<"IncomingDeliveryLine"> | string
   deletedBy?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
+  notCorrect?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
+  notCorrectReason?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
 }
 
 export type IncomingDeliveryLineUpsertWithWhereUniqueWithoutEmployee_IncomingDeliveryLine_deletedByToEmployeeInput = {
@@ -1046,6 +1100,8 @@ export type IncomingDeliveryLineCreateWithoutMaterialInput = {
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Employee_IncomingDeliveryLine_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeInput
@@ -1069,6 +1125,8 @@ export type IncomingDeliveryLineUncheckedCreateWithoutMaterialInput = {
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -1110,6 +1168,8 @@ export type IncomingDeliveryLineCreateWithoutPurchaseDetailInput = {
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
   Employee_IncomingDeliveryLine_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeInput
@@ -1133,6 +1193,8 @@ export type IncomingDeliveryLineUncheckedCreateWithoutPurchaseDetailInput = {
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -1174,6 +1236,8 @@ export type IncomingDeliveryLineCreateWithoutIncomingDeliveryInput = {
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
   Employee_IncomingDeliveryLine_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeInput
@@ -1197,6 +1261,8 @@ export type IncomingDeliveryLineUncheckedCreateWithoutIncomingDeliveryInput = {
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -1238,6 +1304,8 @@ export type IncomingDeliveryLineCreateWithoutIncomingDeliveryLineAllocationInput
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
@@ -1262,6 +1330,8 @@ export type IncomingDeliveryLineUncheckedCreateWithoutIncomingDeliveryLineAlloca
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineCreateOrConnectWithoutIncomingDeliveryLineAllocationInput = {
@@ -1292,6 +1362,8 @@ export type IncomingDeliveryLineUpdateWithoutIncomingDeliveryLineAllocationInput
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
@@ -1316,6 +1388,8 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutIncomingDeliveryLineAlloca
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineCreateManyEmployee_IncomingDeliveryLine_createdByToEmployeeInput = {
@@ -1334,6 +1408,8 @@ export type IncomingDeliveryLineCreateManyEmployee_IncomingDeliveryLine_createdB
   deletedAt?: Date | string | null
   deleted?: boolean
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineCreateManyEmployee_IncomingDeliveryLine_deletedByToEmployeeInput = {
@@ -1352,6 +1428,8 @@ export type IncomingDeliveryLineCreateManyEmployee_IncomingDeliveryLine_deletedB
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineUpdateWithoutEmployee_IncomingDeliveryLine_createdByToEmployeeInput = {
@@ -1366,6 +1444,8 @@ export type IncomingDeliveryLineUpdateWithoutEmployee_IncomingDeliveryLine_creat
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
@@ -1389,6 +1469,8 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutEmployee_IncomingDeliveryL
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -1408,6 +1490,8 @@ export type IncomingDeliveryLineUncheckedUpdateManyWithoutEmployee_IncomingDeliv
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineUpdateWithoutEmployee_IncomingDeliveryLine_deletedByToEmployeeInput = {
@@ -1422,6 +1506,8 @@ export type IncomingDeliveryLineUpdateWithoutEmployee_IncomingDeliveryLine_delet
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
@@ -1445,6 +1531,8 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutEmployee_IncomingDeliveryL
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -1464,6 +1552,8 @@ export type IncomingDeliveryLineUncheckedUpdateManyWithoutEmployee_IncomingDeliv
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineCreateManyMaterialInput = {
@@ -1482,6 +1572,8 @@ export type IncomingDeliveryLineCreateManyMaterialInput = {
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineUpdateWithoutMaterialInput = {
@@ -1496,6 +1588,8 @@ export type IncomingDeliveryLineUpdateWithoutMaterialInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Employee_IncomingDeliveryLine_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeNestedInput
@@ -1519,6 +1613,8 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutMaterialInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -1538,6 +1634,8 @@ export type IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineCreateManyPurchaseDetailInput = {
@@ -1556,6 +1654,8 @@ export type IncomingDeliveryLineCreateManyPurchaseDetailInput = {
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineUpdateWithoutPurchaseDetailInput = {
@@ -1570,6 +1670,8 @@ export type IncomingDeliveryLineUpdateWithoutPurchaseDetailInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   Employee_IncomingDeliveryLine_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeNestedInput
@@ -1593,6 +1695,8 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutPurchaseDetailInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -1612,6 +1716,8 @@ export type IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseDetailInput = 
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineCreateManyIncomingDeliveryInput = {
@@ -1630,6 +1736,8 @@ export type IncomingDeliveryLineCreateManyIncomingDeliveryInput = {
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
+  notCorrect?: boolean
+  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineUpdateWithoutIncomingDeliveryInput = {
@@ -1644,6 +1752,8 @@ export type IncomingDeliveryLineUpdateWithoutIncomingDeliveryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   Employee_IncomingDeliveryLine_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeNestedInput
@@ -1667,6 +1777,8 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutIncomingDeliveryInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -1686,6 +1798,8 @@ export type IncomingDeliveryLineUncheckedUpdateManyWithoutIncomingDeliveryInput 
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1736,6 +1850,8 @@ export type IncomingDeliveryLineSelect<ExtArgs extends runtime.Types.Extensions.
   deleted?: boolean
   createdBy?: boolean
   deletedBy?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: boolean
   IncomingDelivery?: boolean | Prisma.IncomingDeliveryDefaultArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.IncomingDeliveryLine$PurchaseDetailArgs<ExtArgs>
   Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
@@ -1764,9 +1880,11 @@ export type IncomingDeliveryLineSelectScalar = {
   deleted?: boolean
   createdBy?: boolean
   deletedBy?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: boolean
 }
 
-export type IncomingDeliveryLineOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "incomingDeliveryId" | "purchaseDetailId" | "materialId" | "orderedQty" | "deliveredQty" | "acceptedQty" | "rejectedQty" | "backorderQty" | "unitPrice" | "lineStatus" | "createdAt" | "deletedAt" | "deleted" | "createdBy" | "deletedBy", ExtArgs["result"]["incomingDeliveryLine"]>
+export type IncomingDeliveryLineOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "incomingDeliveryId" | "purchaseDetailId" | "materialId" | "orderedQty" | "deliveredQty" | "acceptedQty" | "rejectedQty" | "backorderQty" | "unitPrice" | "lineStatus" | "createdAt" | "deletedAt" | "deleted" | "createdBy" | "deletedBy" | "notCorrect" | "notCorrectReason", ExtArgs["result"]["incomingDeliveryLine"]>
 export type IncomingDeliveryLineInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   IncomingDelivery?: boolean | Prisma.IncomingDeliveryDefaultArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.IncomingDeliveryLine$PurchaseDetailArgs<ExtArgs>
@@ -1804,6 +1922,8 @@ export type $IncomingDeliveryLinePayload<ExtArgs extends runtime.Types.Extension
     deleted: boolean
     createdBy: string
     deletedBy: string | null
+    notCorrect: boolean
+    notCorrectReason: string | null
   }, ExtArgs["result"]["incomingDeliveryLine"]>
   composites: {}
 }
@@ -2195,6 +2315,8 @@ export interface IncomingDeliveryLineFieldRefs {
   readonly deleted: Prisma.FieldRef<"IncomingDeliveryLine", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"IncomingDeliveryLine", 'String'>
   readonly deletedBy: Prisma.FieldRef<"IncomingDeliveryLine", 'String'>
+  readonly notCorrect: Prisma.FieldRef<"IncomingDeliveryLine", 'Boolean'>
+  readonly notCorrectReason: Prisma.FieldRef<"IncomingDeliveryLine", 'String'>
 }
     
 

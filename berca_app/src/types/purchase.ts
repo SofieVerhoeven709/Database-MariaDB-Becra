@@ -32,6 +32,7 @@ export interface MappedPurchaseDetail {
   minQuantity: number | null
   lineStatus: string
   additionalInfo: string | null
+  notDeliverable: boolean
   createdAt: string | null
   createdBy: string
   createdByName: string

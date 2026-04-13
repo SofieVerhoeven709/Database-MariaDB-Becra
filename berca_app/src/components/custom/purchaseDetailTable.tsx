@@ -84,6 +84,7 @@ export function PurchaseDetailTable({
         minQuantity: d.minQuantity,
         lineStatus: d.lineStatus,
         additionalInfo: d.additionalInfo,
+        notDeliverable: d.notDeliverable,
       })
     } else {
       await createPurchaseDetailAction({
@@ -96,6 +97,7 @@ export function PurchaseDetailTable({
         minQuantity: d.minQuantity,
         lineStatus: d.lineStatus,
         additionalInfo: d.additionalInfo,
+        notDeliverable: d.notDeliverable,
       })
     }
     setEditing(null)
@@ -164,6 +166,7 @@ export function PurchaseDetailTable({
               <TableHead className={thClass}>Qty</TableHead>
               <TableHead className={thClass}>Min Qty</TableHead>
               <TableHead className={thClass}>Line Status</TableHead>
+              <TableHead className={thClass}>Flags</TableHead>
               <TableHead className={thClass}>Additional Info</TableHead>
               <TableHead className={thClass}>Created By</TableHead>
               <TableHead className="w-20">
@@ -174,7 +177,7 @@ export function PurchaseDetailTable({
           <TableBody>
             {initialDetails.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={9} className="h-24 text-center text-muted-foreground text-sm">
+                <TableCell colSpan={10} className="h-24 text-center text-muted-foreground text-sm">
                   No line items yet. Add one to get started.
                 </TableCell>
               </TableRow>
@@ -197,6 +200,9 @@ export function PurchaseDetailTable({
                     ) : (
                       <span className="text-muted-foreground text-sm">—</span>
                     )}
+                  </TableCell>
+                  <TableCell className={tdClass}>
+                    {d.notDeliverable ? <Badge variant="destructive" className="text-[10px]">Not deliverable</Badge> : '—'}
                   </TableCell>
                   <TableCell className={tdClass}>{d.additionalInfo ?? '—'}</TableCell>
                   <TableCell className={tdClass}>

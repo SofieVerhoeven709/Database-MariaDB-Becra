@@ -31,6 +31,7 @@ function empty(): MappedInventoryOrder {
     createdAt: '', createdBy: '', createdByName: '',
     approved: false, approvedAt: null, approvedBy: null, approvedByName: null,
     rejected: false, rejectedAt: null, rejectedBy: null, rejectedByName: null,
+    notDeliverable: false, notCorrect: false, notCorrectReason: null, snapshotTakenAt: null,
     deleted: false, deletedAt: null, deletedBy: null, deletedByName: null,
   }
 }

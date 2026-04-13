@@ -31,6 +31,8 @@ export const incomingDeliveryLineSchema = z.object({
   backorderQty: z.coerce.number().int().min(0).optional(),
   unitPrice: z.union([z.string(), z.number()]).nullable().optional(),
   lineStatus: z.string().max(50).optional(),
+  notCorrect: z.boolean().optional(),
+  notCorrectReason: z.string().max(500).nullable().optional(),
 })
 
 export const createIncomingDeliveryLineSchema = incomingDeliveryLineSchema.omit({

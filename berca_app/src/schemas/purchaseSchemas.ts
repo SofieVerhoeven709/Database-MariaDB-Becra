@@ -28,6 +28,7 @@ export const createPurchaseDetailSchema = z.object({
   minQuantity: z.number().int().min(0).nullable().optional(),
   lineStatus: z.string().max(50).optional(),
   additionalInfo: z.string().max(255).nullable().optional(),
+  notDeliverable: z.boolean().optional(),
 })
 
 export const updatePurchaseDetailSchema = createPurchaseDetailSchema.extend({

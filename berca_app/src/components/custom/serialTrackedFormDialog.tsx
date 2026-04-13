@@ -179,6 +179,10 @@ export function MaterialSerialTrackedFormDialog({
   const idInputRef = useRef<HTMLInputElement>(null)
   const resolvedMode: 'create' | 'edit' | 'duplicate' = mode ?? (materialSerialTracked ? 'edit' : 'create')
   const isEditing = resolvedMode === 'edit' && !!materialSerialTracked
+  const selectableMaterialOptions = useMemo(
+    () => materialOptions.filter(option => option.beNumber.trim().length > 0),
+    [materialOptions],
+  )
 
   useEffect(() => {
     if (open) {
@@ -235,7 +239,9 @@ export function MaterialSerialTrackedFormDialog({
   }
 
   async function handleBeNumberSelect(beNumber: string) {
-    const material = materialOptions.find(m => m.beNumber === beNumber)
+    if (!beNumber.trim()) return
+
+    const material = selectableMaterialOptions.find(m => m.beNumber === beNumber)
     if (material) {
       setForm(prev => ({
         ...prev,
@@ -355,7 +361,7 @@ export function MaterialSerialTrackedFormDialog({
                   <SelectValue placeholder="Select BE Number" />
                 </SelectTrigger>
                 <SelectContent>
-                  {materialOptions.map(option => (
+                  {selectableMaterialOptions.map(option => (
                     <SelectItem key={option.id} value={option.beNumber}>
                       {option.beNumber}
                     </SelectItem>

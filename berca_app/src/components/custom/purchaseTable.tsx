@@ -3,7 +3,7 @@
 import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
 import type {Route} from 'next'
-import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Eye} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, ExternalLink} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
@@ -291,7 +291,7 @@ export function PurchaseTable({
                           size="icon"
                           className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
                           onClick={() => router.push(detailHref)}>
-                          <Eye className="h-3.5 w-3.5" />
+                          <ExternalLink className="h-3.5 w-3.5" />
                         </Button>
                         <Button
                           variant="ghost"

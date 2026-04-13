@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, Copy} from 'lucide-react'
+import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, Copy, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -578,10 +578,11 @@ export function SerialTrackedTable({
                           {canDelete && (
                             <Button
                               variant="ghost"
-                              size="sm"
-                              className="h-7 px-2 text-xs text-muted-foreground hover:bg-secondary hover:text-foreground"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:bg-secondary hover:text-foreground"
                               onClick={() => handleUndelete(item)}>
-                              Restore
+                              <RotateCcw className="h-3.5 w-3.5" />
+                              <span className="sr-only">Restore {item.beNumber ?? item.id}</span>
                             </Button>
                           )}
                           {isAdmin && (

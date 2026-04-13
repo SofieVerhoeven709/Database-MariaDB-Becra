@@ -8,9 +8,9 @@ import {
   Trash2,
   ChevronUp,
   ChevronDown,
-  Eye,
+  ExternalLink,
   Copy,
-  Check,
+  RotateCcw,
   /* ChevronLeft,
   ChevronRight, */
 } from 'lucide-react'
@@ -710,7 +710,7 @@ export function MaterialTable({
                         variant="ghost"
                         className="h-7 w-7"
                         onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
-                        <Eye className="h-3.5 w-3.5" />
+                        <ExternalLink className="h-3.5 w-3.5" />
                       </Button>
                       {m.deleted ? (
                         <>
@@ -720,7 +720,7 @@ export function MaterialTable({
                             className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
                             title="Restore"
                             onClick={() => handleRestore(m.id)}>
-                            <Check className="h-3.5 w-3.5" />
+                            <RotateCcw className="h-3.5 w-3.5" />
                           </Button>
                           <Button
                             size="icon"

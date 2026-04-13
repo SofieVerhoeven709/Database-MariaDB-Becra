@@ -2,7 +2,7 @@
 
 import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Copy, Check} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Copy, RotateCcw} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -343,7 +343,7 @@ export function MaterialPriceTable({
                             className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
                             title="Restore"
                             onClick={() => handleRestore(entry.id)}>
-                            <Check className="h-3.5 w-3.5" />
+                            <RotateCcw className="h-3.5 w-3.5" />
                           </Button>
                           {isAdmin && (
                             <Button

@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {Pencil, Plus, Trash2} from 'lucide-react'
+import {Pencil, Plus, Trash2, RotateCcw} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -295,10 +295,11 @@ export function WorkOrderStructures({structures, workOrderId, materials, permiss
                           {canDelete && (
                             <Button
                               variant="ghost"
-                              size="sm"
-                              className="h-7 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary px-2"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:bg-secondary hover:text-foreground"
                               onClick={() => handleUndelete(s.id)}>
-                              Restore
+                              <RotateCcw className="h-3.5 w-3.5" />
+                              <span className="sr-only">Restore structure {s.id}</span>
                             </Button>
                           )}
                           {isAdmin && (

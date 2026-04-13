@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {Pencil, X, Plus, Trash2, ExternalLink} from 'lucide-react'
+import {Pencil, X, Plus, Trash2, ExternalLink, RotateCcw} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -480,10 +480,11 @@ export function WorkOrderTimeRegistries({
                           {canDelete && (
                             <Button
                               variant="ghost"
-                              size="sm"
-                              className="h-7 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary px-2"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:bg-secondary hover:text-foreground"
                               onClick={() => handleUndelete(tr.id)}>
-                              Restore
+                              <RotateCcw className="h-3.5 w-3.5" />
+                              <span className="sr-only">Restore time registry {tr.id}</span>
                             </Button>
                           )}
                           {isAdmin && (

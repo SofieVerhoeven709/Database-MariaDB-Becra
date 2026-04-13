@@ -1,6 +1,6 @@
 'use client'
 import {useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Copy, Check} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Copy, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -249,7 +249,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
                           className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
                           title="Restore"
                           onClick={() => handleRestore(item.id)}>
-                          <Check className="h-3.5 w-3.5" />
+                          <RotateCcw className="h-3.5 w-3.5" />
                         </Button>
                       ) : (
                         <>

@@ -1,32 +1,10 @@
-import {getMaterialPlaces} from '@/dal/materialPlace'
-import {getMaterials} from '@/dal/materials'
-import {MaterialPlaceTable} from '@/components/custom/materialPlaceTable'
-import {mapMaterialPlace} from '@/extra/materialPlace'
+import {redirect} from 'next/navigation'
 
-export default async function MaterialPlacePage() {
-  const [places, materials] = await Promise.all([getMaterialPlaces({includeDeleted: true}), getMaterials()])
-  const mappedPlaces = places.map(mapMaterialPlace)
-  const materialOptions = materials
-    .filter(m => m.beNumber !== null)
-    .map(m => ({
-      id: m.id,
-      beNumber: m.beNumber as string,
-      name: m.name,
-      shortDescription: m.shortDescription,
-    }))
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
 
-  return (
-    <div className="p-6 max-w-7xl mx-auto">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Warehouse Places</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Assign and maintain warehouse storage locations across shelves, columns and layers.
-        </p>
-      </div>
-      <MaterialPlaceTable
-        initialItems={mappedPlaces}
-        materials={materialOptions}
-      />
-    </div>
-  )
+export default async function MaterialPlacePage({params}: PageProps) {
+  const {departmentId} = await params
+  redirect(`/departments/${departmentId}/place`)
 }

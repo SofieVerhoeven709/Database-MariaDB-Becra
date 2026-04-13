@@ -242,7 +242,7 @@ export async function createMaterialForPlaceAction(unvalidatedData: z.infer<type
   ])
 
   if (!defaultUnit || !defaultMaterialGroup) {
-    throw new Error('No standard unit of materialgroup found for creating material.')
+    throw new Error('No standard unit of material group found for creating material.')
   }
 
   const target = await createTargetForType('Company', profile.id)

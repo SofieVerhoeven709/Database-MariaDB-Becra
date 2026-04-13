@@ -134,6 +134,7 @@ interface SerialTrackedTableProps {
     longDescription: string | null
     materialGroupId: string
   }[]
+  managementEmployeeOptions?: {id: string; name: string}[]
   inspectionItemsBySerialTrackedId?: Record<string, InspectionItem[]>
   inspectionWarningDays?: number
 }
@@ -148,6 +149,7 @@ export function SerialTrackedTable({
   warehousePlaceOptions,
   departmentId,
   materialOptions,
+  managementEmployeeOptions = [],
   inspectionItemsBySerialTrackedId,
   inspectionWarningDays,
 }: SerialTrackedTableProps) {
@@ -616,6 +618,7 @@ export function SerialTrackedTable({
         materialGroupOptions={materialGroupOptions}
         warehousePlaceOptions={warehousePlaceOptions}
         materialOptions={materialOptions}
+        managementEmployeeOptions={managementEmployeeOptions}
         departmentId={departmentId}
       />
     </div>

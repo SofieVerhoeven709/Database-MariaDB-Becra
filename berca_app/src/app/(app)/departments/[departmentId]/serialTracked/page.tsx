@@ -4,6 +4,7 @@ import {getProjects} from '@/dal/projects'
 import {getCompanies} from '@/dal/companies'
 import {getMaterialGroups, getMaterials} from '@/dal/materials'
 import {getWarehousePlaces} from '@/dal/warehousePlace'
+import {getEmployees} from '@/dal/employees'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
@@ -29,6 +30,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
       materialGroupsFromDAL,
       materialsFromDAL,
       warehousePlacesFromDAL,
+      employeesFromDAL,
       profile,
     ] = await Promise.all([
       getDepartmentById(departmentId),
@@ -38,6 +40,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
       getMaterialGroups(),
       getMaterials(),
       getWarehousePlaces(),
+      getEmployees(),
       getSessionProfileFromCookieOrThrow(),
     ])
 
@@ -74,6 +77,13 @@ export default async function SerialTrackedPage({params}: PageProps) {
         .filter(Boolean)
         .join(' / '),
     }))
+
+    const managementEmployeeOptions = employeesFromDAL
+      .filter(employee => !employee.deleted)
+      .map(employee => ({
+        id: employee.id,
+        name: `${employee.firstName} ${employee.lastName}`.trim(),
+      }))
 
     // Map materials to the shape expected by materialOptions, only include global materialGroupId
     const materialOptions = materialsFromDAL.map((m: any) => ({
@@ -119,6 +129,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
                 currentUserLevel={currentUserLevel}
                 departmentId={departmentId}
                 materialOptions={materialOptions}
+                managementEmployeeOptions={managementEmployeeOptions}
                 inspectionWarningDays={inspectionWarningDays}
               />
             </TabsContent>

@@ -8,6 +8,7 @@ import {getCompanies} from '@/dal/companies'
 import {getProjects} from '@/dal/projects'
 import {getMaterialGroups, getMaterials} from '@/dal/materials'
 import {getWarehousePlaces} from '@/dal/warehousePlace'
+import {getEmployees} from '@/dal/employees'
 import {getSerialTrackedStructuresBySerialTrackedIds} from '@/dal/materialSerialTrackedStructure'
 import {mapMaterialSerialTracked} from '@/extra/serialTracked'
 import {mapWorkOrder} from '@/extra/workOrders'
@@ -39,6 +40,7 @@ export default async function MaintenancePage({params}: PageProps) {
       materialGroupsFromDAL,
       materialsFromDAL,
       warehousePlacesFromDAL,
+      employeesFromDAL,
       profile,
     ] = await Promise.all([
       getDepartmentById(departmentId),
@@ -49,6 +51,7 @@ export default async function MaintenancePage({params}: PageProps) {
       getMaterialGroups(),
       getMaterials(),
       getWarehousePlaces(),
+      getEmployees(),
       getSessionProfileFromCookieOrThrow(),
     ])
 
@@ -108,6 +111,13 @@ export default async function MaintenancePage({params}: PageProps) {
       materialGroupId: m.materialGroupIdA ?? '',
     }))
 
+    const managementEmployeeOptions = employeesFromDAL
+      .filter(employee => !employee.deleted)
+      .map(employee => ({
+        id: employee.id,
+        name: `${employee.firstName} ${employee.lastName}`.trim(),
+      }))
+
     const inspectionWarningDays = AppSettings.inspectionReminderMonths * 30
 
     return (
@@ -137,6 +147,7 @@ export default async function MaintenancePage({params}: PageProps) {
                 currentUserLevel={currentUserLevel}
                 departmentId={departmentId}
                 materialOptions={materialOptions}
+                managementEmployeeOptions={managementEmployeeOptions}
                 inspectionItemsBySerialTrackedId={inspectionItemsBySerialTrackedId}
                 inspectionWarningDays={inspectionWarningDays}
               />

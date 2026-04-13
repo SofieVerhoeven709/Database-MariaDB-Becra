@@ -14,6 +14,7 @@ interface Props {
   materialGroups: {id: string; name: string}[]
   warehousePlaces: {id: string; label: string}[]
   materialOptions: any[] // Add this line
+  managementEmployeeOptions: {id: string; name: string}[]
   currentUserRole: string
   currentUserLevel: number
 }
@@ -25,6 +26,7 @@ export function MaterialSerialTrackedDetail({
   materialGroups,
   warehousePlaces,
   materialOptions,
+  managementEmployeeOptions,
 }: Props) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [structure, setStructure] = useState<any[]>([])
@@ -169,6 +171,7 @@ export function MaterialSerialTrackedDetail({
         materialGroupOptions={materialGroups}
         warehousePlaceOptions={warehousePlaces}
         materialOptions={materialOptions} // Pass the prop
+        managementEmployeeOptions={managementEmployeeOptions}
         departmentId={item.departmentId}
       />
     </div>

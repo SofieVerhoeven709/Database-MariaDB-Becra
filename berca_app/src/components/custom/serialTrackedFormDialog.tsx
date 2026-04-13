@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useMemo, useState, useTransition, useRef} from 'react'
+import React, {useEffect, useMemo, useState, useTransition, useRef} from 'react'
 //import {useRouter} from 'next/navigation'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter} from '@/components/ui/dialog'
 import {Input} from '@/components/ui/input'
@@ -59,6 +59,7 @@ interface MaterialSerialTrackedFormDialogProps {
     longDescription: string | null
     materialGroupId: string
   }[]
+  managementEmployeeOptions: {id: string; name: string}[]
   departmentId: string
 }
 
@@ -67,6 +68,7 @@ type FormState = {
   materialId: string // New: selected materialId
   beNumber: string
   brandName: string
+  managementEmployeeId: string
   management: string
   brandOrderNumber: string
   companyId: string
@@ -93,6 +95,7 @@ const emptyForm: FormState = {
   materialId: '',
   beNumber: '',
   brandName: '',
+  managementEmployeeId: '',
   management: '',
   brandOrderNumber: '',
   companyId: '',
@@ -115,7 +118,11 @@ const emptyForm: FormState = {
   inspectionIntervalUnit: 'DAY',
 }
 
-function toFormState(item: MaterialSerialTrackedFormValue | null, mode: 'create' | 'edit' | 'duplicate'): FormState {
+function toFormState(
+  item: MaterialSerialTrackedFormValue | null,
+  mode: 'create' | 'edit' | 'duplicate',
+  managementEmployeeOptions: {id: string; name: string}[],
+): FormState {
   if (!item) return emptyForm
 
   const isDuplicate = mode === 'duplicate'
@@ -132,12 +139,16 @@ function toFormState(item: MaterialSerialTrackedFormValue | null, mode: 'create'
     return date.split('T')[0]
   }
 
+  const managementEmployeeId =
+    managementEmployeeOptions.find(option => option.name === (item.management ?? '').trim())?.id ?? ''
+
   return {
     id: isDuplicate ? undefined : item.id,
     materialId: '',
     // Force user to pick a BE/material when duplicating, so create validation stays correct.
     beNumber: isDuplicate ? '' : (item.beNumber ?? ''),
     brandName: item.brandName ?? '',
+    managementEmployeeId,
     management: item.management ?? '',
     brandOrderNumber: item.brandOrderNumber ?? '',
     companyId: item.companyId ?? '',
@@ -170,6 +181,7 @@ export function MaterialSerialTrackedFormDialog({
   materialGroupOptions,
   warehousePlaceOptions,
   materialOptions,
+  managementEmployeeOptions,
 }: MaterialSerialTrackedFormDialogProps) {
   //const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -186,9 +198,9 @@ export function MaterialSerialTrackedFormDialog({
 
   useEffect(() => {
     if (open) {
-      setForm(toFormState(materialSerialTracked, resolvedMode))
+      setForm(toFormState(materialSerialTracked, resolvedMode, managementEmployeeOptions))
     }
-  }, [open, materialSerialTracked, resolvedMode])
+  }, [open, materialSerialTracked, resolvedMode, managementEmployeeOptions])
 
   const title = useMemo(() => {
     if (resolvedMode === 'edit') return 'Edit Serial Tracked Item'
@@ -248,6 +260,8 @@ export function MaterialSerialTrackedFormDialog({
         materialId: material.id, // Set materialId
         beNumber: material.beNumber,
         brandName: material.brandName ?? '',
+        managementEmployeeId:
+          managementEmployeeOptions.find(option => option.name === (material.management ?? '').trim())?.id ?? '',
         management: material.management ?? '',
         brandOrderNumber: material.brandOrderNr ?? '',
         shortDescription: material.shortDescription ?? '',
@@ -257,6 +271,20 @@ export function MaterialSerialTrackedFormDialog({
     } else {
       setForm(prev => ({...prev, beNumber, materialId: ''}))
     }
+  }
+
+  function handleManagementEmployeeChange(value: string) {
+    if (value === '__none__') {
+      setForm(prev => ({...prev, managementEmployeeId: '', management: ''}))
+      return
+    }
+
+    const selectedEmployee = managementEmployeeOptions.find(option => option.id === value)
+    setForm(prev => ({
+      ...prev,
+      managementEmployeeId: selectedEmployee?.id ?? '',
+      management: selectedEmployee?.name ?? '',
+    }))
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -392,12 +420,19 @@ export function MaterialSerialTrackedFormDialog({
 
             <div className="space-y-2">
               <Label htmlFor="management">Management</Label>
-              <Input
-                id="management"
-                value={form.management}
-                onChange={e => setField('management', e.target.value)}
-                placeholder="Management"
-              />
+              <Select value={form.managementEmployeeId || '__none__'} onValueChange={handleManagementEmployeeChange}>
+                <SelectTrigger id="management">
+                  <SelectValue placeholder="Select management employee" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">No management</SelectItem>
+                  {managementEmployeeOptions.map(option => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">

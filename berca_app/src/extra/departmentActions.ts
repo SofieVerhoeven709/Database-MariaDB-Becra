@@ -402,6 +402,7 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       icon: 'MapPin',
       owner: 'warehouse',
     },
+    /*
     {
       id: 'materialPlace',
       name: 'Material Place',
@@ -409,6 +410,7 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       icon: 'Boxes',
       owner: 'warehouse',
     },
+    */
   ],
 
   Sales: [

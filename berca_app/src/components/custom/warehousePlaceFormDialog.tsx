@@ -248,6 +248,7 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
                 inputStyles={inputStyles}
                 onSelect={beNumber => update('beNumber', beNumber)}
               />
+              {/*
               <div className="pt-1">
                 <Button type="button" variant="outline" size="sm" onClick={() => setShowCreateMaterial(v => !v)}>
                   {showCreateMaterial ? 'Cancel new material' : 'Create new material'}
@@ -304,6 +305,7 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
                   </div>
                 </div>
               )}
+              */}
             </div>
           </div>
 

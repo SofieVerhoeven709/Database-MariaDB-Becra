@@ -13,7 +13,7 @@ import {
 } from '@/serverFunctions/warehousePlaces'
 import {useRouter} from 'next/navigation'
 /* type SortField = 'abbreviation' | 'beNumber' | 'place' | 'quantityInStock'*/
-type SortField = 'abbreviation' | 'beNumber' | 'xCoordinate' | 'yCoordinate' | 'zCoordinate' | 'quantityInStock'
+type SortField = 'abbreviation' | 'beNumber' | 'place' | 'xCoordinate' | 'yCoordinate' | 'zCoordinate' | 'quantityInStock'
 type SortDir = 'asc' | 'desc'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -129,6 +129,7 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
   const columns: {key: SortField; label: string}[] = [
     {key: 'abbreviation', label: 'Abbreviation'},
     {key: 'beNumber', label: 'Material Number (BE/IOS)'},
+    {key: 'place', label: 'Warehouse'},
     /*{key: 'place', label: 'Place'},*/
     /*{key: 'shelf', label: 'Shelf'},*/
     /*{key: 'column', label: 'Column'},*/
@@ -206,6 +207,9 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
                   </TableCell>
                   <TableCell className="text-sm">
                     {item.column ?? <span className="text-muted-foreground">—</span>}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {item.layer ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
                   <TableCell className="text-sm font-semibold">{item.quantityInStock}</TableCell>
                   <TableCell

@@ -307,6 +307,20 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
             </div>
           </div>
 
+          {/* Warehouse */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="wp-place" className="text-xs text-muted-foreground">
+              Warehouse
+            </Label>
+            <Input
+              id="wp-place"
+              className={inputStyles}
+              value={form.place ?? ''}
+              onChange={e => update('place', e.target.value)}
+              placeholder="e.g. Warehouse A"
+            />
+          </div>
+
           {/* X + Y */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
@@ -316,9 +330,9 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
               <Input
                 id="wp-x"
                 className={inputStyles}
-                value={form.place ?? ''}
-                onChange={e => update('place', e.target.value)}
-                placeholder="e.g. Warehouse A"
+                value={form.shelf ?? ''}
+                onChange={e => update('shelf', e.target.value)}
+                placeholder="e.g. Shelf 1"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -328,9 +342,9 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
               <Input
                 id="wp-y"
                 className={inputStyles}
-                value={form.shelf ?? ''}
-                onChange={e => update('shelf', e.target.value)}
-                placeholder="e.g. Shelf 1"
+                value={form.column ?? ''}
+                onChange={e => update('column', e.target.value)}
+                placeholder="e.g. Column B"
               />
             </div>
           </div>
@@ -343,9 +357,9 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
             <Input
               id="wp-z"
               className={inputStyles}
-              value={form.column ?? ''}
-              onChange={e => update('column', e.target.value)}
-              placeholder="e.g. Column B"
+              value={form.layer ?? ''}
+              onChange={e => update('layer', e.target.value)}
+              placeholder="e.g. Layer 2"
             />
           </div>
 

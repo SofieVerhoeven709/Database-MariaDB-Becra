@@ -28,6 +28,7 @@ import {
   createMaterialAction,
   updateMaterialAction,
   deleteMaterialAction,
+  hardDeleteMaterialAction,
   restoreMaterialAction,
 } from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
@@ -417,7 +418,11 @@ export function MaterialTable({
     if (!confirm(confirmText)) return
     const fd = new FormData()
     fd.append('id', id)
-    await deleteMaterialAction({success: false}, fd)
+    if (target.deleted) {
+      await hardDeleteMaterialAction({success: false}, fd)
+    } else {
+      await deleteMaterialAction({success: false}, fd)
+    }
     router.refresh()
   }
 

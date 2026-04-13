@@ -1,7 +1,19 @@
 'use client'
 
 import {useMemo, useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye, Copy, Check} from 'lucide-react'
+import {
+  Search,
+  Plus,
+  Pencil,
+  Trash2,
+  ChevronUp,
+  ChevronDown,
+  Eye,
+  Copy,
+  Check,
+  /* ChevronLeft,
+  ChevronRight, */
+} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -128,6 +140,10 @@ export function MaterialTable({
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterRejected, setFilterRejected] = useState<FilterRejected>('all')
   const [filterNumberKind, setFilterNumberKind] = useState<FilterNumberKind>('all')
+  {
+    /*const [currentPage, setCurrentPage] = useState(1)
+  const ITEMS_PER_PAGE = 15*/
+  }
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
   const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
@@ -255,6 +271,36 @@ export function MaterialTable({
       const bVal = getSortValue(b, sortField)
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
+  {
+    /*
+  // Paginatie berekeningen
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+  const endIndex = startIndex + ITEMS_PER_PAGE
+  const displayedMaterials = filtered.slice(startIndex, endIndex)
+
+  // Reset naar pagina 1 als er wordt gezocht of gefilterd
+  const handleSearch = (value: string) => {
+    setSearch(value)
+    setCurrentPage(1)
+  }
+
+  const handleFilterStatusChange = (value: FilterStatus) => {
+    setFilterStatus(value)
+    setCurrentPage(1)
+  }
+
+  const handleFilterRejectedChange = (value: FilterRejected) => {
+    setFilterRejected(value)
+    setCurrentPage(1)
+  }
+
+  const handleFilterNumberKindChange = (value: FilterNumberKind) => {
+    setFilterNumberKind(value)
+    setCurrentPage(1)
+  }
+  */
+  }
 
   async function handleSave(form: Partial<MappedMaterial> & {id: string}) {
     setSaving(true)
@@ -407,7 +453,7 @@ export function MaterialTable({
 
   const columns: {key: SortField; label: string}[] = [
     {key: 'beNumber', label: 'Number'},
-    {key: 'name', label: 'Name'},
+    {key: 'name', label: 'Material Name'},
     {key: 'shortDescription', label: 'Description'},
     {key: 'warehouseAbbreviation', label: 'Abbr'},
     {key: 'warehousePlace', label: 'Place'},
@@ -452,10 +498,12 @@ export function MaterialTable({
             className="pl-9 bg-secondary border-border"
             placeholder="Searching for materials..."
             value={search}
+            /*onChange={e => handleSearch(e.target.value)}*/
             onChange={e => setSearch(e.target.value)}
           />
         </div>
 
+        {/* <Select value={filterStatus} onValueChange={v => handleFilterStatusChange(v as FilterStatus)}> */}
         <Select value={filterStatus} onValueChange={v => setFilterStatus(v as FilterStatus)}>
           <SelectTrigger className="w-36 bg-secondary border-border">
             <SelectValue />
@@ -466,8 +514,8 @@ export function MaterialTable({
             <SelectItem value="deleted">Deleted</SelectItem>
           </SelectContent>
         </Select>
-
         <Select value={filterNumberKind} onValueChange={v => setFilterNumberKind(v as FilterNumberKind)}>
+          {/* <Select value={filterNumberKind} onValueChange={v => handleFilterNumberKindChange(v as FilterNumberKind)}>*/}
           <SelectTrigger className="w-36 bg-secondary border-border">
             <SelectValue />
           </SelectTrigger>
@@ -477,8 +525,8 @@ export function MaterialTable({
             <SelectItem value="ios">IOS</SelectItem>
           </SelectContent>
         </Select>
-
         <Select value={filterRejected} onValueChange={v => setFilterRejected(v as FilterRejected)}>
+          {/* <Select value={filterRejected} onValueChange={v => handleFilterRejectedChange(v as FilterRejected)}>*/}
           <SelectTrigger className="w-36 bg-secondary border-border">
             <SelectValue />
           </SelectTrigger>
@@ -542,6 +590,7 @@ export function MaterialTable({
                 </TableCell>
               </TableRow>
             ) : (
+              /* displayedMaterials.map(m => ( */
               filtered.map(m => (
                 <TableRow
                   key={m.id}
@@ -719,10 +768,57 @@ export function MaterialTable({
         </Table>
       </div>
 
-      <p className="text-xs text-muted-foreground">
-        Showing {filtered.length} of {materials.length} material{materials.length !== 1 ? 's' : ''}
-      </p>
+      {/* Pagination Info & Controls
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p className="text-xs text-muted-foreground">
+          Showing {displayedMaterials.length > 0 ? startIndex + 1 : 0}–{Math.min(endIndex, filtered.length)} of{' '}
+          {filtered.length} material{filtered.length !== 1 ? 's' : ''} (Page {currentPage} of {totalPages || 1})
+        </p>
+        {totalPages > 1 && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="flex items-center gap-1">
+              <ChevronLeft className="h-4 w-4" />
+              Previous
+            </Button>
 
+            <div className="flex items-center gap-1">
+              {Array.from({length: totalPages}, (_, i) => i + 1)
+                .filter(page => {
+                  // Show first, last, and pages around current
+                  return page === 1 || page === totalPages || Math.abs(page - currentPage) <= 1
+                })
+                .map((page, idx, arr) => (
+                  <div key={page}>
+                    {idx > 0 && arr[idx - 1] !== page - 1 && <span className="px-1 text-muted-foreground">...</span>}
+                    <Button
+                      variant={currentPage === page ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setCurrentPage(page)}
+                      className="h-8 w-8 p-0">
+                      {page}
+                    </Button>
+                  </div>
+                ))}
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="flex items-center gap-1">
+              Next
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
+      </div>
+      */}
       <MaterialFormDialog
         open={dialogOpen}
         onOpenChange={open => {

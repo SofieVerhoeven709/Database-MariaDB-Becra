@@ -130,6 +130,7 @@ interface MaterialDetailProps {
 
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 const thClass = 'whitespace-nowrap text-xs'
+const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
 
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '-'
@@ -142,6 +143,22 @@ function formatWarehousePlace(place: WarehousePlaceOption) {
     .join(' - ')
 }
 
+type NumberKind = 'BE' | 'IOS'
+
+function detectNumberKind(value: string | null | undefined): NumberKind {
+  const normalized = (value ?? '').trim()
+  return normalized.startsWith('4') ? 'IOS' : 'BE'
+}
+
+function normalizeMaterialNumber(value: string | null | undefined, kind: NumberKind): string {
+  const digits = (value ?? '').replace(/\D/g, '')
+  if (!digits) return ''
+
+  // Keep the last 6 digits and enforce series prefix: 1xxxxxx for BE, 4xxxxxx for IOS.
+  const tail = digits.length > 6 ? digits.slice(-6) : digits.padStart(6, '0')
+  return `${kind === 'IOS' ? '4' : '1'}${tail}`
+}
+
 export function MaterialDetail({
   material,
   materialGroups,
@@ -151,6 +168,7 @@ export function MaterialDetail({
 }: MaterialDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
+  const [numberKind, setNumberKind] = useState<NumberKind>(detectNumberKind(material.beNumber))
   const [saving, setSaving] = useState(false)
   const [restoring, setRestoring] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
@@ -234,7 +252,7 @@ export function MaterialDetail({
     try {
       const fd = new FormData()
       fd.append('id', material.id)
-      fd.append('beNumber', form.beNumber)
+      fd.append('beNumber', normalizeMaterialNumber(form.beNumber, numberKind))
       if (form.name) fd.append('name', form.name)
       fd.append('brandOrderNr', form.brandOrderNr ?? '')
       fd.append('shortDescription', form.shortDescription)
@@ -492,9 +510,41 @@ export function MaterialDetail({
         <TabsContent value="details" className="mt-4">
           <div className="rounded-xl border border-border bg-card p-6 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
             <div className="flex flex-col gap-1.5 md:col-span-2">
-              <Label className="text-xs text-muted-foreground">BE Number</Label>
+              <Label className="text-xs text-muted-foreground">{numberKind} Number</Label>
               {editing ? (
-                <Input value={form.beNumber} onChange={e => handleField('beNumber', e.target.value)} />
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">
+                    <div className="flex flex-col">
+                      <Label className="text-xs text-muted-foreground">Number type</Label>
+                      <p className="text-xs text-muted-foreground">Switch between BE and IOS.</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`text-xs ${numberKind === 'BE' ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
+                        BE
+                      </span>
+                      <Switch
+                        checked={numberKind === 'IOS'}
+                        onCheckedChange={checked => {
+                          const nextKind: NumberKind = checked ? 'IOS' : 'BE'
+                          setNumberKind(nextKind)
+                          const current = normalizeMaterialNumber(form.beNumber, nextKind)
+                          handleField('beNumber', current || (nextKind === 'IOS' ? '4000000' : '1000000'))
+                        }}
+                        aria-label="Number type IOS"
+                      />
+                      <span
+                        className={`text-xs ${numberKind === 'IOS' ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
+                        IOS
+                      </span>
+                    </div>
+                  </div>
+                  <Input
+                    value={form.beNumber}
+                    onChange={e => handleField('beNumber', e.target.value)}
+                    placeholder={numberKind === 'IOS' ? 'e.g. 4000000' : 'e.g. 1000000'}
+                  />
+                </div>
               ) : (
                 <p className="text-sm font-mono font-medium">{material.beNumber}</p>
               )}
@@ -503,7 +553,11 @@ export function MaterialDetail({
             <div className="flex flex-col gap-1.5 md:col-span-2">
               <Label className="text-xs text-muted-foreground">Short Description</Label>
               {editing ? (
-                <Input value={form.shortDescription} onChange={e => handleField('shortDescription', e.target.value)} />
+                <Input
+                  className={inputStyles}
+                  value={form.shortDescription}
+                  onChange={e => handleField('shortDescription', e.target.value)}
+                />
               ) : (
                 <p className="text-sm">{material.shortDescription}</p>
               )}
@@ -513,6 +567,7 @@ export function MaterialDetail({
               <Label className="text-xs text-muted-foreground">Long Description</Label>
               {editing ? (
                 <Textarea
+                  className={`${inputStyles} resize-none`}
                   value={form.longDescription}
                   onChange={e => handleField('longDescription', e.target.value)}
                   rows={3}
@@ -529,6 +584,7 @@ export function MaterialDetail({
               <Label className="text-xs text-muted-foreground">Brand Name</Label>
               {editing ? (
                 <Input
+                  className={inputStyles}
                   value={form.brandName}
                   onChange={e => handleField('brandName', e.target.value)}
                   placeholder="—"
@@ -541,7 +597,11 @@ export function MaterialDetail({
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Brand Order No.</Label>
               {editing ? (
-                <Input value={form.brandOrderNr ?? ''} onChange={e => handleField('brandOrderNr', e.target.value)} />
+                <Input
+                  className={inputStyles}
+                  value={form.brandOrderNr ?? ''}
+                  onChange={e => handleField('brandOrderNr', e.target.value)}
+                />
               ) : (
                 <p className="text-sm">{material.brandOrderNr}</p>
               )}
@@ -550,7 +610,12 @@ export function MaterialDetail({
             <div className="flex flex-col gap-1.5 md:col-span-2">
               <Label className="text-xs text-muted-foreground">Brand Short Description</Label>
               {editing ? (
-                <Input value={form.name} onChange={e => handleField('name', e.target.value)} placeholder="—" />
+                <Input
+                  className={inputStyles}
+                  value={form.name}
+                  onChange={e => handleField('name', e.target.value)}
+                  placeholder="—"
+                />
               ) : (
                 <p className="text-sm">{material.name ?? <span className="text-muted-foreground">—</span>}</p>
               )}
@@ -845,28 +910,7 @@ export function MaterialDetail({
               )}
             </div>
 
-            {/* Document Flags Section */}
-            <div className="md:col-span-2">
-              <h3 className="text-sm font-semibold mb-3">Document Flags</h3>
-              <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
-                {MATERIAL_DOCUMENT_FLAGS.map(flag => (
-                  <div key={flag.key} className="flex flex-col gap-1.5">
-                    <Label className="text-xs text-muted-foreground">{flag.label}</Label>
-                    {editing ? (
-                      <div className="flex items-center gap-2 h-9">
-                        <Switch
-                          checked={(form as any)[flag.key]}
-                          onCheckedChange={v => handleField(flag.key as any, v)}
-                        />
-                      </div>
-                    ) : (
-                      <p className="text-sm">{(material as any)[flag.key] ? 'Yes' : 'No'}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1.5 md:col-span-2 rounded-md border border-border bg-secondary/20 p-3">
               <Label className="text-xs text-muted-foreground">Long Lead Time</Label>
               {editing ? (
                 <div className="flex items-center gap-2 h-9">
@@ -887,7 +931,7 @@ export function MaterialDetail({
               )}
             </div>
 
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1.5 md:col-span-2">
               <Label className="text-xs text-muted-foreground">Lead Time Period</Label>
               {editing ? (
                 form.longLeadTime ? (
@@ -913,7 +957,7 @@ export function MaterialDetail({
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="__none__">None</SelectItem>
-                        <SelectItem value="days">Days</SelectItem>
+                        {/*<SelectItem value="days">Days</SelectItem>*/}
                         <SelectItem value="weeks">Weeks</SelectItem>
                         <SelectItem value="months">Months</SelectItem>
                       </SelectContent>
@@ -929,6 +973,38 @@ export function MaterialDetail({
               ) : (
                 <p className="text-sm text-muted-foreground">—</p>
               )}
+            </div>
+
+            {/* Document Flags Section */}
+            <div className="md:col-span-2 rounded-lg border border-border bg-secondary/20 p-4">
+              <div className="mb-3">
+                <Label className="text-xs text-muted-foreground">Document links</Label>
+                <p className="text-xs text-muted-foreground/80 mt-1">
+                  Mark which document types are available for this material.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                {MATERIAL_DOCUMENT_FLAGS.map(flag => (
+                  <div
+                    key={flag.key}
+                    className="flex items-center justify-between gap-3 rounded-md border border-border bg-background/40 px-3 py-2">
+                    <Label className="text-sm text-foreground">{flag.label}</Label>
+                    {editing ? (
+                      <div className="flex items-center gap-3">
+                        <Switch
+                          checked={(form as any)[flag.key]}
+                          onCheckedChange={v => handleField(flag.key as any, v)}
+                        />
+                        <span className="text-sm text-muted-foreground">{(form as any)[flag.key] ? 'Yes' : 'No'}</span>
+                      </div>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">
+                        {(material as any)[flag.key] ? 'Yes' : 'No'}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="flex flex-col gap-1.5">

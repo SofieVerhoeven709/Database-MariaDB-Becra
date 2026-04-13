@@ -167,7 +167,7 @@ export default async function MaterialPage({params}: PageProps) {
     }))
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-6 w-full max-w-none mx-auto">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Materials</h1>
         <p className="text-muted-foreground text-sm mt-1">

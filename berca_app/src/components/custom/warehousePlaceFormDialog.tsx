@@ -52,7 +52,7 @@ function MaterialNumberPicker({selectedBeNumber, materials, inputStyles, onSelec
     <div className="relative">
       <Input
         className={inputStyles}
-        placeholder="Type materialnumber or name..."
+        placeholder="Type material number or name..."
         value={displayValue}
         onChange={e => {
           setSearch(e.target.value)
@@ -258,7 +258,7 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="flex flex-col gap-1">
                       <Label htmlFor="new-material-be" className="text-xs text-muted-foreground">
-                        BE/IOS nummer
+                        BE/IOS number
                       </Label>
                       <Input
                         id="new-material-be"
@@ -299,7 +299,7 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
                   {materialError && <p className="text-xs text-destructive">{materialError}</p>}
                   <div className="flex justify-end">
                     <Button type="button" size="sm" onClick={handleCreateMaterial} disabled={creatingMaterial}>
-                      {creatingMaterial ? 'Creating...' : 'Creating material and selecting'}
+                      {creatingMaterial ? 'Creating...' : 'Create and select material'}
                     </Button>
                   </div>
                 </div>

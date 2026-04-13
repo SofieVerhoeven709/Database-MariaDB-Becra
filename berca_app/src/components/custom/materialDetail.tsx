@@ -831,7 +831,8 @@ export function MaterialDetail({
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
+              {/*<Label className="text-xs text-muted-foreground">Warehouse Place</Label>*/}
+              <Label className="text-xs text-muted-foreground">Warehouse Coordinates</Label>
               {editing ? (
                 <div className="space-y-2">
                   <Select
@@ -852,22 +853,32 @@ export function MaterialDetail({
                   {resolvedWarehousePlace && (
                     <div className="text-xs text-muted-foreground space-y-0.5">
                       <p>Abbr: {resolvedWarehousePlace.abbreviation ?? '-'}</p>
-                      <p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
+                      {/*<p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
                       <p>Shelf: {resolvedWarehousePlace.shelf ?? '-'}</p>
                       <p>Column: {resolvedWarehousePlace.column ?? '-'}</p>
                       <p>Layer: {resolvedWarehousePlace.layer ?? '-'}</p>
-                      <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
+                      <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>*/}
+                      <p>Warehouse: {resolvedWarehousePlace.place ?? '-'}</p>
+                      <p>X: {resolvedWarehousePlace.shelf ?? '-'}</p>
+                      <p>Y: {resolvedWarehousePlace.column ?? '-'}</p>
+                      <p>Z: {resolvedWarehousePlace.layer ?? '-'}</p>
+                      <p>Position: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
                     </div>
                   )}
                 </div>
               ) : resolvedWarehousePlace ? (
                 <div className="text-sm space-y-0.5">
                   <p>Abbr: {resolvedWarehousePlace.abbreviation ?? '-'}</p>
-                  <p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
+                  {/*<p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
                   <p>Shelf: {resolvedWarehousePlace.shelf ?? '-'}</p>
                   <p>Column: {resolvedWarehousePlace.column ?? '-'}</p>
                   <p>Layer: {resolvedWarehousePlace.layer ?? '-'}</p>
-                  <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
+                  <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>*/}
+                  <p>Warehouse: {resolvedWarehousePlace.place ?? '-'}</p>
+                  <p>X: {resolvedWarehousePlace.shelf ?? '-'}</p>
+                  <p>Y: {resolvedWarehousePlace.column ?? '-'}</p>
+                  <p>Z: {resolvedWarehousePlace.layer ?? '-'}</p>
+                  <p>Position: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
                 </div>
               ) : (
                 <p className="text-sm text-muted-foreground">—</p>

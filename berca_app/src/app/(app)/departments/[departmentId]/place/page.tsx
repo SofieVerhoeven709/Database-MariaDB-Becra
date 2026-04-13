@@ -18,7 +18,7 @@ export default async function WarehousePlacePage() {
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Warehouse Places</h1>
         <p className="text-muted-foreground text-sm mt-1">
-          Manage storage locations, shelves, columns, layers and their capacity.
+          Manage warehouse locations using Warehouse, X, Y and Z coordinates.
         </p>
       </div>
       <WarehousePlaceTable initialItems={mappedPlaces} materials={materialOptions} />

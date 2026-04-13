@@ -176,11 +176,16 @@ export function MaterialTable({
   function formatWarehouseCoordinates(place: WarehousePlaceOption): string {
     const parts = [
       place.abbreviation && `Abbr: ${place.abbreviation}`,
-      place.place && `Place: ${place.place}`,
+      /* place.place && `Place: ${place.place}`,
       place.shelf && `Shelf: ${place.shelf}`,
       place.column && `Column: ${place.column}`,
       place.layer && `Layer: ${place.layer}`,
-      place.layerPlace && `Layer place: ${place.layerPlace}`,
+      place.layerPlace && `Layer place: ${place.layerPlace}`, */
+      place.place && `Warehouse: ${place.place}`,
+      place.shelf && `X: ${place.shelf}`,
+      place.column && `Y: ${place.column}`,
+      place.layer && `Z: ${place.layer}`,
+      place.layerPlace && `Position: ${place.layerPlace}`,
     ].filter(Boolean)
 
     return parts.length > 0 ? parts.join(' | ') : place.label
@@ -456,11 +461,16 @@ export function MaterialTable({
     {key: 'name', label: 'Material Name'},
     {key: 'shortDescription', label: 'Description'},
     {key: 'warehouseAbbreviation', label: 'Abbr'},
-    {key: 'warehousePlace', label: 'Place'},
+    /* {key: 'warehousePlace', label: 'Place'},
     {key: 'warehouseShelf', label: 'Shelf'},
     {key: 'warehouseColumn', label: 'Column'},
     {key: 'warehouseLayer', label: 'Layer'},
-    {key: 'warehouseLayerPlace', label: 'Layer Place'},
+    {key: 'warehouseLayerPlace', label: 'Layer Place'},*/
+    {key: 'warehousePlace', label: 'Warehouse'},
+    {key: 'warehouseShelf', label: 'X'},
+    {key: 'warehouseColumn', label: 'Y'},
+    {key: 'warehouseLayer', label: 'Z'},
+    {key: 'warehouseLayerPlace', label: 'Position'},
     {key: 'brandName', label: 'Brand'},
     {key: 'materialGroupLabelA', label: 'Group A'},
     {key: 'materialGroupLabelB', label: 'Group B'},

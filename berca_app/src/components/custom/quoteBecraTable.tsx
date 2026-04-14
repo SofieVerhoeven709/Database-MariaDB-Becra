@@ -1,5 +1,6 @@
 'use client'
 import {useState} from 'react'
+import {useRouter} from 'next/navigation'
 import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
@@ -22,7 +23,8 @@ import {generateCompanyNumber} from '@/lib/utils'
 
 type SortField = 'qNumber' | 'description' | 'date' | 'validDate' | 'companyName' | 'createdByName'
 type SortDir = 'asc' | 'desc'
-type FilterDeleted = 'not-deleted' | 'deleted' | 'valid' | 'not valid' | 'all'
+type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
+type FilterValid = 'valid' | 'not valid' | 'all'
 type QuoteBecraUpdatePayload = {
   originalId: string
   id: string
@@ -38,8 +40,8 @@ function formatDate(date: string | null) {
 
 function getQuoteNumber(id: string) {
   if (!id) return '-'
-  if (/^\d{6}$/.test(id)) return id
-  return `${id.slice(0, 6).toUpperCase()}`
+  if (/^\d{8}$/.test(id)) return id
+  return `${id.slice(0, 8).toUpperCase()}`
 }
 
 function getCompanyName(company: string | null) {
@@ -73,12 +75,14 @@ export function QuoteBecraTable({
   currentUserName,
 }: QuoteBecraTableProps) {
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const router = useRouter()
 
   const [quotes, setQuotes] = useState(initialQuotes)
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('date')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
-  const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
+  const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('all')
+  const [filterValid, setFilterValid] = useState<FilterValid>('all')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<MappedQuoteBecra | null>(null)
   const [companyOptions, setCompanyOptions] = useState(initialCompanyOptions)
@@ -96,8 +100,8 @@ export function QuoteBecraTable({
     .filter(q => {
       if (filterDeleted === 'not-deleted' && q.deleted) return false
       if (filterDeleted === 'deleted' && !q.deleted) return false
-      if (filterDeleted === 'valid' && (!q.validDate || q.deleted)) return false
-      if (filterDeleted === 'not valid' && (q.validDate || q.deleted)) return false
+      if (filterValid === 'valid' && (!q.validDate || q.deleted)) return false
+      if (filterValid === 'not valid' && (q.validDate || q.deleted)) return false
       if (!search) return true
       const s = search.toLowerCase()
       return (
@@ -126,19 +130,27 @@ export function QuoteBecraTable({
   async function handleSave(form: Partial<MappedQuoteBecra> & {id: string; originalId?: string}) {
     const encodedDescription = encodeQuoteBecraDescription(form.description, form.company)
     const quoteNumber = form.id.trim()
+    const parseErrors = (errors?: Record<string, string[] | undefined>) =>
+      Object.values(errors ?? {})
+        .flatMap(errs => errs ?? [])
+        .filter(Boolean)
+        .join(' | ')
 
     if (editingItem) {
       const originalId = form.originalId ?? editingItem.id
       const updateQuoteBecraWithOriginalId = updateQuoteBecraAction as unknown as (
         data: QuoteBecraUpdatePayload,
-      ) => Promise<void>
-      await updateQuoteBecraWithOriginalId({
+      ) => Promise<{success: boolean; errors?: Record<string, string[] | undefined>}>
+      const result = await updateQuoteBecraWithOriginalId({
         originalId,
         id: quoteNumber,
         description: encodedDescription,
         validDate: form.validDate ?? false,
         date: form.date ? new Date(form.date) : null,
       })
+      if (result && !result.success) {
+        throw new Error(parseErrors(result.errors) || 'Could not update the quote. Please check the form and try again.')
+      }
       // Update the matching quote in local state immediately
       setQuotes(prev =>
         prev.map(q =>
@@ -155,12 +167,18 @@ export function QuoteBecraTable({
         ),
       )
     } else {
-      await createQuoteBecraAction({
+      const createQuoteBecraWithResponse = createQuoteBecraAction as unknown as (
+        data: Omit<QuoteBecraUpdatePayload, 'originalId'>,
+      ) => Promise<{success: boolean; errors?: Record<string, string[] | undefined>}>
+      const result = await createQuoteBecraWithResponse({
         id: quoteNumber,
         description: encodedDescription,
         validDate: form.validDate ?? false,
         date: form.date ? new Date(form.date) : null,
       })
+      if (result && !result.success) {
+        throw new Error(parseErrors(result.errors) || 'Could not create the quote. Please check the form and try again.')
+      }
       // Add the new quote to local state immediately
       const newQuote: MappedQuoteBecra = {
         id: quoteNumber,
@@ -177,6 +195,8 @@ export function QuoteBecraTable({
       }
       setQuotes(prev => [newQuote, ...prev])
     }
+
+    router.refresh()
   }
 
   async function handleCreateCompany(name: string) {
@@ -260,6 +280,18 @@ export function QuoteBecraTable({
         </div>
         <div className="flex gap-2 items-center">
           {isAdmin && (
+            <Select value={filterValid} onValueChange={v => setFilterValid(v as FilterValid)}>
+              <SelectTrigger className="w-36 bg-secondary border-border text-sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="valid">Valid</SelectItem>
+                <SelectItem value="not valid">Not valid</SelectItem>
+                <SelectItem value="all">All</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+          {isAdmin && (
             <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
               <SelectTrigger className="w-36 bg-secondary border-border text-sm">
                 <SelectValue />
@@ -267,8 +299,6 @@ export function QuoteBecraTable({
               <SelectContent>
                 <SelectItem value="not-deleted">Active</SelectItem>
                 <SelectItem value="deleted">Deleted</SelectItem>
-                <SelectItem value="valid">Valid</SelectItem>
-                <SelectItem value="not valid">Not Valid</SelectItem>
                 <SelectItem value="all">All</SelectItem>
               </SelectContent>
             </Select>

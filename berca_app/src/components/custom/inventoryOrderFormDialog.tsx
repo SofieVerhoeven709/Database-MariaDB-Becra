@@ -8,6 +8,7 @@ import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Textarea} from '@/components/ui/textarea'
 import type {MappedInventoryOrder} from '@/types/inventoryOrder'
+import {generateIncomingDeliveryNumber} from '@/lib/utils'
 
 export interface InventoryOption {
   id: string
@@ -26,7 +27,7 @@ interface Props {
 function empty(): MappedInventoryOrder {
   return {
     id: '', materialId: '', inventoryBeNumber: null, inventoryDescription: null,
-    orderNumber: '', requestedQty: 1, orderDate: new Date().toISOString().split('T')[0],
+    orderNumber: generateIncomingDeliveryNumber('OR'), requestedQty: 1, orderDate: new Date().toISOString().split('T')[0],
     shortDescription: '', longDescription: null,
     createdAt: '', createdBy: '', createdByName: '',
     approved: false, approvedAt: null, approvedBy: null, approvedByName: null,
@@ -40,6 +41,7 @@ export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories
   const [form, setForm] = useState<MappedInventoryOrder>(empty())
   const [saving, setSaving] = useState(false)
   const [materialSearch, setMaterialSearch] = useState('')
+  const isEdit = !!entry
 
   useEffect(() => {
     if (open) {
@@ -113,8 +115,20 @@ export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories
 
           <div className="grid gap-1.5">
             <Label htmlFor="orderNumber">Order Number</Label>
-            <Input id="orderNumber" value={form.orderNumber} onChange={e => set('orderNumber', e.target.value)}
-              placeholder="e.g. ORD-2026-001" className="bg-secondary border-border" />
+            <div className="flex gap-2">
+              <Input id="orderNumber" value={form.orderNumber} onChange={e => set('orderNumber', e.target.value)}
+                placeholder="e.g. OR2026041301" className="bg-secondary border-border flex-1" />
+              {!isEdit && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="h-10 px-3 border-border text-xs shrink-0"
+                  onClick={() => set('orderNumber', generateIncomingDeliveryNumber('OR'))}>
+                  Regenerate
+                </Button>
+              )}
+            </div>
           </div>
 
           <div className="grid gap-1.5">

@@ -51,24 +51,22 @@ type IncomingDeliveryLineWithRelations = Prisma.IncomingDeliveryLineGetPayload<{
     IncomingDeliveryLineAllocation: {
       include: {
         MaterialDemandSource: {
-          include: {
-            MaterialDemandSourceType: {select: {name: true}}
-            MaterialDemand: {
-              select: {
-                id: true
-                Material: {select: {id: true; beNumber: true; shortDescription: true; name: true}}
-              }
-            }
-          }
           select: {
             id: true
+            sourceReferenceId: true
             fulfilled: true
             fulfilledAt: true
             fulfilledBy: true
             requiredQty: true
             reservedQty: true
-            MaterialDemandSourceType: true
-            MaterialDemand: true
+            MaterialDemandSourceType: {select: {name: true}}
+            MaterialDemand: {
+              select: {
+                id: true
+                materialId: true
+                Material: {select: {id: true; beNumber: true; shortDescription: true; name: true}}
+              }
+            }
           }
         }
         Employee_IncomingDeliveryLineAllocation_createdByToEmployee: {select: {id: true; firstName: true; lastName: true}}
@@ -112,6 +110,8 @@ export function mapIncomingDeliveryLineAllocation(
     incomingDeliveryLineId: allocation.incomingDeliveryLineId,
     materialDemandSourceId: allocation.materialDemandSourceId,
     materialDemandSourceLabel: `${allocation.MaterialDemandSource.MaterialDemandSourceType.name} - ${material.beNumber ?? '—'} - ${material.shortDescription ?? material.name ?? allocation.materialDemandSourceId}`,
+    sourceTypeName: allocation.MaterialDemandSource.MaterialDemandSourceType.name,
+    sourceReferenceId: allocation.MaterialDemandSource.sourceReferenceId ?? null,
     allocatedQty: allocation.allocatedQty,
     createdAt: allocation.createdAt.toISOString(),
     createdBy: allocation.createdBy,
@@ -136,6 +136,9 @@ export function mapMaterialDemandSourceOption(row: {
   id: string
   requiredQty: number
   reservedQty: number | null
+  fulfilled: boolean
+  fulfilledAt: Date | string | null
+  fulfilledBy: string | null
   MaterialDemandSourceType: {name: string}
   MaterialDemand: {materialId: string; Material: {beNumber: string | null; shortDescription: string | null; name: string | null}}
 }): MaterialDemandSourceOption {
@@ -145,6 +148,9 @@ export function mapMaterialDemandSourceOption(row: {
     materialId: row.MaterialDemand.materialId,
     requiredQty: row.requiredQty,
     reservedQty: row.reservedQty ?? 0,
+    fulfilled: row.fulfilled,
+    fulfilledAt: row.fulfilledAt ? new Date(row.fulfilledAt).toISOString() : null,
+    fulfilledBy: row.fulfilledBy,
     label: `${row.MaterialDemandSourceType.name} - ${material.beNumber ?? '—'} - ${material.shortDescription ?? material.name ?? row.id}`,
   }
 }

@@ -8,6 +8,7 @@ import {
 } from '@/schemas/inventoryOrderSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createMaterialDemandSourceForInventoryOrder, removeMaterialDemandSourceForInventoryOrder} from '@/dal/materialDemands'
+import {generateIncomingDeliveryNumber} from '@/lib/utils'
 
 const REVALIDATE_PATH = '/departments/purchasing/orderRequests'
 const REVALIDATE_MATERIAL_DEMAND = '/departments/purchasing/materialDemand'
@@ -45,6 +46,8 @@ export const createInventoryOrderAction = protectedServerFunction({
       throw new Error('Material not found.')
     }
 
+    const orderNumber = data.orderNumber?.trim() || generateIncomingDeliveryNumber('OR')
+
     if (isLowStockRequestDescription(data.shortDescription)) {
       const existingPendingLowStock = await prismaClient.inventoryOrder.findFirst({
         where: {
@@ -67,7 +70,7 @@ export const createInventoryOrderAction = protectedServerFunction({
       data: {
         id: crypto.randomUUID(),
         materialId: data.materialId,
-        orderNumber: data.orderNumber,
+          orderNumber,
         requestedQty: data.requestedQty,
         orderDate: toDate(data.orderDate),
         shortDescription: data.shortDescription,
@@ -88,7 +91,7 @@ export const updateInventoryOrderAction = protectedServerFunction({
       where: {id},
       data: {
         materialId: rest.materialId,
-        orderNumber: rest.orderNumber,
+        orderNumber: rest.orderNumber.trim() || generateIncomingDeliveryNumber('OR'),
         requestedQty: rest.requestedQty,
         orderDate: toDate(rest.orderDate),
         shortDescription: rest.shortDescription,

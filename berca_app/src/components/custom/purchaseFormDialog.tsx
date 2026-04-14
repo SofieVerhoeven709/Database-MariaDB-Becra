@@ -24,7 +24,7 @@ interface PurchaseFormDialogProps {
   onSave: (purchase: MappedPurchase) => Promise<void>
 }
 
-const STATUS_OPTIONS = ['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'CLOSED', 'CANCELLED']
+const STATUS_OPTIONS = ['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED']
 
 function emptyPurchase(): MappedPurchase {
   return {

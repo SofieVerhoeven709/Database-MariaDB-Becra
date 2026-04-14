@@ -14,12 +14,14 @@ import type {
   MappedIncomingDeliveryLine,
   MappedIncomingDeliveryLineAllocation,
   MaterialDemandSourceOption,
+  WarehousePlaceOption,
 } from '@/types/incomingDelivery'
 import {
   createIncomingDeliveryLineAction,
   updateIncomingDeliveryLineAction,
   softDeleteIncomingDeliveryLineAction,
   createIncomingDeliveryLineAllocationAction,
+  createIncomingDeliveryOverDeliveryAllocationAction,
   softDeleteIncomingDeliveryLineAllocationAction,
 } from '@/serverFunctions/incomingDeliveries'
 import {INCOMING_PERMISSION_LEVELS} from '@/constants'
@@ -42,6 +44,7 @@ interface Props {
   materialOptions: MaterialOption[]
   purchaseDetailOptions: PurchaseDetailOption[]
   materialDemandSourceOptions: MaterialDemandSourceOption[]
+  warehousePlaceOptions: WarehousePlaceOption[]
   currentUserRole: string
   currentUserLevel: number
 }
@@ -96,6 +99,7 @@ export function IncomingDeliveryDetailTable({
   materialOptions,
   purchaseDetailOptions,
   materialDemandSourceOptions,
+  warehousePlaceOptions,
   currentUserRole,
   currentUserLevel,
 }: Props) {
@@ -112,6 +116,8 @@ export function IncomingDeliveryDetailTable({
   const [expandedLineId, setExpandedLineId] = useState<string | null>(null)
   const [allocationSourceId, setAllocationSourceId] = useState<string>('__none__')
   const [allocationQty, setAllocationQty] = useState('1')
+  const [warehousePlaceId, setWarehousePlaceId] = useState<string>('__none__')
+  const [warehouseAllocationQty, setWarehouseAllocationQty] = useState('1')
 
   const materialById = useMemo(() => new Map(materialOptions.map(option => [option.id, option])), [materialOptions])
   const lineById = useMemo(() => new Map(lines.map(line => [line.id, line])), [lines])
@@ -207,12 +213,60 @@ export function IncomingDeliveryDetailTable({
     router.refresh()
   }
 
+  async function addOverDeliveryAllocation() {
+    if (!canAddSourceLink) return
+    if (!expandedLineId) return
+    if (!warehousePlaceId || warehousePlaceId === '__none__') return
+
+    await createIncomingDeliveryOverDeliveryAllocationAction({
+      incomingDeliveryLineId: expandedLineId,
+      warehousePlaceId,
+      allocatedQty: Number.parseInt(warehouseAllocationQty, 10) || 1,
+    })
+
+    setWarehousePlaceId('__none__')
+    setWarehouseAllocationQty('1')
+    router.refresh()
+  }
+
   const sourceOptionsForExpandedLine = (() => {
     if (!expandedLineId) return []
     const line = lineById.get(expandedLineId)
     if (!line) return []
-    return materialDemandSourceOptions.filter(option => option.materialId === line.materialId)
+    return materialDemandSourceOptions.filter(option => option.materialId === line.materialId && !option.fulfilled)
   })()
+
+  const expandedLine = expandedLineId ? lineById.get(expandedLineId) ?? null : null
+  const overDeliveredQty = expandedLine ? Math.max(expandedLine.deliveredQty - expandedLine.orderedQty, 0) : 0
+  const overDeliveredAssignedQty = expandedLine
+    ? (allocationsByLineId[expandedLine.id] ?? [])
+        .filter(allocation => allocation.sourceTypeName.toLowerCase() === 'warehouseplace')
+        .reduce((sum, allocation) => sum + allocation.allocatedQty, 0)
+    : 0
+  const overDeliveredRemainingQty = Math.max(overDeliveredQty - overDeliveredAssignedQty, 0)
+  const warehousePlaceById = useMemo(
+    () => new Map(warehousePlaceOptions.map(option => [option.id, option.label])),
+    [warehousePlaceOptions],
+  )
+
+  function allocationLabel(allocation: MappedIncomingDeliveryLineAllocation) {
+    if (allocation.sourceTypeName.toLowerCase() !== 'warehouseplace') return allocation.materialDemandSourceLabel
+    const locationLabel = allocation.sourceReferenceId ? warehousePlaceById.get(allocation.sourceReferenceId) : null
+    return `WarehousePlace - ${locationLabel ?? allocation.sourceReferenceId ?? allocation.materialDemandSourceLabel}`
+  }
+
+  function getOverDeliveryStats(line: MappedIncomingDeliveryLine) {
+    const overDeliveredQty = Math.max(line.deliveredQty - line.orderedQty, 0)
+    const assignedWarehouseQty = (allocationsByLineId[line.id] ?? [])
+      .filter(allocation => allocation.sourceTypeName.toLowerCase() === 'warehouseplace')
+      .reduce((sum, allocation) => sum + allocation.allocatedQty, 0)
+
+    return {
+      overDeliveredQty,
+      assignedWarehouseQty,
+      remainingQty: Math.max(overDeliveredQty - assignedWarehouseQty, 0),
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -378,6 +432,10 @@ export function IncomingDeliveryDetailTable({
             ) : (
               lines.map(line => (
                 <TableRow key={line.id} className="border-border/40 hover:bg-secondary/50">
+                  {(() => {
+                    const overDelivery = getOverDeliveryStats(line)
+                    return (
+                      <>
                   <TableCell className="text-sm text-foreground">{line.materialLabel || materialById.get(line.materialId)?.label || line.materialId}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{line.orderedQty}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{line.deliveredQty}</TableCell>
@@ -388,7 +446,28 @@ export function IncomingDeliveryDetailTable({
                     <Badge variant="outline" className="text-[11px]">{line.lineStatus}</Badge>
                   </TableCell>
                   <TableCell>
-                    {line.notCorrect ? <Badge variant="destructive" className="text-[10px]">Not correct</Badge> : '—'}
+                    <div className="flex flex-col gap-1">
+                      {line.notCorrect && (
+                        <>
+                          <Badge variant="destructive" className="text-[10px] w-fit">Not correct</Badge>
+                          {line.notCorrectReason && <span className="text-[11px] text-muted-foreground">{line.notCorrectReason}</span>}
+                        </>
+                      )}
+                      {overDelivery.overDeliveredQty > 0 && (
+                        <Badge
+                          variant="outline"
+                          className={`text-[10px] w-fit ${
+                            overDelivery.remainingQty > 0
+                              ? 'border-amber-500/60 text-amber-700'
+                              : 'border-emerald-500/50 text-emerald-700'
+                          }`}>
+                          {overDelivery.remainingQty > 0
+                            ? `Over rem: ${overDelivery.remainingQty}`
+                            : 'Over fully allocated'}
+                        </Badge>
+                      )}
+                      {!line.notCorrect && overDelivery.overDeliveredQty === 0 && '—'}
+                    </div>
                   </TableCell>
                   <TableCell>
                     <Button
@@ -399,6 +478,8 @@ export function IncomingDeliveryDetailTable({
                         setExpandedLineId(expandedLineId === line.id ? null : line.id)
                         setAllocationSourceId('__none__')
                         setAllocationQty('1')
+                        setWarehousePlaceId('__none__')
+                        setWarehouseAllocationQty('1')
                       }}>
                       <Link2 className="h-3.5 w-3.5 mr-1" />
                       {line.allocationCount} source{line.allocationCount === 1 ? '' : 's'}
@@ -418,6 +499,9 @@ export function IncomingDeliveryDetailTable({
                       )}
                     </div>
                   </TableCell>
+                      </>
+                    )
+                  })()}
                 </TableRow>
               ))
             )}
@@ -464,6 +548,55 @@ export function IncomingDeliveryDetailTable({
             </Button>
           </div>
 
+          {overDeliveredQty > 0 && (
+            <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 space-y-3">
+              <div className="text-xs text-amber-800">
+                Over-delivered: {overDeliveredQty} · Assigned to warehouse: {overDeliveredAssignedQty} · Remaining: {overDeliveredRemainingQty}
+              </div>
+              <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
+                <div className="grid gap-1.5">
+                  <Label>Warehouse location</Label>
+                  <Select value={warehousePlaceId} onValueChange={setWarehousePlaceId}>
+                    <SelectTrigger className="bg-secondary border-border">
+                      <SelectValue placeholder="Select warehouse location" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-card border-border">
+                      <SelectItem value="__none__">Select location</SelectItem>
+                      {warehousePlaceOptions.map(option => (
+                        <SelectItem key={option.id} value={option.id}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="grid gap-1.5">
+                  <Label>Qty to store</Label>
+                  <Input
+                    type="number"
+                    min={1}
+                    max={Math.max(overDeliveredRemainingQty, 1)}
+                    value={warehouseAllocationQty}
+                    onChange={e => setWarehouseAllocationQty(e.target.value)}
+                    className="bg-secondary border-border"
+                  />
+                </div>
+
+                <Button
+                  onClick={addOverDeliveryAllocation}
+                  disabled={
+                    !canAddSourceLink ||
+                    warehousePlaceId === '__none__' ||
+                    overDeliveredRemainingQty <= 0
+                  }
+                  className="bg-amber-600 text-white hover:bg-amber-700">
+                  Store Over-delivery
+                </Button>
+              </div>
+            </div>
+          )}
+
           <div className="rounded-lg border border-border/50 overflow-x-auto">
             <Table>
               <TableHeader>
@@ -483,7 +616,7 @@ export function IncomingDeliveryDetailTable({
                 ) : (
                   (allocationsByLineId[expandedLineId] ?? []).map(allocation => (
                     <TableRow key={allocation.id} className="border-border/40">
-                      <TableCell className="text-sm text-muted-foreground">{allocation.materialDemandSourceLabel}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">{allocationLabel(allocation)}</TableCell>
                       <TableCell className="text-sm text-muted-foreground">{allocation.allocatedQty}</TableCell>
                       <TableCell className="text-sm">
                         {allocation.fulfilled ? (

@@ -77,7 +77,7 @@ export function generatePurchaseNumber() {
   return `PO${year}${month}${day}${random}`
 }
 
-export function generateIncomingDeliveryNumber() {
+export function generateIncomingDeliveryNumber(prefix = 'DEL') {
   const now = new Date()
 
   const year = now.getFullYear().toString() // 2026
@@ -88,7 +88,7 @@ export function generateIncomingDeliveryNumber() {
     .toString()
     .padStart(2, '0') // two random digits
 
-  return `DEL${year}${month}${day}${random}`
+  return `${prefix}${year}${month}${day}${random}`
 }
 
 export function generateTrainingNumber() {

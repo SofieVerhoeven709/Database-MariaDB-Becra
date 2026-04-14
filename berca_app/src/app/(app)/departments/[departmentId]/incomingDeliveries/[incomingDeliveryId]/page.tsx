@@ -15,6 +15,7 @@ import {mapIncomingDeliveryLine, mapIncomingDeliveryLineAllocation, mapMaterialD
 import {IncomingDeliveryDetailTable} from '@/components/custom/incomingDeliveryDetailTable'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {getWarehousePlaces} from '@/dal/warehousePlace'
 
 interface PageProps {
   params: Promise<{departmentId: string; incomingDeliveryId: string}>
@@ -29,11 +30,12 @@ function formatDate(iso: string | Date | null | undefined) {
 export default async function IncomingDeliveryDetailPage({params}: PageProps) {
   const {departmentId, incomingDeliveryId} = await params
 
-  const [department, incomingDelivery, materialOptionsRaw, sourceOptionsRaw, profile] = await Promise.all([
+  const [department, incomingDelivery, materialOptionsRaw, sourceOptionsRaw, warehousePlacesRaw, profile] = await Promise.all([
     getDepartmentById(departmentId),
     getIncomingDeliveryById(incomingDeliveryId),
     getIncomingDeliveryMaterialOptions(),
     getMaterialDemandSourceOptions(),
+    getWarehousePlaces(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
@@ -62,6 +64,12 @@ export default async function IncomingDeliveryDetailPage({params}: PageProps) {
   }))
 
   const sourceOptions = sourceOptionsRaw.map(mapMaterialDemandSourceOption)
+  const warehousePlaceOptions = warehousePlacesRaw.map(place => ({
+    id: place.id,
+    label: [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+      .filter(Boolean)
+      .join(' - ') || place.id,
+  }))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -104,6 +112,7 @@ export default async function IncomingDeliveryDetailPage({params}: PageProps) {
           materialOptions={materialOptions}
           purchaseDetailOptions={purchaseDetailOptions}
           materialDemandSourceOptions={sourceOptions}
+          warehousePlaceOptions={warehousePlaceOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
         />

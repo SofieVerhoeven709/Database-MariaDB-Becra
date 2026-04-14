@@ -398,24 +398,100 @@ export async function syncMaterialDemandFromIncomingAllocations(
   employeeId: string,
   tx?: Prisma.TransactionClient,
 ) {
+  const syncSourceOriginFeedback = async (
+    db: Prisma.TransactionClient | typeof prismaClient,
+    params: {
+      sourceTypeName: string
+      sourceReferenceId: string | null
+      reservedQty: number
+      fulfilled: boolean
+      hasNotCorrect: boolean
+      notCorrectReason: string | null
+      now: Date
+    },
+  ) => {
+    if (!params.sourceReferenceId) return
+
+    const sourceType = params.sourceTypeName.toLowerCase()
+
+    if (sourceType === 'inventoryorder') {
+      await db.inventoryOrder.updateMany({
+        where: {id: params.sourceReferenceId},
+        data: {
+          snapshotTakenAt: params.now,
+          notCorrect: params.hasNotCorrect,
+          notCorrectReason: params.hasNotCorrect ? params.notCorrectReason : null,
+        },
+      })
+      return
+    }
+
+    const updateBomExecutionByProjectStructureId = async (projectBOMStructureId: string) => {
+      const currentExecution = await db.bOMExecution.findUnique({
+        where: {projectBOMStructureId},
+        select: {completedDate: true},
+      })
+
+      if (!currentExecution) return
+
+      await db.bOMExecution.update({
+        where: {projectBOMStructureId},
+        data: {
+          purchaseReceivedQuantity: params.reservedQty,
+          notCorrect: params.hasNotCorrect,
+          notCorrectReason: params.hasNotCorrect ? params.notCorrectReason : null,
+          completedDate: params.fulfilled ? (currentExecution.completedDate ?? params.now) : null,
+        },
+      })
+    }
+
+    if (sourceType === 'projectbomstructure') {
+      await updateBomExecutionByProjectStructureId(params.sourceReferenceId)
+      return
+    }
+
+    if (sourceType === 'purchasebomstructure') {
+      const purchaseStructure = await db.purchaseBOMStructure.findUnique({
+        where: {id: params.sourceReferenceId},
+        select: {projectBOMStructureId: true},
+      })
+      if (!purchaseStructure) return
+      await updateBomExecutionByProjectStructureId(purchaseStructure.projectBOMStructureId)
+    }
+  }
+
   const apply = async (db: Prisma.TransactionClient | typeof prismaClient) => {
     const demand = await db.materialDemand.findUnique({
       where: {id: materialDemandId},
       select: {
         id: true,
         totalRequiredQty: true,
+        reservedQty: true,
         MaterialDemandSource: {
           select: {
             id: true,
+            sourceReferenceId: true,
             requiredQty: true,
             reservedQty: true,
             fulfilled: true,
             fulfilledAt: true,
             fulfilledBy: true,
+            MaterialDemandSourceType: {
+              select: {
+                name: true,
+              },
+            },
             IncomingDeliveryLineAllocation: {
               where: {deleted: false},
               select: {
                 allocatedQty: true,
+                IncomingDeliveryLine: {
+                  select: {
+                    deleted: true,
+                    notCorrect: true,
+                    notCorrectReason: true,
+                  },
+                },
               },
             },
           },
@@ -430,14 +506,21 @@ export async function syncMaterialDemandFromIncomingAllocations(
 
     const now = new Date()
     let nextTotalRequiredQty = 0
+    let nextDemandReservedQty = 0
 
     for (const source of demand.MaterialDemandSource) {
-      const allocatedQty = source.IncomingDeliveryLineAllocation.reduce((sum, allocation) => sum + allocation.allocatedQty, 0)
-      const nextReservedQty = Math.min(source.requiredQty, allocatedQty)
-      const nextOutstandingQty = Math.max(source.requiredQty - nextReservedQty, 0)
+      const activeAllocations = source.IncomingDeliveryLineAllocation.filter(allocation => !allocation.IncomingDeliveryLine?.deleted)
+      const allocatedQty = activeAllocations.reduce((sum, allocation) => sum + allocation.allocatedQty, 0)
+      const matchedQty = Math.min(source.requiredQty, allocatedQty)
+      const nextOutstandingQty = Math.max(source.requiredQty - matchedQty, 0)
       const nextFulfilled = nextOutstandingQty === 0
+      const nextReservedQty = nextFulfilled ? 0 : matchedQty
+      const notCorrectAllocation = activeAllocations.find(allocation => allocation.IncomingDeliveryLine?.notCorrect)
+      const hasNotCorrect = Boolean(notCorrectAllocation)
+      const notCorrectReason = notCorrectAllocation?.IncomingDeliveryLine?.notCorrectReason?.trim() || null
 
       nextTotalRequiredQty += nextOutstandingQty
+      nextDemandReservedQty += nextReservedQty
 
       const updates: {
         reservedQty?: number
@@ -472,12 +555,25 @@ export async function syncMaterialDemandFromIncomingAllocations(
           data: updates,
         })
       }
+
+      await syncSourceOriginFeedback(db, {
+        sourceTypeName: source.MaterialDemandSourceType.name,
+        sourceReferenceId: source.sourceReferenceId,
+        reservedQty: nextReservedQty,
+        fulfilled: nextFulfilled,
+        hasNotCorrect,
+        notCorrectReason,
+        now,
+      })
     }
 
-    if (demand.totalRequiredQty !== nextTotalRequiredQty) {
+    if (demand.totalRequiredQty !== nextTotalRequiredQty || (demand.reservedQty ?? 0) !== nextDemandReservedQty) {
       await db.materialDemand.update({
         where: {id: demand.id},
-        data: {totalRequiredQty: nextTotalRequiredQty},
+        data: {
+          totalRequiredQty: nextTotalRequiredQty,
+          reservedQty: nextDemandReservedQty,
+        },
       })
     }
     return {materialDemandId: demand.id, totalRequiredQty: nextTotalRequiredQty}
@@ -577,11 +673,11 @@ export async function createMaterialDemandSourcesForProjectBOMStructures(
 }
 
 /**
- * Update MaterialDemandSource reserved quantities when QuoteSupplierLine is selected.
- * Tracks the allocation of quantity from demand source to chosen supplier.
+ * Update MaterialDemandSource reserved quantities for a material demand source reference.
+ * Tracks the allocation of quantity from the demand source to the chosen supplier.
  *
- * @param quoteSupplierLineId - ID of selected QuoteSupplierLine
  * @param materialDemandId - ID of MaterialDemand
+ * @param sourceReferenceId - Source reference ID to update
  * @param reservedQty - Quantity being reserved at supplier level
  */
 export async function updateMaterialDemandSourceReservedQty(

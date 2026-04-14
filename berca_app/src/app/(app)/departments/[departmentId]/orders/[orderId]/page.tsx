@@ -29,6 +29,7 @@ const STATUS_COLOR: Record<string, string> = {
   DRAFT: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/30',
   ORDERED: 'bg-blue-500/10 text-blue-600 border-blue-500/30',
   PARTIAL_RECEIVED: 'bg-cyan-500/10 text-cyan-600 border-cyan-500/30',
+  RECEIVED: 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30',
   CLOSED: 'bg-green-500/10 text-green-600 border-green-500/30',
   CANCELLED: 'bg-red-500/10 text-red-600 border-red-500/30',
 }
@@ -48,9 +49,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
   if (!department) return <p>Department not found</p>
   if (!purchase) notFound()
 
-  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-
+  const {currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const details: MappedPurchaseDetail[] = detailsRaw.map(d => mapPurchaseDetail(d))
 
   const materialOptions = materialsRaw
@@ -165,8 +164,6 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
           materialOptions={materialOptions}
           materialDemandOptions={materialDemandOptions}
           quoteLineOptions={quoteLineOptions}
-          isAdmin={isAdmin}
-          purchaseStatus={normalizedStatus}
           currentUserLevel={currentUserLevel}
         />
       </div>

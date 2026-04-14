@@ -2,6 +2,7 @@
 import {revalidatePath} from 'next/cache'
 import {prismaClient} from '@/dal/prismaClient'
 import {Prisma} from '@/generated/prisma/client'
+import {syncPurchaseBOMStructuresForOrderedApprovedPurchase} from '@/dal/purchases'
 import {
   createPurchaseSchema,
   updatePurchaseSchema,
@@ -15,7 +16,13 @@ import {generateIncomingDeliveryNumber, generatePurchaseNumber} from '@/lib/util
 
 const REVALIDATE_PATH = '/departments/purchasing/orders'
 const INCOMING_REVALIDATE_PATH = '/departments/purchasing/incomingDeliveries'
-const PURCHASE_STATUSES = new Set(['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'CLOSED', 'CANCELLED'])
+const PURCHASE_STATUSES = new Set(['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED'])
+const PURCHASE_DETAIL_PERMISSION_LEVELS = {
+  edit: 40,
+  create: 60,
+  softDelete: 80,
+  hardDelete: 100,
+} as const
 
 function getHighestRoleLevel(profile: {RoleLevelEmployee: Array<{RoleLevel: {SubRole: {level: number}}}>}): number {
   return Math.max(0, ...profile.RoleLevelEmployee.map(row => row.RoleLevel.SubRole.level))
@@ -34,14 +41,21 @@ function normalizePurchaseStatus(status: string | null | undefined): string {
   return PURCHASE_STATUSES.has(status) ? status : 'ORDERED'
 }
 
-async function assertCanEditPurchase(purchaseId: string, profile: {RoleLevelEmployee: Array<{RoleLevel: {SubRole: {level: number}}}>}) {
+async function assertCanEditPurchase(purchaseId: string) {
   const purchase = await prismaClient.purchase.findUnique({
     where: {id: purchaseId},
     select: {status: true},
   })
   if (!purchase) throw new Error('Purchase not found.')
-  if (isOrderedNotSentStatus(purchase.status) && !isManagerLevel(profile)) {
-    throw new Error('Only managers can edit an ordered purchase.')
+}
+
+function assertPurchaseDetailPermission(
+  profile: {RoleLevelEmployee: Array<{RoleLevel: {SubRole: {level: number}}}>},
+  minLevel: number,
+  message: string,
+) {
+  if (getHighestRoleLevel(profile) < minLevel) {
+    throw new Error(message)
   }
 }
 
@@ -175,15 +189,18 @@ export const createPurchaseAction = protectedServerFunction({
     let purchaseNumber = d.purchaseNumber || generatePurchaseNumber()
     let attempts = 0
     let created = false
+    let createdPurchaseId: string | null = null
+    let createdStatus = 'DRAFT'
 
     while (attempts < 5) {
       try {
-        await prismaClient.purchase.create({
+        const nextStatus = normalizePurchaseStatus(d.status)
+        const createdPurchase = await prismaClient.purchase.create({
           data: {
             id: crypto.randomUUID(),
             purchaseNumber,
             purchaseDate: toDate(d.purchaseDate) ?? new Date(),
-            status: normalizePurchaseStatus(d.status),
+            status: nextStatus,
             companyId: d.companyId,
             quoteSupplierId: d.quoteSupplierId ?? null,
             paymentConditionId: d.paymentConditionId ?? null,
@@ -192,7 +209,10 @@ export const createPurchaseAction = protectedServerFunction({
             additionalInfo: d.additionalInfo ?? null,
             createdBy: profile.id,
           },
+          select: {id: true},
         })
+        createdPurchaseId = createdPurchase.id
+        createdStatus = nextStatus
         created = true
         break
       } catch (err: unknown) {
@@ -208,6 +228,10 @@ export const createPurchaseAction = protectedServerFunction({
 
     if (!created) {
       throw new Error('Failed to generate a unique purchase number after 5 attempts')
+    }
+
+    if (createdPurchaseId && createdStatus === 'ORDERED') {
+      await syncPurchaseBOMStructuresForOrderedApprovedPurchase(createdPurchaseId)
     }
 
     revalidatePath(REVALIDATE_PATH)
@@ -256,6 +280,11 @@ export const updatePurchaseAction = protectedServerFunction({
     })
 
     logger.info(`Purchase updated: ${id}`)
+
+    if (nextStatus === 'ORDERED') {
+      await syncPurchaseBOMStructuresForOrderedApprovedPurchase(id)
+    }
+
     revalidateDetail(id)
     if (autoIncomingDeliveryId) {
       logger.info(`Auto-created or updated draft incoming delivery for purchase: ${id}`)
@@ -305,7 +334,12 @@ export const createPurchaseDetailAction = protectedServerFunction({
   schema: createPurchaseDetailSchema,
   functionName: 'Create purchase detail action',
   serverFn: async ({data, profile, logger}) => {
-    await assertCanEditPurchase(data.purchaseId, profile)
+    assertPurchaseDetailPermission(
+      profile,
+      PURCHASE_DETAIL_PERMISSION_LEVELS.create,
+      'You do not have permission to create purchase detail lines.',
+    )
+    await assertCanEditPurchase(data.purchaseId)
     logger.info(`Creating purchase detail for purchase: ${data.purchaseId}`)
     await prismaClient.purchaseDetail.create({
       data: {
@@ -332,7 +366,12 @@ export const updatePurchaseDetailAction = protectedServerFunction({
   functionName: 'Update purchase detail action',
   serverFn: async ({data, profile, logger}) => {
     const {id, purchaseId, ...rest} = data
-    await assertCanEditPurchase(purchaseId, profile)
+    assertPurchaseDetailPermission(
+      profile,
+      PURCHASE_DETAIL_PERMISSION_LEVELS.edit,
+      'You do not have permission to edit purchase detail lines.',
+    )
+    await assertCanEditPurchase(purchaseId)
     await prismaClient.purchaseDetail.update({
       where: {id},
       data: {
@@ -351,7 +390,12 @@ export const softDeletePurchaseDetailAction = protectedServerFunction({
   functionName: 'Soft delete purchase detail action',
   serverFn: async ({data, profile, logger}) => {
     const {id, purchaseId} = data as {id: string; purchaseId: string}
-    await assertCanEditPurchase(purchaseId, profile)
+    assertPurchaseDetailPermission(
+      profile,
+      PURCHASE_DETAIL_PERMISSION_LEVELS.softDelete,
+      'You do not have permission to soft delete purchase detail lines.',
+    )
+    await assertCanEditPurchase(purchaseId)
     await prismaClient.purchaseDetail.update({
       where: {id},
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
@@ -366,7 +410,12 @@ export const hardDeletePurchaseDetailAction = protectedServerFunction({
   functionName: 'Hard delete purchase detail action',
   serverFn: async ({data, profile, logger}) => {
     const {id, purchaseId} = data as {id: string; purchaseId: string}
-    await assertCanEditPurchase(purchaseId, profile)
+    assertPurchaseDetailPermission(
+      profile,
+      PURCHASE_DETAIL_PERMISSION_LEVELS.hardDelete,
+      'You do not have permission to hard delete purchase detail lines.',
+    )
+    await assertCanEditPurchase(purchaseId)
     await prismaClient.purchaseDetail.delete({where: {id}})
     logger.info(`Purchase detail hard deleted: ${id}`)
     revalidateDetail(purchaseId)

@@ -33,11 +33,19 @@ export async function getIncomingDeliveryById(id: string) {
             orderBy: {createdAt: 'desc'},
             include: {
               MaterialDemandSource: {
-                include: {
+                select: {
+                  id: true,
+                  sourceReferenceId: true,
+                  fulfilled: true,
+                  fulfilledAt: true,
+                  fulfilledBy: true,
+                  requiredQty: true,
+                  reservedQty: true,
                   MaterialDemandSourceType: {select: {name: true}},
                   MaterialDemand: {
                     select: {
                       id: true,
+                      materialId: true,
                       Material: {select: {id: true, beNumber: true, shortDescription: true, name: true}},
                     },
                   },
@@ -87,11 +95,15 @@ export async function getIncomingDeliveryPurchaseDetailOptions(purchaseId: strin
 
 export async function getMaterialDemandSourceOptions() {
   return prismaClient.materialDemandSource.findMany({
+    where: {fulfilled: false},
     orderBy: {createdAt: 'desc'},
     select: {
       id: true,
       requiredQty: true,
       reservedQty: true,
+      fulfilled: true,
+      fulfilledAt: true,
+      fulfilledBy: true,
       MaterialDemandSourceType: {select: {name: true}},
       MaterialDemand: {
         select: {

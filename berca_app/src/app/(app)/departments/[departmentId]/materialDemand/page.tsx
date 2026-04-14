@@ -10,17 +10,17 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {getSupplierCompanies} from '@/dal/companies'
-import {Checkbox} from '@/components/ui/checkbox'
 import Link from 'next/link'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
-  searchParams: {[key: string]: string | string[] | undefined}
+  searchParams: Promise<{[key: string]: string | string[] | undefined}>
 }
 
 export default async function MaterialDemandPage({params, searchParams}: PageProps) {
   const {departmentId} = await params
-  const showFulfilled = searchParams?.showFulfilled === 'true'
+  const resolvedSearchParams = await searchParams
+  const showFulfilled = resolvedSearchParams?.showFulfilled === 'true'
 
   const [department, demandsFromDAL, materialsRaw, supplierCompaniesRaw, profile] = await Promise.all([
     getDepartmentById(departmentId),
@@ -67,14 +67,11 @@ export default async function MaterialDemandPage({params, searchParams}: PagePro
             <span className="rounded-full border border-border/70 px-3 py-1 text-xs uppercase tracking-wide">
               Role: {currentUserRole}
             </span>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="showFulfilled" asChild>
-                <Link href={`?showFulfilled=${!showFulfilled}`} />
-              </Checkbox>
-              <label htmlFor="showFulfilled" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                Show Fulfilled
-              </label>
-            </div>
+            <Link
+              href={`?showFulfilled=${showFulfilled ? 'false' : 'true'}`}
+              className="rounded-full border border-border/70 px-3 py-1 text-xs uppercase tracking-wide text-foreground hover:bg-secondary/70">
+              {showFulfilled ? 'Hide Fulfilled Sources' : 'Show Fulfilled Sources'}
+            </Link>
           </div>
         </header>
 

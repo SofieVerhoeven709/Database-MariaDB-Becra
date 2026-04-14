@@ -139,7 +139,7 @@ export function mapMaterialDemand(
     link => link.Company.supplier && !link.Company.deleted,
   ).map(link => link.companyId)
 
-  const quoteOptions = row.QuoteSupplierLine.map(line => {
+  const allQuoteOptions = row.QuoteSupplierLine.map(line => {
     const isCurrentlyValid = isDateStillValid(line.QuoteSupplier.validUntil)
     const isEligibleForBest =
       !line.QuoteSupplier.deleted &&
@@ -183,6 +183,9 @@ export function mapMaterialDemand(
     }
   })
 
+  // Once demand is fully fulfilled, quote options are considered completed for this page.
+  const hideQuotesForFulfilledDemand = row.totalRequiredQty <= 0
+  const quoteOptions = hideQuotesForFulfilledDemand ? [] : allQuoteOptions
   const bestOption = quoteOptions.find(option => option.isEligibleForBest) ?? null
 
   return {

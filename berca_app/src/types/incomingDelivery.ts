@@ -49,6 +49,8 @@ export interface MappedIncomingDeliveryLineAllocation {
   incomingDeliveryLineId: string
   materialDemandSourceId: string
   materialDemandSourceLabel: string
+  sourceTypeName: string
+  sourceReferenceId: string | null
   allocatedQty: number
   createdAt: string
   createdBy: string
@@ -59,6 +61,11 @@ export interface MappedIncomingDeliveryLineAllocation {
   fulfilled: boolean
   fulfilledAt: string | null
   fulfilledBy: string | null
+}
+
+export interface WarehousePlaceOption {
+  id: string
+  label: string
 }
 
 export interface IncomingDeliveryOption {
@@ -72,5 +79,8 @@ export interface MaterialDemandSourceOption {
   materialId: string
   requiredQty: number
   reservedQty: number
+  fulfilled: boolean
+  fulfilledAt: string | null
+  fulfilledBy: string | null
 }
 

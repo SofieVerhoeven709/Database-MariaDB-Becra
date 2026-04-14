@@ -1,6 +1,6 @@
 import {notFound} from 'next/navigation'
 import {getCompanies, getCompanyDetail} from '@/dal/companies'
-import {getContactOptions} from '@/dal/contacts'
+import {getCompanyContactOptions} from '@/dal/contacts'
 import {getFunctions} from '@/dal/functions'
 import {getDepartmentExterns} from '@/dal/departmentExterns'
 import {getTitles} from '@/dal/titles'
@@ -37,7 +37,7 @@ export default async function CompanyDetailPage({params}: PageProps) {
     getCompanies(),
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
-    getContactOptions(),
+    getCompanyContactOptions(companyId),
     getFunctions(),
     getDepartmentExterns(),
     getTitles(),

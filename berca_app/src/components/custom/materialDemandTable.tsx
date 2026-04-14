@@ -13,6 +13,7 @@ import {Badge} from '@/components/ui/badge'
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog'
 import {Label} from '@/components/ui/label'
 import type {MappedMaterialDemand, MaterialDemandMaterialOption} from '@/types/materialDemand'
+import {generateIncomingDeliveryNumber} from '@/lib/utils'
 import {
   createMaterialDemandAction,
   updateMaterialDemandAction,
@@ -109,13 +110,8 @@ function materialLabel(m: MaterialDemandMaterialOption) {
   return [m.beNumber, m.shortDescription ?? m.name].filter(Boolean).join(' — ') || m.id
 }
 
-function generateLowStockRequestNumber(entry: MappedMaterialDemand) {
-  const suffix = new Date()
-    .toISOString()
-    .replace(/[-:.TZ]/g, '')
-    .slice(0, 12)
-  const materialToken = (entry.materialBeNumber ?? entry.materialId.slice(0, 6)).replace(/\s+/g, '')
-  return `REQ-${materialToken}-${suffix}`
+function generateLowStockRequestNumber() {
+  return generateIncomingDeliveryNumber('OR')
 }
 
 function getQuoteState(entry: MappedMaterialDemand): {label: string; className: string} {
@@ -440,7 +436,7 @@ export function MaterialDemandTable({
     try {
       const result = await createInventoryOrderAction({
         materialId: entry.materialId,
-        orderNumber: generateLowStockRequestNumber(entry),
+        orderNumber: generateLowStockRequestNumber(),
         requestedQty,
         orderDate: new Date().toISOString().slice(0, 10),
         shortDescription: `Low-stock request for ${entry.materialBeNumber ?? entry.materialId}`,

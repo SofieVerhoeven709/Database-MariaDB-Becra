@@ -52,6 +52,12 @@ export const incomingDeliveryLineAllocationSchema = z.object({
 
 export const createIncomingDeliveryLineAllocationSchema = incomingDeliveryLineAllocationSchema.omit({id: true})
 
+export const createIncomingDeliveryOverDeliveryAllocationSchema = z.object({
+  incomingDeliveryLineId: z.string(),
+  warehousePlaceId: z.string(),
+  allocatedQty: z.coerce.number().int().min(1),
+})
+
 export const updateIncomingDeliveryLineAllocationSchema = incomingDeliveryLineAllocationSchema
 
 export const incomingDeliveryLineAllocationIdSchema = z.object({

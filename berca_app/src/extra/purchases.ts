@@ -10,7 +10,7 @@ type PurchaseWithRelations = Prisma.PurchaseGetPayload<{
   }
 }>
 
-const PURCHASE_STATUSES = new Set(['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'CLOSED', 'CANCELLED'])
+const PURCHASE_STATUSES = new Set(['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED'])
 
 export function normalizePurchaseStatus(status: string | null | undefined): string {
   if (!status) return 'DRAFT'

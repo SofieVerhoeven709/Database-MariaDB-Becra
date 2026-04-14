@@ -9,12 +9,18 @@ import {
   updateIncomingDeliveryLineSchema,
   incomingDeliveryLineIdSchema,
   createIncomingDeliveryLineAllocationSchema,
+  createIncomingDeliveryOverDeliveryAllocationSchema,
   incomingDeliveryLineAllocationIdSchema,
 } from '@/schemas/incomingDeliverySchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {INCOMING_PERMISSION_LEVELS} from '@/constants'
 import {generateIncomingDeliveryNumber} from '@/lib/utils'
-import {syncMaterialDemandFromIncomingAllocations} from '@/dal/materialDemands'
+import {
+  ensureMaterialDemandForMaterial,
+  ensureMaterialDemandSourceType,
+  syncMaterialDemandFromIncomingAllocations,
+} from '@/dal/materialDemands'
+import {syncPurchaseStatusFromFulfilledSources} from '@/dal/purchases'
 
 const REVALIDATE_BASE = '/departments'
 
@@ -50,6 +56,22 @@ function revalidateIncomingDeliveryRoutes(incomingDeliveryId?: string) {
   revalidatePath('/departments/purchasing/incomingDeliveries')
   if (incomingDeliveryId) {
     revalidatePath(`/departments/purchasing/incomingDeliveries/${incomingDeliveryId}`)
+  }
+}
+
+async function syncPurchaseStatusForIncomingDelivery(incomingDeliveryId: string | null | undefined) {
+  if (!incomingDeliveryId) return
+
+  const incoming = await prismaClient.incomingDelivery.findUnique({
+    where: {id: incomingDeliveryId},
+    select: {purchaseId: true},
+  })
+
+  if (!incoming?.purchaseId) return
+  const result = await syncPurchaseStatusFromFulfilledSources(incoming.purchaseId)
+  if (result.updated) {
+    revalidatePath('/departments/purchasing/orders')
+    revalidatePath(`/departments/purchasing/orders/${incoming.purchaseId}`)
   }
 }
 
@@ -265,6 +287,30 @@ export const updateIncomingDeliveryLineAction = protectedServerFunction({
   serverFn: async ({data: {id, incomingDeliveryId, ...data}, profile, logger}) => {
     assertMinRoleLevel(profile, INCOMING_PERMISSION_LEVELS.edit, 'You do not have permission to edit incoming delivery lines.')
 
+    const allocationSourceIds = await prismaClient.incomingDeliveryLineAllocation.findMany({
+      where: {incomingDeliveryLineId: id, deleted: false},
+      select: {
+        materialDemandSourceId: true,
+        allocatedQty: true,
+        MaterialDemandSource: {
+          select: {
+            MaterialDemandSourceType: {select: {name: true}},
+          },
+        },
+      },
+    })
+
+    const assignedOverDeliveryQty = allocationSourceIds.reduce((sum, allocation) => {
+      if ((allocation.MaterialDemandSource.MaterialDemandSourceType.name ?? '').toLowerCase() !== 'warehouseplace') return sum
+      return sum + allocation.allocatedQty
+    }, 0)
+    const nextOverDeliveredQty = Math.max((data.deliveredQty ?? 0) - (data.orderedQty ?? 0), 0)
+    if (assignedOverDeliveryQty > nextOverDeliveredQty) {
+      throw new Error(
+        `Over-delivery assigned quantity (${assignedOverDeliveryQty}) exceeds remaining over-delivered quantity (${nextOverDeliveredQty}). Remove warehouse assignments first.`,
+      )
+    }
+
     await prismaClient.incomingDeliveryLine.update({
       where: {id},
       data: {
@@ -282,6 +328,21 @@ export const updateIncomingDeliveryLineAction = protectedServerFunction({
       },
     })
 
+    const materialDemandIds = new Set<string>()
+    for (const allocation of allocationSourceIds) {
+      const source = await prismaClient.materialDemandSource.findUnique({
+        where: {id: allocation.materialDemandSourceId},
+        select: {materialDemandId: true},
+      })
+      if (source) materialDemandIds.add(source.materialDemandId)
+    }
+
+    for (const materialDemandId of materialDemandIds) {
+      await syncMaterialDemandFromIncomingAllocations(materialDemandId, profile.id)
+    }
+
+    await syncPurchaseStatusForIncomingDelivery(incomingDeliveryId)
+
     logger.info(`Incoming delivery line updated: ${id}`)
     revalidateIncomingDeliveryRoutes(incomingDeliveryId)
   },
@@ -293,10 +354,70 @@ export const softDeleteIncomingDeliveryLineAction = protectedServerFunction({
   serverFn: async ({data: {id, incomingDeliveryId}, profile, logger}) => {
     assertMinRoleLevel(profile, INCOMING_PERMISSION_LEVELS.delete, 'You do not have permission to delete incoming delivery lines.')
 
-    await prismaClient.incomingDeliveryLine.update({
-      where: {id},
-      data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
+    const allocations = await prismaClient.incomingDeliveryLineAllocation.findMany({
+      where: {incomingDeliveryLineId: id, deleted: false},
+      select: {
+        id: true,
+        allocatedQty: true,
+        materialDemandSourceId: true,
+        MaterialDemandSource: {
+          select: {
+            sourceReferenceId: true,
+            MaterialDemandSourceType: {select: {name: true}},
+          },
+        },
+      },
     })
+
+    await prismaClient.$transaction(async tx => {
+      await tx.incomingDeliveryLine.update({
+        where: {id},
+        data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
+      })
+
+      await tx.incomingDeliveryLineAllocation.updateMany({
+        where: {incomingDeliveryLineId: id, deleted: false},
+        data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
+      })
+    })
+
+    const materialDemandIds = new Set<string>()
+    const warehouseAdjustments = new Map<string, number>()
+    for (const allocation of allocations) {
+      const source = await prismaClient.materialDemandSource.findUnique({
+        where: {id: allocation.materialDemandSourceId},
+        select: {materialDemandId: true},
+      })
+      if (source) materialDemandIds.add(source.materialDemandId)
+
+      if ((allocation.MaterialDemandSource.MaterialDemandSourceType.name ?? '').toLowerCase() === 'warehouseplace') {
+        const warehousePlaceId = allocation.MaterialDemandSource.sourceReferenceId
+        if (warehousePlaceId) {
+          warehouseAdjustments.set(
+            warehousePlaceId,
+            (warehouseAdjustments.get(warehousePlaceId) ?? 0) + allocation.allocatedQty,
+          )
+        }
+      }
+    }
+
+    for (const [warehousePlaceId, qtyToRollback] of warehouseAdjustments.entries()) {
+      const place = await prismaClient.warehousePlace.findUnique({
+        where: {id: warehousePlaceId},
+        select: {quantityInStock: true},
+      })
+      if (!place) continue
+      await prismaClient.warehousePlace.update({
+        where: {id: warehousePlaceId},
+        data: {quantityInStock: Math.max(place.quantityInStock - qtyToRollback, 0)},
+      })
+    }
+
+    for (const materialDemandId of materialDemandIds) {
+      await syncMaterialDemandFromIncomingAllocations(materialDemandId, profile.id)
+    }
+
+    await syncPurchaseStatusForIncomingDelivery(incomingDeliveryId)
 
     logger.info(`Incoming delivery line soft deleted: ${id}`)
     revalidateIncomingDeliveryRoutes(incomingDeliveryId)
@@ -335,8 +456,128 @@ export const createIncomingDeliveryLineAllocationAction = protectedServerFunctio
       await syncMaterialDemandFromIncomingAllocations(allocation.MaterialDemandSource.materialDemandId, profile.id)
     }
 
+    await syncPurchaseStatusForIncomingDelivery(line?.incomingDeliveryId)
+
     logger.info(`Incoming delivery line allocation created for line ${data.incomingDeliveryLineId}`)
     revalidateIncomingDeliveryRoutes(line?.incomingDeliveryId)
+  },
+})
+
+export const createIncomingDeliveryOverDeliveryAllocationAction = protectedServerFunction({
+  schema: createIncomingDeliveryOverDeliveryAllocationSchema,
+  functionName: 'Create incoming over-delivery allocation action',
+  serverFn: async ({data, profile, logger}) => {
+    assertMinRoleLevel(profile, INCOMING_PERMISSION_LEVELS.addSourceLink, 'You do not have permission to add warehouse over-delivery assignments.')
+
+    let incomingDeliveryId: string | null = null
+
+    await prismaClient.$transaction(async tx => {
+      const line = await tx.incomingDeliveryLine.findUnique({
+        where: {id: data.incomingDeliveryLineId},
+        select: {
+          id: true,
+          incomingDeliveryId: true,
+          materialId: true,
+          orderedQty: true,
+          deliveredQty: true,
+          deleted: true,
+        },
+      })
+
+      if (!line || line.deleted) {
+        throw new Error('Incoming delivery line not found.')
+      }
+
+      incomingDeliveryId = line.incomingDeliveryId
+
+      const overDeliveredQty = Math.max(line.deliveredQty - line.orderedQty, 0)
+      if (overDeliveredQty <= 0) {
+        throw new Error('No over-delivered quantity is available for warehouse assignment.')
+      }
+
+      const warehousePlace = await tx.warehousePlace.findFirst({
+        where: {id: data.warehousePlaceId, deleted: false},
+        select: {id: true, quantityInStock: true},
+      })
+      if (!warehousePlace) {
+        throw new Error('Warehouse location not found.')
+      }
+
+      const sourceTypeId = await ensureMaterialDemandSourceType(
+        'WarehousePlace',
+        profile.id,
+        'Over-delivery assigned to warehouse location',
+        tx,
+      )
+      const materialDemand = await ensureMaterialDemandForMaterial(line.materialId, tx)
+
+      let warehouseSource = await tx.materialDemandSource.findFirst({
+        where: {
+          materialDemandId: materialDemand.id,
+          sourceTypeId,
+          sourceReferenceId: data.warehousePlaceId,
+        },
+        select: {id: true},
+      })
+
+      if (!warehouseSource) {
+        warehouseSource = await tx.materialDemandSource.create({
+          data: {
+            id: crypto.randomUUID(),
+            materialDemandId: materialDemand.id,
+            sourceTypeId,
+            sourceReferenceId: data.warehousePlaceId,
+            requiredQty: 0,
+            reservedQty: 0,
+            createdAt: new Date(),
+            createdBy: profile.id,
+          },
+          select: {id: true},
+        })
+      }
+
+      const assignedQtyAggregate = await tx.incomingDeliveryLineAllocation.aggregate({
+        _sum: {allocatedQty: true},
+        where: {
+          incomingDeliveryLineId: line.id,
+          deleted: false,
+          MaterialDemandSource: {sourceTypeId},
+        },
+      })
+
+      const alreadyAssignedQty = assignedQtyAggregate._sum.allocatedQty ?? 0
+      const remainingQty = Math.max(overDeliveredQty - alreadyAssignedQty, 0)
+      if (data.allocatedQty > remainingQty) {
+        throw new Error(`Assigned quantity (${data.allocatedQty}) exceeds over-delivery remaining quantity (${remainingQty}).`)
+      }
+
+      await tx.incomingDeliveryLineAllocation.create({
+        data: {
+          id: crypto.randomUUID(),
+          incomingDeliveryLineId: line.id,
+          materialDemandSourceId: warehouseSource.id,
+          allocatedQty: data.allocatedQty,
+          createdAt: new Date(),
+          createdBy: profile.id,
+        },
+      })
+
+      await tx.warehousePlace.update({
+        where: {id: data.warehousePlaceId},
+        data: {quantityInStock: warehousePlace.quantityInStock + data.allocatedQty},
+      })
+
+      await tx.material.update({
+        where: {id: line.materialId},
+        data: {warehousePlaceId: data.warehousePlaceId},
+      })
+
+      await syncMaterialDemandFromIncomingAllocations(materialDemand.id, profile.id, tx)
+    })
+
+    logger.info(`Incoming over-delivery allocation created for line ${data.incomingDeliveryLineId}`)
+    await syncPurchaseStatusForIncomingDelivery(incomingDeliveryId)
+    revalidateIncomingDeliveryRoutes(incomingDeliveryId ?? undefined)
   },
 })
 
@@ -348,13 +589,40 @@ export const softDeleteIncomingDeliveryLineAllocationAction = protectedServerFun
 
     const allocation = await prismaClient.incomingDeliveryLineAllocation.findUnique({
       where: {id},
-      select: {materialDemandSourceId: true},
+      select: {
+        materialDemandSourceId: true,
+        allocatedQty: true,
+        MaterialDemandSource: {
+          select: {
+            sourceReferenceId: true,
+            MaterialDemandSourceType: {select: {name: true}},
+          },
+        },
+      },
     })
 
     await prismaClient.incomingDeliveryLineAllocation.update({
       where: {id},
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
     })
+
+    if (
+      allocation?.MaterialDemandSource &&
+      (allocation.MaterialDemandSource.MaterialDemandSourceType.name ?? '').toLowerCase() === 'warehouseplace' &&
+      allocation.MaterialDemandSource.sourceReferenceId
+    ) {
+      const place = await prismaClient.warehousePlace.findUnique({
+        where: {id: allocation.MaterialDemandSource.sourceReferenceId},
+        select: {quantityInStock: true},
+      })
+
+      if (place) {
+        await prismaClient.warehousePlace.update({
+          where: {id: allocation.MaterialDemandSource.sourceReferenceId},
+          data: {quantityInStock: Math.max(place.quantityInStock - allocation.allocatedQty, 0)},
+        })
+      }
+    }
 
     // Sync the material demand fulfillment status
     if (allocation?.materialDemandSourceId) {
@@ -366,6 +634,8 @@ export const softDeleteIncomingDeliveryLineAllocationAction = protectedServerFun
         await syncMaterialDemandFromIncomingAllocations(source.materialDemandId, profile.id)
       }
     }
+
+    await syncPurchaseStatusForIncomingDelivery(incomingDeliveryId)
 
     logger.info(`Incoming delivery line allocation soft deleted: ${id}`)
     revalidateIncomingDeliveryRoutes(incomingDeliveryId)

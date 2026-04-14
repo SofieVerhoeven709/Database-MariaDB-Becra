@@ -1357,11 +1357,11 @@ CREATE TABLE
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-SET FOREIGN_KEY_CHECKS = 0;
+-- SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS QuoteSupplier;
+-- DROP TABLE IF EXISTS QuoteSupplier;
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE
       IF NOT EXISTS QuoteSupplier (
@@ -1589,12 +1589,12 @@ ALTER TABLE InventoryOrder
 ALTER TABLE InventoryOrder
     DROP COLUMN IF EXISTS inventoryId;
 
-SET FOREIGN_KEY_CHECKS = 0;
+-- SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS PurchaseDetail;
-DROP TABLE IF EXISTS Purchase;
+-- DROP TABLE IF EXISTS PurchaseDetail;
+-- DROP TABLE IF EXISTS Purchase;
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE
       IF NOT EXISTS Purchase (
@@ -1748,3 +1748,33 @@ ALTER TABLE InventoryOrder
     ADD COLUMN IF NOT EXISTS notCorrect BOOLEAN NOT NULL DEFAULT 0,
     ADD COLUMN IF NOT EXISTS notCorrectReason TEXT NULL,
     ADD COLUMN IF NOT EXISTS snapshotTakenAt DATETIME NULL;
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS MaterialDemandSource;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+CREATE TABLE
+      IF NOT EXISTS MaterialDemandSource (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            materialDemandId CHAR(36) NOT NULL,
+            sourceTypeId CHAR(36) NOT NULL,
+            sourceReferenceId CHAR(36),
+            requiredQty INT NOT NULL,
+            reservedQty INT DEFAULT 0,
+            fulfilled BOOLEAN NOT NULL DEFAULT 0,
+            fulfilledAt DATETIME,
+            fulfilledBy CHAR(36),
+            createdAt DATETIME NOT NULL,
+            createdBy CHAR(36) NOT NULL,
+            FOREIGN KEY (materialDemandId) REFERENCES MaterialDemand (id) ON DELETE CASCADE,
+            FOREIGN KEY (sourceTypeId) REFERENCES MaterialDemandSourceType (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (fulfilledBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            INDEX (materialDemandId),
+            INDEX (sourceTypeId),
+            INDEX (createdBy),
+            INDEX (fulfilledBy)
+      ) ENGINE = InnoDB;

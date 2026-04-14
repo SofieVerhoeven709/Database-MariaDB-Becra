@@ -17,12 +17,7 @@ export type ProjectDetailData = Prisma.ProjectGetPayload<{
         Employee: true
       }
     }
-    Purchase: {
-      include: {
-        Company: true
-        Employee: true
-      }
-    }
+    ProjectBOM: true
     MaterialSerialTrack: {
       include: {
         Company: true

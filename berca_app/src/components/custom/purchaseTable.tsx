@@ -10,6 +10,7 @@ import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {PurchaseFormDialog, type PurchaseOption} from '@/components/custom/purchaseFormDialog'
+import {normalizePurchaseStatus} from '@/extra/purchases'
 import type {MappedPurchase} from '@/types/purchase'
 import {
   createPurchaseAction,
@@ -18,9 +19,14 @@ import {
   hardDeletePurchaseAction,
 } from '@/serverFunctions/purchases'
 
-type SortField = 'orderNumber' | 'purchaseDate' | 'companyName' | 'project' | 'status' | 'createdBy'
+type SortField = 'purchaseNumber' | 'purchaseDate' | 'companyName' | 'quote' | 'status' | 'createdBy'
 type SortDir = 'asc' | 'desc'
 type StatusFilter = string
+
+function isOrderedNotSentStatus(status: string | null | undefined): boolean {
+  const normalized = normalizePurchaseStatus(status)
+  return normalized === 'ORDERED'
+}
 
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '-'
@@ -39,7 +45,8 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
 interface PurchaseTableProps {
   initialPurchases: MappedPurchase[]
   companies: PurchaseOption[]
-  projects: PurchaseOption[]
+  quoteSuppliers: PurchaseOption[]
+  paymentConditions: PurchaseOption[]
   currentUserRole: string
   currentUserLevel: number
   departmentId: string
@@ -51,13 +58,15 @@ const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 export function PurchaseTable({
   initialPurchases,
   companies,
-  projects,
+  quoteSuppliers,
+  paymentConditions,
   currentUserRole,
   currentUserLevel,
   departmentId,
 }: PurchaseTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canManageOrderedPurchases = currentUserLevel >= 80
 
   const statusOptions = useMemo(() => {
     const statuses = new Set<string>()
@@ -80,13 +89,12 @@ export function PurchaseTable({
       if (!search) return true
       const q = search.toLowerCase()
       return (
-        (p.orderNumber ?? '').toLowerCase().includes(q) ||
+        (p.purchaseNumber ?? '').toLowerCase().includes(q) ||
         (p.companyName ?? '').toLowerCase().includes(q) ||
-        (p.projectNumber ?? '').toLowerCase().includes(q) ||
-        (p.projectName ?? '').toLowerCase().includes(q) ||
+        (p.quoteNumber ?? '').toLowerCase().includes(q) ||
+        (p.paymentConditionName ?? '').toLowerCase().includes(q) ||
         (p.status ?? '').toLowerCase().includes(q) ||
-        (p.brandName ?? '').toLowerCase().includes(q) ||
-        (p.preferredSupplier ?? '').toLowerCase().includes(q) ||
+        (p.shortDescription ?? '').toLowerCase().includes(q) ||
         p.createdByName.toLowerCase().includes(q)
       )
     })
@@ -95,14 +103,14 @@ export function PurchaseTable({
       const cmpStr = (x: string | null | undefined, y: string | null | undefined) =>
         dir * (x ?? '').localeCompare(y ?? '')
       switch (sortField) {
-        case 'orderNumber':
-          return cmpStr(a.orderNumber, b.orderNumber)
+        case 'purchaseNumber':
+          return cmpStr(a.purchaseNumber, b.purchaseNumber)
         case 'purchaseDate':
           return cmpStr(a.purchaseDate, b.purchaseDate)
         case 'companyName':
           return cmpStr(a.companyName, b.companyName)
-        case 'project':
-          return cmpStr(a.projectNumber, b.projectNumber)
+        case 'quote':
+          return cmpStr(a.quoteNumber, b.quoteNumber)
         case 'status':
           return cmpStr(a.status, b.status)
         case 'createdBy':
@@ -124,25 +132,27 @@ export function PurchaseTable({
     if (editing) {
       await updatePurchaseAction({
         id: p.id,
-        orderNumber: p.orderNumber,
-        brandName: p.brandName,
-        purchaseDate: p.purchaseDate ?? null,
+        purchaseNumber: p.purchaseNumber,
+        purchaseDate: p.purchaseDate ?? new Date().toISOString(),
         status: p.status,
         companyId: p.companyId,
-        projectId: p.projectId,
-        preferredSupplier: p.preferredSupplier,
+        quoteSupplierId: p.quoteSupplierId,
+        paymentConditionId: p.paymentConditionId,
+        shortDescription: p.shortDescription,
         description: p.description,
+        additionalInfo: p.additionalInfo,
       })
     } else {
       await createPurchaseAction({
-        orderNumber: p.orderNumber,
-        brandName: p.brandName,
-        purchaseDate: p.purchaseDate ?? null,
+        purchaseNumber: p.purchaseNumber,
+        purchaseDate: p.purchaseDate ?? new Date().toISOString(),
         status: p.status,
         companyId: p.companyId,
-        projectId: p.projectId,
-        preferredSupplier: p.preferredSupplier,
+        quoteSupplierId: p.quoteSupplierId,
+        paymentConditionId: p.paymentConditionId,
+        shortDescription: p.shortDescription,
         description: p.description,
+        additionalInfo: p.additionalInfo,
       })
     }
     setEditing(null)
@@ -167,7 +177,7 @@ export function PurchaseTable({
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search order, company, project or status..."
+              placeholder="Search number, company, quote or status..."
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
@@ -208,8 +218,8 @@ export function PurchaseTable({
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
-              <TableHead className={thClass} onClick={() => toggleSort('orderNumber')}>
-                Order # <SortIcon field="orderNumber" sortField={sortField} sortDir={sortDir} />
+              <TableHead className={thClass} onClick={() => toggleSort('purchaseNumber')}>
+                Purchase # <SortIcon field="purchaseNumber" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('purchaseDate')}>
                 Purchase Date <SortIcon field="purchaseDate" sortField={sortField} sortDir={sortDir} />
@@ -217,8 +227,8 @@ export function PurchaseTable({
               <TableHead className={thClass} onClick={() => toggleSort('companyName')}>
                 Company <SortIcon field="companyName" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('project')}>
-                Project <SortIcon field="project" sortField={sortField} sortDir={sortDir} />
+              <TableHead className={thClass} onClick={() => toggleSort('quote')}>
+                Quote <SortIcon field="quote" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('status')}>
                 Status <SortIcon field="status" sortField={sortField} sortDir={sortDir} />
@@ -240,8 +250,10 @@ export function PurchaseTable({
               </TableRow>
             ) : (
               filtered.map(purchase => {
-                const secondaryLabel = purchase.brandName ?? purchase.preferredSupplier ?? ''
+                const secondaryLabel = purchase.shortDescription ?? purchase.paymentConditionName ?? ''
                 const detailHref = `/departments/${departmentId}/orders/${purchase.id}` as Route
+                const isOrderedNotSent = isOrderedNotSentStatus(purchase.status)
+                const canMutatePurchase = !isOrderedNotSent || canManageOrderedPurchases
                 return (
                   <TableRow
                     key={purchase.id}
@@ -250,7 +262,7 @@ export function PurchaseTable({
                     <TableCell className={`${tdClass} text-foreground font-medium`}>
                       <div className="flex flex-col gap-0.5">
                         <span className="text-accent underline-offset-2 hover:underline">
-                          {purchase.orderNumber ?? '—'}
+                          {purchase.purchaseNumber ?? '—'}
                         </span>
                         {secondaryLabel ? (
                           <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
@@ -263,13 +275,11 @@ export function PurchaseTable({
                     <TableCell className={tdClass}>{purchase.companyName ?? '-'}</TableCell>
                     <TableCell className={tdClass}>
                       <div className="flex flex-col gap-0.5">
-                        <Badge
-                          variant="outline"
-                          className="border-border text-muted-foreground font-normal whitespace-nowrap">
-                          {purchase.projectNumber ?? '—'}
+                        <Badge variant="outline" className="border-border text-muted-foreground font-normal whitespace-nowrap">
+                          {purchase.quoteNumber ?? 'Manual'}
                         </Badge>
-                        {purchase.projectName ? (
-                          <span className="text-[11px] text-muted-foreground truncate">{purchase.projectName}</span>
+                        {purchase.paymentConditionName ? (
+                          <span className="text-[11px] text-muted-foreground truncate">{purchase.paymentConditionName}</span>
                         ) : null}
                       </div>
                     </TableCell>
@@ -281,7 +291,7 @@ export function PurchaseTable({
                     <TableCell className={tdClass}>
                       <div className="flex flex-col gap-0.5">
                         <span className="text-foreground">{purchase.createdByName}</span>
-                        <span className="text-[11px] text-muted-foreground">{formatDate(purchase.updatedAt)}</span>
+                        <span className="text-[11px] text-muted-foreground">{formatDate(purchase.createdAt)}</span>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -297,6 +307,7 @@ export function PurchaseTable({
                           variant="ghost"
                           size="icon"
                           className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          disabled={!canMutatePurchase}
                           onClick={() => {
                             setEditing(purchase)
                             setDialogOpen(true)
@@ -307,6 +318,7 @@ export function PurchaseTable({
                           variant="ghost"
                           size="icon"
                           className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                          disabled={!canMutatePurchase}
                           onClick={() => (isAdmin ? handleHardDelete(purchase.id) : handleSoftDelete(purchase.id))}>
                           <Trash2 className="h-3.5 w-3.5" />
                         </Button>
@@ -325,7 +337,8 @@ export function PurchaseTable({
         onOpenChange={setDialogOpen}
         purchase={editing}
         companies={companies}
-        projects={projects}
+        quoteSuppliers={quoteSuppliers}
+        paymentConditions={paymentConditions}
         onSave={handleSave}
       />
     </div>

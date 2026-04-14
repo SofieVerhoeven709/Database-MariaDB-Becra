@@ -213,7 +213,6 @@ export type MaterialGroupWhereInput = {
   Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   MaterialSerialTrack?: Prisma.MaterialSerialTrackListRelationFilter
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
-  Purchase?: Prisma.PurchaseListRelationFilter
 }
 
 export type MaterialGroupOrderByWithRelationInput = {
@@ -232,7 +231,6 @@ export type MaterialGroupOrderByWithRelationInput = {
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackOrderByRelationAggregateInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureOrderByRelationAggregateInput
-  Purchase?: Prisma.PurchaseOrderByRelationAggregateInput
   _relevance?: Prisma.MaterialGroupOrderByRelevanceInput
 }
 
@@ -255,7 +253,6 @@ export type MaterialGroupWhereUniqueInput = Prisma.AtLeast<{
   Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   MaterialSerialTrack?: Prisma.MaterialSerialTrackListRelationFilter
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
-  Purchase?: Prisma.PurchaseListRelationFilter
 }, "id">
 
 export type MaterialGroupOrderByWithAggregationInput = {
@@ -301,7 +298,6 @@ export type MaterialGroupCreateInput = {
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupUncheckedCreateInput = {
@@ -319,7 +315,6 @@ export type MaterialGroupUncheckedCreateInput = {
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupUpdateInput = {
@@ -337,7 +332,6 @@ export type MaterialGroupUpdateInput = {
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUncheckedUpdateInput = {
@@ -355,7 +349,6 @@ export type MaterialGroupUncheckedUpdateInput = {
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupCreateManyInput = {
@@ -582,22 +575,6 @@ export type MaterialGroupUpdateOneWithoutMaterialSerialTrackedStructureNestedInp
   update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialGroupUpdateToOneWithWhereWithoutMaterialSerialTrackedStructureInput, Prisma.MaterialGroupUpdateWithoutMaterialSerialTrackedStructureInput>, Prisma.MaterialGroupUncheckedUpdateWithoutMaterialSerialTrackedStructureInput>
 }
 
-export type MaterialGroupCreateNestedOneWithoutPurchaseInput = {
-  create?: Prisma.XOR<Prisma.MaterialGroupCreateWithoutPurchaseInput, Prisma.MaterialGroupUncheckedCreateWithoutPurchaseInput>
-  connectOrCreate?: Prisma.MaterialGroupCreateOrConnectWithoutPurchaseInput
-  connect?: Prisma.MaterialGroupWhereUniqueInput
-}
-
-export type MaterialGroupUpdateOneWithoutPurchaseNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialGroupCreateWithoutPurchaseInput, Prisma.MaterialGroupUncheckedCreateWithoutPurchaseInput>
-  connectOrCreate?: Prisma.MaterialGroupCreateOrConnectWithoutPurchaseInput
-  upsert?: Prisma.MaterialGroupUpsertWithoutPurchaseInput
-  disconnect?: Prisma.MaterialGroupWhereInput | boolean
-  delete?: Prisma.MaterialGroupWhereInput | boolean
-  connect?: Prisma.MaterialGroupWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialGroupUpdateToOneWithWhereWithoutPurchaseInput, Prisma.MaterialGroupUpdateWithoutPurchaseInput>, Prisma.MaterialGroupUncheckedUpdateWithoutPurchaseInput>
-}
-
 export type MaterialGroupCreateWithoutEmployeeInput = {
   id: string
   groupA: string
@@ -612,7 +589,6 @@ export type MaterialGroupCreateWithoutEmployeeInput = {
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupUncheckedCreateWithoutEmployeeInput = {
@@ -629,7 +605,6 @@ export type MaterialGroupUncheckedCreateWithoutEmployeeInput = {
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupCreateOrConnectWithoutEmployeeInput = {
@@ -686,7 +661,6 @@ export type MaterialGroupCreateWithoutMaterial_Material_materialGroupIdAToMateri
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupUncheckedCreateWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput = {
@@ -703,7 +677,6 @@ export type MaterialGroupUncheckedCreateWithoutMaterial_Material_materialGroupId
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupCreateOrConnectWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput = {
@@ -725,7 +698,6 @@ export type MaterialGroupCreateWithoutMaterial_Material_materialGroupIdBToMateri
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupUncheckedCreateWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput = {
@@ -742,7 +714,6 @@ export type MaterialGroupUncheckedCreateWithoutMaterial_Material_materialGroupId
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupCreateOrConnectWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput = {
@@ -764,7 +735,6 @@ export type MaterialGroupCreateWithoutMaterial_Material_materialGroupIdCToMateri
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupUncheckedCreateWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput = {
@@ -781,7 +751,6 @@ export type MaterialGroupUncheckedCreateWithoutMaterial_Material_materialGroupId
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupCreateOrConnectWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput = {
@@ -803,7 +772,6 @@ export type MaterialGroupCreateWithoutMaterial_Material_materialGroupIdDToMateri
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupUncheckedCreateWithoutMaterial_Material_materialGroupIdDToMaterialGroupInput = {
@@ -820,7 +788,6 @@ export type MaterialGroupUncheckedCreateWithoutMaterial_Material_materialGroupId
   Material_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdCToMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupCreateOrConnectWithoutMaterial_Material_materialGroupIdDToMaterialGroupInput = {
@@ -853,7 +820,6 @@ export type MaterialGroupUpdateWithoutMaterial_Material_materialGroupIdAToMateri
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUncheckedUpdateWithoutMaterial_Material_materialGroupIdAToMaterialGroupInput = {
@@ -870,7 +836,6 @@ export type MaterialGroupUncheckedUpdateWithoutMaterial_Material_materialGroupId
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUpsertWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput = {
@@ -898,7 +863,6 @@ export type MaterialGroupUpdateWithoutMaterial_Material_materialGroupIdBToMateri
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUncheckedUpdateWithoutMaterial_Material_materialGroupIdBToMaterialGroupInput = {
@@ -915,7 +879,6 @@ export type MaterialGroupUncheckedUpdateWithoutMaterial_Material_materialGroupId
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUpsertWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput = {
@@ -943,7 +906,6 @@ export type MaterialGroupUpdateWithoutMaterial_Material_materialGroupIdCToMateri
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUncheckedUpdateWithoutMaterial_Material_materialGroupIdCToMaterialGroupInput = {
@@ -960,7 +922,6 @@ export type MaterialGroupUncheckedUpdateWithoutMaterial_Material_materialGroupId
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUpsertWithoutMaterial_Material_materialGroupIdDToMaterialGroupInput = {
@@ -988,7 +949,6 @@ export type MaterialGroupUpdateWithoutMaterial_Material_materialGroupIdDToMateri
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUncheckedUpdateWithoutMaterial_Material_materialGroupIdDToMaterialGroupInput = {
@@ -1005,7 +965,6 @@ export type MaterialGroupUncheckedUpdateWithoutMaterial_Material_materialGroupId
   Material_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdCToMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupCreateWithoutMaterialSerialTrackInput = {
@@ -1022,7 +981,6 @@ export type MaterialGroupCreateWithoutMaterialSerialTrackInput = {
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupUncheckedCreateWithoutMaterialSerialTrackInput = {
@@ -1039,7 +997,6 @@ export type MaterialGroupUncheckedCreateWithoutMaterialSerialTrackInput = {
   Material_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdCToMaterialGroupInput
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupCreateOrConnectWithoutMaterialSerialTrackInput = {
@@ -1072,7 +1029,6 @@ export type MaterialGroupUpdateWithoutMaterialSerialTrackInput = {
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUncheckedUpdateWithoutMaterialSerialTrackInput = {
@@ -1089,7 +1045,6 @@ export type MaterialGroupUncheckedUpdateWithoutMaterialSerialTrackInput = {
   Material_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdCToMaterialGroupNestedInput
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupCreateWithoutMaterialSerialTrackedStructureInput = {
@@ -1106,7 +1061,6 @@ export type MaterialGroupCreateWithoutMaterialSerialTrackedStructureInput = {
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupUncheckedCreateWithoutMaterialSerialTrackedStructureInput = {
@@ -1123,7 +1077,6 @@ export type MaterialGroupUncheckedCreateWithoutMaterialSerialTrackedStructureInp
   Material_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdCToMaterialGroupInput
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
-  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
 }
 
 export type MaterialGroupCreateOrConnectWithoutMaterialSerialTrackedStructureInput = {
@@ -1156,7 +1109,6 @@ export type MaterialGroupUpdateWithoutMaterialSerialTrackedStructureInput = {
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUncheckedUpdateWithoutMaterialSerialTrackedStructureInput = {
@@ -1173,91 +1125,6 @@ export type MaterialGroupUncheckedUpdateWithoutMaterialSerialTrackedStructureInp
   Material_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdCToMaterialGroupNestedInput
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
-}
-
-export type MaterialGroupCreateWithoutPurchaseInput = {
-  id: string
-  groupA: string
-  groupB?: string | null
-  groupC?: string | null
-  groupD?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Material_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdAToMaterialGroupInput
-  Material_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdBToMaterialGroupInput
-  Material_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdCToMaterialGroupInput
-  Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
-  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
-}
-
-export type MaterialGroupUncheckedCreateWithoutPurchaseInput = {
-  id: string
-  groupA: string
-  groupB?: string | null
-  groupC?: string | null
-  groupD?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-  Material_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdAToMaterialGroupInput
-  Material_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdBToMaterialGroupInput
-  Material_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdCToMaterialGroupInput
-  Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupInput
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
-}
-
-export type MaterialGroupCreateOrConnectWithoutPurchaseInput = {
-  where: Prisma.MaterialGroupWhereUniqueInput
-  create: Prisma.XOR<Prisma.MaterialGroupCreateWithoutPurchaseInput, Prisma.MaterialGroupUncheckedCreateWithoutPurchaseInput>
-}
-
-export type MaterialGroupUpsertWithoutPurchaseInput = {
-  update: Prisma.XOR<Prisma.MaterialGroupUpdateWithoutPurchaseInput, Prisma.MaterialGroupUncheckedUpdateWithoutPurchaseInput>
-  create: Prisma.XOR<Prisma.MaterialGroupCreateWithoutPurchaseInput, Prisma.MaterialGroupUncheckedCreateWithoutPurchaseInput>
-  where?: Prisma.MaterialGroupWhereInput
-}
-
-export type MaterialGroupUpdateToOneWithWhereWithoutPurchaseInput = {
-  where?: Prisma.MaterialGroupWhereInput
-  data: Prisma.XOR<Prisma.MaterialGroupUpdateWithoutPurchaseInput, Prisma.MaterialGroupUncheckedUpdateWithoutPurchaseInput>
-}
-
-export type MaterialGroupUpdateWithoutPurchaseInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupA?: Prisma.StringFieldUpdateOperationsInput | string
-  groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Material_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialUpdateManyWithoutMaterialGroup_Material_materialGroupIdAToMaterialGroupNestedInput
-  Material_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialUpdateManyWithoutMaterialGroup_Material_materialGroupIdBToMaterialGroupNestedInput
-  Material_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialUpdateManyWithoutMaterialGroup_Material_materialGroupIdCToMaterialGroupNestedInput
-  Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
-  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
-}
-
-export type MaterialGroupUncheckedUpdateWithoutPurchaseInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupA?: Prisma.StringFieldUpdateOperationsInput | string
-  groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  Material_Material_materialGroupIdAToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdAToMaterialGroupNestedInput
-  Material_Material_materialGroupIdBToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdBToMaterialGroupNestedInput
-  Material_Material_materialGroupIdCToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdCToMaterialGroupNestedInput
-  Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupCreateManyEmployeeInput = {
@@ -1284,7 +1151,6 @@ export type MaterialGroupUpdateWithoutEmployeeInput = {
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUncheckedUpdateWithoutEmployeeInput = {
@@ -1301,7 +1167,6 @@ export type MaterialGroupUncheckedUpdateWithoutEmployeeInput = {
   Material_Material_materialGroupIdDToMaterialGroup?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGroupIdDToMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
-  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
 }
 
 export type MaterialGroupUncheckedUpdateManyWithoutEmployeeInput = {
@@ -1326,7 +1191,6 @@ export type MaterialGroupCountOutputType = {
   Material_Material_materialGroupIdDToMaterialGroup: number
   MaterialSerialTrack: number
   MaterialSerialTrackedStructure: number
-  Purchase: number
 }
 
 export type MaterialGroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1336,7 +1200,6 @@ export type MaterialGroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Ext
   Material_Material_materialGroupIdDToMaterialGroup?: boolean | MaterialGroupCountOutputTypeCountMaterial_Material_materialGroupIdDToMaterialGroupArgs
   MaterialSerialTrack?: boolean | MaterialGroupCountOutputTypeCountMaterialSerialTrackArgs
   MaterialSerialTrackedStructure?: boolean | MaterialGroupCountOutputTypeCountMaterialSerialTrackedStructureArgs
-  Purchase?: boolean | MaterialGroupCountOutputTypeCountPurchaseArgs
 }
 
 /**
@@ -1391,13 +1254,6 @@ export type MaterialGroupCountOutputTypeCountMaterialSerialTrackedStructureArgs<
   where?: Prisma.MaterialSerialTrackedStructureWhereInput
 }
 
-/**
- * MaterialGroupCountOutputType without action
- */
-export type MaterialGroupCountOutputTypeCountPurchaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PurchaseWhereInput
-}
-
 
 export type MaterialGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1415,7 +1271,6 @@ export type MaterialGroupSelect<ExtArgs extends runtime.Types.Extensions.Interna
   Employee?: boolean | Prisma.MaterialGroup$EmployeeArgs<ExtArgs>
   MaterialSerialTrack?: boolean | Prisma.MaterialGroup$MaterialSerialTrackArgs<ExtArgs>
   MaterialSerialTrackedStructure?: boolean | Prisma.MaterialGroup$MaterialSerialTrackedStructureArgs<ExtArgs>
-  Purchase?: boolean | Prisma.MaterialGroup$PurchaseArgs<ExtArgs>
   _count?: boolean | Prisma.MaterialGroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["materialGroup"]>
 
@@ -1441,7 +1296,6 @@ export type MaterialGroupInclude<ExtArgs extends runtime.Types.Extensions.Intern
   Employee?: boolean | Prisma.MaterialGroup$EmployeeArgs<ExtArgs>
   MaterialSerialTrack?: boolean | Prisma.MaterialGroup$MaterialSerialTrackArgs<ExtArgs>
   MaterialSerialTrackedStructure?: boolean | Prisma.MaterialGroup$MaterialSerialTrackedStructureArgs<ExtArgs>
-  Purchase?: boolean | Prisma.MaterialGroup$PurchaseArgs<ExtArgs>
   _count?: boolean | Prisma.MaterialGroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1455,7 +1309,6 @@ export type $MaterialGroupPayload<ExtArgs extends runtime.Types.Extensions.Inter
     Employee: Prisma.$EmployeePayload<ExtArgs> | null
     MaterialSerialTrack: Prisma.$MaterialSerialTrackPayload<ExtArgs>[]
     MaterialSerialTrackedStructure: Prisma.$MaterialSerialTrackedStructurePayload<ExtArgs>[]
-    Purchase: Prisma.$PurchasePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1813,7 +1666,6 @@ export interface Prisma__MaterialGroupClient<T, Null = never, ExtArgs extends ru
   Employee<T extends Prisma.MaterialGroup$EmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialGroup$EmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   MaterialSerialTrack<T extends Prisma.MaterialGroup$MaterialSerialTrackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialGroup$MaterialSerialTrackArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MaterialSerialTrackedStructure<T extends Prisma.MaterialGroup$MaterialSerialTrackedStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialGroup$MaterialSerialTrackedStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackedStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  Purchase<T extends Prisma.MaterialGroup$PurchaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialGroup$PurchaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2354,30 +2206,6 @@ export type MaterialGroup$MaterialSerialTrackedStructureArgs<ExtArgs extends run
   take?: number
   skip?: number
   distinct?: Prisma.MaterialSerialTrackedStructureScalarFieldEnum | Prisma.MaterialSerialTrackedStructureScalarFieldEnum[]
-}
-
-/**
- * MaterialGroup.Purchase
- */
-export type MaterialGroup$PurchaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Purchase
-   */
-  select?: Prisma.PurchaseSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Purchase
-   */
-  omit?: Prisma.PurchaseOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PurchaseInclude<ExtArgs> | null
-  where?: Prisma.PurchaseWhereInput
-  orderBy?: Prisma.PurchaseOrderByWithRelationInput | Prisma.PurchaseOrderByWithRelationInput[]
-  cursor?: Prisma.PurchaseWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PurchaseScalarFieldEnum | Prisma.PurchaseScalarFieldEnum[]
 }
 
 /**

@@ -3,6 +3,7 @@
 import {revalidatePath} from 'next/cache'
 import {randomUUID} from 'crypto'
 import {createMaterial, updateMaterial, softDeleteMaterial, hardDeleteMaterial, restoreMaterial} from '@/dal/materials'
+import {ensureMaterialDemandForMaterial, removeMaterialDemandForMaterial} from '@/dal/materialDemands'
 import {prismaClient} from '@/dal/prismaClient'
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {createMaterialSchema, updateMaterialSchema, deleteMaterialSchema} from '@/schemas/materialSchemas'
@@ -15,6 +16,8 @@ import {Prisma} from '@/generated/prisma/client'
 const REVALIDATE_MATERIAL = '/departments/engineering/material'
 const REVALIDATE_INVENTORY = '/departments/warehouse/inventory'
 const REVALIDATE_WAREHOUSE_PLACE = '/departments/[departmentId]/place'
+const REVALIDATE_MATERIAL_PLACE = '/departments/[departmentId]/materialPlace'
+const REVALIDATE_MATERIAL_DEMAND = '/departments/purchasing/materialDemand'
 const REVALIDATE_INVENTORY_PLACE = '/departments/[departmentId]/inventoryPlace'
 
 const createMaterialForPlaceSchema = z.object({
@@ -129,9 +132,17 @@ export const createMaterialAction = protectedFormAction({
         errors: {global: ['Material could not be created. Please try again.']},
       }
     }
+
+    try {
+      await ensureMaterialDemandForMaterial(material.id)
+    } catch (error) {
+      logger.warn(`Material demand link create skipped for material ${material.id}: ${String(error)}`)
+    }
+
     logger.info(`Material created: ${material.id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
+    revalidatePath(REVALIDATE_MATERIAL_DEMAND)
   },
 })
 
@@ -190,10 +201,18 @@ export const deleteMaterialAction = protectedFormAction({
   globalErrorMessage: 'Could not delete the material, please try again.',
   serverFn: async ({data, profile, logger}) => {
     await softDeleteMaterial(data.id, profile.id)
+
+    try {
+      await removeMaterialDemandForMaterial(data.id)
+    } catch (error) {
+      logger.warn(`Material demand link delete skipped for material ${data.id}: ${String(error)}`)
+    }
+
     logger.info(`Material soft-deleted: ${data.id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
     revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
+    revalidatePath(REVALIDATE_MATERIAL_DEMAND)
   },
 })
 
@@ -258,10 +277,18 @@ export async function createMaterialForPlaceAction(unvalidatedData: z.infer<type
     isSerialTracked: false,
   })
 
+  try {
+    await ensureMaterialDemandForMaterial(material.id)
+  } catch (error) {
+    logger.warn(`Material demand link create skipped for quick-create ${material.id}: ${String(error)}`)
+  }
+
   logger.info(`Material quick-created for place: ${material.id}`)
   revalidatePath(REVALIDATE_MATERIAL)
   revalidatePath(REVALIDATE_INVENTORY)
   revalidatePath(REVALIDATE_WAREHOUSE_PLACE, 'page')
+  revalidatePath(REVALIDATE_MATERIAL_PLACE, 'page')
+  revalidatePath(REVALIDATE_MATERIAL_DEMAND)
   revalidatePath(REVALIDATE_INVENTORY_PLACE, 'page')
 
   return {

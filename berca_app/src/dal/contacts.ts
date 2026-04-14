@@ -38,6 +38,34 @@ export async function getContactOptions() {
   })
 }
 
+export async function getCompanyContactOptions(companyId: string) {
+  return prismaClient.contact.findMany({
+    where: {
+      deleted: false,
+      CompanyContact: {
+        none: {
+          companyId,
+          deleted: false,
+        },
+      },
+      NOT: {
+        CompanyContact: {
+          some: {
+            deleted: false,
+            OR: [
+              {roleWithCompany: 'Invoice'},
+              {roleWithCompany: 'INVOICE'},
+              {roleWithCompany: 'invoice'},
+            ],
+          },
+        },
+      },
+    },
+    select: {id: true, firstName: true, lastName: true},
+    orderBy: [{lastName: 'asc'}, {firstName: 'asc'}],
+  })
+}
+
 export async function getContactDetail(id: string) {
   return prismaClient.contact.findUniqueOrThrow({
     where: {id},

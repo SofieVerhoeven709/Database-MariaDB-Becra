@@ -4,7 +4,7 @@ import {useState} from 'react'
 import Link from 'next/link'
 import type {Route} from 'next'
 import {useRouter} from 'next/navigation'
-import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, RotateCcw} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
@@ -653,13 +653,13 @@ export function QuoteSupplierTable({
                               {canDelete && (
                                 <Button
                                   variant="ghost"
-                                  size="sm"
-                                  className="h-7 text-xs px-2 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                  size="icon"
+                                  className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
                                   onClick={async () => {
                                     await undeletePaymentConditionAction({id: row.id})
                                     router.refresh()
                                   }}>
-                                  Restore
+                                  <RotateCcw className="h-3.5 w-3.5" />
                                 </Button>
                               )}
                               {isAdmin && (

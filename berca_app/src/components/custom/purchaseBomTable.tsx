@@ -4,7 +4,7 @@ import {useState} from 'react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {Search, Plus, Pencil, Trash2, ChevronDown, ChevronUp, ExternalLink} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronDown, ChevronUp, ExternalLink, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -392,10 +392,10 @@ export function PurchaseBOMTable({
                             {canDelete && (
                               <Button
                                 variant="ghost"
-                                size="sm"
-                                className="h-7 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary px-2"
+                                size="icon"
+                                className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
                                 onClick={() => handleUndelete(bom)}>
-                                Restore
+                                <RotateCcw className="h-3.5 w-3.5" />
                               </Button>
                             )}
                             {isAdmin && (

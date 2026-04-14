@@ -4,15 +4,19 @@ import {
   getPaymentMethods,
   getInvoiceSentTypes,
   getInvoiceStatuses,
-  getVatMargins,
+  getAllVatMargins,
+  getCountries,
   getOpenProjects,
 } from '@/dal/invoices'
 import {getContactOptions} from '@/dal/contacts'
 import {mapInvoiceOut} from '@/extra/invoices'
 import {InvoiceOutTable} from '@/components/custom/invoiceOutTable'
+import {VatMarginTable} from '@/components/custom/vatMarginTable'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
+import {Badge} from '@/components/ui/badge'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -28,7 +32,8 @@ export default async function InvoicesOutPage({params}: PageProps) {
     paymentMethods,
     invoiceSentTypes,
     invoiceStatuses,
-    vatMargins,
+    vatMarginsRaw,
+    countries,
     contactOptions,
     projectsRaw,
     profile,
@@ -39,7 +44,8 @@ export default async function InvoicesOutPage({params}: PageProps) {
     getPaymentMethods(),
     getInvoiceSentTypes(),
     getInvoiceStatuses(),
-    getVatMargins(),
+    getAllVatMargins(),
+    getCountries(),
     getContactOptions(),
     getOpenProjects(),
     getSessionProfileFromCookieOrThrow(),
@@ -81,6 +87,19 @@ export default async function InvoicesOutPage({params}: PageProps) {
     companyName: p.Company?.name ?? '',
   }))
 
+  // Map VAT margins for table display
+  const mappedVatMargins = vatMarginsRaw.map(v => ({
+    id: v.id,
+    vat: v.vat,
+    countryId: v.countryId,
+    countryName: v.countryName,
+    createdAt: new Date(v.createdAt).toISOString(),
+    createdByName: v.createdByName,
+    deletedAt: v.deletedAt ? new Date(v.deletedAt).toISOString() : null,
+    deletedByName: v.deletedByName,
+    deleted: v.deleted,
+  }))
+
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-6xl">
@@ -89,19 +108,46 @@ export default async function InvoicesOutPage({params}: PageProps) {
           <p className="mt-1 text-sm text-muted-foreground">Manage invoices sent to clients</p>
         </div>
 
-        <InvoiceOutTable
-          initialInvoices={invoices}
-          currentUserRole={currentUserRole}
-          currentUserLevel={currentUserLevel}
-          departmentId={departmentId}
-          invoiceTypes={invoiceTypes}
-          paymentMethods={paymentMethods}
-          invoiceSentTypes={invoiceSentTypes}
-          invoiceStatuses={invoiceStatuses}
-          vatMargins={vatMargins}
-          contactOptions={mappedContacts}
-          projectOptions={projectOptions}
-        />
+        <Tabs defaultValue="invoices" className="w-full">
+          <TabsList className="bg-secondary border border-border/60">
+            <TabsTrigger value="invoices">
+              Invoices
+              <Badge variant="secondary" className="ml-2 text-xs">
+                {invoices.filter(inv => !inv.deleted).length}
+              </Badge>
+            </TabsTrigger>
+            <TabsTrigger value="vatMargins">
+              VAT Margins
+              <Badge variant="secondary" className="ml-2 text-xs">
+                {mappedVatMargins.filter(v => !v.deleted).length}
+              </Badge>
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="invoices" className="mt-4">
+            <InvoiceOutTable
+              initialInvoices={invoices}
+              currentUserRole={currentUserRole}
+              currentUserLevel={currentUserLevel}
+              departmentId={departmentId}
+              invoiceTypes={invoiceTypes}
+              paymentMethods={paymentMethods}
+              invoiceSentTypes={invoiceSentTypes}
+              invoiceStatuses={invoiceStatuses}
+              contactOptions={mappedContacts}
+              projectOptions={projectOptions}
+            />
+          </TabsContent>
+
+          <TabsContent value="vatMargins" className="mt-4">
+            <VatMarginTable
+              initialVatMargins={mappedVatMargins}
+              countries={countries}
+              currentUserRole={currentUserRole}
+              currentUserLevel={currentUserLevel}
+            />
+          </TabsContent>
+        </Tabs>
       </div>
     </main>
   )

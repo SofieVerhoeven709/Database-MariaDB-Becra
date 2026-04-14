@@ -941,7 +941,6 @@ model InvoiceOut {
   paymentMethodId                          String              @db.Char(36)
   invoiceSentTypeId                        String              @db.Char(36)
   invoiceStatusId                          String              @db.Char(36)
-  vatMarginId                              String              @db.Char(36)
   priceListId                              String?             @db.Char(36)
   InvoiceType                              InvoiceType         @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
   PriceList                                PriceList?          @relation(fields: [priceListId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOut_ibfk_10")
@@ -952,7 +951,6 @@ model InvoiceOut {
   PaymentMethod                            PaymentMethod       @relation(fields: [paymentMethodId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_6")
   InvoiceSentType                          InvoiceSentType     @relation(fields: [invoiceSentTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_7")
   InvoiceStatus                            InvoiceStatus       @relation(fields: [invoiceStatusId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_8")
-  VatMargin                                VatMargin           @relation(fields: [vatMarginId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_9")
   InvoiceOutContact                        InvoiceOutContact[]
   WorkOrderInvoice                         WorkOrderInvoice[]
 
@@ -964,7 +962,6 @@ model InvoiceOut {
   @@index([invoiceStatusId], map: "invoiceStatusId")
   @@index([modifiedBy], map: "modifiedBy")
   @@index([paymentMethodId], map: "paymentMethodId")
-  @@index([vatMarginId], map: "vatMarginId")
   @@index([priceListId], map: "priceListId")
 }
 
@@ -1860,16 +1857,19 @@ model TimeRegistry {
   deleted                                   Boolean                @default(false)
   deletedAt                                 DateTime?              @db.DateTime(0)
   deletedBy                                 String?                @db.Char(36)
+  vatMarginId                               String?                @db.Char(36)
   Employee                                  Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_1")
   HourType                                  HourType               @relation(fields: [hourTypeId], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_2")
   WorkOrder                                 WorkOrder              @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_3")
   Employee_TimeRegistry_deletedByToEmployee Employee?              @relation("TimeRegistry_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_4")
+  VatMargin                                 VatMargin?             @relation(fields: [vatMarginId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_timeRegistry_vatMarginId")
   TimeRegistryEmployee                      TimeRegistryEmployee[]
 
   @@index([createdBy], map: "createdBy")
   @@index([workOrderId], map: "workOrderId")
   @@index([deletedBy], map: "deletedBy")
   @@index([hourTypeId], map: "hourTypeId")
+  @@index([vatMarginId], map: "fk_timeRegistry_vatMarginId")
 }
 
 model TimeRegistryEmployee {
@@ -2137,18 +2137,21 @@ model WorkOrderStructure {
   deleted                                         Boolean                        @default(false)
   deletedAt                                       DateTime?                      @db.DateTime(0)
   deletedBy                                       String?                        @db.Char(36)
+  vatMarginId                                     String?                        @db.Char(36)
   SupplierDeliveryNoteFollowUp                    SupplierDeliveryNoteFollowUp[]
   WorkOrder                                       WorkOrder                      @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_1")
   Employee                                        Employee                       @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_2")
   Material                                        Material                       @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_3")
   Target                                          Target                         @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_4")
   Employee_WorkOrderStructure_deletedByToEmployee Employee?                      @relation("WorkOrderStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_5")
+  VatMargin                                       VatMargin?                     @relation(fields: [vatMarginId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_workOrderStructure_vatMarginId")
 
   @@index([createdBy], map: "createdBy")
   @@index([materialId], map: "materialId")
   @@index([targetId], map: "targetId")
   @@index([workOrderId], map: "workOrderId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([vatMarginId], map: "idx_workOrderStructure_vatMarginId")
 }
 
 model RoleLevel {
@@ -2247,6 +2250,7 @@ model Country {
   CompanyAddress                       CompanyAddress[]
   Employee_Country_deletedByToEmployee Employee?        @relation("Country_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Country_ibfk_1")
   Employee_Country_createdByToEmployee Employee         @relation("Country_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "Country_ibfk_2")
+  VatMargin                            VatMargin[]
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
@@ -2315,20 +2319,24 @@ model PaymentMethod {
 }
 
 model VatMargin {
-  id                                     String       @id @db.Char(36)
-  vat                                    Float        @db.Float
-  createdAt                              DateTime     @db.DateTime(0)
-  createdBy                              String       @db.Char(36)
-  deleted                                Boolean      @default(false)
-  deletedAt                              DateTime?    @db.DateTime(0)
-  deletedBy                              String?      @db.Char(36)
+  id                                     String               @id @db.Char(36)
+  vat                                    Float                @db.Float
+  createdAt                              DateTime             @db.DateTime(0)
+  createdBy                              String               @db.Char(36)
+  deleted                                Boolean              @default(false)
+  deletedAt                              DateTime?            @db.DateTime(0)
+  deletedBy                              String?              @db.Char(36)
+  countryId                              String?              @db.Char(36)
   InvoiceIn                              InvoiceIn[]
-  InvoiceOut                             InvoiceOut[]
-  Employee_VatMargin_createdByToEmployee Employee     @relation("VatMargin_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "VatMargin_ibfk_1")
-  Employee_VatMargin_deletedByToEmployee Employee?    @relation("VatMargin_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "VatMargin_ibfk_2")
+  TimeRegistry                           TimeRegistry[]
+  Employee_VatMargin_createdByToEmployee Employee             @relation("VatMargin_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "VatMargin_ibfk_1")
+  Employee_VatMargin_deletedByToEmployee Employee?            @relation("VatMargin_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "VatMargin_ibfk_2")
+  Country                                Country?             @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_vatMargin_countryId")
+  WorkOrderStructure                     WorkOrderStructure[]
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
+  @@index([countryId], map: "idx_vatMargin_countryId")
 }
 
 model PriceList {

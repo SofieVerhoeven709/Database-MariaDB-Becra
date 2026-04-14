@@ -44,6 +44,7 @@ export type TimeRegistryMinAggregateOutputType = {
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
+  vatMarginId: string | null
 }
 
 export type TimeRegistryMaxAggregateOutputType = {
@@ -66,6 +67,7 @@ export type TimeRegistryMaxAggregateOutputType = {
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
+  vatMarginId: string | null
 }
 
 export type TimeRegistryCountAggregateOutputType = {
@@ -88,6 +90,7 @@ export type TimeRegistryCountAggregateOutputType = {
   deleted: number
   deletedAt: number
   deletedBy: number
+  vatMarginId: number
   _all: number
 }
 
@@ -112,6 +115,7 @@ export type TimeRegistryMinAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
+  vatMarginId?: true
 }
 
 export type TimeRegistryMaxAggregateInputType = {
@@ -134,6 +138,7 @@ export type TimeRegistryMaxAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
+  vatMarginId?: true
 }
 
 export type TimeRegistryCountAggregateInputType = {
@@ -156,6 +161,7 @@ export type TimeRegistryCountAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
+  vatMarginId?: true
   _all?: true
 }
 
@@ -251,6 +257,7 @@ export type TimeRegistryGroupByOutputType = {
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
+  vatMarginId: string | null
   _count: TimeRegistryCountAggregateOutputType | null
   _min: TimeRegistryMinAggregateOutputType | null
   _max: TimeRegistryMaxAggregateOutputType | null
@@ -294,10 +301,12 @@ export type TimeRegistryWhereInput = {
   deleted?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"TimeRegistry"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"TimeRegistry"> | string | null
+  vatMarginId?: Prisma.StringNullableFilter<"TimeRegistry"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   HourType?: Prisma.XOR<Prisma.HourTypeScalarRelationFilter, Prisma.HourTypeWhereInput>
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  VatMargin?: Prisma.XOR<Prisma.VatMarginNullableScalarRelationFilter, Prisma.VatMarginWhereInput> | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeListRelationFilter
 }
 
@@ -321,10 +330,12 @@ export type TimeRegistryOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   HourType?: Prisma.HourTypeOrderByWithRelationInput
   WorkOrder?: Prisma.WorkOrderOrderByWithRelationInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  VatMargin?: Prisma.VatMarginOrderByWithRelationInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeOrderByRelationAggregateInput
   _relevance?: Prisma.TimeRegistryOrderByRelevanceInput
 }
@@ -352,10 +363,12 @@ export type TimeRegistryWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"TimeRegistry"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"TimeRegistry"> | string | null
+  vatMarginId?: Prisma.StringNullableFilter<"TimeRegistry"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   HourType?: Prisma.XOR<Prisma.HourTypeScalarRelationFilter, Prisma.HourTypeWhereInput>
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  VatMargin?: Prisma.XOR<Prisma.VatMarginNullableScalarRelationFilter, Prisma.VatMarginWhereInput> | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeListRelationFilter
 }, "id">
 
@@ -379,6 +392,7 @@ export type TimeRegistryOrderByWithAggregationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TimeRegistryCountOrderByAggregateInput
   _max?: Prisma.TimeRegistryMaxOrderByAggregateInput
   _min?: Prisma.TimeRegistryMinOrderByAggregateInput
@@ -407,6 +421,7 @@ export type TimeRegistryScalarWhereWithAggregatesInput = {
   deleted?: Prisma.BoolWithAggregatesFilter<"TimeRegistry"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TimeRegistry"> | Date | string | null
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"TimeRegistry"> | string | null
+  vatMarginId?: Prisma.StringNullableWithAggregatesFilter<"TimeRegistry"> | string | null
 }
 
 export type TimeRegistryCreateInput = {
@@ -429,6 +444,7 @@ export type TimeRegistryCreateInput = {
   HourType: Prisma.HourTypeCreateNestedOneWithoutTimeRegistryInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTimeRegistryInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeInput
+  VatMargin?: Prisma.VatMarginCreateNestedOneWithoutTimeRegistryInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeCreateNestedManyWithoutTimeRegistryInput
 }
 
@@ -452,6 +468,7 @@ export type TimeRegistryUncheckedCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  vatMarginId?: string | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedCreateNestedManyWithoutTimeRegistryInput
 }
 
@@ -475,6 +492,7 @@ export type TimeRegistryUpdateInput = {
   HourType?: Prisma.HourTypeUpdateOneRequiredWithoutTimeRegistryNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTimeRegistryNestedInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeNestedInput
+  VatMargin?: Prisma.VatMarginUpdateOneWithoutTimeRegistryNestedInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUpdateManyWithoutTimeRegistryNestedInput
 }
 
@@ -498,6 +516,7 @@ export type TimeRegistryUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedUpdateManyWithoutTimeRegistryNestedInput
 }
 
@@ -521,6 +540,7 @@ export type TimeRegistryCreateManyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  vatMarginId?: string | null
 }
 
 export type TimeRegistryUpdateManyMutationInput = {
@@ -561,6 +581,7 @@ export type TimeRegistryUncheckedUpdateManyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TimeRegistryListRelationFilter = {
@@ -599,6 +620,7 @@ export type TimeRegistryCountOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrder
 }
 
 export type TimeRegistryMaxOrderByAggregateInput = {
@@ -621,6 +643,7 @@ export type TimeRegistryMaxOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrder
 }
 
 export type TimeRegistryMinOrderByAggregateInput = {
@@ -643,6 +666,7 @@ export type TimeRegistryMinOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrder
 }
 
 export type TimeRegistryScalarRelationFilter = {
@@ -832,6 +856,48 @@ export type TimeRegistryUncheckedUpdateManyWithoutWorkOrderNestedInput = {
   deleteMany?: Prisma.TimeRegistryScalarWhereInput | Prisma.TimeRegistryScalarWhereInput[]
 }
 
+export type TimeRegistryCreateNestedManyWithoutVatMarginInput = {
+  create?: Prisma.XOR<Prisma.TimeRegistryCreateWithoutVatMarginInput, Prisma.TimeRegistryUncheckedCreateWithoutVatMarginInput> | Prisma.TimeRegistryCreateWithoutVatMarginInput[] | Prisma.TimeRegistryUncheckedCreateWithoutVatMarginInput[]
+  connectOrCreate?: Prisma.TimeRegistryCreateOrConnectWithoutVatMarginInput | Prisma.TimeRegistryCreateOrConnectWithoutVatMarginInput[]
+  createMany?: Prisma.TimeRegistryCreateManyVatMarginInputEnvelope
+  connect?: Prisma.TimeRegistryWhereUniqueInput | Prisma.TimeRegistryWhereUniqueInput[]
+}
+
+export type TimeRegistryUncheckedCreateNestedManyWithoutVatMarginInput = {
+  create?: Prisma.XOR<Prisma.TimeRegistryCreateWithoutVatMarginInput, Prisma.TimeRegistryUncheckedCreateWithoutVatMarginInput> | Prisma.TimeRegistryCreateWithoutVatMarginInput[] | Prisma.TimeRegistryUncheckedCreateWithoutVatMarginInput[]
+  connectOrCreate?: Prisma.TimeRegistryCreateOrConnectWithoutVatMarginInput | Prisma.TimeRegistryCreateOrConnectWithoutVatMarginInput[]
+  createMany?: Prisma.TimeRegistryCreateManyVatMarginInputEnvelope
+  connect?: Prisma.TimeRegistryWhereUniqueInput | Prisma.TimeRegistryWhereUniqueInput[]
+}
+
+export type TimeRegistryUpdateManyWithoutVatMarginNestedInput = {
+  create?: Prisma.XOR<Prisma.TimeRegistryCreateWithoutVatMarginInput, Prisma.TimeRegistryUncheckedCreateWithoutVatMarginInput> | Prisma.TimeRegistryCreateWithoutVatMarginInput[] | Prisma.TimeRegistryUncheckedCreateWithoutVatMarginInput[]
+  connectOrCreate?: Prisma.TimeRegistryCreateOrConnectWithoutVatMarginInput | Prisma.TimeRegistryCreateOrConnectWithoutVatMarginInput[]
+  upsert?: Prisma.TimeRegistryUpsertWithWhereUniqueWithoutVatMarginInput | Prisma.TimeRegistryUpsertWithWhereUniqueWithoutVatMarginInput[]
+  createMany?: Prisma.TimeRegistryCreateManyVatMarginInputEnvelope
+  set?: Prisma.TimeRegistryWhereUniqueInput | Prisma.TimeRegistryWhereUniqueInput[]
+  disconnect?: Prisma.TimeRegistryWhereUniqueInput | Prisma.TimeRegistryWhereUniqueInput[]
+  delete?: Prisma.TimeRegistryWhereUniqueInput | Prisma.TimeRegistryWhereUniqueInput[]
+  connect?: Prisma.TimeRegistryWhereUniqueInput | Prisma.TimeRegistryWhereUniqueInput[]
+  update?: Prisma.TimeRegistryUpdateWithWhereUniqueWithoutVatMarginInput | Prisma.TimeRegistryUpdateWithWhereUniqueWithoutVatMarginInput[]
+  updateMany?: Prisma.TimeRegistryUpdateManyWithWhereWithoutVatMarginInput | Prisma.TimeRegistryUpdateManyWithWhereWithoutVatMarginInput[]
+  deleteMany?: Prisma.TimeRegistryScalarWhereInput | Prisma.TimeRegistryScalarWhereInput[]
+}
+
+export type TimeRegistryUncheckedUpdateManyWithoutVatMarginNestedInput = {
+  create?: Prisma.XOR<Prisma.TimeRegistryCreateWithoutVatMarginInput, Prisma.TimeRegistryUncheckedCreateWithoutVatMarginInput> | Prisma.TimeRegistryCreateWithoutVatMarginInput[] | Prisma.TimeRegistryUncheckedCreateWithoutVatMarginInput[]
+  connectOrCreate?: Prisma.TimeRegistryCreateOrConnectWithoutVatMarginInput | Prisma.TimeRegistryCreateOrConnectWithoutVatMarginInput[]
+  upsert?: Prisma.TimeRegistryUpsertWithWhereUniqueWithoutVatMarginInput | Prisma.TimeRegistryUpsertWithWhereUniqueWithoutVatMarginInput[]
+  createMany?: Prisma.TimeRegistryCreateManyVatMarginInputEnvelope
+  set?: Prisma.TimeRegistryWhereUniqueInput | Prisma.TimeRegistryWhereUniqueInput[]
+  disconnect?: Prisma.TimeRegistryWhereUniqueInput | Prisma.TimeRegistryWhereUniqueInput[]
+  delete?: Prisma.TimeRegistryWhereUniqueInput | Prisma.TimeRegistryWhereUniqueInput[]
+  connect?: Prisma.TimeRegistryWhereUniqueInput | Prisma.TimeRegistryWhereUniqueInput[]
+  update?: Prisma.TimeRegistryUpdateWithWhereUniqueWithoutVatMarginInput | Prisma.TimeRegistryUpdateWithWhereUniqueWithoutVatMarginInput[]
+  updateMany?: Prisma.TimeRegistryUpdateManyWithWhereWithoutVatMarginInput | Prisma.TimeRegistryUpdateManyWithWhereWithoutVatMarginInput[]
+  deleteMany?: Prisma.TimeRegistryScalarWhereInput | Prisma.TimeRegistryScalarWhereInput[]
+}
+
 export type TimeRegistryCreateWithoutEmployeeInput = {
   id: string
   activityDescription?: string | null
@@ -851,6 +917,7 @@ export type TimeRegistryCreateWithoutEmployeeInput = {
   HourType: Prisma.HourTypeCreateNestedOneWithoutTimeRegistryInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTimeRegistryInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeInput
+  VatMargin?: Prisma.VatMarginCreateNestedOneWithoutTimeRegistryInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeCreateNestedManyWithoutTimeRegistryInput
 }
 
@@ -873,6 +940,7 @@ export type TimeRegistryUncheckedCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  vatMarginId?: string | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedCreateNestedManyWithoutTimeRegistryInput
 }
 
@@ -905,6 +973,7 @@ export type TimeRegistryCreateWithoutEmployee_TimeRegistry_deletedByToEmployeeIn
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
   HourType: Prisma.HourTypeCreateNestedOneWithoutTimeRegistryInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTimeRegistryInput
+  VatMargin?: Prisma.VatMarginCreateNestedOneWithoutTimeRegistryInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeCreateNestedManyWithoutTimeRegistryInput
 }
 
@@ -927,6 +996,7 @@ export type TimeRegistryUncheckedCreateWithoutEmployee_TimeRegistry_deletedByToE
   hourTypeId: string
   deleted?: boolean
   deletedAt?: Date | string | null
+  vatMarginId?: string | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedCreateNestedManyWithoutTimeRegistryInput
 }
 
@@ -979,6 +1049,7 @@ export type TimeRegistryScalarWhereInput = {
   deleted?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"TimeRegistry"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"TimeRegistry"> | string | null
+  vatMarginId?: Prisma.StringNullableFilter<"TimeRegistry"> | string | null
 }
 
 export type TimeRegistryUpsertWithWhereUniqueWithoutEmployee_TimeRegistry_deletedByToEmployeeInput = {
@@ -1016,6 +1087,7 @@ export type TimeRegistryCreateWithoutHourTypeInput = {
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTimeRegistryInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeInput
+  VatMargin?: Prisma.VatMarginCreateNestedOneWithoutTimeRegistryInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeCreateNestedManyWithoutTimeRegistryInput
 }
 
@@ -1038,6 +1110,7 @@ export type TimeRegistryUncheckedCreateWithoutHourTypeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  vatMarginId?: string | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedCreateNestedManyWithoutTimeRegistryInput
 }
 
@@ -1087,6 +1160,7 @@ export type TimeRegistryCreateWithoutTimeRegistryEmployeeInput = {
   HourType: Prisma.HourTypeCreateNestedOneWithoutTimeRegistryInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTimeRegistryInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeInput
+  VatMargin?: Prisma.VatMarginCreateNestedOneWithoutTimeRegistryInput
 }
 
 export type TimeRegistryUncheckedCreateWithoutTimeRegistryEmployeeInput = {
@@ -1109,6 +1183,7 @@ export type TimeRegistryUncheckedCreateWithoutTimeRegistryEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  vatMarginId?: string | null
 }
 
 export type TimeRegistryCreateOrConnectWithoutTimeRegistryEmployeeInput = {
@@ -1147,6 +1222,7 @@ export type TimeRegistryUpdateWithoutTimeRegistryEmployeeInput = {
   HourType?: Prisma.HourTypeUpdateOneRequiredWithoutTimeRegistryNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTimeRegistryNestedInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeNestedInput
+  VatMargin?: Prisma.VatMarginUpdateOneWithoutTimeRegistryNestedInput
 }
 
 export type TimeRegistryUncheckedUpdateWithoutTimeRegistryEmployeeInput = {
@@ -1169,6 +1245,7 @@ export type TimeRegistryUncheckedUpdateWithoutTimeRegistryEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TimeRegistryCreateWithoutWorkOrderInput = {
@@ -1190,6 +1267,7 @@ export type TimeRegistryCreateWithoutWorkOrderInput = {
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
   HourType: Prisma.HourTypeCreateNestedOneWithoutTimeRegistryInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeInput
+  VatMargin?: Prisma.VatMarginCreateNestedOneWithoutTimeRegistryInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeCreateNestedManyWithoutTimeRegistryInput
 }
 
@@ -1212,6 +1290,7 @@ export type TimeRegistryUncheckedCreateWithoutWorkOrderInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  vatMarginId?: string | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedCreateNestedManyWithoutTimeRegistryInput
 }
 
@@ -1241,6 +1320,78 @@ export type TimeRegistryUpdateManyWithWhereWithoutWorkOrderInput = {
   data: Prisma.XOR<Prisma.TimeRegistryUpdateManyMutationInput, Prisma.TimeRegistryUncheckedUpdateManyWithoutWorkOrderInput>
 }
 
+export type TimeRegistryCreateWithoutVatMarginInput = {
+  id: string
+  activityDescription?: string | null
+  additionalInfo?: string | null
+  invoiceInfo?: string | null
+  startTime: Date | string
+  endTime?: Date | string | null
+  workDate: Date | string
+  startBreak?: Date | string | null
+  endBreak?: Date | string | null
+  createdAt: Date | string
+  invoiceTime?: boolean
+  onSite?: boolean
+  stayOver?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
+  HourType: Prisma.HourTypeCreateNestedOneWithoutTimeRegistryInput
+  WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTimeRegistryInput
+  Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeInput
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeCreateNestedManyWithoutTimeRegistryInput
+}
+
+export type TimeRegistryUncheckedCreateWithoutVatMarginInput = {
+  id: string
+  activityDescription?: string | null
+  additionalInfo?: string | null
+  invoiceInfo?: string | null
+  startTime: Date | string
+  endTime?: Date | string | null
+  workDate: Date | string
+  startBreak?: Date | string | null
+  endBreak?: Date | string | null
+  createdAt: Date | string
+  invoiceTime?: boolean
+  onSite?: boolean
+  stayOver?: boolean
+  createdBy: string
+  workOrderId: string
+  hourTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedCreateNestedManyWithoutTimeRegistryInput
+}
+
+export type TimeRegistryCreateOrConnectWithoutVatMarginInput = {
+  where: Prisma.TimeRegistryWhereUniqueInput
+  create: Prisma.XOR<Prisma.TimeRegistryCreateWithoutVatMarginInput, Prisma.TimeRegistryUncheckedCreateWithoutVatMarginInput>
+}
+
+export type TimeRegistryCreateManyVatMarginInputEnvelope = {
+  data: Prisma.TimeRegistryCreateManyVatMarginInput | Prisma.TimeRegistryCreateManyVatMarginInput[]
+  skipDuplicates?: boolean
+}
+
+export type TimeRegistryUpsertWithWhereUniqueWithoutVatMarginInput = {
+  where: Prisma.TimeRegistryWhereUniqueInput
+  update: Prisma.XOR<Prisma.TimeRegistryUpdateWithoutVatMarginInput, Prisma.TimeRegistryUncheckedUpdateWithoutVatMarginInput>
+  create: Prisma.XOR<Prisma.TimeRegistryCreateWithoutVatMarginInput, Prisma.TimeRegistryUncheckedCreateWithoutVatMarginInput>
+}
+
+export type TimeRegistryUpdateWithWhereUniqueWithoutVatMarginInput = {
+  where: Prisma.TimeRegistryWhereUniqueInput
+  data: Prisma.XOR<Prisma.TimeRegistryUpdateWithoutVatMarginInput, Prisma.TimeRegistryUncheckedUpdateWithoutVatMarginInput>
+}
+
+export type TimeRegistryUpdateManyWithWhereWithoutVatMarginInput = {
+  where: Prisma.TimeRegistryScalarWhereInput
+  data: Prisma.XOR<Prisma.TimeRegistryUpdateManyMutationInput, Prisma.TimeRegistryUncheckedUpdateManyWithoutVatMarginInput>
+}
+
 export type TimeRegistryCreateManyEmployeeInput = {
   id: string
   activityDescription?: string | null
@@ -1260,6 +1411,7 @@ export type TimeRegistryCreateManyEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  vatMarginId?: string | null
 }
 
 export type TimeRegistryCreateManyEmployee_TimeRegistry_deletedByToEmployeeInput = {
@@ -1281,6 +1433,7 @@ export type TimeRegistryCreateManyEmployee_TimeRegistry_deletedByToEmployeeInput
   hourTypeId: string
   deleted?: boolean
   deletedAt?: Date | string | null
+  vatMarginId?: string | null
 }
 
 export type TimeRegistryUpdateWithoutEmployeeInput = {
@@ -1302,6 +1455,7 @@ export type TimeRegistryUpdateWithoutEmployeeInput = {
   HourType?: Prisma.HourTypeUpdateOneRequiredWithoutTimeRegistryNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTimeRegistryNestedInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeNestedInput
+  VatMargin?: Prisma.VatMarginUpdateOneWithoutTimeRegistryNestedInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUpdateManyWithoutTimeRegistryNestedInput
 }
 
@@ -1324,6 +1478,7 @@ export type TimeRegistryUncheckedUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedUpdateManyWithoutTimeRegistryNestedInput
 }
 
@@ -1346,6 +1501,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TimeRegistryUpdateWithoutEmployee_TimeRegistry_deletedByToEmployeeInput = {
@@ -1367,6 +1523,7 @@ export type TimeRegistryUpdateWithoutEmployee_TimeRegistry_deletedByToEmployeeIn
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
   HourType?: Prisma.HourTypeUpdateOneRequiredWithoutTimeRegistryNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTimeRegistryNestedInput
+  VatMargin?: Prisma.VatMarginUpdateOneWithoutTimeRegistryNestedInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUpdateManyWithoutTimeRegistryNestedInput
 }
 
@@ -1389,6 +1546,7 @@ export type TimeRegistryUncheckedUpdateWithoutEmployee_TimeRegistry_deletedByToE
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedUpdateManyWithoutTimeRegistryNestedInput
 }
 
@@ -1411,6 +1569,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutEmployee_TimeRegistry_deletedB
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TimeRegistryCreateManyHourTypeInput = {
@@ -1432,6 +1591,7 @@ export type TimeRegistryCreateManyHourTypeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  vatMarginId?: string | null
 }
 
 export type TimeRegistryUpdateWithoutHourTypeInput = {
@@ -1453,6 +1613,7 @@ export type TimeRegistryUpdateWithoutHourTypeInput = {
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTimeRegistryNestedInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeNestedInput
+  VatMargin?: Prisma.VatMarginUpdateOneWithoutTimeRegistryNestedInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUpdateManyWithoutTimeRegistryNestedInput
 }
 
@@ -1475,6 +1636,7 @@ export type TimeRegistryUncheckedUpdateWithoutHourTypeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedUpdateManyWithoutTimeRegistryNestedInput
 }
 
@@ -1497,6 +1659,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutHourTypeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TimeRegistryCreateManyWorkOrderInput = {
@@ -1518,6 +1681,7 @@ export type TimeRegistryCreateManyWorkOrderInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  vatMarginId?: string | null
 }
 
 export type TimeRegistryUpdateWithoutWorkOrderInput = {
@@ -1539,6 +1703,7 @@ export type TimeRegistryUpdateWithoutWorkOrderInput = {
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
   HourType?: Prisma.HourTypeUpdateOneRequiredWithoutTimeRegistryNestedInput
   Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeNestedInput
+  VatMargin?: Prisma.VatMarginUpdateOneWithoutTimeRegistryNestedInput
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUpdateManyWithoutTimeRegistryNestedInput
 }
 
@@ -1561,6 +1726,7 @@ export type TimeRegistryUncheckedUpdateWithoutWorkOrderInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedUpdateManyWithoutTimeRegistryNestedInput
 }
 
@@ -1579,6 +1745,97 @@ export type TimeRegistryUncheckedUpdateManyWithoutWorkOrderInput = {
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TimeRegistryCreateManyVatMarginInput = {
+  id: string
+  activityDescription?: string | null
+  additionalInfo?: string | null
+  invoiceInfo?: string | null
+  startTime: Date | string
+  endTime?: Date | string | null
+  workDate: Date | string
+  startBreak?: Date | string | null
+  endBreak?: Date | string | null
+  createdAt: Date | string
+  invoiceTime?: boolean
+  onSite?: boolean
+  stayOver?: boolean
+  createdBy: string
+  workOrderId: string
+  hourTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type TimeRegistryUpdateWithoutVatMarginInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  workDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startBreak?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endBreak?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
+  HourType?: Prisma.HourTypeUpdateOneRequiredWithoutTimeRegistryNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTimeRegistryNestedInput
+  Employee_TimeRegistry_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTimeRegistry_TimeRegistry_deletedByToEmployeeNestedInput
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUpdateManyWithoutTimeRegistryNestedInput
+}
+
+export type TimeRegistryUncheckedUpdateWithoutVatMarginInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  workDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startBreak?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endBreak?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  TimeRegistryEmployee?: Prisma.TimeRegistryEmployeeUncheckedUpdateManyWithoutTimeRegistryNestedInput
+}
+
+export type TimeRegistryUncheckedUpdateManyWithoutVatMarginInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  workDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startBreak?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endBreak?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1636,10 +1893,12 @@ export type TimeRegistrySelect<ExtArgs extends runtime.Types.Extensions.Internal
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
+  vatMarginId?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   HourType?: boolean | Prisma.HourTypeDefaultArgs<ExtArgs>
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Employee_TimeRegistry_deletedByToEmployee?: boolean | Prisma.TimeRegistry$Employee_TimeRegistry_deletedByToEmployeeArgs<ExtArgs>
+  VatMargin?: boolean | Prisma.TimeRegistry$VatMarginArgs<ExtArgs>
   TimeRegistryEmployee?: boolean | Prisma.TimeRegistry$TimeRegistryEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.TimeRegistryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timeRegistry"]>
@@ -1666,14 +1925,16 @@ export type TimeRegistrySelectScalar = {
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
+  vatMarginId?: boolean
 }
 
-export type TimeRegistryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activityDescription" | "additionalInfo" | "invoiceInfo" | "startTime" | "endTime" | "workDate" | "startBreak" | "endBreak" | "createdAt" | "invoiceTime" | "onSite" | "stayOver" | "createdBy" | "workOrderId" | "hourTypeId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["timeRegistry"]>
+export type TimeRegistryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activityDescription" | "additionalInfo" | "invoiceInfo" | "startTime" | "endTime" | "workDate" | "startBreak" | "endBreak" | "createdAt" | "invoiceTime" | "onSite" | "stayOver" | "createdBy" | "workOrderId" | "hourTypeId" | "deleted" | "deletedAt" | "deletedBy" | "vatMarginId", ExtArgs["result"]["timeRegistry"]>
 export type TimeRegistryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   HourType?: boolean | Prisma.HourTypeDefaultArgs<ExtArgs>
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Employee_TimeRegistry_deletedByToEmployee?: boolean | Prisma.TimeRegistry$Employee_TimeRegistry_deletedByToEmployeeArgs<ExtArgs>
+  VatMargin?: boolean | Prisma.TimeRegistry$VatMarginArgs<ExtArgs>
   TimeRegistryEmployee?: boolean | Prisma.TimeRegistry$TimeRegistryEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.TimeRegistryCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1685,6 +1946,7 @@ export type $TimeRegistryPayload<ExtArgs extends runtime.Types.Extensions.Intern
     HourType: Prisma.$HourTypePayload<ExtArgs>
     WorkOrder: Prisma.$WorkOrderPayload<ExtArgs>
     Employee_TimeRegistry_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    VatMargin: Prisma.$VatMarginPayload<ExtArgs> | null
     TimeRegistryEmployee: Prisma.$TimeRegistryEmployeePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1707,6 +1969,7 @@ export type $TimeRegistryPayload<ExtArgs extends runtime.Types.Extensions.Intern
     deleted: boolean
     deletedAt: Date | null
     deletedBy: string | null
+    vatMarginId: string | null
   }, ExtArgs["result"]["timeRegistry"]>
   composites: {}
 }
@@ -2051,6 +2314,7 @@ export interface Prisma__TimeRegistryClient<T, Null = never, ExtArgs extends run
   HourType<T extends Prisma.HourTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HourTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__HourTypeClient<runtime.Types.Result.GetResult<Prisma.$HourTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   WorkOrder<T extends Prisma.WorkOrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WorkOrderDefaultArgs<ExtArgs>>): Prisma.Prisma__WorkOrderClient<runtime.Types.Result.GetResult<Prisma.$WorkOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_TimeRegistry_deletedByToEmployee<T extends Prisma.TimeRegistry$Employee_TimeRegistry_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TimeRegistry$Employee_TimeRegistry_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  VatMargin<T extends Prisma.TimeRegistry$VatMarginArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TimeRegistry$VatMarginArgs<ExtArgs>>): Prisma.Prisma__VatMarginClient<runtime.Types.Result.GetResult<Prisma.$VatMarginPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   TimeRegistryEmployee<T extends Prisma.TimeRegistry$TimeRegistryEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TimeRegistry$TimeRegistryEmployeeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeRegistryEmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2100,6 +2364,7 @@ export interface TimeRegistryFieldRefs {
   readonly deleted: Prisma.FieldRef<"TimeRegistry", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"TimeRegistry", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"TimeRegistry", 'String'>
+  readonly vatMarginId: Prisma.FieldRef<"TimeRegistry", 'String'>
 }
     
 
@@ -2459,6 +2724,25 @@ export type TimeRegistry$Employee_TimeRegistry_deletedByToEmployeeArgs<ExtArgs e
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * TimeRegistry.VatMargin
+ */
+export type TimeRegistry$VatMarginArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VatMargin
+   */
+  select?: Prisma.VatMarginSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the VatMargin
+   */
+  omit?: Prisma.VatMarginOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VatMarginInclude<ExtArgs> | null
+  where?: Prisma.VatMarginWhereInput
 }
 
 /**

@@ -30,6 +30,38 @@ type PriceListItemRaw = {
   PriceListItemTarget: {targetId: string} | null
 }
 
+const STAY_OVER_UNIT = 'STAY_OVER'
+
+function normalizeText(value: string | null | undefined): string {
+  return (value ?? '').trim().toUpperCase().replace(/\s+/g, '_')
+}
+
+function findStayOverPrice(items: PriceListItemRaw[]): {itemId: string; unit: string; basePrice: number} | null {
+  const byUnit = items.find(item => !item.isCostMargin && normalizeText(item.unit) === STAY_OVER_UNIT)
+  if (byUnit) {
+    return {
+      itemId: byUnit.id,
+      unit: byUnit.unit,
+      basePrice: byUnit.price.toNumber(),
+    }
+  }
+
+  // Compatibility fallback for older lists where stay-over was encoded in description.
+  const byDescription = items.find(item => {
+    if (item.isCostMargin) return false
+    const normalizedDescription = normalizeText(item.description).replace(/_/g, '')
+    return normalizedDescription === 'STAYOVER'
+  })
+
+  if (!byDescription) return null
+
+  return {
+    itemId: byDescription.id,
+    unit: byDescription.unit,
+    basePrice: byDescription.price.toNumber(),
+  }
+}
+
 function buildTargetPriceMap(
   items: PriceListItemRaw[],
 ): Map<string, {itemId: string; unit: string; basePrice: number}> {
@@ -52,6 +84,8 @@ function applyMargin(basePrice: number, marginPercent: number): number {
 
 type TimeRegistryRaw = {
   id: string
+  invoiceTime: boolean | null
+  stayOver: boolean | null
   startTime: Date
   endTime: Date | null
   startBreak: Date | null
@@ -66,6 +100,8 @@ type WorkOrderStructureRaw = {
   quantity: number | null
   shortDescription: string | null
   materialId: string
+  vatMarginId: string | null
+  VatMargin: {id: string; vat: number} | null
   Material: {
     id: string
     name: string | null
@@ -140,14 +176,12 @@ type InvoiceOutRaw = {
   paymentMethodId: string
   invoiceSentTypeId: string
   invoiceStatusId: string
-  vatMarginId: string
   priceListId: string | null
   InvoiceType: {id: string; name: string}
   Employee: {id: string; firstName: string; lastName: string}
   PaymentMethod: {id: string; name: string}
   InvoiceSentType: {id: string; name: string}
   InvoiceStatus: {id: string; name: string}
-  VatMargin: {id: string; vat: number}
   // ← Price list at invoice level
   PriceList: {
     id: string
@@ -170,17 +204,29 @@ type InvoiceOutRaw = {
 }
 
 // Now takes priceMap and costMargin directly — sourced from invoice.PriceList
+// Returns work order with calculated VAT per material based on VatMargin
 function mapWorkOrderWithLines(
   w: WorkOrderInvoiceRaw,
   priceMap: Map<string, {itemId: string; unit: string; basePrice: number}>,
   costMargin: number,
+  stayOverPrice: {itemId: string; unit: string; basePrice: number} | null,
 ): MappedInvoiceOutWorkOrder {
   const wo = w.WorkOrder
   const lines: MappedBillingLine[] = []
+  const vatByRateMap = new Map<number, number>() // VAT rate → total VAT amount
 
   // ── Hour lines ────────────────────────────────────────────────────────────
   const hoursByType = new Map<string, {label: string; targetId: string | null; totalHours: number}>()
+  let stayOverCount = 0
   for (const tr of wo.TimeRegistry) {
+    if (tr.invoiceTime !== true) {
+      continue
+    }
+
+    if (tr.stayOver === true) {
+      stayOverCount += 1
+    }
+
     const existing = hoursByType.get(tr.hourTypeId)
     const hours = calcHours(tr.startTime, tr.endTime, tr.startBreak, tr.endBreak, tr.TimeRegistryEmployee.length || 1)
     if (existing) {
@@ -207,7 +253,29 @@ function mapWorkOrderWithLines(
       unitPriceBase: match?.basePrice ?? null,
       unitPriceFinal: match ? applyMargin(match.basePrice, costMargin) : null,
       lineTotalFinal: match ? applyMargin(match.basePrice, costMargin) * totalHours : null,
+      vatRate: 0,
+      lineVatAmount: match ? 0 : null,
+      lineTotalInclVat: match ? applyMargin(match.basePrice, costMargin) * totalHours : null,
       unmatched: !match,
+    })
+  }
+
+  if (stayOverCount > 0) {
+    lines.push({
+      workOrderId: wo.id,
+      type: 'stay_over',
+      sourceId: 'stay_over',
+      sourceLabel: 'Stay Over',
+      quantity: stayOverCount,
+      unit: stayOverPrice?.unit ?? 'STAY_OVER',
+      priceListItemId: stayOverPrice?.itemId ?? null,
+      unitPriceBase: stayOverPrice?.basePrice ?? null,
+      unitPriceFinal: stayOverPrice ? applyMargin(stayOverPrice.basePrice, costMargin) : null,
+      lineTotalFinal: stayOverPrice ? applyMargin(stayOverPrice.basePrice, costMargin) * stayOverCount : null,
+      vatRate: 0,
+      lineVatAmount: stayOverPrice ? 0 : null,
+      lineTotalInclVat: stayOverPrice ? applyMargin(stayOverPrice.basePrice, costMargin) * stayOverCount : null,
+      unmatched: !stayOverPrice,
     })
   }
 
@@ -216,6 +284,17 @@ function mapWorkOrderWithLines(
     const mat = wos.Material
     const qty = wos.quantity ?? 1
     const match = mat.targetId ? priceMap.get(mat.targetId) : undefined
+    const unitPrice = match ? applyMargin(match.basePrice, costMargin) : null
+    const lineTotal = unitPrice ? unitPrice * qty : null
+    const vatRate = wos.VatMargin?.vat ?? 0
+    const lineVat = lineTotal !== null ? lineTotal * (vatRate / 100) : null
+    const lineTotalInclVat = lineTotal !== null ? lineTotal + (lineVat ?? 0) : null
+
+    // Calculate VAT for this material line based on its VatMargin
+    if (lineTotal !== null && vatRate > 0) {
+      vatByRateMap.set(vatRate, (vatByRateMap.get(vatRate) ?? 0) + (lineVat ?? 0))
+    }
+
     lines.push({
       workOrderId: wo.id,
       type: 'material',
@@ -225,9 +304,14 @@ function mapWorkOrderWithLines(
       unit: match?.unit ?? mat.Unit.abbreviation,
       priceListItemId: match?.itemId ?? null,
       unitPriceBase: match?.basePrice ?? null,
-      unitPriceFinal: match ? applyMargin(match.basePrice, costMargin) : null,
-      lineTotalFinal: match ? applyMargin(match.basePrice, costMargin) * qty : null,
+      unitPriceFinal: unitPrice,
+      lineTotalFinal: lineTotal,
+      vatRate,
+      lineVatAmount: lineVat,
+      lineTotalInclVat,
       unmatched: !match,
+      workOrderStructureId: wos.id,
+      currentVatMarginId: wos.vatMarginId,
     })
   }
 
@@ -248,9 +332,21 @@ function mapWorkOrderWithLines(
       unitPriceBase: match?.basePrice ?? null,
       unitPriceFinal: match ? applyMargin(match.basePrice, costMargin) : null,
       lineTotalFinal: match ? applyMargin(match.basePrice, costMargin) * 1 : null,
+      vatRate: 0,
+      lineVatAmount: match ? 0 : null,
+      lineTotalInclVat: match ? applyMargin(match.basePrice, costMargin) * 1 : null,
       unmatched: !match,
     })
   }
+
+  const subtotalExVat = lines.reduce((sum, l) => sum + (l.lineTotalFinal ?? 0), 0)
+  const totalVat = Array.from(vatByRateMap.values()).reduce((sum, v) => sum + v, 0)
+  const totalInclVat = subtotalExVat + totalVat
+
+  // Convert map to sorted array for consistent output
+  const vatByRateArray = Array.from(vatByRateMap.entries())
+    .map(([rate, amount]) => ({rate, amount}))
+    .sort((a, b) => a.rate - b.rate)
 
   return {
     id: wo.id,
@@ -265,22 +361,38 @@ function mapWorkOrderWithLines(
     companyId: wo.Project.Company.id,
     companyName: wo.Project.Company.name,
     billingLines: lines,
+    subtotalExVat,
+    vatByRate: vatByRateArray,
+    totalVat,
+    totalInclVat,
   }
 }
 
 export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
-  const vatPct = r.VatMargin.vat
-
   // Build price map from invoice-level price list
   const priceItems = r.PriceList?.PriceListItem ?? []
   const priceMap = buildTargetPriceMap(priceItems)
   const costMargin = priceItems.find(i => i.isCostMargin)?.price.toNumber() ?? 0
+  const stayOverPrice = findStayOverPrice(priceItems)
 
-  const workOrders = r.WorkOrderInvoice.map(w => mapWorkOrderWithLines(w, priceMap, costMargin))
+  const workOrders = r.WorkOrderInvoice.map(w => mapWorkOrderWithLines(w, priceMap, costMargin, stayOverPrice))
 
-  const subtotalExVat = workOrders.flatMap(wo => wo.billingLines).reduce((sum, l) => sum + (l.lineTotalFinal ?? 0), 0)
-  const vatAmount = subtotalExVat * (vatPct / 100)
-  const totalInclVat = subtotalExVat + vatAmount
+  // Aggregate VAT from all work orders
+  const invoiceVatByRateMap = new Map<number, number>() // rate → total amount
+  for (const wo of workOrders) {
+    for (const {rate, amount} of wo.vatByRate) {
+      invoiceVatByRateMap.set(rate, (invoiceVatByRateMap.get(rate) ?? 0) + amount)
+    }
+  }
+
+  const subtotalExVat = workOrders.reduce((sum, wo) => sum + wo.subtotalExVat, 0)
+  const totalVat = workOrders.reduce((sum, wo) => sum + wo.totalVat, 0)
+  const totalInclVat = subtotalExVat + totalVat
+
+  // Convert map to sorted array
+  const vatByRateArray = Array.from(invoiceVatByRateMap.entries())
+    .map(([rate, amount]) => ({rate, amount}))
+    .sort((a, b) => a.rate - b.rate)
 
   return {
     id: r.id,
@@ -311,8 +423,6 @@ export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
     invoiceSentTypeName: r.InvoiceSentType.name,
     invoiceStatusId: r.invoiceStatusId,
     invoiceStatusName: r.InvoiceStatus.name,
-    vatMarginId: r.vatMarginId,
-    vatMarginVat: vatPct,
     priceListId: r.priceListId,
     priceListName: r.PriceList?.name ?? null,
     contacts: r.InvoiceOutContact.map(
@@ -326,7 +436,8 @@ export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
     ),
     workOrders,
     subtotalExVat,
-    vatAmount,
+    vatByRate: vatByRateArray,
+    totalVat,
     totalInclVat,
   }
 }

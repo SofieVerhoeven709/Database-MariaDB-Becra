@@ -15,7 +15,7 @@ export interface PriceListOption {
 }
 
 // ─── Billing lines ─────────────────────────────────────────────────────────────
-export type BillingLineType = 'hours' | 'material' | 'training'
+export type BillingLineType = 'hours' | 'material' | 'training' | 'stay_over'
 
 export interface MappedBillingLine {
   workOrderId: string
@@ -28,7 +28,12 @@ export interface MappedBillingLine {
   unitPriceBase: number | null
   unitPriceFinal: number | null
   lineTotalFinal: number | null
+  vatRate: number | null
+  lineVatAmount: number | null
+  lineTotalInclVat: number | null
   unmatched: boolean
+  workOrderStructureId?: string // For materials with VAT
+  currentVatMarginId?: string | null
 }
 
 // ─── InvoiceOut ────────────────────────────────────────────────────────────────
@@ -45,6 +50,11 @@ export interface MappedInvoiceOutWorkOrder {
   companyId: string
   companyName: string
   billingLines: MappedBillingLine[]
+  // VAT calculation per work order
+  subtotalExVat: number
+  vatByRate: Array<{rate: number; amount: number}> // VAT grouped by rate
+  totalVat: number
+  totalInclVat: number
 }
 
 export interface MappedInvoiceOut {
@@ -76,14 +86,14 @@ export interface MappedInvoiceOut {
   invoiceSentTypeName: string
   invoiceStatusId: string
   invoiceStatusName: string
-  vatMarginId: string
-  vatMarginVat: number
-  priceListId: string | null // ← new
-  priceListName: string | null // ← new
+  priceListId: string | null
+  priceListName: string | null
   contacts: MappedInvoiceOutContact[]
   workOrders: MappedInvoiceOutWorkOrder[]
   subtotalExVat: number
-  vatAmount: number
+  // VAT breakdown by rate across all work orders
+  vatByRate: Array<{rate: number; amount: number}>
+  totalVat: number
   totalInclVat: number
 }
 

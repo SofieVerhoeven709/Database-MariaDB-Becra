@@ -8281,7 +8281,6 @@ export const InvoiceOutScalarFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  vatMarginId: 'vatMarginId',
   priceListId: 'priceListId'
 } as const
 
@@ -8934,7 +8933,8 @@ export const TimeRegistryScalarFieldEnum = {
   hourTypeId: 'hourTypeId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  vatMarginId: 'vatMarginId'
 } as const
 
 export type TimeRegistryScalarFieldEnum = (typeof TimeRegistryScalarFieldEnum)[keyof typeof TimeRegistryScalarFieldEnum]
@@ -9142,7 +9142,8 @@ export const WorkOrderStructureScalarFieldEnum = {
   targetId: 'targetId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  vatMarginId: 'vatMarginId'
 } as const
 
 export type WorkOrderStructureScalarFieldEnum = (typeof WorkOrderStructureScalarFieldEnum)[keyof typeof WorkOrderStructureScalarFieldEnum]
@@ -9281,7 +9282,8 @@ export const VatMarginScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  countryId: 'countryId'
 } as const
 
 export type VatMarginScalarFieldEnum = (typeof VatMarginScalarFieldEnum)[keyof typeof VatMarginScalarFieldEnum]
@@ -10101,7 +10103,6 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  vatMarginId: 'vatMarginId',
   priceListId: 'priceListId'
 } as const
 
@@ -10585,7 +10586,8 @@ export const TimeRegistryOrderByRelevanceFieldEnum = {
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
   hourTypeId: 'hourTypeId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  vatMarginId: 'vatMarginId'
 } as const
 
 export type TimeRegistryOrderByRelevanceFieldEnum = (typeof TimeRegistryOrderByRelevanceFieldEnum)[keyof typeof TimeRegistryOrderByRelevanceFieldEnum]
@@ -10745,7 +10747,8 @@ export const WorkOrderStructureOrderByRelevanceFieldEnum = {
   workOrderId: 'workOrderId',
   materialId: 'materialId',
   targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  vatMarginId: 'vatMarginId'
 } as const
 
 export type WorkOrderStructureOrderByRelevanceFieldEnum = (typeof WorkOrderStructureOrderByRelevanceFieldEnum)[keyof typeof WorkOrderStructureOrderByRelevanceFieldEnum]
@@ -10854,7 +10857,8 @@ export type PaymentMethodOrderByRelevanceFieldEnum = (typeof PaymentMethodOrderB
 export const VatMarginOrderByRelevanceFieldEnum = {
   id: 'id',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  countryId: 'countryId'
 } as const
 
 export type VatMarginOrderByRelevanceFieldEnum = (typeof VatMarginOrderByRelevanceFieldEnum)[keyof typeof VatMarginOrderByRelevanceFieldEnum]

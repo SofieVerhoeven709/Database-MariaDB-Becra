@@ -10,7 +10,7 @@ import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
-import type {MappedInvoiceOut, InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import type {MappedInvoiceOut, InvoiceLookup} from '@/types/invoice'
 import {
   softDeleteInvoiceOutAction,
   hardDeleteInvoiceOutAction,
@@ -28,7 +28,6 @@ type SortField =
   | 'invoiceStatus'
   | 'paymentMethod'
   | 'invoiceType'
-  | 'vatMargin'
   | 'outstanding'
   | 'reminderSent'
   | 'createdAt'
@@ -78,7 +77,6 @@ interface InvoiceOutTableProps {
   paymentMethods: InvoiceLookup[]
   invoiceSentTypes: InvoiceLookup[]
   invoiceStatuses: InvoiceLookup[]
-  vatMargins: VatMarginOption[]
   contactOptions: InvoiceLookup[]
   projectOptions: ProjectOption[]
 }
@@ -115,7 +113,6 @@ export function InvoiceOutTable({
   paymentMethods,
   invoiceSentTypes,
   invoiceStatuses,
-  vatMargins,
   contactOptions,
   projectOptions,
 }: InvoiceOutTableProps) {
@@ -176,8 +173,6 @@ export function InvoiceOutTable({
           return s(a.paymentMethodName, b.paymentMethodName)
         case 'invoiceType':
           return s(a.invoiceTypeName, b.invoiceTypeName)
-        case 'vatMargin':
-          return dir * (a.vatMarginVat - b.vatMarginVat)
         case 'outstanding':
           return n(a.outstanding, b.outstanding)
         case 'reminderSent':
@@ -263,7 +258,6 @@ export function InvoiceOutTable({
               <Th field="invoiceStatus" label="Status" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="paymentMethod" label="Payment" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="invoiceType" label="Type" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
-              <Th field="vatMargin" label="VAT %" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="outstanding" label="Outstanding" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="reminderSent" label="Reminder" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdAt" label="Created At" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
@@ -282,7 +276,7 @@ export function InvoiceOutTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={showDeletedCols ? 15 : 14} className="h-32 text-center text-muted-foreground">
+                <TableCell colSpan={showDeletedCols ? 14 : 13} className="h-32 text-center text-muted-foreground">
                   No invoices found.
                 </TableCell>
               </TableRow>
@@ -309,7 +303,6 @@ export function InvoiceOutTable({
                   </TableCell>
                   <TableCell className={tdClass}>{inv.paymentMethodName}</TableCell>
                   <TableCell className={tdClass}>{inv.invoiceTypeName}</TableCell>
-                  <TableCell className={tdClass}>{inv.vatMarginVat}%</TableCell>
                   <TableCell>
                     <BoolBadge value={inv.outstanding} />
                   </TableCell>
@@ -402,7 +395,6 @@ export function InvoiceOutTable({
         paymentMethods={paymentMethods}
         invoiceSentTypes={invoiceSentTypes}
         invoiceStatuses={invoiceStatuses}
-        vatMargins={vatMargins}
         contactOptions={contactOptions}
         projectOptions={projectOptions}
         onSaved={() => {

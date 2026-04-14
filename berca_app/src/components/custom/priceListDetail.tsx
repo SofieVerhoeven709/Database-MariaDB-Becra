@@ -148,6 +148,7 @@ function ItemDialog({
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Unit *</Label>
             <Input
+              list="price-list-unit-options"
               value={unit}
               onChange={e => {
                 setUnit(e.target.value)
@@ -156,6 +157,13 @@ function ItemDialog({
               disabled={isEditingCostMargin}
               className={`bg-secondary border-border ${errors.unit ? 'border-destructive' : ''} ${isEditingCostMargin ? 'opacity-60 cursor-not-allowed' : ''}`}
             />
+            <datalist id="price-list-unit-options">
+              <option value="H" />
+              <option value="STAY_OVER" />
+            </datalist>
+            {!isEditingCostMargin && (
+              <p className="text-[11px] text-muted-foreground">Use `STAY_OVER` to bill time-registry stay-over markers.</p>
+            )}
             {errors.unit && <p className="text-xs text-destructive">{errors.unit}</p>}
           </div>
           <div className="flex flex-col gap-1.5">

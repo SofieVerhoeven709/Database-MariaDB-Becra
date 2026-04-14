@@ -21,6 +21,54 @@ function isMissingTrackedStructureMaterialGroupColumnError(error: unknown): bool
   return false
 }
 
+function isInventoryOrderFilterMismatchError(error: unknown): boolean {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    const metaColumn = String(error.meta?.column ?? '')
+    return (
+      error.code === 'P2022' &&
+      (metaColumn.includes('InventoryOrder.materialId') || metaColumn.includes('InventoryOrder.inventoryId'))
+    )
+  }
+
+  if (error instanceof Error) {
+    return (
+      (error.message.includes('Unknown argument') || error.message.includes('Unknown field')) &&
+      (error.message.includes('materialId') || error.message.includes('inventoryId'))
+    )
+  }
+
+  return false
+}
+
+async function deleteInventoryOrdersCompat(
+  tx: Prisma.TransactionClient,
+  data: {materialId: string; inventoryIds: string[]},
+) {
+  const whereCandidates: Array<Record<string, unknown>> = [{materialId: data.materialId}]
+
+  if (data.inventoryIds.length > 0) {
+    whereCandidates.push({inventoryId: {in: data.inventoryIds}})
+  }
+
+  let lastMismatchError: unknown = null
+
+  for (const where of whereCandidates) {
+    try {
+      await tx.inventoryOrder.deleteMany({where: where as any})
+      return
+    } catch (error) {
+      if (!isInventoryOrderFilterMismatchError(error)) {
+        throw error
+      }
+      lastMismatchError = error
+    }
+  }
+
+  if (lastMismatchError) {
+    throw lastMismatchError
+  }
+}
+
 async function createTrackedStructureCompat(
   tx: Prisma.TransactionClient,
   data: {
@@ -711,7 +759,7 @@ export async function hardDeleteMaterial(id: string) {
 
     if (inventoryIds.length > 0) {
       await tx.inventoryChange.deleteMany({where: {inventoryId: {in: inventoryIds}}})
-      await tx.inventoryOrder.deleteMany({where: {inventoryId: {in: inventoryIds}}})
+      await deleteInventoryOrdersCompat(tx, {materialId: id, inventoryIds})
       await tx.inventoryStructure.deleteMany({where: {inventoryId: {in: inventoryIds}}})
       await tx.inventory.deleteMany({where: {id: {in: inventoryIds}}})
     }

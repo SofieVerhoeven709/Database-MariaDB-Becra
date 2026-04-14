@@ -4,7 +4,7 @@ import {mapPurchase} from '@/extra/purchases'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getCompanies} from '@/dal/companies'
-import {getProjects} from '@/dal/projects'
+import {getPaymentConditionOptions, getQuoteSuppliers} from '@/dal/quoteSuppliers'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
@@ -19,12 +19,13 @@ function formatShortDate(date: Date) {
 export default async function PurchaseOrdersPage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [department, purchasesFromDAL, profile, companiesRaw, projectsRaw] = await Promise.all([
+  const [department, purchasesFromDAL, profile, companiesRaw, quoteSuppliersRaw, paymentConditionsRaw] = await Promise.all([
     getDepartmentById(departmentId),
     getPurchases(),
     getSessionProfileFromCookieOrThrow(),
     getCompanies(),
-    getProjects(),
+    getQuoteSuppliers(),
+    getPaymentConditionOptions(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -39,9 +40,13 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
     .map(c => ({id: c.id, name: c.name}))
     .sort((a, b) => a.name.localeCompare(b.name))
 
-  const projectOptions = projectsRaw
-    .filter(p => !p.deleted)
-    .map(p => ({id: p.id, name: `${p.projectNumber} – ${p.projectName}`}))
+  const quoteSupplierOptions = quoteSuppliersRaw
+    .filter(q => !q.deleted)
+    .map(q => ({id: q.id, name: `${q.quoteNumber} - ${q.Company?.name ?? 'Unknown supplier'}`}))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  const paymentConditionOptions = paymentConditionsRaw
+    .map(pc => ({id: pc.id, name: pc.name}))
     .sort((a, b) => a.name.localeCompare(b.name))
 
   const datedEntries = purchases
@@ -91,7 +96,8 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
         <PurchaseTable
           initialPurchases={purchases}
           companies={companyOptions}
-          projects={projectOptions}
+          quoteSuppliers={quoteSupplierOptions}
+          paymentConditions={paymentConditionOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           departmentId={departmentId}

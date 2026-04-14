@@ -182,12 +182,11 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     Purchase: {
       select: {
         id: true
-        orderNumber: true
+        purchaseNumber: true
         shortDescription: true
         purchaseDate: true
         status: true
         Company: {select: {name: true}}
-        Project: {select: {projectName: true}}
       }
     }
     TimeRegistry: {
@@ -242,7 +241,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     DeliveryNoteSupplier: {
       select: {id: true; supplierNN: true; information: true; createdAt: true; Company: {select: {name: true}}}
     }
-    QuoteSupplier: {select: {id: true; description: true; Project: {select: {projectName: true; projectNumber: true}}}}
+    QuoteSupplier: {select: {id: true; description: true; Company: {select: {name: true; number: true}}}}
     WorkOrderStructure: {
       select: {id: true; shortDescription: true; createdAt: true; WorkOrder: {select: {workOrderNumber: true}}}
     }
@@ -262,12 +261,11 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     Purchase_Purchase_deletedByToEmployee: {
       select: {
         id: true
-        orderNumber: true
+        purchaseNumber: true
         shortDescription: true
         deletedAt: true
         purchaseDate: true
         Company: {select: {name: true}}
-        Project: {select: {projectName: true}}
       }
     }
     TimeRegistry_TimeRegistry_deletedByToEmployee: {
@@ -288,7 +286,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         id: true
         description: true
         deletedAt: true
-        Project: {select: {projectName: true; projectNumber: true}}
+        Company: {select: {name: true; number: true}}
       }
     }
     WorkOrderStructure_WorkOrderStructure_deletedByToEmployee: {
@@ -347,7 +345,14 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       }
     }
     ProjectType: {select: {id: true; name: true; createdAt: true}}
-    PurchaseDetail: {select: {id: true; beNumber: true; status: true; Purchase: {select: {orderNumber: true}}}}
+    PurchaseDetail: {
+      select: {
+        id: true
+        lineStatus: true
+        Material: {select: {beNumber: true; shortDescription: true}}
+        Purchase: {select: {purchaseNumber: true}}
+      }
+    }
     PurchaseOrderBecra: {select: {id: true; description: true; date: true}}
     QuoteBecra_QuoteBecra_createdByToEmployee: {select: {id: true; description: true; date: true}}
     Role_Role_createdByToEmployee: {select: {id: true; name: true; createdAt: true}}
@@ -441,7 +446,13 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     }
     ProjectType_ProjectType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     PurchaseDetail_PurchaseDetail_deletedByToEmployee: {
-      select: {id: true; beNumber: true; status: true; deletedAt: true; Purchase: {select: {orderNumber: true}}}
+      select: {
+        id: true
+        lineStatus: true
+        deletedAt: true
+        Material: {select: {beNumber: true; shortDescription: true}}
+        Purchase: {select: {purchaseNumber: true}}
+      }
     }
     PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
     QuoteBecra_QuoteBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
@@ -579,8 +590,8 @@ export function mapEmployeeDetail(
     ...e.Purchase.map(p => ({
       id: p.id,
       type: 'Purchase' as const,
-      label: p.orderNumber ?? p.shortDescription ?? '(no number)',
-      detail: [p.Company?.name, p.Project?.projectName].filter(Boolean).join(' · ') || null,
+      label: p.purchaseNumber ?? p.shortDescription ?? '(no number)',
+      detail: [p.Company?.name, p.status].filter(Boolean).join(' · ') || null,
       date: p.purchaseDate?.toISOString() ?? null,
       deletedAt: null,
       href: null,
@@ -642,7 +653,7 @@ export function mapEmployeeDetail(
     ...e.QuoteSupplier.map(q => ({
       id: q.id,
       type: 'Quote' as const,
-      label: q.Project ? `${q.Project.projectNumber} — ${q.Project.projectName}` : '(no project)',
+      label: q.Company ? `${q.Company.number ?? ''} — ${q.Company.name}`.trim().replace(/^—\s*/, '') : '(no supplier)',
       detail: q.description ?? null,
       date: null,
       deletedAt: null,
@@ -772,8 +783,8 @@ export function mapEmployeeDetail(
     ...e.Purchase_Purchase_deletedByToEmployee.map(p => ({
       id: p.id,
       type: 'Purchase' as const,
-      label: p.orderNumber ?? p.shortDescription ?? '(no number)',
-      detail: [p.Company?.name, p.Project?.projectName].filter(Boolean).join(' · ') || null,
+      label: p.purchaseNumber ?? p.shortDescription ?? '(no number)',
+      detail: p.Company?.name ?? null,
       date: p.purchaseDate?.toISOString() ?? null,
       deletedAt: p.deletedAt?.toISOString() ?? null,
       href: null,
@@ -808,7 +819,7 @@ export function mapEmployeeDetail(
     ...e.QuoteSupplier_QuoteSupplier_deletedByToEmployee.map(q => ({
       id: q.id,
       type: 'Quote' as const,
-      label: q.Project ? `${q.Project.projectNumber} — ${q.Project.projectName}` : '(no project)',
+      label: q.Company ? `${q.Company.number ?? ''} — ${q.Company.name}`.trim().replace(/^—\s*/, '') : '(no supplier)',
       detail: q.description ?? null,
       date: null,
       deletedAt: q.deletedAt?.toISOString() ?? null,
@@ -1180,8 +1191,8 @@ export function mapEmployeeDetail(
       ...e.PurchaseDetail.map(r => ({
         id: r.id,
         type: 'Purchase Detail' as const,
-        label: r.Purchase?.orderNumber ?? '(no order)',
-        detail: r.beNumber ?? null,
+        label: r.Purchase?.purchaseNumber ?? '(no order)',
+        detail: r.Material?.beNumber ?? r.Material?.shortDescription ?? null,
         date: null,
         deletedAt: null,
         href: null,
@@ -1547,8 +1558,8 @@ export function mapEmployeeDetail(
       ...e.PurchaseDetail_PurchaseDetail_deletedByToEmployee.map(r => ({
         id: r.id,
         type: 'Purchase Detail' as const,
-        label: r.Purchase?.orderNumber ?? '(no order)',
-        detail: r.beNumber ?? null,
+        label: r.Purchase?.purchaseNumber ?? '(no order)',
+        detail: r.Material?.beNumber ?? r.Material?.shortDescription ?? null,
         date: null,
         deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,

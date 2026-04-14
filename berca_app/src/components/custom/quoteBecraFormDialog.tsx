@@ -1,5 +1,5 @@
 'use client'
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter} from '@/components/ui/dialog'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
@@ -7,12 +7,15 @@ import {Label} from '@/components/ui/label'
 import {Textarea} from '@/components/ui/textarea'
 import {Switch} from '@/components/ui/switch'
 import type {MappedQuoteBecra} from '@/types/quoteBecra'
+import {QuoteBecraCompanySelect, type QuoteBecraCompanyOption} from '@/components/custom/quoteBecraCompanySelect'
 
 interface QuoteBecraFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   item: MappedQuoteBecra | null
   onSave: (item: Partial<MappedQuoteBecra> & {id: string}) => Promise<void>
+  companyOptions: QuoteBecraCompanyOption[]
+  onCreateCompany: (name: string) => Promise<QuoteBecraCompanyOption>
 }
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
@@ -25,29 +28,63 @@ const EMPTY: Partial<MappedQuoteBecra> & {id: string} = {
   date: null,
 }
 
-function getQNumber(id: string) {
-  return id ? `Q-${id.slice(0, 8).toUpperCase()}` : '-'
+function onlyDigits(value: string) {
+  return value.replace(/\D/g, '')
 }
 
-export function QuoteBecraFormDialog({open, onOpenChange, item, onSave}: QuoteBecraFormDialogProps) {
+function generateSuffix() {
+  return String(Math.floor(Math.random() * 100)).padStart(2, '0')
+}
+
+export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyOptions, onCreateCompany}: QuoteBecraFormDialogProps) {
   const isEditing = item !== null
   const makeForm = (): Partial<MappedQuoteBecra> & {id: string} =>
-    item ? {...item} : {...EMPTY, id: crypto.randomUUID()}
+    item ? {...item} : {...EMPTY}
 
   const [form, setForm] = useState(makeForm)
+  const [quotePrefix, setQuotePrefix] = useState(() => (item?.id ? item.id.slice(0, 8) : ''))
+  const [quoteSuffix, setQuoteSuffix] = useState(() => (item?.id ? item.id.slice(8, 10) : ''))
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const generatedForPrefixRef = useRef('')
 
   useEffect(() => {
     if (open) {
       setForm(makeForm())
+      setQuotePrefix(item?.id ? item.id.slice(0, 8) : '')
+      setQuoteSuffix(item?.id ? item.id.slice(8, 10) : '')
+      generatedForPrefixRef.current = item?.id ? item.id.slice(0, 8) : ''
       setError(null)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, item?.id])
+
+  useEffect(() => {
+    if (isEditing) return
+
+    if (quotePrefix.length < 8) {
+      generatedForPrefixRef.current = ''
+      setQuoteSuffix('')
+      setForm(prev => ({...prev, id: quotePrefix}))
+      return
+    }
+
+    if (generatedForPrefixRef.current !== quotePrefix) {
+      const suffix = generateSuffix()
+      generatedForPrefixRef.current = quotePrefix
+      setQuoteSuffix(suffix)
+      setForm(prev => ({...prev, id: `${quotePrefix}${suffix}`}))
+      return
+    }
+
+    setForm(prev => ({...prev, id: `${quotePrefix}${quoteSuffix}`}))
+  }, [quotePrefix, quoteSuffix, isEditing])
 
   function update<K extends keyof MappedQuoteBecra>(field: K, value: MappedQuoteBecra[K]) {
     setForm(prev => ({...prev, [field]: value}))
+  }
+
+  function handlePrefixChange(value: string) {
+    setQuotePrefix(onlyDigits(value).slice(0, 8))
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -55,7 +92,11 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave}: QuoteBe
     setSaving(true)
     setError(null)
     try {
-      await onSave(form)
+      const id = isEditing ? form.id.trim() : `${quotePrefix}${quoteSuffix}`
+      if (!isEditing && !/^\d{10}$/.test(id)) {
+        throw new Error('Please enter 8 digits first so the final 2 digits can be generated automatically.')
+      }
+      await onSave({...form, id})
       onOpenChange(false)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong, please try again.')
@@ -70,7 +111,9 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave}: QuoteBe
         <DialogHeader>
           <DialogTitle className="text-foreground">{isEditing ? 'Edit Quote' : 'New Becra Quote'}</DialogTitle>
           <DialogDescription>
-            {isEditing ? `Editing quote: ${item.id.slice(0, 8)}…` : 'Create a new Becra quote record.'}
+            {isEditing
+              ? `Editing quote: ${item.id}`
+              : 'Create a new Becra quote record. Enter the first 8 digits and the last 2 digits will be generated automatically.'}
           </DialogDescription>
         </DialogHeader>
 
@@ -78,20 +121,39 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave}: QuoteBe
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
               <Label htmlFor="qb-number" className="text-xs text-muted-foreground">
-                Q Number
+                Quote Number
               </Label>
-              <Input id="qb-number" className={inputStyles} value={getQNumber(form.id)} readOnly />
+              {isEditing ? (
+                <Input id="qb-number" className={inputStyles} value={form.id ?? ''} readOnly />
+              ) : (
+                <div className="grid grid-cols-[1fr_auto] gap-2">
+                  <Input
+                    id="qb-number"
+                    className={inputStyles}
+                    value={quotePrefix}
+                    onChange={e => handlePrefixChange(e.target.value)}
+                    placeholder="YYYYMMDD"
+                    inputMode="numeric"
+                    maxLength={8}
+                    required
+                  />
+                  <Input className={inputStyles} value={quoteSuffix} readOnly aria-label="Auto-generated suffix" />
+                </div>
+              )}
+              <p className="text-[11px] text-muted-foreground">
+                Example: 20260414 + 01 → 2026041401
+              </p>
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="qb-company" className="text-xs text-muted-foreground">
                 Company
               </Label>
-              <Input
-                id="qb-company"
-                className={inputStyles}
+              <QuoteBecraCompanySelect
                 value={form.company ?? ''}
-                onChange={e => update('company', e.target.value)}
-                placeholder="Enter company name"
+                onChange={value => update('company', value)}
+                companies={companyOptions}
+                onCreateCompany={onCreateCompany}
+                className={inputStyles}
               />
             </div>
           </div>

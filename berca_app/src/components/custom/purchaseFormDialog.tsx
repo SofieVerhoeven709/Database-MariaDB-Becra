@@ -7,6 +7,7 @@ import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedPurchase} from '@/types/purchase'
+import {generatePurchaseNumber} from '@/lib/utils'
 
 export interface PurchaseOption {
   id: string
@@ -18,29 +19,31 @@ interface PurchaseFormDialogProps {
   onOpenChange: (open: boolean) => void
   purchase: MappedPurchase | null
   companies: PurchaseOption[]
-  projects: PurchaseOption[]
+  quoteSuppliers: PurchaseOption[]
+  paymentConditions: PurchaseOption[]
   onSave: (purchase: MappedPurchase) => Promise<void>
 }
 
-const STATUS_OPTIONS = ['Pending', 'Ordered', 'Delivered', 'Cancelled', 'On Hold']
+const STATUS_OPTIONS = ['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED']
 
 function emptyPurchase(): MappedPurchase {
   return {
     id: '',
-    orderNumber: null,
-    brandName: null,
-    purchaseDate: null,
-    status: null,
-    companyId: null,
+    purchaseNumber: generatePurchaseNumber(),
+    purchaseDate: new Date().toISOString(),
+    status: 'DRAFT',
+    companyId: '',
     companyName: null,
-    projectId: null,
-    projectNumber: null,
-    projectName: null,
-    updatedAt: null,
+    quoteSupplierId: null,
+    quoteNumber: null,
+    paymentConditionId: null,
+    paymentConditionName: null,
+    shortDescription: null,
+    createdAt: null,
     createdBy: '',
     createdByName: '',
-    preferredSupplier: null,
     description: null,
+    additionalInfo: null,
     deleted: false,
     deletedAt: null,
     deletedBy: null,
@@ -52,7 +55,8 @@ export function PurchaseFormDialog({
   onOpenChange,
   purchase,
   companies,
-  projects,
+  quoteSuppliers,
+  paymentConditions,
   onSave,
 }: PurchaseFormDialogProps) {
   const [form, setForm] = useState<MappedPurchase>(emptyPurchase())
@@ -79,6 +83,7 @@ export function PurchaseFormDialog({
   }
 
   const isEdit = !!purchase
+  const canSubmit = !!form.purchaseNumber.trim() && !!form.companyId
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -88,16 +93,28 @@ export function PurchaseFormDialog({
         </DialogHeader>
 
         <div className="grid gap-4 py-2">
-          {/* Order number */}
+          {/* Purchase number */}
           <div className="grid gap-1.5">
-            <Label htmlFor="orderNumber">Order Number</Label>
-            <Input
-              id="orderNumber"
-              value={form.orderNumber ?? ''}
-              onChange={e => set('orderNumber', e.target.value || null)}
-              placeholder="e.g. PO-2026-001"
-              className="bg-secondary border-border"
-            />
+            <Label htmlFor="purchaseNumber">Purchase Number</Label>
+            <div className="flex gap-2">
+              <Input
+                id="purchaseNumber"
+                value={form.purchaseNumber ?? ''}
+                onChange={e => set('purchaseNumber', e.target.value)}
+                placeholder="e.g. PO2026041301"
+                className="bg-secondary border-border flex-1"
+              />
+              {!isEdit && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="h-10 px-3 border-border text-xs shrink-0"
+                  onClick={() => set('purchaseNumber', generatePurchaseNumber())}>
+                  Regenerate
+                </Button>
+              )}
+            </div>
           </div>
 
           {/* Purchase date */}
@@ -107,7 +124,7 @@ export function PurchaseFormDialog({
               id="purchaseDate"
               type="date"
               value={form.purchaseDate ? form.purchaseDate.slice(0, 10) : ''}
-              onChange={e => set('purchaseDate', e.target.value ? new Date(e.target.value).toISOString() : null)}
+              onChange={e => set('purchaseDate', e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString())}
               className="bg-secondary border-border"
             />
           </div>
@@ -115,7 +132,7 @@ export function PurchaseFormDialog({
           {/* Status */}
           <div className="grid gap-1.5">
             <Label>Status</Label>
-            <Select value={form.status ?? ''} onValueChange={v => set('status', v || null)}>
+            <Select value={form.status} onValueChange={v => set('status', v)}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
@@ -132,11 +149,12 @@ export function PurchaseFormDialog({
           {/* Company (supplier) */}
           <div className="grid gap-1.5">
             <Label>Supplier Company</Label>
-            <Select value={form.companyId ?? ''} onValueChange={v => set('companyId', v || null)}>
+            <Select value={form.companyId || '__none__'} onValueChange={v => set('companyId', v === '__none__' ? '' : v)}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select company" />
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
+                <SelectItem value="__none__">Select company</SelectItem>
                 {companies.map(c => (
                   <SelectItem key={c.id} value={c.id}>
                     {c.name}
@@ -146,43 +164,52 @@ export function PurchaseFormDialog({
             </Select>
           </div>
 
-          {/* Project */}
+          {/* Quote (optional) */}
           <div className="grid gap-1.5">
-            <Label>Project</Label>
-            <Select value={form.projectId ?? ''} onValueChange={v => set('projectId', v || null)}>
+            <Label>Quote (optional)</Label>
+            <Select value={form.quoteSupplierId ?? '__none__'} onValueChange={v => set('quoteSupplierId', v === '__none__' ? null : v)}>
               <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select project" />
+                <SelectValue placeholder="Select quote" />
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
-                {projects.map(p => (
-                  <SelectItem key={p.id} value={p.id}>
-                    {p.name}
+                <SelectItem value="__none__">Manual purchase (no quote)</SelectItem>
+                {quoteSuppliers.map(q => (
+                  <SelectItem key={q.id} value={q.id}>
+                    {q.name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
 
-          {/* Brand name */}
+          {/* Payment condition */}
           <div className="grid gap-1.5">
-            <Label htmlFor="brandName">Brand Name</Label>
-            <Input
-              id="brandName"
-              value={form.brandName ?? ''}
-              onChange={e => set('brandName', e.target.value || null)}
-              placeholder="e.g. Siemens"
-              className="bg-secondary border-border"
-            />
+            <Label>Payment condition</Label>
+            <Select
+              value={form.paymentConditionId ?? '__none__'}
+              onValueChange={v => set('paymentConditionId', v === '__none__' ? null : v)}>
+              <SelectTrigger className="bg-secondary border-border">
+                <SelectValue placeholder="Select payment condition" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                <SelectItem value="__none__">— None —</SelectItem>
+                {paymentConditions.map(pc => (
+                  <SelectItem key={pc.id} value={pc.id}>
+                    {pc.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
-          {/* Preferred supplier */}
+          {/* Short description */}
           <div className="grid gap-1.5">
-            <Label htmlFor="preferedSupplier">Preferred Supplier</Label>
+            <Label htmlFor="shortDescription">Short Description</Label>
             <Input
-              id="preferedSupplier"
-              value={form.preferredSupplier ?? ''}
-              onChange={e => set('preferredSupplier', e.target.value || null)}
-              placeholder="e.g. PartsCo"
+              id="shortDescription"
+              value={form.shortDescription ?? ''}
+              onChange={e => set('shortDescription', e.target.value || null)}
+              placeholder="Header note"
               className="bg-secondary border-border"
             />
           </div>
@@ -194,7 +221,19 @@ export function PurchaseFormDialog({
               id="description"
               value={form.description ?? ''}
               onChange={e => set('description', e.target.value || null)}
-              placeholder="Short description"
+              placeholder="Detailed description"
+              className="bg-secondary border-border"
+            />
+          </div>
+
+          {/* Additional info */}
+          <div className="grid gap-1.5">
+            <Label htmlFor="additionalInfo">Additional Info</Label>
+            <Input
+              id="additionalInfo"
+              value={form.additionalInfo ?? ''}
+              onChange={e => set('additionalInfo', e.target.value || null)}
+              placeholder="Optional extra details"
               className="bg-secondary border-border"
             />
           </div>
@@ -206,7 +245,7 @@ export function PurchaseFormDialog({
           </Button>
           <Button
             onClick={handleSubmit}
-            disabled={saving}
+            disabled={saving || !canSubmit}
             className="bg-accent text-accent-foreground hover:bg-accent/80">
             {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Create Order'}
           </Button>

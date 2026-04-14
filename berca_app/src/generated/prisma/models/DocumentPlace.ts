@@ -209,7 +209,6 @@ export type DocumentPlaceWhereInput = {
   Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_DocumentPlace_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   DocumentStructure?: Prisma.DocumentStructureListRelationFilter
-  QuoteSupplier?: Prisma.QuoteSupplierListRelationFilter
 }
 
 export type DocumentPlaceOrderByWithRelationInput = {
@@ -224,7 +223,6 @@ export type DocumentPlaceOrderByWithRelationInput = {
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_DocumentPlace_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   DocumentStructure?: Prisma.DocumentStructureOrderByRelationAggregateInput
-  QuoteSupplier?: Prisma.QuoteSupplierOrderByRelationAggregateInput
   _relevance?: Prisma.DocumentPlaceOrderByRelevanceInput
 }
 
@@ -243,7 +241,6 @@ export type DocumentPlaceWhereUniqueInput = Prisma.AtLeast<{
   Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_DocumentPlace_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   DocumentStructure?: Prisma.DocumentStructureListRelationFilter
-  QuoteSupplier?: Prisma.QuoteSupplierListRelationFilter
 }, "id">
 
 export type DocumentPlaceOrderByWithAggregationInput = {
@@ -284,7 +281,6 @@ export type DocumentPlaceCreateInput = {
   Employee?: Prisma.EmployeeCreateNestedOneWithoutDocumentPlaceInput
   Employee_DocumentPlace_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentPlace_DocumentPlace_createdByToEmployeeInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentPlaceInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutDocumentPlaceInput
 }
 
 export type DocumentPlaceUncheckedCreateInput = {
@@ -297,7 +293,6 @@ export type DocumentPlaceUncheckedCreateInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentPlaceInput
-  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutDocumentPlaceInput
 }
 
 export type DocumentPlaceUpdateInput = {
@@ -310,7 +305,6 @@ export type DocumentPlaceUpdateInput = {
   Employee?: Prisma.EmployeeUpdateOneWithoutDocumentPlaceNestedInput
   Employee_DocumentPlace_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentPlace_DocumentPlace_createdByToEmployeeNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentPlaceNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutDocumentPlaceNestedInput
 }
 
 export type DocumentPlaceUncheckedUpdateInput = {
@@ -323,7 +317,6 @@ export type DocumentPlaceUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentPlaceNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutDocumentPlaceNestedInput
 }
 
 export type DocumentPlaceCreateManyInput = {
@@ -511,22 +504,6 @@ export type DocumentPlaceUncheckedUpdateManyWithoutEmployee_DocumentPlace_create
   deleteMany?: Prisma.DocumentPlaceScalarWhereInput | Prisma.DocumentPlaceScalarWhereInput[]
 }
 
-export type DocumentPlaceCreateNestedOneWithoutQuoteSupplierInput = {
-  create?: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput>
-  connectOrCreate?: Prisma.DocumentPlaceCreateOrConnectWithoutQuoteSupplierInput
-  connect?: Prisma.DocumentPlaceWhereUniqueInput
-}
-
-export type DocumentPlaceUpdateOneWithoutQuoteSupplierNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput>
-  connectOrCreate?: Prisma.DocumentPlaceCreateOrConnectWithoutQuoteSupplierInput
-  upsert?: Prisma.DocumentPlaceUpsertWithoutQuoteSupplierInput
-  disconnect?: Prisma.DocumentPlaceWhereInput | boolean
-  delete?: Prisma.DocumentPlaceWhereInput | boolean
-  connect?: Prisma.DocumentPlaceWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentPlaceUpdateToOneWithWhereWithoutQuoteSupplierInput, Prisma.DocumentPlaceUpdateWithoutQuoteSupplierInput>, Prisma.DocumentPlaceUncheckedUpdateWithoutQuoteSupplierInput>
-}
-
 export type DocumentPlaceCreateWithoutDocumentStructureInput = {
   id: string
   headFolder: string
@@ -536,7 +513,6 @@ export type DocumentPlaceCreateWithoutDocumentStructureInput = {
   deletedAt?: Date | string | null
   Employee?: Prisma.EmployeeCreateNestedOneWithoutDocumentPlaceInput
   Employee_DocumentPlace_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentPlace_DocumentPlace_createdByToEmployeeInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutDocumentPlaceInput
 }
 
 export type DocumentPlaceUncheckedCreateWithoutDocumentStructureInput = {
@@ -548,7 +524,6 @@ export type DocumentPlaceUncheckedCreateWithoutDocumentStructureInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutDocumentPlaceInput
 }
 
 export type DocumentPlaceCreateOrConnectWithoutDocumentStructureInput = {
@@ -576,7 +551,6 @@ export type DocumentPlaceUpdateWithoutDocumentStructureInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneWithoutDocumentPlaceNestedInput
   Employee_DocumentPlace_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentPlace_DocumentPlace_createdByToEmployeeNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutDocumentPlaceNestedInput
 }
 
 export type DocumentPlaceUncheckedUpdateWithoutDocumentStructureInput = {
@@ -588,7 +562,6 @@ export type DocumentPlaceUncheckedUpdateWithoutDocumentStructureInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutDocumentPlaceNestedInput
 }
 
 export type DocumentPlaceCreateWithoutEmployeeInput = {
@@ -600,7 +573,6 @@ export type DocumentPlaceCreateWithoutEmployeeInput = {
   deletedAt?: Date | string | null
   Employee_DocumentPlace_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentPlace_DocumentPlace_createdByToEmployeeInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentPlaceInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutDocumentPlaceInput
 }
 
 export type DocumentPlaceUncheckedCreateWithoutEmployeeInput = {
@@ -612,7 +584,6 @@ export type DocumentPlaceUncheckedCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentPlaceInput
-  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutDocumentPlaceInput
 }
 
 export type DocumentPlaceCreateOrConnectWithoutEmployeeInput = {
@@ -634,7 +605,6 @@ export type DocumentPlaceCreateWithoutEmployee_DocumentPlace_createdByToEmployee
   deletedAt?: Date | string | null
   Employee?: Prisma.EmployeeCreateNestedOneWithoutDocumentPlaceInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentPlaceInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutDocumentPlaceInput
 }
 
 export type DocumentPlaceUncheckedCreateWithoutEmployee_DocumentPlace_createdByToEmployeeInput = {
@@ -646,7 +616,6 @@ export type DocumentPlaceUncheckedCreateWithoutEmployee_DocumentPlace_createdByT
   deletedAt?: Date | string | null
   deletedBy?: string | null
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentPlaceInput
-  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutDocumentPlaceInput
 }
 
 export type DocumentPlaceCreateOrConnectWithoutEmployee_DocumentPlace_createdByToEmployeeInput = {
@@ -705,70 +674,6 @@ export type DocumentPlaceUpdateManyWithWhereWithoutEmployee_DocumentPlace_create
   data: Prisma.XOR<Prisma.DocumentPlaceUpdateManyMutationInput, Prisma.DocumentPlaceUncheckedUpdateManyWithoutEmployee_DocumentPlace_createdByToEmployeeInput>
 }
 
-export type DocumentPlaceCreateWithoutQuoteSupplierInput = {
-  id: string
-  headFolder: string
-  subFolder?: string | null
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Employee?: Prisma.EmployeeCreateNestedOneWithoutDocumentPlaceInput
-  Employee_DocumentPlace_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentPlace_DocumentPlace_createdByToEmployeeInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentPlaceInput
-}
-
-export type DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput = {
-  id: string
-  headFolder: string
-  subFolder?: string | null
-  createdBy: string
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-  DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentPlaceInput
-}
-
-export type DocumentPlaceCreateOrConnectWithoutQuoteSupplierInput = {
-  where: Prisma.DocumentPlaceWhereUniqueInput
-  create: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput>
-}
-
-export type DocumentPlaceUpsertWithoutQuoteSupplierInput = {
-  update: Prisma.XOR<Prisma.DocumentPlaceUpdateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedUpdateWithoutQuoteSupplierInput>
-  create: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput>
-  where?: Prisma.DocumentPlaceWhereInput
-}
-
-export type DocumentPlaceUpdateToOneWithWhereWithoutQuoteSupplierInput = {
-  where?: Prisma.DocumentPlaceWhereInput
-  data: Prisma.XOR<Prisma.DocumentPlaceUpdateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedUpdateWithoutQuoteSupplierInput>
-}
-
-export type DocumentPlaceUpdateWithoutQuoteSupplierInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  headFolder?: Prisma.StringFieldUpdateOperationsInput | string
-  subFolder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee?: Prisma.EmployeeUpdateOneWithoutDocumentPlaceNestedInput
-  Employee_DocumentPlace_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentPlace_DocumentPlace_createdByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentPlaceNestedInput
-}
-
-export type DocumentPlaceUncheckedUpdateWithoutQuoteSupplierInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  headFolder?: Prisma.StringFieldUpdateOperationsInput | string
-  subFolder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentPlaceNestedInput
-}
-
 export type DocumentPlaceCreateManyEmployeeInput = {
   id: string
   headFolder: string
@@ -798,7 +703,6 @@ export type DocumentPlaceUpdateWithoutEmployeeInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_DocumentPlace_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentPlace_DocumentPlace_createdByToEmployeeNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentPlaceNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutDocumentPlaceNestedInput
 }
 
 export type DocumentPlaceUncheckedUpdateWithoutEmployeeInput = {
@@ -810,7 +714,6 @@ export type DocumentPlaceUncheckedUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentPlaceNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutDocumentPlaceNestedInput
 }
 
 export type DocumentPlaceUncheckedUpdateManyWithoutEmployeeInput = {
@@ -832,7 +735,6 @@ export type DocumentPlaceUpdateWithoutEmployee_DocumentPlace_createdByToEmployee
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneWithoutDocumentPlaceNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentPlaceNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutDocumentPlaceNestedInput
 }
 
 export type DocumentPlaceUncheckedUpdateWithoutEmployee_DocumentPlace_createdByToEmployeeInput = {
@@ -844,7 +746,6 @@ export type DocumentPlaceUncheckedUpdateWithoutEmployee_DocumentPlace_createdByT
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentPlaceNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutDocumentPlaceNestedInput
 }
 
 export type DocumentPlaceUncheckedUpdateManyWithoutEmployee_DocumentPlace_createdByToEmployeeInput = {
@@ -864,12 +765,10 @@ export type DocumentPlaceUncheckedUpdateManyWithoutEmployee_DocumentPlace_create
 
 export type DocumentPlaceCountOutputType = {
   DocumentStructure: number
-  QuoteSupplier: number
 }
 
 export type DocumentPlaceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   DocumentStructure?: boolean | DocumentPlaceCountOutputTypeCountDocumentStructureArgs
-  QuoteSupplier?: boolean | DocumentPlaceCountOutputTypeCountQuoteSupplierArgs
 }
 
 /**
@@ -889,13 +788,6 @@ export type DocumentPlaceCountOutputTypeCountDocumentStructureArgs<ExtArgs exten
   where?: Prisma.DocumentStructureWhereInput
 }
 
-/**
- * DocumentPlaceCountOutputType without action
- */
-export type DocumentPlaceCountOutputTypeCountQuoteSupplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.QuoteSupplierWhereInput
-}
-
 
 export type DocumentPlaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -909,7 +801,6 @@ export type DocumentPlaceSelect<ExtArgs extends runtime.Types.Extensions.Interna
   Employee?: boolean | Prisma.DocumentPlace$EmployeeArgs<ExtArgs>
   Employee_DocumentPlace_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   DocumentStructure?: boolean | Prisma.DocumentPlace$DocumentStructureArgs<ExtArgs>
-  QuoteSupplier?: boolean | Prisma.DocumentPlace$QuoteSupplierArgs<ExtArgs>
   _count?: boolean | Prisma.DocumentPlaceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["documentPlace"]>
 
@@ -931,7 +822,6 @@ export type DocumentPlaceInclude<ExtArgs extends runtime.Types.Extensions.Intern
   Employee?: boolean | Prisma.DocumentPlace$EmployeeArgs<ExtArgs>
   Employee_DocumentPlace_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   DocumentStructure?: boolean | Prisma.DocumentPlace$DocumentStructureArgs<ExtArgs>
-  QuoteSupplier?: boolean | Prisma.DocumentPlace$QuoteSupplierArgs<ExtArgs>
   _count?: boolean | Prisma.DocumentPlaceCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -941,7 +831,6 @@ export type $DocumentPlacePayload<ExtArgs extends runtime.Types.Extensions.Inter
     Employee: Prisma.$EmployeePayload<ExtArgs> | null
     Employee_DocumentPlace_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs>[]
-    QuoteSupplier: Prisma.$QuoteSupplierPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1295,7 +1184,6 @@ export interface Prisma__DocumentPlaceClient<T, Null = never, ExtArgs extends ru
   Employee<T extends Prisma.DocumentPlace$EmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentPlace$EmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_DocumentPlace_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   DocumentStructure<T extends Prisma.DocumentPlace$DocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentPlace$DocumentStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  QuoteSupplier<T extends Prisma.DocumentPlace$QuoteSupplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentPlace$QuoteSupplierArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteSupplierPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1716,30 +1604,6 @@ export type DocumentPlace$DocumentStructureArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   distinct?: Prisma.DocumentStructureScalarFieldEnum | Prisma.DocumentStructureScalarFieldEnum[]
-}
-
-/**
- * DocumentPlace.QuoteSupplier
- */
-export type DocumentPlace$QuoteSupplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the QuoteSupplier
-   */
-  select?: Prisma.QuoteSupplierSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the QuoteSupplier
-   */
-  omit?: Prisma.QuoteSupplierOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.QuoteSupplierInclude<ExtArgs> | null
-  where?: Prisma.QuoteSupplierWhereInput
-  orderBy?: Prisma.QuoteSupplierOrderByWithRelationInput | Prisma.QuoteSupplierOrderByWithRelationInput[]
-  cursor?: Prisma.QuoteSupplierWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.QuoteSupplierScalarFieldEnum | Prisma.QuoteSupplierScalarFieldEnum[]
 }
 
 /**

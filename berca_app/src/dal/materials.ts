@@ -241,6 +241,19 @@ export async function getMaterials(options?: {includeDeleted?: boolean}): Promis
   })
 }
 
+export async function getMaterialsForSupplierCompany(companyId: string): Promise<MaterialListItem[]> {
+  return prismaClient.material.findMany({
+    where: {
+      deleted: false,
+      MaterialSupplier: {
+        some: {companyId},
+      },
+    },
+    include: materialListInclude,
+    orderBy: {beNumber: 'asc'},
+  })
+}
+
 export async function getMaterialById(id: string): Promise<MaterialWithRelations | null> {
   return prismaClient.material.findUnique({
     where: {id},

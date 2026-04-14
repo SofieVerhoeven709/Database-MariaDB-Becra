@@ -333,7 +333,6 @@ export type InventoryWhereInput = {
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_Inventory_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   InventoryChange?: Prisma.InventoryChangeListRelationFilter
-  InventoryOrder?: Prisma.InventoryOrderListRelationFilter
   InventoryStructure?: Prisma.InventoryStructureListRelationFilter
 }
 
@@ -361,7 +360,6 @@ export type InventoryOrderByWithRelationInput = {
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   InventoryChange?: Prisma.InventoryChangeOrderByRelationAggregateInput
-  InventoryOrder?: Prisma.InventoryOrderOrderByRelationAggregateInput
   InventoryStructure?: Prisma.InventoryStructureOrderByRelationAggregateInput
   _relevance?: Prisma.InventoryOrderByRelevanceInput
 }
@@ -393,7 +391,6 @@ export type InventoryWhereUniqueInput = Prisma.AtLeast<{
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_Inventory_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   InventoryChange?: Prisma.InventoryChangeListRelationFilter
-  InventoryOrder?: Prisma.InventoryOrderListRelationFilter
   InventoryStructure?: Prisma.InventoryStructureListRelationFilter
 }, "id" | "beNumber">
 
@@ -467,7 +464,6 @@ export type InventoryCreateInput = {
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventory_Inventory_deletedByToEmployeeInput
   InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
 }
 
@@ -491,7 +487,6 @@ export type InventoryUncheckedCreateInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
 }
 
@@ -515,7 +510,6 @@ export type InventoryUpdateInput = {
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventory_Inventory_deletedByToEmployeeNestedInput
   InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
 }
 
@@ -539,7 +533,6 @@ export type InventoryUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
@@ -809,20 +802,6 @@ export type InventoryUpdateOneRequiredWithoutInventoryChangeNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryUpdateToOneWithWhereWithoutInventoryChangeInput, Prisma.InventoryUpdateWithoutInventoryChangeInput>, Prisma.InventoryUncheckedUpdateWithoutInventoryChangeInput>
 }
 
-export type InventoryCreateNestedOneWithoutInventoryOrderInput = {
-  create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryOrderInput, Prisma.InventoryUncheckedCreateWithoutInventoryOrderInput>
-  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryOrderInput
-  connect?: Prisma.InventoryWhereUniqueInput
-}
-
-export type InventoryUpdateOneRequiredWithoutInventoryOrderNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryOrderInput, Prisma.InventoryUncheckedCreateWithoutInventoryOrderInput>
-  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryOrderInput
-  upsert?: Prisma.InventoryUpsertWithoutInventoryOrderInput
-  connect?: Prisma.InventoryWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryUpdateToOneWithWhereWithoutInventoryOrderInput, Prisma.InventoryUpdateWithoutInventoryOrderInput>, Prisma.InventoryUncheckedUpdateWithoutInventoryOrderInput>
-}
-
 export type InventoryCreateNestedOneWithoutInventoryStructureInput = {
   create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryStructureInput, Prisma.InventoryUncheckedCreateWithoutInventoryStructureInput>
   connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryStructureInput
@@ -930,7 +909,6 @@ export type InventoryCreateWithoutEmployeeInput = {
   Material_Inventory_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_beNumberToMaterialInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventory_Inventory_deletedByToEmployeeInput
   InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
 }
 
@@ -953,7 +931,6 @@ export type InventoryUncheckedCreateWithoutEmployeeInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
 }
 
@@ -986,7 +963,6 @@ export type InventoryCreateWithoutEmployee_Inventory_deletedByToEmployeeInput = 
   Material_Inventory_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_beNumberToMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
   InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
 }
 
@@ -1009,7 +985,6 @@ export type InventoryUncheckedCreateWithoutEmployee_Inventory_deletedByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
 }
 
@@ -1098,7 +1073,6 @@ export type InventoryCreateWithoutInventoryChangeInput = {
   Material_Inventory_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_beNumberToMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventory_Inventory_deletedByToEmployeeInput
-  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
 }
 
@@ -1121,7 +1095,6 @@ export type InventoryUncheckedCreateWithoutInventoryChangeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
 }
 
@@ -1160,7 +1133,6 @@ export type InventoryUpdateWithoutInventoryChangeInput = {
   Material_Inventory_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventory_Inventory_deletedByToEmployeeNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
 }
 
@@ -1183,115 +1155,6 @@ export type InventoryUncheckedUpdateWithoutInventoryChangeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
-}
-
-export type InventoryCreateWithoutInventoryOrderInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  serialNumber: string
-  quantityInStock: number
-  minQuantityInStock: number
-  maxQuantityInStock: number
-  information: string
-  valid: boolean
-  noValidDate: Date | string
-  createdAt?: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Material_Inventory_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_materialIdToMaterialInput
-  Material_Inventory_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_beNumberToMaterialInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
-  Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventory_Inventory_deletedByToEmployeeInput
-  InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
-}
-
-export type InventoryUncheckedCreateWithoutInventoryOrderInput = {
-  id: string
-  materialId: string
-  beNumber: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  serialNumber: string
-  quantityInStock: number
-  minQuantityInStock: number
-  maxQuantityInStock: number
-  information: string
-  valid: boolean
-  noValidDate: Date | string
-  createdAt?: Date | string
-  createdBy: string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-  InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
-}
-
-export type InventoryCreateOrConnectWithoutInventoryOrderInput = {
-  where: Prisma.InventoryWhereUniqueInput
-  create: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryOrderInput, Prisma.InventoryUncheckedCreateWithoutInventoryOrderInput>
-}
-
-export type InventoryUpsertWithoutInventoryOrderInput = {
-  update: Prisma.XOR<Prisma.InventoryUpdateWithoutInventoryOrderInput, Prisma.InventoryUncheckedUpdateWithoutInventoryOrderInput>
-  create: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryOrderInput, Prisma.InventoryUncheckedCreateWithoutInventoryOrderInput>
-  where?: Prisma.InventoryWhereInput
-}
-
-export type InventoryUpdateToOneWithWhereWithoutInventoryOrderInput = {
-  where?: Prisma.InventoryWhereInput
-  data: Prisma.XOR<Prisma.InventoryUpdateWithoutInventoryOrderInput, Prisma.InventoryUncheckedUpdateWithoutInventoryOrderInput>
-}
-
-export type InventoryUpdateWithoutInventoryOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Material_Inventory_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_materialIdToMaterialNestedInput
-  Material_Inventory_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMaterialNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
-  Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventory_Inventory_deletedByToEmployeeNestedInput
-  InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
-}
-
-export type InventoryUncheckedUpdateWithoutInventoryOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
@@ -1315,7 +1178,6 @@ export type InventoryCreateWithoutInventoryStructureInput = {
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventory_Inventory_deletedByToEmployeeInput
   InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryUncheckedCreateWithoutInventoryStructureInput = {
@@ -1338,7 +1200,6 @@ export type InventoryUncheckedCreateWithoutInventoryStructureInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryCreateOrConnectWithoutInventoryStructureInput = {
@@ -1377,7 +1238,6 @@ export type InventoryUpdateWithoutInventoryStructureInput = {
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventory_Inventory_deletedByToEmployeeNestedInput
   InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryUncheckedUpdateWithoutInventoryStructureInput = {
@@ -1400,7 +1260,6 @@ export type InventoryUncheckedUpdateWithoutInventoryStructureInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput = {
@@ -1422,7 +1281,6 @@ export type InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput =
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventory_Inventory_deletedByToEmployeeInput
   InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
 }
 
@@ -1445,7 +1303,6 @@ export type InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMateri
   deletedAt?: Date | string | null
   deletedBy?: string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
 }
 
@@ -1478,7 +1335,6 @@ export type InventoryCreateWithoutMaterial_Inventory_beNumberToMaterialInput = {
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventory_Inventory_deletedByToEmployeeInput
   InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
 }
 
@@ -1501,7 +1357,6 @@ export type InventoryUncheckedCreateWithoutMaterial_Inventory_beNumberToMaterial
   deletedAt?: Date | string | null
   deletedBy?: string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
 }
 
@@ -1556,7 +1411,6 @@ export type InventoryUpdateWithoutMaterial_Inventory_beNumberToMaterialInput = {
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventory_Inventory_deletedByToEmployeeNestedInput
   InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
 }
 
@@ -1579,7 +1433,6 @@ export type InventoryUncheckedUpdateWithoutMaterial_Inventory_beNumberToMaterial
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
@@ -1642,7 +1495,6 @@ export type InventoryUpdateWithoutEmployeeInput = {
   Material_Inventory_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMaterialNestedInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventory_Inventory_deletedByToEmployeeNestedInput
   InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
 }
 
@@ -1665,7 +1517,6 @@ export type InventoryUncheckedUpdateWithoutEmployeeInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
@@ -1708,7 +1559,6 @@ export type InventoryUpdateWithoutEmployee_Inventory_deletedByToEmployeeInput = 
   Material_Inventory_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
   InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
 }
 
@@ -1731,7 +1581,6 @@ export type InventoryUncheckedUpdateWithoutEmployee_Inventory_deletedByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
@@ -1794,7 +1643,6 @@ export type InventoryUpdateWithoutMaterial_Inventory_materialIdToMaterialInput =
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
   Employee_Inventory_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventory_Inventory_deletedByToEmployeeNestedInput
   InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
 }
 
@@ -1817,7 +1665,6 @@ export type InventoryUncheckedUpdateWithoutMaterial_Inventory_materialIdToMateri
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
   InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
@@ -1848,13 +1695,11 @@ export type InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMa
 
 export type InventoryCountOutputType = {
   InventoryChange: number
-  InventoryOrder: number
   InventoryStructure: number
 }
 
 export type InventoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   InventoryChange?: boolean | InventoryCountOutputTypeCountInventoryChangeArgs
-  InventoryOrder?: boolean | InventoryCountOutputTypeCountInventoryOrderArgs
   InventoryStructure?: boolean | InventoryCountOutputTypeCountInventoryStructureArgs
 }
 
@@ -1873,13 +1718,6 @@ export type InventoryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
  */
 export type InventoryCountOutputTypeCountInventoryChangeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.InventoryChangeWhereInput
-}
-
-/**
- * InventoryCountOutputType without action
- */
-export type InventoryCountOutputTypeCountInventoryOrderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryOrderWhereInput
 }
 
 /**
@@ -1914,7 +1752,6 @@ export type InventorySelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_Inventory_deletedByToEmployee?: boolean | Prisma.Inventory$Employee_Inventory_deletedByToEmployeeArgs<ExtArgs>
   InventoryChange?: boolean | Prisma.Inventory$InventoryChangeArgs<ExtArgs>
-  InventoryOrder?: boolean | Prisma.Inventory$InventoryOrderArgs<ExtArgs>
   InventoryStructure?: boolean | Prisma.Inventory$InventoryStructureArgs<ExtArgs>
   _count?: boolean | Prisma.InventoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventory"]>
@@ -1949,7 +1786,6 @@ export type InventoryInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_Inventory_deletedByToEmployee?: boolean | Prisma.Inventory$Employee_Inventory_deletedByToEmployeeArgs<ExtArgs>
   InventoryChange?: boolean | Prisma.Inventory$InventoryChangeArgs<ExtArgs>
-  InventoryOrder?: boolean | Prisma.Inventory$InventoryOrderArgs<ExtArgs>
   InventoryStructure?: boolean | Prisma.Inventory$InventoryStructureArgs<ExtArgs>
   _count?: boolean | Prisma.InventoryCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1962,7 +1798,6 @@ export type $InventoryPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Employee_Inventory_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     InventoryChange: Prisma.$InventoryChangePayload<ExtArgs>[]
-    InventoryOrder: Prisma.$InventoryOrderPayload<ExtArgs>[]
     InventoryStructure: Prisma.$InventoryStructurePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2329,7 +2164,6 @@ export interface Prisma__InventoryClient<T, Null = never, ExtArgs extends runtim
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_Inventory_deletedByToEmployee<T extends Prisma.Inventory$Employee_Inventory_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Inventory$Employee_Inventory_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   InventoryChange<T extends Prisma.Inventory$InventoryChangeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Inventory$InventoryChangeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryChangePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  InventoryOrder<T extends Prisma.Inventory$InventoryOrderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Inventory$InventoryOrderArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   InventoryStructure<T extends Prisma.Inventory$InventoryStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Inventory$InventoryStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2761,30 +2595,6 @@ export type Inventory$InventoryChangeArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.InventoryChangeScalarFieldEnum | Prisma.InventoryChangeScalarFieldEnum[]
-}
-
-/**
- * Inventory.InventoryOrder
- */
-export type Inventory$InventoryOrderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryOrder
-   */
-  select?: Prisma.InventoryOrderSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InventoryOrder
-   */
-  omit?: Prisma.InventoryOrderOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InventoryOrderInclude<ExtArgs> | null
-  where?: Prisma.InventoryOrderWhereInput
-  orderBy?: Prisma.InventoryOrderOrderByWithRelationInput | Prisma.InventoryOrderOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryOrderWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InventoryOrderScalarFieldEnum | Prisma.InventoryOrderScalarFieldEnum[]
 }
 
 /**

@@ -10,10 +10,9 @@ export const createQuoteBecraAction = protectedServerFunction({
   schema: createQuoteBecraSchema,
   functionName: 'Create QuoteBecra action',
   serverFn: async ({data, logger, profile}) => {
-    const id = crypto.randomUUID()
     await prismaClient.quoteBecra.create({
       data: {
-        id,
+        id: data.id,
         description: data.description ?? null,
         validDate: data.validDate ?? false,
         date: data.date ?? null,
@@ -21,7 +20,7 @@ export const createQuoteBecraAction = protectedServerFunction({
         deleted: false,
       },
     })
-    logger.info(`QuoteBecra created: ${id}`)
+    logger.info(`QuoteBecra created: ${data.id}`)
     revalidatePath('/departments/sales/quoteBecra')
   },
 })

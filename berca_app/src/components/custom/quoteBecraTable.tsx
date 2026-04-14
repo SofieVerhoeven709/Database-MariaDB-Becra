@@ -7,6 +7,7 @@ import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {QuoteBecraFormDialog} from '@/components/custom/quoteBecraFormDialog'
+import type {QuoteBecraCompanyOption} from '@/components/custom/quoteBecraCompanySelect'
 import type {MappedQuoteBecra} from '@/types/quoteBecra'
 import {
   createQuoteBecraAction,
@@ -15,7 +16,9 @@ import {
   hardDeleteQuoteBecraAction,
   undeleteQuoteBecraAction,
 } from '@/serverFunctions/quoteBecra'
+import {createCompanyAndReturnIdAction} from '@/serverFunctions/companies'
 import {encodeQuoteBecraDescription} from '@/lib/quoteBecraCompany'
+import {generateCompanyNumber} from '@/lib/utils'
 
 type SortField = 'qNumber' | 'description' | 'date' | 'validDate' | 'companyName' | 'createdByName'
 type SortDir = 'asc' | 'desc'
@@ -26,8 +29,10 @@ function formatDate(date: string | null) {
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
-function getQNumber(id: string) {
-  return `Q-${id.slice(0, 8).toUpperCase()}`
+function getQuoteNumber(id: string) {
+  if (!id) return '-'
+  if (/^\d{10}$/.test(id)) return id
+  return `${id.slice(0, 10).toUpperCase()}`
 }
 
 function getCompanyName(company: string | null) {
@@ -45,6 +50,7 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
 
 interface QuoteBecraTableProps {
   initialQuotes: MappedQuoteBecra[]
+  companyOptions: QuoteBecraCompanyOption[]
   currentUserRole: string
   currentUserLevel: number
   currentUserId: string
@@ -53,6 +59,7 @@ interface QuoteBecraTableProps {
 
 export function QuoteBecraTable({
   initialQuotes,
+  companyOptions: initialCompanyOptions,
   currentUserRole,
   currentUserLevel,
   currentUserId,
@@ -67,6 +74,7 @@ export function QuoteBecraTable({
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<MappedQuoteBecra | null>(null)
+  const [companyOptions, setCompanyOptions] = useState(initialCompanyOptions)
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -88,20 +96,20 @@ export function QuoteBecraTable({
       return (
         (q.description ?? '').toLowerCase().includes(s) ||
         (q.createdByName ?? '').toLowerCase().includes(s) ||
-        getQNumber(q.id).toLowerCase().includes(s) ||
+        q.id.toLowerCase().includes(s) ||
         getCompanyName(q.company).toLowerCase().includes(s)
       )
     })
     .sort((a, b) => {
       const aVal =
         sortField === 'qNumber'
-          ? getQNumber(a.id)
+          ? getQuoteNumber(a.id)
           : sortField === 'companyName'
             ? getCompanyName(a.company)
             : String(a[sortField] ?? '')
       const bVal =
         sortField === 'qNumber'
-          ? getQNumber(b.id)
+          ? getQuoteNumber(b.id)
           : sortField === 'companyName'
             ? getCompanyName(b.company)
             : String(b[sortField] ?? '')
@@ -110,10 +118,11 @@ export function QuoteBecraTable({
 
   async function handleSave(form: Partial<MappedQuoteBecra> & {id: string}) {
     const encodedDescription = encodeQuoteBecraDescription(form.description, form.company)
+    const quoteNumber = form.id.trim()
 
     if (editingItem) {
       await updateQuoteBecraAction({
-        id: form.id,
+        id: quoteNumber,
         description: encodedDescription,
         validDate: form.validDate ?? false,
         date: form.date ? new Date(form.date) : null,
@@ -121,7 +130,7 @@ export function QuoteBecraTable({
       // Update the matching quote in local state immediately
       setQuotes(prev =>
         prev.map(q =>
-          q.id === form.id
+          q.id === quoteNumber
             ? {
                 ...q,
                 company: form.company ?? null,
@@ -134,13 +143,14 @@ export function QuoteBecraTable({
       )
     } else {
       await createQuoteBecraAction({
+        id: quoteNumber,
         description: encodedDescription,
         validDate: form.validDate ?? false,
         date: form.date ? new Date(form.date) : null,
       })
       // Add the new quote to local state immediately
       const newQuote: MappedQuoteBecra = {
-        id: form.id,
+        id: quoteNumber,
         company: form.company ?? null,
         description: form.description ?? null,
         validDate: form.validDate ?? false,
@@ -154,6 +164,41 @@ export function QuoteBecraTable({
       }
       setQuotes(prev => [newQuote, ...prev])
     }
+  }
+
+  async function handleCreateCompany(name: string) {
+    const created = await createCompanyAndReturnIdAction({
+      name,
+      officialName: name,
+      number: generateCompanyNumber(),
+      idOld: null,
+      mail: null,
+      businessPhone: null,
+      website: null,
+      vatNumber: null,
+      bankNumber: null,
+      iban: null,
+      bic: null,
+      becraCustomerNumber: null,
+      becraWebsiteLogin: null,
+      supplier: false,
+      preferredSupplier: false,
+      companyActive: true,
+      newsLetter: false,
+      customer: false,
+      potentialCustomer: false,
+      headQuarters: false,
+      potentialSubContractor: false,
+      subContractor: false,
+      notes: null,
+      companyId: null,
+      addresses: [],
+      visibilityForRoles: [],
+    })
+
+    const option = {id: created.id, name: created.name}
+    setCompanyOptions(prev => [...prev.filter(c => c.id !== option.id), option].sort((a, b) => a.name.localeCompare(b.name)))
+    return option
   }
 
   async function handleSoftDelete(id: string) {
@@ -256,7 +301,7 @@ export function QuoteBecraTable({
             ) : (
               filtered.map(q => (
                 <TableRow key={q.id} className={q.deleted ? 'opacity-50' : ''}>
-                  <TableCell className={tdClass}>{getQNumber(q.id)}</TableCell>
+                  <TableCell className={tdClass}>{getQuoteNumber(q.id)}</TableCell>
                   <TableCell className="text-sm max-w-xs truncate">
                     {q.description ? (
                       <span title={q.description}>
@@ -333,7 +378,14 @@ export function QuoteBecraTable({
 
       <p className="text-xs text-muted-foreground">{filtered.length} record(s) shown</p>
 
-      <QuoteBecraFormDialog open={dialogOpen} onOpenChange={setDialogOpen} item={editingItem} onSave={handleSave} />
+      <QuoteBecraFormDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        item={editingItem}
+        onSave={handleSave}
+        companyOptions={companyOptions}
+        onCreateCompany={handleCreateCompany}
+      />
     </div>
   )
 }

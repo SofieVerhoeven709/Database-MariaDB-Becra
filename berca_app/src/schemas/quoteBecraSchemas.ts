@@ -16,13 +16,17 @@ export const quoteBecraSchema = z.object({
 
 // ─── Create ───────────────────────────────────────────────────────────────────
 
-export const createQuoteBecraSchema = quoteBecraSchema.omit({
-  id: true,
-  createdBy: true,
-  deleted: true,
-  deletedAt: true,
-  deletedBy: true,
-})
+export const createQuoteBecraSchema = quoteBecraSchema
+  .omit({
+    id: true,
+    createdBy: true,
+    deleted: true,
+    deletedAt: true,
+    deletedBy: true,
+  })
+  .extend({
+    id: z.string().trim().regex(/^\d{10}$/, 'Quote number must contain exactly 10 digits (YYYYMMDDNN).'),
+  })
 
 // ─── Update ───────────────────────────────────────────────────────────────────
 

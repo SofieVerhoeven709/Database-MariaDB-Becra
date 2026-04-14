@@ -140,6 +140,8 @@ const ALL_TARGET_TYPES = [
   'PriceList',
   'HourType',
   'Material',
+  'ProjectBom',
+  'PurchaseBom',
 ]
 
 const URGENCY_TYPES = ['Low', 'Medium', 'High', 'Critical']
@@ -628,6 +630,24 @@ export const seedDev = async (prisma: PrismaClient) => {
   }
 
   console.log('Company invoice contact backfill complete')
+
+  // 23. Backfill MaterialDemand for every existing Material row
+  const materials = await prisma.material.findMany({select: {id: true, shortDescription: true}})
+  for (const material of materials) {
+    await prisma.materialDemand.upsert({
+      where: {materialId: material.id},
+      update: {},
+      create: {
+        id: randomUUID(),
+        materialId: material.id,
+        totalRequiredQty: 0,
+        reservedQty: 0,
+        createdAt: now,
+      },
+    })
+  }
+
+  console.log(`Material demand backfill complete for ${materials.length} material(s)`)
 
   console.log('Seed complete')
 }

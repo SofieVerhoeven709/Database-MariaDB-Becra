@@ -63,6 +63,7 @@ const SEGMENT_LABELS: Record<string, string> = {
   timeRegistry: 'Time Registry',
   orders: 'Orders',
   orderQuote: 'Order Quotes',
+  materialDemand: 'Material Demand',
   orderRequests: 'Order Requests',
   admin: 'Admin',
   audit: 'Audit',

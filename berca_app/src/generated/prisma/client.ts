@@ -524,3 +524,68 @@ export type DocumentStructureTarget = Prisma.DocumentStructureTargetModel
  * 
  */
 export type MaterialLeadTime = Prisma.MaterialLeadTimeModel
+/**
+ * Model ProjectBOM
+ * 
+ */
+export type ProjectBOM = Prisma.ProjectBOMModel
+/**
+ * Model ProjectBOMStructure
+ * 
+ */
+export type ProjectBOMStructure = Prisma.ProjectBOMStructureModel
+/**
+ * Model PurchaseBOM
+ * 
+ */
+export type PurchaseBOM = Prisma.PurchaseBOMModel
+/**
+ * Model PurchaseBOMStructure
+ * 
+ */
+export type PurchaseBOMStructure = Prisma.PurchaseBOMStructureModel
+/**
+ * Model BOMExecution
+ * 
+ */
+export type BOMExecution = Prisma.BOMExecutionModel
+/**
+ * Model MaterialDemand
+ * 
+ */
+export type MaterialDemand = Prisma.MaterialDemandModel
+/**
+ * Model MaterialDemandSource
+ * 
+ */
+export type MaterialDemandSource = Prisma.MaterialDemandSourceModel
+/**
+ * Model MaterialDemandSourceType
+ * 
+ */
+export type MaterialDemandSourceType = Prisma.MaterialDemandSourceTypeModel
+/**
+ * Model PaymentCondition
+ * 
+ */
+export type PaymentCondition = Prisma.PaymentConditionModel
+/**
+ * Model QuoteSupplierLine
+ * 
+ */
+export type QuoteSupplierLine = Prisma.QuoteSupplierLineModel
+/**
+ * Model IncomingDelivery
+ * 
+ */
+export type IncomingDelivery = Prisma.IncomingDeliveryModel
+/**
+ * Model IncomingDeliveryLine
+ * 
+ */
+export type IncomingDeliveryLine = Prisma.IncomingDeliveryLineModel
+/**
+ * Model IncomingDeliveryLineAllocation
+ * 
+ */
+export type IncomingDeliveryLineAllocation = Prisma.IncomingDeliveryLineAllocationModel

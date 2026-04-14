@@ -1,5 +1,6 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
+import {projectBOMInclude} from './projectBoms'
 
 const projectInclude = {
   Company: true,
@@ -51,11 +52,8 @@ export async function getProjectById(id: string) {
           Employee: true,
         },
       },
-      Purchase: {
-        include: {
-          Company: true,
-          Employee: true,
-        },
+      ProjectBOM: {
+        include: projectBOMInclude,
       },
       MaterialSerialTrack: {
         include: {

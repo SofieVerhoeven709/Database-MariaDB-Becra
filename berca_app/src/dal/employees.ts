@@ -396,12 +396,11 @@ export async function getEmployeeDetail(id: string) {
           take: 50,
           select: {
             id: true,
-            orderNumber: true,
+            purchaseNumber: true,
             shortDescription: true,
             purchaseDate: true,
             status: true,
             Company: {select: {name: true}},
-            Project: {select: {projectName: true}},
           },
         },
         TimeRegistry: {
@@ -467,7 +466,7 @@ export async function getEmployeeDetail(id: string) {
           select: {
             id: true,
             description: true,
-            Project: {select: {projectName: true, projectNumber: true}},
+            Company: {select: {name: true, number: true}},
           },
         },
         WorkOrderStructure: {
@@ -669,13 +668,13 @@ export async function getEmployeeDetail(id: string) {
         },
         PurchaseDetail: {
           where: {deleted: false},
-          orderBy: {updatedAt: 'desc'},
+          orderBy: {createdAt: 'desc'},
           take: 50,
           select: {
             id: true,
-            beNumber: true,
-            status: true,
-            Purchase: {select: {orderNumber: true}},
+            lineStatus: true,
+            Material: {select: {beNumber: true, shortDescription: true}},
+            Purchase: {select: {purchaseNumber: true}},
           },
         },
         PurchaseOrderBecra: {
@@ -861,12 +860,11 @@ export async function getEmployeeDetail(id: string) {
           take: 50,
           select: {
             id: true,
-            orderNumber: true,
+            purchaseNumber: true,
             shortDescription: true,
             deletedAt: true,
             purchaseDate: true,
             Company: {select: {name: true}},
-            Project: {select: {projectName: true}},
           },
         },
         TimeRegistry_TimeRegistry_deletedByToEmployee: {
@@ -932,7 +930,7 @@ export async function getEmployeeDetail(id: string) {
             id: true,
             description: true,
             deletedAt: true,
-            Project: {select: {projectName: true, projectNumber: true}},
+            Company: {select: {name: true, number: true}},
           },
         },
         WorkOrderStructure_WorkOrderStructure_deletedByToEmployee: {
@@ -1144,10 +1142,10 @@ export async function getEmployeeDetail(id: string) {
           take: 50,
           select: {
             id: true,
-            beNumber: true,
-            status: true,
+            lineStatus: true,
             deletedAt: true,
-            Purchase: {select: {orderNumber: true}},
+            Material: {select: {beNumber: true, shortDescription: true}},
+            Purchase: {select: {purchaseNumber: true}},
           },
         },
         PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {

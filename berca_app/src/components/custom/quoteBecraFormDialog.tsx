@@ -48,11 +48,12 @@ export function QuoteBecraFormDialog({
   const makeForm = (): Partial<MappedQuoteBecra> & {id: string} => (item ? {...item} : {...EMPTY})
 
   const [form, setForm] = useState(makeForm)
-  const [quotePrefix, setQuotePrefix] = useState(() => (item?.id ? item.id.slice(0, 8) : ''))
-  const [quoteSuffix, setQuoteSuffix] = useState(() => (item?.id ? item.id.slice(8, 10) : ''))
+  const [quotePrefix, setQuotePrefix] = useState(() => (item?.id ? item.id.slice(0, 6) : ''))
+  const [quoteSuffix, setQuoteSuffix] = useState(() => (item?.id ? item.id.slice(6, 8) : ''))
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const generatedForPrefixRef = useRef('')
+  const hasValidQuoteNumber = /^\d{6}$/.test(quotePrefix) && /^\d{2}$/.test(quoteSuffix)
 
   useEffect(() => {
     if (open) {
@@ -97,8 +98,8 @@ export function QuoteBecraFormDialog({
     setError(null)
     try {
       const id = `${quotePrefix}${quoteSuffix}`
-      if (!/^\d{6}$/.test(id)) {
-        setError('Please enter 6 digits first so the final 2 digits can be generated automatically.')
+      if (!/^\d{8}$/.test(id)) {
+        setError('Please enter exactly 6 digits first so the final 2 digits can be generated automatically.')
         return
       }
       await onSave({...form, id, originalId: item?.id})
@@ -209,7 +210,11 @@ export function QuoteBecraFormDialog({
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>
               Cancel
             </Button>
-            <Button type="submit" disabled={saving} className="bg-accent text-accent-foreground hover:bg-accent/90">
+            <Button
+              type="submit"
+              disabled={saving || !hasValidQuoteNumber}
+              className="bg-accent text-accent-foreground hover:bg-accent/90"
+            >
               {saving ? 'Saving…' : isEditing ? 'Save Changes' : 'Create Quote'}
             </Button>
           </DialogFooter>

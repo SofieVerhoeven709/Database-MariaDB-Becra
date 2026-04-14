@@ -19,9 +19,14 @@ const inputStyles = 'bg-secondary border-border placeholder:text-muted-foregroun
 
 const EMPTY: Partial<MappedQuoteBecra> & {id: string} = {
   id: '',
+  company: '',
   description: '',
   validDate: false,
   date: null,
+}
+
+function getQNumber(id: string) {
+  return id ? `Q-${id.slice(0, 8).toUpperCase()}` : '-'
 }
 
 export function QuoteBecraFormDialog({open, onOpenChange, item, onSave}: QuoteBecraFormDialogProps) {
@@ -63,15 +68,34 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave}: QuoteBe
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-card border-border max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-foreground">
-            {isEditing ? 'Edit Quote' : 'New Becra Quote'}
-          </DialogTitle>
+          <DialogTitle className="text-foreground">{isEditing ? 'Edit Quote' : 'New Becra Quote'}</DialogTitle>
           <DialogDescription>
             {isEditing ? `Editing quote: ${item.id.slice(0, 8)}…` : 'Create a new Becra quote record.'}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="qb-number" className="text-xs text-muted-foreground">
+                Q Number
+              </Label>
+              <Input id="qb-number" className={inputStyles} value={getQNumber(form.id)} readOnly />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="qb-company" className="text-xs text-muted-foreground">
+                Company
+              </Label>
+              <Input
+                id="qb-company"
+                className={inputStyles}
+                value={form.company ?? ''}
+                onChange={e => update('company', e.target.value)}
+                placeholder="Enter company name"
+              />
+            </div>
+          </div>
+
           {/* Description */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="qb-description" className="text-xs text-muted-foreground">
@@ -109,7 +133,7 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave}: QuoteBe
               onCheckedChange={checked => update('validDate', checked)}
             />
             <Label htmlFor="qb-validDate" className="text-sm text-foreground cursor-pointer">
-              Valid date confirmed
+              Quote validity confirmed
             </Label>
           </div>
 
@@ -128,4 +152,3 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave}: QuoteBe
     </Dialog>
   )
 }
-

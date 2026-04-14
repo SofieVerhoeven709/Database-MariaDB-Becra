@@ -279,30 +279,26 @@ export function QuoteBecraTable({
           />
         </div>
         <div className="flex gap-2 items-center">
-          {isAdmin && (
-            <Select value={filterValid} onValueChange={v => setFilterValid(v as FilterValid)}>
-              <SelectTrigger className="w-36 bg-secondary border-border text-sm">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="valid">Valid</SelectItem>
-                <SelectItem value="not valid">Not valid</SelectItem>
-                <SelectItem value="all">All</SelectItem>
-              </SelectContent>
-            </Select>
-          )}
-          {isAdmin && (
-            <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
-              <SelectTrigger className="w-36 bg-secondary border-border text-sm">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="not-deleted">Active</SelectItem>
-                <SelectItem value="deleted">Deleted</SelectItem>
-                <SelectItem value="all">All</SelectItem>
-              </SelectContent>
-            </Select>
-          )}
+          <Select value={filterValid} onValueChange={v => setFilterValid(v as FilterValid)}>
+            <SelectTrigger className="w-36 bg-secondary border-border text-sm">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="valid">Valid</SelectItem>
+              <SelectItem value="not valid">Not valid</SelectItem>
+              <SelectItem value="all">All</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
+            <SelectTrigger className="w-36 bg-secondary border-border text-sm">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="not-deleted">Active</SelectItem>
+              <SelectItem value="deleted">Deleted</SelectItem>
+              <SelectItem value="all">All</SelectItem>
+            </SelectContent>
+          </Select>
           <Button onClick={openCreate} size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90">
             <Plus className="h-4 w-4 mr-1" /> New Quote
           </Button>

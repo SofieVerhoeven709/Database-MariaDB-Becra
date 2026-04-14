@@ -118,11 +118,11 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 sm:col-span-2">
               <Label htmlFor="qb-number" className="text-xs text-muted-foreground">
                 Quote Number
               </Label>
-              <div className="grid grid-cols-[1fr_auto] gap-2">
+              <div className="grid grid-cols-[minmax(0,1fr)_5rem] gap-2">
                 <Input
                   id="qb-number"
                   className={inputStyles}
@@ -133,7 +133,7 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
                   maxLength={8}
                   required
                 />
-                <Input className={inputStyles} value={quoteSuffix} readOnly aria-label="Auto-generated suffix" />
+                <Input className={`${inputStyles} text-center`} value={quoteSuffix} readOnly aria-label="Auto-generated suffix" />
               </div>
               <p className="text-[11px] text-muted-foreground">
                 Example: 20260414 + 01 → 2026041401

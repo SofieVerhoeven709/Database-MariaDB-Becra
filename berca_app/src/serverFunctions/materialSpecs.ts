@@ -10,9 +10,11 @@ import {
   createUnit,
   updateUnit,
   softDeleteUnit,
+  restoreUnit,
   createMaterialPerformance,
   updateMaterialPerformance,
   softDeleteMaterialPerformance,
+  restoreMaterialPerformance,
 } from '@/dal/materialSpecs'
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {
@@ -123,6 +125,18 @@ export const deleteUnitAction = protectedFormAction({
   },
 })
 
+export const restoreUnitAction = protectedFormAction({
+  schema: deleteUnitSchema,
+  functionName: 'Restore unit',
+  globalErrorMessage: 'Could not restore the unit, please try again.',
+  serverFn: async ({data, logger}) => {
+    await restoreUnit(data.id)
+    logger.info(`Unit restored: ${data.id}`)
+    revalidatePath(REVALIDATE)
+    revalidatePath(REVALIDATE_MATERIAL)
+  },
+})
+
 // ─── MaterialPerformance actions ─────────────────────────────────────────────
 
 export const createPerformanceAction = protectedFormAction({
@@ -163,3 +177,15 @@ export const deletePerformanceAction = protectedFormAction({
     revalidatePath(REVALIDATE)
   },
 })
+
+export const restorePerformanceAction = protectedFormAction({
+  schema: deletePerformanceSchema,
+  functionName: 'Restore performance spec',
+  globalErrorMessage: 'Could not restore the performance spec, please try again.',
+  serverFn: async ({data, logger}) => {
+    await restoreMaterialPerformance(data.id)
+    logger.info(`MaterialPerformance restored: ${data.id}`)
+    revalidatePath(REVALIDATE)
+  },
+})
+

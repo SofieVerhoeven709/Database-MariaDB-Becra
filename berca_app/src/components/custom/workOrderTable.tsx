@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
+import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, RotateCcw} from 'lucide-react'
 import {WorkOrderFormDialog} from '@/components/custom/workOrderFormDialog'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
@@ -368,10 +368,11 @@ export function WorkOrderTable({
                           {canDelete && (
                             <Button
                               variant="ghost"
-                              size="sm"
-                              className="h-7 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary px-2"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:bg-secondary hover:text-foreground"
                               onClick={() => handleUndelete(w)}>
-                              Restore
+                              <RotateCcw className="h-3.5 w-3.5" />
+                              <span className="sr-only">Restore {w.workOrderNumber ?? w.id}</span>
                             </Button>
                           )}
                           {isAdmin && (

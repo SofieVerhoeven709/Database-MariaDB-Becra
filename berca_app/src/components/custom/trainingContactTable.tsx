@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, Check, X} from 'lucide-react'
+import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, Check, X, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -549,13 +549,14 @@ export function TrainingContactTable({
                                 {canEdit && (
                                   <Button
                                     variant="ghost"
-                                    size="sm"
-                                    className="h-7 text-xs px-2 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                    size="icon"
+                                    className="h-8 w-8 text-muted-foreground hover:bg-secondary hover:text-foreground"
                                     onClick={async () => {
                                       await undeleteTrainingContactAction({id: tc.id})
                                       router.refresh()
                                     }}>
-                                    Restore
+                                    <RotateCcw className="h-3.5 w-3.5" />
+                                    <span className="sr-only">Restore {tc.contact.lastName} {tc.contact.firstName}</span>
                                   </Button>
                                 )}
                                 {isAdmin && (

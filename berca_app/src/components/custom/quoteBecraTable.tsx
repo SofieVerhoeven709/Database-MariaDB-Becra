@@ -15,14 +15,23 @@ import {
   hardDeleteQuoteBecraAction,
   undeleteQuoteBecraAction,
 } from '@/serverFunctions/quoteBecra'
+import {encodeQuoteBecraDescription} from '@/lib/quoteBecraCompany'
 
-type SortField = 'description' | 'date' | 'validDate' | 'createdByName'
+type SortField = 'qNumber' | 'description' | 'date' | 'validDate' | 'companyName' | 'createdByName'
 type SortDir = 'asc' | 'desc'
 type FilterDeleted = 'not-deleted' | 'deleted' | 'valid' | 'not valid' | 'all'
 
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function getQNumber(id: string) {
+  return `Q-${id.slice(0, 8).toUpperCase()}`
+}
+
+function getCompanyName(company: string | null) {
+  return company?.trim() || '-'
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -76,19 +85,36 @@ export function QuoteBecraTable({
       if (filterDeleted === 'not valid' && (q.validDate || q.deleted)) return false
       if (!search) return true
       const s = search.toLowerCase()
-      return (q.description ?? '').toLowerCase().includes(s) || (q.createdByName ?? '').toLowerCase().includes(s)
+      return (
+        (q.description ?? '').toLowerCase().includes(s) ||
+        (q.createdByName ?? '').toLowerCase().includes(s) ||
+        getQNumber(q.id).toLowerCase().includes(s) ||
+        getCompanyName(q.company).toLowerCase().includes(s)
+      )
     })
     .sort((a, b) => {
-      const aVal = String(a[sortField] ?? '')
-      const bVal = String(b[sortField] ?? '')
+      const aVal =
+        sortField === 'qNumber'
+          ? getQNumber(a.id)
+          : sortField === 'companyName'
+            ? getCompanyName(a.company)
+            : String(a[sortField] ?? '')
+      const bVal =
+        sortField === 'qNumber'
+          ? getQNumber(b.id)
+          : sortField === 'companyName'
+            ? getCompanyName(b.company)
+            : String(b[sortField] ?? '')
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
 
   async function handleSave(form: Partial<MappedQuoteBecra> & {id: string}) {
+    const encodedDescription = encodeQuoteBecraDescription(form.description, form.company)
+
     if (editingItem) {
       await updateQuoteBecraAction({
         id: form.id,
-        description: form.description ?? null,
+        description: encodedDescription,
         validDate: form.validDate ?? false,
         date: form.date ? new Date(form.date) : null,
       })
@@ -98,6 +124,7 @@ export function QuoteBecraTable({
           q.id === form.id
             ? {
                 ...q,
+                company: form.company ?? null,
                 description: form.description ?? null,
                 validDate: form.validDate ?? false,
                 date: form.date ?? null,
@@ -107,13 +134,14 @@ export function QuoteBecraTable({
       )
     } else {
       await createQuoteBecraAction({
-        description: form.description ?? null,
+        description: encodedDescription,
         validDate: form.validDate ?? false,
         date: form.date ? new Date(form.date) : null,
       })
       // Add the new quote to local state immediately
       const newQuote: MappedQuoteBecra = {
         id: form.id,
+        company: form.company ?? null,
         description: form.description ?? null,
         validDate: form.validDate ?? false,
         date: form.date ?? null,
@@ -196,14 +224,20 @@ export function QuoteBecraTable({
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/40 hover:bg-muted/40">
+              <TableHead className={thClass} onClick={() => handleSort('qNumber')}>
+                Q Number <SortIcon field="qNumber" sortField={sortField} sortDir={sortDir} />
+              </TableHead>
               <TableHead className={thClass} onClick={() => handleSort('description')}>
                 Description <SortIcon field="description" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className={thClass} onClick={() => handleSort('date')}>
                 Date <SortIcon field="date" sortField={sortField} sortDir={sortDir} />
               </TableHead>
+              <TableHead className={thClass} onClick={() => handleSort('companyName')}>
+                Company <SortIcon field="companyName" sortField={sortField} sortDir={sortDir} />
+              </TableHead>
               <TableHead className={thClass} onClick={() => handleSort('validDate')}>
-                Valid <SortIcon field="validDate" sortField={sortField} sortDir={sortDir} />
+                Quote Validity <SortIcon field="validDate" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className={thClass} onClick={() => handleSort('createdByName')}>
                 Created By <SortIcon field="createdByName" sortField={sortField} sortDir={sortDir} />
@@ -215,13 +249,14 @@ export function QuoteBecraTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={isAdmin ? 6 : 5} className="text-center py-10 text-muted-foreground text-sm">
+                <TableCell colSpan={isAdmin ? 8 : 7} className="text-center py-10 text-muted-foreground text-sm">
                   No quotes found.
                 </TableCell>
               </TableRow>
             ) : (
               filtered.map(q => (
                 <TableRow key={q.id} className={q.deleted ? 'opacity-50' : ''}>
+                  <TableCell className={tdClass}>{getQNumber(q.id)}</TableCell>
                   <TableCell className="text-sm max-w-xs truncate">
                     {q.description ? (
                       <span title={q.description}>
@@ -232,12 +267,13 @@ export function QuoteBecraTable({
                     )}
                   </TableCell>
                   <TableCell className={tdClass}>{formatDate(q.date)}</TableCell>
+                  <TableCell className={tdClass}>{getCompanyName(q.company)}</TableCell>
                   <TableCell>
                     {q.validDate ? (
-                      <Badge className="bg-accent/15 text-accent border-0 font-medium text-xs">Yes</Badge>
+                      <Badge className="bg-accent/15 text-accent border-0 font-medium text-xs">Valid</Badge>
                     ) : (
                       <Badge variant="secondary" className="text-muted-foreground font-medium text-xs">
-                        No
+                        Not valid
                       </Badge>
                     )}
                   </TableCell>

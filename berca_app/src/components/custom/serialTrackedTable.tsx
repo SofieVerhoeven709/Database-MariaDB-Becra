@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, Copy} from 'lucide-react'
+import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, Copy, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -31,6 +31,7 @@ type SortField =
 
 type SortDir = 'asc' | 'desc'
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
+type InspectionStatusFilter = 'all' | 'overdue' | 'upcoming' | 'ok' | 'none'
 
 export type MappedMaterialSerialTracked = {
   id: string
@@ -62,6 +63,13 @@ export type MappedMaterialSerialTracked = {
   nextInspectionDate?: string | null
   inspectionIntervalValue?: number | null
   inspectionIntervalUnit?: string | null
+}
+
+export type InspectionItem = {
+  id: string
+  beNumber: string | null
+  shortDescription: string | null
+  quantityRequired: number | null
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -126,6 +134,9 @@ interface SerialTrackedTableProps {
     longDescription: string | null
     materialGroupId: string
   }[]
+  managementEmployeeOptions?: {id: string; name: string}[]
+  inspectionItemsBySerialTrackedId?: Record<string, InspectionItem[]>
+  inspectionWarningDays?: number
 }
 
 export function SerialTrackedTable({
@@ -138,6 +149,9 @@ export function SerialTrackedTable({
   warehousePlaceOptions,
   departmentId,
   materialOptions,
+  managementEmployeeOptions = [],
+  inspectionItemsBySerialTrackedId,
+  inspectionWarningDays,
 }: SerialTrackedTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -145,6 +159,7 @@ export function SerialTrackedTable({
 
   const [search, setSearch] = useState('')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
+  const [inspectionStatusFilter, setInspectionStatusFilter] = useState<InspectionStatusFilter>('all')
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -159,6 +174,24 @@ export function SerialTrackedTable({
   const projectMap = new Map(projectOptions.map(p => [p.id, p.name]))
   const materialGroupMap = new Map(materialGroupOptions.map(mg => [mg.id, mg.name]))
 
+  const inspectionWarningWindowDays = inspectionWarningDays ?? 0
+
+  function getInspectionStatus(nextInspectionDate?: string | null): 'none' | 'overdue' | 'upcoming' | 'ok' {
+    if (!nextInspectionDate || inspectionWarningWindowDays <= 0) return 'none'
+
+    const targetDate = new Date(nextInspectionDate)
+    if (Number.isNaN(targetDate.getTime())) return 'none'
+
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    targetDate.setHours(0, 0, 0, 0)
+
+    const diffDays = Math.ceil((targetDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+    if (diffDays < 0) return 'overdue'
+    if (diffDays <= inspectionWarningWindowDays) return 'upcoming'
+    return 'ok'
+  }
+
   function toggleSort(field: SortField) {
     if (sortField === field) {
       setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))
@@ -172,6 +205,12 @@ export function SerialTrackedTable({
     .filter(item => {
       if (filterDeleted === 'not-deleted' && item.deleted) return false
       if (filterDeleted === 'deleted' && !item.deleted) return false
+
+      if (inspectionStatusFilter !== 'all') {
+        const status = getInspectionStatus(item.nextInspectionDate)
+        if (status !== inspectionStatusFilter) return false
+      }
+
       if (!search) return true
 
       const q = search.toLowerCase()
@@ -230,6 +269,15 @@ export function SerialTrackedTable({
       }
     })
 
+  const overdueCount = filtered.reduce(
+    (count, item) => (getInspectionStatus(item.nextInspectionDate) === 'overdue' ? count + 1 : count),
+    0,
+  )
+  const upcomingCount = filtered.reduce(
+    (count, item) => (getInspectionStatus(item.nextInspectionDate) === 'upcoming' ? count + 1 : count),
+    0,
+  )
+
   async function handleSoftDelete(item: MappedMaterialSerialTracked) {
     await deleteMaterialSerialTrackedAction({id: item.id})
     router.refresh()
@@ -246,10 +294,22 @@ export function SerialTrackedTable({
   }
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
-  const colCount = showDeletedCols ? 20 : 17
+  const showInspectionItemsColumn = Boolean(inspectionItemsBySerialTrackedId)
+  const showInspectionStatusColumn = inspectionWarningWindowDays > 0
+  const colCount =
+    (showDeletedCols ? 20 : 17) + (showInspectionItemsColumn ? 1 : 0) + (showInspectionStatusColumn ? 1 : 0)
 
   return (
     <div className="flex flex-col gap-6">
+      {inspectionWarningWindowDays > 0 && (overdueCount > 0 || upcomingCount > 0) && (
+        <div className="rounded-lg border border-border/60 bg-secondary/40 px-4 py-3 text-sm text-foreground">
+          {overdueCount > 0 && `${overdueCount} inspection${overdueCount === 1 ? '' : 's'} overdue`}
+          {overdueCount > 0 && upcomingCount > 0 && ' - '}
+          {upcomingCount > 0 &&
+            `${upcomingCount} inspection${upcomingCount === 1 ? '' : 's'} within ${inspectionWarningWindowDays} day${inspectionWarningWindowDays === 1 ? '' : 's'}`}
+        </div>
+      )}
+
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative max-w-sm flex-1">
@@ -272,6 +332,23 @@ export function SerialTrackedTable({
               <SelectItem value="all">Show All</SelectItem>
             </SelectContent>
           </Select>
+
+          {showInspectionStatusColumn && (
+            <Select
+              value={inspectionStatusFilter}
+              onValueChange={v => setInspectionStatusFilter(v as InspectionStatusFilter)}>
+              <SelectTrigger className="w-42 border-border bg-secondary">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="border-border bg-card">
+                <SelectItem value="all">All inspections</SelectItem>
+                <SelectItem value="overdue">Overdue</SelectItem>
+                <SelectItem value="upcoming">Inspection soon</SelectItem>
+                <SelectItem value="ok">OK</SelectItem>
+                <SelectItem value="none">No reminder date</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
         </div>
 
         {canDelete && (
@@ -325,6 +402,8 @@ export function SerialTrackedTable({
               <TableHead className="whitespace-nowrap text-xs">Last Inspection</TableHead>
               <TableHead className="whitespace-nowrap text-xs">Inspection Interval</TableHead>
               <TableHead className="whitespace-nowrap text-xs">Next Inspection</TableHead>
+              {showInspectionStatusColumn && <TableHead className="whitespace-nowrap text-xs">Inspection Status</TableHead>}
+              {showInspectionItemsColumn && <TableHead className="whitespace-nowrap text-xs">Inspection Items</TableHead>}
               <Th field="rejected" label="Rejected" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdBy" label="Created By" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
 
@@ -387,6 +466,37 @@ export function SerialTrackedTable({
                     {formatInspectionInterval(item.inspectionIntervalValue, item.inspectionIntervalUnit)}
                   </TableCell>
                   <TableCell className={tdClass}>{formatDate(item.nextInspectionDate)}</TableCell>
+                  {showInspectionStatusColumn && (
+                    <TableCell>
+                      {(() => {
+                        const status = getInspectionStatus(item.nextInspectionDate)
+                        if (status === 'overdue') {
+                          return <Badge variant="destructive">Overdue</Badge>
+                        }
+                        if (status === 'upcoming') {
+                          return <Badge variant="secondary">Inspection soon</Badge>
+                        }
+                        return <span className="text-sm text-muted-foreground">-</span>
+                      })()}
+                    </TableCell>
+                  )}
+                  {showInspectionItemsColumn && (
+                    <TableCell className={tdClass}>
+                      {(() => {
+                        const inspectionItems = inspectionItemsBySerialTrackedId?.[item.id] ?? []
+                        if (inspectionItems.length === 0) return '-'
+
+                        return inspectionItems
+                          .map(i => {
+                            const label = [i.beNumber, i.shortDescription].filter(Boolean).join(' - ')
+                            if (!label) return null
+                            return i.quantityRequired ? `${label} (x${i.quantityRequired})` : label
+                          })
+                          .filter(Boolean)
+                          .join(', ')
+                      })()}
+                    </TableCell>
+                  )}
 
                   <TableCell>
                     <YesNoBadge value={!!item.rejected} />
@@ -468,10 +578,11 @@ export function SerialTrackedTable({
                           {canDelete && (
                             <Button
                               variant="ghost"
-                              size="sm"
-                              className="h-7 px-2 text-xs text-muted-foreground hover:bg-secondary hover:text-foreground"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:bg-secondary hover:text-foreground"
                               onClick={() => handleUndelete(item)}>
-                              Restore
+                              <RotateCcw className="h-3.5 w-3.5" />
+                              <span className="sr-only">Restore {item.beNumber ?? item.id}</span>
                             </Button>
                           )}
                           {isAdmin && (
@@ -508,6 +619,7 @@ export function SerialTrackedTable({
         materialGroupOptions={materialGroupOptions}
         warehousePlaceOptions={warehousePlaceOptions}
         materialOptions={materialOptions}
+        managementEmployeeOptions={managementEmployeeOptions}
         departmentId={departmentId}
       />
     </div>

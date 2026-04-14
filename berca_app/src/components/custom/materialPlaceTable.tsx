@@ -1,6 +1,6 @@
 'use client'
 import {useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Copy} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Copy, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -12,6 +12,7 @@ import {
   createMaterialPlaceAction,
   updateMaterialPlaceAction,
   deleteMaterialPlaceAction,
+  restoreMaterialPlaceAction,
 } from '@/serverFunctions/materialPlaces'
 import {useRouter} from 'next/navigation'
 
@@ -124,6 +125,12 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
     router.refresh()
   }
 
+  async function handleRestore(id: string) {
+    if (!confirm('Restore this warehouse place?')) return
+    await restoreMaterialPlaceAction({id})
+    router.refresh()
+  }
+
   const columns: {key: SortField; label: string}[] = [
     {key: 'abbreviation', label: 'Abbreviation'},
     {key: 'beNumber', label: 'Material Number (BE/IOS)'},
@@ -134,7 +141,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px]">
+        <div className="relative flex-1 min-w-50">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             className="pl-9 bg-secondary border-border"
@@ -144,7 +151,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
           />
         </div>
         <Select value={deletedFilter} onValueChange={v => setDeletedFilter(v as DeletedFilter)}>
-          <SelectTrigger className="w-[180px] bg-secondary border-border">
+          <SelectTrigger className="w-45 bg-secondary border-border">
             <SelectValue placeholder="Filter status" />
           </SelectTrigger>
           <SelectContent>
@@ -184,7 +191,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Status</TableHead>
-              <TableHead className="w-[90px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <TableHead className="w-22.5 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
             </TableRow>
@@ -206,7 +213,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
                   <TableCell className="text-sm">{item.place ?? <span className="text-muted-foreground">-</span>}</TableCell>
                   <TableCell className="text-sm font-semibold">{item.quantityInStock}</TableCell>
                   <TableCell
-                    className="text-sm text-muted-foreground max-w-[200px] truncate"
+                    className="text-sm text-muted-foreground max-w-50 truncate"
                     title={item.information ?? ''}>
                     {item.information ?? <span className="text-muted-foreground">-</span>}
                   </TableCell>
@@ -235,37 +242,48 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7"
-                        onClick={() => {
-                          setDialogMode('edit')
-                          setEditingItem(item)
-                          setDialogOpen(true)
-                        }}>
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      {!item.deleted && (
+                      {item.deleted ? (
                         <Button
                           size="icon"
                           variant="ghost"
-                          className="h-7 w-7"
-                          onClick={() => {
-                            setDialogMode('duplicate')
-                            setEditingItem(item)
-                            setDialogOpen(true)
-                          }}>
-                          <Copy className="h-3.5 w-3.5" />
+                          className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                          title="Restore"
+                          onClick={() => handleRestore(item.id)}>
+                          <RotateCcw className="h-3.5 w-3.5" />
                         </Button>
+                      ) : (
+                        <>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7"
+                            onClick={() => {
+                              setDialogMode('edit')
+                              setEditingItem(item)
+                              setDialogOpen(true)
+                            }}>
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7"
+                            onClick={() => {
+                              setDialogMode('duplicate')
+                              setEditingItem(item)
+                              setDialogOpen(true)
+                            }}>
+                            <Copy className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(item.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
                       )}
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7 text-destructive hover:text-destructive"
-                        onClick={() => handleDelete(item.id)}>
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>

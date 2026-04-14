@@ -1,11 +1,12 @@
 import 'server-only'
 import {prismaClient} from './prismaClient'
-import type {WarehousePlace, Employee} from '@/generated/prisma/client'
+import type {WarehousePlace, Employee, MaterialSerialTrack} from '@/generated/prisma/client'
 
 // Material Place is currently backed by the warehousePlace table until a dedicated model is introduced.
 export type MaterialPlaceWithRelations = WarehousePlace & {
   Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
   Employee_WarehousePlace_deletedByToEmployee: Pick<Employee, 'id' | 'firstName' | 'lastName'> | null
+  MaterialSerialTrack: Pick<MaterialSerialTrack, 'id' | 'nextInspectionDate'> | null
 }
 
 export async function getMaterialPlaces(options?: {includeDeleted?: boolean}): Promise<MaterialPlaceWithRelations[]> {
@@ -16,6 +17,7 @@ export async function getMaterialPlaces(options?: {includeDeleted?: boolean}): P
     include: {
       Employee: {select: {id: true, firstName: true, lastName: true}},
       Employee_WarehousePlace_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
+      MaterialSerialTrack: {select: {id: true, nextInspectionDate: true}},
     },
     orderBy: {place: 'asc'},
   })
@@ -27,6 +29,7 @@ export async function getMaterialPlaceById(id: string): Promise<MaterialPlaceWit
     include: {
       Employee: {select: {id: true, firstName: true, lastName: true}},
       Employee_WarehousePlace_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
+      MaterialSerialTrack: {select: {id: true, nextInspectionDate: true}},
     },
   })
 }
@@ -71,6 +74,13 @@ export async function softDeleteMaterialPlace(id: string, deletedBy: string) {
   return prismaClient.warehousePlace.update({
     where: {id},
     data: {deleted: true, deletedAt: new Date(), deletedBy},
+  })
+}
+
+export async function restoreMaterialPlace(id: string) {
+  return prismaClient.warehousePlace.update({
+    where: {id},
+    data: {deleted: false, deletedAt: null, deletedBy: null},
   })
 }
 

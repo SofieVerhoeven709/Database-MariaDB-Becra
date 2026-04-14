@@ -483,7 +483,7 @@ export function MaterialFormDialog({
                   const current = normalizeMaterialNumber(form.beNumber, nextKind)
                   update('beNumber', current || (nextKind === 'IOS' ? '4000000' : '1000000'))
                 }}
-                aria-label="Nummer type IOS"
+                aria-label="Toggle number type (BE/IOS)"
               />
               <span
                 className={`text-xs ${numberKind === 'IOS' ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
@@ -497,13 +497,13 @@ export function MaterialFormDialog({
             <Label htmlFor="beNumber" className="text-xs text-muted-foreground">
               {numberKind} Number
             </Label>
-            <p className="text-xs text-muted-foreground">Leave empty for automatically generating of the number</p>
+            <p className="text-xs text-muted-foreground">Leave empty to auto-generate the number.</p>
             <Input
               id="beNumber"
               className={inputStyles}
               value={form.beNumber ?? ''}
               onChange={e => update('beNumber', e.target.value)}
-              placeholder={numberKind === 'IOS' ? 'bijv. 4000000' : 'bijv. 1000000'}
+              placeholder={numberKind === 'IOS' ? 'e.g. 4000000' : 'e.g. 1000000'}
             />
           </div>
           <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">
@@ -536,22 +536,22 @@ export function MaterialFormDialog({
           </div>
           {/* Material Name */}
           <div className="flex flex-col gap-2">
-            <Label htmlFor="MaterialName" className="text-xs text-muted-foreground">
+            <Label htmlFor="materialName" className="text-xs text-muted-foreground">
               Material Name *
             </Label>
             <Input
-              id="MaterialName"
+              id="materialName"
               className={inputStyles}
               value={form.name ?? ''}
               onChange={e => update('name', e.target.value)}
-              placeholder="Material Name"
+              placeholder="Material name"
               required
             />
           </div>
           {/* Short Description */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="shortDescription" className="text-xs text-muted-foreground">
-              Short Description
+              Short Description *
             </Label>
             <Input
               id="shortDescription"
@@ -559,6 +559,7 @@ export function MaterialFormDialog({
               value={form.shortDescription ?? ''}
               onChange={e => update('shortDescription', e.target.value)}
               placeholder="Short description"
+              required
             />
           </div>
           {/* Long Description */}
@@ -932,7 +933,7 @@ export function MaterialFormDialog({
                   className={inputStyles}
                   value={form.leadTimeValue ?? ''}
                   onChange={e => update('leadTimeValue', e.target.value ? Number(e.target.value) : null)}
-                  placeholder="bijv. 5"
+                  placeholder="5"
                 />
               </div>
               <div className="flex flex-col gap-2">

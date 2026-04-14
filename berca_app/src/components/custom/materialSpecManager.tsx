@@ -20,9 +20,11 @@ import {
   createUnitAction,
   updateUnitAction,
   deleteUnitAction,
+  restoreUnitAction,
   createPerformanceAction,
   updatePerformanceAction,
   deletePerformanceAction,
+  restorePerformanceAction,
 } from '@/serverFunctions/materialSpecs'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -508,6 +510,14 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
     setUnits(prev => prev.map(u => (u.id === id ? {...u, deleted: true} : u)))
   }
 
+  async function handleRestore(id: string) {
+    if (!confirm('Restore this unit?')) return
+    const fd = new FormData()
+    fd.append('id', id)
+    await restoreUnitAction({success: false}, fd)
+    setUnits(prev => prev.map(u => (u.id === id ? {...u, deleted: false} : u)))
+  }
+
   const filtered = units
     .filter(u => {
       if (statusFilter === 'active') return !u.deleted
@@ -659,19 +669,32 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
-                      <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(u)}>
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openDuplicate(u)}>
-                        <Copy className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7 text-destructive hover:text-destructive"
-                        onClick={() => handleDelete(u.id)}>
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
+                      {u.deleted ? (
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                          title="Restore"
+                          onClick={() => handleRestore(u.id)}>
+                          <Check className="h-3.5 w-3.5" />
+                        </Button>
+                      ) : (
+                        <>
+                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(u)}>
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openDuplicate(u)}>
+                            <Copy className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(u.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
@@ -866,6 +889,14 @@ function PerformanceTab({
     setPerformances(prev => prev.map(p => (p.id === id ? {...p, deleted: true} : p)))
   }
 
+  async function handleRestore(id: string) {
+    if (!confirm('Restore this performance spec?')) return
+    const fd = new FormData()
+    fd.append('id', id)
+    await restorePerformanceAction({success: false}, fd)
+    setPerformances(prev => prev.map(p => (p.id === id ? {...p, deleted: false} : p)))
+  }
+
   const filtered = performances
     .filter(p => {
       if (statusFilter === 'active') return !p.deleted
@@ -989,19 +1020,32 @@ function PerformanceTab({
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
-                      <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(p)}>
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openDuplicate(p)}>
-                        <Copy className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7 text-destructive hover:text-destructive"
-                        onClick={() => handleDelete(p.id)}>
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
+                      {p.deleted ? (
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                          title="Restore"
+                          onClick={() => handleRestore(p.id)}>
+                          <Check className="h-3.5 w-3.5" />
+                        </Button>
+                      ) : (
+                        <>
+                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(p)}>
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openDuplicate(p)}>
+                            <Copy className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(p.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>

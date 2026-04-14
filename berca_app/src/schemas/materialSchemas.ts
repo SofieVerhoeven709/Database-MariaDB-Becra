@@ -13,9 +13,9 @@ const booleanFromString = z.preprocess(
 const beNumberSchema = z
   .string()
   .trim()
-  .min(1)
-  .max(255)
-  .regex(/^(1\d{6}|4\d{6})$/, 'Nummer moet in de 1000000-reeks (BE) of 4000000-reeks (IOS) liggen')
+  .refine(val => val === '' || /^(1\d{6}|4\d{6})$/.test(val), {
+    message: 'Nummer moet in de 1000000-reeks (BE) of 4000000-reeks (IOS) liggen',
+  })
 
 const brandOrderNrSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
@@ -34,7 +34,7 @@ const parentBeNumbersSchema = z.preprocess(
     if (val == null || val === '') return []
     return [val]
   },
-  z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number can only contains numbers')).default([]),
+  z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number can only contain numbers')).default([]),
 )
 
 const nullableUuidSchema = z.preprocess(

@@ -123,6 +123,13 @@ export async function softDeleteUnit(id: string, deletedBy: string) {
   })
 }
 
+export async function restoreUnit(id: string) {
+  return prismaClient.unit.update({
+    where: {id},
+    data: {deleted: false, deletedAt: null, deletedBy: null},
+  })
+}
+
 // ─── MaterialSpec (for dropdown) ──────────────────────────────────────────────
 
 export async function getMaterialSpecs(): Promise<MaterialSpec[]> {
@@ -189,3 +196,11 @@ export async function softDeleteMaterialPerformance(id: string, deletedBy: strin
     data: {deleted: true, deletedAt: new Date(), deletedBy},
   })
 }
+
+export async function restoreMaterialPerformance(id: string) {
+  return prismaClient.materialPerformance.update({
+    where: {id},
+    data: {deleted: false, deletedAt: null, deletedBy: null},
+  })
+}
+

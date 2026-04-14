@@ -2,7 +2,7 @@
 
 import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Copy} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Copy, RotateCcw} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -14,11 +14,13 @@ import {
   createMaterialPriceAction,
   updateMaterialPriceAction,
   softDeleteMaterialPriceAction,
+  restoreMaterialPriceAction,
   hardDeleteMaterialPriceAction,
 } from '@/serverFunctions/materialPrices'
 
 type SortField = 'beNumber' | 'companyName' | 'brandName' | 'unitPrice' | 'createdByName' | 'createdAt'
 type SortDir = 'asc' | 'desc'
+type DeletedFilter = 'all' | 'active' | 'deleted'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
@@ -85,6 +87,7 @@ export function MaterialPriceTable({
   }, [initialEntries])
 
   const [search, setSearch] = useState('')
+  const [deletedFilter, setDeletedFilter] = useState<DeletedFilter>('active')
   const [companyFilter, setCompanyFilter] = useState<string>('all')
   const [sortField, setSortField] = useState<SortField>('createdAt')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
@@ -93,6 +96,11 @@ export function MaterialPriceTable({
   const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
 
   const filtered = initialEntries
+    .filter(e => {
+      if (deletedFilter === 'active') return !e.deleted
+      if (deletedFilter === 'deleted') return e.deleted
+      return true
+    })
     .filter(e => {
       if (companyFilter !== 'all' && e.companyId !== companyFilter) return false
       if (!search) return true
@@ -187,6 +195,12 @@ export function MaterialPriceTable({
     router.refresh()
   }
 
+  async function handleRestore(id: string) {
+    if (!confirm('Restore this material price entry?')) return
+    await restoreMaterialPriceAction({id})
+    router.refresh()
+  }
+
   return (
     <div className="flex flex-col gap-6">
       {/* Toolbar */}
@@ -202,7 +216,7 @@ export function MaterialPriceTable({
             />
           </div>
           <Select value={companyFilter} onValueChange={setCompanyFilter}>
-            <SelectTrigger className="w-[200px] bg-secondary border-border">
+            <SelectTrigger className="w-50 bg-secondary border-border">
               <SelectValue placeholder="All companies" />
             </SelectTrigger>
             <SelectContent className="bg-card border-border">
@@ -212,6 +226,16 @@ export function MaterialPriceTable({
                   {c.name}
                 </SelectItem>
               ))}
+            </SelectContent>
+          </Select>
+          <Select value={deletedFilter} onValueChange={v => setDeletedFilter(v as DeletedFilter)}>
+            <SelectTrigger className="w-45 bg-secondary border-border">
+              <SelectValue placeholder="All statuses" />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-border">
+              <SelectItem value="active">Active only</SelectItem>
+              <SelectItem value="deleted">Deleted only</SelectItem>
+              <SelectItem value="all">All statuses</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -298,9 +322,7 @@ export function MaterialPriceTable({
                       ) : null}
                     </div>
                   </TableCell>
-                  <TableCell className={`${tdClass} max-w-[200px] truncate`}>
-                    {entry.shortDescription ?? '—'}
-                  </TableCell>
+                  <TableCell className={`${tdClass} max-w-50 truncate`}>{entry.shortDescription ?? '—'}</TableCell>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     {formatPrice(entry.unitPrice)}
                   </TableCell>
@@ -313,38 +335,61 @@ export function MaterialPriceTable({
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                        onClick={() => {
-                          setDialogMode('edit')
-                          setEditing(entry)
-                          setDialogOpen(true)
-                        }}>
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      {!entry.deleted && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                          onClick={() => {
-                            setDialogMode('duplicate')
-                            setEditing({...entry, id: ''})
-                            setDialogOpen(true)
-                          }}>
-                          <Copy className="h-3.5 w-3.5" />
-                          <span className="sr-only">Duplicate {entry.beNumber ?? entry.id}</span>
-                        </Button>
+                      {entry.deleted ? (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                            title="Restore"
+                            onClick={() => handleRestore(entry.id)}>
+                            <RotateCcw className="h-3.5 w-3.5" />
+                          </Button>
+                          {isAdmin && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                              title="Permanently delete"
+                              onClick={() => handleDelete(entry.id)}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                            onClick={() => {
+                              setDialogMode('edit')
+                              setEditing(entry)
+                              setDialogOpen(true)
+                            }}>
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                            onClick={() => {
+                              setDialogMode('duplicate')
+                              setEditing({...entry, id: ''})
+                              setDialogOpen(true)
+                            }}>
+                            <Copy className="h-3.5 w-3.5" />
+                            <span className="sr-only">Duplicate {entry.beNumber ?? entry.id}</span>
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                            onClick={() => handleDelete(entry.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
                       )}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                        onClick={() => handleDelete(entry.id)}>
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -365,4 +410,3 @@ export function MaterialPriceTable({
     </div>
   )
 }
-

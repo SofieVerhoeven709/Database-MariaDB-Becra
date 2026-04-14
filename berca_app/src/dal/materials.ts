@@ -686,6 +686,67 @@ export async function softDeleteMaterial(id: string, deletedBy: string) {
   })
 }
 
+export async function hardDeleteMaterial(id: string) {
+  return prismaClient.$transaction(async tx => {
+    const material = await tx.material.findUnique({
+      where: {id},
+      select: {id: true, beNumber: true},
+    })
+
+    if (!material) {
+      throw new Error(`Material not found: ${id}`)
+    }
+
+    const beNumber = material.beNumber ?? null
+
+    const inventoryWhere = beNumber
+      ? {OR: [{materialId: id}, {beNumber}]}
+      : {materialId: id}
+
+    const inventories = await tx.inventory.findMany({
+      where: inventoryWhere,
+      select: {id: true},
+    })
+    const inventoryIds = inventories.map(inventory => inventory.id)
+
+    if (inventoryIds.length > 0) {
+      await tx.inventoryChange.deleteMany({where: {inventoryId: {in: inventoryIds}}})
+      await tx.inventoryOrder.deleteMany({where: {inventoryId: {in: inventoryIds}}})
+      await tx.inventoryStructure.deleteMany({where: {inventoryId: {in: inventoryIds}}})
+      await tx.inventory.deleteMany({where: {id: {in: inventoryIds}}})
+    }
+
+    if (beNumber) {
+      await tx.materialMovement.deleteMany({where: {beNumberId: beNumber}})
+    }
+    await tx.materialOther.deleteMany({where: {materialId: id}})
+
+    const serialTracks = await tx.materialSerialTrack.findMany({
+      where: {materialId: id},
+      select: {id: true},
+    })
+    const serialTrackIds = serialTracks.map(track => track.id)
+
+    if (serialTrackIds.length > 0) {
+      await tx.warehousePlace.updateMany({
+        where: {serialTrackedId: {in: serialTrackIds}},
+        data: {serialTrackedId: null},
+      })
+
+      await tx.materialSerialTrackedStructure.deleteMany({where: {serialTrackedId: {in: serialTrackIds}}})
+      await tx.materialSerialTrack.deleteMany({where: {id: {in: serialTrackIds}}})
+    }
+
+    await tx.product.deleteMany({where: {materialId: id}})
+    await tx.workOrderStructure.deleteMany({where: {materialId: id}})
+    await tx.materialLeadTime.deleteMany({where: {materialId: id}})
+    await tx.materialSupplier.deleteMany({where: {materialId: id}})
+    await tx.materialStructure.deleteMany({where: beNumber ? {OR: [{materialId: id}, {beNumber}]} : {materialId: id}})
+
+    return tx.material.delete({where: {id}})
+  })
+}
+
 export async function restoreMaterial(id: string) {
   return prismaClient.material.update({
     where: {id},

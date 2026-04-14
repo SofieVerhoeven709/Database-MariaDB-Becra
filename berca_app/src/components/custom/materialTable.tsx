@@ -1,7 +1,19 @@
 'use client'
 
 import {useMemo, useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye, Copy} from 'lucide-react'
+import {
+  Search,
+  Plus,
+  Pencil,
+  Trash2,
+  ChevronUp,
+  ChevronDown,
+  ExternalLink,
+  Copy,
+  RotateCcw,
+  /* ChevronLeft,
+  ChevronRight, */
+} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -12,7 +24,13 @@ import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
 import {MATERIAL_DOCUMENT_FLAGS} from '@/components/custom/materialDocumentFlags'
 import type {MappedMaterial} from '@/types/material'
 import type {WarehousePlaceOption} from '@/types/warehousePlace'
-import {createMaterialAction, updateMaterialAction, deleteMaterialAction} from '@/serverFunctions/materials'
+import {
+  createMaterialAction,
+  updateMaterialAction,
+  deleteMaterialAction,
+  hardDeleteMaterialAction,
+  restoreMaterialAction,
+} from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
 
 interface MaterialGroup {
@@ -70,6 +88,7 @@ type SortField =
   | 'hasBdoc'
   | 'hasInsp'
 type SortDir = 'asc' | 'desc'
+type FilterStatus = 'all' | 'active' | 'deleted'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
 
@@ -119,8 +138,13 @@ export function MaterialTable({
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterRejected, setFilterRejected] = useState<FilterRejected>('all')
   const [filterNumberKind, setFilterNumberKind] = useState<FilterNumberKind>('all')
+  {
+    /*const [currentPage, setCurrentPage] = useState(1)
+  const ITEMS_PER_PAGE = 15*/
+  }
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
   const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
@@ -153,11 +177,16 @@ export function MaterialTable({
   function formatWarehouseCoordinates(place: WarehousePlaceOption): string {
     const parts = [
       place.abbreviation && `Abbr: ${place.abbreviation}`,
-      place.place && `Place: ${place.place}`,
+      /* place.place && `Place: ${place.place}`,
       place.shelf && `Shelf: ${place.shelf}`,
       place.column && `Column: ${place.column}`,
       place.layer && `Layer: ${place.layer}`,
-      place.layerPlace && `Layer place: ${place.layerPlace}`,
+      place.layerPlace && `Layer place: ${place.layerPlace}`, */
+      place.place && `Warehouse: ${place.place}`,
+      place.shelf && `X: ${place.shelf}`,
+      place.column && `Y: ${place.column}`,
+      place.layer && `Z: ${place.layer}`,
+      place.layerPlace && `Position: ${place.layerPlace}`,
     ].filter(Boolean)
 
     return parts.length > 0 ? parts.join(' | ') : place.label
@@ -210,6 +239,11 @@ export function MaterialTable({
 
   const filtered = materials
     .filter(m => {
+      if (filterStatus === 'active') return !m.deleted
+      if (filterStatus === 'deleted') return m.deleted
+      return true
+    })
+    .filter(m => {
       if (filterNumberKind === 'all') return true
       return getNumberKind(m.beNumber) === filterNumberKind
     })
@@ -243,6 +277,36 @@ export function MaterialTable({
       const bVal = getSortValue(b, sortField)
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
+  {
+    /*
+  // Paginatie berekeningen
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+  const endIndex = startIndex + ITEMS_PER_PAGE
+  const displayedMaterials = filtered.slice(startIndex, endIndex)
+
+  // Reset naar pagina 1 als er wordt gezocht of gefilterd
+  const handleSearch = (value: string) => {
+    setSearch(value)
+    setCurrentPage(1)
+  }
+
+  const handleFilterStatusChange = (value: FilterStatus) => {
+    setFilterStatus(value)
+    setCurrentPage(1)
+  }
+
+  const handleFilterRejectedChange = (value: FilterRejected) => {
+    setFilterRejected(value)
+    setCurrentPage(1)
+  }
+
+  const handleFilterNumberKindChange = (value: FilterNumberKind) => {
+    setFilterNumberKind(value)
+    setCurrentPage(1)
+  }
+  */
+  }
 
   async function handleSave(form: Partial<MappedMaterial> & {id: string}) {
     setSaving(true)
@@ -344,10 +408,29 @@ export function MaterialTable({
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('Are you sure you want to delete this material?')) return
+    const target = materials.find(m => m.id === id)
+    if (!target) return
+
+    const confirmText = target.deleted
+      ? 'This material is already soft deleted. Permanently delete it?'
+      : 'Are you sure you want to delete this material?'
+
+    if (!confirm(confirmText)) return
     const fd = new FormData()
     fd.append('id', id)
-    await deleteMaterialAction({success: false}, fd)
+    if (target.deleted) {
+      await hardDeleteMaterialAction({success: false}, fd)
+    } else {
+      await deleteMaterialAction({success: false}, fd)
+    }
+    router.refresh()
+  }
+
+  async function handleRestore(id: string) {
+    if (!confirm('Restore this material?')) return
+    const fd = new FormData()
+    fd.append('id', id)
+    await restoreMaterialAction({success: false}, fd)
     router.refresh()
   }
 
@@ -380,14 +463,19 @@ export function MaterialTable({
 
   const columns: {key: SortField; label: string}[] = [
     {key: 'beNumber', label: 'Number'},
-    {key: 'name', label: 'Name'},
+    {key: 'name', label: 'Material Name'},
     {key: 'shortDescription', label: 'Description'},
     {key: 'warehouseAbbreviation', label: 'Abbr'},
-    {key: 'warehousePlace', label: 'Place'},
+    /* {key: 'warehousePlace', label: 'Place'},
     {key: 'warehouseShelf', label: 'Shelf'},
     {key: 'warehouseColumn', label: 'Column'},
     {key: 'warehouseLayer', label: 'Layer'},
-    {key: 'warehouseLayerPlace', label: 'Layer Place'},
+    {key: 'warehouseLayerPlace', label: 'Layer Place'},*/
+    {key: 'warehousePlace', label: 'Warehouse'},
+    {key: 'warehouseShelf', label: 'X'},
+    {key: 'warehouseColumn', label: 'Y'},
+    {key: 'warehouseLayer', label: 'Z'},
+    {key: 'warehouseLayerPlace', label: 'Position'},
     {key: 'brandName', label: 'Brand'},
     {key: 'materialGroupLabelA', label: 'Group A'},
     {key: 'materialGroupLabelB', label: 'Group B'},
@@ -425,11 +513,24 @@ export function MaterialTable({
             className="pl-9 bg-secondary border-border"
             placeholder="Searching for materials..."
             value={search}
+            /*onChange={e => handleSearch(e.target.value)}*/
             onChange={e => setSearch(e.target.value)}
           />
         </div>
 
+        {/* <Select value={filterStatus} onValueChange={v => handleFilterStatusChange(v as FilterStatus)}> */}
+        <Select value={filterStatus} onValueChange={v => setFilterStatus(v as FilterStatus)}>
+          <SelectTrigger className="w-36 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="active">Not deleted</SelectItem>
+            <SelectItem value="deleted">Deleted</SelectItem>
+          </SelectContent>
+        </Select>
         <Select value={filterNumberKind} onValueChange={v => setFilterNumberKind(v as FilterNumberKind)}>
+          {/* <Select value={filterNumberKind} onValueChange={v => handleFilterNumberKindChange(v as FilterNumberKind)}>*/}
           <SelectTrigger className="w-36 bg-secondary border-border">
             <SelectValue />
           </SelectTrigger>
@@ -439,8 +540,8 @@ export function MaterialTable({
             <SelectItem value="ios">IOS</SelectItem>
           </SelectContent>
         </Select>
-
         <Select value={filterRejected} onValueChange={v => setFilterRejected(v as FilterRejected)}>
+          {/* <Select value={filterRejected} onValueChange={v => handleFilterRejectedChange(v as FilterRejected)}>*/}
           <SelectTrigger className="w-36 bg-secondary border-border">
             <SelectValue />
           </SelectTrigger>
@@ -497,11 +598,14 @@ export function MaterialTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + MATERIAL_DOCUMENT_FLAGS.length + 2} className="text-center text-muted-foreground py-10">
+                <TableCell
+                  colSpan={columns.length + MATERIAL_DOCUMENT_FLAGS.length + 2}
+                  className="text-center text-muted-foreground py-10">
                   No materials found
                 </TableCell>
               </TableRow>
             ) : (
+              /* displayedMaterials.map(m => ( */
               filtered.map(m => (
                 <TableRow
                   key={m.id}
@@ -560,7 +664,9 @@ export function MaterialTable({
                   </TableCell>
                   <TableCell>
                     {m.partApproved ? (
-                      <Badge variant="secondary" className="text-xs bg-emerald-500/15 text-emerald-700 dark:text-emerald-400">
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-emerald-500/15 text-emerald-700 dark:text-emerald-400">
                         Yes
                       </Badge>
                     ) : (
@@ -604,47 +710,70 @@ export function MaterialTable({
                         variant="ghost"
                         className="h-7 w-7"
                         onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
-                        <Eye className="h-3.5 w-3.5" />
+                        <ExternalLink className="h-3.5 w-3.5" />
                       </Button>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7"
-                        onClick={() => {
-                          setDialogMode('edit')
-                          setEditingMaterial(m)
-                          setDialogOpen(true)
-                        }}>
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      <span title={m.partApproved ? 'Copy row' : 'Part must be approved before copying'}>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-7 w-7"
-                          onClick={() => {
-                            if (!m.partApproved) {
-                              setAlert({
-                                title: 'Copy not allowed',
-                                description: 'This part must be approved before it can be copied.',
-                                type: 'warning',
-                              })
-                              return
-                            }
-                            setDialogMode('duplicate')
-                            setEditingMaterial(m)
-                            setDialogOpen(true)
-                          }}>
-                          <Copy className="h-3.5 w-3.5" />
-                        </Button>
-                      </span>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7 text-destructive hover:text-destructive"
-                        onClick={() => handleDelete(m.id)}>
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
+                      {m.deleted ? (
+                        <>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+                            title="Restore"
+                            onClick={() => handleRestore(m.id)}>
+                            <RotateCcw className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:text-destructive"
+                            title="Permanently delete"
+                            onClick={() => handleDelete(m.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7"
+                            onClick={() => {
+                              setDialogMode('edit')
+                              setEditingMaterial(m)
+                              setDialogOpen(true)
+                            }}>
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <span title={m.partApproved ? 'Copy row' : 'Part must be approved before copying'}>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7"
+                              onClick={() => {
+                                if (!m.partApproved) {
+                                  setAlert({
+                                    title: 'Copy not allowed',
+                                    description: 'This part must be approved before it can be copied.',
+                                    type: 'warning',
+                                  })
+                                  return
+                                }
+                                setDialogMode('duplicate')
+                                setEditingMaterial(m)
+                                setDialogOpen(true)
+                              }}>
+                              <Copy className="h-3.5 w-3.5" />
+                            </Button>
+                          </span>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(m.id)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
@@ -654,10 +783,57 @@ export function MaterialTable({
         </Table>
       </div>
 
-      <p className="text-xs text-muted-foreground">
-        Showing {filtered.length} of {materials.length} material{materials.length !== 1 ? 's' : ''}
-      </p>
+      {/* Pagination Info & Controls
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p className="text-xs text-muted-foreground">
+          Showing {displayedMaterials.length > 0 ? startIndex + 1 : 0}–{Math.min(endIndex, filtered.length)} of{' '}
+          {filtered.length} material{filtered.length !== 1 ? 's' : ''} (Page {currentPage} of {totalPages || 1})
+        </p>
+        {totalPages > 1 && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="flex items-center gap-1">
+              <ChevronLeft className="h-4 w-4" />
+              Previous
+            </Button>
 
+            <div className="flex items-center gap-1">
+              {Array.from({length: totalPages}, (_, i) => i + 1)
+                .filter(page => {
+                  // Show first, last, and pages around current
+                  return page === 1 || page === totalPages || Math.abs(page - currentPage) <= 1
+                })
+                .map((page, idx, arr) => (
+                  <div key={page}>
+                    {idx > 0 && arr[idx - 1] !== page - 1 && <span className="px-1 text-muted-foreground">...</span>}
+                    <Button
+                      variant={currentPage === page ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setCurrentPage(page)}
+                      className="h-8 w-8 p-0">
+                      {page}
+                    </Button>
+                  </div>
+                ))}
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="flex items-center gap-1">
+              Next
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
+      </div>
+      */}
       <MaterialFormDialog
         open={dialogOpen}
         onOpenChange={open => {

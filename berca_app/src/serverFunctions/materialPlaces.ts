@@ -1,7 +1,7 @@
 'use server'
 import {revalidatePath} from 'next/cache'
 import {randomUUID} from 'crypto'
-import {createMaterialPlace, updateMaterialPlace, softDeleteMaterialPlace} from '@/dal/materialPlace'
+import {createMaterialPlace, updateMaterialPlace, softDeleteMaterialPlace, restoreMaterialPlace} from '@/dal/materialPlace'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createMaterialPlaceSchema, updateMaterialPlaceSchema, deleteMaterialPlaceSchema} from '@/schemas/materialPlaceSchemas'
 
@@ -43,6 +43,16 @@ export const deleteMaterialPlaceAction = protectedServerFunction({
   serverFn: async ({data, profile, logger}) => {
     await softDeleteMaterialPlace(data.id, profile.id)
     logger.info(`MaterialPlace soft-deleted: ${data.id}`)
+    revalidatePath(REVALIDATE, 'page')
+  },
+})
+
+export const restoreMaterialPlaceAction = protectedServerFunction({
+  schema: deleteMaterialPlaceSchema,
+  functionName: 'Restore material place',
+  serverFn: async ({data, logger}) => {
+    await restoreMaterialPlace(data.id)
+    logger.info(`MaterialPlace restored: ${data.id}`)
     revalidatePath(REVALIDATE, 'page')
   },
 })

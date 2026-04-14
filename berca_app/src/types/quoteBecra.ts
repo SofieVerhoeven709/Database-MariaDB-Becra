@@ -1,5 +1,6 @@
 export interface MappedQuoteBecra {
   id: string
+  company: string | null
   description: string | null
   validDate: boolean
   date: string | null

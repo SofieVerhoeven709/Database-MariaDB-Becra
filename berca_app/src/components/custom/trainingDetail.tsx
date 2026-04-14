@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Pencil, X, Save, Plus, Check, Trash2} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Plus, Check, Trash2, RotateCcw} from 'lucide-react'
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
@@ -602,13 +602,14 @@ export function TrainingDetail({
                                     {canEdit && (
                                       <Button
                                         variant="ghost"
-                                        size="sm"
-                                        className="h-7 text-xs px-2 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
                                         onClick={async () => {
                                           await undeleteTrainingContactAction({id: tc.id})
                                           router.refresh()
                                         }}>
-                                        Restore
+                                        <RotateCcw className="h-3.5 w-3.5" />
+                                        <span className="sr-only">Restore {tc.contact.lastName} {tc.contact.firstName}</span>
                                       </Button>
                                     )}
                                     {isAdmin && (

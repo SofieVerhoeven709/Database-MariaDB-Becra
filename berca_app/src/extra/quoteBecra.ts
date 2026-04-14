@@ -1,5 +1,6 @@
 import type {QuoteBecra, Employee} from '@/generated/prisma/client'
 import type {MappedQuoteBecra} from '@/types/quoteBecra'
+import {decodeQuoteBecraDescription} from '@/lib/quoteBecraCompany'
 
 type QuoteBecraWithRelations = QuoteBecra & {
   Employee_QuoteBecra_createdByToEmployee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
@@ -7,9 +8,12 @@ type QuoteBecraWithRelations = QuoteBecra & {
 }
 
 export function mapQuoteBecra(q: QuoteBecraWithRelations): MappedQuoteBecra {
+  const decoded = decodeQuoteBecraDescription(q.description)
+
   return {
     id: q.id,
-    description: q.description,
+    company: decoded.company,
+    description: decoded.description,
     validDate: q.validDate,
     date: q.date?.toISOString() ?? null,
     createdBy: q.createdBy,

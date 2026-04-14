@@ -2,7 +2,7 @@
 
 import {revalidatePath} from 'next/cache'
 import {randomUUID} from 'crypto'
-import {createMaterial, updateMaterial, softDeleteMaterial, restoreMaterial} from '@/dal/materials'
+import {createMaterial, updateMaterial, softDeleteMaterial, hardDeleteMaterial, restoreMaterial} from '@/dal/materials'
 import {ensureMaterialDemandForMaterial, removeMaterialDemandForMaterial} from '@/dal/materialDemands'
 import {prismaClient} from '@/dal/prismaClient'
 import {protectedFormAction} from '@/lib/serverFunctions'
@@ -18,13 +18,14 @@ const REVALIDATE_INVENTORY = '/departments/warehouse/inventory'
 const REVALIDATE_WAREHOUSE_PLACE = '/departments/[departmentId]/place'
 const REVALIDATE_MATERIAL_PLACE = '/departments/[departmentId]/materialPlace'
 const REVALIDATE_MATERIAL_DEMAND = '/departments/purchasing/materialDemand'
+const REVALIDATE_INVENTORY_PLACE = '/departments/[departmentId]/inventoryPlace'
 
 const createMaterialForPlaceSchema = z.object({
   id: z.string().uuid(),
   beNumber: z
     .string()
     .trim()
-    .regex(/^(1\d{6}|4\d{6})$/, 'Nummer moet in de 1000000-reeks (BE) of 4000000-reeks (IOS) liggen'),
+    .regex(/^(1\d{6}|4\d{6})$/, 'Number has to be in the 1000000 (BE) or 4000000 (IOS)'),
   shortDescription: z.string().trim().min(1).max(255),
   name: z.string().trim().max(255).optional(),
 })
@@ -228,6 +229,19 @@ export const restoreMaterialAction = protectedFormAction({
   },
 })
 
+export const hardDeleteMaterialAction = protectedFormAction({
+  schema: deleteMaterialSchema,
+  functionName: 'Hard delete material',
+  globalErrorMessage: 'Could not permanently delete the material, please try again.',
+  serverFn: async ({data, logger}) => {
+    await hardDeleteMaterial(data.id)
+    logger.info(`Material hard-deleted: ${data.id}`)
+    revalidatePath(REVALIDATE_MATERIAL)
+    revalidatePath(REVALIDATE_INVENTORY)
+    revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
+  },
+})
+
 export async function createMaterialForPlaceAction(unvalidatedData: z.infer<typeof createMaterialForPlaceSchema>) {
   const logger = await getLogger()
   const profile = await getSessionProfileFromCookieOrThrow()
@@ -247,7 +261,7 @@ export async function createMaterialForPlaceAction(unvalidatedData: z.infer<type
   ])
 
   if (!defaultUnit || !defaultMaterialGroup) {
-    throw new Error('No standard unit of materialgroup found for creating material.')
+    throw new Error('No standard unit of material group found for creating material.')
   }
 
   const target = await createTargetForType('Company', profile.id)
@@ -275,6 +289,7 @@ export async function createMaterialForPlaceAction(unvalidatedData: z.infer<type
   revalidatePath(REVALIDATE_WAREHOUSE_PLACE, 'page')
   revalidatePath(REVALIDATE_MATERIAL_PLACE, 'page')
   revalidatePath(REVALIDATE_MATERIAL_DEMAND)
+  revalidatePath(REVALIDATE_INVENTORY_PLACE, 'page')
 
   return {
     id: material.id,

@@ -36,10 +36,16 @@ function generateSuffix() {
   return String(Math.floor(Math.random() * 100)).padStart(2, '0')
 }
 
-export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyOptions, onCreateCompany}: QuoteBecraFormDialogProps) {
+export function QuoteBecraFormDialog({
+  open,
+  onOpenChange,
+  item,
+  onSave,
+  companyOptions,
+  onCreateCompany,
+}: QuoteBecraFormDialogProps) {
   const isEditing = item !== null
-  const makeForm = (): Partial<MappedQuoteBecra> & {id: string} =>
-    item ? {...item} : {...EMPTY}
+  const makeForm = (): Partial<MappedQuoteBecra> & {id: string} => (item ? {...item} : {...EMPTY})
 
   const [form, setForm] = useState(makeForm)
   const [quotePrefix, setQuotePrefix] = useState(() => (item?.id ? item.id.slice(0, 8) : ''))
@@ -51,15 +57,15 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
   useEffect(() => {
     if (open) {
       setForm(makeForm())
-      setQuotePrefix(item?.id ? item.id.slice(0, 8) : '')
-      setQuoteSuffix(item?.id ? item.id.slice(8, 10) : '')
-      generatedForPrefixRef.current = item?.id ? item.id.slice(0, 8) : ''
+      setQuotePrefix(item?.id ? item.id.slice(0, 6) : '')
+      setQuoteSuffix(item?.id ? item.id.slice(6, 8) : '')
+      generatedForPrefixRef.current = item?.id ? item.id.slice(0, 6) : ''
       setError(null)
     }
   }, [open, item?.id])
 
   useEffect(() => {
-    if (quotePrefix.length < 8) {
+    if (quotePrefix.length < 6) {
       generatedForPrefixRef.current = ''
       setQuoteSuffix('')
       setForm(prev => ({...prev, id: quotePrefix}))
@@ -82,7 +88,7 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
   }
 
   function handlePrefixChange(value: string) {
-    setQuotePrefix(onlyDigits(value).slice(0, 8))
+    setQuotePrefix(onlyDigits(value).slice(0, 6))
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -91,8 +97,8 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
     setError(null)
     try {
       const id = `${quotePrefix}${quoteSuffix}`
-      if (!/^\d{10}$/.test(id)) {
-        setError('Please enter 8 digits first so the final 2 digits can be generated automatically.')
+      if (!/^\d{6}$/.test(id)) {
+        setError('Please enter 6 digits first so the final 2 digits can be generated automatically.')
         return
       }
       await onSave({...form, id, originalId: item?.id})
@@ -112,7 +118,7 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
           <DialogDescription>
             {isEditing
               ? `Editing quote: ${item.id}`
-              : 'Create a new Becra quote record. Enter the first 8 digits and the last 2 digits will be generated automatically.'}
+              : 'Create a new Becra quote record. Enter the first 6 digits and the last 2 digits will be generated automatically.'}
           </DialogDescription>
         </DialogHeader>
 
@@ -128,16 +134,19 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
                   className={inputStyles}
                   value={quotePrefix}
                   onChange={e => handlePrefixChange(e.target.value)}
-                  placeholder="YYYYMMDD"
+                  placeholder="YYMMDD"
                   inputMode="numeric"
-                  maxLength={8}
+                  maxLength={6}
                   required
                 />
-                <Input className={`${inputStyles} text-center`} value={quoteSuffix} readOnly aria-label="Auto-generated suffix" />
+                <Input
+                  className={`${inputStyles} text-center`}
+                  value={quoteSuffix}
+                  readOnly
+                  aria-label="Auto-generated suffix"
+                />
               </div>
-              <p className="text-[11px] text-muted-foreground">
-                Example: 20260414 + 01 → 2026041401
-              </p>
+              <p className="text-[11px] text-muted-foreground">Example: 260414 + 01 → 26041401</p>
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="qb-company" className="text-xs text-muted-foreground">

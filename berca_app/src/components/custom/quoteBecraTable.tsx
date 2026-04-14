@@ -38,8 +38,8 @@ function formatDate(date: string | null) {
 
 function getQuoteNumber(id: string) {
   if (!id) return '-'
-  if (/^\d{8}$/.test(id)) return id
-  return `${id.slice(0, 8).toUpperCase()}`
+  if (/^\d{6}$/.test(id)) return id
+  return `${id.slice(0, 6).toUpperCase()}`
 }
 
 function getCompanyName(company: string | null) {
@@ -129,7 +129,9 @@ export function QuoteBecraTable({
 
     if (editingItem) {
       const originalId = form.originalId ?? editingItem.id
-      const updateQuoteBecraWithOriginalId = updateQuoteBecraAction as unknown as (data: QuoteBecraUpdatePayload) => Promise<void>
+      const updateQuoteBecraWithOriginalId = updateQuoteBecraAction as unknown as (
+        data: QuoteBecraUpdatePayload,
+      ) => Promise<void>
       await updateQuoteBecraWithOriginalId({
         originalId,
         id: quoteNumber,

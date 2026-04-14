@@ -13,7 +13,7 @@ interface QuoteBecraFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   item: MappedQuoteBecra | null
-  onSave: (item: Partial<MappedQuoteBecra> & {id: string}) => Promise<void>
+  onSave: (item: Partial<MappedQuoteBecra> & {id: string; originalId?: string}) => Promise<void>
   companyOptions: QuoteBecraCompanyOption[]
   onCreateCompany: (name: string) => Promise<QuoteBecraCompanyOption>
 }
@@ -59,8 +59,6 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
   }, [open, item?.id])
 
   useEffect(() => {
-    if (isEditing) return
-
     if (quotePrefix.length < 8) {
       generatedForPrefixRef.current = ''
       setQuoteSuffix('')
@@ -77,7 +75,7 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
     }
 
     setForm(prev => ({...prev, id: `${quotePrefix}${quoteSuffix}`}))
-  }, [quotePrefix, quoteSuffix, isEditing])
+  }, [quotePrefix, quoteSuffix])
 
   function update<K extends keyof MappedQuoteBecra>(field: K, value: MappedQuoteBecra[K]) {
     setForm(prev => ({...prev, [field]: value}))
@@ -92,11 +90,12 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
     setSaving(true)
     setError(null)
     try {
-      const id = isEditing ? form.id.trim() : `${quotePrefix}${quoteSuffix}`
-      if (!isEditing && !/^\d{10}$/.test(id)) {
-        throw new Error('Please enter 8 digits first so the final 2 digits can be generated automatically.')
+      const id = `${quotePrefix}${quoteSuffix}`
+      if (!/^\d{10}$/.test(id)) {
+        setError('Please enter 8 digits first so the final 2 digits can be generated automatically.')
+        return
       }
-      await onSave({...form, id})
+      await onSave({...form, id, originalId: item?.id})
       onOpenChange(false)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong, please try again.')
@@ -123,23 +122,19 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
               <Label htmlFor="qb-number" className="text-xs text-muted-foreground">
                 Quote Number
               </Label>
-              {isEditing ? (
-                <Input id="qb-number" className={inputStyles} value={form.id ?? ''} readOnly />
-              ) : (
-                <div className="grid grid-cols-[1fr_auto] gap-2">
-                  <Input
-                    id="qb-number"
-                    className={inputStyles}
-                    value={quotePrefix}
-                    onChange={e => handlePrefixChange(e.target.value)}
-                    placeholder="YYYYMMDD"
-                    inputMode="numeric"
-                    maxLength={8}
-                    required
-                  />
-                  <Input className={inputStyles} value={quoteSuffix} readOnly aria-label="Auto-generated suffix" />
-                </div>
-              )}
+              <div className="grid grid-cols-[1fr_auto] gap-2">
+                <Input
+                  id="qb-number"
+                  className={inputStyles}
+                  value={quotePrefix}
+                  onChange={e => handlePrefixChange(e.target.value)}
+                  placeholder="YYYYMMDD"
+                  inputMode="numeric"
+                  maxLength={8}
+                  required
+                />
+                <Input className={inputStyles} value={quoteSuffix} readOnly aria-label="Auto-generated suffix" />
+              </div>
               <p className="text-[11px] text-muted-foreground">
                 Example: 20260414 + 01 → 2026041401
               </p>

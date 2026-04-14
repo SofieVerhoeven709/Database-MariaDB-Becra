@@ -29,6 +29,13 @@ export async function redirectProxy(
   response: NextResponse,
   session: SessionWithProfile | null,
 ): Promise<NextResponse> {
+  const quoteBecraMatch = request.nextUrl.pathname.match(/^(\/departments\/[^/]+)\/quotebecra$/i)
+  if (quoteBecraMatch && !request.nextUrl.pathname.endsWith('/quoteBecra')) {
+    const nextUrl = request.nextUrl.clone()
+    nextUrl.pathname = `${quoteBecraMatch[1]}/quoteBecra`
+    return NextResponse.redirect(nextUrl)
+  }
+
   const parameterizedRoute = request.nextUrl.pathname.replaceAll(uuidV4Regex, ':param')
   const logger = await getLogger()
 

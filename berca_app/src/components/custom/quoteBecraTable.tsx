@@ -23,6 +23,13 @@ import {generateCompanyNumber} from '@/lib/utils'
 type SortField = 'qNumber' | 'description' | 'date' | 'validDate' | 'companyName' | 'createdByName'
 type SortDir = 'asc' | 'desc'
 type FilterDeleted = 'not-deleted' | 'deleted' | 'valid' | 'not valid' | 'all'
+type QuoteBecraUpdatePayload = {
+  originalId: string
+  id: string
+  description?: string | null
+  validDate: boolean
+  date?: Date | null
+}
 
 function formatDate(date: string | null) {
   if (!date) return '-'
@@ -116,12 +123,15 @@ export function QuoteBecraTable({
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
 
-  async function handleSave(form: Partial<MappedQuoteBecra> & {id: string}) {
+  async function handleSave(form: Partial<MappedQuoteBecra> & {id: string; originalId?: string}) {
     const encodedDescription = encodeQuoteBecraDescription(form.description, form.company)
     const quoteNumber = form.id.trim()
 
     if (editingItem) {
-      await updateQuoteBecraAction({
+      const originalId = form.originalId ?? editingItem.id
+      const updateQuoteBecraWithOriginalId = updateQuoteBecraAction as unknown as (data: QuoteBecraUpdatePayload) => Promise<void>
+      await updateQuoteBecraWithOriginalId({
+        originalId,
         id: quoteNumber,
         description: encodedDescription,
         validDate: form.validDate ?? false,
@@ -130,9 +140,10 @@ export function QuoteBecraTable({
       // Update the matching quote in local state immediately
       setQuotes(prev =>
         prev.map(q =>
-          q.id === quoteNumber
+          q.id === originalId
             ? {
                 ...q,
+                id: quoteNumber,
                 company: form.company ?? null,
                 description: form.description ?? null,
                 validDate: form.validDate ?? false,

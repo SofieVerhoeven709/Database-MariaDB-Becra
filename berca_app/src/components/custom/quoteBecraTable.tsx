@@ -31,8 +31,8 @@ function formatDate(date: string | null) {
 
 function getQuoteNumber(id: string) {
   if (!id) return '-'
-  if (/^\d{10}$/.test(id)) return id
-  return `${id.slice(0, 10).toUpperCase()}`
+  if (/^\d{8}$/.test(id)) return id
+  return `${id.slice(0, 8).toUpperCase()}`
 }
 
 function getCompanyName(company: string | null) {
@@ -197,7 +197,9 @@ export function QuoteBecraTable({
     })
 
     const option = {id: created.id, name: created.name}
-    setCompanyOptions(prev => [...prev.filter(c => c.id !== option.id), option].sort((a, b) => a.name.localeCompare(b.name)))
+    setCompanyOptions(prev =>
+      [...prev.filter(c => c.id !== option.id), option].sort((a, b) => a.name.localeCompare(b.name)),
+    )
     return option
   }
 

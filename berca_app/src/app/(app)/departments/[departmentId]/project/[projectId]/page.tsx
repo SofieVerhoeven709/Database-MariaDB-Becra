@@ -1,7 +1,7 @@
 import {getProjectById, getProjectTypes} from '@/dal/projects'
 import {getEmployees} from '@/dal/employees'
 import {getContacts} from '@/dal/contacts'
-import {getPurchases} from '@/dal/purchases'
+import {getProjectBOMs} from '@/dal/projectBoms'
 import {mapEmployee} from '@/extra/employees'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {ProjectDetail} from '@/components/custom/projectDetail'
@@ -16,6 +16,7 @@ import {getTitles} from '@/dal/titles'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {getCountries} from '@/dal/countries'
+import {mapProjectBOM} from '@/extra/projectBom'
 
 interface PageProps {
   params: Promise<{departmentId: string; projectId: string}>
@@ -31,7 +32,7 @@ export default async function ProjectDetailPage({params}: PageProps) {
     companies,
     employeesFromDAL,
     contactsFromDAL,
-    purchasesFromDAL,
+    projectBomsFromDAL,
     roleLevels,
     profile,
     functions,
@@ -45,7 +46,7 @@ export default async function ProjectDetailPage({params}: PageProps) {
     getCompanies(),
     getEmployees(),
     getContacts(),
-    getPurchases(),
+    getProjectBOMs(),
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
     getFunctions(),
@@ -64,9 +65,7 @@ export default async function ProjectDetailPage({params}: PageProps) {
   const contactOptions = contactsFromDAL.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
   const projectTypeOptions = projectTypes.map(t => ({id: t.id, name: t.name}))
   const companyOptions = companies.filter(c => !c.deleted).map(c => ({id: c.id, name: c.name}))
-  const availablePurchases = purchasesFromDAL
-    .filter(p => !p.deleted && p.projectId === null)
-    .map(p => ({id: p.id, orderNumber: p.orderNumber, companyName: p.Company?.name ?? null, status: p.status}))
+  const projectBomOptions = projectBomsFromDAL.map(mapProjectBOM)
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
   const defaultVisibleRoleNames = [department.name]
   const visibilityForRoles = project.Target.VisibilityForRole.map(mapVisibility)
@@ -87,7 +86,7 @@ export default async function ProjectDetailPage({params}: PageProps) {
           contacts={contactOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
-          availablePurchases={availablePurchases}
+          projectBoms={projectBomOptions}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
           visibilityForRoles={visibilityForRoles}

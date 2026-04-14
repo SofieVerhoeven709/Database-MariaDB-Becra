@@ -1,8 +1,9 @@
 import {z} from 'zod/v4'
 
 export const createInventoryOrderSchema = z.object({
-  inventoryId: z.string().min(1),
+  materialId: z.string().min(1),
   orderNumber: z.string().min(1).max(255),
+  requestedQty: z.coerce.number().int().min(1),
   orderDate: z.string().min(1),
   shortDescription: z.string().min(1).max(255),
   longDescription: z.string().nullable().optional(),

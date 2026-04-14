@@ -8,6 +8,15 @@ export const SessionDuration: Record<string, number> = {
 
 export const DEFAULT_SESSION_DURATION = 1000 * 60 * 60
 
+export const INCOMING_PERMISSION_LEVELS = {
+  edit: 40,
+  create: 60,
+  delete: 80,
+  hardDelete: 100,
+  addSourceLink: 40,
+  deleteSourceLink: 80,
+  } as const
+  
 export const AppSettings = {
   inspectionReminderMonths: 2,
 } as const

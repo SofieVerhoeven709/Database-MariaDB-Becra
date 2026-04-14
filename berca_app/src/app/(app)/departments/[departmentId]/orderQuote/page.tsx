@@ -1,24 +1,31 @@
-import {getQuoteSuppliers} from '@/dal/quoteSuppliers'
-import {mapQuoteSupplier} from '@/extra/quoteSuppliers'
+import {getQuoteSuppliers, getPaymentConditionOptions, getPaymentConditions} from '@/dal/quoteSuppliers'
+import {mapPaymentCondition, mapQuoteSupplier} from '@/extra/quoteSuppliers'
 import {QuoteSupplierTable} from '@/components/custom/quoteSupplierTable'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
-import {getProjects} from '@/dal/projects'
+import {getSupplierCompanies} from '@/dal/companies'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {getMaterialById} from '@/dal/materials'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
+  searchParams?: Promise<{materialId?: string; materialDemandId?: string; supplierId?: string; quoteQty?: string}>
 }
 
-export default async function OrderQuotePage({params}: PageProps) {
+export default async function OrderQuotePage({params, searchParams}: PageProps) {
   const {departmentId} = await params
+  const {materialId, materialDemandId, supplierId, quoteQty} = (await searchParams) ?? {}
+  const initialQuoteQty = quoteQty ? Number.parseInt(quoteQty, 10) : undefined
 
-  const [department, entriesFromDAL, projectsRaw, profile] = await Promise.all([
+  const [department, entriesFromDAL, companiesRaw, paymentConditionsRaw, paymentConditionRowsRaw, profile, materialData] = await Promise.all([
     getDepartmentById(departmentId),
     getQuoteSuppliers(),
-    getProjects(),
+    getSupplierCompanies(),
+    getPaymentConditionOptions(),
+    getPaymentConditions(),
     getSessionProfileFromCookieOrThrow(),
+    materialId ? getMaterialById(materialId) : Promise.resolve(null),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -28,10 +35,19 @@ export default async function OrderQuotePage({params}: PageProps) {
   const entries = entriesFromDAL.map(mapQuoteSupplier)
   const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'orderQuote')
 
-  const projectOptions = projectsRaw
-    .filter(p => !p.deleted)
-    .map(p => ({id: p.id, name: `${p.projectNumber} – ${p.projectName}`}))
+  const companyOptions = companiesRaw
+    .map(c => ({id: c.id, name: c.name}))
     .sort((a, b) => a.name.localeCompare(b.name))
+
+  const paymentConditionOptions = paymentConditionsRaw
+    .map(pc => ({id: pc.id, name: pc.name}))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  const paymentConditionRows = paymentConditionRowsRaw
+    .map(mapPaymentCondition)
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  const selectedSupplier = supplierId ? companyOptions.find(c => c.id === supplierId) ?? null : null
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -43,6 +59,20 @@ export default async function OrderQuotePage({params}: PageProps) {
               {action?.description ?? 'Manage supplier quotations and comparisons.'}
             </p>
           </div>
+          {materialData && (
+            <div className="rounded-lg border border-border/60 bg-card p-3 space-y-2">
+              <p className="text-xs text-muted-foreground"><strong>Creating quote for material:</strong></p>
+              <div className="flex items-baseline gap-2">
+                <span className="font-medium">{materialData.beNumber ?? materialData.id.slice(0, 8)}</span>
+                <span className="text-sm text-muted-foreground">{materialData.shortDescription ?? materialData.name ?? '—'}</span>
+              </div>
+              {selectedSupplier && (
+                <p className="text-xs text-muted-foreground">
+                  <strong>Supplier preselected:</strong> {selectedSupplier.name}
+                </p>
+              )}
+            </div>
+          )}
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
             <span className="text-foreground">
               {entries.length}
@@ -56,9 +86,16 @@ export default async function OrderQuotePage({params}: PageProps) {
 
         <QuoteSupplierTable
           initialEntries={entries}
-          projects={projectOptions}
+          companies={companyOptions}
+          paymentConditions={paymentConditionOptions}
+          paymentConditionRows={paymentConditionRows}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          departmentId={departmentId}
+          defaultMaterialId={materialId}
+          defaultMaterialDemandId={materialDemandId}
+          defaultInitialQuantity={Number.isFinite(initialQuoteQty) ? initialQuoteQty : undefined}
+          defaultSupplierId={selectedSupplier?.id}
         />
       </div>
     </main>

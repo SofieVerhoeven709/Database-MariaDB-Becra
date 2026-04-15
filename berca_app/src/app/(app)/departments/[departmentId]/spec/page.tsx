@@ -5,15 +5,17 @@ import {
   getMaterialSpecs,
   getMaterialFamilies,
 } from '@/dal/materialSpecs'
+import {getMaterials} from '@/dal/materials'
 import {MaterialSpecManager} from '@/components/custom/materialSpecManager'
 
 export default async function SpecPage() {
-  const [groups, units, performances, specs, families] = await Promise.all([
+  const [groups, units, performances, specs, families, materialsRaw] = await Promise.all([
     getMaterialGroups(true),
     getUnits(true),
     getMaterialPerformances(true),
     getMaterialSpecs(),
     getMaterialFamilies(),
+    getMaterials({includeDeleted: true}),
   ])
 
   const mappedGroups = groups.map(g => ({
@@ -62,6 +64,16 @@ export default async function SpecPage() {
     name: f.name ?? null,
   }))
 
+  const mappedMaterials = materialsRaw.map(m => ({
+    id: m.id,
+    beNumber: m.beNumber ?? '',
+    shortDescription: m.shortDescription,
+    materialGroupIdA: m.materialGroupIdA ?? null,
+    materialGroupIdB: m.materialGroupIdB ?? null,
+    materialGroupIdC: m.materialGroupIdC ?? null,
+    materialGroupIdD: m.materialGroupIdD ?? null,
+  }))
+
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="mb-6">
@@ -76,6 +88,7 @@ export default async function SpecPage() {
         initialPerformances={mappedPerformances}
         specs={mappedSpecs}
         families={mappedFamilies}
+        materials={mappedMaterials}
       />
     </div>
   )

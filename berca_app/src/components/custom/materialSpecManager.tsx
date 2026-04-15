@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {Plus, Pencil, Trash2, Search, ChevronUp, ChevronDown, Check, X, Copy} from 'lucide-react'
+import {Plus, Pencil, Trash2, Search, ChevronUp, ChevronDown, Check, X, Copy, Eye} from 'lucide-react'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Input} from '@/components/ui/input'
@@ -75,12 +75,23 @@ export interface MappedFamily {
   name: string | null
 }
 
+export interface MappedGroupMaterial {
+  id: string
+  beNumber: string
+  shortDescription: string | null
+  materialGroupIdA: string | null
+  materialGroupIdB: string | null
+  materialGroupIdC: string | null
+  materialGroupIdD: string | null
+}
+
 interface MaterialSpecManagerProps {
   initialGroups: MappedMaterialGroup[]
   initialUnits: MappedUnit[]
   initialPerformances: MappedPerformance[]
   specs: MappedSpec[]
   families: MappedFamily[]
+  materials?: MappedGroupMaterial[]
 }
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
@@ -122,7 +133,13 @@ const EMPTY_GROUP: MappedMaterialGroup = {
   deleted: false,
 }
 
-function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]}) {
+function MaterialGroupTab({
+  initialGroups,
+  materials,
+}: {
+  initialGroups: MappedMaterialGroup[]
+  materials?: MappedGroupMaterial[]
+}) {
   const [groups, setGroups] = useState(initialGroups)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'deleted'>('all')
@@ -131,6 +148,18 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
   const [editing, setEditing] = useState<MappedMaterialGroup | null>(null)
   const [form, setForm] = useState<MappedMaterialGroup>(EMPTY_GROUP)
   const [saving, setSaving] = useState(false)
+  const [detailGroupId, setDetailGroupId] = useState<string | null>(null)
+
+  function getMaterialsForGroup(groupId: string) {
+    if (!materials) return []
+    return materials.filter(
+      m =>
+        m.materialGroupIdA === groupId ||
+        m.materialGroupIdB === groupId ||
+        m.materialGroupIdC === groupId ||
+        m.materialGroupIdD === groupId,
+    )
+  }
 
   function openNew() {
     setEditing(null)
@@ -183,9 +212,7 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
     fd.append('id', id)
     await deleteMaterialGroupAction({success: false}, fd)
     setGroups(prev =>
-      target.deleted
-        ? prev.filter(g => g.id !== id)
-        : prev.map(g => (g.id === id ? {...g, deleted: true} : g)),
+      target.deleted ? prev.filter(g => g.id !== id) : prev.map(g => (g.id === id ? {...g, deleted: true} : g)),
     )
   }
 
@@ -217,6 +244,9 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
         (a.groupD ?? '').localeCompare(b.groupD ?? '')
       return sortDir === 'asc' ? cmp : -cmp
     })
+
+  const selectedGroup = detailGroupId ? (groups.find(g => g.id === detailGroupId) ?? null) : null
+  const detailMaterials = detailGroupId ? getMaterialsForGroup(detailGroupId) : []
 
   return (
     <div className="flex flex-col gap-4">
@@ -256,11 +286,21 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
                 Group A
                 <SortIndicator active={true} dir={sortDir} />
               </TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group B</TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group C</TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group D</TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Group B
+              </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Group C
+              </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Group D
+              </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Created
+              </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Deleted
+              </TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -329,6 +369,16 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
                           <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(g)}>
                             <Pencil className="h-3.5 w-3.5" />
                           </Button>
+                          {materials && (
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                              title={`View ${getMaterialsForGroup(g.id).length} material(s) in this group`}
+                              onClick={() => setDetailGroupId(g.id)}>
+                              <Eye className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
                           <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openDuplicate(g)}>
                             <Copy className="h-3.5 w-3.5" />
                           </Button>
@@ -417,6 +467,58 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
             </Button>
             <Button onClick={handleSave} disabled={!form.groupA || saving}>
               {saving ? 'Saving…' : editing ? 'Save changes' : 'Create group'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!detailGroupId} onOpenChange={open => !open && setDetailGroupId(null)}>
+        <DialogContent className="bg-card border-border max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Materials in group</DialogTitle>
+            <DialogDescription>
+              {selectedGroup
+                ? `${selectedGroup.groupA}${selectedGroup.groupB ? ` > ${selectedGroup.groupB}` : ''}${selectedGroup.groupC ? ` > ${selectedGroup.groupC}` : ''}${selectedGroup.groupD ? ` > ${selectedGroup.groupD}` : ''}`
+                : 'Selected material group'}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="rounded-lg border border-border overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-secondary hover:bg-secondary">
+                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    BE Number
+                  </TableHead>
+                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    Short Description
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {detailMaterials.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={2} className="text-center text-muted-foreground py-8">
+                      No materials linked to this group.
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  detailMaterials.map(material => (
+                    <TableRow key={material.id} className="hover:bg-secondary/50 transition-colors">
+                      <TableCell className="font-mono text-sm">{material.beNumber || '-'}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {material.shortDescription ?? '—'}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDetailGroupId(null)}>
+              Close
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -602,8 +704,12 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Description
               </TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Created
+              </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Deleted
+              </TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -970,8 +1076,12 @@ function PerformanceTab({
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Short Description
               </TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Created
+              </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Deleted
+              </TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -1167,6 +1277,7 @@ export function MaterialSpecManager({
   initialPerformances,
   specs,
   families,
+  materials,
 }: MaterialSpecManagerProps) {
   return (
     <Tabs defaultValue="groups" className="w-full">
@@ -1182,7 +1293,7 @@ export function MaterialSpecManager({
         </TabsTrigger>
       </TabsList>
       <TabsContent value="groups">
-        <MaterialGroupTab initialGroups={initialGroups} />
+        <MaterialGroupTab initialGroups={initialGroups} materials={materials} />
       </TabsContent>
       <TabsContent value="units">
         <UnitTab initialUnits={initialUnits} />

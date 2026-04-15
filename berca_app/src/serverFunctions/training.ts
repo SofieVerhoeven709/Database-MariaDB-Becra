@@ -89,6 +89,7 @@ export const createCertificateAction = protectedServerFunction({
   schema: createCertificateSchema,
   functionName: 'Create certificate action',
   serverFn: async ({data: {visibilityForRoles, ...data}, profile, logger}) => {
+    // Create a target row to scope visibility for this certificate.
     const target = await createTargetForType('Certificate', profile.id)
     await prismaClient.certificate.create({
       data: {id: crypto.randomUUID(), ...data, createdBy: profile.id, createdAt: new Date(), targetId: target.id},
@@ -104,6 +105,7 @@ export const updateCertificateAction = protectedServerFunction({
   functionName: 'Update certificate action',
   serverFn: async ({data: {id, visibilityForRoles, ...data}, logger}) => {
     const {targetId} = await prismaClient.certificate.findUniqueOrThrow({where: {id}, select: {targetId: true}})
+    // Update core fields and visibility in parallel.
     await Promise.all([
       prismaClient.certificate.update({where: {id}, data}),
       upsertVisibilityRows(targetId, visibilityForRoles),
@@ -152,6 +154,7 @@ export const createTrainingStandardAction = protectedServerFunction({
   schema: createTrainingStandardSchema,
   functionName: 'Create training standard action',
   serverFn: async ({data: {visibilityForRoles, ...data}, profile, logger}) => {
+    // Create a target row to scope visibility for this standard.
     const target = await createTargetForType('TrainingStandard', profile.id)
     await prismaClient.trainingStandard.create({
       data: {id: crypto.randomUUID(), ...data, createdBy: profile.id, createdAt: new Date(), targetId: target.id},
@@ -167,6 +170,7 @@ export const updateTrainingStandardAction = protectedServerFunction({
   functionName: 'Update training standard action',
   serverFn: async ({data: {id, visibilityForRoles, ...data}, logger}) => {
     const {targetId} = await prismaClient.trainingStandard.findUniqueOrThrow({where: {id}, select: {targetId: true}})
+    // Update core fields and visibility in parallel.
     await Promise.all([
       prismaClient.trainingStandard.update({where: {id}, data}),
       upsertVisibilityRows(targetId, visibilityForRoles),
@@ -215,10 +219,12 @@ export const createTrainingAction = protectedServerFunction({
   schema: createTrainingSchema,
   functionName: 'Create training action',
   serverFn: async ({data: {visibilityForRoles, ...data}, profile, logger}) => {
+    // Create a target row to scope visibility for this training.
     const target = await createTargetForType('Training', profile.id)
     const trainingId = crypto.randomUUID()
     const now = new Date()
 
+    // Retry loop to avoid unique constraint conflicts on trainingNumber.
     let trainingNumber = data.trainingNumber || generateTrainingNumber()
     let attempts = 0
 
@@ -260,6 +266,7 @@ export const updateTrainingAction = protectedServerFunction({
   functionName: 'Update training action',
   serverFn: async ({data: {id, visibilityForRoles, ...data}, logger}) => {
     const {targetId} = await prismaClient.training.findUniqueOrThrow({where: {id}, select: {targetId: true}})
+    // Update core fields and visibility in parallel.
     await Promise.all([
       prismaClient.training.update({where: {id}, data}),
       upsertVisibilityRows(targetId, visibilityForRoles),

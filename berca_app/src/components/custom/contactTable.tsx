@@ -164,6 +164,7 @@ export function ContactTable({
   }
 
   const filtered = initialContacts
+    // Client-side filter/sort keeps UI responsive.
     .filter(c => {
       if (filterDeleted === 'not-deleted' && c.deleted) return false
       if (filterDeleted === 'deleted' && !c.deleted) return false
@@ -257,6 +258,7 @@ export function ContactTable({
     visibilityRows: VisibilityRow[],
     initialCompanyId?: string,
     initialRoleWithCompany?: string,
+    initialCompanyAddressId?: string,
   ) {
     const core = {
       firstName: c.firstName,
@@ -292,11 +294,13 @@ export function ContactTable({
     if (editingContact) {
       await updateContactAction({id: c.id, ...core, visibilityForRoles: visibilityRows})
     } else {
+      // Create action can attach initial company link.
       await createContactAction({
         ...core,
         visibilityForRoles: visibilityRows,
         initialCompanyId: initialCompanyId ?? null,
         initialRoleWithCompany: initialRoleWithCompany ?? null,
+        initialCompanyAddressId: initialCompanyAddressId ?? null,
       })
     }
     setDialogOpen(false)

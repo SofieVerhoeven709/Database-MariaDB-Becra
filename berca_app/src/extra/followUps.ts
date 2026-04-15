@@ -83,6 +83,7 @@ function resolveTarget(followUpTargets: FollowUpListPayload['FollowUpTarget']): 
   followUpTargetId: string | null
   followUpTargetTargetId: string | null
 } {
+  // Follow-ups keep a single active target link for display.
   const first = followUpTargets[0]
   if (!first) return {targetTypeName: null, followUpTargetId: null, followUpTargetTargetId: null}
   return {
@@ -102,6 +103,7 @@ export function mapFollowUp(f: FollowUpListPayload): MappedFollowUp {
     id: f.id,
     activityDescription: f.activityDescription,
     additionalInfo: f.additionalInfo,
+    // Normalize dates to ISO strings for the client.
     actionAgenda: f.actionAgenda?.toISOString() ?? null,
     closedAgenda: f.closedAgenda?.toISOString() ?? null,
     recurringCallDays: f.recurringCallDays,

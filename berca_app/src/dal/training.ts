@@ -8,6 +8,7 @@ export async function getCertificateTypes() {
       Employee: {select: {id: true, firstName: true, lastName: true}},
       Employee_CertificateType_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
     },
+    // Stable ordering for dropdowns.
     orderBy: {name: 'asc'},
   })
 }
@@ -20,6 +21,7 @@ export async function getCertificates() {
       Employee: {select: {id: true, firstName: true, lastName: true}},
       Employee_Certificate_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       CertificateType: {select: {id: true, name: true}},
+      // Inline visibility rows for list screens.
       Target: {
         select: {
           id: true,
@@ -38,6 +40,7 @@ export async function getCertificateDetail(id: string) {
       Employee: {select: {id: true, firstName: true, lastName: true}},
       Employee_Certificate_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       CertificateType: {select: {id: true, name: true}},
+      // Training standards linked to this certificate for the detail view.
       TrainingStandard: {
         select: {
           id: true,
@@ -66,6 +69,7 @@ export async function getTrainingStandards() {
       Employee: {select: {id: true, firstName: true, lastName: true}},
       Employee_TrainingStandard_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       Certificate: {select: {id: true, descriptionShort: true}},
+      // Inline visibility rows for list screens.
       Target: {
         select: {
           id: true,
@@ -84,6 +88,7 @@ export async function getTrainingStandardDetail(id: string) {
       Employee: {select: {id: true, firstName: true, lastName: true}},
       Employee_TrainingStandard_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       Certificate: {select: {id: true, descriptionShort: true}},
+      // Include trainings and documents for detail tabs.
       Training: {
         orderBy: {trainingDate: 'desc'},
         select: {
@@ -152,6 +157,7 @@ export async function getTrainingDetail(id: string) {
           Certificate: {select: {descriptionShort: true}},
         },
       },
+      // Include linked participants with contact/company context.
       TrainingContact: {
         orderBy: {createdAt: 'desc'},
         include: {

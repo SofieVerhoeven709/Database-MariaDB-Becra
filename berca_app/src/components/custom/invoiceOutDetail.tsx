@@ -186,6 +186,7 @@ export function InvoiceOutDetail({
   useEffect(() => {
     if (!addingWorkOrders || !isDraft) return
     setLoadingWorkOrders(true)
+    // Load work orders from the same projects already on this invoice.
     Promise.all(linkedProjectIds.map(pid => getActiveWorkOrdersForProjectAction(pid)))
       .then(results => {
         const all = results.flat()

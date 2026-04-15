@@ -144,6 +144,7 @@ export function InvoiceOutFormDialog({
   }, [invoice?.id, open])
 
   useEffect(() => {
+    // Load work orders only when creating and a project is selected.
     if (!selectedProjectId || invoice) return
     setWorkOrders([])
     setSelectedWorkOrderIds([])
@@ -209,6 +210,7 @@ export function InvoiceOutFormDialog({
       if (invoice) {
         await updateInvoiceOutAction({id: invoice.id, ...payload})
       } else {
+        // Create requires at least one work order.
         await createInvoiceOutAction({...payload, workOrderIds: selectedWorkOrderIds})
       }
       onSaved()

@@ -1,5 +1,6 @@
 import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
 
+// Address rows shown in company list/detail views.
 export interface MappedCompanyAddress {
   id: string
   street: string | null
@@ -57,6 +58,7 @@ export interface MappedCompany {
   visibilityForRoles: MappedVisibilityForRole[]
 }
 
+// Contact link rows shown inside company detail.
 export interface MappedCompanyContact {
   id: string
   startedDate: string
@@ -90,6 +92,7 @@ export interface MappedCompanyContact {
   } | null
 }
 
+// Project rows shown inside company detail.
 export interface MappedCompanyProject {
   id: string
   projectNumber: string
@@ -139,6 +142,7 @@ export interface CompanyDetailData {
   addresses: MappedCompanyAddress[]
   contacts: MappedCompanyContact[]
   projects: MappedCompanyProject[]
+  // Subsidiaries shown in a separate tab.
   subsidiaries: {id: string; name: string; number: string; companyActive: boolean}[]
   visibilityForRoles: MappedVisibilityForRole[]
 }

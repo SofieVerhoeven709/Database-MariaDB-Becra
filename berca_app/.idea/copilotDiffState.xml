@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/src/extra/projectDetails.ts">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/extra/projectDetails.ts" />
+              <option name="originalContent" value="import type {Prisma} from '@/generated/prisma/client'&#10;&#10;// Full project detail payload for the detail view.&#10;export type ProjectDetailData = Prisma.ProjectGetPayload&lt;{&#10;  include: {&#10;    Company: true&#10;    ProjectType: true&#10;    Employee: true&#10;    Project: true&#10;    ProjectContact: {&#10;      include: {&#10;        Contact: true&#10;        Employee_ProjectContact_createdByToEmployee: true&#10;      }&#10;    }&#10;    WorkOrder: {&#10;      include: {&#10;        Employee: true&#10;      }&#10;    }&#10;    ProjectBOM: true&#10;    MaterialSerialTrack: {&#10;      include: {&#10;        Company: true&#10;        Employee: true&#10;      }&#10;    }&#10;    other_Project: {&#10;      include: {&#10;        Company: true&#10;        ProjectType: true&#10;      }&#10;    }&#10;    Target: {&#10;      include: {&#10;        VisibilityForRole: {&#10;          include: {&#10;            RoleLevel: {&#10;              include: {&#10;                Role: true&#10;                SubRole: true&#10;              }&#10;            }&#10;          }&#10;        }&#10;      }&#10;    }&#10;  }&#10;}&gt;&#10;" />
+              <option name="updatedContent" value="import type {Prisma} from '@/generated/prisma/client'&#13;&#10;&#13;&#10;// Full project detail payload for the detail view.&#13;&#10;export type ProjectDetailData = Prisma.ProjectGetPayload&lt;{&#13;&#10;  include: {&#13;&#10;    Company: true&#13;&#10;    ProjectType: true&#13;&#10;    Employee: true&#13;&#10;    Project: true&#13;&#10;    ProjectContact: {&#13;&#10;      include: {&#13;&#10;        Contact: true&#13;&#10;        // Include creator metadata for contact link rows.&#13;&#10;        Employee_ProjectContact_createdByToEmployee: true&#13;&#10;      }&#13;&#10;    }&#13;&#10;    WorkOrder: {&#13;&#10;      include: {&#13;&#10;        // Include the creator for list display.&#13;&#10;        Employee: true&#13;&#10;      }&#13;&#10;    }&#13;&#10;    ProjectBOM: true&#13;&#10;    MaterialSerialTrack: {&#13;&#10;      include: {&#13;&#10;        Company: true&#13;&#10;        Employee: true&#13;&#10;      }&#13;&#10;    }&#13;&#10;    other_Project: {&#13;&#10;      include: {&#13;&#10;        Company: true&#13;&#10;        ProjectType: true&#13;&#10;      }&#13;&#10;    }&#13;&#10;    Target: {&#13;&#10;      include: {&#13;&#10;        // Include role visibility for the Visibility tab.&#13;&#10;        VisibilityForRole: {&#13;&#10;          include: {&#13;&#10;            RoleLevel: {&#13;&#10;              include: {&#13;&#10;                Role: true&#13;&#10;                SubRole: true&#13;&#10;              }&#13;&#10;            }&#13;&#10;          }&#13;&#10;        }&#13;&#10;      }&#13;&#10;    }&#13;&#10;  }&#13;&#10;}&gt;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

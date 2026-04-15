@@ -24,6 +24,7 @@ export async function getActiveWorkOrdersForProjectAction(projectId: string) {
 
 export async function getNextInvoiceOutNumberAction(): Promise<string> {
   const year = new Date().getFullYear()
+  // Use last invoice with same year prefix to compute next sequence.
   const last = await prismaClient.invoiceOut.findFirst({
     where: {invoiceNumber: {startsWith: String(year)}},
     orderBy: {invoiceNumber: 'desc'},
@@ -35,6 +36,7 @@ export async function getNextInvoiceOutNumberAction(): Promise<string> {
 
 export async function getNextInvoiceInNumberAction(): Promise<string> {
   const year = new Date().getFullYear()
+  // Use last invoice with same year prefix to compute next sequence.
   const last = await prismaClient.invoiceIn.findFirst({
     where: {invoiceNumber: {startsWith: String(year)}},
     orderBy: {invoiceNumber: 'desc'},
@@ -53,6 +55,7 @@ export const createInvoiceOutAction = protectedServerFunction({
   serverFn: async ({data: {workOrderIds, invoiceNumber: suppliedNumber, ...data}, logger, profile}) => {
     logger.info(`Creating invoice out, createdBy: ${profile.id}`)
 
+    // Target row scopes visibility for this invoice.
     const target = await createTargetForType('InvoiceOut', profile.id)
     const id = crypto.randomUUID()
     const now = new Date()
@@ -64,6 +67,7 @@ export const createInvoiceOutAction = protectedServerFunction({
     const numbersToTry: Array<() => Promise<string>> = []
     if (suppliedNumber) numbersToTry.push(async () => suppliedNumber)
     numbersToTry.push(async () => {
+      // Fallback: compute next sequence from last invoice in the same year.
       const last = await prismaClient.invoiceOut.findFirst({
         where: {invoiceNumber: {startsWith: String(year)}},
         orderBy: {invoiceNumber: 'desc'},
@@ -73,6 +77,7 @@ export const createInvoiceOutAction = protectedServerFunction({
       return generateInvoiceOutNumber(year, lastSeq + 1)
     })
 
+    // Retry on unique constraint (invoiceNumber) collisions.
     while (attempts < 5) {
       try {
         const candidateFn = numbersToTry[Math.min(attempts, numbersToTry.length - 1)]
@@ -105,6 +110,7 @@ export const createInvoiceOutAction = protectedServerFunction({
     if (attempts >= 5) throw new Error('Failed to generate a unique invoice OUT number after 5 attempts')
 
     if (workOrderIds.length > 0) {
+      // Link work orders and close their hours/materials.
       await prismaClient.workOrderInvoice.createMany({
         data: workOrderIds.map((workOrderId: string) => ({
           id: crypto.randomUUID(),
@@ -173,6 +179,7 @@ export const updateInvoiceOutAction = protectedServerFunction({
 
 export async function addWorkOrdersToInvoiceAction(invoiceOutId: string, workOrderIds: string[]) {
   if (workOrderIds.length === 0) return
+  // Link new work orders and close their hours/materials.
   await prismaClient.workOrderInvoice.createMany({
     data: workOrderIds.map(workOrderId => ({
       id: crypto.randomUUID(),
@@ -248,6 +255,7 @@ export const createInvoiceInAction = protectedServerFunction({
   serverFn: async ({data: {invoiceNumber: suppliedNumber, ...data}, logger, profile}) => {
     logger.info(`Creating invoice in, createdBy: ${profile.id}`)
 
+    // Target row scopes visibility for this invoice.
     const target = await createTargetForType('InvoiceIn', profile.id)
     const id = crypto.randomUUID()
     const now = new Date()
@@ -259,6 +267,7 @@ export const createInvoiceInAction = protectedServerFunction({
     const numbersToTry: Array<() => Promise<string>> = []
     if (suppliedNumber) numbersToTry.push(async () => suppliedNumber)
     numbersToTry.push(async () => {
+      // Fallback: compute next sequence from last invoice in the same year.
       const last = await prismaClient.invoiceIn.findFirst({
         where: {invoiceNumber: {startsWith: String(year)}},
         orderBy: {invoiceNumber: 'desc'},
@@ -268,6 +277,7 @@ export const createInvoiceInAction = protectedServerFunction({
       return generateInvoiceInNumber(year, lastSeq + 1)
     })
 
+    // Retry on unique constraint (invoiceNumber) collisions.
     while (attempts < 5) {
       try {
         const candidateFn = numbersToTry[Math.min(attempts, numbersToTry.length - 1)]

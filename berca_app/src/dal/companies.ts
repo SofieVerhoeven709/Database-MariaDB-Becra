@@ -1,6 +1,7 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 
+// Shared include bundle for list views.
 const companyInclude = {
   Company: true,
   Employee: {select: {id: true, firstName: true, lastName: true}},
@@ -38,6 +39,7 @@ export async function getCompanyDetail(id: string) {
     include: {
       Employee: {select: {id: true, firstName: true, lastName: true}},
       Company: {select: {id: true, name: true}},
+      // Pull non-deleted subsidiaries for the detail tab.
       other_Company: {
         where: {deleted: false},
         select: {id: true, name: true, number: true, companyActive: true},
@@ -46,6 +48,7 @@ export async function getCompanyDetail(id: string) {
         include: {Country: {select: {id: true, name: true}}},
         orderBy: {createdAt: 'asc'},
       },
+      // Include active contact links with contact + address context.
       CompanyContact: {
         where: {deleted: false},
         include: {

@@ -120,6 +120,7 @@ export function ProjectTable({
     return p ? p.projectNumber : '-'
   }
 
+  // Apply open/deleted filters and search terms before sorting.
   const filtered = projects
     .filter(p => {
       if (filterOpen === 'open' && !p.isOpen) return false
@@ -201,6 +202,7 @@ export function ProjectTable({
       engineeringStartDate: p.engineeringStartDate ? new Date(p.engineeringStartDate) : null,
       createdAt: new Date(p.createdAt),
       deletedAt: p.deletedAt ? new Date(p.deletedAt) : null,
+      // Strip view-only fields before sending to the server.
       companyName: undefined,
       projectTypeName: undefined,
       visibilityForRoles: visibilityRows,

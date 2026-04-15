@@ -22,6 +22,7 @@ interface CountrySelectProps {
   className?: string
 }
 
+// Sentinel values used by the select list.
 const NONE = '__none__'
 const CREATE = '__create__'
 
@@ -33,6 +34,7 @@ export function CountrySelect({value, currentName, onChange, countries, classNam
     if (!selectedId || !selectedName) return base
     const already = base.some(o => o.id === selectedId)
     if (already) return base
+    // Keep the injected option sorted with the rest.
     return [{id: selectedId, name: selectedName}, ...base].sort((a, b) => a.name.localeCompare(b.name))
   }
 
@@ -52,6 +54,7 @@ export function CountrySelect({value, currentName, onChange, countries, classNam
   async function handleCreate() {
     const trimmed = newName.trim()
     if (!trimmed) return
+    // Avoid duplicates by reusing an existing match (case-insensitive).
     const existing = options.find(o => o.name.toLowerCase() === trimmed.toLowerCase())
     if (existing) {
       onChange(existing.id, existing.name)
@@ -75,6 +78,7 @@ export function CountrySelect({value, currentName, onChange, countries, classNam
     }
   }
 
+  // Inline create mode swaps the select for a small input + actions row.
   if (creatingMode) {
     return (
       <div className="flex flex-col gap-1.5">
@@ -126,6 +130,7 @@ export function CountrySelect({value, currentName, onChange, countries, classNam
       <Select
         value={value ?? NONE}
         onValueChange={v => {
+          // Pivot into create mode or propagate the selected option.
           if (v === CREATE) {
             setCreatingMode(true)
           } else if (v === NONE) {

@@ -78,6 +78,7 @@ export interface MappedInvoiceOut {
   invoiceStatusName: string
   vatMarginId: string
   vatMarginVat: number
+  // Optional price list used to calculate billing totals.
   priceListId: string | null // ← new
   priceListName: string | null // ← new
   contacts: MappedInvoiceOutContact[]

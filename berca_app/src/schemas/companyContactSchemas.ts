@@ -26,6 +26,7 @@ export const addCompanyContactSchema = companyContactSchema
     deletedBy: true,
   })
   .extend({
+    // Optionally end any active links for this contact.
     endPreviousActive: z.boolean().default(true),
   })
 

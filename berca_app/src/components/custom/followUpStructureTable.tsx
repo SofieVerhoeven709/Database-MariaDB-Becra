@@ -159,6 +159,7 @@ export function FollowUpStructureTable({
 
   const filtered = initialStructures
     .filter(s => {
+      // Client-side filtering by soft-delete, status, and search.
       if (filterDeleted === 'not-deleted' && s.deleted) return false
       if (filterDeleted === 'deleted' && !s.deleted) return false
       if (filterStatus !== 'all' && s.statusId !== filterStatus) return false
@@ -176,6 +177,7 @@ export function FollowUpStructureTable({
       )
     })
     .sort((a, b) => {
+      // Sort client-side to keep UI responsive without round-trips.
       const dir = sortDir === 'asc' ? 1 : -1
       const s = (x: string | null, y: string | null) => dir * (x ?? '').localeCompare(y ?? '')
       const n = (x: boolean, y: boolean) => dir * (Number(x) - Number(y))
@@ -221,7 +223,7 @@ export function FollowUpStructureTable({
       }
     })
 
-  // ─── Save handler ──────────────────────────────────────────────────────────
+  // ─── Save handler ─────────────────────────────────────────────────────────-
 
   async function handleSave(s: MappedFollowUpStructure, visibilityRows: VisibilityRow[]) {
     const core = {

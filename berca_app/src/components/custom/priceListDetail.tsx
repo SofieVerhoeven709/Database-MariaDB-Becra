@@ -70,6 +70,7 @@ function ItemDialog({
   const prevOpenRef = useRef(false)
   useEffect(() => {
     if (open && !prevOpenRef.current) {
+      // Cost margin rows are locked to a fixed description/unit.
       const isMargin = item?.isCostMargin ?? isCostMargin
       setDescription(isMargin ? 'Cost Margin' : (item?.description ?? ''))
       setUnit(isMargin ? '%' : (item?.unit ?? ''))
@@ -726,7 +727,7 @@ export function PriceListDetail({priceList, currentUserLevel, currentUserRole, d
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-6 text-xs text-muted-foreground hover:text-accent hover:bg-accent/10 px-2 gap-1"
+                            className="h-6 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary"
                             onClick={() => openLinkDialog(item)}>
                             <Plus className="h-3 w-3" /> Link
                           </Button>

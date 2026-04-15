@@ -63,6 +63,7 @@ const emptyStructure = (fixedFollowUpId?: string): MappedFollowUpStructure => ({
   statusName: '',
   urgencyTypeId: '',
   urgencyTypeName: '',
+  // Seed parent follow-up when creating inside a detail page.
   followUpId: fixedFollowUpId ?? '',
   contactId: '',
   contactName: '',
@@ -115,6 +116,7 @@ export function FollowUpStructureFormDialog({
   async function handleSubmit() {
     setSaving(true)
     try {
+      // Trim user input before persisting.
       const trimmedForm = {
         ...form,
         activityDescription: form.activityDescription?.trim() || null,
@@ -127,6 +129,7 @@ export function FollowUpStructureFormDialog({
     }
   }
 
+  // Require core classification/assignment fields.
   const isValid =
     form.statusId !== '' &&
     form.urgencyTypeId !== '' &&

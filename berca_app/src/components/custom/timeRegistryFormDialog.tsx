@@ -59,6 +59,7 @@ const emptyForm = (defaultWorkOrderId = '', currentUserId = ''): TimeRegistryFor
   onSite: false,
   hourTypeId: '',
   workOrderId: defaultWorkOrderId,
+  // Pre-select the current user when available.
   employeeIds: currentUserId ? [currentUserId] : [],
   stayOver: false,
 })

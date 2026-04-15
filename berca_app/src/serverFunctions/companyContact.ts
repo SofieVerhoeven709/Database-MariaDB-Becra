@@ -17,6 +17,7 @@ export const addCompanyContactAction = protectedServerFunction({
     const {endPreviousActive, ...rest} = data
 
     if (endPreviousActive) {
+      // End any currently active links for this contact.
       const activeLinks = await prismaClient.companyContact.findMany({
         where: {
           contactId: rest.contactId,
@@ -46,6 +47,7 @@ export const addCompanyContactAction = protectedServerFunction({
         createdAt: now,
       },
     })
+    // Revalidate department pages that include company detail.
     revalidatePath(`/departments`)
   },
 })

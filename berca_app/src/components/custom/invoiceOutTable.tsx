@@ -142,6 +142,7 @@ export function InvoiceOutTable({
   }
 
   const filtered = initialInvoices
+    // Client-side filter/sort for responsive tables.
     .filter(inv => {
       if (filterDeleted === 'not-deleted' && inv.deleted) return false
       if (filterDeleted === 'deleted' && !inv.deleted) return false

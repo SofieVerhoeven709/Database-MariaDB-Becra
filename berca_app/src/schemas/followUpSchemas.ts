@@ -44,6 +44,7 @@ export const createFollowUpSchema = followUpSchema
     deletedBy: true,
   })
   .extend({
+    // Visibility is stored on the follow-up's target.
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
     // Optional: link this follow-up to a target at creation time
     followUpTargetId: z.string().nullable().optional(),
@@ -61,6 +62,7 @@ export const updateFollowUpSchema = followUpSchema
     deletedBy: true,
   })
   .extend({
+    // Visibility updates also target the follow-up's target row.
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
   })
 

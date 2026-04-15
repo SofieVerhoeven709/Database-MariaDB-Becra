@@ -71,5 +71,6 @@ export interface MappedFollowUp {
 // ─── Full detail (includes structure tab) ────────────────────────────────────
 
 export interface FollowUpDetailData extends MappedFollowUp {
+  // Child entries shown in the detail tab.
   structures: MappedFollowUpStructureSummary[]
 }

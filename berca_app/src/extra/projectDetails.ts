@@ -1,5 +1,6 @@
 import type {Prisma} from '@/generated/prisma/client'
 
+// Full project detail payload for the detail view.
 export type ProjectDetailData = Prisma.ProjectGetPayload<{
   include: {
     Company: true
@@ -9,11 +10,13 @@ export type ProjectDetailData = Prisma.ProjectGetPayload<{
     ProjectContact: {
       include: {
         Contact: true
+        // Include creator metadata for contact link rows.
         Employee_ProjectContact_createdByToEmployee: true
       }
     }
     WorkOrder: {
       include: {
+        // Include the creator for list display.
         Employee: true
       }
     }
@@ -32,6 +35,7 @@ export type ProjectDetailData = Prisma.ProjectGetPayload<{
     }
     Target: {
       include: {
+        // Include role visibility for the Visibility tab.
         VisibilityForRole: {
           include: {
             RoleLevel: {

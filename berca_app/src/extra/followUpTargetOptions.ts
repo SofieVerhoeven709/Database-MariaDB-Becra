@@ -1,6 +1,7 @@
 import type {PrismaClient} from '@/generated/prisma/client'
 import type {TargetOptions} from '@/types/followUpTargetOptions'
 
+// Prefer a short description; fall back to a short id.
 function idName(id: string, description: string | null | undefined, fallback?: string): string {
   return description?.trim() || fallback || `(${id.slice(0, 8)})`
 }
@@ -10,6 +11,7 @@ function formatDate(d: Date): string {
 }
 
 export async function getFollowUpTargetOptions(prisma: PrismaClient): Promise<TargetOptions> {
+  // Load all selector options in parallel for the target picker.
   const [
     contacts,
     companies,

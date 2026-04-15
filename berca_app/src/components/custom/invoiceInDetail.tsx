@@ -133,6 +133,7 @@ export function InvoiceInDetail({
   }
 
   function handleCancel() {
+    // Reset to the last saved values.
     setForm(buildForm())
     setNumberError(null)
     setEditing(false)

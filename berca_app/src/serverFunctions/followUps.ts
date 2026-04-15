@@ -14,6 +14,7 @@ export const createFollowUpAction = protectedServerFunction({
   serverFn: async ({data: {visibilityForRoles, followUpTargetId, documentId, ...data}, logger, profile}) => {
     logger.info(`Creating follow-up, createdBy: ${profile.id}`)
 
+    // Create a target row for visibility scoping and future links.
     const target = await createTargetForType('FollowUp', profile.id)
     const followUpId = crypto.randomUUID()
     const now = new Date()
@@ -41,11 +42,13 @@ export const createFollowUpAction = protectedServerFunction({
       })
     }
 
+    // Persist role visibility rules for the follow-up target.
     if (visibilityForRoles.length > 0) {
       await upsertVisibilityRows(target.id, visibilityForRoles)
     }
 
     logger.info(`Follow-up created: ${followUpId}${followUpTargetId ? ` linked to target ${followUpTargetId}` : ''}`)
+    // Refresh the follow-up list view.
     revalidatePath('/followups')
   },
 })
@@ -56,6 +59,7 @@ export const updateFollowUpAction = protectedServerFunction({
   schema: updateFollowUpSchema,
   functionName: 'Update follow-up action',
   serverFn: async ({data: {id, visibilityForRoles, documentId, ...data}, logger}) => {
+    // Read the follow-up target id so visibility can be updated in sync.
     const {targetId} = await prismaClient.followUp.findUniqueOrThrow({
       where: {id},
       select: {targetId: true},
@@ -63,6 +67,7 @@ export const updateFollowUpAction = protectedServerFunction({
 
     await Promise.all([
       prismaClient.followUp.update({where: {id}, data}),
+      // Keep role visibility in sync with the follow-up target.
       upsertVisibilityRows(targetId, visibilityForRoles),
     ])
 
@@ -92,6 +97,7 @@ export const hardDeleteFollowUpAction = protectedServerFunction({
   schema: followUpIdSchema,
   functionName: 'Hard delete follow-up action',
   serverFn: async ({data: {id}, logger}) => {
+    // Remove the follow-up row entirely.
     await prismaClient.followUp.delete({where: {id}})
     logger.info(`Follow-up hard deleted: ${id}`)
     revalidatePath('/followups')
@@ -104,6 +110,7 @@ export const undeleteFollowUpAction = protectedServerFunction({
   schema: followUpIdSchema,
   functionName: 'Undelete follow-up action',
   serverFn: async ({data: {id}, logger}) => {
+    // Restore the follow-up without touching other fields.
     await prismaClient.followUp.update({
       where: {id},
       data: {deleted: false, deletedAt: null, deletedBy: null},

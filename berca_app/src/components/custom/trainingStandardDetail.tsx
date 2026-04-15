@@ -52,6 +52,7 @@ export function TrainingStandardDetail({
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
 
+  // Build form defaults from the current standard.
   const buildForm = () => ({
     descriptionShort: standard.descriptionShort ?? '',
     description: standard.description ?? '',
@@ -96,6 +97,7 @@ export function TrainingStandardDetail({
 
   const thClass = 'whitespace-nowrap text-xs'
   const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
+  // Split trainings into open vs. closed/deleted buckets for tabs.
   const activeTrainings = standard.trainings.filter(t => !t.deleted && !t.closed)
   const closedTrainings = standard.trainings.filter(t => t.closed || t.deleted)
 

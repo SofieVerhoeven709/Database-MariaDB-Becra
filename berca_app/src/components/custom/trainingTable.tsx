@@ -92,6 +92,7 @@ export function TrainingTable({
     )
   }
 
+  // Apply search, filter, and sort for the training list.
   const filtered = initialTrainings
     .filter(t => {
       if (filterDeleted === 'not-deleted' && t.deleted) return false
@@ -124,6 +125,7 @@ export function TrainingTable({
       trainingStandardId: t.trainingStandardId,
       visibilityForRoles: visibilityRows,
     }
+    // Create or update based on the active edit state.
     if (editing) {
       await updateTrainingAction({id: t.id, ...core})
     } else {

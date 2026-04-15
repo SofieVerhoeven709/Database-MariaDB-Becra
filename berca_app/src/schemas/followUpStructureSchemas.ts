@@ -12,6 +12,7 @@ export const followUpStructureSchema = z.object({
   closedAgenda: dateSchema.optional(),
   recurringItem: z.string().max(100).nullable().optional(),
   item: z.string().max(100).nullable().optional(),
+  // Contact date is required for timeline ordering.
   contactDate: requiredDateSchema,
   taskDescription: z.string().nullable().optional(),
   taskStartDate: dateSchema.optional(),
@@ -46,6 +47,7 @@ export const createFollowUpStructureSchema = followUpStructureSchema
     deletedBy: true,
   })
   .extend({
+    // Visibility is stored on the structure's target.
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
   })
 
@@ -61,6 +63,7 @@ export const updateFollowUpStructureSchema = followUpStructureSchema
     deletedBy: true,
   })
   .extend({
+    // Visibility updates also target the structure's target row.
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
   })
 

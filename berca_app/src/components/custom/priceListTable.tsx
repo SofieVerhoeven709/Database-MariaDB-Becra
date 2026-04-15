@@ -75,6 +75,7 @@ function CreateOrCloneDialog({open, onOpenChange, cloneSource, onSaved}: CreateD
 
   const handleOpenChange = (v: boolean) => {
     if (v) {
+      // Seed the dialog from the clone source when applicable.
       setName(cloneSource ? `Copy of ${cloneSource.name}` : '')
       setRepeatUse(cloneSource ? cloneSource.repeatUse : false)
       setError(null)
@@ -185,6 +186,7 @@ export function PriceListTable({
     }
   }
 
+  // Apply client-side search, filter, and sort for the table view.
   const filtered = initialPriceLists
     .filter(pl => {
       if (filterDeleted === 'not-deleted' && pl.deleted) return false

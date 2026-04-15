@@ -56,13 +56,13 @@ export type IncomingDeliveryLineMinAggregateOutputType = {
   backorderQty: number | null
   unitPrice: runtime.Decimal | null
   lineStatus: string | null
+  notCorrect: boolean | null
+  notCorrectReason: string | null
   createdAt: Date | null
   deletedAt: Date | null
   deleted: boolean | null
   createdBy: string | null
   deletedBy: string | null
-  notCorrect: boolean | null
-  notCorrectReason: string | null
 }
 
 export type IncomingDeliveryLineMaxAggregateOutputType = {
@@ -77,13 +77,13 @@ export type IncomingDeliveryLineMaxAggregateOutputType = {
   backorderQty: number | null
   unitPrice: runtime.Decimal | null
   lineStatus: string | null
+  notCorrect: boolean | null
+  notCorrectReason: string | null
   createdAt: Date | null
   deletedAt: Date | null
   deleted: boolean | null
   createdBy: string | null
   deletedBy: string | null
-  notCorrect: boolean | null
-  notCorrectReason: string | null
 }
 
 export type IncomingDeliveryLineCountAggregateOutputType = {
@@ -98,13 +98,13 @@ export type IncomingDeliveryLineCountAggregateOutputType = {
   backorderQty: number
   unitPrice: number
   lineStatus: number
+  notCorrect: number
+  notCorrectReason: number
   createdAt: number
   deletedAt: number
   deleted: number
   createdBy: number
   deletedBy: number
-  notCorrect: number
-  notCorrectReason: number
   _all: number
 }
 
@@ -139,13 +139,13 @@ export type IncomingDeliveryLineMinAggregateInputType = {
   backorderQty?: true
   unitPrice?: true
   lineStatus?: true
+  notCorrect?: true
+  notCorrectReason?: true
   createdAt?: true
   deletedAt?: true
   deleted?: true
   createdBy?: true
   deletedBy?: true
-  notCorrect?: true
-  notCorrectReason?: true
 }
 
 export type IncomingDeliveryLineMaxAggregateInputType = {
@@ -160,13 +160,13 @@ export type IncomingDeliveryLineMaxAggregateInputType = {
   backorderQty?: true
   unitPrice?: true
   lineStatus?: true
+  notCorrect?: true
+  notCorrectReason?: true
   createdAt?: true
   deletedAt?: true
   deleted?: true
   createdBy?: true
   deletedBy?: true
-  notCorrect?: true
-  notCorrectReason?: true
 }
 
 export type IncomingDeliveryLineCountAggregateInputType = {
@@ -181,13 +181,13 @@ export type IncomingDeliveryLineCountAggregateInputType = {
   backorderQty?: true
   unitPrice?: true
   lineStatus?: true
+  notCorrect?: true
+  notCorrectReason?: true
   createdAt?: true
   deletedAt?: true
   deleted?: true
   createdBy?: true
   deletedBy?: true
-  notCorrect?: true
-  notCorrectReason?: true
   _all?: true
 }
 
@@ -289,13 +289,13 @@ export type IncomingDeliveryLineGroupByOutputType = {
   backorderQty: number
   unitPrice: runtime.Decimal | null
   lineStatus: string
+  notCorrect: boolean
+  notCorrectReason: string | null
   createdAt: Date
   deletedAt: Date | null
   deleted: boolean
   createdBy: string
   deletedBy: string | null
-  notCorrect: boolean
-  notCorrectReason: string | null
   _count: IncomingDeliveryLineCountAggregateOutputType | null
   _avg: IncomingDeliveryLineAvgAggregateOutputType | null
   _sum: IncomingDeliveryLineSumAggregateOutputType | null
@@ -333,13 +333,13 @@ export type IncomingDeliveryLineWhereInput = {
   backorderQty?: Prisma.IntFilter<"IncomingDeliveryLine"> | number
   unitPrice?: Prisma.DecimalNullableFilter<"IncomingDeliveryLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFilter<"IncomingDeliveryLine"> | string
+  notCorrect?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
+  notCorrectReason?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
   createdAt?: Prisma.DateTimeFilter<"IncomingDeliveryLine"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"IncomingDeliveryLine"> | Date | string | null
   deleted?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
   createdBy?: Prisma.StringFilter<"IncomingDeliveryLine"> | string
   deletedBy?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
-  notCorrect?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
-  notCorrectReason?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
   IncomingDelivery?: Prisma.XOR<Prisma.IncomingDeliveryScalarRelationFilter, Prisma.IncomingDeliveryWhereInput>
   PurchaseDetail?: Prisma.XOR<Prisma.PurchaseDetailNullableScalarRelationFilter, Prisma.PurchaseDetailWhereInput> | null
   Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
@@ -360,13 +360,13 @@ export type IncomingDeliveryLineOrderByWithRelationInput = {
   backorderQty?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   lineStatus?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  notCorrect?: Prisma.SortOrder
-  notCorrectReason?: Prisma.SortOrderInput | Prisma.SortOrder
   IncomingDelivery?: Prisma.IncomingDeliveryOrderByWithRelationInput
   PurchaseDetail?: Prisma.PurchaseDetailOrderByWithRelationInput
   Material?: Prisma.MaterialOrderByWithRelationInput
@@ -391,13 +391,13 @@ export type IncomingDeliveryLineWhereUniqueInput = Prisma.AtLeast<{
   backorderQty?: Prisma.IntFilter<"IncomingDeliveryLine"> | number
   unitPrice?: Prisma.DecimalNullableFilter<"IncomingDeliveryLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFilter<"IncomingDeliveryLine"> | string
+  notCorrect?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
+  notCorrectReason?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
   createdAt?: Prisma.DateTimeFilter<"IncomingDeliveryLine"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"IncomingDeliveryLine"> | Date | string | null
   deleted?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
   createdBy?: Prisma.StringFilter<"IncomingDeliveryLine"> | string
   deletedBy?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
-  notCorrect?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
-  notCorrectReason?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
   IncomingDelivery?: Prisma.XOR<Prisma.IncomingDeliveryScalarRelationFilter, Prisma.IncomingDeliveryWhereInput>
   PurchaseDetail?: Prisma.XOR<Prisma.PurchaseDetailNullableScalarRelationFilter, Prisma.PurchaseDetailWhereInput> | null
   Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
@@ -418,13 +418,13 @@ export type IncomingDeliveryLineOrderByWithAggregationInput = {
   backorderQty?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   lineStatus?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  notCorrect?: Prisma.SortOrder
-  notCorrectReason?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.IncomingDeliveryLineCountOrderByAggregateInput
   _avg?: Prisma.IncomingDeliveryLineAvgOrderByAggregateInput
   _max?: Prisma.IncomingDeliveryLineMaxOrderByAggregateInput
@@ -447,13 +447,13 @@ export type IncomingDeliveryLineScalarWhereWithAggregatesInput = {
   backorderQty?: Prisma.IntWithAggregatesFilter<"IncomingDeliveryLine"> | number
   unitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"IncomingDeliveryLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringWithAggregatesFilter<"IncomingDeliveryLine"> | string
+  notCorrect?: Prisma.BoolWithAggregatesFilter<"IncomingDeliveryLine"> | boolean
+  notCorrectReason?: Prisma.StringNullableWithAggregatesFilter<"IncomingDeliveryLine"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"IncomingDeliveryLine"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"IncomingDeliveryLine"> | Date | string | null
   deleted?: Prisma.BoolWithAggregatesFilter<"IncomingDeliveryLine"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"IncomingDeliveryLine"> | string
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"IncomingDeliveryLine"> | string | null
-  notCorrect?: Prisma.BoolWithAggregatesFilter<"IncomingDeliveryLine"> | boolean
-  notCorrectReason?: Prisma.StringNullableWithAggregatesFilter<"IncomingDeliveryLine"> | string | null
 }
 
 export type IncomingDeliveryLineCreateInput = {
@@ -465,11 +465,11 @@ export type IncomingDeliveryLineCreateInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
@@ -490,13 +490,13 @@ export type IncomingDeliveryLineUncheckedCreateInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -509,11 +509,11 @@ export type IncomingDeliveryLineUpdateInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
@@ -534,13 +534,13 @@ export type IncomingDeliveryLineUncheckedUpdateInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -556,13 +556,13 @@ export type IncomingDeliveryLineCreateManyInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineUpdateManyMutationInput = {
@@ -574,11 +574,11 @@ export type IncomingDeliveryLineUpdateManyMutationInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineUncheckedUpdateManyInput = {
@@ -593,13 +593,13 @@ export type IncomingDeliveryLineUncheckedUpdateManyInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineListRelationFilter = {
@@ -630,13 +630,13 @@ export type IncomingDeliveryLineCountOrderByAggregateInput = {
   backorderQty?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   lineStatus?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  notCorrect?: Prisma.SortOrder
-  notCorrectReason?: Prisma.SortOrder
 }
 
 export type IncomingDeliveryLineAvgOrderByAggregateInput = {
@@ -660,13 +660,13 @@ export type IncomingDeliveryLineMaxOrderByAggregateInput = {
   backorderQty?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   lineStatus?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  notCorrect?: Prisma.SortOrder
-  notCorrectReason?: Prisma.SortOrder
 }
 
 export type IncomingDeliveryLineMinOrderByAggregateInput = {
@@ -681,13 +681,13 @@ export type IncomingDeliveryLineMinOrderByAggregateInput = {
   backorderQty?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   lineStatus?: Prisma.SortOrder
+  notCorrect?: Prisma.SortOrder
+  notCorrectReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  notCorrect?: Prisma.SortOrder
-  notCorrectReason?: Prisma.SortOrder
 }
 
 export type IncomingDeliveryLineSumOrderByAggregateInput = {
@@ -937,11 +937,11 @@ export type IncomingDeliveryLineCreateWithoutEmployee_IncomingDeliveryLine_creat
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
@@ -961,12 +961,12 @@ export type IncomingDeliveryLineUncheckedCreateWithoutEmployee_IncomingDeliveryL
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -989,11 +989,11 @@ export type IncomingDeliveryLineCreateWithoutEmployee_IncomingDeliveryLine_delet
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
@@ -1013,12 +1013,12 @@ export type IncomingDeliveryLineUncheckedCreateWithoutEmployee_IncomingDeliveryL
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -1063,13 +1063,13 @@ export type IncomingDeliveryLineScalarWhereInput = {
   backorderQty?: Prisma.IntFilter<"IncomingDeliveryLine"> | number
   unitPrice?: Prisma.DecimalNullableFilter<"IncomingDeliveryLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFilter<"IncomingDeliveryLine"> | string
+  notCorrect?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
+  notCorrectReason?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
   createdAt?: Prisma.DateTimeFilter<"IncomingDeliveryLine"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"IncomingDeliveryLine"> | Date | string | null
   deleted?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
   createdBy?: Prisma.StringFilter<"IncomingDeliveryLine"> | string
   deletedBy?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
-  notCorrect?: Prisma.BoolFilter<"IncomingDeliveryLine"> | boolean
-  notCorrectReason?: Prisma.StringNullableFilter<"IncomingDeliveryLine"> | string | null
 }
 
 export type IncomingDeliveryLineUpsertWithWhereUniqueWithoutEmployee_IncomingDeliveryLine_deletedByToEmployeeInput = {
@@ -1097,11 +1097,11 @@ export type IncomingDeliveryLineCreateWithoutMaterialInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Employee_IncomingDeliveryLine_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeInput
@@ -1120,13 +1120,13 @@ export type IncomingDeliveryLineUncheckedCreateWithoutMaterialInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -1165,11 +1165,11 @@ export type IncomingDeliveryLineCreateWithoutPurchaseDetailInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
   Employee_IncomingDeliveryLine_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeInput
@@ -1188,13 +1188,13 @@ export type IncomingDeliveryLineUncheckedCreateWithoutPurchaseDetailInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -1233,11 +1233,11 @@ export type IncomingDeliveryLineCreateWithoutIncomingDeliveryInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
   Employee_IncomingDeliveryLine_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeInput
@@ -1256,13 +1256,13 @@ export type IncomingDeliveryLineUncheckedCreateWithoutIncomingDeliveryInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutIncomingDeliveryLineInput
 }
 
@@ -1301,11 +1301,11 @@ export type IncomingDeliveryLineCreateWithoutIncomingDeliveryLineAllocationInput
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
-  notCorrect?: boolean
-  notCorrectReason?: string | null
   IncomingDelivery: Prisma.IncomingDeliveryCreateNestedOneWithoutIncomingDeliveryLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedOneWithoutIncomingDeliveryLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutIncomingDeliveryLineInput
@@ -1325,13 +1325,13 @@ export type IncomingDeliveryLineUncheckedCreateWithoutIncomingDeliveryLineAlloca
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineCreateOrConnectWithoutIncomingDeliveryLineAllocationInput = {
@@ -1359,11 +1359,11 @@ export type IncomingDeliveryLineUpdateWithoutIncomingDeliveryLineAllocationInput
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
@@ -1383,13 +1383,13 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutIncomingDeliveryLineAlloca
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineCreateManyEmployee_IncomingDeliveryLine_createdByToEmployeeInput = {
@@ -1404,12 +1404,12 @@ export type IncomingDeliveryLineCreateManyEmployee_IncomingDeliveryLine_createdB
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineCreateManyEmployee_IncomingDeliveryLine_deletedByToEmployeeInput = {
@@ -1424,12 +1424,12 @@ export type IncomingDeliveryLineCreateManyEmployee_IncomingDeliveryLine_deletedB
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
-  notCorrect?: boolean
-  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineUpdateWithoutEmployee_IncomingDeliveryLine_createdByToEmployeeInput = {
@@ -1441,11 +1441,11 @@ export type IncomingDeliveryLineUpdateWithoutEmployee_IncomingDeliveryLine_creat
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
@@ -1465,12 +1465,12 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutEmployee_IncomingDeliveryL
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -1486,12 +1486,12 @@ export type IncomingDeliveryLineUncheckedUpdateManyWithoutEmployee_IncomingDeliv
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineUpdateWithoutEmployee_IncomingDeliveryLine_deletedByToEmployeeInput = {
@@ -1503,11 +1503,11 @@ export type IncomingDeliveryLineUpdateWithoutEmployee_IncomingDeliveryLine_delet
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
@@ -1527,12 +1527,12 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutEmployee_IncomingDeliveryL
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -1548,12 +1548,12 @@ export type IncomingDeliveryLineUncheckedUpdateManyWithoutEmployee_IncomingDeliv
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineCreateManyMaterialInput = {
@@ -1567,13 +1567,13 @@ export type IncomingDeliveryLineCreateManyMaterialInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineUpdateWithoutMaterialInput = {
@@ -1585,11 +1585,11 @@ export type IncomingDeliveryLineUpdateWithoutMaterialInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Employee_IncomingDeliveryLine_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeNestedInput
@@ -1608,13 +1608,13 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutMaterialInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -1629,13 +1629,13 @@ export type IncomingDeliveryLineUncheckedUpdateManyWithoutMaterialInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineCreateManyPurchaseDetailInput = {
@@ -1649,13 +1649,13 @@ export type IncomingDeliveryLineCreateManyPurchaseDetailInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineUpdateWithoutPurchaseDetailInput = {
@@ -1667,11 +1667,11 @@ export type IncomingDeliveryLineUpdateWithoutPurchaseDetailInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   Employee_IncomingDeliveryLine_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeNestedInput
@@ -1690,13 +1690,13 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutPurchaseDetailInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -1711,13 +1711,13 @@ export type IncomingDeliveryLineUncheckedUpdateManyWithoutPurchaseDetailInput = 
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type IncomingDeliveryLineCreateManyIncomingDeliveryInput = {
@@ -1731,13 +1731,13 @@ export type IncomingDeliveryLineCreateManyIncomingDeliveryInput = {
   backorderQty?: number
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: string
+  notCorrect?: boolean
+  notCorrectReason?: string | null
   createdAt: Date | string
   deletedAt?: Date | string | null
   deleted?: boolean
   createdBy: string
   deletedBy?: string | null
-  notCorrect?: boolean
-  notCorrectReason?: string | null
 }
 
 export type IncomingDeliveryLineUpdateWithoutIncomingDeliveryInput = {
@@ -1749,11 +1749,11 @@ export type IncomingDeliveryLineUpdateWithoutIncomingDeliveryInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseDetail?: Prisma.PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutIncomingDeliveryLineNestedInput
   Employee_IncomingDeliveryLine_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutIncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployeeNestedInput
@@ -1772,13 +1772,13 @@ export type IncomingDeliveryLineUncheckedUpdateWithoutIncomingDeliveryInput = {
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutIncomingDeliveryLineNestedInput
 }
 
@@ -1793,13 +1793,13 @@ export type IncomingDeliveryLineUncheckedUpdateManyWithoutIncomingDeliveryInput 
   backorderQty?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  notCorrectReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1845,13 +1845,13 @@ export type IncomingDeliveryLineSelect<ExtArgs extends runtime.Types.Extensions.
   backorderQty?: boolean
   unitPrice?: boolean
   lineStatus?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: boolean
   createdAt?: boolean
   deletedAt?: boolean
   deleted?: boolean
   createdBy?: boolean
   deletedBy?: boolean
-  notCorrect?: boolean
-  notCorrectReason?: boolean
   IncomingDelivery?: boolean | Prisma.IncomingDeliveryDefaultArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.IncomingDeliveryLine$PurchaseDetailArgs<ExtArgs>
   Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
@@ -1875,16 +1875,16 @@ export type IncomingDeliveryLineSelectScalar = {
   backorderQty?: boolean
   unitPrice?: boolean
   lineStatus?: boolean
+  notCorrect?: boolean
+  notCorrectReason?: boolean
   createdAt?: boolean
   deletedAt?: boolean
   deleted?: boolean
   createdBy?: boolean
   deletedBy?: boolean
-  notCorrect?: boolean
-  notCorrectReason?: boolean
 }
 
-export type IncomingDeliveryLineOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "incomingDeliveryId" | "purchaseDetailId" | "materialId" | "orderedQty" | "deliveredQty" | "acceptedQty" | "rejectedQty" | "backorderQty" | "unitPrice" | "lineStatus" | "createdAt" | "deletedAt" | "deleted" | "createdBy" | "deletedBy" | "notCorrect" | "notCorrectReason", ExtArgs["result"]["incomingDeliveryLine"]>
+export type IncomingDeliveryLineOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "incomingDeliveryId" | "purchaseDetailId" | "materialId" | "orderedQty" | "deliveredQty" | "acceptedQty" | "rejectedQty" | "backorderQty" | "unitPrice" | "lineStatus" | "notCorrect" | "notCorrectReason" | "createdAt" | "deletedAt" | "deleted" | "createdBy" | "deletedBy", ExtArgs["result"]["incomingDeliveryLine"]>
 export type IncomingDeliveryLineInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   IncomingDelivery?: boolean | Prisma.IncomingDeliveryDefaultArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.IncomingDeliveryLine$PurchaseDetailArgs<ExtArgs>
@@ -1917,13 +1917,13 @@ export type $IncomingDeliveryLinePayload<ExtArgs extends runtime.Types.Extension
     backorderQty: number
     unitPrice: runtime.Decimal | null
     lineStatus: string
+    notCorrect: boolean
+    notCorrectReason: string | null
     createdAt: Date
     deletedAt: Date | null
     deleted: boolean
     createdBy: string
     deletedBy: string | null
-    notCorrect: boolean
-    notCorrectReason: string | null
   }, ExtArgs["result"]["incomingDeliveryLine"]>
   composites: {}
 }
@@ -2310,13 +2310,13 @@ export interface IncomingDeliveryLineFieldRefs {
   readonly backorderQty: Prisma.FieldRef<"IncomingDeliveryLine", 'Int'>
   readonly unitPrice: Prisma.FieldRef<"IncomingDeliveryLine", 'Decimal'>
   readonly lineStatus: Prisma.FieldRef<"IncomingDeliveryLine", 'String'>
+  readonly notCorrect: Prisma.FieldRef<"IncomingDeliveryLine", 'Boolean'>
+  readonly notCorrectReason: Prisma.FieldRef<"IncomingDeliveryLine", 'String'>
   readonly createdAt: Prisma.FieldRef<"IncomingDeliveryLine", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"IncomingDeliveryLine", 'DateTime'>
   readonly deleted: Prisma.FieldRef<"IncomingDeliveryLine", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"IncomingDeliveryLine", 'String'>
   readonly deletedBy: Prisma.FieldRef<"IncomingDeliveryLine", 'String'>
-  readonly notCorrect: Prisma.FieldRef<"IncomingDeliveryLine", 'Boolean'>
-  readonly notCorrectReason: Prisma.FieldRef<"IncomingDeliveryLine", 'String'>
 }
     
 

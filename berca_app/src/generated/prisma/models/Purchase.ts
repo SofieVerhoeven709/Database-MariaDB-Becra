@@ -264,10 +264,10 @@ export type PurchaseWhereInput = {
   deletedBy?: Prisma.StringNullableFilter<"Purchase"> | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryListRelationFilter
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
-  QuoteSupplier?: Prisma.XOR<Prisma.QuoteSupplierNullableScalarRelationFilter, Prisma.QuoteSupplierWhereInput> | null
-  PaymentCondition?: Prisma.XOR<Prisma.PaymentConditionNullableScalarRelationFilter, Prisma.PaymentConditionWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_Purchase_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  PaymentCondition?: Prisma.XOR<Prisma.PaymentConditionNullableScalarRelationFilter, Prisma.PaymentConditionWhereInput> | null
+  QuoteSupplier?: Prisma.XOR<Prisma.QuoteSupplierNullableScalarRelationFilter, Prisma.QuoteSupplierWhereInput> | null
   PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
 }
 
@@ -289,10 +289,10 @@ export type PurchaseOrderByWithRelationInput = {
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   IncomingDelivery?: Prisma.IncomingDeliveryOrderByRelationAggregateInput
   Company?: Prisma.CompanyOrderByWithRelationInput
-  QuoteSupplier?: Prisma.QuoteSupplierOrderByWithRelationInput
-  PaymentCondition?: Prisma.PaymentConditionOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  PaymentCondition?: Prisma.PaymentConditionOrderByWithRelationInput
+  QuoteSupplier?: Prisma.QuoteSupplierOrderByWithRelationInput
   PurchaseDetail?: Prisma.PurchaseDetailOrderByRelationAggregateInput
   _relevance?: Prisma.PurchaseOrderByRelevanceInput
 }
@@ -318,10 +318,10 @@ export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
   deletedBy?: Prisma.StringNullableFilter<"Purchase"> | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryListRelationFilter
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
-  QuoteSupplier?: Prisma.XOR<Prisma.QuoteSupplierNullableScalarRelationFilter, Prisma.QuoteSupplierWhereInput> | null
-  PaymentCondition?: Prisma.XOR<Prisma.PaymentConditionNullableScalarRelationFilter, Prisma.PaymentConditionWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_Purchase_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  PaymentCondition?: Prisma.XOR<Prisma.PaymentConditionNullableScalarRelationFilter, Prisma.PaymentConditionWhereInput> | null
+  QuoteSupplier?: Prisma.XOR<Prisma.QuoteSupplierNullableScalarRelationFilter, Prisma.QuoteSupplierWhereInput> | null
   PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
 }, "id" | "purchaseNumber">
 
@@ -380,10 +380,10 @@ export type PurchaseCreateInput = {
   deletedAt?: Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseInput
   Company: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
-  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchase_Purchase_deletedByToEmployeeInput
+  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
 }
 
@@ -420,10 +420,10 @@ export type PurchaseUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutPurchaseNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
-  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchase_Purchase_deletedByToEmployeeNestedInput
+  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
 }
 
@@ -828,10 +828,10 @@ export type PurchaseCreateWithoutCompanyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
-  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchase_Purchase_deletedByToEmployeeInput
+  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
 }
 
@@ -914,9 +914,9 @@ export type PurchaseCreateWithoutEmployeeInput = {
   deletedAt?: Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseInput
   Company: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
-  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchase_Purchase_deletedByToEmployeeInput
+  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
 }
 
@@ -962,9 +962,9 @@ export type PurchaseCreateWithoutEmployee_Purchase_deletedByToEmployeeInput = {
   deletedAt?: Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseInput
   Company: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
-  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
+  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
 }
 
@@ -1042,10 +1042,10 @@ export type PurchaseCreateWithoutPurchaseDetailInput = {
   deletedAt?: Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseInput
   Company: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
-  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchase_Purchase_deletedByToEmployeeInput
+  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
 }
 
 export type PurchaseUncheckedCreateWithoutPurchaseDetailInput = {
@@ -1096,10 +1096,10 @@ export type PurchaseUpdateWithoutPurchaseDetailInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutPurchaseNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
-  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchase_Purchase_deletedByToEmployeeNestedInput
+  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
 }
 
 export type PurchaseUncheckedUpdateWithoutPurchaseDetailInput = {
@@ -1134,9 +1134,9 @@ export type PurchaseCreateWithoutQuoteSupplierInput = {
   deletedAt?: Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseInput
   Company: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
-  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchase_Purchase_deletedByToEmployeeInput
+  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
 }
 
@@ -1198,9 +1198,9 @@ export type PurchaseCreateWithoutPaymentConditionInput = {
   deletedAt?: Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryCreateNestedManyWithoutPurchaseInput
   Company: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchase_Purchase_deletedByToEmployeeInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
 }
 
@@ -1261,10 +1261,10 @@ export type PurchaseCreateWithoutIncomingDeliveryInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Company: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
-  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
-  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPurchase_Purchase_deletedByToEmployeeInput
+  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutPurchaseInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedOneWithoutPurchaseInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
 }
 
@@ -1315,10 +1315,10 @@ export type PurchaseUpdateWithoutIncomingDeliveryInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Company?: Prisma.CompanyUpdateOneRequiredWithoutPurchaseNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
-  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchase_Purchase_deletedByToEmployeeNestedInput
+  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
 }
 
@@ -1370,10 +1370,10 @@ export type PurchaseUpdateWithoutCompanyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
-  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchase_Purchase_deletedByToEmployeeNestedInput
+  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
 }
 
@@ -1460,9 +1460,9 @@ export type PurchaseUpdateWithoutEmployeeInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutPurchaseNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
-  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchase_Purchase_deletedByToEmployeeNestedInput
+  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
 }
 
@@ -1515,9 +1515,9 @@ export type PurchaseUpdateWithoutEmployee_Purchase_deletedByToEmployeeInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutPurchaseNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
-  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
+  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
 }
 
@@ -1587,9 +1587,9 @@ export type PurchaseUpdateWithoutQuoteSupplierInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutPurchaseNestedInput
-  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchase_Purchase_deletedByToEmployeeNestedInput
+  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutPurchaseNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
 }
 
@@ -1659,9 +1659,9 @@ export type PurchaseUpdateWithoutPaymentConditionInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   IncomingDelivery?: Prisma.IncomingDeliveryUpdateManyWithoutPurchaseNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutPurchaseNestedInput
-  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
   Employee_Purchase_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPurchase_Purchase_deletedByToEmployeeNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateOneWithoutPurchaseNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
 }
 
@@ -1759,10 +1759,10 @@ export type PurchaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   deletedBy?: boolean
   IncomingDelivery?: boolean | Prisma.Purchase$IncomingDeliveryArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
-  QuoteSupplier?: boolean | Prisma.Purchase$QuoteSupplierArgs<ExtArgs>
-  PaymentCondition?: boolean | Prisma.Purchase$PaymentConditionArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_Purchase_deletedByToEmployee?: boolean | Prisma.Purchase$Employee_Purchase_deletedByToEmployeeArgs<ExtArgs>
+  PaymentCondition?: boolean | Prisma.Purchase$PaymentConditionArgs<ExtArgs>
+  QuoteSupplier?: boolean | Prisma.Purchase$QuoteSupplierArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.Purchase$PurchaseDetailArgs<ExtArgs>
   _count?: boolean | Prisma.PurchaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["purchase"]>
@@ -1791,10 +1791,10 @@ export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type PurchaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   IncomingDelivery?: boolean | Prisma.Purchase$IncomingDeliveryArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
-  QuoteSupplier?: boolean | Prisma.Purchase$QuoteSupplierArgs<ExtArgs>
-  PaymentCondition?: boolean | Prisma.Purchase$PaymentConditionArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_Purchase_deletedByToEmployee?: boolean | Prisma.Purchase$Employee_Purchase_deletedByToEmployeeArgs<ExtArgs>
+  PaymentCondition?: boolean | Prisma.Purchase$PaymentConditionArgs<ExtArgs>
+  QuoteSupplier?: boolean | Prisma.Purchase$QuoteSupplierArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.Purchase$PurchaseDetailArgs<ExtArgs>
   _count?: boolean | Prisma.PurchaseCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1804,10 +1804,10 @@ export type $PurchasePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     IncomingDelivery: Prisma.$IncomingDeliveryPayload<ExtArgs>[]
     Company: Prisma.$CompanyPayload<ExtArgs>
-    QuoteSupplier: Prisma.$QuoteSupplierPayload<ExtArgs> | null
-    PaymentCondition: Prisma.$PaymentConditionPayload<ExtArgs> | null
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Employee_Purchase_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    PaymentCondition: Prisma.$PaymentConditionPayload<ExtArgs> | null
+    QuoteSupplier: Prisma.$QuoteSupplierPayload<ExtArgs> | null
     PurchaseDetail: Prisma.$PurchaseDetailPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2168,10 +2168,10 @@ export interface Prisma__PurchaseClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   IncomingDelivery<T extends Prisma.Purchase$IncomingDeliveryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$IncomingDeliveryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncomingDeliveryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Company<T extends Prisma.CompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  QuoteSupplier<T extends Prisma.Purchase$QuoteSupplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$QuoteSupplierArgs<ExtArgs>>): Prisma.Prisma__QuoteSupplierClient<runtime.Types.Result.GetResult<Prisma.$QuoteSupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  PaymentCondition<T extends Prisma.Purchase$PaymentConditionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$PaymentConditionArgs<ExtArgs>>): Prisma.Prisma__PaymentConditionClient<runtime.Types.Result.GetResult<Prisma.$PaymentConditionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_Purchase_deletedByToEmployee<T extends Prisma.Purchase$Employee_Purchase_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$Employee_Purchase_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  PaymentCondition<T extends Prisma.Purchase$PaymentConditionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$PaymentConditionArgs<ExtArgs>>): Prisma.Prisma__PaymentConditionClient<runtime.Types.Result.GetResult<Prisma.$PaymentConditionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  QuoteSupplier<T extends Prisma.Purchase$QuoteSupplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$QuoteSupplierArgs<ExtArgs>>): Prisma.Prisma__QuoteSupplierClient<runtime.Types.Result.GetResult<Prisma.$QuoteSupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   PurchaseDetail<T extends Prisma.Purchase$PurchaseDetailArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$PurchaseDetailArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2584,22 +2584,22 @@ export type Purchase$IncomingDeliveryArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
- * Purchase.QuoteSupplier
+ * Purchase.Employee_Purchase_deletedByToEmployee
  */
-export type Purchase$QuoteSupplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Purchase$Employee_Purchase_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the QuoteSupplier
+   * Select specific fields to fetch from the Employee
    */
-  select?: Prisma.QuoteSupplierSelect<ExtArgs> | null
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the QuoteSupplier
+   * Omit specific fields from the Employee
    */
-  omit?: Prisma.QuoteSupplierOmit<ExtArgs> | null
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.QuoteSupplierInclude<ExtArgs> | null
-  where?: Prisma.QuoteSupplierWhereInput
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**
@@ -2622,22 +2622,22 @@ export type Purchase$PaymentConditionArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
- * Purchase.Employee_Purchase_deletedByToEmployee
+ * Purchase.QuoteSupplier
  */
-export type Purchase$Employee_Purchase_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Purchase$QuoteSupplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Employee
+   * Select specific fields to fetch from the QuoteSupplier
    */
-  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  select?: Prisma.QuoteSupplierSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Employee
+   * Omit specific fields from the QuoteSupplier
    */
-  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  omit?: Prisma.QuoteSupplierOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.EmployeeInclude<ExtArgs> | null
-  where?: Prisma.EmployeeWhereInput
+  include?: Prisma.QuoteSupplierInclude<ExtArgs> | null
+  where?: Prisma.QuoteSupplierWhereInput
 }
 
 /**

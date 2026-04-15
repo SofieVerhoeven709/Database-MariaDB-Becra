@@ -49,4 +49,3 @@ export function mapInventoryOrder(o: InventoryOrderWithRelations): MappedInvento
       : null,
   }
 }
-

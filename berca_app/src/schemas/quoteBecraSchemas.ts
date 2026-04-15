@@ -25,7 +25,7 @@ export const createQuoteBecraSchema = quoteBecraSchema
     deletedBy: true,
   })
   .extend({
-    id: z.string().trim().regex(/^\d{10}$/, 'Quote number must contain exactly 10 digits (YYYYMMDDNN).'),
+    id: z.string().trim().regex(/^\d{8}$/, 'Quote number must contain exactly 8 digits (YYMMDDNN).'),
   })
 
 // ─── Update ───────────────────────────────────────────────────────────────────
@@ -35,6 +35,9 @@ export const updateQuoteBecraSchema = quoteBecraSchema.omit({
   deleted: true,
   deletedAt: true,
   deletedBy: true,
+}).extend({
+  originalId: z.string().trim().min(1),
+  id: z.string().trim().regex(/^\d{8}$/, 'Quote number must contain exactly 8 digits (YYMMDDNN).'),
 })
 
 // ─── ID only ──────────────────────────────────────────────────────────────────

@@ -13,7 +13,7 @@ interface QuoteBecraFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   item: MappedQuoteBecra | null
-  onSave: (item: Partial<MappedQuoteBecra> & {id: string}) => Promise<void>
+  onSave: (item: Partial<MappedQuoteBecra> & {id: string; originalId?: string}) => Promise<void>
   companyOptions: QuoteBecraCompanyOption[]
   onCreateCompany: (name: string) => Promise<QuoteBecraCompanyOption>
 }
@@ -28,40 +28,77 @@ const EMPTY: Partial<MappedQuoteBecra> & {id: string} = {
   date: null,
 }
 
-function onlyDigits(value: string) {
-  return value.replace(/\D/g, '')
+function generatePrefixFromDate(date: Date | string | null): string {
+  if (!date) return ''
+  const d = typeof date === 'string' ? new Date(date) : date
+  const year = String(d.getFullYear()).slice(-2).padStart(2, '0')
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${year}${month}${day}`
 }
+
 
 function generateSuffix() {
   return String(Math.floor(Math.random() * 100)).padStart(2, '0')
 }
 
-export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyOptions, onCreateCompany}: QuoteBecraFormDialogProps) {
+export function QuoteBecraFormDialog({
+  open,
+  onOpenChange,
+  item,
+  onSave,
+  companyOptions,
+  onCreateCompany,
+}: QuoteBecraFormDialogProps) {
   const isEditing = item !== null
-  const makeForm = (): Partial<MappedQuoteBecra> & {id: string} =>
-    item ? {...item} : {...EMPTY}
+  const makeForm = (): Partial<MappedQuoteBecra> & {id: string} => (item ? {...item} : {...EMPTY})
 
   const [form, setForm] = useState(makeForm)
-  const [quotePrefix, setQuotePrefix] = useState(() => (item?.id ? item.id.slice(0, 8) : ''))
-  const [quoteSuffix, setQuoteSuffix] = useState(() => (item?.id ? item.id.slice(8, 10) : ''))
+  const [quotePrefix, setQuotePrefix] = useState(() => (item?.id ? item.id.slice(0, 6) : ''))
+  const [quoteSuffix, setQuoteSuffix] = useState(() => (item?.id ? item.id.slice(6, 8) : ''))
+  const [displayDate, setDisplayDate] = useState(() =>
+    item?.date ? item.date.slice(0, 10) : new Date().toISOString().slice(0, 10),
+  )
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const generatedForPrefixRef = useRef('')
+  const [isUserModifiedPrefix, setIsUserModifiedPrefix] = useState(false)
+  const hasValidQuoteNumber = /^\d{6}$/.test(quotePrefix) && /^\d{2}$/.test(quoteSuffix)
 
   useEffect(() => {
     if (open) {
       setForm(makeForm())
-      setQuotePrefix(item?.id ? item.id.slice(0, 8) : '')
-      setQuoteSuffix(item?.id ? item.id.slice(8, 10) : '')
-      generatedForPrefixRef.current = item?.id ? item.id.slice(0, 8) : ''
       setError(null)
+      setIsUserModifiedPrefix(false)
+
+      setQuotePrefix(item?.id ? item.id.slice(0, 6) : '')
+      setQuoteSuffix(item?.id ? item.id.slice(6, 8) : '')
+      setDisplayDate(item?.date ? item.date.slice(0, 10) : new Date().toISOString().slice(0, 10))
+      generatedForPrefixRef.current = item?.id ? item.id.slice(0, 8) : ''
+
+      // For new quotes, auto-generate prefix from today
+      if (!item) {
+        const today = new Date().toISOString().slice(0, 10)
+        const generatedPrefix = generatePrefixFromDate(today)
+        setQuotePrefix(generatedPrefix)
+        generatedForPrefixRef.current = generatedPrefix
+        setQuoteSuffix(generateSuffix())
+      }
     }
   }, [open, item?.id])
 
   useEffect(() => {
-    if (isEditing) return
+    if (!displayDate) return
+    const generatedPrefix = generatePrefixFromDate(displayDate)
+    if (!isUserModifiedPrefix && generatedPrefix && generatedPrefix !== quotePrefix) {
+      setQuotePrefix(generatedPrefix)
+      generatedForPrefixRef.current = generatedPrefix
+      setQuoteSuffix(generateSuffix())
+    }
+  }, [displayDate, quotePrefix, isUserModifiedPrefix])
 
-    if (quotePrefix.length < 8) {
+  useEffect(() => {
+    if (quotePrefix.length < 6) {
       generatedForPrefixRef.current = ''
       setQuoteSuffix('')
       setForm(prev => ({...prev, id: quotePrefix}))
@@ -77,26 +114,37 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
     }
 
     setForm(prev => ({...prev, id: `${quotePrefix}${quoteSuffix}`}))
-  }, [quotePrefix, quoteSuffix, isEditing])
+  }, [quotePrefix, quoteSuffix])
 
   function update<K extends keyof MappedQuoteBecra>(field: K, value: MappedQuoteBecra[K]) {
     setForm(prev => ({...prev, [field]: value}))
   }
 
-  function handlePrefixChange(value: string) {
-    setQuotePrefix(onlyDigits(value).slice(0, 8))
+  function handleDateChange(value: string) {
+    setDisplayDate(value)
+    update('date', value ? new Date(value).toISOString() : null)
   }
+
+  function handlePrefixChange(value: string) {
+    const digitsOnly = value.replace(/\D/g, '').slice(0, 6)
+    setQuotePrefix(digitsOnly)
+    if (digitsOnly.length > 0) {
+      setIsUserModifiedPrefix(true)
+    }
+  }
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setSaving(true)
     setError(null)
     try {
-      const id = isEditing ? form.id.trim() : `${quotePrefix}${quoteSuffix}`
-      if (!isEditing && !/^\d{10}$/.test(id)) {
-        throw new Error('Please enter 8 digits first so the final 2 digits can be generated automatically.')
+      const id = `${quotePrefix}${quoteSuffix}`
+      if (!/^\d{8}$/.test(id)) {
+        setError('Please enter exactly 6 digits first so the final 2 digits can be generated automatically.')
+        return
       }
-      await onSave({...form, id})
+      await onSave({...form, id, originalId: item?.id})
       onOpenChange(false)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong, please try again.')
@@ -113,36 +161,36 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
           <DialogDescription>
             {isEditing
               ? `Editing quote: ${item.id}`
-              : 'Create a new Becra quote record. Enter the first 8 digits and the last 2 digits will be generated automatically.'}
+              : 'Create a new Becra quote record. Enter the first 6 digits and the last 2 digits will be generated automatically.'}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 sm:col-span-2">
               <Label htmlFor="qb-number" className="text-xs text-muted-foreground">
                 Quote Number
               </Label>
-              {isEditing ? (
-                <Input id="qb-number" className={inputStyles} value={form.id ?? ''} readOnly />
-              ) : (
-                <div className="grid grid-cols-[1fr_auto] gap-2">
-                  <Input
-                    id="qb-number"
-                    className={inputStyles}
-                    value={quotePrefix}
-                    onChange={e => handlePrefixChange(e.target.value)}
-                    placeholder="YYYYMMDD"
-                    inputMode="numeric"
-                    maxLength={8}
-                    required
-                  />
-                  <Input className={inputStyles} value={quoteSuffix} readOnly aria-label="Auto-generated suffix" />
-                </div>
-              )}
-              <p className="text-[11px] text-muted-foreground">
-                Example: 20260414 + 01 → 2026041401
-              </p>
+              <div className="grid grid-cols-[minmax(0,1fr)_5rem] gap-2">
+                <Input
+                  id="qb-number"
+                  className={inputStyles}
+                  value={quotePrefix}
+                      onChange={e => handlePrefixChange(e.target.value)}
+                      placeholder="YYMMDD"
+                      inputMode="numeric"
+                      maxLength={6}
+                      aria-label="Quote prefix (YYMMDD) - auto-filled from date or edit manually"
+                  required
+                />
+                <Input
+                  className={`${inputStyles} text-center`}
+                  value={quoteSuffix}
+                  readOnly
+                  aria-label="Auto-generated random suffix"
+                />
+              </div>
+              <p className="text-[11px] text-muted-foreground">YYMMDD auto-filled from date, or edit manually. Suffix is 2 random digits. Example: 2026-04-14 → 260414 + 01 = 26041401</p>
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="qb-company" className="text-xs text-muted-foreground">
@@ -182,8 +230,8 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
               id="qb-date"
               type="date"
               className={inputStyles}
-              value={form.date ? form.date.slice(0, 10) : ''}
-              onChange={e => update('date', e.target.value ? new Date(e.target.value).toISOString() : null)}
+              value={displayDate}
+              onChange={e => handleDateChange(e.target.value)}
             />
           </div>
 
@@ -205,7 +253,10 @@ export function QuoteBecraFormDialog({open, onOpenChange, item, onSave, companyO
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>
               Cancel
             </Button>
-            <Button type="submit" disabled={saving} className="bg-accent text-accent-foreground hover:bg-accent/90">
+            <Button
+              type="submit"
+              disabled={saving || !hasValidQuoteNumber}
+              className="bg-accent text-accent-foreground hover:bg-accent/90">
               {saving ? 'Saving…' : isEditing ? 'Save Changes' : 'Create Quote'}
             </Button>
           </DialogFooter>

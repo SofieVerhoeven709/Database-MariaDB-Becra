@@ -91,6 +91,7 @@ type SortDir = 'asc' | 'desc'
 type FilterStatus = 'all' | 'active' | 'deleted'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
+type FilterMaterialGroup = 'all' | string
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
@@ -141,6 +142,7 @@ export function MaterialTable({
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterRejected, setFilterRejected] = useState<FilterRejected>('all')
   const [filterNumberKind, setFilterNumberKind] = useState<FilterNumberKind>('all')
+  const [filterMaterialGroup, setFilterMaterialGroup] = useState<FilterMaterialGroup>('all')
   {
     /*const [currentPage, setCurrentPage] = useState(1)
   const ITEMS_PER_PAGE = 15*/
@@ -173,6 +175,14 @@ export function MaterialTable({
   }
 
   const warehousePlaceById = useMemo(() => new Map(warehousePlaces.map(place => [place.id, place])), [warehousePlaces])
+  const materialGroupOptions = useMemo(
+    () =>
+      materialGroups.map(group => {
+        const label = [group.groupA, group.groupB, group.groupC, group.groupD].filter(Boolean).join(' / ')
+        return {id: group.id, label}
+      }),
+    [materialGroups],
+  )
 
   function formatWarehouseCoordinates(place: WarehousePlaceOption): string {
     const parts = [
@@ -251,6 +261,15 @@ export function MaterialTable({
       if (filterRejected === 'active') return !m.rejected
       if (filterRejected === 'rejected') return m.rejected
       return true
+    })
+    .filter(m => {
+      if (filterMaterialGroup === 'all') return true
+      return (
+        m.materialGroupIdA === filterMaterialGroup ||
+        m.materialGroupIdB === filterMaterialGroup ||
+        m.materialGroupIdC === filterMaterialGroup ||
+        m.materialGroupIdD === filterMaterialGroup
+      )
     })
     .filter(m => {
       if (!search) return true
@@ -549,6 +568,19 @@ export function MaterialTable({
             <SelectItem value="all">All statuses</SelectItem>
             <SelectItem value="active">Active</SelectItem>
             <SelectItem value="rejected">Rejected</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select value={filterMaterialGroup} onValueChange={setFilterMaterialGroup}>
+          <SelectTrigger className="w-52 bg-secondary border-border">
+            <SelectValue placeholder="Material group" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All material groups</SelectItem>
+            {materialGroupOptions.map(group => (
+              <SelectItem key={group.id} value={group.id}>
+                {group.label || group.id}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 

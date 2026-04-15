@@ -30,16 +30,17 @@ export const createQuoteBecraAction = protectedServerFunction({
 export const updateQuoteBecraAction = protectedServerFunction({
   schema: updateQuoteBecraSchema,
   functionName: 'Update QuoteBecra action',
-  serverFn: async ({data: {id, ...rest}, logger}) => {
+  serverFn: async ({data: {id, originalId, ...rest}, logger}) => {
     await prismaClient.quoteBecra.update({
-      where: {id},
+      where: {id: originalId},
       data: {
+        id,
         description: rest.description ?? null,
         validDate: rest.validDate ?? false,
         date: rest.date ?? null,
       },
     })
-    logger.info(`QuoteBecra updated: ${id}`)
+    logger.info(`QuoteBecra updated: ${originalId} -> ${id}`)
     revalidatePath('/departments/sales/quoteBecra')
   },
 })

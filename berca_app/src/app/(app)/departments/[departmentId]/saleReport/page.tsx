@@ -61,7 +61,8 @@ export default async function SaleReportPage() {
 
     return {
       ...q,
-      displayTitle: decoded.company ?? decoded.description ?? null,
+      displayCompany: decoded.company,
+      displayDescription: decoded.description,
     }
   })
 
@@ -136,11 +137,22 @@ export default async function SaleReportPage() {
                 recentQuotesWithCompany.map(q => (
                   <div key={q.id} className="flex items-start justify-between gap-2 text-sm">
                     <div className="min-w-0">
-                      <p className="truncate text-foreground">
-                        {q.displayTitle
-                          ? q.displayTitle.slice(0, 50) + (q.displayTitle.length > 50 ? '…' : '')
-                          : <span className="italic text-muted-foreground">No description</span>}
-                      </p>
+                      {q.displayCompany ? (
+                        <p className="truncate text-foreground">
+                          {q.displayCompany.slice(0, 50) + (q.displayCompany.length > 50 ? '…' : '')}
+                        </p>
+                      ) : q.displayDescription ? (
+                        <p className="truncate text-foreground">
+                          {q.displayDescription.slice(0, 50) + (q.displayDescription.length > 50 ? '…' : '')}
+                        </p>
+                      ) : (
+                        <p className="italic text-muted-foreground">No description</p>
+                      )}
+                      {q.displayCompany && q.displayDescription ? (
+                        <p className="truncate text-xs text-muted-foreground">
+                          {q.displayDescription.slice(0, 80) + (q.displayDescription.length > 80 ? '…' : '')}
+                        </p>
+                      ) : null}
                       <p className="text-xs text-muted-foreground">
                         {q.Employee_QuoteBecra_createdByToEmployee.firstName}{' '}
                         {q.Employee_QuoteBecra_createdByToEmployee.lastName} · {formatDate(q.date)}

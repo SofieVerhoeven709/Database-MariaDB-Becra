@@ -43,11 +43,11 @@ export type MaterialDemandSourceMinAggregateOutputType = {
   sourceReferenceId: string | null
   requiredQty: number | null
   reservedQty: number | null
-  createdAt: Date | null
-  createdBy: string | null
   fulfilled: boolean | null
   fulfilledAt: Date | null
   fulfilledBy: string | null
+  createdAt: Date | null
+  createdBy: string | null
 }
 
 export type MaterialDemandSourceMaxAggregateOutputType = {
@@ -57,11 +57,11 @@ export type MaterialDemandSourceMaxAggregateOutputType = {
   sourceReferenceId: string | null
   requiredQty: number | null
   reservedQty: number | null
-  createdAt: Date | null
-  createdBy: string | null
   fulfilled: boolean | null
   fulfilledAt: Date | null
   fulfilledBy: string | null
+  createdAt: Date | null
+  createdBy: string | null
 }
 
 export type MaterialDemandSourceCountAggregateOutputType = {
@@ -71,11 +71,11 @@ export type MaterialDemandSourceCountAggregateOutputType = {
   sourceReferenceId: number
   requiredQty: number
   reservedQty: number
-  createdAt: number
-  createdBy: number
   fulfilled: number
   fulfilledAt: number
   fulfilledBy: number
+  createdAt: number
+  createdBy: number
   _all: number
 }
 
@@ -97,11 +97,11 @@ export type MaterialDemandSourceMinAggregateInputType = {
   sourceReferenceId?: true
   requiredQty?: true
   reservedQty?: true
-  createdAt?: true
-  createdBy?: true
   fulfilled?: true
   fulfilledAt?: true
   fulfilledBy?: true
+  createdAt?: true
+  createdBy?: true
 }
 
 export type MaterialDemandSourceMaxAggregateInputType = {
@@ -111,11 +111,11 @@ export type MaterialDemandSourceMaxAggregateInputType = {
   sourceReferenceId?: true
   requiredQty?: true
   reservedQty?: true
-  createdAt?: true
-  createdBy?: true
   fulfilled?: true
   fulfilledAt?: true
   fulfilledBy?: true
+  createdAt?: true
+  createdBy?: true
 }
 
 export type MaterialDemandSourceCountAggregateInputType = {
@@ -125,11 +125,11 @@ export type MaterialDemandSourceCountAggregateInputType = {
   sourceReferenceId?: true
   requiredQty?: true
   reservedQty?: true
-  createdAt?: true
-  createdBy?: true
   fulfilled?: true
   fulfilledAt?: true
   fulfilledBy?: true
+  createdAt?: true
+  createdBy?: true
   _all?: true
 }
 
@@ -226,11 +226,11 @@ export type MaterialDemandSourceGroupByOutputType = {
   sourceReferenceId: string | null
   requiredQty: number
   reservedQty: number | null
-  createdAt: Date
-  createdBy: string
   fulfilled: boolean
   fulfilledAt: Date | null
   fulfilledBy: string | null
+  createdAt: Date
+  createdBy: string
   _count: MaterialDemandSourceCountAggregateOutputType | null
   _avg: MaterialDemandSourceAvgAggregateOutputType | null
   _sum: MaterialDemandSourceSumAggregateOutputType | null
@@ -263,11 +263,11 @@ export type MaterialDemandSourceWhereInput = {
   sourceReferenceId?: Prisma.StringNullableFilter<"MaterialDemandSource"> | string | null
   requiredQty?: Prisma.IntFilter<"MaterialDemandSource"> | number
   reservedQty?: Prisma.IntNullableFilter<"MaterialDemandSource"> | number | null
-  createdAt?: Prisma.DateTimeFilter<"MaterialDemandSource"> | Date | string
-  createdBy?: Prisma.StringFilter<"MaterialDemandSource"> | string
   fulfilled?: Prisma.BoolFilter<"MaterialDemandSource"> | boolean
   fulfilledAt?: Prisma.DateTimeNullableFilter<"MaterialDemandSource"> | Date | string | null
   fulfilledBy?: Prisma.StringNullableFilter<"MaterialDemandSource"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"MaterialDemandSource"> | Date | string
+  createdBy?: Prisma.StringFilter<"MaterialDemandSource"> | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationListRelationFilter
   MaterialDemand?: Prisma.XOR<Prisma.MaterialDemandScalarRelationFilter, Prisma.MaterialDemandWhereInput>
   MaterialDemandSourceType?: Prisma.XOR<Prisma.MaterialDemandSourceTypeScalarRelationFilter, Prisma.MaterialDemandSourceTypeWhereInput>
@@ -282,11 +282,11 @@ export type MaterialDemandSourceOrderByWithRelationInput = {
   sourceReferenceId?: Prisma.SortOrderInput | Prisma.SortOrder
   requiredQty?: Prisma.SortOrder
   reservedQty?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   fulfilled?: Prisma.SortOrder
   fulfilledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   fulfilledBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationOrderByRelationAggregateInput
   MaterialDemand?: Prisma.MaterialDemandOrderByWithRelationInput
   MaterialDemandSourceType?: Prisma.MaterialDemandSourceTypeOrderByWithRelationInput
@@ -305,11 +305,11 @@ export type MaterialDemandSourceWhereUniqueInput = Prisma.AtLeast<{
   sourceReferenceId?: Prisma.StringNullableFilter<"MaterialDemandSource"> | string | null
   requiredQty?: Prisma.IntFilter<"MaterialDemandSource"> | number
   reservedQty?: Prisma.IntNullableFilter<"MaterialDemandSource"> | number | null
-  createdAt?: Prisma.DateTimeFilter<"MaterialDemandSource"> | Date | string
-  createdBy?: Prisma.StringFilter<"MaterialDemandSource"> | string
   fulfilled?: Prisma.BoolFilter<"MaterialDemandSource"> | boolean
   fulfilledAt?: Prisma.DateTimeNullableFilter<"MaterialDemandSource"> | Date | string | null
   fulfilledBy?: Prisma.StringNullableFilter<"MaterialDemandSource"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"MaterialDemandSource"> | Date | string
+  createdBy?: Prisma.StringFilter<"MaterialDemandSource"> | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationListRelationFilter
   MaterialDemand?: Prisma.XOR<Prisma.MaterialDemandScalarRelationFilter, Prisma.MaterialDemandWhereInput>
   MaterialDemandSourceType?: Prisma.XOR<Prisma.MaterialDemandSourceTypeScalarRelationFilter, Prisma.MaterialDemandSourceTypeWhereInput>
@@ -324,11 +324,11 @@ export type MaterialDemandSourceOrderByWithAggregationInput = {
   sourceReferenceId?: Prisma.SortOrderInput | Prisma.SortOrder
   requiredQty?: Prisma.SortOrder
   reservedQty?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   fulfilled?: Prisma.SortOrder
   fulfilledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   fulfilledBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   _count?: Prisma.MaterialDemandSourceCountOrderByAggregateInput
   _avg?: Prisma.MaterialDemandSourceAvgOrderByAggregateInput
   _max?: Prisma.MaterialDemandSourceMaxOrderByAggregateInput
@@ -346,11 +346,11 @@ export type MaterialDemandSourceScalarWhereWithAggregatesInput = {
   sourceReferenceId?: Prisma.StringNullableWithAggregatesFilter<"MaterialDemandSource"> | string | null
   requiredQty?: Prisma.IntWithAggregatesFilter<"MaterialDemandSource"> | number
   reservedQty?: Prisma.IntNullableWithAggregatesFilter<"MaterialDemandSource"> | number | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"MaterialDemandSource"> | Date | string
-  createdBy?: Prisma.StringWithAggregatesFilter<"MaterialDemandSource"> | string
   fulfilled?: Prisma.BoolWithAggregatesFilter<"MaterialDemandSource"> | boolean
   fulfilledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"MaterialDemandSource"> | Date | string | null
   fulfilledBy?: Prisma.StringNullableWithAggregatesFilter<"MaterialDemandSource"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"MaterialDemandSource"> | Date | string
+  createdBy?: Prisma.StringWithAggregatesFilter<"MaterialDemandSource"> | string
 }
 
 export type MaterialDemandSourceCreateInput = {
@@ -358,9 +358,9 @@ export type MaterialDemandSourceCreateInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
+  createdAt: Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationCreateNestedManyWithoutMaterialDemandSourceInput
   MaterialDemand: Prisma.MaterialDemandCreateNestedOneWithoutMaterialDemandSourceInput
   MaterialDemandSourceType: Prisma.MaterialDemandSourceTypeCreateNestedOneWithoutMaterialDemandSourceInput
@@ -375,11 +375,11 @@ export type MaterialDemandSourceUncheckedCreateInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
-  createdBy: string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
   fulfilledBy?: string | null
+  createdAt: Date | string
+  createdBy: string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutMaterialDemandSourceInput
 }
 
@@ -388,9 +388,9 @@ export type MaterialDemandSourceUpdateInput = {
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUpdateManyWithoutMaterialDemandSourceNestedInput
   MaterialDemand?: Prisma.MaterialDemandUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
   MaterialDemandSourceType?: Prisma.MaterialDemandSourceTypeUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
@@ -405,11 +405,11 @@ export type MaterialDemandSourceUncheckedUpdateInput = {
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fulfilledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutMaterialDemandSourceNestedInput
 }
 
@@ -420,11 +420,11 @@ export type MaterialDemandSourceCreateManyInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
-  createdBy: string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
   fulfilledBy?: string | null
+  createdAt: Date | string
+  createdBy: string
 }
 
 export type MaterialDemandSourceUpdateManyMutationInput = {
@@ -432,9 +432,9 @@ export type MaterialDemandSourceUpdateManyMutationInput = {
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MaterialDemandSourceUncheckedUpdateManyInput = {
@@ -444,11 +444,11 @@ export type MaterialDemandSourceUncheckedUpdateManyInput = {
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fulfilledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type MaterialDemandSourceListRelationFilter = {
@@ -474,11 +474,11 @@ export type MaterialDemandSourceCountOrderByAggregateInput = {
   sourceReferenceId?: Prisma.SortOrder
   requiredQty?: Prisma.SortOrder
   reservedQty?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   fulfilled?: Prisma.SortOrder
   fulfilledAt?: Prisma.SortOrder
   fulfilledBy?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type MaterialDemandSourceAvgOrderByAggregateInput = {
@@ -493,11 +493,11 @@ export type MaterialDemandSourceMaxOrderByAggregateInput = {
   sourceReferenceId?: Prisma.SortOrder
   requiredQty?: Prisma.SortOrder
   reservedQty?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   fulfilled?: Prisma.SortOrder
   fulfilledAt?: Prisma.SortOrder
   fulfilledBy?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type MaterialDemandSourceMinOrderByAggregateInput = {
@@ -507,11 +507,11 @@ export type MaterialDemandSourceMinOrderByAggregateInput = {
   sourceReferenceId?: Prisma.SortOrder
   requiredQty?: Prisma.SortOrder
   reservedQty?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   fulfilled?: Prisma.SortOrder
   fulfilledAt?: Prisma.SortOrder
   fulfilledBy?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type MaterialDemandSourceSumOrderByAggregateInput = {
@@ -711,9 +711,9 @@ export type MaterialDemandSourceCreateWithoutEmployeeInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
+  createdAt: Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationCreateNestedManyWithoutMaterialDemandSourceInput
   MaterialDemand: Prisma.MaterialDemandCreateNestedOneWithoutMaterialDemandSourceInput
   MaterialDemandSourceType: Prisma.MaterialDemandSourceTypeCreateNestedOneWithoutMaterialDemandSourceInput
@@ -727,10 +727,10 @@ export type MaterialDemandSourceUncheckedCreateWithoutEmployeeInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
   fulfilledBy?: string | null
+  createdAt: Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutMaterialDemandSourceInput
 }
 
@@ -749,9 +749,9 @@ export type MaterialDemandSourceCreateWithoutEmployee_MaterialDemandSource_fulfi
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
+  createdAt: Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationCreateNestedManyWithoutMaterialDemandSourceInput
   MaterialDemand: Prisma.MaterialDemandCreateNestedOneWithoutMaterialDemandSourceInput
   MaterialDemandSourceType: Prisma.MaterialDemandSourceTypeCreateNestedOneWithoutMaterialDemandSourceInput
@@ -765,10 +765,10 @@ export type MaterialDemandSourceUncheckedCreateWithoutEmployee_MaterialDemandSou
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
-  createdBy: string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
+  createdAt: Date | string
+  createdBy: string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutMaterialDemandSourceInput
 }
 
@@ -808,11 +808,11 @@ export type MaterialDemandSourceScalarWhereInput = {
   sourceReferenceId?: Prisma.StringNullableFilter<"MaterialDemandSource"> | string | null
   requiredQty?: Prisma.IntFilter<"MaterialDemandSource"> | number
   reservedQty?: Prisma.IntNullableFilter<"MaterialDemandSource"> | number | null
-  createdAt?: Prisma.DateTimeFilter<"MaterialDemandSource"> | Date | string
-  createdBy?: Prisma.StringFilter<"MaterialDemandSource"> | string
   fulfilled?: Prisma.BoolFilter<"MaterialDemandSource"> | boolean
   fulfilledAt?: Prisma.DateTimeNullableFilter<"MaterialDemandSource"> | Date | string | null
   fulfilledBy?: Prisma.StringNullableFilter<"MaterialDemandSource"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"MaterialDemandSource"> | Date | string
+  createdBy?: Prisma.StringFilter<"MaterialDemandSource"> | string
 }
 
 export type MaterialDemandSourceUpsertWithWhereUniqueWithoutEmployee_MaterialDemandSource_fulfilledByToEmployeeInput = {
@@ -836,9 +836,9 @@ export type MaterialDemandSourceCreateWithoutMaterialDemandInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
+  createdAt: Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationCreateNestedManyWithoutMaterialDemandSourceInput
   MaterialDemandSourceType: Prisma.MaterialDemandSourceTypeCreateNestedOneWithoutMaterialDemandSourceInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialDemandSourceInput
@@ -851,11 +851,11 @@ export type MaterialDemandSourceUncheckedCreateWithoutMaterialDemandInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
-  createdBy: string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
   fulfilledBy?: string | null
+  createdAt: Date | string
+  createdBy: string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutMaterialDemandSourceInput
 }
 
@@ -890,9 +890,9 @@ export type MaterialDemandSourceCreateWithoutMaterialDemandSourceTypeInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
+  createdAt: Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationCreateNestedManyWithoutMaterialDemandSourceInput
   MaterialDemand: Prisma.MaterialDemandCreateNestedOneWithoutMaterialDemandSourceInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialDemandSourceInput
@@ -905,11 +905,11 @@ export type MaterialDemandSourceUncheckedCreateWithoutMaterialDemandSourceTypeIn
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
-  createdBy: string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
   fulfilledBy?: string | null
+  createdAt: Date | string
+  createdBy: string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedCreateNestedManyWithoutMaterialDemandSourceInput
 }
 
@@ -944,9 +944,9 @@ export type MaterialDemandSourceCreateWithoutIncomingDeliveryLineAllocationInput
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
+  createdAt: Date | string
   MaterialDemand: Prisma.MaterialDemandCreateNestedOneWithoutMaterialDemandSourceInput
   MaterialDemandSourceType: Prisma.MaterialDemandSourceTypeCreateNestedOneWithoutMaterialDemandSourceInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialDemandSourceInput
@@ -960,11 +960,11 @@ export type MaterialDemandSourceUncheckedCreateWithoutIncomingDeliveryLineAlloca
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
-  createdBy: string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
   fulfilledBy?: string | null
+  createdAt: Date | string
+  createdBy: string
 }
 
 export type MaterialDemandSourceCreateOrConnectWithoutIncomingDeliveryLineAllocationInput = {
@@ -988,9 +988,9 @@ export type MaterialDemandSourceUpdateWithoutIncomingDeliveryLineAllocationInput
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   MaterialDemand?: Prisma.MaterialDemandUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
   MaterialDemandSourceType?: Prisma.MaterialDemandSourceTypeUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
@@ -1004,11 +1004,11 @@ export type MaterialDemandSourceUncheckedUpdateWithoutIncomingDeliveryLineAlloca
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fulfilledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type MaterialDemandSourceCreateManyEmployeeInput = {
@@ -1018,10 +1018,10 @@ export type MaterialDemandSourceCreateManyEmployeeInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
   fulfilledBy?: string | null
+  createdAt: Date | string
 }
 
 export type MaterialDemandSourceCreateManyEmployee_MaterialDemandSource_fulfilledByToEmployeeInput = {
@@ -1031,10 +1031,10 @@ export type MaterialDemandSourceCreateManyEmployee_MaterialDemandSource_fulfille
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
-  createdBy: string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
+  createdAt: Date | string
+  createdBy: string
 }
 
 export type MaterialDemandSourceUpdateWithoutEmployeeInput = {
@@ -1042,9 +1042,9 @@ export type MaterialDemandSourceUpdateWithoutEmployeeInput = {
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUpdateManyWithoutMaterialDemandSourceNestedInput
   MaterialDemand?: Prisma.MaterialDemandUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
   MaterialDemandSourceType?: Prisma.MaterialDemandSourceTypeUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
@@ -1058,10 +1058,10 @@ export type MaterialDemandSourceUncheckedUpdateWithoutEmployeeInput = {
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fulfilledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutMaterialDemandSourceNestedInput
 }
 
@@ -1072,10 +1072,10 @@ export type MaterialDemandSourceUncheckedUpdateManyWithoutEmployeeInput = {
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fulfilledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MaterialDemandSourceUpdateWithoutEmployee_MaterialDemandSource_fulfilledByToEmployeeInput = {
@@ -1083,9 +1083,9 @@ export type MaterialDemandSourceUpdateWithoutEmployee_MaterialDemandSource_fulfi
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUpdateManyWithoutMaterialDemandSourceNestedInput
   MaterialDemand?: Prisma.MaterialDemandUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
   MaterialDemandSourceType?: Prisma.MaterialDemandSourceTypeUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
@@ -1099,10 +1099,10 @@ export type MaterialDemandSourceUncheckedUpdateWithoutEmployee_MaterialDemandSou
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutMaterialDemandSourceNestedInput
 }
 
@@ -1113,10 +1113,10 @@ export type MaterialDemandSourceUncheckedUpdateManyWithoutEmployee_MaterialDeman
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type MaterialDemandSourceCreateManyMaterialDemandInput = {
@@ -1125,11 +1125,11 @@ export type MaterialDemandSourceCreateManyMaterialDemandInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
-  createdBy: string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
   fulfilledBy?: string | null
+  createdAt: Date | string
+  createdBy: string
 }
 
 export type MaterialDemandSourceUpdateWithoutMaterialDemandInput = {
@@ -1137,9 +1137,9 @@ export type MaterialDemandSourceUpdateWithoutMaterialDemandInput = {
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUpdateManyWithoutMaterialDemandSourceNestedInput
   MaterialDemandSourceType?: Prisma.MaterialDemandSourceTypeUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
@@ -1152,11 +1152,11 @@ export type MaterialDemandSourceUncheckedUpdateWithoutMaterialDemandInput = {
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fulfilledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutMaterialDemandSourceNestedInput
 }
 
@@ -1166,11 +1166,11 @@ export type MaterialDemandSourceUncheckedUpdateManyWithoutMaterialDemandInput = 
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fulfilledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type MaterialDemandSourceCreateManyMaterialDemandSourceTypeInput = {
@@ -1179,11 +1179,11 @@ export type MaterialDemandSourceCreateManyMaterialDemandSourceTypeInput = {
   sourceReferenceId?: string | null
   requiredQty: number
   reservedQty?: number | null
-  createdAt: Date | string
-  createdBy: string
   fulfilled?: boolean
   fulfilledAt?: Date | string | null
   fulfilledBy?: string | null
+  createdAt: Date | string
+  createdBy: string
 }
 
 export type MaterialDemandSourceUpdateWithoutMaterialDemandSourceTypeInput = {
@@ -1191,9 +1191,9 @@ export type MaterialDemandSourceUpdateWithoutMaterialDemandSourceTypeInput = {
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUpdateManyWithoutMaterialDemandSourceNestedInput
   MaterialDemand?: Prisma.MaterialDemandUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialDemandSourceNestedInput
@@ -1206,11 +1206,11 @@ export type MaterialDemandSourceUncheckedUpdateWithoutMaterialDemandSourceTypeIn
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fulfilledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   IncomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationUncheckedUpdateManyWithoutMaterialDemandSourceNestedInput
 }
 
@@ -1220,11 +1220,11 @@ export type MaterialDemandSourceUncheckedUpdateManyWithoutMaterialDemandSourceTy
   sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requiredQty?: Prisma.IntFieldUpdateOperationsInput | number
   reservedQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   fulfilled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fulfilledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fulfilledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -1265,11 +1265,11 @@ export type MaterialDemandSourceSelect<ExtArgs extends runtime.Types.Extensions.
   sourceReferenceId?: boolean
   requiredQty?: boolean
   reservedQty?: boolean
-  createdAt?: boolean
-  createdBy?: boolean
   fulfilled?: boolean
   fulfilledAt?: boolean
   fulfilledBy?: boolean
+  createdAt?: boolean
+  createdBy?: boolean
   IncomingDeliveryLineAllocation?: boolean | Prisma.MaterialDemandSource$IncomingDeliveryLineAllocationArgs<ExtArgs>
   MaterialDemand?: boolean | Prisma.MaterialDemandDefaultArgs<ExtArgs>
   MaterialDemandSourceType?: boolean | Prisma.MaterialDemandSourceTypeDefaultArgs<ExtArgs>
@@ -1287,14 +1287,14 @@ export type MaterialDemandSourceSelectScalar = {
   sourceReferenceId?: boolean
   requiredQty?: boolean
   reservedQty?: boolean
-  createdAt?: boolean
-  createdBy?: boolean
   fulfilled?: boolean
   fulfilledAt?: boolean
   fulfilledBy?: boolean
+  createdAt?: boolean
+  createdBy?: boolean
 }
 
-export type MaterialDemandSourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialDemandId" | "sourceTypeId" | "sourceReferenceId" | "requiredQty" | "reservedQty" | "createdAt" | "createdBy" | "fulfilled" | "fulfilledAt" | "fulfilledBy", ExtArgs["result"]["materialDemandSource"]>
+export type MaterialDemandSourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialDemandId" | "sourceTypeId" | "sourceReferenceId" | "requiredQty" | "reservedQty" | "fulfilled" | "fulfilledAt" | "fulfilledBy" | "createdAt" | "createdBy", ExtArgs["result"]["materialDemandSource"]>
 export type MaterialDemandSourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   IncomingDeliveryLineAllocation?: boolean | Prisma.MaterialDemandSource$IncomingDeliveryLineAllocationArgs<ExtArgs>
   MaterialDemand?: boolean | Prisma.MaterialDemandDefaultArgs<ExtArgs>
@@ -1320,11 +1320,11 @@ export type $MaterialDemandSourcePayload<ExtArgs extends runtime.Types.Extension
     sourceReferenceId: string | null
     requiredQty: number
     reservedQty: number | null
-    createdAt: Date
-    createdBy: string
     fulfilled: boolean
     fulfilledAt: Date | null
     fulfilledBy: string | null
+    createdAt: Date
+    createdBy: string
   }, ExtArgs["result"]["materialDemandSource"]>
   composites: {}
 }
@@ -1705,11 +1705,11 @@ export interface MaterialDemandSourceFieldRefs {
   readonly sourceReferenceId: Prisma.FieldRef<"MaterialDemandSource", 'String'>
   readonly requiredQty: Prisma.FieldRef<"MaterialDemandSource", 'Int'>
   readonly reservedQty: Prisma.FieldRef<"MaterialDemandSource", 'Int'>
-  readonly createdAt: Prisma.FieldRef<"MaterialDemandSource", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"MaterialDemandSource", 'String'>
   readonly fulfilled: Prisma.FieldRef<"MaterialDemandSource", 'Boolean'>
   readonly fulfilledAt: Prisma.FieldRef<"MaterialDemandSource", 'DateTime'>
   readonly fulfilledBy: Prisma.FieldRef<"MaterialDemandSource", 'String'>
+  readonly createdAt: Prisma.FieldRef<"MaterialDemandSource", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"MaterialDemandSource", 'String'>
 }
     
 

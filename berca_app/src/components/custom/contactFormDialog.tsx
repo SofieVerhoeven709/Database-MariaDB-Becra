@@ -14,6 +14,8 @@ import type {RoleLevelOption} from '@/types/roleLevel'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {CompanyFormDialog} from '@/components/custom/companyFormDialog'
+import {FunctionSelect} from '@/components/custom/functionSelect'
+import {DepartmentExternSelect} from '@/components/custom/departmentExternSelect'
 import {
   CompanyAddressOption,
   createCompanyAndReturnIdAction,
@@ -117,10 +119,6 @@ export function ContactFormDialog({
   const [companies, setCompanies] = useState(companyOptions)
   const [companyDialogOpen, setCompanyDialogOpen] = useState(false)
 
-  const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
-    buildInitialVisibilityRows(contact?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
-  )
-
   // New contact: initial company assignment
   const [initialCompanyId, setInitialCompanyId] = useState<string>('none')
   const [initialRoleWithCompany, setInitialRoleWithCompany] = useState<string>('')
@@ -133,6 +131,10 @@ export function ContactFormDialog({
   const [newAddresses, setNewAddresses] = useState<CompanyAddressOption[]>([])
   const [newCompanyAddressId, setNewCompanyAddressId] = useState<string>('none')
   const [endPreviousActive, setEndPreviousActive] = useState<boolean>(true)
+
+  const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
+    buildInitialVisibilityRows(contact?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
+  )
 
   useEffect(() => {
     const next = contact ?? emptyContact()
@@ -147,6 +149,7 @@ export function ContactFormDialog({
     setNewAddresses([])
     setNewCompanyAddressId('none')
     setEndPreviousActive(true)
+    setCompanies(companyOptions)
   }, [contact?.id, open])
 
   // Fetch addresses when initial company changes (new contact flow)
@@ -269,6 +272,44 @@ export function ContactFormDialog({
     </div>
   )
 
+  const selectFieldWithCreate = (
+    key: keyof MappedContact,
+    label: string,
+    options: SelectOption[],
+    onCreate: () => void,
+  ) => (
+    <div className="flex flex-col gap-1.5">
+      <Label className="text-xs text-muted-foreground">{label}</Label>
+      <div className="flex gap-2">
+        <Select
+          value={(form[key] as string | null) ?? 'none'}
+          onValueChange={v => {
+            if (v === '__create__') {
+              onCreate()
+            } else {
+              set(key, (v === 'none' ? null : v) as MappedContact[typeof key])
+            }
+          }}>
+          <SelectTrigger className="bg-secondary border-border flex-1">
+            <SelectValue placeholder="None" />
+          </SelectTrigger>
+          <SelectContent className="bg-card border-border">
+            <SelectItem value="none">None</SelectItem>
+            {options.map(o => (
+              <SelectItem key={o.id} value={o.id}>
+                {o.name}
+              </SelectItem>
+            ))}
+            <SelectItem value="__create__">+ Create New</SelectItem>
+          </SelectContent>
+        </Select>
+        <Button type="button" variant="outline" className="border-border" onClick={onCreate}>
+          +
+        </Button>
+      </div>
+    </div>
+  )
+
   const addressSelect = (addresses: CompanyAddressOption[], value: string, onChange: (v: string) => void) => {
     if (addresses.length === 0) return null
     return (
@@ -368,8 +409,30 @@ export function ContactFormDialog({
                 </div>
                 {textField('through', 'Through / Source')}
                 {selectField('titleId', 'Title', titleOptions)}
-                {selectField('functionId', 'Function', functionOptions)}
-                {selectField('departmentExternId', 'External Department', departmentExternOptions)}
+                <div className="flex flex-col gap-1.5">
+                  <Label className="text-xs text-muted-foreground">Function</Label>
+                  <FunctionSelect
+                    value={form.functionId}
+                    currentName={form.functionName}
+                    onChange={(id, name) => {
+                      set('functionId', id)
+                      set('functionName', name)
+                    }}
+                    options={functionOptions}
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label className="text-xs text-muted-foreground">External Department</Label>
+                  <DepartmentExternSelect
+                    value={form.departmentExternId}
+                    currentName={form.departmentExternName}
+                    onChange={(id, name) => {
+                      set('departmentExternId', id)
+                      set('departmentExternName', name)
+                    }}
+                    options={departmentExternOptions}
+                  />
+                </div>
 
                 {!isEdit && (
                   <>

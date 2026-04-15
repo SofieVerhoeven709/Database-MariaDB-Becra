@@ -22,18 +22,19 @@ export interface MappedBillingLine {
   type: BillingLineType
   sourceId: string
   sourceLabel: string
+  timeRegistryIds?: string[]
   quantity: number
   unit: string
   priceListItemId: string | null
   unitPriceBase: number | null
   unitPriceFinal: number | null
   lineTotalFinal: number | null
+  vatMarginId: string | null
   vatRate: number | null
   lineVatAmount: number | null
   lineTotalInclVat: number | null
   unmatched: boolean
   workOrderStructureId?: string // For materials with VAT
-  currentVatMarginId?: string | null
 }
 
 // ─── InvoiceOut ────────────────────────────────────────────────────────────────

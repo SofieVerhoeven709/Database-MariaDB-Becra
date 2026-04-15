@@ -91,7 +91,9 @@ type TimeRegistryRaw = {
   startBreak: Date | null
   endBreak: Date | null
   hourTypeId: string
+  vatMarginId: string | null
   HourType: {id: string; name: string; targetId: string | null}
+  VatMargin: {id: string; vat: number} | null
   TimeRegistryEmployee: {id: string; employeeId: string}[]
 }
 
@@ -116,6 +118,8 @@ type TrainingRaw = {
   id: string
   trainingNumber: string | null
   targetId: string | null
+  vatMarginId: string | null
+  VatMargin: {id: string; vat: number} | null
   TrainingStandard: {
     id: string
     descriptionShort: string | null
@@ -214,67 +218,141 @@ function mapWorkOrderWithLines(
   const wo = w.WorkOrder
   const lines: MappedBillingLine[] = []
   const vatByRateMap = new Map<number, number>() // VAT rate → total VAT amount
+  const vatRateById = new Map<string, number>()
 
   // ── Hour lines ────────────────────────────────────────────────────────────
-  const hoursByType = new Map<string, {label: string; targetId: string | null; totalHours: number}>()
-  let stayOverCount = 0
+  const hoursByType = new Map<
+    string,
+    {
+      label: string
+      targetId: string | null
+      totalHours: number
+      timeRegistryIds: string[]
+      vatMarginIds: Set<string | null>
+      vatAmount: number
+    }
+  >()
+  const stayOverByType = new Map<
+    string,
+    {
+      label: string
+      count: number
+      timeRegistryIds: string[]
+      vatMarginIds: Set<string | null>
+      vatAmount: number
+    }
+  >()
   for (const tr of wo.TimeRegistry) {
     if (tr.invoiceTime !== true) {
       continue
     }
+    const hours = calcHours(tr.startTime, tr.endTime, tr.startBreak, tr.endBreak, tr.TimeRegistryEmployee.length || 1)
 
-    if (tr.stayOver === true) {
-      stayOverCount += 1
+    if (tr.vatMarginId && tr.VatMargin?.vat != null) {
+      vatRateById.set(tr.vatMarginId, tr.VatMargin.vat)
     }
 
-    const existing = hoursByType.get(tr.hourTypeId)
-    const hours = calcHours(tr.startTime, tr.endTime, tr.startBreak, tr.endBreak, tr.TimeRegistryEmployee.length || 1)
-    if (existing) {
-      existing.totalHours += hours
-    } else {
-      hoursByType.set(tr.hourTypeId, {
+    const hoursGroup = hoursByType.get(tr.hourTypeId) ?? {
+      label: tr.HourType.name,
+      targetId: tr.HourType.targetId,
+      totalHours: 0,
+      timeRegistryIds: [],
+      vatMarginIds: new Set<string | null>(),
+      vatAmount: 0,
+    }
+
+    const hoursMatch = tr.HourType.targetId ? priceMap.get(tr.HourType.targetId) : undefined
+    const hoursUnitPrice = hoursMatch ? applyMargin(hoursMatch.basePrice, costMargin) : null
+    const hoursLineTotal = hoursUnitPrice ? hoursUnitPrice * hours : null
+    const hoursVatRate = tr.VatMargin?.vat ?? 0
+    if (hoursLineTotal !== null && hoursVatRate > 0) {
+      const vatAmount = hoursLineTotal * (hoursVatRate / 100)
+      hoursGroup.vatAmount += vatAmount
+      vatByRateMap.set(hoursVatRate, (vatByRateMap.get(hoursVatRate) ?? 0) + vatAmount)
+    }
+
+    hoursGroup.totalHours += hours
+    hoursGroup.timeRegistryIds.push(tr.id)
+    hoursGroup.vatMarginIds.add(tr.vatMarginId ?? null)
+    hoursByType.set(tr.hourTypeId, hoursGroup)
+
+    if (tr.stayOver === true) {
+      const stayGroup = stayOverByType.get(tr.hourTypeId) ?? {
         label: tr.HourType.name,
-        targetId: tr.HourType.targetId,
-        totalHours: hours,
-      })
+        count: 0,
+        timeRegistryIds: [],
+        vatMarginIds: new Set<string | null>(),
+        vatAmount: 0,
+      }
+      const stayUnitPrice = stayOverPrice ? applyMargin(stayOverPrice.basePrice, costMargin) : null
+      const stayVatRate = tr.VatMargin?.vat ?? 0
+      if (stayUnitPrice !== null && stayVatRate > 0) {
+        const vatAmount = stayUnitPrice * (stayVatRate / 100)
+        stayGroup.vatAmount += vatAmount
+        vatByRateMap.set(stayVatRate, (vatByRateMap.get(stayVatRate) ?? 0) + vatAmount)
+      }
+      stayGroup.count += 1
+      stayGroup.timeRegistryIds.push(tr.id)
+      stayGroup.vatMarginIds.add(tr.vatMarginId ?? null)
+      stayOverByType.set(tr.hourTypeId, stayGroup)
     }
   }
 
-  for (const [hourTypeId, {label, targetId, totalHours}] of hoursByType) {
-    const match = targetId ? priceMap.get(targetId) : undefined
+  const sortedHourGroups = Array.from(hoursByType.entries()).sort((a, b) => a[1].label.localeCompare(b[1].label))
+  for (const [hourTypeId, group] of sortedHourGroups) {
+    const match = group.targetId ? priceMap.get(group.targetId) : undefined
+    const unitPrice = match ? applyMargin(match.basePrice, costMargin) : null
+    const lineTotalFinal = unitPrice ? unitPrice * group.totalHours : null
+    const lineVatAmount = unitPrice ? group.vatAmount : null
+    const lineTotalInclVat = lineTotalFinal !== null ? lineTotalFinal + (lineVatAmount ?? 0) : null
+    const vatMarginId = group.vatMarginIds.size === 1 ? Array.from(group.vatMarginIds)[0] : null
+    const vatRate = vatMarginId ? vatRateById.get(vatMarginId) ?? null : null
     lines.push({
       workOrderId: wo.id,
       type: 'hours',
       sourceId: hourTypeId,
-      sourceLabel: label,
-      quantity: totalHours,
+      sourceLabel: group.label,
+      timeRegistryIds: group.timeRegistryIds,
+      quantity: group.totalHours,
       unit: match?.unit ?? 'H',
       priceListItemId: match?.itemId ?? null,
       unitPriceBase: match?.basePrice ?? null,
-      unitPriceFinal: match ? applyMargin(match.basePrice, costMargin) : null,
-      lineTotalFinal: match ? applyMargin(match.basePrice, costMargin) * totalHours : null,
-      vatRate: 0,
-      lineVatAmount: match ? 0 : null,
-      lineTotalInclVat: match ? applyMargin(match.basePrice, costMargin) * totalHours : null,
+      unitPriceFinal: unitPrice,
+      lineTotalFinal,
+      vatMarginId,
+      vatRate,
+      lineVatAmount,
+      lineTotalInclVat,
       unmatched: !match,
     })
   }
 
-  if (stayOverCount > 0) {
+  const sortedStayOverGroups = Array.from(stayOverByType.entries()).sort((a, b) =>
+    a[1].label.localeCompare(b[1].label),
+  )
+  for (const [hourTypeId, group] of sortedStayOverGroups) {
+    const unitPrice = stayOverPrice ? applyMargin(stayOverPrice.basePrice, costMargin) : null
+    const lineTotalFinal = unitPrice ? unitPrice * group.count : null
+    const lineVatAmount = unitPrice ? group.vatAmount : null
+    const lineTotalInclVat = lineTotalFinal !== null ? lineTotalFinal + (lineVatAmount ?? 0) : null
+    const vatMarginId = group.vatMarginIds.size === 1 ? Array.from(group.vatMarginIds)[0] : null
+    const vatRate = vatMarginId ? vatRateById.get(vatMarginId) ?? null : null
     lines.push({
       workOrderId: wo.id,
       type: 'stay_over',
-      sourceId: 'stay_over',
-      sourceLabel: 'Stay Over',
-      quantity: stayOverCount,
+      sourceId: hourTypeId,
+      sourceLabel: `Stay Over (${group.label})`,
+      timeRegistryIds: group.timeRegistryIds,
+      quantity: group.count,
       unit: stayOverPrice?.unit ?? 'STAY_OVER',
       priceListItemId: stayOverPrice?.itemId ?? null,
       unitPriceBase: stayOverPrice?.basePrice ?? null,
-      unitPriceFinal: stayOverPrice ? applyMargin(stayOverPrice.basePrice, costMargin) : null,
-      lineTotalFinal: stayOverPrice ? applyMargin(stayOverPrice.basePrice, costMargin) * stayOverCount : null,
-      vatRate: 0,
-      lineVatAmount: stayOverPrice ? 0 : null,
-      lineTotalInclVat: stayOverPrice ? applyMargin(stayOverPrice.basePrice, costMargin) * stayOverCount : null,
+      unitPriceFinal: unitPrice,
+      lineTotalFinal,
+      vatMarginId,
+      vatRate,
+      lineVatAmount,
+      lineTotalInclVat,
       unmatched: !stayOverPrice,
     })
   }
@@ -286,12 +364,12 @@ function mapWorkOrderWithLines(
     const match = mat.targetId ? priceMap.get(mat.targetId) : undefined
     const unitPrice = match ? applyMargin(match.basePrice, costMargin) : null
     const lineTotal = unitPrice ? unitPrice * qty : null
-    const vatRate = wos.VatMargin?.vat ?? 0
-    const lineVat = lineTotal !== null ? lineTotal * (vatRate / 100) : null
+    const vatRate = wos.VatMargin?.vat ?? null
+    const lineVat = lineTotal !== null ? lineTotal * ((vatRate ?? 0) / 100) : null
     const lineTotalInclVat = lineTotal !== null ? lineTotal + (lineVat ?? 0) : null
 
     // Calculate VAT for this material line based on its VatMargin
-    if (lineTotal !== null && vatRate > 0) {
+    if (lineTotal !== null && vatRate && vatRate > 0) {
       vatByRateMap.set(vatRate, (vatByRateMap.get(vatRate) ?? 0) + (lineVat ?? 0))
     }
 
@@ -306,12 +384,12 @@ function mapWorkOrderWithLines(
       unitPriceBase: match?.basePrice ?? null,
       unitPriceFinal: unitPrice,
       lineTotalFinal: lineTotal,
+      vatMarginId: wos.vatMarginId ?? null,
       vatRate,
       lineVatAmount: lineVat,
       lineTotalInclVat,
       unmatched: !match,
       workOrderStructureId: wos.id,
-      currentVatMarginId: wos.vatMarginId,
     })
   }
 
@@ -321,6 +399,14 @@ function mapWorkOrderWithLines(
     const match = targetId ? priceMap.get(targetId) : undefined
     const label =
       tr.TrainingStandard?.descriptionShort ?? tr.TrainingStandard?.description ?? `Training ${tr.trainingNumber}`
+    const unitPrice = match ? applyMargin(match.basePrice, costMargin) : null
+    const lineTotalFinal = unitPrice
+    const vatRate = tr.VatMargin?.vat ?? null
+    const lineVatAmount = lineTotalFinal !== null ? lineTotalFinal * ((vatRate ?? 0) / 100) : null
+    const lineTotalInclVat = lineTotalFinal !== null ? lineTotalFinal + (lineVatAmount ?? 0) : null
+    if (lineTotalFinal !== null && vatRate && vatRate > 0) {
+      vatByRateMap.set(vatRate, (vatByRateMap.get(vatRate) ?? 0) + (lineVatAmount ?? 0))
+    }
     lines.push({
       workOrderId: wo.id,
       type: 'training',
@@ -330,11 +416,12 @@ function mapWorkOrderWithLines(
       unit: match?.unit ?? 'T',
       priceListItemId: match?.itemId ?? null,
       unitPriceBase: match?.basePrice ?? null,
-      unitPriceFinal: match ? applyMargin(match.basePrice, costMargin) : null,
-      lineTotalFinal: match ? applyMargin(match.basePrice, costMargin) * 1 : null,
-      vatRate: 0,
-      lineVatAmount: match ? 0 : null,
-      lineTotalInclVat: match ? applyMargin(match.basePrice, costMargin) * 1 : null,
+      unitPriceFinal: unitPrice,
+      lineTotalFinal,
+      vatMarginId: tr.vatMarginId ?? null,
+      vatRate,
+      lineVatAmount,
+      lineTotalInclVat,
       unmatched: !match,
     })
   }

@@ -37,34 +37,34 @@ export type VatMarginSumAggregateOutputType = {
 export type VatMarginMinAggregateOutputType = {
   id: string | null
   vat: number | null
+  countryId: string | null
   createdAt: Date | null
   createdBy: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
-  countryId: string | null
 }
 
 export type VatMarginMaxAggregateOutputType = {
   id: string | null
   vat: number | null
+  countryId: string | null
   createdAt: Date | null
   createdBy: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
-  countryId: string | null
 }
 
 export type VatMarginCountAggregateOutputType = {
   id: number
   vat: number
+  countryId: number
   createdAt: number
   createdBy: number
   deleted: number
   deletedAt: number
   deletedBy: number
-  countryId: number
   _all: number
 }
 
@@ -80,34 +80,34 @@ export type VatMarginSumAggregateInputType = {
 export type VatMarginMinAggregateInputType = {
   id?: true
   vat?: true
+  countryId?: true
   createdAt?: true
   createdBy?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  countryId?: true
 }
 
 export type VatMarginMaxAggregateInputType = {
   id?: true
   vat?: true
+  countryId?: true
   createdAt?: true
   createdBy?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  countryId?: true
 }
 
 export type VatMarginCountAggregateInputType = {
   id?: true
   vat?: true
+  countryId?: true
   createdAt?: true
   createdBy?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  countryId?: true
   _all?: true
 }
 
@@ -200,12 +200,12 @@ export type VatMarginGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type VatMarginGroupByOutputType = {
   id: string
   vat: number
+  countryId: string | null
   createdAt: Date
   createdBy: string
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
-  countryId: string | null
   _count: VatMarginCountAggregateOutputType | null
   _avg: VatMarginAvgAggregateOutputType | null
   _sum: VatMarginSumAggregateOutputType | null
@@ -234,14 +234,15 @@ export type VatMarginWhereInput = {
   NOT?: Prisma.VatMarginWhereInput | Prisma.VatMarginWhereInput[]
   id?: Prisma.StringFilter<"VatMargin"> | string
   vat?: Prisma.FloatFilter<"VatMargin"> | number
+  countryId?: Prisma.StringNullableFilter<"VatMargin"> | string | null
   createdAt?: Prisma.DateTimeFilter<"VatMargin"> | Date | string
   createdBy?: Prisma.StringFilter<"VatMargin"> | string
   deleted?: Prisma.BoolFilter<"VatMargin"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"VatMargin"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"VatMargin"> | string | null
-  countryId?: Prisma.StringNullableFilter<"VatMargin"> | string | null
   InvoiceIn?: Prisma.InvoiceInListRelationFilter
   TimeRegistry?: Prisma.TimeRegistryListRelationFilter
+  Training?: Prisma.TrainingListRelationFilter
   Employee_VatMargin_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_VatMargin_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Country?: Prisma.XOR<Prisma.CountryNullableScalarRelationFilter, Prisma.CountryWhereInput> | null
@@ -251,14 +252,15 @@ export type VatMarginWhereInput = {
 export type VatMarginOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   vat?: Prisma.SortOrder
+  countryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  countryId?: Prisma.SortOrderInput | Prisma.SortOrder
   InvoiceIn?: Prisma.InvoiceInOrderByRelationAggregateInput
   TimeRegistry?: Prisma.TimeRegistryOrderByRelationAggregateInput
+  Training?: Prisma.TrainingOrderByRelationAggregateInput
   Employee_VatMargin_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Country?: Prisma.CountryOrderByWithRelationInput
@@ -272,14 +274,15 @@ export type VatMarginWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.VatMarginWhereInput[]
   NOT?: Prisma.VatMarginWhereInput | Prisma.VatMarginWhereInput[]
   vat?: Prisma.FloatFilter<"VatMargin"> | number
+  countryId?: Prisma.StringNullableFilter<"VatMargin"> | string | null
   createdAt?: Prisma.DateTimeFilter<"VatMargin"> | Date | string
   createdBy?: Prisma.StringFilter<"VatMargin"> | string
   deleted?: Prisma.BoolFilter<"VatMargin"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"VatMargin"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"VatMargin"> | string | null
-  countryId?: Prisma.StringNullableFilter<"VatMargin"> | string | null
   InvoiceIn?: Prisma.InvoiceInListRelationFilter
   TimeRegistry?: Prisma.TimeRegistryListRelationFilter
+  Training?: Prisma.TrainingListRelationFilter
   Employee_VatMargin_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_VatMargin_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Country?: Prisma.XOR<Prisma.CountryNullableScalarRelationFilter, Prisma.CountryWhereInput> | null
@@ -289,12 +292,12 @@ export type VatMarginWhereUniqueInput = Prisma.AtLeast<{
 export type VatMarginOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   vat?: Prisma.SortOrder
+  countryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  countryId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.VatMarginCountOrderByAggregateInput
   _avg?: Prisma.VatMarginAvgOrderByAggregateInput
   _max?: Prisma.VatMarginMaxOrderByAggregateInput
@@ -308,12 +311,12 @@ export type VatMarginScalarWhereWithAggregatesInput = {
   NOT?: Prisma.VatMarginScalarWhereWithAggregatesInput | Prisma.VatMarginScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"VatMargin"> | string
   vat?: Prisma.FloatWithAggregatesFilter<"VatMargin"> | number
+  countryId?: Prisma.StringNullableWithAggregatesFilter<"VatMargin"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"VatMargin"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"VatMargin"> | string
   deleted?: Prisma.BoolWithAggregatesFilter<"VatMargin"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"VatMargin"> | Date | string | null
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"VatMargin"> | string | null
-  countryId?: Prisma.StringNullableWithAggregatesFilter<"VatMargin"> | string | null
 }
 
 export type VatMarginCreateInput = {
@@ -324,6 +327,7 @@ export type VatMarginCreateInput = {
   deletedAt?: Date | string | null
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutVatMarginInput
   TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutVatMarginInput
   Employee_VatMargin_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_createdByToEmployeeInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_deletedByToEmployeeInput
   Country?: Prisma.CountryCreateNestedOneWithoutVatMarginInput
@@ -333,14 +337,15 @@ export type VatMarginCreateInput = {
 export type VatMarginUncheckedCreateInput = {
   id: string
   vat: number
+  countryId?: string | null
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  countryId?: string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutVatMarginInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutVatMarginInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutVatMarginInput
 }
 
@@ -352,6 +357,7 @@ export type VatMarginUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutVatMarginNestedInput
   TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutVatMarginNestedInput
   Employee_VatMargin_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutVatMargin_VatMargin_createdByToEmployeeNestedInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutVatMargin_VatMargin_deletedByToEmployeeNestedInput
   Country?: Prisma.CountryUpdateOneWithoutVatMarginNestedInput
@@ -361,26 +367,27 @@ export type VatMarginUpdateInput = {
 export type VatMarginUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutVatMarginNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutVatMarginNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutVatMarginNestedInput
 }
 
 export type VatMarginCreateManyInput = {
   id: string
   vat: number
+  countryId?: string | null
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  countryId?: string | null
 }
 
 export type VatMarginUpdateManyMutationInput = {
@@ -394,12 +401,12 @@ export type VatMarginUpdateManyMutationInput = {
 export type VatMarginUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VatMarginListRelationFilter = {
@@ -431,12 +438,12 @@ export type VatMarginOrderByRelevanceInput = {
 export type VatMarginCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   vat?: Prisma.SortOrder
+  countryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  countryId?: Prisma.SortOrder
 }
 
 export type VatMarginAvgOrderByAggregateInput = {
@@ -446,23 +453,23 @@ export type VatMarginAvgOrderByAggregateInput = {
 export type VatMarginMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   vat?: Prisma.SortOrder
+  countryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  countryId?: Prisma.SortOrder
 }
 
 export type VatMarginMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   vat?: Prisma.SortOrder
+  countryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  countryId?: Prisma.SortOrder
 }
 
 export type VatMarginSumOrderByAggregateInput = {
@@ -583,6 +590,22 @@ export type VatMarginUpdateOneWithoutTimeRegistryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.VatMarginUpdateToOneWithWhereWithoutTimeRegistryInput, Prisma.VatMarginUpdateWithoutTimeRegistryInput>, Prisma.VatMarginUncheckedUpdateWithoutTimeRegistryInput>
 }
 
+export type VatMarginCreateNestedOneWithoutTrainingInput = {
+  create?: Prisma.XOR<Prisma.VatMarginCreateWithoutTrainingInput, Prisma.VatMarginUncheckedCreateWithoutTrainingInput>
+  connectOrCreate?: Prisma.VatMarginCreateOrConnectWithoutTrainingInput
+  connect?: Prisma.VatMarginWhereUniqueInput
+}
+
+export type VatMarginUpdateOneWithoutTrainingNestedInput = {
+  create?: Prisma.XOR<Prisma.VatMarginCreateWithoutTrainingInput, Prisma.VatMarginUncheckedCreateWithoutTrainingInput>
+  connectOrCreate?: Prisma.VatMarginCreateOrConnectWithoutTrainingInput
+  upsert?: Prisma.VatMarginUpsertWithoutTrainingInput
+  disconnect?: Prisma.VatMarginWhereInput | boolean
+  delete?: Prisma.VatMarginWhereInput | boolean
+  connect?: Prisma.VatMarginWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.VatMarginUpdateToOneWithWhereWithoutTrainingInput, Prisma.VatMarginUpdateWithoutTrainingInput>, Prisma.VatMarginUncheckedUpdateWithoutTrainingInput>
+}
+
 export type VatMarginCreateNestedOneWithoutWorkOrderStructureInput = {
   create?: Prisma.XOR<Prisma.VatMarginCreateWithoutWorkOrderStructureInput, Prisma.VatMarginUncheckedCreateWithoutWorkOrderStructureInput>
   connectOrCreate?: Prisma.VatMarginCreateOrConnectWithoutWorkOrderStructureInput
@@ -657,6 +680,7 @@ export type VatMarginCreateWithoutEmployee_VatMargin_createdByToEmployeeInput = 
   deletedAt?: Date | string | null
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutVatMarginInput
   TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutVatMarginInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_deletedByToEmployeeInput
   Country?: Prisma.CountryCreateNestedOneWithoutVatMarginInput
   WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutVatMarginInput
@@ -665,13 +689,14 @@ export type VatMarginCreateWithoutEmployee_VatMargin_createdByToEmployeeInput = 
 export type VatMarginUncheckedCreateWithoutEmployee_VatMargin_createdByToEmployeeInput = {
   id: string
   vat: number
+  countryId?: string | null
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  countryId?: string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutVatMarginInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutVatMarginInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutVatMarginInput
 }
 
@@ -693,6 +718,7 @@ export type VatMarginCreateWithoutEmployee_VatMargin_deletedByToEmployeeInput = 
   deletedAt?: Date | string | null
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutVatMarginInput
   TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutVatMarginInput
   Employee_VatMargin_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_createdByToEmployeeInput
   Country?: Prisma.CountryCreateNestedOneWithoutVatMarginInput
   WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutVatMarginInput
@@ -701,13 +727,14 @@ export type VatMarginCreateWithoutEmployee_VatMargin_deletedByToEmployeeInput = 
 export type VatMarginUncheckedCreateWithoutEmployee_VatMargin_deletedByToEmployeeInput = {
   id: string
   vat: number
+  countryId?: string | null
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
-  countryId?: string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutVatMarginInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutVatMarginInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutVatMarginInput
 }
 
@@ -743,12 +770,12 @@ export type VatMarginScalarWhereInput = {
   NOT?: Prisma.VatMarginScalarWhereInput | Prisma.VatMarginScalarWhereInput[]
   id?: Prisma.StringFilter<"VatMargin"> | string
   vat?: Prisma.FloatFilter<"VatMargin"> | number
+  countryId?: Prisma.StringNullableFilter<"VatMargin"> | string | null
   createdAt?: Prisma.DateTimeFilter<"VatMargin"> | Date | string
   createdBy?: Prisma.StringFilter<"VatMargin"> | string
   deleted?: Prisma.BoolFilter<"VatMargin"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"VatMargin"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"VatMargin"> | string | null
-  countryId?: Prisma.StringNullableFilter<"VatMargin"> | string | null
 }
 
 export type VatMarginUpsertWithWhereUniqueWithoutEmployee_VatMargin_deletedByToEmployeeInput = {
@@ -774,6 +801,7 @@ export type VatMarginCreateWithoutInvoiceInInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutVatMarginInput
   Employee_VatMargin_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_createdByToEmployeeInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_deletedByToEmployeeInput
   Country?: Prisma.CountryCreateNestedOneWithoutVatMarginInput
@@ -783,13 +811,14 @@ export type VatMarginCreateWithoutInvoiceInInput = {
 export type VatMarginUncheckedCreateWithoutInvoiceInInput = {
   id: string
   vat: number
+  countryId?: string | null
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  countryId?: string | null
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutVatMarginInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutVatMarginInput
 }
 
@@ -816,6 +845,7 @@ export type VatMarginUpdateWithoutInvoiceInInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutVatMarginNestedInput
   Employee_VatMargin_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutVatMargin_VatMargin_createdByToEmployeeNestedInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutVatMargin_VatMargin_deletedByToEmployeeNestedInput
   Country?: Prisma.CountryUpdateOneWithoutVatMarginNestedInput
@@ -825,13 +855,14 @@ export type VatMarginUpdateWithoutInvoiceInInput = {
 export type VatMarginUncheckedUpdateWithoutInvoiceInInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutVatMarginNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutVatMarginNestedInput
 }
 
@@ -842,6 +873,7 @@ export type VatMarginCreateWithoutTimeRegistryInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutVatMarginInput
   Employee_VatMargin_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_createdByToEmployeeInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_deletedByToEmployeeInput
   Country?: Prisma.CountryCreateNestedOneWithoutVatMarginInput
@@ -851,13 +883,14 @@ export type VatMarginCreateWithoutTimeRegistryInput = {
 export type VatMarginUncheckedCreateWithoutTimeRegistryInput = {
   id: string
   vat: number
+  countryId?: string | null
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  countryId?: string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutVatMarginInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutVatMarginInput
 }
 
@@ -884,6 +917,7 @@ export type VatMarginUpdateWithoutTimeRegistryInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutVatMarginNestedInput
   Employee_VatMargin_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutVatMargin_VatMargin_createdByToEmployeeNestedInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutVatMargin_VatMargin_deletedByToEmployeeNestedInput
   Country?: Prisma.CountryUpdateOneWithoutVatMarginNestedInput
@@ -893,13 +927,86 @@ export type VatMarginUpdateWithoutTimeRegistryInput = {
 export type VatMarginUncheckedUpdateWithoutTimeRegistryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutVatMarginNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutVatMarginNestedInput
+}
+
+export type VatMarginCreateWithoutTrainingInput = {
+  id: string
+  vat: number
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutVatMarginInput
+  TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutVatMarginInput
+  Employee_VatMargin_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_createdByToEmployeeInput
+  Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_deletedByToEmployeeInput
+  Country?: Prisma.CountryCreateNestedOneWithoutVatMarginInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutVatMarginInput
+}
+
+export type VatMarginUncheckedCreateWithoutTrainingInput = {
+  id: string
+  vat: number
+  countryId?: string | null
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutVatMarginInput
+  TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutVatMarginInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutVatMarginInput
+}
+
+export type VatMarginCreateOrConnectWithoutTrainingInput = {
+  where: Prisma.VatMarginWhereUniqueInput
+  create: Prisma.XOR<Prisma.VatMarginCreateWithoutTrainingInput, Prisma.VatMarginUncheckedCreateWithoutTrainingInput>
+}
+
+export type VatMarginUpsertWithoutTrainingInput = {
+  update: Prisma.XOR<Prisma.VatMarginUpdateWithoutTrainingInput, Prisma.VatMarginUncheckedUpdateWithoutTrainingInput>
+  create: Prisma.XOR<Prisma.VatMarginCreateWithoutTrainingInput, Prisma.VatMarginUncheckedCreateWithoutTrainingInput>
+  where?: Prisma.VatMarginWhereInput
+}
+
+export type VatMarginUpdateToOneWithWhereWithoutTrainingInput = {
+  where?: Prisma.VatMarginWhereInput
+  data: Prisma.XOR<Prisma.VatMarginUpdateWithoutTrainingInput, Prisma.VatMarginUncheckedUpdateWithoutTrainingInput>
+}
+
+export type VatMarginUpdateWithoutTrainingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutVatMarginNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutVatMarginNestedInput
+  Employee_VatMargin_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutVatMargin_VatMargin_createdByToEmployeeNestedInput
+  Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutVatMargin_VatMargin_deletedByToEmployeeNestedInput
+  Country?: Prisma.CountryUpdateOneWithoutVatMarginNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutVatMarginNestedInput
+}
+
+export type VatMarginUncheckedUpdateWithoutTrainingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutVatMarginNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutVatMarginNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutVatMarginNestedInput
 }
 
@@ -911,6 +1018,7 @@ export type VatMarginCreateWithoutWorkOrderStructureInput = {
   deletedAt?: Date | string | null
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutVatMarginInput
   TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutVatMarginInput
   Employee_VatMargin_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_createdByToEmployeeInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_deletedByToEmployeeInput
   Country?: Prisma.CountryCreateNestedOneWithoutVatMarginInput
@@ -919,14 +1027,15 @@ export type VatMarginCreateWithoutWorkOrderStructureInput = {
 export type VatMarginUncheckedCreateWithoutWorkOrderStructureInput = {
   id: string
   vat: number
+  countryId?: string | null
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  countryId?: string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutVatMarginInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutVatMarginInput
 }
 
 export type VatMarginCreateOrConnectWithoutWorkOrderStructureInput = {
@@ -953,6 +1062,7 @@ export type VatMarginUpdateWithoutWorkOrderStructureInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutVatMarginNestedInput
   TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutVatMarginNestedInput
   Employee_VatMargin_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutVatMargin_VatMargin_createdByToEmployeeNestedInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutVatMargin_VatMargin_deletedByToEmployeeNestedInput
   Country?: Prisma.CountryUpdateOneWithoutVatMarginNestedInput
@@ -961,14 +1071,15 @@ export type VatMarginUpdateWithoutWorkOrderStructureInput = {
 export type VatMarginUncheckedUpdateWithoutWorkOrderStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutVatMarginNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutVatMarginNestedInput
 }
 
 export type VatMarginCreateWithoutCountryInput = {
@@ -979,6 +1090,7 @@ export type VatMarginCreateWithoutCountryInput = {
   deletedAt?: Date | string | null
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutVatMarginInput
   TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutVatMarginInput
   Employee_VatMargin_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_createdByToEmployeeInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutVatMargin_VatMargin_deletedByToEmployeeInput
   WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutVatMarginInput
@@ -994,6 +1106,7 @@ export type VatMarginUncheckedCreateWithoutCountryInput = {
   deletedBy?: string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutVatMarginInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutVatMarginInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutVatMarginInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutVatMarginInput
 }
 
@@ -1026,21 +1139,21 @@ export type VatMarginUpdateManyWithWhereWithoutCountryInput = {
 export type VatMarginCreateManyEmployee_VatMargin_createdByToEmployeeInput = {
   id: string
   vat: number
+  countryId?: string | null
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  countryId?: string | null
 }
 
 export type VatMarginCreateManyEmployee_VatMargin_deletedByToEmployeeInput = {
   id: string
   vat: number
+  countryId?: string | null
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
-  countryId?: string | null
 }
 
 export type VatMarginUpdateWithoutEmployee_VatMargin_createdByToEmployeeInput = {
@@ -1051,6 +1164,7 @@ export type VatMarginUpdateWithoutEmployee_VatMargin_createdByToEmployeeInput = 
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutVatMarginNestedInput
   TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutVatMarginNestedInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutVatMargin_VatMargin_deletedByToEmployeeNestedInput
   Country?: Prisma.CountryUpdateOneWithoutVatMarginNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutVatMarginNestedInput
@@ -1059,24 +1173,25 @@ export type VatMarginUpdateWithoutEmployee_VatMargin_createdByToEmployeeInput = 
 export type VatMarginUncheckedUpdateWithoutEmployee_VatMargin_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutVatMarginNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutVatMarginNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutVatMarginNestedInput
 }
 
 export type VatMarginUncheckedUpdateManyWithoutEmployee_VatMargin_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VatMarginUpdateWithoutEmployee_VatMargin_deletedByToEmployeeInput = {
@@ -1087,6 +1202,7 @@ export type VatMarginUpdateWithoutEmployee_VatMargin_deletedByToEmployeeInput = 
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutVatMarginNestedInput
   TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutVatMarginNestedInput
   Employee_VatMargin_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutVatMargin_VatMargin_createdByToEmployeeNestedInput
   Country?: Prisma.CountryUpdateOneWithoutVatMarginNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutVatMarginNestedInput
@@ -1095,24 +1211,25 @@ export type VatMarginUpdateWithoutEmployee_VatMargin_deletedByToEmployeeInput = 
 export type VatMarginUncheckedUpdateWithoutEmployee_VatMargin_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutVatMarginNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutVatMarginNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutVatMarginNestedInput
 }
 
 export type VatMarginUncheckedUpdateManyWithoutEmployee_VatMargin_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vat?: Prisma.FloatFieldUpdateOperationsInput | number
+  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  countryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VatMarginCreateManyCountryInput = {
@@ -1133,6 +1250,7 @@ export type VatMarginUpdateWithoutCountryInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutVatMarginNestedInput
   TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutVatMarginNestedInput
   Employee_VatMargin_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutVatMargin_VatMargin_createdByToEmployeeNestedInput
   Employee_VatMargin_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutVatMargin_VatMargin_deletedByToEmployeeNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutVatMarginNestedInput
@@ -1148,6 +1266,7 @@ export type VatMarginUncheckedUpdateWithoutCountryInput = {
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutVatMarginNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutVatMarginNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutVatMarginNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutVatMarginNestedInput
 }
 
@@ -1169,12 +1288,14 @@ export type VatMarginUncheckedUpdateManyWithoutCountryInput = {
 export type VatMarginCountOutputType = {
   InvoiceIn: number
   TimeRegistry: number
+  Training: number
   WorkOrderStructure: number
 }
 
 export type VatMarginCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   InvoiceIn?: boolean | VatMarginCountOutputTypeCountInvoiceInArgs
   TimeRegistry?: boolean | VatMarginCountOutputTypeCountTimeRegistryArgs
+  Training?: boolean | VatMarginCountOutputTypeCountTrainingArgs
   WorkOrderStructure?: boolean | VatMarginCountOutputTypeCountWorkOrderStructureArgs
 }
 
@@ -1205,6 +1326,13 @@ export type VatMarginCountOutputTypeCountTimeRegistryArgs<ExtArgs extends runtim
 /**
  * VatMarginCountOutputType without action
  */
+export type VatMarginCountOutputTypeCountTrainingArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TrainingWhereInput
+}
+
+/**
+ * VatMarginCountOutputType without action
+ */
 export type VatMarginCountOutputTypeCountWorkOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.WorkOrderStructureWhereInput
 }
@@ -1213,14 +1341,15 @@ export type VatMarginCountOutputTypeCountWorkOrderStructureArgs<ExtArgs extends 
 export type VatMarginSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   vat?: boolean
+  countryId?: boolean
   createdAt?: boolean
   createdBy?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  countryId?: boolean
   InvoiceIn?: boolean | Prisma.VatMargin$InvoiceInArgs<ExtArgs>
   TimeRegistry?: boolean | Prisma.VatMargin$TimeRegistryArgs<ExtArgs>
+  Training?: boolean | Prisma.VatMargin$TrainingArgs<ExtArgs>
   Employee_VatMargin_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_VatMargin_deletedByToEmployee?: boolean | Prisma.VatMargin$Employee_VatMargin_deletedByToEmployeeArgs<ExtArgs>
   Country?: boolean | Prisma.VatMargin$CountryArgs<ExtArgs>
@@ -1233,18 +1362,19 @@ export type VatMarginSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type VatMarginSelectScalar = {
   id?: boolean
   vat?: boolean
+  countryId?: boolean
   createdAt?: boolean
   createdBy?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  countryId?: boolean
 }
 
-export type VatMarginOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vat" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy" | "countryId", ExtArgs["result"]["vatMargin"]>
+export type VatMarginOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vat" | "countryId" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["vatMargin"]>
 export type VatMarginInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   InvoiceIn?: boolean | Prisma.VatMargin$InvoiceInArgs<ExtArgs>
   TimeRegistry?: boolean | Prisma.VatMargin$TimeRegistryArgs<ExtArgs>
+  Training?: boolean | Prisma.VatMargin$TrainingArgs<ExtArgs>
   Employee_VatMargin_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_VatMargin_deletedByToEmployee?: boolean | Prisma.VatMargin$Employee_VatMargin_deletedByToEmployeeArgs<ExtArgs>
   Country?: boolean | Prisma.VatMargin$CountryArgs<ExtArgs>
@@ -1257,6 +1387,7 @@ export type $VatMarginPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     InvoiceIn: Prisma.$InvoiceInPayload<ExtArgs>[]
     TimeRegistry: Prisma.$TimeRegistryPayload<ExtArgs>[]
+    Training: Prisma.$TrainingPayload<ExtArgs>[]
     Employee_VatMargin_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_VatMargin_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Country: Prisma.$CountryPayload<ExtArgs> | null
@@ -1265,12 +1396,12 @@ export type $VatMarginPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     vat: number
+    countryId: string | null
     createdAt: Date
     createdBy: string
     deleted: boolean
     deletedAt: Date | null
     deletedBy: string | null
-    countryId: string | null
   }, ExtArgs["result"]["vatMargin"]>
   composites: {}
 }
@@ -1613,6 +1744,7 @@ export interface Prisma__VatMarginClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   InvoiceIn<T extends Prisma.VatMargin$InvoiceInArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VatMargin$InvoiceInArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   TimeRegistry<T extends Prisma.VatMargin$TimeRegistryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VatMargin$TimeRegistryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeRegistryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Training<T extends Prisma.VatMargin$TrainingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VatMargin$TrainingArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee_VatMargin_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_VatMargin_deletedByToEmployee<T extends Prisma.VatMargin$Employee_VatMargin_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VatMargin$Employee_VatMargin_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Country<T extends Prisma.VatMargin$CountryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VatMargin$CountryArgs<ExtArgs>>): Prisma.Prisma__CountryClient<runtime.Types.Result.GetResult<Prisma.$CountryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -1648,12 +1780,12 @@ export interface Prisma__VatMarginClient<T, Null = never, ExtArgs extends runtim
 export interface VatMarginFieldRefs {
   readonly id: Prisma.FieldRef<"VatMargin", 'String'>
   readonly vat: Prisma.FieldRef<"VatMargin", 'Float'>
+  readonly countryId: Prisma.FieldRef<"VatMargin", 'String'>
   readonly createdAt: Prisma.FieldRef<"VatMargin", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"VatMargin", 'String'>
   readonly deleted: Prisma.FieldRef<"VatMargin", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"VatMargin", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"VatMargin", 'String'>
-  readonly countryId: Prisma.FieldRef<"VatMargin", 'String'>
 }
     
 
@@ -2042,6 +2174,30 @@ export type VatMargin$TimeRegistryArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.TimeRegistryScalarFieldEnum | Prisma.TimeRegistryScalarFieldEnum[]
+}
+
+/**
+ * VatMargin.Training
+ */
+export type VatMargin$TrainingArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Training
+   */
+  select?: Prisma.TrainingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Training
+   */
+  omit?: Prisma.TrainingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TrainingInclude<ExtArgs> | null
+  where?: Prisma.TrainingWhereInput
+  orderBy?: Prisma.TrainingOrderByWithRelationInput | Prisma.TrainingOrderByWithRelationInput[]
+  cursor?: Prisma.TrainingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TrainingScalarFieldEnum | Prisma.TrainingScalarFieldEnum[]
 }
 
 /**

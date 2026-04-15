@@ -47,10 +47,10 @@ export type WorkOrderStructureMinAggregateOutputType = {
   workOrderId: string | null
   materialId: string | null
   targetId: string | null
+  vatMarginId: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
-  vatMarginId: string | null
 }
 
 export type WorkOrderStructureMaxAggregateOutputType = {
@@ -66,10 +66,10 @@ export type WorkOrderStructureMaxAggregateOutputType = {
   workOrderId: string | null
   materialId: string | null
   targetId: string | null
+  vatMarginId: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
-  vatMarginId: string | null
 }
 
 export type WorkOrderStructureCountAggregateOutputType = {
@@ -85,10 +85,10 @@ export type WorkOrderStructureCountAggregateOutputType = {
   workOrderId: number
   materialId: number
   targetId: number
+  vatMarginId: number
   deleted: number
   deletedAt: number
   deletedBy: number
-  vatMarginId: number
   _all: number
 }
 
@@ -114,10 +114,10 @@ export type WorkOrderStructureMinAggregateInputType = {
   workOrderId?: true
   materialId?: true
   targetId?: true
+  vatMarginId?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  vatMarginId?: true
 }
 
 export type WorkOrderStructureMaxAggregateInputType = {
@@ -133,10 +133,10 @@ export type WorkOrderStructureMaxAggregateInputType = {
   workOrderId?: true
   materialId?: true
   targetId?: true
+  vatMarginId?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  vatMarginId?: true
 }
 
 export type WorkOrderStructureCountAggregateInputType = {
@@ -152,10 +152,10 @@ export type WorkOrderStructureCountAggregateInputType = {
   workOrderId?: true
   materialId?: true
   targetId?: true
+  vatMarginId?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  vatMarginId?: true
   _all?: true
 }
 
@@ -258,10 +258,10 @@ export type WorkOrderStructureGroupByOutputType = {
   workOrderId: string
   materialId: string
   targetId: string
+  vatMarginId: string | null
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
-  vatMarginId: string | null
   _count: WorkOrderStructureCountAggregateOutputType | null
   _avg: WorkOrderStructureAvgAggregateOutputType | null
   _sum: WorkOrderStructureSumAggregateOutputType | null
@@ -300,10 +300,10 @@ export type WorkOrderStructureWhereInput = {
   workOrderId?: Prisma.StringFilter<"WorkOrderStructure"> | string
   materialId?: Prisma.StringFilter<"WorkOrderStructure"> | string
   targetId?: Prisma.StringFilter<"WorkOrderStructure"> | string
+  vatMarginId?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   deleted?: Prisma.BoolFilter<"WorkOrderStructure"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"WorkOrderStructure"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
-  vatMarginId?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpListRelationFilter
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -326,10 +326,10 @@ export type WorkOrderStructureOrderByWithRelationInput = {
   workOrderId?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpOrderByRelationAggregateInput
   WorkOrder?: Prisma.WorkOrderOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
@@ -356,10 +356,10 @@ export type WorkOrderStructureWhereUniqueInput = Prisma.AtLeast<{
   workOrderId?: Prisma.StringFilter<"WorkOrderStructure"> | string
   materialId?: Prisma.StringFilter<"WorkOrderStructure"> | string
   targetId?: Prisma.StringFilter<"WorkOrderStructure"> | string
+  vatMarginId?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   deleted?: Prisma.BoolFilter<"WorkOrderStructure"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"WorkOrderStructure"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
-  vatMarginId?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpListRelationFilter
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -382,10 +382,10 @@ export type WorkOrderStructureOrderByWithAggregationInput = {
   workOrderId?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.WorkOrderStructureCountOrderByAggregateInput
   _avg?: Prisma.WorkOrderStructureAvgOrderByAggregateInput
   _max?: Prisma.WorkOrderStructureMaxOrderByAggregateInput
@@ -409,10 +409,10 @@ export type WorkOrderStructureScalarWhereWithAggregatesInput = {
   workOrderId?: Prisma.StringWithAggregatesFilter<"WorkOrderStructure"> | string
   materialId?: Prisma.StringWithAggregatesFilter<"WorkOrderStructure"> | string
   targetId?: Prisma.StringWithAggregatesFilter<"WorkOrderStructure"> | string
+  vatMarginId?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderStructure"> | string | null
   deleted?: Prisma.BoolWithAggregatesFilter<"WorkOrderStructure"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"WorkOrderStructure"> | Date | string | null
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderStructure"> | string | null
-  vatMarginId?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderStructure"> | string | null
 }
 
 export type WorkOrderStructureCreateInput = {
@@ -448,10 +448,10 @@ export type WorkOrderStructureUncheckedCreateInput = {
   workOrderId: string
   materialId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutWorkOrderStructureInput
 }
 
@@ -488,10 +488,10 @@ export type WorkOrderStructureUncheckedUpdateInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutWorkOrderStructureNestedInput
 }
 
@@ -508,10 +508,10 @@ export type WorkOrderStructureCreateManyInput = {
   workOrderId: string
   materialId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type WorkOrderStructureUpdateManyMutationInput = {
@@ -540,10 +540,10 @@ export type WorkOrderStructureUncheckedUpdateManyInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WorkOrderStructureListRelationFilter = {
@@ -580,10 +580,10 @@ export type WorkOrderStructureCountOrderByAggregateInput = {
   workOrderId?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  vatMarginId?: Prisma.SortOrder
 }
 
 export type WorkOrderStructureAvgOrderByAggregateInput = {
@@ -603,10 +603,10 @@ export type WorkOrderStructureMaxOrderByAggregateInput = {
   workOrderId?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  vatMarginId?: Prisma.SortOrder
 }
 
 export type WorkOrderStructureMinOrderByAggregateInput = {
@@ -622,10 +622,10 @@ export type WorkOrderStructureMinOrderByAggregateInput = {
   workOrderId?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  vatMarginId?: Prisma.SortOrder
 }
 
 export type WorkOrderStructureSumOrderByAggregateInput = {
@@ -929,10 +929,10 @@ export type WorkOrderStructureUncheckedCreateWithoutEmployeeInput = {
   workOrderId: string
   materialId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutWorkOrderStructureInput
 }
 
@@ -978,9 +978,9 @@ export type WorkOrderStructureUncheckedCreateWithoutEmployee_WorkOrderStructure_
   workOrderId: string
   materialId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  vatMarginId?: string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutWorkOrderStructureInput
 }
 
@@ -1026,10 +1026,10 @@ export type WorkOrderStructureScalarWhereInput = {
   workOrderId?: Prisma.StringFilter<"WorkOrderStructure"> | string
   materialId?: Prisma.StringFilter<"WorkOrderStructure"> | string
   targetId?: Prisma.StringFilter<"WorkOrderStructure"> | string
+  vatMarginId?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   deleted?: Prisma.BoolFilter<"WorkOrderStructure"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"WorkOrderStructure"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
-  vatMarginId?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
 }
 
 export type WorkOrderStructureUpsertWithWhereUniqueWithoutEmployee_WorkOrderStructure_deletedByToEmployeeInput = {
@@ -1079,10 +1079,10 @@ export type WorkOrderStructureUncheckedCreateWithoutMaterialInput = {
   createdBy: string
   workOrderId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutWorkOrderStructureInput
 }
 
@@ -1144,10 +1144,10 @@ export type WorkOrderStructureUncheckedCreateWithoutSupplierDeliveryNoteFollowUp
   workOrderId: string
   materialId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type WorkOrderStructureCreateOrConnectWithoutSupplierDeliveryNoteFollowUpInput = {
@@ -1198,10 +1198,10 @@ export type WorkOrderStructureUncheckedUpdateWithoutSupplierDeliveryNoteFollowUp
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WorkOrderStructureCreateWithoutTargetInput = {
@@ -1235,10 +1235,10 @@ export type WorkOrderStructureUncheckedCreateWithoutTargetInput = {
   createdBy: string
   workOrderId: string
   materialId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutWorkOrderStructureInput
 }
 
@@ -1299,10 +1299,10 @@ export type WorkOrderStructureUncheckedCreateWithoutWorkOrderInput = {
   createdBy: string
   materialId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutWorkOrderStructureInput
 }
 
@@ -1408,10 +1408,10 @@ export type WorkOrderStructureCreateManyEmployeeInput = {
   workOrderId: string
   materialId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type WorkOrderStructureCreateManyEmployee_WorkOrderStructure_deletedByToEmployeeInput = {
@@ -1427,9 +1427,9 @@ export type WorkOrderStructureCreateManyEmployee_WorkOrderStructure_deletedByToE
   workOrderId: string
   materialId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  vatMarginId?: string | null
 }
 
 export type WorkOrderStructureUpdateWithoutEmployeeInput = {
@@ -1463,10 +1463,10 @@ export type WorkOrderStructureUncheckedUpdateWithoutEmployeeInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutWorkOrderStructureNestedInput
 }
 
@@ -1482,10 +1482,10 @@ export type WorkOrderStructureUncheckedUpdateManyWithoutEmployeeInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WorkOrderStructureUpdateWithoutEmployee_WorkOrderStructure_deletedByToEmployeeInput = {
@@ -1520,9 +1520,9 @@ export type WorkOrderStructureUncheckedUpdateWithoutEmployee_WorkOrderStructure_
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutWorkOrderStructureNestedInput
 }
 
@@ -1539,9 +1539,9 @@ export type WorkOrderStructureUncheckedUpdateManyWithoutEmployee_WorkOrderStruct
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WorkOrderStructureCreateManyMaterialInput = {
@@ -1556,10 +1556,10 @@ export type WorkOrderStructureCreateManyMaterialInput = {
   createdBy: string
   workOrderId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type WorkOrderStructureUpdateWithoutMaterialInput = {
@@ -1593,10 +1593,10 @@ export type WorkOrderStructureUncheckedUpdateWithoutMaterialInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutWorkOrderStructureNestedInput
 }
 
@@ -1612,10 +1612,10 @@ export type WorkOrderStructureUncheckedUpdateManyWithoutMaterialInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WorkOrderStructureCreateManyTargetInput = {
@@ -1630,10 +1630,10 @@ export type WorkOrderStructureCreateManyTargetInput = {
   createdBy: string
   workOrderId: string
   materialId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type WorkOrderStructureUpdateWithoutTargetInput = {
@@ -1667,10 +1667,10 @@ export type WorkOrderStructureUncheckedUpdateWithoutTargetInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutWorkOrderStructureNestedInput
 }
 
@@ -1686,10 +1686,10 @@ export type WorkOrderStructureUncheckedUpdateManyWithoutTargetInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WorkOrderStructureCreateManyWorkOrderInput = {
@@ -1704,10 +1704,10 @@ export type WorkOrderStructureCreateManyWorkOrderInput = {
   createdBy: string
   materialId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type WorkOrderStructureUpdateWithoutWorkOrderInput = {
@@ -1741,10 +1741,10 @@ export type WorkOrderStructureUncheckedUpdateWithoutWorkOrderInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   SupplierDeliveryNoteFollowUp?: Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutWorkOrderStructureNestedInput
 }
 
@@ -1760,10 +1760,10 @@ export type WorkOrderStructureUncheckedUpdateManyWithoutWorkOrderInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WorkOrderStructureCreateManyVatMarginInput = {
@@ -1884,10 +1884,10 @@ export type WorkOrderStructureSelect<ExtArgs extends runtime.Types.Extensions.In
   workOrderId?: boolean
   materialId?: boolean
   targetId?: boolean
+  vatMarginId?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  vatMarginId?: boolean
   SupplierDeliveryNoteFollowUp?: boolean | Prisma.WorkOrderStructure$SupplierDeliveryNoteFollowUpArgs<ExtArgs>
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -1913,13 +1913,13 @@ export type WorkOrderStructureSelectScalar = {
   workOrderId?: boolean
   materialId?: boolean
   targetId?: boolean
+  vatMarginId?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  vatMarginId?: boolean
 }
 
-export type WorkOrderStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientNumber" | "tag" | "quantity" | "additionalInfo" | "shortDescription" | "longDescription" | "createdAt" | "createdBy" | "workOrderId" | "materialId" | "targetId" | "deleted" | "deletedAt" | "deletedBy" | "vatMarginId", ExtArgs["result"]["workOrderStructure"]>
+export type WorkOrderStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientNumber" | "tag" | "quantity" | "additionalInfo" | "shortDescription" | "longDescription" | "createdAt" | "createdBy" | "workOrderId" | "materialId" | "targetId" | "vatMarginId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["workOrderStructure"]>
 export type WorkOrderStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   SupplierDeliveryNoteFollowUp?: boolean | Prisma.WorkOrderStructure$SupplierDeliveryNoteFollowUpArgs<ExtArgs>
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
@@ -1955,10 +1955,10 @@ export type $WorkOrderStructurePayload<ExtArgs extends runtime.Types.Extensions.
     workOrderId: string
     materialId: string
     targetId: string
+    vatMarginId: string | null
     deleted: boolean
     deletedAt: Date | null
     deletedBy: string | null
-    vatMarginId: string | null
   }, ExtArgs["result"]["workOrderStructure"]>
   composites: {}
 }
@@ -2347,10 +2347,10 @@ export interface WorkOrderStructureFieldRefs {
   readonly workOrderId: Prisma.FieldRef<"WorkOrderStructure", 'String'>
   readonly materialId: Prisma.FieldRef<"WorkOrderStructure", 'String'>
   readonly targetId: Prisma.FieldRef<"WorkOrderStructure", 'String'>
+  readonly vatMarginId: Prisma.FieldRef<"WorkOrderStructure", 'String'>
   readonly deleted: Prisma.FieldRef<"WorkOrderStructure", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"WorkOrderStructure", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"WorkOrderStructure", 'String'>
-  readonly vatMarginId: Prisma.FieldRef<"WorkOrderStructure", 'String'>
 }
     
 

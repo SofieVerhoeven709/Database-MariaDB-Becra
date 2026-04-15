@@ -73,7 +73,9 @@ const invoiceOutInclude = {
               startBreak: true,
               endBreak: true,
               hourTypeId: true,
+              vatMarginId: true,
               HourType: {select: {id: true, name: true, targetId: true}},
+              VatMargin: {select: {id: true, vat: true}},
               TimeRegistryEmployee: {select: {id: true, employeeId: true}},
             },
           },
@@ -109,6 +111,8 @@ const invoiceOutInclude = {
               id: true,
               trainingNumber: true,
               targetId: true,
+              vatMarginId: true,
+              VatMargin: {select: {id: true, vat: true}},
               TrainingStandard: {
                 select: {
                   id: true,

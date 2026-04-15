@@ -536,3 +536,38 @@ export const updateWorkOrderStructureVatAction = protectedServerFunction({
     revalidatePath('/invoicesIn')
   },
 })
+
+export const updateTimeRegistryVatMarginAction = protectedServerFunction({
+  schema: z.object({
+    timeRegistryIds: z.array(z.string()).min(1),
+    vatMarginId: z.string().nullable(),
+  }),
+  functionName: 'Update time registry VAT',
+  serverFn: async ({data: {timeRegistryIds, vatMarginId}, logger}) => {
+    await prismaClient.timeRegistry.updateMany({
+      where: {id: {in: timeRegistryIds}},
+      data: {vatMarginId},
+    })
+    logger.info(`Time registry VAT updated: ${timeRegistryIds.length} record(s) -> ${vatMarginId}`)
+    revalidatePath('/invoicesOut')
+    revalidatePath('/invoicesIn')
+  },
+})
+
+export const updateTrainingVatMarginAction = protectedServerFunction({
+  schema: z.object({
+    trainingId: z.string(),
+    vatMarginId: z.string().nullable(),
+  }),
+  functionName: 'Update training VAT',
+  serverFn: async ({data: {trainingId, vatMarginId}, logger}) => {
+    await prismaClient.training.update({
+      where: {id: trainingId},
+      data: {vatMarginId},
+    })
+    logger.info(`Training VAT updated: ${trainingId} -> ${vatMarginId}`)
+    revalidatePath('/invoicesOut')
+    revalidatePath('/invoicesIn')
+  },
+})
+

@@ -203,7 +203,6 @@ const TARGET_TYPE_LABELS: Record<LinkableTargetType, string> = {
   HourType: 'Hour Type',
   Material: 'Material',
   Training: 'Training',
-  TrainingStandard: 'Training Standard',
 }
 
 interface LinkDialogProps {
@@ -734,7 +733,7 @@ export function PriceListDetail({priceList, currentUserLevel, currentUserRole, d
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-6 text-xs text-muted-foreground hover:text-accent hover:bg-accent/10 px-2 gap-1"
+                            className="h-6 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary"
                             onClick={() => openLinkDialog(item)}>
                             <Plus className="h-3 w-3" /> Link
                           </Button>

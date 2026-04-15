@@ -794,6 +794,7 @@ CREATE TABLE
     workOrderId CHAR(36) NOT NULL,
     trainingStandardId CHAR(36) NOT NULL,
     targetId CHAR(36) NOT NULL,
+    vatMarginId CHAR(36) NULL,
     FOREIGN KEY (workOrderId) REFERENCES WorkOrder (id) ON DELETE RESTRICT,
     FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
     FOREIGN KEY (trainingStandardId) REFERENCES TrainingStandard (id) ON DELETE RESTRICT,
@@ -802,6 +803,7 @@ CREATE TABLE
     deletedAt DATETIME,
     deletedBy CHAR(36),
     FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+    FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON UPDATE RESTRICT ON DELETE RESTRICT,
     UNIQUE (trainingNumber)
     ) ENGINE = InnoDB;
 
@@ -958,7 +960,6 @@ CREATE TABLE
     paymentMethodId CHAR(36) NOT NULL,
     invoiceSentTypeId CHAR(36) NOT NULL,
     invoiceStatusId CHAR(36) NOT NULL,
-    vatMarginId CHAR(36) NOT NULL,
     priceListId CHAR(36),
     FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
     FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
@@ -968,7 +969,6 @@ CREATE TABLE
     FOREIGN KEY (paymentMethodId) REFERENCES PaymentMethod (id) ON DELETE RESTRICT,
     FOREIGN KEY (invoiceSentTypeId) REFERENCES InvoiceSentType (id) ON DELETE RESTRICT,
     FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
-    FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
     FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
     UNIQUE (invoiceNumber)
     ) ENGINE = InnoDB;
@@ -2133,6 +2133,7 @@ CREATE TABLE
             notDeliverable BOOLEAN NOT NULL DEFAULT 0,
             notCorrect BOOLEAN NOT NULL DEFAULT 0,
             notCorrectReason TEXT,
+            snapshotTakenAt DATETIME NULL,
             createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             createdBy CHAR(36) NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,

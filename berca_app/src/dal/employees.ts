@@ -203,6 +203,7 @@ export async function extendSession(id: string, subRole: {name: string}): Promis
 }
 
 export async function getEmployeeDetail(id: string) {
+  // Load the employee plus recent created/deleted audit lists for detail tabs.
   const [employee, createdEmployees, deletedEmployees] = await Promise.all([
     prismaClient.employee.findUniqueOrThrow({
       where: {id},
@@ -1150,13 +1151,13 @@ export async function getEmployeeDetail(id: string) {
         },
         PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {
           where: {deleted: true},
-          orderBy: {deletedAt: 'desc'},
+          orderBy: {date: 'desc'},
           take: 50,
           select: {id: true, description: true, deletedAt: true},
         },
         QuoteBecra_QuoteBecra_deletedByToEmployee: {
           where: {deleted: true},
-          orderBy: {deletedAt: 'desc'},
+          orderBy: {date: 'desc'},
           take: 50,
           select: {id: true, description: true, deletedAt: true},
         },

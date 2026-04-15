@@ -345,6 +345,7 @@ export function EmployeeDetail({
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
 
+  // Build form defaults from the current employee.
   const buildForm = () => ({
     firstName: employee.firstName,
     lastName: employee.lastName,

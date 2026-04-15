@@ -108,6 +108,7 @@ export function EmployeeTable({
   const router = useRouter()
 
   useEffect(() => {
+    // Keep local list in sync with server-provided employees.
     setEmployees(initialEmployees)
   }, [initialEmployees])
 
@@ -117,6 +118,7 @@ export function EmployeeTable({
     return emp ? `${emp.firstName} ${emp.lastName}` : '-'
   }
 
+  // Apply status/deleted filters and search before sorting.
   const filtered = employees
     .filter(emp => {
       if (filterStatus === 'active' && !emp.active) return false

@@ -16,6 +16,7 @@ type EmployeeWithRelations = Employee & {
 }
 
 export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
+  // Pick the highest role level to display in lists.
   const highestRoleLevel = prismaEmp.RoleLevelEmployee.reduce<EmployeeWithRelations['RoleLevelEmployee'][0] | null>(
     (highest, current) => {
       if (!highest) return current
@@ -61,6 +62,7 @@ export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
   }
 }
 
+// Prisma include graph for the employee detail view.
 type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
   include: {
     RoleLevelEmployee: {
@@ -344,7 +346,16 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Project: {select: {projectNumber: true; projectName: true}}
       }
     }
+    ProjectContact_ProjectContact_deletedByToEmployee: {
+      select: {
+        id: true
+        deletedAt: true
+        Contact: {select: {firstName: true; lastName: true}}
+        Project: {select: {projectNumber: true; projectName: true}}
+      }
+    }
     ProjectType: {select: {id: true; name: true; createdAt: true}}
+    ProjectType_ProjectType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     PurchaseDetail: {
       select: {
         id: true
@@ -353,21 +364,21 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Purchase: {select: {purchaseNumber: true}}
       }
     }
-    PurchaseOrderBecra: {select: {id: true; description: true; date: true}}
-    QuoteBecra_QuoteBecra_createdByToEmployee: {select: {id: true; description: true; date: true}}
-    Role_Role_createdByToEmployee: {select: {id: true; name: true; createdAt: true}}
+    PurchaseOrderBecra: {select: {id: true, description: true, date: true}}
+    QuoteBecra_QuoteBecra_createdByToEmployee: {select: {id: true, description: true, date: true}}
+    Role_Role_createdByToEmployee: {select: {id: true, name: true, createdAt: true}}
     RoleLevel_RoleLevel_createdByToEmployee: {
-      select: {id: true; createdAt: true; Role: {select: {name: true}}; SubRole: {select: {name: true}}}
+      select: {id: true, createdAt: true, Role: {select: {name: true}}; SubRole: {select: {name: true}}}
     }
-    Status: {select: {id: true; name: true; createdAt: true}}
-    SubRole_SubRole_createdByToEmployee: {select: {id: true; name: true; createdAt: true}}
+    Status: {select: {id: true, name: true, createdAt: true}}
+    SubRole_SubRole_createdByToEmployee: {select: {id: true, name: true, createdAt: true}}
     SupplierDeliveryNoteFollowUp: {
-      select: {id: true; information: true; deliveryDate: true; DeliveryNoteSupplier: {select: {supplierNN: true}}}
+      select: {id: true, information: true, deliveryDate: true; DeliveryNoteSupplier: {select: {supplierNN: true}}}
     }
-    Target: {select: {id: true; createdAt: true; TargetType: {select: {name: true}}}}
-    TargetType: {select: {id: true; name: true; createdAt: true}}
-    TestProcedure: {select: {id: true; name: true; shortDescription: true; createdAt: true}}
-    Title_Title_createdByToEmployee: {select: {id: true; name: true; createdAt: true}}
+    Target: {select: {id: true, createdAt: true; TargetType: {select: {name: true}}}}
+    TargetType: {select: {id: true, name: true, createdAt: true}}
+    TestProcedure: {select: {id: true, name: true, shortDescription: true, createdAt: true}}
+    Title_Title_createdByToEmployee: {select: {id: true, name: true, createdAt: true}}
     TrainingContact: {
       select: {
         id: true
@@ -376,16 +387,16 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Training: {select: {trainingNumber: true}}
       }
     }
-    Unit: {select: {id: true; unitName: true; abbreviation: true; createdAt: true}}
-    UrgencyType: {select: {id: true; name: true; createdAt: true}}
-    WarehousePlace: {select: {id: true; place: true; shelf: true; createdAt: true}}
+    Unit: {select: {id: true, unitName: true, abbreviation: true; createdAt: true}}
+    UrgencyType: {select: {id: true, name: true, createdAt: true}}
+    WarehousePlace: {select: {id: true, place: true, shelf: true; createdAt: true}}
     // Other deleted
     Certificate_Certificate_deletedByToEmployee: {
-      select: {id: true; descriptionShort: true; deletedAt: true; CertificateType: {select: {name: true}}}
+      select: {id: true, descriptionShort: true, deletedAt: true; CertificateType: {select: {name: true}}}
     }
-    CertificateType_CertificateType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    CertificateType_CertificateType_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
     CompanyAddress_CompanyAddress_deletedByToEmployee: {
-      select: {id: true; street: true; houseNumber: true; place: true; deletedAt: true; Company: {select: {name: true}}}
+      select: {id: true, street: true, houseNumber: true, place: true, deletedAt: true; Company: {select: {name: true}}}
     }
     CompanyContact_CompanyContact_deletedByToEmployee: {
       select: {
@@ -396,11 +407,11 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Company: {select: {name: true}}
       }
     }
-    Department_Department_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
-    Function_Function_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
-    HourType_HourType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    Department_Department_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    Function_Function_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    HourType_HourType_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
     Inventory_Inventory_deletedByToEmployee: {
-      select: {id: true; beNumber: true; shortDescription: true; deletedAt: true}
+      select: {id: true, beNumber: true, shortDescription: true, deletedAt: true}
     }
     InventoryChange_InventoryChange_deletedByToEmployee: {
       select: {
@@ -411,40 +422,31 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       }
     }
     InventoryOrder_InventoryOrder_deletedByToEmployee: {
-      select: {id: true; orderNumber: true; shortDescription: true; deletedAt: true}
+      select: {id: true, orderNumber: true, shortDescription: true, deletedAt: true}
     }
     InventoryStructure_InventoryStructure_deletedByToEmployee: {
-      select: {id: true; shortDescription: true; deletedAt: true; Inventory: {select: {beNumber: true}}}
+      select: {id: true, shortDescription: true, deletedAt: true; Inventory: {select: {beNumber: true}}}
     }
-    InvoiceType_InvoiceType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
-    Material_Material_deletedByToEmployee: {select: {id: true; beNumber: true; shortDescription: true; deletedAt: true}}
+    InvoiceType_InvoiceType_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    Material_Material_deletedByToEmployee: {select: {id: true, beNumber: true, shortDescription: true, deletedAt: true}}
     MaterialAssembly_MaterialAssembly_deletedByToEmployee: {
-      select: {id: true; name: true; shortDescription: true; deletedAt: true}
+      select: {id: true, name: true, shortDescription: true, deletedAt: true}
     }
-    MaterialCode_MaterialCode_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
-    MaterialFamily_MaterialFamily_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
-    MaterialMovement_MaterialMovement_deletedByToEmployee: {select: {id: true; shortDescription: true; deletedAt: true}}
+    MaterialCode_MaterialCode_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    MaterialFamily_MaterialFamily_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    MaterialMovement_MaterialMovement_deletedByToEmployee: {select: {id: true, shortDescription: true, deletedAt: true}}
     MaterialOther_MaterialOther_deletedByToEmployee: {
-      select: {id: true; name: true; shortDescription: true; deletedAt: true; Material: {select: {beNumber: true}}}
+      select: {id: true, name: true, shortDescription: true, deletedAt: true; Material: {select: {beNumber: true}}}
     }
     MaterialPrice_MaterialPrice_deletedByToEmployee: {
-      select: {id: true; beNumber: true; shortDescription: true; deletedAt: true}
+      select: {id: true, beNumber: true, shortDescription: true, deletedAt: true}
     }
     MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee: {
-      select: {id: true; shortDescription: true; deletedAt: true}
+      select: {id: true, shortDescription: true, deletedAt: true}
     }
-    Part_Part_deletedByToEmployee: {select: {id: true; name: true; shortDescription: true; deletedAt: true}}
-    Phantom_Phantom_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
-    Product_Product_deletedByToEmployee: {select: {id: true; shortDescription: true; status: true; deletedAt: true}}
-    ProjectContact_ProjectContact_deletedByToEmployee: {
-      select: {
-        id: true
-        deletedAt: true
-        Contact: {select: {firstName: true; lastName: true}}
-        Project: {select: {projectNumber: true; projectName: true}}
-      }
-    }
-    ProjectType_ProjectType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    Part_Part_deletedByToEmployee: {select: {id: true, name: true, shortDescription: true, deletedAt: true}}
+    Phantom_Phantom_deletedByToEmployee: {select: {id: true, description: true, deletedAt: true}}
+    Product_Product_deletedByToEmployee: {select: {id: true, shortDescription: true, status: true, deletedAt: true}}
     PurchaseDetail_PurchaseDetail_deletedByToEmployee: {
       select: {
         id: true
@@ -454,23 +456,23 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Purchase: {select: {purchaseNumber: true}}
       }
     }
-    PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
-    QuoteBecra_QuoteBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
-    Role_Role_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {select: {id: true, description: true, deletedAt: true}}
+    QuoteBecra_QuoteBecra_deletedByToEmployee: {select: {id: true, description: true, deletedAt: true}}
+    Role_Role_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
     RoleLevel_RoleLevel_deletedByToEmployee: {
-      select: {id: true; deletedAt: true; Role: {select: {name: true}}; SubRole: {select: {name: true}}}
+      select: {id: true, deletedAt: true, Role: {select: {name: true}}; SubRole: {select: {name: true}}}
     }
-    Status_Status_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
-    SubRole_SubRole_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    Status_Status_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    SubRole_SubRole_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
     SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee: {
-      select: {id: true; information: true; deletedAt: true; DeliveryNoteSupplier: {select: {supplierNN: true}}}
+      select: {id: true, information: true, deletedAt: true; DeliveryNoteSupplier: {select: {supplierNN: true}}}
     }
-    Target_Target_deletedByToEmployee: {select: {id: true; deletedAt: true; TargetType: {select: {name: true}}}}
-    TargetType_TargetType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    Target_Target_deletedByToEmployee: {select: {id: true, deletedAt: true; TargetType: {select: {name: true}}}}
+    TargetType_TargetType_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
     TestProcedure_TestProcedure_deletedByToEmployee: {
-      select: {id: true; name: true; shortDescription: true; deletedAt: true}
+      select: {id: true, name: true, shortDescription: true, deletedAt: true}
     }
-    Title_Title_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    Title_Title_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
     TrainingContact_TrainingContact_deletedByToEmployee: {
       select: {
         id: true
@@ -479,9 +481,9 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Training: {select: {trainingNumber: true}}
       }
     }
-    Unit_Unit_deletedByToEmployee: {select: {id: true; unitName: true; abbreviation: true; deletedAt: true}}
-    UrgencyType_UrgencyType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
-    WarehousePlace_WarehousePlace_deletedByToEmployee: {select: {id: true; place: true; shelf: true; deletedAt: true}}
+    Unit_Unit_deletedByToEmployee: {select: {id: true, unitName: true, abbreviation: true, deletedAt: true}}
+    UrgencyType_UrgencyType_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    WarehousePlace_WarehousePlace_deletedByToEmployee: {select: {id: true, place: true, shelf: true, deletedAt: true}}
   }
 }>
 
@@ -494,6 +496,7 @@ type CreatedEmployee = {
   RoleLevelEmployee: {RoleLevel: {Role: {name: string}; SubRole: {name: string; level: number}}}[]
 }
 
+// Minimal shape for employees deleted by the current employee (audit lists).
 type DeletedEmployee = {
   id: string
   firstName: string
@@ -520,9 +523,10 @@ export function mapEmployeeDetail(
     return highest ? `${highest.Role.name.replace(' Role', '')} / ${highest.SubRole.name}` : null
   }
 
+  // Used to de-duplicate follow-ups where the employee is both owner and executor.
   const ownedFollowUpIds = new Set(e.FollowUp_FollowUp_ownedByToEmployee.map(f => f.id))
 
-  // ── Created records: flat unified rows ──────────────────────────────────────
+  // Flatten related entities into unified rows for the Created table.
   const createdRecords: UnifiedRecord[] = [
     ...e.Contact.map(c => ({
       id: c.id,
@@ -887,8 +891,8 @@ export function mapEmployeeDetail(
     roleName: highestRoleLevel
       ? `${highestRoleLevel.Role.name.replace(' Role', '')} / ${highestRoleLevel.SubRole.name}`
       : '-',
-    titleName: e.Title_Employee_titleIdToTitle?.name ?? '-',
     titleId: e.titleId,
+    titleName: e.Title_Employee_titleIdToTitle?.name ?? '-',
     emergencyContacts: e.EmergencyContact,
 
     // ── Section 1: Assigned ──────────────────────────────────────────────────
@@ -920,6 +924,7 @@ export function mapEmployeeDetail(
     ],
 
     assignedFollowUpStructures: (() => {
+      // Keep the first role we see per structure (owner > executor > taskFor).
       const seen = new Map<string, 'owner' | 'executor' | 'taskFor'>()
       for (const f of e.FollowUpStructure_FollowUpStructure_ownedByToEmployee) seen.set(f.id, 'owner')
       for (const f of e.FollowUpStructure_FollowUpStructure_executedByToEmployee)

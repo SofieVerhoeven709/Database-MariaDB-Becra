@@ -1,11 +1,13 @@
 import {z} from 'zod/v4'
 
 const dateSchema = z.preprocess(
+  // Treat empty values as null for optional dates.
   val => (val === '' || val === null || val === undefined ? null : new Date(val as string)),
   z.date().nullable(),
 )
 
 const requiredDateSchema = z.preprocess(
+  // Coerce strings into Date instances for required timestamps.
   val => (typeof val === 'string' || val instanceof Date ? new Date(val) : val),
   z.date(),
 )
@@ -48,7 +50,8 @@ export const emergencyContactSchema = z.object({
   relationship: z.string(),
   mail: z.string(),
   phoneNumber: z.string(),
-  employeeId: z.string().optional(), // filled server-side
+  // employeeId is populated server-side when persisting contacts.
+  employeeId: z.string().optional(),
 })
 
 export const signInSchema = employeeSchemas.pick({

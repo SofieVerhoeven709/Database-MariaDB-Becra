@@ -17,6 +17,7 @@ export function mapWorkOrderStructure(s: WorkOrderStructureWithRelations): Mappe
     additionalInfo: s.additionalInfo,
     shortDescription: s.shortDescription,
     longDescription: s.longDescription,
+    // Normalize dates to ISO strings for the client.
     createdAt: s.createdAt.toISOString(),
     createdBy: s.createdBy,
     workOrderId: s.workOrderId,
@@ -24,6 +25,7 @@ export function mapWorkOrderStructure(s: WorkOrderStructureWithRelations): Mappe
     deleted: s.deleted,
     deletedAt: s.deletedAt?.toISOString() ?? null,
     deletedBy: s.deletedBy,
+    // Denormalized display fields used in list views.
     createdByName: `${s.Employee.firstName} ${s.Employee.lastName}`,
     deletedByName: s.Employee_WorkOrderStructure_deletedByToEmployee
       ? `${s.Employee_WorkOrderStructure_deletedByToEmployee.firstName} ${s.Employee_WorkOrderStructure_deletedByToEmployee.lastName}`

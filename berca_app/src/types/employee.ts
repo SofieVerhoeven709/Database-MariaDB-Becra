@@ -27,8 +27,10 @@ export interface MappedEmployee {
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
+  // Selected role levels used for permission checks and display.
   roleLevelIds: string[]
   titleId: string | null
+  // Denormalized names for list/detail views.
   roleName: string
   titleName: string
   emergencyContacts: EmergencyContact[]
@@ -183,6 +185,7 @@ export interface EmployeeDetailData {
   newYearCard: boolean
   active: boolean
   createdAt: string
+  // Denormalized names used in detail headers.
   createdByName: string | null
   passwordCreatedAt: string
   pictureId: string | null

@@ -9,6 +9,7 @@ export const createWorkOrderStructureSchema = z.object({
   shortDescription: z.string().max(100).nullable().optional(),
   longDescription: z.string().nullable().optional(),
   additionalInfo: z.string().nullable().optional(),
+  // Each structure row is linked to a work order and a material.
   workOrderId: z.string(),
   materialId: z.string(),
 })

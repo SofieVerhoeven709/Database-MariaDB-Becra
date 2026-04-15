@@ -52,6 +52,7 @@ export function WorkOrderFormDialog({open, onOpenChange, workOrder, projectOptio
 
   useEffect(() => {
     if (workOrder) {
+      // Seed form values from the selected work order.
       setForm({
         workOrderNumber: workOrder.workOrderNumber ?? generateWorkOrderNumber(),
         description: workOrder.description ?? '',
@@ -80,6 +81,7 @@ export function WorkOrderFormDialog({open, onOpenChange, workOrder, projectOptio
   async function handleSubmit() {
     setSaving(true)
     try {
+      // Normalize empty strings to null for nullable fields.
       const payload = {
         workOrderNumber: form.workOrderNumber,
         description: form.description || null,

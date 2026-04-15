@@ -108,6 +108,7 @@ export function ProjectTable({
 
   const router = useRouter()
 
+  // Resolve employee IDs to display names for table columns.
   const getEmployeeName = (id: string | null) => {
     if (!id) return '-'
     const emp = employees.find(e => e.id === id)

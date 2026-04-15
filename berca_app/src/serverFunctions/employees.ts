@@ -125,6 +125,7 @@ export const createEmployeeAction = protectedServerFunction({
         createdBy: profile.id,
         createdAt: new Date(),
         passwordCreatedAt: new Date(),
+        // Create role-level links only when provided.
         RoleLevelEmployee: roleLevelIds?.length
           ? {
               create: roleLevelIds.map((roleLevelId: string) => ({
@@ -133,6 +134,7 @@ export const createEmployeeAction = protectedServerFunction({
               })),
             }
           : undefined,
+        // Seed emergency contacts when provided.
         EmergencyContact: emergencyContacts?.length
           ? {
               create: emergencyContacts.map(c => ({
@@ -160,8 +162,10 @@ export const updateEmployeeAdminAction = protectedServerFunction({
       where: {id},
       data: {
         ...data,
+        // Update password only when provided.
         ...(password_hash ? {password_hash: hashPassword(password_hash), passwordCreatedAt: new Date()} : {}),
         RoleLevelEmployee: {
+          // Replace role links to match current selection.
           deleteMany: {employeeId: id},
           ...(roleLevelIds?.length
             ? {
@@ -173,6 +177,7 @@ export const updateEmployeeAdminAction = protectedServerFunction({
             : {}),
         },
         EmergencyContact: {
+          // Replace emergency contacts to match current list.
           deleteMany: {employeeId: id},
           ...(emergencyContacts?.length
             ? {

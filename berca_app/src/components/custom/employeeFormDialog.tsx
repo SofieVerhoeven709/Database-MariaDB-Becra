@@ -87,6 +87,7 @@ export function EmployeeFormDialog({
 
   useEffect(() => {
     if (open) {
+      // Re-seed the form when opening or switching the edited employee.
       if (employee) {
         setForm({
           ...employee,

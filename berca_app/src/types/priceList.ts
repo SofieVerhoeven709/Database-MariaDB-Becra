@@ -1,5 +1,5 @@
 // ─── PriceListItemTarget ───────────────────────────────────────────────────────
-export type LinkableTargetType = 'HourType' | 'Material' | 'Training' | 'TrainingStandard'
+export type LinkableTargetType = 'HourType' | 'Material' | 'Training'
 
 export interface MappedPriceListItemTarget {
   id: string

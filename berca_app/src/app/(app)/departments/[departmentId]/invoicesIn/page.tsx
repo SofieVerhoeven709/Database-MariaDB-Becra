@@ -4,14 +4,18 @@ import {
   getPaymentMethods,
   getInvoiceSentTypes,
   getInvoiceStatuses,
-  getVatMargins,
+  getAllVatMargins,
+  getCountries,
 } from '@/dal/invoices'
 import {getCompanies} from '@/dal/companies'
 import {mapInvoiceIn} from '@/extra/invoices'
 import {InvoiceInTable} from '@/components/custom/invoiceInTable'
+import {VatMarginTable} from '@/components/custom/vatMarginTable'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
+import {Badge} from '@/components/ui/badge'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -27,7 +31,8 @@ export default async function InvoicesInPage({params}: PageProps) {
     paymentMethods,
     invoiceSentTypes,
     invoiceStatuses,
-    vatMargins,
+    vatMarginsRaw,
+    countries,
     companiesRaw,
     profile,
   ] = await Promise.all([
@@ -37,7 +42,8 @@ export default async function InvoicesInPage({params}: PageProps) {
     getPaymentMethods(),
     getInvoiceSentTypes(),
     getInvoiceStatuses(),
-    getVatMargins(),
+    getAllVatMargins(),
+    getCountries(),
     getCompanies(),
     getSessionProfileFromCookieOrThrow(),
   ])
@@ -48,6 +54,25 @@ export default async function InvoicesInPage({params}: PageProps) {
   const invoices = invoicesRaw.map(mapInvoiceIn)
   const companyOptions = companiesRaw.filter(c => !c.deleted).map(c => ({id: c.id, name: c.name}))
 
+  const vatMargins = vatMarginsRaw
+    .filter(v => !v.deleted)
+    .map(v => ({
+      id: v.id,
+      vat: v.vat,
+    }))
+
+  const mappedVatMargins = vatMarginsRaw.map(v => ({
+    id: v.id,
+    vat: v.vat,
+    countryId: v.countryId,
+    countryName: v.countryName,
+    createdAt: new Date(v.createdAt).toISOString(),
+    createdByName: v.createdByName,
+    deletedAt: v.deletedAt ? new Date(v.deletedAt).toISOString() : null,
+    deletedByName: v.deletedByName,
+    deleted: v.deleted,
+  }))
+
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-6xl">
@@ -56,18 +81,46 @@ export default async function InvoicesInPage({params}: PageProps) {
           <p className="mt-1 text-sm text-muted-foreground">Manage invoices received from suppliers</p>
         </div>
 
-        <InvoiceInTable
-          initialInvoices={invoices}
-          currentUserRole={currentUserRole}
-          currentUserLevel={currentUserLevel}
-          departmentId={departmentId}
-          invoiceTypes={invoiceTypes}
-          paymentMethods={paymentMethods}
-          invoiceSentTypes={invoiceSentTypes}
-          invoiceStatuses={invoiceStatuses}
-          vatMargins={vatMargins}
-          companyOptions={companyOptions}
-        />
+        <Tabs defaultValue="invoices" className="w-full">
+          <TabsList className="bg-secondary border border-border/60">
+            <TabsTrigger value="invoices">
+              Invoices
+              <Badge variant="secondary" className="ml-2 text-xs">
+                {invoices.filter(inv => !inv.deleted).length}
+              </Badge>
+            </TabsTrigger>
+            <TabsTrigger value="vatMargins">
+              VAT Margins
+              <Badge variant="secondary" className="ml-2 text-xs">
+                {mappedVatMargins.filter(v => !v.deleted).length}
+              </Badge>
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="invoices" className="mt-4">
+            <InvoiceInTable
+              initialInvoices={invoices}
+              currentUserRole={currentUserRole}
+              currentUserLevel={currentUserLevel}
+              departmentId={departmentId}
+              invoiceTypes={invoiceTypes}
+              paymentMethods={paymentMethods}
+              invoiceSentTypes={invoiceSentTypes}
+              invoiceStatuses={invoiceStatuses}
+              vatMargins={vatMargins}
+              companyOptions={companyOptions}
+            />
+          </TabsContent>
+
+          <TabsContent value="vatMargins" className="mt-4">
+            <VatMarginTable
+              initialVatMargins={mappedVatMargins}
+              countries={countries}
+              currentUserRole={currentUserRole}
+              currentUserLevel={currentUserLevel}
+            />
+          </TabsContent>
+        </Tabs>
       </div>
     </main>
   )

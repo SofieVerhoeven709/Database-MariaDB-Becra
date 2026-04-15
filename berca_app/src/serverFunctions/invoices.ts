@@ -16,7 +16,14 @@ import {generateInvoiceInNumber, generateInvoiceOutNumber} from '@/lib/utils'
 
 export async function getActiveWorkOrdersForProjectAction(projectId: string) {
   return prismaClient.workOrder.findMany({
-    where: {deleted: false, completed: false, projectId},
+    where: {
+      deleted: false,
+      completed: false,
+      projectId,
+      WorkOrderInvoice: {
+        none: {deleted: false},
+      },
+    },
     select: {id: true, workOrderNumber: true, description: true},
     orderBy: {workOrderNumber: 'asc'},
   })
@@ -105,21 +112,34 @@ export const createInvoiceOutAction = protectedServerFunction({
     if (attempts >= 5) throw new Error('Failed to generate a unique invoice OUT number after 5 attempts')
 
     if (workOrderIds.length > 0) {
+      const availableWorkOrders = await prismaClient.workOrder.findMany({
+        where: {
+          id: {in: workOrderIds},
+          deleted: false,
+          WorkOrderInvoice: {
+            none: {deleted: false},
+          },
+        },
+        select: {id: true},
+      })
+      const availableWorkOrderIds = availableWorkOrders.map(row => row.id)
+
+      if (availableWorkOrderIds.length > 0) {
       await prismaClient.workOrderInvoice.createMany({
-        data: workOrderIds.map((workOrderId: string) => ({
+        data: availableWorkOrderIds.map((workOrderId: string) => ({
           id: crypto.randomUUID(),
           invoiceOutId: id,
           workOrderId,
         })),
       })
       await prismaClient.workOrder.updateMany({
-        where: {id: {in: workOrderIds}},
+        where: {id: {in: availableWorkOrderIds}},
         data: {hoursMaterialClosed: true},
       })
 
       // Auto-assign invoice contacts from the companies of the linked work orders' projects
       const projects = await prismaClient.workOrder.findMany({
-        where: {id: {in: workOrderIds}},
+        where: {id: {in: availableWorkOrderIds}},
         select: {Project: {select: {companyId: true}}},
       })
       const companyIds = [...new Set(projects.map(p => p.Project.companyId))]
@@ -143,6 +163,7 @@ export const createInvoiceOutAction = protectedServerFunction({
           })),
           skipDuplicates: true,
         })
+      }
       }
     }
 
@@ -173,15 +194,29 @@ export const updateInvoiceOutAction = protectedServerFunction({
 
 export async function addWorkOrdersToInvoiceAction(invoiceOutId: string, workOrderIds: string[]) {
   if (workOrderIds.length === 0) return
+
+  const availableWorkOrders = await prismaClient.workOrder.findMany({
+    where: {
+      id: {in: workOrderIds},
+      deleted: false,
+      WorkOrderInvoice: {
+        none: {deleted: false},
+      },
+    },
+    select: {id: true},
+  })
+  const availableWorkOrderIds = availableWorkOrders.map(row => row.id)
+  if (availableWorkOrderIds.length === 0) return
+
   await prismaClient.workOrderInvoice.createMany({
-    data: workOrderIds.map(workOrderId => ({
+    data: availableWorkOrderIds.map(workOrderId => ({
       id: crypto.randomUUID(),
       invoiceOutId,
       workOrderId,
     })),
   })
   await prismaClient.workOrder.updateMany({
-    where: {id: {in: workOrderIds}},
+    where: {id: {in: availableWorkOrderIds}},
     data: {hoursMaterialClosed: true},
   })
   revalidatePath('/invoicesOut')
@@ -353,3 +388,186 @@ export const undeleteInvoiceInAction = protectedServerFunction({
     revalidatePath('/invoicesIn')
   },
 })
+
+// ─── VatMargin ─────────────────────────────────────────────────────────────────
+const createVatMarginSchema = z.object({
+  vat: z.number().min(0).max(100),
+  countryId: z.string().uuid().nullable(),
+})
+
+const updateVatMarginSchema = z.object({
+  id: z.string().uuid(),
+  vat: z.number().min(0).max(100),
+  countryId: z.string().uuid().nullable(),
+})
+
+const vatMarginIdSchema = z.object({
+  id: z.string().uuid(),
+})
+
+export const createVatMarginAction = protectedServerFunction({
+  schema: createVatMarginSchema,
+  functionName: 'Create VAT margin',
+  serverFn: async ({data, logger, profile}) => {
+    const id = crypto.randomUUID()
+    await prismaClient.vatMargin.create({
+      data: {
+        id,
+        vat: data.vat,
+        countryId: data.countryId,
+        createdBy: profile.id,
+        createdAt: new Date(),
+      },
+    })
+    logger.info(`VAT margin created: ${id}`)
+    revalidatePath('/invoicesOut')
+    revalidatePath('/invoicesIn')
+  },
+})
+
+export const updateVatMarginAction = protectedServerFunction({
+  schema: updateVatMarginSchema,
+  functionName: 'Update VAT margin',
+  serverFn: async ({data: {id, ...data}, logger, profile}) => {
+    await prismaClient.vatMargin.update({
+      where: {id},
+      data: {
+        ...data,
+      },
+    })
+    logger.info(`VAT margin updated: ${id}`)
+    revalidatePath('/invoicesOut')
+    revalidatePath('/invoicesIn')
+  },
+})
+
+export const softDeleteVatMarginAction = protectedServerFunction({
+  schema: vatMarginIdSchema,
+  functionName: 'Soft delete VAT margin',
+  serverFn: async ({data: {id}, profile, logger}) => {
+    await prismaClient.vatMargin.update({
+      where: {id},
+      data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
+    })
+    logger.info(`VAT margin soft deleted: ${id}`)
+    revalidatePath('/invoicesOut')
+    revalidatePath('/invoicesIn')
+  },
+})
+
+export const hardDeleteVatMarginAction = protectedServerFunction({
+  schema: vatMarginIdSchema,
+  functionName: 'Hard delete VAT margin',
+  serverFn: async ({data: {id}, logger}) => {
+    await prismaClient.vatMargin.delete({where: {id}})
+    logger.info(`VAT margin hard deleted: ${id}`)
+    revalidatePath('/invoicesOut')
+    revalidatePath('/invoicesIn')
+  },
+})
+
+export const undeleteVatMarginAction = protectedServerFunction({
+  schema: vatMarginIdSchema,
+  functionName: 'Undelete VAT margin',
+  serverFn: async ({data: {id}, logger}) => {
+    await prismaClient.vatMargin.update({where: {id}, data: {deleted: false, deletedAt: null, deletedBy: null}})
+    logger.info(`VAT margin undeleted: ${id}`)
+    revalidatePath('/invoicesOut')
+    revalidatePath('/invoicesIn')
+  },
+})
+
+// ─── WorkOrderStructure VAT Assignment ─────────────────────────────────────
+export async function getAvailableVatMarginsAction() {
+  const vatMargins = await prismaClient.vatMargin.findMany({
+    where: {deleted: false},
+    select: {id: true, vat: true, countryId: true, Country: {select: {id: true, name: true}}},
+    orderBy: [{countryId: 'asc'}, {vat: 'asc'}],
+  })
+
+  // Group by country
+  const grouped: {[countryId: string]: {countryName: string; countryId: string | null; rates: Array<{id: string; vat: number}>}} = {}
+  const noCountryRates: Array<{id: string; vat: number}> = []
+
+  for (const vm of vatMargins) {
+    if (!vm.countryId) {
+      noCountryRates.push({id: vm.id, vat: vm.vat})
+    } else {
+      const key = vm.countryId
+      if (!grouped[key]) {
+        grouped[key] = {
+          countryId: vm.countryId,
+          countryName: vm.Country?.name ?? 'Unknown',
+          rates: [],
+        }
+      }
+      grouped[key].rates.push({id: vm.id, vat: vm.vat})
+    }
+  }
+
+  // Sort by country name
+  const sorted = Object.values(grouped).sort((a, b) => a.countryName.localeCompare(b.countryName))
+
+  // Add no-country rates at the end if any
+  if (noCountryRates.length > 0) {
+    sorted.push({
+      countryId: null,
+      countryName: 'Belgium / Global',
+      rates: noCountryRates,
+    })
+  }
+
+  return sorted
+}
+
+export const updateWorkOrderStructureVatAction = protectedServerFunction({
+  schema: z.object({
+    workOrderStructureId: z.string(),
+    vatMarginId: z.string().nullable(),
+  }),
+  functionName: 'Update work order structure VAT',
+  serverFn: async ({data: {workOrderStructureId, vatMarginId}, logger}) => {
+    await prismaClient.workOrderStructure.update({
+      where: {id: workOrderStructureId},
+      data: {vatMarginId},
+    })
+    logger.info(`Work order structure VAT updated: ${workOrderStructureId} -> ${vatMarginId}`)
+    revalidatePath('/invoicesOut')
+    revalidatePath('/invoicesIn')
+  },
+})
+
+export const updateTimeRegistryVatMarginAction = protectedServerFunction({
+  schema: z.object({
+    timeRegistryIds: z.array(z.string()).min(1),
+    vatMarginId: z.string().nullable(),
+  }),
+  functionName: 'Update time registry VAT',
+  serverFn: async ({data: {timeRegistryIds, vatMarginId}, logger}) => {
+    await prismaClient.timeRegistry.updateMany({
+      where: {id: {in: timeRegistryIds}},
+      data: {vatMarginId},
+    })
+    logger.info(`Time registry VAT updated: ${timeRegistryIds.length} record(s) -> ${vatMarginId}`)
+    revalidatePath('/invoicesOut')
+    revalidatePath('/invoicesIn')
+  },
+})
+
+export const updateTrainingVatMarginAction = protectedServerFunction({
+  schema: z.object({
+    trainingId: z.string(),
+    vatMarginId: z.string().nullable(),
+  }),
+  functionName: 'Update training VAT',
+  serverFn: async ({data: {trainingId, vatMarginId}, logger}) => {
+    await prismaClient.training.update({
+      where: {id: trainingId},
+      data: {vatMarginId},
+    })
+    logger.info(`Training VAT updated: ${trainingId} -> ${vatMarginId}`)
+    revalidatePath('/invoicesOut')
+    revalidatePath('/invoicesIn')
+  },
+})
+

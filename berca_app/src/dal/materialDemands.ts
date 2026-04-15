@@ -434,13 +434,16 @@ export async function syncMaterialDemandFromIncomingAllocations(
 
       if (!currentExecution) return
 
+      const canUpdateExecutionQty = !currentExecution.completedDate
+      const nextCompletedDate = currentExecution.completedDate ?? (params.fulfilled ? params.now : null)
+
       await db.bOMExecution.update({
         where: {projectBOMStructureId},
         data: {
-          purchaseReceivedQuantity: params.reservedQty,
+          ...(canUpdateExecutionQty ? {purchaseReceivedQuantity: params.reservedQty} : {}),
           notCorrect: params.hasNotCorrect,
           notCorrectReason: params.hasNotCorrect ? params.notCorrectReason : null,
-          completedDate: params.fulfilled ? (currentExecution.completedDate ?? params.now) : null,
+          completedDate: nextCompletedDate,
         },
       })
     }

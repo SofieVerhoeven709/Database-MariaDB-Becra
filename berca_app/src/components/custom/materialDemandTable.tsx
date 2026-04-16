@@ -660,6 +660,7 @@ export function MaterialDemandTable({
                 const isExpanded = expandedDemandIds.has(entry.id)
                 const isSourcesExpanded = expandedSourceDemandIds.has(entry.id)
                 const hasManualDemandWithoutSources = entry.totalRequiredQty > 0 && entry.sourceCount === 0
+                // Block new quotes when a non-accepted quote already exists.
                 const hasBlockingQuote = entry.quoteOptions.some(option => !option.deleted && !(option.sent && option.acceptedForPOB))
                 const quoteState = getQuoteState(entry)
                 const quoteOptions = [...entry.quoteOptions].sort((a, b) => compareQuoteOptions(a, b, rankingPolicy))

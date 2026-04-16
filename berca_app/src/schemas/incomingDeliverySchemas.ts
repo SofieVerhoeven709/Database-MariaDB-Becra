@@ -24,11 +24,13 @@ export const incomingDeliveryLineSchema = z.object({
   incomingDeliveryId: z.string(),
   purchaseDetailId: z.string().nullable().optional(),
   materialId: z.string(),
+  // Coerce numeric inputs from form fields into integers.
   orderedQty: z.coerce.number().int().min(0),
   deliveredQty: z.coerce.number().int().min(0),
   acceptedQty: z.coerce.number().int().min(0),
   rejectedQty: z.coerce.number().int().min(0).optional(),
   backorderQty: z.coerce.number().int().min(0).optional(),
+  // Accept either raw strings or numeric values from the UI.
   unitPrice: z.union([z.string(), z.number()]).nullable().optional(),
   lineStatus: z.string().max(50).optional(),
   notCorrect: z.boolean().optional(),

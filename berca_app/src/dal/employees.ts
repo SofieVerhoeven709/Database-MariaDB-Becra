@@ -106,6 +106,7 @@ export async function getEmployees(): Promise<
  * @param role The role of the user for whom to start the session.
  */
 export async function startSession(employeeId: string, subRole: {name: string}): Promise<SessionWithProfile> {
+  // Map sub-role name to a session duration, falling back to the default.
   const duration = SessionDuration[subRole.name.toLowerCase()] ?? DEFAULT_SESSION_DURATION
 
   logger.warn(subRole.name)
@@ -191,6 +192,7 @@ export async function updateEmployee({id, ...data}: UpdateEmployeeParams): Promi
  * @param role The role of the user for whom to start the session.
  */
 export async function extendSession(id: string, subRole: {name: string}): Promise<SessionWithProfile> {
+  // Reuse the same duration mapping when extending an existing session.
   const duration = SessionDuration[subRole.name.toLowerCase()] ?? DEFAULT_SESSION_DURATION
 
   return prismaClient.session.update({

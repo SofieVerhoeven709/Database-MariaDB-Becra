@@ -98,6 +98,7 @@ export async function searchProjects(query: string) {
 // ─── Cascade helpers ──────────────────────────────────────────────────────────
 
 export async function getDescendantBOMIds(parentId: string): Promise<string[]> {
+  // Depth-first traversal of all non-deleted children.
   const children = await prismaClient.purchaseBOM.findMany({
     where: {purchaseBomId: parentId, deleted: false},
     select: {id: true},
@@ -109,6 +110,7 @@ export async function getDescendantBOMIds(parentId: string): Promise<string[]> {
 }
 
 export async function getAncestorBOMIds(bomId: string): Promise<string[]> {
+  // Walk up the parent chain until the root.
   const bom = await prismaClient.purchaseBOM.findUnique({
     where: {id: bomId},
     select: {purchaseBomId: true},

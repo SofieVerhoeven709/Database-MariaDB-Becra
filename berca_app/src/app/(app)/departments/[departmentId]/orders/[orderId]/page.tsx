@@ -53,6 +53,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
   const details: MappedPurchaseDetail[] = detailsRaw.map(d => mapPurchaseDetail(d))
 
   const materialOptions = materialsRaw
+    // Build human-friendly labels for the line item picker.
     .map(m => ({id: m.id, name: `${m.beNumber} - ${m.name ?? m.shortDescription ?? 'Unnamed material'}`}))
     .sort((a, b) => a.name.localeCompare(b.name))
 
@@ -75,6 +76,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
   }))
 
   const createdByName = `${purchase.Employee.firstName} ${purchase.Employee.lastName}`
+  // Normalize status to the supported set for consistent badge colors.
   const normalizedStatus = normalizePurchaseStatus(purchase.status)
 
   return (

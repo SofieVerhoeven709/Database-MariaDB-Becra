@@ -37,6 +37,7 @@ function isOrderedNotSentStatus(status: string | null | undefined): boolean {
 }
 
 function normalizePurchaseStatus(status: string | null | undefined): string {
+  // Guard against invalid or empty statuses from user input.
   if (!status) return 'DRAFT'
   return PURCHASE_STATUSES.has(status) ? status : 'ORDERED'
 }
@@ -163,6 +164,7 @@ async function ensureDraftIncomingDeliveryForPurchase(
     } catch (err: unknown) {
       const prismaErr = err as {code?: string}
       if (prismaErr.code === 'P2002') {
+        // Retry number generation on unique constraint collisions.
         attempts++
         incomingDeliveryNumber = generateIncomingDeliveryNumber()
         continue

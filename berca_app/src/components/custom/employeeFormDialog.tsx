@@ -21,6 +21,7 @@ interface EmployeeFormDialogProps {
   onSave: (employee: MappedEmployee, password: string) => void
 }
 
+// Defaults used when creating a new employee or resetting the form.
 export const EMPTY_EMPLOYEE: MappedEmployee = {
   id: '',
   firstName: '',

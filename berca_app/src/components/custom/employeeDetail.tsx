@@ -472,6 +472,7 @@ export function EmployeeDetail({
   )
 
   // ─── Tab counts ────────────────────────────────────────────────────────────
+  // Aggregate assigned counts for the tab badge.
   const assignedCount =
     employee.assignedFollowUps.length +
     employee.assignedFollowUpStructures.length +

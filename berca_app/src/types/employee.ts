@@ -215,6 +215,7 @@ export interface EmployeeDetailData {
 
 // ─── Type badge colours ───────────────────────────────────────────────────────
 
+// UI badge classes keyed by record type for the Created/Deleted tables.
 export const TYPE_COLOURS: Record<RecordType, string> = {
   // Main records
   Contact: 'bg-blue-500/10 text-blue-600 border-blue-500/20',

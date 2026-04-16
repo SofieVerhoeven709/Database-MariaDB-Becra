@@ -64,6 +64,7 @@ export const registerSchema = employeeSchemas
     emergencyContacts: z.array(emergencyContactSchema).optional(),
     passwordConfirmation: z.string().optional(),
   })
+  // Ensure the confirmation matches the chosen password on registration.
   .refine(data => data.password_hash === data.passwordConfirmation, {
     path: ['passwordConfirmation'],
     message: 'The password and confirmation do not match',

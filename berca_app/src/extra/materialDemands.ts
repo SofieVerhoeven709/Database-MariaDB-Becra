@@ -144,6 +144,7 @@ export function mapMaterialDemand(
     const isEligibleForBest =
       !line.QuoteSupplier.deleted &&
       !line.QuoteSupplier.rejected &&
+      // Exclude already accepted/sent quotes from best-option ranking.
       !(line.QuoteSupplier.sent && line.QuoteSupplier.acceptedForPOB) &&
       isCurrentlyValid
 
@@ -175,6 +176,7 @@ export function mapMaterialDemand(
       id: source.id,
       sourceTypeName: source.MaterialDemandSourceType.name,
       sourceReferenceId: source.sourceReferenceId,
+      // Fall back to the raw reference id when no label is known.
       sourceReferenceLabel: key ? (sourceLabels[key] ?? source.sourceReferenceId ?? '—') : '—',
       requiredQty: source.requiredQty,
       reservedQty: source.reservedQty ?? 0,

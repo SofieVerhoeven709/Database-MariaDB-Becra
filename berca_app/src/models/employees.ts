@@ -23,6 +23,7 @@ export type Profile = Prisma.EmployeeGetPayload<{
   }
 }>
 
+// Shared include shape for session queries that need the full employee profile.
 export const sessionWithProfileInclude = {
   Employee: {
     omit: profileOmit,

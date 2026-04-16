@@ -66,6 +66,7 @@ export function QuoteSupplierDetail({
   defaultMaterialDemandId,
 }: QuoteSupplierDetailProps) {
   const router = useRouter()
+  // Approved quotes are locked for non-managers.
   const isApprovedLocked = quote.acceptedForPOB && currentUserLevel < 80
   const canEditLines = currentUserLevel >= 40 && !isApprovedLocked
   const canCreateLines = currentUserLevel >= 60 && !quote.sent && !isApprovedLocked
@@ -90,6 +91,7 @@ export function QuoteSupplierDetail({
 
   const demandOptionsForSelectedMaterial = useMemo(() => {
     if (!newMaterialId || newMaterialId === '__none__') return materialDemandOptions
+    // Keep the demand picker scoped to the chosen material.
     return materialDemandOptions.filter(option => option.materialId === newMaterialId)
   }, [materialDemandOptions, newMaterialId])
 
@@ -213,6 +215,7 @@ export function QuoteSupplierDetail({
       await selectQuoteSupplierLineAction({
         id: lineId,
         selected,
+        // Provide a demand id fallback when the line did not store one yet.
         materialDemandId: materialDemandId ?? undefined,
       })
       setError(null)
@@ -306,6 +309,7 @@ export function QuoteSupplierDetail({
                 onValueChange={value => {
                   setNewMaterialId(value)
                   const firstDemandForMaterial = materialDemandOptions.find(option => option.materialId === value)
+                  // Keep the demand field in sync when the material changes.
                   if (firstDemandForMaterial) setNewMaterialDemandId(firstDemandForMaterial.id)
                 }}>
                 <SelectTrigger className="bg-secondary border-border mt-1">

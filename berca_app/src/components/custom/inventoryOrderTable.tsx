@@ -43,6 +43,7 @@ function classifyMaterialNumber(beNumber: string | null | undefined): 'be' | 'is
   if (!digits) return 'unknown'
   const parsed = Number.parseInt(digits, 10)
   if (Number.isNaN(parsed)) return 'unknown'
+  // ISO numbers are classified by the threshold used in the UI filter.
   return parsed >= ISO_THRESHOLD ? 'iso' : 'be'
 }
 
@@ -74,6 +75,7 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
   const filtered = initialEntries
     .filter(e => {
       const status = e.deleted ? 'deleted' : e.rejected ? 'rejected' : e.approved ? 'approved' : 'pending'
+      // Derive the status filter from the row's approval/rejection flags.
       if (statusFilter !== 'all' && status !== statusFilter) return false
 
       const numberClass = classifyMaterialNumber(e.inventoryBeNumber)
@@ -82,6 +84,7 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
 
       if (!search) return true
       const q = search.toLowerCase()
+      // Search across order id and inventory labels.
       return (
         e.orderNumber.toLowerCase().includes(q) ||
         (e.shortDescription ?? '').toLowerCase().includes(q) ||

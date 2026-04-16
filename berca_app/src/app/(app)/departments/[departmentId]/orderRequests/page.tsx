@@ -27,6 +27,7 @@ export default async function OrderRequestsPage({params}: PageProps) {
   const entries = entriesFromDAL.map(mapInventoryOrder)
   const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'orderRequests')
 
+  // Build lightweight picker options for the request form.
   const inventoryOptions = inventoriesRaw.map(i => ({
     id: i.id,
     beNumber: i.beNumber,

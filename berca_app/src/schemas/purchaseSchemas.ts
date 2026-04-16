@@ -23,6 +23,7 @@ export const createPurchaseDetailSchema = z.object({
   quoteSupplierLineId: z.string().nullable().optional(),
   materialId: z.string(),
   materialDemandId: z.string().nullable().optional(),
+  // Accept string input from form fields or numeric values from API callers.
   unitPrice: z.union([z.string(), z.number()]),
   quantity: z.number().int().min(1),
   minQuantity: z.number().int().min(0).nullable().optional(),

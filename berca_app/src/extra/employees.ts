@@ -516,6 +516,7 @@ export function mapEmployeeDetail(
   }, null)?.RoleLevel
 
   const getEmployeeRoleName = (emp: CreatedEmployee | DeletedEmployee) => {
+    // Derive a single display role name from the highest sub-role level.
     const highest = emp.RoleLevelEmployee.reduce<(typeof emp.RoleLevelEmployee)[0] | null>((h, c) => {
       if (!h) return c
       return c.RoleLevel.SubRole.level > h.RoleLevel.SubRole.level ? c : h

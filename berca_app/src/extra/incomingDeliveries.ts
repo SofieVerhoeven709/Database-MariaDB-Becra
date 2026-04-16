@@ -19,6 +19,7 @@ export function mapIncomingDelivery(row: IncomingDeliveryWithRelations): MappedI
   const orderedQtyTotal = row.IncomingDeliveryLine.reduce((sum, line) => sum + line.orderedQty, 0)
   const acceptedQtyTotal = row.IncomingDeliveryLine.reduce((sum, line) => sum + line.acceptedQty, 0)
   const hasBackorder = row.IncomingDeliveryLine.some(line => line.backorderQty > 0)
+  // Fully delivered when all ordered qty is accepted and no backorder remains.
   const isFullyDelivered = row.IncomingDeliveryLine.length > 0 && acceptedQtyTotal >= orderedQtyTotal && !hasBackorder
 
   return {
@@ -81,6 +82,7 @@ export function mapIncomingDeliveryLine(line: IncomingDeliveryLineWithRelations)
     incomingDeliveryId: line.incomingDeliveryId,
     purchaseDetailId: line.purchaseDetailId,
     materialId: line.materialId,
+    // Prefer BE number with a readable name/description.
     materialLabel: [line.Material.beNumber, line.Material.shortDescription ?? line.Material.name].filter(Boolean).join(' - '),
     orderedQty: line.orderedQty,
     deliveredQty: line.deliveredQty,
@@ -109,6 +111,7 @@ export function mapIncomingDeliveryLineAllocation(
     id: allocation.id,
     incomingDeliveryLineId: allocation.incomingDeliveryLineId,
     materialDemandSourceId: allocation.materialDemandSourceId,
+    // Include source type and material for quick identification in the UI.
     materialDemandSourceLabel: `${allocation.MaterialDemandSource.MaterialDemandSourceType.name} - ${material.beNumber ?? '—'} - ${material.shortDescription ?? material.name ?? allocation.materialDemandSourceId}`,
     sourceTypeName: allocation.MaterialDemandSource.MaterialDemandSourceType.name,
     sourceReferenceId: allocation.MaterialDemandSource.sourceReferenceId ?? null,

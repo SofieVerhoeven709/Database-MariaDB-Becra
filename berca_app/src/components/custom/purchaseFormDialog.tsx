@@ -27,6 +27,7 @@ interface PurchaseFormDialogProps {
 const STATUS_OPTIONS = ['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED']
 
 function emptyPurchase(): MappedPurchase {
+  // Defaults for a brand-new purchase order form.
   return {
     id: '',
     purchaseNumber: generatePurchaseNumber(),
@@ -124,6 +125,7 @@ export function PurchaseFormDialog({
               id="purchaseDate"
               type="date"
               value={form.purchaseDate ? form.purchaseDate.slice(0, 10) : ''}
+              // Convert the date input back to ISO for storage.
               onChange={e => set('purchaseDate', e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString())}
               className="bg-secondary border-border"
             />

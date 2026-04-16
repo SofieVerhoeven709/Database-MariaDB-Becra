@@ -215,6 +215,7 @@ export function EmployeeTable({
   }
 
   async function handleSave(emp: MappedEmployee, password: string) {
+    // Convert UI strings to the schema's expected Date types and omit UI-only fields.
     const payload = {
       ...emp,
       password_hash: password || undefined,

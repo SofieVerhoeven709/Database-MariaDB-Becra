@@ -1777,3 +1777,59 @@ CREATE TABLE
             INDEX (createdBy),
             INDEX (fulfilledBy)
       ) ENGINE = InnoDB;
+
+-- 1) Ensure VatMargin table has countryId column
+ALTER TABLE VatMargin
+ADD COLUMN IF NOT EXISTS countryId CHAR(36) NULL;
+
+-- 2) Drop old FK(s) if they exist
+ALTER TABLE VatMargin
+DROP FOREIGN KEY IF EXISTS fk_vatMargin_countryId;
+
+-- 3) Add/refresh countryId FK
+ALTER TABLE VatMargin
+ADD CONSTRAINT fk_vatMargin_countryId
+FOREIGN KEY (countryId) REFERENCES Country (id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+-- 4) Ensure required fields exist on WorkOrderStructure (safe for older DBs)
+ALTER TABLE WorkOrderStructure
+ADD COLUMN IF NOT EXISTS vatMarginId CHAR(36) NULL;
+
+-- 5) Drop old FK(s) tied to vatMarginId
+ALTER TABLE WorkOrderStructure
+DROP FOREIGN KEY IF EXISTS fk_workOrderStructure_vatMarginId;
+
+-- 6) Add/refresh vatMarginId FK
+ALTER TABLE WorkOrderStructure
+ADD CONSTRAINT fk_workOrderStructure_vatMarginId
+FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+-- Remove VAT from InvoiceOut
+ALTER TABLE InvoiceOut
+DROP FOREIGN KEY IF EXISTS InvoiceOut_ibfk_9;
+
+ALTER TABLE InvoiceOut
+DROP COLUMN IF EXISTS vatMarginId;
+
+ALTER TABLE InvoiceOut
+DROP INDEX IF EXISTS vatMarginId;
+
+ALTER TABLE TimeRegistry
+ADD COLUMN IF NOT EXISTS vatMarginId CHAR(36) NULL;
+
+ALTER TABLE TimeRegistry
+DROP FOREIGN KEY IF EXISTS fk_timeRegistry_vatMarginId;
+
+ALTER TABLE TimeRegistry
+ADD CONSTRAINT fk_timeRegistry_vatMarginId
+FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE Training
+ADD COLUMN IF NOT EXISTS vatMarginId CHAR(36) NULL;
+
+ALTER TABLE Training
+DROP FOREIGN KEY IF EXISTS fk_training_vatMarginId;
+
+ALTER TABLE Training
+ADD CONSTRAINT fk_training_vatMarginId
+FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON UPDATE RESTRICT ON DELETE RESTRICT;

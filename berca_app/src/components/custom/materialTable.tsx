@@ -776,27 +776,23 @@ export function MaterialTable({
                             }}>
                             <Pencil className="h-3.5 w-3.5" />
                           </Button>
-                          <span title={m.partApproved ? 'Copy row' : 'Part must be approved before copying'}>
-                            <Button
-                              size="icon"
-                              variant="ghost"
-                              className="h-7 w-7"
-                              onClick={() => {
-                                if (!m.partApproved) {
-                                  setAlert({
-                                    title: 'Copy not allowed',
-                                    description: 'This part must be approved before it can be copied.',
-                                    type: 'warning',
-                                  })
-                                  return
-                                }
-                                setDialogMode('duplicate')
-                                setEditingMaterial(m)
-                                setDialogOpen(true)
-                              }}>
-                              <Copy className="h-3.5 w-3.5" />
-                            </Button>
-                          </span>
+                          {m.partApproved ? (
+                            <span title="Copy row">
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-7 w-7"
+                                onClick={() => {
+                                  setDialogMode('duplicate')
+                                  setEditingMaterial(m)
+                                  setDialogOpen(true)
+                                }}>
+                                <Copy className="h-3.5 w-3.5" />
+                              </Button>
+                            </span>
+                          ) : (
+                            <span className="inline-block h-7 w-7 invisible pointer-events-none" aria-hidden="true" />
+                          )}
                           <Button
                             size="icon"
                             variant="ghost"

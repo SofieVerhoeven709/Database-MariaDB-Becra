@@ -59,12 +59,14 @@ export function TrainingStandardFormDialog({
   const [form, setForm] = useState<MappedTrainingStandard>(emptyStandard())
   const [saving, setSaving] = useState(false)
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
+    // Seed visibility rows based on the current standard (or defaults for new).
     buildInitialVisibilityRows(standard?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
 
   useEffect(() => {
     const next = standard ?? emptyStandard()
     setForm(next)
+    // Keep visibility state in sync when switching between standards.
     setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
   }, [standard?.id, open])
 

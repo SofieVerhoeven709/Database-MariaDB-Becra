@@ -20,14 +20,12 @@ import {
   getActiveWorkOrdersForProjectAction,
   addWorkOrdersToInvoiceAction,
   assignPriceListToInvoiceAction,
+  getAvailableVatMarginsAction,
+  updateWorkOrderStructureVatAction,
+  updateTimeRegistryVatMarginAction,
+  updateTrainingVatMarginAction,
 } from '@/serverFunctions/invoices'
-import type {
-  MappedInvoiceOut,
-  MappedBillingLine,
-  InvoiceLookup,
-  VatMarginOption,
-  PriceListOption,
-} from '@/types/invoice'
+import type {MappedInvoiceOut, MappedBillingLine, InvoiceLookup, PriceListOption} from '@/types/invoice'
 
 function formatDate(date: string | null) {
   if (!date) return '-'
@@ -58,6 +56,7 @@ function TypeBadge({type}: {type: MappedBillingLine['type']}) {
     hours: {label: 'Hours', cls: 'bg-blue-500/10 text-blue-500 border-0'},
     material: {label: 'Material', cls: 'bg-purple-500/10 text-purple-500 border-0'},
     training: {label: 'Training', cls: 'bg-green-500/10 text-green-500 border-0'},
+    stay_over: {label: 'Stay Over', cls: 'bg-amber-500/10 text-amber-600 border-0'},
   }
   const {label, cls} = map[type]
   return <Badge className={`${cls} font-medium text-xs`}>{label}</Badge>
@@ -75,7 +74,6 @@ interface InvoiceOutDetailProps {
   paymentMethods: InvoiceLookup[]
   invoiceSentTypes: InvoiceLookup[]
   invoiceStatuses: InvoiceLookup[]
-  vatMargins: VatMarginOption[]
   contactOptions: InvoiceLookup[]
   priceListOptions: PriceListOption[] // ← new
   currentUserLevel: number
@@ -94,7 +92,6 @@ type EditForm = {
   paymentMethodId: string
   invoiceSentTypeId: string
   invoiceStatusId: string
-  vatMarginId: string
   reminderSent: boolean
   outstanding: boolean
 }
@@ -110,7 +107,6 @@ export function InvoiceOutDetail({
   paymentMethods,
   invoiceSentTypes,
   invoiceStatuses,
-  vatMargins,
   contactOptions,
   priceListOptions,
   currentUserLevel,
@@ -136,7 +132,6 @@ export function InvoiceOutDetail({
     paymentMethodId: invoice.paymentMethodId,
     invoiceSentTypeId: invoice.invoiceSentTypeId,
     invoiceStatusId: invoice.invoiceStatusId,
-    vatMarginId: invoice.vatMarginId,
     reminderSent: invoice.reminderSent,
     outstanding: invoice.outstanding,
   })
@@ -186,6 +181,7 @@ export function InvoiceOutDetail({
   useEffect(() => {
     if (!addingWorkOrders || !isDraft) return
     setLoadingWorkOrders(true)
+    // Load work orders from the same projects already on this invoice.
     Promise.all(linkedProjectIds.map(pid => getActiveWorkOrdersForProjectAction(pid)))
       .then(results => {
         const all = results.flat()
@@ -232,7 +228,6 @@ export function InvoiceOutDetail({
         paymentMethodId: form.paymentMethodId,
         invoiceSentTypeId: form.invoiceSentTypeId,
         invoiceStatusId: form.invoiceStatusId,
-        vatMarginId: form.vatMarginId,
         reminderSent: form.reminderSent,
         outstanding: form.outstanding,
         // priceListId is managed separately via assignPriceListToInvoiceAction
@@ -281,6 +276,116 @@ export function InvoiceOutDetail({
     wo.billingLines.map(l => ({...l, workOrderNumber: wo.workOrderNumber, workOrderDesc: wo.description})),
   )
   const unmatchedCount = allLines.filter(l => l.unmatched).length
+
+  // VAT management
+  const [availableVatMargins, setAvailableVatMargins] = useState<
+    Array<{
+      countryId: string | null
+      countryName: string
+      rates: Array<{id: string; vat: number}>
+    }>
+  >([])
+  const [editingVatLineKey, setEditingVatLineKey] = useState<string | null>(null)
+  const [savingVat, setSavingVat] = useState(false)
+  const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null)
+  const [selectedVatMarginId, setSelectedVatMarginId] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Load available VAT margins when component mounts
+    getAvailableVatMarginsAction()
+      .then(setAvailableVatMargins)
+      .catch(err => console.error(err))
+  }, [])
+
+  function normalizeCountryName(name: string | null | undefined) {
+    return (name ?? '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim()
+  }
+
+  function getVatRatesForSelectedCountry(countrySelection: string | null) {
+    if (!countrySelection || countrySelection === '__unset__') return [] as Array<{id: string; vat: number}>
+
+    if (countrySelection === '__none__') {
+      const globalRates = availableVatMargins.find(group => group.countryId === null)?.rates ?? []
+      const belgiumRates =
+        availableVatMargins.find(group => normalizeCountryName(group.countryName).includes('belg'))?.rates ?? []
+
+      const merged = [...globalRates, ...belgiumRates]
+      const dedupedById = new Map(merged.map(rate => [rate.id, rate]))
+      return Array.from(dedupedById.values()).sort((a, b) => a.vat - b.vat)
+    }
+
+    return availableVatMargins.find(group => group.countryId === countrySelection)?.rates ?? []
+  }
+
+  function getVatLabel(vatMarginId: string | null) {
+    if (!vatMarginId) return '—'
+    for (const group of availableVatMargins) {
+      const rate = group.rates.find(r => r.id === vatMarginId)
+      if (rate) return `${rate.vat}%`
+    }
+    return '?'
+  }
+
+  function beginVatEdit(line: MappedBillingLine, lineKey: string) {
+    setEditingVatLineKey(lineKey)
+    const currentGroup = availableVatMargins.find(group => group.rates.some(rate => rate.id === line.vatMarginId))
+    setSelectedCountryId(currentGroup ? (currentGroup.countryId ?? '__none__') : '__unset__')
+    setSelectedVatMarginId(line.vatMarginId ?? null)
+  }
+
+  function handleCountrySelection(value: string) {
+    setSelectedCountryId(value)
+    if (value === '__unset__') {
+      setSelectedVatMarginId(null)
+      return
+    }
+    setSelectedVatMarginId(null)
+  }
+
+  function handleVatRateSelection(value: string) {
+    if (value === '__unset_vat__') {
+      setSelectedVatMarginId(null)
+      return
+    }
+    setSelectedVatMarginId(value)
+  }
+
+  async function handleSetVat(line: MappedBillingLine) {
+    const currentVatMarginId = line.vatMarginId ?? null
+    if (selectedVatMarginId === currentVatMarginId) return
+
+    setSavingVat(true)
+    try {
+      if (line.type === 'material' && line.workOrderStructureId) {
+        await updateWorkOrderStructureVatAction({
+          workOrderStructureId: line.workOrderStructureId,
+          vatMarginId: selectedVatMarginId,
+        })
+      } else if ((line.type === 'hours' || line.type === 'stay_over') && line.timeRegistryIds?.length) {
+        await updateTimeRegistryVatMarginAction({
+          timeRegistryIds: line.timeRegistryIds,
+          vatMarginId: selectedVatMarginId,
+        })
+      } else if (line.type === 'training') {
+        await updateTrainingVatMarginAction({
+          trainingId: line.sourceId,
+          vatMarginId: selectedVatMarginId,
+        })
+      }
+      setEditingVatLineKey(null)
+      setSelectedCountryId(null)
+      setSelectedVatMarginId(null)
+      router.refresh()
+    } catch (err) {
+      console.error('Failed to update VAT:', err)
+    } finally {
+      setSavingVat(false)
+    }
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -504,26 +609,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">VAT Margin</Label>
-            {editing ? (
-              <Select value={form.vatMarginId} onValueChange={v => s('vatMarginId', v)}>
-                <SelectTrigger className="bg-secondary border-border">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border">
-                  {vatMargins.map(v => (
-                    <SelectItem key={v.id} value={v.id}>
-                      {v.vat}%
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : (
-              <p className="text-sm text-muted-foreground">{invoice.vatMarginVat}%</p>
-            )}
-          </div>
-
           {/* ─── Price List — always visible, independent of edit mode ─────── */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Price List</Label>
@@ -673,7 +758,11 @@ export function InvoiceOutDetail({
                               <TableHead className={thClass}>Qty</TableHead>
                               <TableHead className={thClass}>Unit</TableHead>
                               <TableHead className={thClass}>Unit Price</TableHead>
-                              <TableHead className={thClass}>Total</TableHead>
+                              <TableHead className={thClass}>Total (ex VAT)</TableHead>
+                              <TableHead className={thClass}>VAT %</TableHead>
+                              <TableHead className={thClass}>VAT Amount</TableHead>
+                              <TableHead className={thClass}>Total (incl VAT)</TableHead>
+                              {canEdit && <TableHead className={thClass}>VAT</TableHead>}
                             </TableRow>
                           </TableHeader>
                           <TableBody>
@@ -709,6 +798,118 @@ export function InvoiceOutDetail({
                                     <span className="text-amber-500 text-xs">—</span>
                                   )}
                                 </TableCell>
+                                <TableCell className={`${tdClass} font-mono font-medium`}>
+                                  {getVatLabel(line.vatMarginId ?? null)}
+                                </TableCell>
+                                <TableCell className={`${tdClass} font-mono font-medium`}>
+                                  {line.lineVatAmount != null ? (
+                                    formatEur(line.lineVatAmount)
+                                  ) : (
+                                    <span className="text-amber-500 text-xs">—</span>
+                                  )}
+                                </TableCell>
+                                <TableCell className={`${tdClass} font-mono font-medium`}>
+                                  {line.lineTotalInclVat != null ? (
+                                    formatEur(line.lineTotalInclVat)
+                                  ) : (
+                                    <span className="text-amber-500 text-xs">—</span>
+                                  )}
+                                </TableCell>
+                                {canEdit && (
+                                  <TableCell className={tdClass}>
+                                    {(() => {
+                                      const lineKey =
+                                        line.workOrderStructureId ?? `${wo.id}:${line.type}:${line.sourceId}`
+                                      const canEditVatLine =
+                                        (line.type === 'material' && !!line.workOrderStructureId) ||
+                                        (line.type === 'hours' && (line.timeRegistryIds?.length ?? 0) > 0) ||
+                                        line.type === 'training'
+                                      const isEditing = editingVatLineKey === lineKey
+                                      const hasVatChange = selectedVatMarginId !== (line.vatMarginId ?? null)
+
+                                      if (!canEditVatLine) {
+                                        return <span className="text-xs text-muted-foreground">—</span>
+                                      }
+
+                                      return (
+                                        <div className="flex items-center gap-1">
+                                          {isEditing ? (
+                                            <div className="flex flex-col gap-2 w-60">
+                                              <Select
+                                                value={selectedCountryId ?? '__unset__'}
+                                                onValueChange={handleCountrySelection}>
+                                                <SelectTrigger className="h-7 text-xs bg-secondary border-border">
+                                                  <SelectValue placeholder="Select country..." />
+                                                </SelectTrigger>
+                                                <SelectContent className="bg-card border-border text-xs">
+                                                  <SelectItem value="__unset__">Select country...</SelectItem>
+                                                  <SelectItem value="__none__">
+                                                    No country (Belgium / Global)
+                                                  </SelectItem>
+                                                  {availableVatMargins
+                                                    .filter(group => !!group.countryId)
+                                                    .map(group => (
+                                                      <SelectItem key={group.countryId!} value={group.countryId!}>
+                                                        {group.countryName}
+                                                      </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                              </Select>
+
+                                              {selectedCountryId && selectedCountryId !== '__unset__' && (
+                                                <Select
+                                                  value={selectedVatMarginId ?? '__unset_vat__'}
+                                                  onValueChange={handleVatRateSelection}>
+                                                  <SelectTrigger className="h-7 text-xs bg-secondary border-border">
+                                                    <SelectValue placeholder="Select VAT rate..." />
+                                                  </SelectTrigger>
+                                                  <SelectContent className="bg-card border-border text-xs">
+                                                    <SelectItem value="__unset_vat__">Unset VAT</SelectItem>
+                                                    {getVatRatesForSelectedCountry(selectedCountryId).map(rate => (
+                                                      <SelectItem key={rate.id} value={rate.id}>
+                                                        {rate.vat}%
+                                                      </SelectItem>
+                                                    ))}
+                                                  </SelectContent>
+                                                </Select>
+                                              )}
+
+                                              <div className="flex gap-1">
+                                                <Button
+                                                  size="sm"
+                                                  variant="ghost"
+                                                  className="h-7 w-7 p-0"
+                                                  disabled={savingVat || !hasVatChange}
+                                                  onClick={() => handleSetVat(line)}>
+                                                  <Save className="h-3 w-3" />
+                                                </Button>
+                                                <Button
+                                                  size="sm"
+                                                  variant="ghost"
+                                                  className="h-7 w-7 p-0"
+                                                  onClick={() => {
+                                                    setEditingVatLineKey(null)
+                                                    setSelectedCountryId(null)
+                                                    setSelectedVatMarginId(null)
+                                                  }}>
+                                                  <X className="h-3 w-3" />
+                                                </Button>
+                                              </div>
+                                            </div>
+                                          ) : (
+                                            <Button
+                                              size="sm"
+                                              variant="ghost"
+                                              className="h-7 w-7 p-0"
+                                              onClick={() => beginVatEdit(line, lineKey)}>
+                                              <Pencil className="h-3 w-3" />
+                                            </Button>
+                                          )}
+                                        </div>
+                                      )
+                                    })()}
+                                  </TableCell>
+                                )}
                               </TableRow>
                             ))}
                           </TableBody>
@@ -724,10 +925,12 @@ export function InvoiceOutDetail({
                       <span className="text-xs text-muted-foreground">Subtotal (ex VAT)</span>
                       <span className="text-sm font-mono text-foreground">{formatEur(invoice.subtotalExVat)}</span>
                     </div>
+
                     <div className="flex items-center justify-between gap-8">
-                      <span className="text-xs text-muted-foreground">VAT ({invoice.vatMarginVat}%)</span>
-                      <span className="text-sm font-mono text-muted-foreground">{formatEur(invoice.vatAmount)}</span>
+                      <span className="text-xs text-muted-foreground">Total VAT</span>
+                      <span className="text-sm font-mono text-muted-foreground">{formatEur(invoice.totalVat)}</span>
                     </div>
+
                     <div className="border-t border-border/60 pt-1.5 flex items-center justify-between gap-8">
                       <span className="text-sm font-medium text-foreground">Total (incl. VAT)</span>
                       <span className="text-base font-mono font-semibold text-foreground">

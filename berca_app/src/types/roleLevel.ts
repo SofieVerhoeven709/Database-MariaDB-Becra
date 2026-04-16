@@ -12,6 +12,7 @@ export function mapRoleLevelOptions(
     SubRole: {name: string; level: number}
   }[],
 ): RoleLevelOption[] {
+  // Hide administrator role levels from general selection lists.
   return roleLevels
     .filter(r => r.Role.name !== 'Administrator')
     .map(r => ({

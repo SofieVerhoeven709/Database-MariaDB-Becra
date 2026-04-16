@@ -70,6 +70,7 @@ function ItemDialog({
   const prevOpenRef = useRef(false)
   useEffect(() => {
     if (open && !prevOpenRef.current) {
+      // Cost margin rows are locked to a fixed description/unit.
       const isMargin = item?.isCostMargin ?? isCostMargin
       setDescription(isMargin ? 'Cost Margin' : (item?.description ?? ''))
       setUnit(isMargin ? '%' : (item?.unit ?? ''))
@@ -148,6 +149,7 @@ function ItemDialog({
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Unit *</Label>
             <Input
+              list="price-list-unit-options"
               value={unit}
               onChange={e => {
                 setUnit(e.target.value)
@@ -156,6 +158,13 @@ function ItemDialog({
               disabled={isEditingCostMargin}
               className={`bg-secondary border-border ${errors.unit ? 'border-destructive' : ''} ${isEditingCostMargin ? 'opacity-60 cursor-not-allowed' : ''}`}
             />
+            <datalist id="price-list-unit-options">
+              <option value="H" />
+              <option value="STAY_OVER" />
+            </datalist>
+            {!isEditingCostMargin && (
+              <p className="text-[11px] text-muted-foreground">Use `STAY_OVER` to bill time-registry stay-over markers.</p>
+            )}
             {errors.unit && <p className="text-xs text-destructive">{errors.unit}</p>}
           </div>
           <div className="flex flex-col gap-1.5">
@@ -195,7 +204,6 @@ const TARGET_TYPE_LABELS: Record<LinkableTargetType, string> = {
   HourType: 'Hour Type',
   Material: 'Material',
   Training: 'Training',
-  TrainingStandard: 'Training Standard',
 }
 
 interface LinkDialogProps {
@@ -726,7 +734,7 @@ export function PriceListDetail({priceList, currentUserLevel, currentUserRole, d
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-6 text-xs text-muted-foreground hover:text-accent hover:bg-accent/10 px-2 gap-1"
+                            className="h-6 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary"
                             onClick={() => openLinkDialog(item)}>
                             <Plus className="h-3 w-3" /> Link
                           </Button>

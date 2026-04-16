@@ -10,6 +10,7 @@ export type RoleLevelWithRelations = Prisma.RoleLevelGetPayload<{
 }>
 
 export async function getRolelevelById(id: string): Promise<RoleLevelWithRelations | null> {
+  // Fetch a single role level with its role and sub-role details.
   return prismaClient.roleLevel.findFirst({
     where: {id},
     include: {
@@ -34,6 +35,7 @@ export async function getAllRoleLevels() {
       Role: true,
       SubRole: true,
     },
+    // Stable ordering for role/sub-role dropdowns.
     orderBy: [{Role: {name: 'asc'}}, {SubRole: {level: 'asc'}}],
   })
 }

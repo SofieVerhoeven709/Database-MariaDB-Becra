@@ -37,6 +37,7 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
 
   const companyOptions = companiesRaw
     .filter(c => !c.deleted)
+    // Keep dropdowns stable and searchable by name.
     .map(c => ({id: c.id, name: c.name}))
     .sort((a, b) => a.name.localeCompare(b.name))
 
@@ -64,6 +65,7 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
   }, null)
 
   const dateRangeLabel = (() => {
+    // Friendly summary of purchase activity dates.
     if (!earliest || !latest) return 'No purchase dates yet'
     if (earliest.getTime() === latest.getTime()) return formatShortDate(latest)
     return `${formatShortDate(earliest)} – ${formatShortDate(latest)}`

@@ -114,11 +114,13 @@ export function PurchaseDetailTable({
   }
 
   const totalValue = initialDetails.reduce((sum, d) => {
+    // Sum quantity * unit price, ignoring invalid prices.
     const unit = d.unitPrice != null ? parseFloat(d.unitPrice) : 0
     const cost = unit * d.quantity
     return sum + (isNaN(cost) ? 0 : cost)
   }, 0)
 
+  // Fast lookup from demand id to label for table rendering.
   const demandLabelById = new Map(materialDemandOptions.map(option => [option.id, option.name]))
 
   return (

@@ -33,7 +33,7 @@ export type DocumentListPayload = Prisma.DocumentStructureGetPayload<{
     }
     DocumentPlace: {select: {id: true; headFolder: true; subFolder: true}}
     DocumentStatus: {select: {id: true; name: true}}
-    DocumentStructure: {select: {id: true; documentNumber: true}}
+    DocumentStructure: {select: {id: true, documentNumber: true}}
     DocumentStructureTarget: {
       include: {
         Target: {
@@ -74,7 +74,7 @@ export type DocumentDetailPayload = Prisma.DocumentStructureGetPayload<{
     }
     DocumentPlace: {select: {id: true; headFolder: true; subFolder: true}}
     DocumentStatus: {select: {id: true; name: true}}
-    DocumentStructure: {select: {id: true; documentNumber: true}}
+    DocumentStructure: {select: {id: true, documentNumber: true}}
     DocumentStructureTarget: {
       take: 1
       include: {
@@ -149,10 +149,12 @@ export type DocumentStatusPayload = Prisma.DocumentStatusGetPayload<{
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function placeLabel(headFolder: string, subFolder: string | null): string {
+  // Build a single label for display in dropdowns/tables.
   return subFolder ? `${headFolder} / ${subFolder}` : headFolder
 }
 
 function buildGroupLabel(a: string | null, b: string | null, c: string | null, d: string | null): string {
+  // Show a compact A › B › C › D path, falling back to a dash.
   return [a, b, c, d].filter(Boolean).join(' › ') || '—'
 }
 
@@ -219,6 +221,7 @@ export function mapDocument(d: DocumentListPayload): MappedDocument {
     documentTargetTypeName: docTarget?.Target.TargetType.name ?? null,
     documentStructureTargets: d.DocumentStructureTarget.map(t => ({
       targetTypeName: t.Target.TargetType.name,
+      // Prefer the first populated related entity name for display.
       targetDisplayName:
         t.Target.Material[0]?.name ?? t.Target.Project[0]?.projectName ?? t.Target.Company[0]?.name ?? null,
     })),
@@ -258,6 +261,7 @@ export function mapDocumentDetail(
   return {
     ...base,
     revisions: d.DocumentRevision.map(mapRevision),
+    // Allow the caller to provide pre-resolved display names (e.g., from a separate query).
     documentStructureTargets:
       targetDisplayNames ??
       d.DocumentStructureTarget.map(t => ({

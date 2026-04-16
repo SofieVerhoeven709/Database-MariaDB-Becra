@@ -4,6 +4,7 @@ import {prismaClient} from '@/dal/prismaClient'
 
 const employeeSelect = {select: {id: true, firstName: true, lastName: true}} as const
 
+// Visibility rows include role + subrole labels for the UI.
 const visibilityInclude = {
   include: {
     RoleLevel: {include: {Role: true, SubRole: true}},
@@ -11,6 +12,7 @@ const visibilityInclude = {
 } as const
 
 const listInclude = {
+  // Shared include bundle for list views.
   Employee_FollowUpStructure_createdByToEmployee: employeeSelect,
   Employee_FollowUpStructure_ownedByToEmployee: employeeSelect,
   Employee_FollowUpStructure_executedByToEmployee: employeeSelect,
@@ -41,6 +43,7 @@ const detailInclude = {
       VisibilityForRole: visibilityInclude,
     },
   },
+  // Include parent follow-up summary for breadcrumbs.
   FollowUp: {
     select: {
       id: true,

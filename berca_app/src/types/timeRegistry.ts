@@ -1,4 +1,5 @@
 export interface MappedTimeRegistry {
+  // Flattened time registry row used by tables and forms.
   id: string
   activityDescription: string | null
   additionalInfo: string | null

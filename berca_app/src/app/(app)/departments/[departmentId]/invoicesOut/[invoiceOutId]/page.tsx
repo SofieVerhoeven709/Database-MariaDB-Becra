@@ -5,7 +5,6 @@ import {
   getPaymentMethods,
   getInvoiceSentTypes,
   getInvoiceStatuses,
-  getVatMargins,
   getCompanyContactsForInvoice,
   getPriceListsForCompanies,
 } from '@/dal/invoices'
@@ -22,7 +21,7 @@ interface PageProps {
 export default async function InvoiceOutDetailPage({params}: PageProps) {
   const {departmentId, invoiceOutId} = await params
 
-  const [department, invoiceRaw, invoiceTypes, paymentMethods, invoiceSentTypes, invoiceStatuses, vatMargins, profile] =
+  const [department, invoiceRaw, invoiceTypes, paymentMethods, invoiceSentTypes, invoiceStatuses, profile] =
     await Promise.all([
       getDepartmentById(departmentId),
       getInvoiceOutById(invoiceOutId).catch(() => null),
@@ -30,7 +29,6 @@ export default async function InvoiceOutDetailPage({params}: PageProps) {
       getPaymentMethods(),
       getInvoiceSentTypes(),
       getInvoiceStatuses(),
-      getVatMargins(),
       getSessionProfileFromCookieOrThrow(),
     ])
 
@@ -86,7 +84,6 @@ export default async function InvoiceOutDetailPage({params}: PageProps) {
           paymentMethods={paymentMethods}
           invoiceSentTypes={invoiceSentTypes}
           invoiceStatuses={invoiceStatuses}
-          vatMargins={vatMargins}
           contactOptions={contactOptions}
           priceListOptions={priceListOptions}
           currentUserRole={currentUserRole}

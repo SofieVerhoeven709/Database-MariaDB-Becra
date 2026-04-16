@@ -67,7 +67,7 @@ export const createDocumentAction = protectedServerFunction({
             data: {...data, documentNumber, id, createdBy: profile.id, createdAt: now, targetId: target.id},
           })
 
-          // Create all target links
+          // Link all selected targets (explicit + primary) in the same transaction.
           const allAssignments = [
             ...(targetAssignments ?? []),
             ...(documentTargetId ? [{targetId: documentTargetId}] : []),
@@ -86,6 +86,7 @@ export const createDocumentAction = protectedServerFunction({
       } catch (err: unknown) {
         const prismaErr = err as {code?: string}
         if (prismaErr.code === 'P2002') {
+          // Collision on unique documentNumber; regenerate and retry.
           attempts++
           documentNumber = generateDocumentNumber()
           continue
@@ -97,6 +98,7 @@ export const createDocumentAction = protectedServerFunction({
     if (attempts >= 5) throw new Error('Failed to generate a unique document number after 5 attempts')
 
     if (visibilityForRoles.length > 0) {
+      // Apply default visibility rows after the document + target exist.
       await upsertVisibilityRows(target.id, visibilityForRoles)
     }
 
@@ -114,7 +116,7 @@ export const updateDocumentAction = protectedServerFunction({
       select: {targetId: true},
     })
 
-    // Fix: Only add DocumentStructure relation if referenceDocId is defined
+    // Only touch referenceDocId when it is provided by the form.
     const {referenceDocId, ...restData} = data
     let updateData = {...restData}
     if (typeof referenceDocId !== 'undefined') {
@@ -132,10 +134,12 @@ export const updateDocumentAction = protectedServerFunction({
           managedById: data.managedById ?? null,
         },
       }),
+      // Replace visibility rows for the target linked to this document.
       upsertVisibilityRows(targetId, visibilityForRoles),
     ])
 
     if (targetAssignments && targetAssignments.length > 0) {
+      // Add only missing target links (keeps existing links intact).
       for (const a of targetAssignments) {
         const exists = await prismaClient.documentStructureTarget.findFirst({
           where: {documentStructureId: id, targetId: a.targetId},
@@ -227,7 +231,7 @@ export const copyDocumentAction = protectedServerFunction({
         createdBy: profile.id,
         createdAt: new Date(),
         targetId: target.id,
-        // Reset revision info on copy
+        // Reset revision + deletion metadata for the new copy.
         revisionNumber: null,
         revisionDetail: null,
         deleted: false,

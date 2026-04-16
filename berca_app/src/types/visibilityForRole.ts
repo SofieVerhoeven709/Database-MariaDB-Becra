@@ -1,3 +1,4 @@
+// Flattened visibility record used by UI controls.
 export interface MappedVisibilityForRole {
   id: string
   visible: boolean

@@ -66,6 +66,7 @@ async function getNextQuoteNumber(): Promise<string> {
 async function getNextAvailableQuoteNumber(): Promise<string> {
   let candidate = await getNextQuoteNumber()
   let parsed = parseQuoteNumber(candidate) ?? QUOTE_NUMBER_BASE
+  // Increment until we find a quote number that is not already used.
   while (await quoteNumberExists(candidate)) {
     parsed += 1
     candidate = formatQuoteNumber(parsed)
@@ -120,6 +121,7 @@ export const createQuoteSupplierAction = protectedServerFunction({
           },
         },
       })
+      // Only allow one active (unsent or unapproved) quote per demand.
       if (existingForDemand.some(line => !line.QuoteSupplier.deleted && !(line.QuoteSupplier.sent && line.QuoteSupplier.acceptedForPOB))) {
         throw new Error('A quote already exists for this material demand.')
       }
@@ -138,6 +140,7 @@ export const createQuoteSupplierAction = protectedServerFunction({
         select: {id: true},
       })
 
+      // Reuse the latest unsent quote for the same supplier instead of creating a new header.
       if (reusableQuote) {
         // One unsent quote can collect multiple lines for the same supplier while it is still being prepared.
         await prismaClient.quoteSupplierLine.create({
@@ -205,6 +208,7 @@ export const createQuoteSupplierAction = protectedServerFunction({
     logger.info(`Quote supplier created: ${id}`)
 
     if (data.acceptedForPOB ?? false) {
+      // Approved quotes ensure a matching purchase order in the purchasing module.
       // A quote can be approved at creation time, which immediately creates the linked purchase.
       const result = await ensurePurchaseFromApprovedQuote(id, profile.id)
       if (result.purchaseId) {
@@ -270,6 +274,7 @@ export const updateQuoteSupplierAction = protectedServerFunction({
     })
 
     if (!before.acceptedForPOB && nextApproved) {
+      // Newly approved quotes trigger a purchase order check/create.
       // The approval transition is what materializes the purchase record when one does not already exist.
       const result = await ensurePurchaseFromApprovedQuote(id, profile.id)
       if (result.purchaseId) {
@@ -412,6 +417,7 @@ export const setQuoteSupplierSentAction = protectedServerFunction({
             sentBy: profile.id,
           }
         : {
+            // Reset received flags when moving back to unsent.
             sent: false,
             sentAt: null,
             sentBy: null,
@@ -445,6 +451,7 @@ export const setQuoteSupplierReceivedAction = protectedServerFunction({
       where: {id},
       data: received
         ? {
+            // Ensure sent timestamps are populated when receiving directly.
             sent: true,
             sentAt: existing.sent ? undefined : new Date(),
             sentBy: existing.sent ? undefined : profile.id,

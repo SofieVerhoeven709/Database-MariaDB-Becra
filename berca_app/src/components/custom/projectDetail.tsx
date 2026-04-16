@@ -164,10 +164,12 @@ export function ProjectDetail({
   const [savingEdit, setSavingEdit] = useState(false)
   const [savingDelete, setSavingDelete] = useState(false)
 
+  // Seed visibility rows for the current project (used in the Visibility tab).
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(initialVisibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
   )
 
+  // Permission helpers for conditional UI/actions.
   const can = (level: number) => currentUserLevel >= level
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canEdit = currentUserLevel >= 40
@@ -175,12 +177,14 @@ export function ProjectDetail({
   const canManageWorkOrders = currentUserLevel >= 80
   const canManageVisibility = currentUserLevel >= 80
 
+  // Single-project option used by the work-order dialog.
   const workOrderProjectOptions = [{id: project.id, name: `${project.projectNumber} — ${project.projectName}`}]
 
   // All BOMs scoped to this project (for parent BOM selector inside the dialog)
   const projectScopedBoms: MappedProjectBOM[] = projectBoms.filter(b => b.projectId === project.id)
 
   function handleCancel() {
+    // Reset form state and visibility rows back to the original project values.
     setForm({
       projectNumber: project.projectNumber,
       projectName: project.projectName,

@@ -388,6 +388,7 @@ export const softDeletePurchaseBOMStructureAction = protectedServerFunction({
       })
 
       if (sources.length > 0) {
+        // Recompute total required quantities after removing this structure's sources.
         const totalsByDemand = new Map<string, number>()
         for (const src of sources) {
           totalsByDemand.set(src.materialDemandId, (totalsByDemand.get(src.materialDemandId) ?? 0) + src.requiredQty)
@@ -438,6 +439,7 @@ export const hardDeletePurchaseBOMStructureAction = protectedServerFunction({
       })
 
       if (sources.length > 0) {
+        // Mirror the soft-delete recalculation before hard delete.
         const totalsByDemand = new Map<string, number>()
         for (const src of sources) {
           totalsByDemand.set(src.materialDemandId, (totalsByDemand.get(src.materialDemandId) ?? 0) + src.requiredQty)
@@ -492,4 +494,3 @@ export async function hasOpenWorkOrderForProjectAction(projectId: string): Promi
   const openWorkOrder = await findOpenWorkOrderForProject(projectId)
   return Boolean(openWorkOrder)
 }
-

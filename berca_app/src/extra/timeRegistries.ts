@@ -31,6 +31,7 @@ type TimeRegistryWithRelations = {
 }
 
 export function mapTimeRegistry(tr: TimeRegistryWithRelations): MappedTimeRegistry {
+  // Flatten related records into a UI-friendly shape.
   return {
     id: tr.id,
     activityDescription: tr.activityDescription,

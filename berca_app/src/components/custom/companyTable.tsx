@@ -146,6 +146,7 @@ export function CompanyTable({
 
   const filtered = companies
     .filter(c => {
+      // Client-side filtering by soft-delete and search.
       if (filterDeleted === 'not-deleted' && c.deleted) return false
       if (filterDeleted === 'deleted' && !c.deleted) return false
       if (!search) return true
@@ -163,6 +164,7 @@ export function CompanyTable({
       )
     })
     .sort((a, b) => {
+      // Sort client-side to keep UI responsive without round-trips.
       const dir = sortDir === 'asc' ? 1 : -1
       const s = (x: string | null, y: string | null) => dir * (x ?? '').localeCompare(y ?? '')
       const n = (x: boolean, y: boolean) => dir * (Number(x) - Number(y))
@@ -249,6 +251,7 @@ export function CompanyTable({
     if (editingCompany) {
       await updateCompanyAction({id: c.id, ...core, visibilityForRoles: visibilityRows})
     } else {
+      // New companies can include initial addresses in the create payload.
       await createCompanyAction({
         ...core,
         addresses: c.addresses.map(a => ({

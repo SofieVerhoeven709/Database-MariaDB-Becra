@@ -82,6 +82,7 @@ export function QuoteSupplierFormDialog({
       setSaveError(null)
       return
     }
+    // Seed new quotes with defaults and optional preselected supplier.
     setForm({...empty(), quoteNumber: defaultQuoteNumber, companyId: defaultCompanyId ?? ''})
     setSaveError(null)
   }, [open, entry, defaultQuoteNumber, defaultCompanyId])
@@ -182,6 +183,7 @@ export function QuoteSupplierFormDialog({
               id="validUntil"
               type="date"
               value={form.validUntil ? form.validUntil.split('T')[0] : ''}
+              // Store the ISO date part only; the backend handles full Date conversion.
               onChange={e => set('validUntil', e.target.value || null)}
               className="bg-secondary border-border"
             />

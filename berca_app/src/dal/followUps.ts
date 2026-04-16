@@ -4,6 +4,7 @@ import {prismaClient} from '@/dal/prismaClient'
 
 const employeeSelect = {select: {id: true, firstName: true, lastName: true}} as const
 
+// Keep only the first active target link to keep list payload light.
 const followUpTargetInclude = {
   where: {deleted: false},
   take: 1,
@@ -17,6 +18,7 @@ const followUpTargetInclude = {
   },
 } as const
 
+// Visibility rows include role + subrole labels for the UI.
 const visibilityInclude = {
   include: {
     RoleLevel: {include: {Role: true, SubRole: true}},
@@ -24,6 +26,7 @@ const visibilityInclude = {
 } as const
 
 const listInclude = {
+  // Shared include bundle for list views.
   Employee_FollowUp_createdByToEmployee: employeeSelect,
   Employee_FollowUp_ownedByToEmployee: employeeSelect,
   Employee_FollowUp_executedByToEmployee: employeeSelect,
@@ -54,6 +57,7 @@ const detailInclude = {
       VisibilityForRole: visibilityInclude,
     },
   },
+  // Include latest structure entries for the detail tab.
   FollowUpStructure: {
     where: {deleted: false},
     orderBy: {contactDate: 'desc' as const},

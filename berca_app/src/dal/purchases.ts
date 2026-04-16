@@ -7,6 +7,7 @@ async function getNextAvailablePurchaseNumber(): Promise<string> {
   let candidate = generatePurchaseNumber()
   let attempts = 0
 
+  // Retry a few times to avoid collisions when the generator repeats.
   while (attempts < 5) {
     const existing = await prismaClient.purchase.findFirst({
       where: {purchaseNumber: candidate},
@@ -47,6 +48,7 @@ export async function syncPurchaseBOMStructuresForOrderedApprovedPurchase(
     },
   })
 
+  // Only sync once the purchase is ordered and the supplier quote is approved for POB.
   if (!purchase) return {updatedCount: 0, matchedStructureCount: 0}
   if (purchase.status !== 'ORDERED') return {updatedCount: 0, matchedStructureCount: 0}
   if (!purchase.quoteSupplierId || !purchase.QuoteSupplier?.acceptedForPOB) {
@@ -183,6 +185,7 @@ export async function syncPurchaseStatusFromFulfilledSources(
   const allFulfilled = linkedSources.every(source => source.fulfilled)
   const anyFulfilled = linkedSources.some(source => source.fulfilled)
 
+  // Advance status based on fulfillment coverage across linked demand sources.
   let nextStatus = purchase.status
   // Fully fulfilled demand means the purchase can move straight to RECEIVED; partial fulfillment only advances ORDERED -> PARTIAL_RECEIVED.
   if (allFulfilled) {
@@ -256,6 +259,7 @@ export async function ensurePurchaseFromApprovedQuote(quoteSupplierId: string, c
       where: {quoteSupplierId},
       select: {id: true},
     })
+    // Guard against race conditions when multiple requests create the same purchase.
     if (duplicate) return
 
     await tx.purchase.create({
@@ -275,6 +279,7 @@ export async function ensurePurchaseFromApprovedQuote(quoteSupplierId: string, c
     })
 
     if (quote.QuoteSupplierLine.length > 0) {
+      // Mirror approved quote lines into purchase details for the new order.
       await tx.purchaseDetail.createMany({
         data: quote.QuoteSupplierLine.map(line => ({
           id: crypto.randomUUID(),

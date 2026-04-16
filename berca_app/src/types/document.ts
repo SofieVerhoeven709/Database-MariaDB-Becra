@@ -44,7 +44,7 @@ export interface MappedDocumentTarget {
   targetDisplayName: string | null
 }
 
-// ─── Mapped document (list / table row) ──────────────────────────────────────
+// ─── Mapped document (list / table row) ─────────────────────────────────────-
 
 export interface MappedDocument {
   id: string
@@ -191,7 +191,8 @@ export interface MappedDocumentStatus {
   deletedByName: string | null
 }
 
-// ─── Allowed target types for document ───────────────────────────────────────
+// ─── Allowed target types for document ─────────────────────────────────────--
 
+// These names must match TargetType.name values used in the DB.
 export const DOCUMENT_TARGET_TYPE_NAMES = ['Material', 'Project', 'Company'] as const
 export type DocumentTargetTypeName = (typeof DOCUMENT_TARGET_TYPE_NAMES)[number]

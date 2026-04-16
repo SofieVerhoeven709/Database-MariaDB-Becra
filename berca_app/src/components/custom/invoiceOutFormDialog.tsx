@@ -9,7 +9,7 @@ import {Switch} from '@/components/ui/switch'
 import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Checkbox} from '@/components/ui/checkbox'
-import type {MappedInvoiceOut, InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import type {MappedInvoiceOut, InvoiceLookup} from '@/types/invoice'
 import {
   createInvoiceOutAction,
   updateInvoiceOutAction,
@@ -38,7 +38,6 @@ interface InvoiceOutFormDialogProps {
   paymentMethods: InvoiceLookup[]
   invoiceSentTypes: InvoiceLookup[]
   invoiceStatuses: InvoiceLookup[]
-  vatMargins: VatMarginOption[]
   contactOptions: InvoiceLookup[]
   projectOptions: ProjectOption[]
   onSaved: () => void
@@ -55,7 +54,6 @@ type FormState = {
   paymentMethodId: string
   invoiceSentTypeId: string
   invoiceStatusId: string
-  vatMarginId: string
   reminderSent: boolean
   outstanding: boolean
 }
@@ -79,7 +77,6 @@ function emptyForm(inv: MappedInvoiceOut | null): FormState {
       paymentMethodId: '',
       invoiceSentTypeId: '',
       invoiceStatusId: '',
-      vatMarginId: '',
       reminderSent: false,
       outstanding: true,
     }
@@ -95,7 +92,6 @@ function emptyForm(inv: MappedInvoiceOut | null): FormState {
     paymentMethodId: inv.paymentMethodId,
     invoiceSentTypeId: inv.invoiceSentTypeId,
     invoiceStatusId: inv.invoiceStatusId,
-    vatMarginId: inv.vatMarginId,
     reminderSent: inv.reminderSent,
     outstanding: inv.outstanding,
   }
@@ -109,7 +105,6 @@ export function InvoiceOutFormDialog({
   paymentMethods,
   invoiceSentTypes,
   invoiceStatuses,
-  vatMargins,
   projectOptions,
   onSaved,
 }: InvoiceOutFormDialogProps) {
@@ -144,6 +139,7 @@ export function InvoiceOutFormDialog({
   }, [invoice?.id, open])
 
   useEffect(() => {
+    // Load work orders only when creating and a project is selected.
     if (!selectedProjectId || invoice) return
     setWorkOrders([])
     setSelectedWorkOrderIds([])
@@ -183,7 +179,6 @@ export function InvoiceOutFormDialog({
     form.paymentMethodId &&
     form.invoiceSentTypeId &&
     form.invoiceStatusId &&
-    form.vatMarginId &&
     (isEdit || selectedWorkOrderIds.length > 0)
 
   async function handleSubmit() {
@@ -201,7 +196,6 @@ export function InvoiceOutFormDialog({
         paymentMethodId: form.paymentMethodId,
         invoiceSentTypeId: form.invoiceSentTypeId,
         invoiceStatusId: form.invoiceStatusId,
-        vatMarginId: form.vatMarginId,
         reminderSent: form.reminderSent,
         outstanding: form.outstanding,
       }
@@ -209,6 +203,7 @@ export function InvoiceOutFormDialog({
       if (invoice) {
         await updateInvoiceOutAction({id: invoice.id, ...payload})
       } else {
+        // Create requires at least one work order.
         await createInvoiceOutAction({...payload, workOrderIds: selectedWorkOrderIds})
       }
       onSaved()
@@ -448,22 +443,6 @@ export function InvoiceOutFormDialog({
                 {invoiceSentTypes.map(st => (
                   <SelectItem key={st.id} value={st.id}>
                     {st.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label className="text-xs text-muted-foreground">VAT Margin *</Label>
-            <Select value={form.vatMarginId} onValueChange={v => set('vatMarginId', v)}>
-              <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select VAT…" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                {vatMargins.map(v => (
-                  <SelectItem key={v.id} value={v.id}>
-                    {v.vat}%
                   </SelectItem>
                 ))}
               </SelectContent>

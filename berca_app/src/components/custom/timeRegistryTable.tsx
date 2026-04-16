@@ -119,6 +119,7 @@ export function TimeRegistryTable({
         `${tr.employeeFirstName} ${tr.employeeLastName}`.toLowerCase().includes(q)
       )
     })
+    // Sort after filtering to keep pagination/order consistent.
     .sort((a, b) => {
       const dir = sortDir === 'asc' ? 1 : -1
       const cmpStr = (x: string | null | undefined, y: string | null | undefined) =>
@@ -151,6 +152,7 @@ export function TimeRegistryTable({
     })
 
   function buildPayload(f: TimeRegistryFormData) {
+    // Convert UI form values into API-ready Date objects.
     return {
       activityDescription: f.activityDescription || null,
       additionalInfo: f.additionalInfo || null,

@@ -2,11 +2,13 @@ import {z} from 'zod/v4'
 import {visibilityInputSchema} from '@/schemas/visibilityForRoleSchemas'
 
 const dateSchema = z.preprocess(
+  // Treat empty values as null for optional dates.
   val => (val === '' || val === null || val === undefined ? null : new Date(val as string)),
   z.date().nullable(),
 )
 
 const requiredDateSchema = z.preprocess(
+  // Coerce strings into Date instances for required timestamps.
   val => (typeof val === 'string' || val instanceof Date ? new Date(val) : val),
   z.date(),
 )
@@ -36,6 +38,7 @@ export const projectSchema = z.object({
 })
 
 export const upsertProjectSchema = projectSchema.extend({
+  // Visibility rows are managed separately from the project record.
   visibilityForRoles: z.array(visibilityInputSchema).default([]),
 })
 

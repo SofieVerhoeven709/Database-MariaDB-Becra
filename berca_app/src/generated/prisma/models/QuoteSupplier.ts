@@ -41,9 +41,19 @@ export type QuoteSupplierMinAggregateOutputType = {
   description: string | null
   companyId: string | null
   rejected: boolean | null
+  rejectedAt: Date | null
+  rejectedBy: string | null
+  acceptedForPOB: boolean | null
+  approvedAt: Date | null
+  approvedBy: string | null
+  sent: boolean | null
+  sentAt: Date | null
+  sentBy: string | null
+  received: boolean | null
+  receivedAt: Date | null
+  receivedBy: string | null
   additionalInfo: string | null
   documentId: string | null
-  acceptedForPOB: boolean | null
   validUntil: Date | null
   deliveryTimeDays: number | null
   createdBy: string | null
@@ -51,16 +61,6 @@ export type QuoteSupplierMinAggregateOutputType = {
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
-  rejectedAt: Date | null
-  rejectedBy: string | null
-  approvedAt: Date | null
-  approvedBy: string | null
-  sentAt: Date | null
-  sentBy: string | null
-  received: boolean | null
-  receivedAt: Date | null
-  receivedBy: string | null
-  sent: boolean | null
 }
 
 export type QuoteSupplierMaxAggregateOutputType = {
@@ -70,9 +70,19 @@ export type QuoteSupplierMaxAggregateOutputType = {
   description: string | null
   companyId: string | null
   rejected: boolean | null
+  rejectedAt: Date | null
+  rejectedBy: string | null
+  acceptedForPOB: boolean | null
+  approvedAt: Date | null
+  approvedBy: string | null
+  sent: boolean | null
+  sentAt: Date | null
+  sentBy: string | null
+  received: boolean | null
+  receivedAt: Date | null
+  receivedBy: string | null
   additionalInfo: string | null
   documentId: string | null
-  acceptedForPOB: boolean | null
   validUntil: Date | null
   deliveryTimeDays: number | null
   createdBy: string | null
@@ -80,16 +90,6 @@ export type QuoteSupplierMaxAggregateOutputType = {
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
-  rejectedAt: Date | null
-  rejectedBy: string | null
-  approvedAt: Date | null
-  approvedBy: string | null
-  sentAt: Date | null
-  sentBy: string | null
-  received: boolean | null
-  receivedAt: Date | null
-  receivedBy: string | null
-  sent: boolean | null
 }
 
 export type QuoteSupplierCountAggregateOutputType = {
@@ -99,9 +99,19 @@ export type QuoteSupplierCountAggregateOutputType = {
   description: number
   companyId: number
   rejected: number
+  rejectedAt: number
+  rejectedBy: number
+  acceptedForPOB: number
+  approvedAt: number
+  approvedBy: number
+  sent: number
+  sentAt: number
+  sentBy: number
+  received: number
+  receivedAt: number
+  receivedBy: number
   additionalInfo: number
   documentId: number
-  acceptedForPOB: number
   validUntil: number
   deliveryTimeDays: number
   createdBy: number
@@ -109,16 +119,6 @@ export type QuoteSupplierCountAggregateOutputType = {
   deleted: number
   deletedAt: number
   deletedBy: number
-  rejectedAt: number
-  rejectedBy: number
-  approvedAt: number
-  approvedBy: number
-  sentAt: number
-  sentBy: number
-  received: number
-  receivedAt: number
-  receivedBy: number
-  sent: number
   _all: number
 }
 
@@ -138,9 +138,19 @@ export type QuoteSupplierMinAggregateInputType = {
   description?: true
   companyId?: true
   rejected?: true
+  rejectedAt?: true
+  rejectedBy?: true
+  acceptedForPOB?: true
+  approvedAt?: true
+  approvedBy?: true
+  sent?: true
+  sentAt?: true
+  sentBy?: true
+  received?: true
+  receivedAt?: true
+  receivedBy?: true
   additionalInfo?: true
   documentId?: true
-  acceptedForPOB?: true
   validUntil?: true
   deliveryTimeDays?: true
   createdBy?: true
@@ -148,16 +158,6 @@ export type QuoteSupplierMinAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  rejectedAt?: true
-  rejectedBy?: true
-  approvedAt?: true
-  approvedBy?: true
-  sentAt?: true
-  sentBy?: true
-  received?: true
-  receivedAt?: true
-  receivedBy?: true
-  sent?: true
 }
 
 export type QuoteSupplierMaxAggregateInputType = {
@@ -167,9 +167,19 @@ export type QuoteSupplierMaxAggregateInputType = {
   description?: true
   companyId?: true
   rejected?: true
+  rejectedAt?: true
+  rejectedBy?: true
+  acceptedForPOB?: true
+  approvedAt?: true
+  approvedBy?: true
+  sent?: true
+  sentAt?: true
+  sentBy?: true
+  received?: true
+  receivedAt?: true
+  receivedBy?: true
   additionalInfo?: true
   documentId?: true
-  acceptedForPOB?: true
   validUntil?: true
   deliveryTimeDays?: true
   createdBy?: true
@@ -177,16 +187,6 @@ export type QuoteSupplierMaxAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  rejectedAt?: true
-  rejectedBy?: true
-  approvedAt?: true
-  approvedBy?: true
-  sentAt?: true
-  sentBy?: true
-  received?: true
-  receivedAt?: true
-  receivedBy?: true
-  sent?: true
 }
 
 export type QuoteSupplierCountAggregateInputType = {
@@ -196,9 +196,19 @@ export type QuoteSupplierCountAggregateInputType = {
   description?: true
   companyId?: true
   rejected?: true
+  rejectedAt?: true
+  rejectedBy?: true
+  acceptedForPOB?: true
+  approvedAt?: true
+  approvedBy?: true
+  sent?: true
+  sentAt?: true
+  sentBy?: true
+  received?: true
+  receivedAt?: true
+  receivedBy?: true
   additionalInfo?: true
   documentId?: true
-  acceptedForPOB?: true
   validUntil?: true
   deliveryTimeDays?: true
   createdBy?: true
@@ -206,16 +216,6 @@ export type QuoteSupplierCountAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  rejectedAt?: true
-  rejectedBy?: true
-  approvedAt?: true
-  approvedBy?: true
-  sentAt?: true
-  sentBy?: true
-  received?: true
-  receivedAt?: true
-  receivedBy?: true
-  sent?: true
   _all?: true
 }
 
@@ -312,9 +312,19 @@ export type QuoteSupplierGroupByOutputType = {
   description: string | null
   companyId: string
   rejected: boolean
+  rejectedAt: Date | null
+  rejectedBy: string | null
+  acceptedForPOB: boolean
+  approvedAt: Date | null
+  approvedBy: string | null
+  sent: boolean
+  sentAt: Date | null
+  sentBy: string | null
+  received: boolean
+  receivedAt: Date | null
+  receivedBy: string | null
   additionalInfo: string | null
   documentId: string | null
-  acceptedForPOB: boolean
   validUntil: Date | null
   deliveryTimeDays: number | null
   createdBy: string
@@ -322,16 +332,6 @@ export type QuoteSupplierGroupByOutputType = {
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
-  rejectedAt: Date | null
-  rejectedBy: string | null
-  approvedAt: Date | null
-  approvedBy: string | null
-  sentAt: Date | null
-  sentBy: string | null
-  received: boolean
-  receivedAt: Date | null
-  receivedBy: string | null
-  sent: boolean
   _count: QuoteSupplierCountAggregateOutputType | null
   _avg: QuoteSupplierAvgAggregateOutputType | null
   _sum: QuoteSupplierSumAggregateOutputType | null
@@ -364,9 +364,19 @@ export type QuoteSupplierWhereInput = {
   description?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   companyId?: Prisma.StringFilter<"QuoteSupplier"> | string
   rejected?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  rejectedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  rejectedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
+  acceptedForPOB?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  approvedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  approvedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
+  sent?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  sentAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  sentBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
+  received?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  receivedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  receivedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   documentId?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  acceptedForPOB?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
   validUntil?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
   deliveryTimeDays?: Prisma.IntNullableFilter<"QuoteSupplier"> | number | null
   createdBy?: Prisma.StringFilter<"QuoteSupplier"> | string
@@ -374,26 +384,16 @@ export type QuoteSupplierWhereInput = {
   deleted?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  rejectedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  rejectedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  approvedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  approvedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  sentAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  sentBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  received?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
-  receivedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  receivedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  sent?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
   Purchase?: Prisma.PurchaseListRelationFilter
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   PaymentCondition?: Prisma.XOR<Prisma.PaymentConditionNullableScalarRelationFilter, Prisma.PaymentConditionWhereInput> | null
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   QuoteSupplierLine?: Prisma.QuoteSupplierLineListRelationFilter
 }
 
@@ -404,9 +404,19 @@ export type QuoteSupplierOrderByWithRelationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   companyId?: Prisma.SortOrder
   rejected?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  acceptedForPOB?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  sent?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  sentBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  received?: Prisma.SortOrder
+  receivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  receivedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   documentId?: Prisma.SortOrderInput | Prisma.SortOrder
-  acceptedForPOB?: Prisma.SortOrder
   validUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryTimeDays?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -414,26 +424,16 @@ export type QuoteSupplierOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  rejectedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  sentBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  received?: Prisma.SortOrder
-  receivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  receivedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  sent?: Prisma.SortOrder
   Purchase?: Prisma.PurchaseOrderByRelationAggregateInput
   Company?: Prisma.CompanyOrderByWithRelationInput
   DocumentStructure?: Prisma.DocumentStructureOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   PaymentCondition?: Prisma.PaymentConditionOrderByWithRelationInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineOrderByRelationAggregateInput
   _relevance?: Prisma.QuoteSupplierOrderByRelevanceInput
 }
@@ -448,9 +448,19 @@ export type QuoteSupplierWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   companyId?: Prisma.StringFilter<"QuoteSupplier"> | string
   rejected?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  rejectedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  rejectedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
+  acceptedForPOB?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  approvedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  approvedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
+  sent?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  sentAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  sentBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
+  received?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  receivedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  receivedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   documentId?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  acceptedForPOB?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
   validUntil?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
   deliveryTimeDays?: Prisma.IntNullableFilter<"QuoteSupplier"> | number | null
   createdBy?: Prisma.StringFilter<"QuoteSupplier"> | string
@@ -458,26 +468,16 @@ export type QuoteSupplierWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  rejectedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  rejectedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  approvedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  approvedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  sentAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  sentBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  received?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
-  receivedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  receivedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  sent?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
   Purchase?: Prisma.PurchaseListRelationFilter
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   PaymentCondition?: Prisma.XOR<Prisma.PaymentConditionNullableScalarRelationFilter, Prisma.PaymentConditionWhereInput> | null
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   QuoteSupplierLine?: Prisma.QuoteSupplierLineListRelationFilter
 }, "id">
 
@@ -488,9 +488,19 @@ export type QuoteSupplierOrderByWithAggregationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   companyId?: Prisma.SortOrder
   rejected?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  acceptedForPOB?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  sent?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  sentBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  received?: Prisma.SortOrder
+  receivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  receivedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   documentId?: Prisma.SortOrderInput | Prisma.SortOrder
-  acceptedForPOB?: Prisma.SortOrder
   validUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryTimeDays?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -498,16 +508,6 @@ export type QuoteSupplierOrderByWithAggregationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  rejectedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  sentBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  received?: Prisma.SortOrder
-  receivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  receivedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  sent?: Prisma.SortOrder
   _count?: Prisma.QuoteSupplierCountOrderByAggregateInput
   _avg?: Prisma.QuoteSupplierAvgOrderByAggregateInput
   _max?: Prisma.QuoteSupplierMaxOrderByAggregateInput
@@ -525,9 +525,19 @@ export type QuoteSupplierScalarWhereWithAggregatesInput = {
   description?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
   companyId?: Prisma.StringWithAggregatesFilter<"QuoteSupplier"> | string
   rejected?: Prisma.BoolWithAggregatesFilter<"QuoteSupplier"> | boolean
+  rejectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
+  rejectedBy?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
+  acceptedForPOB?: Prisma.BoolWithAggregatesFilter<"QuoteSupplier"> | boolean
+  approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
+  approvedBy?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
+  sent?: Prisma.BoolWithAggregatesFilter<"QuoteSupplier"> | boolean
+  sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
+  sentBy?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
+  received?: Prisma.BoolWithAggregatesFilter<"QuoteSupplier"> | boolean
+  receivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
+  receivedBy?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
   documentId?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
-  acceptedForPOB?: Prisma.BoolWithAggregatesFilter<"QuoteSupplier"> | boolean
   validUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
   deliveryTimeDays?: Prisma.IntNullableWithAggregatesFilter<"QuoteSupplier"> | number | null
   createdBy?: Prisma.StringWithAggregatesFilter<"QuoteSupplier"> | string
@@ -535,16 +545,6 @@ export type QuoteSupplierScalarWhereWithAggregatesInput = {
   deleted?: Prisma.BoolWithAggregatesFilter<"QuoteSupplier"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
-  rejectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
-  rejectedBy?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
-  approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
-  approvedBy?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
-  sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
-  sentBy?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
-  received?: Prisma.BoolWithAggregatesFilter<"QuoteSupplier"> | boolean
-  receivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteSupplier"> | Date | string | null
-  receivedBy?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplier"> | string | null
-  sent?: Prisma.BoolWithAggregatesFilter<"QuoteSupplier"> | boolean
 }
 
 export type QuoteSupplierCreateInput = {
@@ -553,28 +553,28 @@ export type QuoteSupplierCreateInput = {
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
   Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
   PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -585,9 +585,19 @@ export type QuoteSupplierUncheckedCreateInput = {
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -595,16 +605,6 @@ export type QuoteSupplierUncheckedCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
@@ -615,28 +615,28 @@ export type QuoteSupplierUpdateInput = {
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
   PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -647,9 +647,19 @@ export type QuoteSupplierUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -657,16 +667,6 @@ export type QuoteSupplierUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
@@ -678,9 +678,19 @@ export type QuoteSupplierCreateManyInput = {
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -688,16 +698,6 @@ export type QuoteSupplierCreateManyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
 }
 
 export type QuoteSupplierUpdateManyMutationInput = {
@@ -706,18 +706,18 @@ export type QuoteSupplierUpdateManyMutationInput = {
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type QuoteSupplierUncheckedUpdateManyInput = {
@@ -727,9 +727,19 @@ export type QuoteSupplierUncheckedUpdateManyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -737,16 +747,6 @@ export type QuoteSupplierUncheckedUpdateManyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type QuoteSupplierListRelationFilter = {
@@ -777,9 +777,19 @@ export type QuoteSupplierCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   rejected?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrder
+  rejectedBy?: Prisma.SortOrder
+  acceptedForPOB?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  sent?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  sentBy?: Prisma.SortOrder
+  received?: Prisma.SortOrder
+  receivedAt?: Prisma.SortOrder
+  receivedBy?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
-  acceptedForPOB?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   deliveryTimeDays?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -787,16 +797,6 @@ export type QuoteSupplierCountOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  rejectedAt?: Prisma.SortOrder
-  rejectedBy?: Prisma.SortOrder
-  approvedAt?: Prisma.SortOrder
-  approvedBy?: Prisma.SortOrder
-  sentAt?: Prisma.SortOrder
-  sentBy?: Prisma.SortOrder
-  received?: Prisma.SortOrder
-  receivedAt?: Prisma.SortOrder
-  receivedBy?: Prisma.SortOrder
-  sent?: Prisma.SortOrder
 }
 
 export type QuoteSupplierAvgOrderByAggregateInput = {
@@ -810,9 +810,19 @@ export type QuoteSupplierMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   rejected?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrder
+  rejectedBy?: Prisma.SortOrder
+  acceptedForPOB?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  sent?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  sentBy?: Prisma.SortOrder
+  received?: Prisma.SortOrder
+  receivedAt?: Prisma.SortOrder
+  receivedBy?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
-  acceptedForPOB?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   deliveryTimeDays?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -820,16 +830,6 @@ export type QuoteSupplierMaxOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  rejectedAt?: Prisma.SortOrder
-  rejectedBy?: Prisma.SortOrder
-  approvedAt?: Prisma.SortOrder
-  approvedBy?: Prisma.SortOrder
-  sentAt?: Prisma.SortOrder
-  sentBy?: Prisma.SortOrder
-  received?: Prisma.SortOrder
-  receivedAt?: Prisma.SortOrder
-  receivedBy?: Prisma.SortOrder
-  sent?: Prisma.SortOrder
 }
 
 export type QuoteSupplierMinOrderByAggregateInput = {
@@ -839,9 +839,19 @@ export type QuoteSupplierMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   rejected?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrder
+  rejectedBy?: Prisma.SortOrder
+  acceptedForPOB?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  sent?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  sentBy?: Prisma.SortOrder
+  received?: Prisma.SortOrder
+  receivedAt?: Prisma.SortOrder
+  receivedBy?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
-  acceptedForPOB?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   deliveryTimeDays?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -849,16 +859,6 @@ export type QuoteSupplierMinOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  rejectedAt?: Prisma.SortOrder
-  rejectedBy?: Prisma.SortOrder
-  approvedAt?: Prisma.SortOrder
-  approvedBy?: Prisma.SortOrder
-  sentAt?: Prisma.SortOrder
-  sentBy?: Prisma.SortOrder
-  received?: Prisma.SortOrder
-  receivedAt?: Prisma.SortOrder
-  receivedBy?: Prisma.SortOrder
-  sent?: Prisma.SortOrder
 }
 
 export type QuoteSupplierSumOrderByAggregateInput = {
@@ -968,20 +968,6 @@ export type QuoteSupplierCreateNestedManyWithoutEmployee_QuoteSupplier_deletedBy
   connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
 }
 
-export type QuoteSupplierCreateNestedManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInputEnvelope
-  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-}
-
-export type QuoteSupplierCreateNestedManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInputEnvelope
-  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-}
-
 export type QuoteSupplierCreateNestedManyWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[]
   connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[]
@@ -989,10 +975,24 @@ export type QuoteSupplierCreateNestedManyWithoutEmployee_QuoteSupplier_rejectedB
   connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
 }
 
+export type QuoteSupplierCreateNestedManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInputEnvelope
+  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+}
+
 export type QuoteSupplierCreateNestedManyWithoutEmployee_QuoteSupplier_sentByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
   connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_sentByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
   createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_sentByToEmployeeInputEnvelope
+  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+}
+
+export type QuoteSupplierCreateNestedManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInputEnvelope
   connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
 }
 
@@ -1010,20 +1010,6 @@ export type QuoteSupplierUncheckedCreateNestedManyWithoutEmployee_QuoteSupplier_
   connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
 }
 
-export type QuoteSupplierUncheckedCreateNestedManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInputEnvelope
-  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-}
-
-export type QuoteSupplierUncheckedCreateNestedManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInputEnvelope
-  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-}
-
 export type QuoteSupplierUncheckedCreateNestedManyWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[]
   connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[]
@@ -1031,10 +1017,24 @@ export type QuoteSupplierUncheckedCreateNestedManyWithoutEmployee_QuoteSupplier_
   connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
 }
 
+export type QuoteSupplierUncheckedCreateNestedManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInputEnvelope
+  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+}
+
 export type QuoteSupplierUncheckedCreateNestedManyWithoutEmployee_QuoteSupplier_sentByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
   connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_sentByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
   createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_sentByToEmployeeInputEnvelope
+  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+}
+
+export type QuoteSupplierUncheckedCreateNestedManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInputEnvelope
   connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
 }
 
@@ -1066,34 +1066,6 @@ export type QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_deletedByToEmpl
   deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
 }
 
-export type QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeNestedInput = {
-  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  upsert?: Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInputEnvelope
-  set?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  disconnect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  delete?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  update?: Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  updateMany?: Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
-}
-
-export type QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeNestedInput = {
-  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  upsert?: Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInputEnvelope
-  set?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  disconnect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  delete?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  update?: Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  updateMany?: Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
-}
-
 export type QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_rejectedByToEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[]
   connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[]
@@ -1108,6 +1080,20 @@ export type QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_rejectedByToEmp
   deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
 }
 
+export type QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  upsert?: Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInputEnvelope
+  set?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  disconnect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  delete?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  update?: Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  updateMany?: Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
+}
+
 export type QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_sentByToEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
   connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_sentByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
@@ -1119,6 +1105,20 @@ export type QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_sentByToEmploye
   connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
   update?: Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_sentByToEmployeeInput | Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
   updateMany?: Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_sentByToEmployeeInput | Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
+  deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
+}
+
+export type QuoteSupplierUpdateManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  upsert?: Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInputEnvelope
+  set?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  disconnect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  delete?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  update?: Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  updateMany?: Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
   deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
 }
 
@@ -1150,34 +1150,6 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_delete
   deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
 }
 
-export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeNestedInput = {
-  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  upsert?: Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInputEnvelope
-  set?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  disconnect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  delete?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  update?: Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  updateMany?: Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
-}
-
-export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeNestedInput = {
-  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  upsert?: Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInputEnvelope
-  set?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  disconnect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  delete?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
-  update?: Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  updateMany?: Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
-}
-
 export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_rejectedByToEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[]
   connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput[]
@@ -1192,6 +1164,20 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_reject
   deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
 }
 
+export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  upsert?: Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInputEnvelope
+  set?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  disconnect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  delete?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  update?: Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  updateMany?: Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
+}
+
 export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_sentByToEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
   connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_sentByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
@@ -1203,6 +1189,20 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_sentBy
   connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
   update?: Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_sentByToEmployeeInput | Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
   updateMany?: Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_sentByToEmployeeInput | Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_sentByToEmployeeInput[]
+  deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
+}
+
+export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput> | Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[] | Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  upsert?: Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  createMany?: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInputEnvelope
+  set?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  disconnect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  delete?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  connect?: Prisma.QuoteSupplierWhereUniqueInput | Prisma.QuoteSupplierWhereUniqueInput[]
+  update?: Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
+  updateMany?: Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput[]
   deleteMany?: Prisma.QuoteSupplierScalarWhereInput | Prisma.QuoteSupplierScalarWhereInput[]
 }
 
@@ -1284,27 +1284,27 @@ export type QuoteSupplierCreateWithoutCompanyInput = {
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
   PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -1314,9 +1314,19 @@ export type QuoteSupplierUncheckedCreateWithoutCompanyInput = {
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -1324,16 +1334,6 @@ export type QuoteSupplierUncheckedCreateWithoutCompanyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
@@ -1374,9 +1374,19 @@ export type QuoteSupplierScalarWhereInput = {
   description?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   companyId?: Prisma.StringFilter<"QuoteSupplier"> | string
   rejected?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  rejectedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  rejectedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
+  acceptedForPOB?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  approvedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  approvedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
+  sent?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  sentAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  sentBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
+  received?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
+  receivedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
+  receivedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
   documentId?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  acceptedForPOB?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
   validUntil?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
   deliveryTimeDays?: Prisma.IntNullableFilter<"QuoteSupplier"> | number | null
   createdBy?: Prisma.StringFilter<"QuoteSupplier"> | string
@@ -1384,16 +1394,6 @@ export type QuoteSupplierScalarWhereInput = {
   deleted?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  rejectedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  rejectedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  approvedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  approvedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  sentAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  sentBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  received?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
-  receivedAt?: Prisma.DateTimeNullableFilter<"QuoteSupplier"> | Date | string | null
-  receivedBy?: Prisma.StringNullableFilter<"QuoteSupplier"> | string | null
-  sent?: Prisma.BoolFilter<"QuoteSupplier"> | boolean
 }
 
 export type QuoteSupplierCreateWithoutDocumentStructureInput = {
@@ -1402,27 +1402,27 @@ export type QuoteSupplierCreateWithoutDocumentStructureInput = {
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
   Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
   PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -1433,8 +1433,18 @@ export type QuoteSupplierUncheckedCreateWithoutDocumentStructureInput = {
   description?: string | null
   companyId: string
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -1442,16 +1452,6 @@ export type QuoteSupplierUncheckedCreateWithoutDocumentStructureInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
@@ -1488,27 +1488,27 @@ export type QuoteSupplierCreateWithoutEmployeeInput = {
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
   Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
   PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -1519,25 +1519,25 @@ export type QuoteSupplierUncheckedCreateWithoutEmployeeInput = {
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   paymentConditionId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
@@ -1558,27 +1558,27 @@ export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_deletedByToEmployee
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
   Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
   PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -1589,25 +1589,25 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_deletedByT
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
@@ -1622,164 +1622,24 @@ export type QuoteSupplierCreateManyEmployee_QuoteSupplier_deletedByToEmployeeInp
   skipDuplicates?: boolean
 }
 
-export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  id: string
-  quoteNumber: string
-  quotationNumber?: string | null
-  description?: string | null
-  rejected?: boolean
-  additionalInfo?: string | null
-  acceptedForPOB?: boolean
-  validUntil?: Date | string | null
-  deliveryTimeDays?: number | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
-  Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
-  Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
-  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
-  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
-  Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
-  QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
-}
-
-export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  id: string
-  quoteNumber: string
-  quotationNumber?: string | null
-  description?: string | null
-  companyId: string
-  rejected?: boolean
-  additionalInfo?: string | null
-  documentId?: string | null
-  acceptedForPOB?: boolean
-  validUntil?: Date | string | null
-  deliveryTimeDays?: number | null
-  createdBy: string
-  paymentConditionId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
-  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
-  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
-}
-
-export type QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  where: Prisma.QuoteSupplierWhereUniqueInput
-  create: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput>
-}
-
-export type QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInputEnvelope = {
-  data: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInput[]
-  skipDuplicates?: boolean
-}
-
-export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  id: string
-  quoteNumber: string
-  quotationNumber?: string | null
-  description?: string | null
-  rejected?: boolean
-  additionalInfo?: string | null
-  acceptedForPOB?: boolean
-  validUntil?: Date | string | null
-  deliveryTimeDays?: number | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
-  Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
-  Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
-  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
-  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
-  Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
-  QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
-}
-
-export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  id: string
-  quoteNumber: string
-  quotationNumber?: string | null
-  description?: string | null
-  companyId: string
-  rejected?: boolean
-  additionalInfo?: string | null
-  documentId?: string | null
-  acceptedForPOB?: boolean
-  validUntil?: Date | string | null
-  deliveryTimeDays?: number | null
-  createdBy: string
-  paymentConditionId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
-  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
-  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
-}
-
-export type QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  where: Prisma.QuoteSupplierWhereUniqueInput
-  create: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput>
-}
-
-export type QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInputEnvelope = {
-  data: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInput[]
-  skipDuplicates?: boolean
-}
-
 export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
   id: string
   quoteNumber: string
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
   Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
@@ -1787,8 +1647,8 @@ export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmploye
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
   PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
   Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -1799,9 +1659,18 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedBy
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -1809,15 +1678,6 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedBy
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
@@ -1832,33 +1692,103 @@ export type QuoteSupplierCreateManyEmployee_QuoteSupplier_rejectedByToEmployeeIn
   skipDuplicates?: boolean
 }
 
-export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput = {
+export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
   id: string
   quoteNumber: string
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
   Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
   PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
+  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+}
+
+export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  id: string
+  quoteNumber: string
+  quotationNumber?: string | null
+  description?: string | null
+  companyId: string
+  rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
+  additionalInfo?: string | null
+  documentId?: string | null
+  validUntil?: Date | string | null
+  deliveryTimeDays?: number | null
+  createdBy: string
+  paymentConditionId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+}
+
+export type QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  where: Prisma.QuoteSupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput>
+}
+
+export type QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInputEnvelope = {
+  data: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInput | Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput = {
+  id: string
+  quoteNumber: string
+  quotationNumber?: string | null
+  description?: string | null
+  rejected?: boolean
+  rejectedAt?: Date | string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
+  validUntil?: Date | string | null
+  deliveryTimeDays?: number | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
+  Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
+  Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
+  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
+  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
   Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
-  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -1869,9 +1799,18 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEm
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -1879,15 +1818,6 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEm
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
@@ -1899,6 +1829,76 @@ export type QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_sentByToEm
 
 export type QuoteSupplierCreateManyEmployee_QuoteSupplier_sentByToEmployeeInputEnvelope = {
   data: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_sentByToEmployeeInput | Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_sentByToEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  id: string
+  quoteNumber: string
+  quotationNumber?: string | null
+  description?: string | null
+  rejected?: boolean
+  rejectedAt?: Date | string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
+  validUntil?: Date | string | null
+  deliveryTimeDays?: number | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
+  Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
+  Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
+  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
+  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
+  Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+}
+
+export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  id: string
+  quoteNumber: string
+  quotationNumber?: string | null
+  description?: string | null
+  companyId: string
+  rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
+  documentId?: string | null
+  validUntil?: Date | string | null
+  deliveryTimeDays?: number | null
+  createdBy: string
+  paymentConditionId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+}
+
+export type QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  where: Prisma.QuoteSupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput>
+}
+
+export type QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInputEnvelope = {
+  data: Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInput | Prisma.QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -1934,38 +1934,6 @@ export type QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_delete
   data: Prisma.XOR<Prisma.QuoteSupplierUpdateManyMutationInput, Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_deletedByToEmployeeInput>
 }
 
-export type QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  where: Prisma.QuoteSupplierWhereUniqueInput
-  update: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput>
-  create: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput>
-}
-
-export type QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  where: Prisma.QuoteSupplierWhereUniqueInput
-  data: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput>
-}
-
-export type QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  where: Prisma.QuoteSupplierScalarWhereInput
-  data: Prisma.XOR<Prisma.QuoteSupplierUpdateManyMutationInput, Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput>
-}
-
-export type QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  where: Prisma.QuoteSupplierWhereUniqueInput
-  update: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput>
-  create: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput>
-}
-
-export type QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  where: Prisma.QuoteSupplierWhereUniqueInput
-  data: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput>
-}
-
-export type QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  where: Prisma.QuoteSupplierScalarWhereInput
-  data: Prisma.XOR<Prisma.QuoteSupplierUpdateManyMutationInput, Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput>
-}
-
 export type QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
   where: Prisma.QuoteSupplierWhereUniqueInput
   update: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput, Prisma.QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput>
@@ -1980,6 +1948,22 @@ export type QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_reje
 export type QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
   where: Prisma.QuoteSupplierScalarWhereInput
   data: Prisma.XOR<Prisma.QuoteSupplierUpdateManyMutationInput, Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput>
+}
+
+export type QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  where: Prisma.QuoteSupplierWhereUniqueInput
+  update: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput>
+}
+
+export type QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  where: Prisma.QuoteSupplierWhereUniqueInput
+  data: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput, Prisma.QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput>
+}
+
+export type QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  where: Prisma.QuoteSupplierScalarWhereInput
+  data: Prisma.XOR<Prisma.QuoteSupplierUpdateManyMutationInput, Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput>
 }
 
 export type QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_sentByToEmployeeInput = {
@@ -1998,33 +1982,49 @@ export type QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_sentBy
   data: Prisma.XOR<Prisma.QuoteSupplierUpdateManyMutationInput, Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_sentByToEmployeeInput>
 }
 
+export type QuoteSupplierUpsertWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  where: Prisma.QuoteSupplierWhereUniqueInput
+  update: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput>
+}
+
+export type QuoteSupplierUpdateWithWhereUniqueWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  where: Prisma.QuoteSupplierWhereUniqueInput
+  data: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput, Prisma.QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput>
+}
+
+export type QuoteSupplierUpdateManyWithWhereWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  where: Prisma.QuoteSupplierScalarWhereInput
+  data: Prisma.XOR<Prisma.QuoteSupplierUpdateManyMutationInput, Prisma.QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput>
+}
+
 export type QuoteSupplierCreateWithoutPurchaseInput = {
   id: string
   quoteNumber: string
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
   Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
   PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -2035,9 +2035,19 @@ export type QuoteSupplierUncheckedCreateWithoutPurchaseInput = {
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -2045,16 +2055,6 @@ export type QuoteSupplierUncheckedCreateWithoutPurchaseInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -2080,27 +2080,27 @@ export type QuoteSupplierUpdateWithoutPurchaseInput = {
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
   PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -2111,9 +2111,19 @@ export type QuoteSupplierUncheckedUpdateWithoutPurchaseInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2121,16 +2131,6 @@ export type QuoteSupplierUncheckedUpdateWithoutPurchaseInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -2140,27 +2140,27 @@ export type QuoteSupplierCreateWithoutPaymentConditionInput = {
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
   Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -2171,25 +2171,25 @@ export type QuoteSupplierUncheckedCreateWithoutPaymentConditionInput = {
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
@@ -2226,28 +2226,28 @@ export type QuoteSupplierCreateWithoutQuoteSupplierLineInput = {
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  rejectedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
   Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
   PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutQuoteSupplierLineInput = {
@@ -2257,9 +2257,19 @@ export type QuoteSupplierUncheckedCreateWithoutQuoteSupplierLineInput = {
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -2267,16 +2277,6 @@ export type QuoteSupplierUncheckedCreateWithoutQuoteSupplierLineInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
@@ -2302,28 +2302,28 @@ export type QuoteSupplierUpdateWithoutQuoteSupplierLineInput = {
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
   PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutQuoteSupplierLineInput = {
@@ -2333,9 +2333,19 @@ export type QuoteSupplierUncheckedUpdateWithoutQuoteSupplierLineInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2343,16 +2353,6 @@ export type QuoteSupplierUncheckedUpdateWithoutQuoteSupplierLineInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -2362,9 +2362,19 @@ export type QuoteSupplierCreateManyCompanyInput = {
   quotationNumber?: string | null
   description?: string | null
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -2372,16 +2382,6 @@ export type QuoteSupplierCreateManyCompanyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
 }
 
 export type QuoteSupplierUpdateWithoutCompanyInput = {
@@ -2390,27 +2390,27 @@ export type QuoteSupplierUpdateWithoutCompanyInput = {
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
   PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -2420,9 +2420,19 @@ export type QuoteSupplierUncheckedUpdateWithoutCompanyInput = {
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2430,16 +2440,6 @@ export type QuoteSupplierUncheckedUpdateWithoutCompanyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
@@ -2450,9 +2450,19 @@ export type QuoteSupplierUncheckedUpdateManyWithoutCompanyInput = {
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2460,16 +2470,6 @@ export type QuoteSupplierUncheckedUpdateManyWithoutCompanyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type QuoteSupplierCreateManyDocumentStructureInput = {
@@ -2479,8 +2479,18 @@ export type QuoteSupplierCreateManyDocumentStructureInput = {
   description?: string | null
   companyId: string
   rejected?: boolean
-  additionalInfo?: string | null
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
   acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
+  additionalInfo?: string | null
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -2488,16 +2498,6 @@ export type QuoteSupplierCreateManyDocumentStructureInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
 }
 
 export type QuoteSupplierUpdateWithoutDocumentStructureInput = {
@@ -2506,27 +2506,27 @@ export type QuoteSupplierUpdateWithoutDocumentStructureInput = {
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
   PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -2537,8 +2537,18 @@ export type QuoteSupplierUncheckedUpdateWithoutDocumentStructureInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2546,16 +2556,6 @@ export type QuoteSupplierUncheckedUpdateWithoutDocumentStructureInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
@@ -2567,8 +2567,18 @@ export type QuoteSupplierUncheckedUpdateManyWithoutDocumentStructureInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2576,16 +2586,6 @@ export type QuoteSupplierUncheckedUpdateManyWithoutDocumentStructureInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type QuoteSupplierCreateManyEmployeeInput = {
@@ -2595,25 +2595,25 @@ export type QuoteSupplierCreateManyEmployeeInput = {
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   paymentConditionId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
 }
 
 export type QuoteSupplierCreateManyEmployee_QuoteSupplier_deletedByToEmployeeInput = {
@@ -2623,81 +2623,25 @@ export type QuoteSupplierCreateManyEmployee_QuoteSupplier_deletedByToEmployeeInp
   description?: string | null
   companyId: string
   rejected?: boolean
-  additionalInfo?: string | null
-  documentId?: string | null
-  acceptedForPOB?: boolean
-  validUntil?: Date | string | null
-  deliveryTimeDays?: number | null
-  createdBy: string
-  paymentConditionId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
+  acceptedForPOB?: boolean
   approvedAt?: Date | string | null
   approvedBy?: string | null
+  sent?: boolean
   sentAt?: Date | string | null
   sentBy?: string | null
   received?: boolean
   receivedAt?: Date | string | null
   receivedBy?: string | null
-  sent?: boolean
-}
-
-export type QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  id: string
-  quoteNumber: string
-  quotationNumber?: string | null
-  description?: string | null
-  companyId: string
-  rejected?: boolean
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   paymentConditionId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
-}
-
-export type QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  id: string
-  quoteNumber: string
-  quotationNumber?: string | null
-  description?: string | null
-  companyId: string
-  rejected?: boolean
-  additionalInfo?: string | null
-  documentId?: string | null
-  acceptedForPOB?: boolean
-  validUntil?: Date | string | null
-  deliveryTimeDays?: number | null
-  createdBy: string
-  paymentConditionId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  sent?: boolean
 }
 
 export type QuoteSupplierCreateManyEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
@@ -2707,9 +2651,18 @@ export type QuoteSupplierCreateManyEmployee_QuoteSupplier_rejectedByToEmployeeIn
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -2717,15 +2670,34 @@ export type QuoteSupplierCreateManyEmployee_QuoteSupplier_rejectedByToEmployeeIn
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+}
+
+export type QuoteSupplierCreateManyEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  id: string
+  quoteNumber: string
+  quotationNumber?: string | null
+  description?: string | null
+  companyId: string
+  rejected?: boolean
   rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
   approvedAt?: Date | string | null
-  approvedBy?: string | null
+  sent?: boolean
   sentAt?: Date | string | null
   sentBy?: string | null
   received?: boolean
   receivedAt?: Date | string | null
   receivedBy?: string | null
-  sent?: boolean
+  additionalInfo?: string | null
+  documentId?: string | null
+  validUntil?: Date | string | null
+  deliveryTimeDays?: number | null
+  createdBy: string
+  paymentConditionId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type QuoteSupplierCreateManyEmployee_QuoteSupplier_sentByToEmployeeInput = {
@@ -2735,9 +2707,18 @@ export type QuoteSupplierCreateManyEmployee_QuoteSupplier_sentByToEmployeeInput 
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
@@ -2745,15 +2726,34 @@ export type QuoteSupplierCreateManyEmployee_QuoteSupplier_sentByToEmployeeInput 
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+}
+
+export type QuoteSupplierCreateManyEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  id: string
+  quoteNumber: string
+  quotationNumber?: string | null
+  description?: string | null
+  companyId: string
+  rejected?: boolean
   rejectedAt?: Date | string | null
   rejectedBy?: string | null
+  acceptedForPOB?: boolean
   approvedAt?: Date | string | null
   approvedBy?: string | null
+  sent?: boolean
   sentAt?: Date | string | null
+  sentBy?: string | null
   received?: boolean
   receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
+  additionalInfo?: string | null
+  documentId?: string | null
+  validUntil?: Date | string | null
+  deliveryTimeDays?: number | null
+  createdBy: string
+  paymentConditionId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type QuoteSupplierUpdateWithoutEmployeeInput = {
@@ -2762,27 +2762,27 @@ export type QuoteSupplierUpdateWithoutEmployeeInput = {
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
   PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -2793,25 +2793,25 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployeeInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
@@ -2823,25 +2823,25 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployeeInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_deletedByToEmployeeInput = {
@@ -2850,27 +2850,27 @@ export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_deletedByToEmployee
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
   PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -2881,25 +2881,25 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_deletedByT
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
@@ -2911,201 +2911,25 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_delete
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   received?: Prisma.BoolFieldUpdateOperationsInput | boolean
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-}
-
-export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
-  Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
-  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
-  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
-  Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
-  QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
-}
-
-export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
-  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
-}
-
-export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-}
-
-export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
-  Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
-  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
-  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
-  Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
-  QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
-}
-
-export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
-  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
-}
-
-export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
@@ -3114,18 +2938,18 @@ export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_rejectedByToEmploye
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
@@ -3133,8 +2957,8 @@ export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_rejectedByToEmploye
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
   PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
   Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -3145,9 +2969,18 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_rejectedBy
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3155,15 +2988,6 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_rejectedBy
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
@@ -3175,9 +2999,18 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_reject
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3185,15 +3018,94 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_reject
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
+  Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
+  Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
+  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
+  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+}
+
+export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   received?: Prisma.BoolFieldUpdateOperationsInput | boolean
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+}
+
+export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput = {
@@ -3202,27 +3114,27 @@ export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_sentByToEmployeeInp
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
   PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
+  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
   Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
-  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -3233,9 +3145,18 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_sentByToEm
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3243,15 +3164,6 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_sentByToEm
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
@@ -3263,9 +3175,18 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_sentBy
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3273,15 +3194,94 @@ export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_sentBy
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   received?: Prisma.BoolFieldUpdateOperationsInput | boolean
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
+  Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
+  Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
+  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
+  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
+  Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+}
+
+export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+}
+
+export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type QuoteSupplierCreateManyPaymentConditionInput = {
@@ -3291,25 +3291,25 @@ export type QuoteSupplierCreateManyPaymentConditionInput = {
   description?: string | null
   companyId: string
   rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
   additionalInfo?: string | null
   documentId?: string | null
-  acceptedForPOB?: boolean
   validUntil?: Date | string | null
   deliveryTimeDays?: number | null
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  rejectedAt?: Date | string | null
-  rejectedBy?: string | null
-  approvedAt?: Date | string | null
-  approvedBy?: string | null
-  sentAt?: Date | string | null
-  sentBy?: string | null
-  received?: boolean
-  receivedAt?: Date | string | null
-  receivedBy?: string | null
-  sent?: boolean
 }
 
 export type QuoteSupplierUpdateWithoutPaymentConditionInput = {
@@ -3318,27 +3318,27 @@ export type QuoteSupplierUpdateWithoutPaymentConditionInput = {
   quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
   Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
-  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
-  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
@@ -3349,25 +3349,25 @@ export type QuoteSupplierUncheckedUpdateWithoutPaymentConditionInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
@@ -3379,25 +3379,25 @@ export type QuoteSupplierUncheckedUpdateManyWithoutPaymentConditionInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -3447,9 +3447,19 @@ export type QuoteSupplierSelect<ExtArgs extends runtime.Types.Extensions.Interna
   description?: boolean
   companyId?: boolean
   rejected?: boolean
+  rejectedAt?: boolean
+  rejectedBy?: boolean
+  acceptedForPOB?: boolean
+  approvedAt?: boolean
+  approvedBy?: boolean
+  sent?: boolean
+  sentAt?: boolean
+  sentBy?: boolean
+  received?: boolean
+  receivedAt?: boolean
+  receivedBy?: boolean
   additionalInfo?: boolean
   documentId?: boolean
-  acceptedForPOB?: boolean
   validUntil?: boolean
   deliveryTimeDays?: boolean
   createdBy?: boolean
@@ -3457,26 +3467,16 @@ export type QuoteSupplierSelect<ExtArgs extends runtime.Types.Extensions.Interna
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  rejectedAt?: boolean
-  rejectedBy?: boolean
-  approvedAt?: boolean
-  approvedBy?: boolean
-  sentAt?: boolean
-  sentBy?: boolean
-  received?: boolean
-  receivedAt?: boolean
-  receivedBy?: boolean
-  sent?: boolean
   Purchase?: boolean | Prisma.QuoteSupplier$PurchaseArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   DocumentStructure?: boolean | Prisma.QuoteSupplier$DocumentStructureArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_QuoteSupplier_deletedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_deletedByToEmployeeArgs<ExtArgs>
   PaymentCondition?: boolean | Prisma.QuoteSupplier$PaymentConditionArgs<ExtArgs>
-  Employee_QuoteSupplier_approvedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_approvedByToEmployeeArgs<ExtArgs>
-  Employee_QuoteSupplier_receivedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs>
   Employee_QuoteSupplier_rejectedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_rejectedByToEmployeeArgs<ExtArgs>
+  Employee_QuoteSupplier_approvedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_approvedByToEmployeeArgs<ExtArgs>
   Employee_QuoteSupplier_sentByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_sentByToEmployeeArgs<ExtArgs>
+  Employee_QuoteSupplier_receivedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs>
   QuoteSupplierLine?: boolean | Prisma.QuoteSupplier$QuoteSupplierLineArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteSupplierCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["quoteSupplier"]>
@@ -3490,9 +3490,19 @@ export type QuoteSupplierSelectScalar = {
   description?: boolean
   companyId?: boolean
   rejected?: boolean
+  rejectedAt?: boolean
+  rejectedBy?: boolean
+  acceptedForPOB?: boolean
+  approvedAt?: boolean
+  approvedBy?: boolean
+  sent?: boolean
+  sentAt?: boolean
+  sentBy?: boolean
+  received?: boolean
+  receivedAt?: boolean
+  receivedBy?: boolean
   additionalInfo?: boolean
   documentId?: boolean
-  acceptedForPOB?: boolean
   validUntil?: boolean
   deliveryTimeDays?: boolean
   createdBy?: boolean
@@ -3500,19 +3510,9 @@ export type QuoteSupplierSelectScalar = {
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  rejectedAt?: boolean
-  rejectedBy?: boolean
-  approvedAt?: boolean
-  approvedBy?: boolean
-  sentAt?: boolean
-  sentBy?: boolean
-  received?: boolean
-  receivedAt?: boolean
-  receivedBy?: boolean
-  sent?: boolean
 }
 
-export type QuoteSupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "quotationNumber" | "description" | "companyId" | "rejected" | "additionalInfo" | "documentId" | "acceptedForPOB" | "validUntil" | "deliveryTimeDays" | "createdBy" | "paymentConditionId" | "deleted" | "deletedAt" | "deletedBy" | "rejectedAt" | "rejectedBy" | "approvedAt" | "approvedBy" | "sentAt" | "sentBy" | "received" | "receivedAt" | "receivedBy" | "sent", ExtArgs["result"]["quoteSupplier"]>
+export type QuoteSupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "quotationNumber" | "description" | "companyId" | "rejected" | "rejectedAt" | "rejectedBy" | "acceptedForPOB" | "approvedAt" | "approvedBy" | "sent" | "sentAt" | "sentBy" | "received" | "receivedAt" | "receivedBy" | "additionalInfo" | "documentId" | "validUntil" | "deliveryTimeDays" | "createdBy" | "paymentConditionId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["quoteSupplier"]>
 export type QuoteSupplierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Purchase?: boolean | Prisma.QuoteSupplier$PurchaseArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
@@ -3520,10 +3520,10 @@ export type QuoteSupplierInclude<ExtArgs extends runtime.Types.Extensions.Intern
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_QuoteSupplier_deletedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_deletedByToEmployeeArgs<ExtArgs>
   PaymentCondition?: boolean | Prisma.QuoteSupplier$PaymentConditionArgs<ExtArgs>
-  Employee_QuoteSupplier_approvedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_approvedByToEmployeeArgs<ExtArgs>
-  Employee_QuoteSupplier_receivedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs>
   Employee_QuoteSupplier_rejectedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_rejectedByToEmployeeArgs<ExtArgs>
+  Employee_QuoteSupplier_approvedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_approvedByToEmployeeArgs<ExtArgs>
   Employee_QuoteSupplier_sentByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_sentByToEmployeeArgs<ExtArgs>
+  Employee_QuoteSupplier_receivedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs>
   QuoteSupplierLine?: boolean | Prisma.QuoteSupplier$QuoteSupplierLineArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteSupplierCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -3537,10 +3537,10 @@ export type $QuoteSupplierPayload<ExtArgs extends runtime.Types.Extensions.Inter
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Employee_QuoteSupplier_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     PaymentCondition: Prisma.$PaymentConditionPayload<ExtArgs> | null
-    Employee_QuoteSupplier_approvedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
-    Employee_QuoteSupplier_receivedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Employee_QuoteSupplier_rejectedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    Employee_QuoteSupplier_approvedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Employee_QuoteSupplier_sentByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    Employee_QuoteSupplier_receivedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     QuoteSupplierLine: Prisma.$QuoteSupplierLinePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -3550,9 +3550,19 @@ export type $QuoteSupplierPayload<ExtArgs extends runtime.Types.Extensions.Inter
     description: string | null
     companyId: string
     rejected: boolean
+    rejectedAt: Date | null
+    rejectedBy: string | null
+    acceptedForPOB: boolean
+    approvedAt: Date | null
+    approvedBy: string | null
+    sent: boolean
+    sentAt: Date | null
+    sentBy: string | null
+    received: boolean
+    receivedAt: Date | null
+    receivedBy: string | null
     additionalInfo: string | null
     documentId: string | null
-    acceptedForPOB: boolean
     validUntil: Date | null
     deliveryTimeDays: number | null
     createdBy: string
@@ -3560,16 +3570,6 @@ export type $QuoteSupplierPayload<ExtArgs extends runtime.Types.Extensions.Inter
     deleted: boolean
     deletedAt: Date | null
     deletedBy: string | null
-    rejectedAt: Date | null
-    rejectedBy: string | null
-    approvedAt: Date | null
-    approvedBy: string | null
-    sentAt: Date | null
-    sentBy: string | null
-    received: boolean
-    receivedAt: Date | null
-    receivedBy: string | null
-    sent: boolean
   }, ExtArgs["result"]["quoteSupplier"]>
   composites: {}
 }
@@ -3916,10 +3916,10 @@ export interface Prisma__QuoteSupplierClient<T, Null = never, ExtArgs extends ru
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_QuoteSupplier_deletedByToEmployee<T extends Prisma.QuoteSupplier$Employee_QuoteSupplier_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$Employee_QuoteSupplier_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   PaymentCondition<T extends Prisma.QuoteSupplier$PaymentConditionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$PaymentConditionArgs<ExtArgs>>): Prisma.Prisma__PaymentConditionClient<runtime.Types.Result.GetResult<Prisma.$PaymentConditionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  Employee_QuoteSupplier_approvedByToEmployee<T extends Prisma.QuoteSupplier$Employee_QuoteSupplier_approvedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$Employee_QuoteSupplier_approvedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  Employee_QuoteSupplier_receivedByToEmployee<T extends Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_QuoteSupplier_rejectedByToEmployee<T extends Prisma.QuoteSupplier$Employee_QuoteSupplier_rejectedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$Employee_QuoteSupplier_rejectedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee_QuoteSupplier_approvedByToEmployee<T extends Prisma.QuoteSupplier$Employee_QuoteSupplier_approvedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$Employee_QuoteSupplier_approvedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_QuoteSupplier_sentByToEmployee<T extends Prisma.QuoteSupplier$Employee_QuoteSupplier_sentByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$Employee_QuoteSupplier_sentByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee_QuoteSupplier_receivedByToEmployee<T extends Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   QuoteSupplierLine<T extends Prisma.QuoteSupplier$QuoteSupplierLineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$QuoteSupplierLineArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteSupplierLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3956,9 +3956,19 @@ export interface QuoteSupplierFieldRefs {
   readonly description: Prisma.FieldRef<"QuoteSupplier", 'String'>
   readonly companyId: Prisma.FieldRef<"QuoteSupplier", 'String'>
   readonly rejected: Prisma.FieldRef<"QuoteSupplier", 'Boolean'>
+  readonly rejectedAt: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
+  readonly rejectedBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
+  readonly acceptedForPOB: Prisma.FieldRef<"QuoteSupplier", 'Boolean'>
+  readonly approvedAt: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
+  readonly approvedBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
+  readonly sent: Prisma.FieldRef<"QuoteSupplier", 'Boolean'>
+  readonly sentAt: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
+  readonly sentBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
+  readonly received: Prisma.FieldRef<"QuoteSupplier", 'Boolean'>
+  readonly receivedAt: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
+  readonly receivedBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
   readonly additionalInfo: Prisma.FieldRef<"QuoteSupplier", 'String'>
   readonly documentId: Prisma.FieldRef<"QuoteSupplier", 'String'>
-  readonly acceptedForPOB: Prisma.FieldRef<"QuoteSupplier", 'Boolean'>
   readonly validUntil: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
   readonly deliveryTimeDays: Prisma.FieldRef<"QuoteSupplier", 'Int'>
   readonly createdBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
@@ -3966,16 +3976,6 @@ export interface QuoteSupplierFieldRefs {
   readonly deleted: Prisma.FieldRef<"QuoteSupplier", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
-  readonly rejectedAt: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
-  readonly rejectedBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
-  readonly approvedAt: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
-  readonly approvedBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
-  readonly sentAt: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
-  readonly sentBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
-  readonly received: Prisma.FieldRef<"QuoteSupplier", 'Boolean'>
-  readonly receivedAt: Prisma.FieldRef<"QuoteSupplier", 'DateTime'>
-  readonly receivedBy: Prisma.FieldRef<"QuoteSupplier", 'String'>
-  readonly sent: Prisma.FieldRef<"QuoteSupplier", 'Boolean'>
 }
     
 
@@ -4400,44 +4400,6 @@ export type QuoteSupplier$PaymentConditionArgs<ExtArgs extends runtime.Types.Ext
 }
 
 /**
- * QuoteSupplier.Employee_QuoteSupplier_approvedByToEmployee
- */
-export type QuoteSupplier$Employee_QuoteSupplier_approvedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Employee
-   */
-  select?: Prisma.EmployeeSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Employee
-   */
-  omit?: Prisma.EmployeeOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmployeeInclude<ExtArgs> | null
-  where?: Prisma.EmployeeWhereInput
-}
-
-/**
- * QuoteSupplier.Employee_QuoteSupplier_receivedByToEmployee
- */
-export type QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Employee
-   */
-  select?: Prisma.EmployeeSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Employee
-   */
-  omit?: Prisma.EmployeeOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmployeeInclude<ExtArgs> | null
-  where?: Prisma.EmployeeWhereInput
-}
-
-/**
  * QuoteSupplier.Employee_QuoteSupplier_rejectedByToEmployee
  */
 export type QuoteSupplier$Employee_QuoteSupplier_rejectedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4457,9 +4419,47 @@ export type QuoteSupplier$Employee_QuoteSupplier_rejectedByToEmployeeArgs<ExtArg
 }
 
 /**
+ * QuoteSupplier.Employee_QuoteSupplier_approvedByToEmployee
+ */
+export type QuoteSupplier$Employee_QuoteSupplier_approvedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
+}
+
+/**
  * QuoteSupplier.Employee_QuoteSupplier_sentByToEmployee
  */
 export type QuoteSupplier$Employee_QuoteSupplier_sentByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * QuoteSupplier.Employee_QuoteSupplier_receivedByToEmployee
+ */
+export type QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Employee
    */

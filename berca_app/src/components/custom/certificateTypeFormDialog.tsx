@@ -24,6 +24,7 @@ export function CertificateTypeFormDialog({
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
+    // Re-seed the form when switching between types or reopening.
     setName(certificateType?.name ?? '')
   }, [certificateType?.id, open])
 

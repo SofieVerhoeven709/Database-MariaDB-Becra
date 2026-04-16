@@ -35,6 +35,7 @@ export const companySchema = z.object({
   deletedBy: z.string().nullable().optional(),
 })
 
+// Address input used by create/update flows.
 const addressInputSchema = z.object({
   street: z.string().max(100).nullable().optional(),
   houseNumber: z.string().max(100).nullable().optional(),
@@ -56,6 +57,7 @@ export const createCompanySchema = companySchema
   })
   .extend({
     addresses: z.array(addressInputSchema).default([]),
+    // Visibility is stored on the company's target.
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
   })
 
@@ -68,12 +70,13 @@ export const updateCompanySchema = companySchema
     deletedBy: true,
   })
   .extend({
+    // Visibility updates also target the company's target row.
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
   })
 
 export const companyIdSchema = companySchema.pick({id: true})
 
-// ─── Company Address ──────────────────────────────────────────────────────────
+// ─── Company Address ─────────────────────────────────────────────────────────-
 export const companyAddressSchema = z.object({
   id: z.string(),
   street: z.string().max(100).nullable().optional(),

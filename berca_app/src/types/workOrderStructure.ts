@@ -22,6 +22,7 @@ export interface MappedWorkOrderStructure {
 }
 
 export interface MaterialOption {
+  // Minimal material shape for selectors.
   id: string
   name: string
   beNumber: string

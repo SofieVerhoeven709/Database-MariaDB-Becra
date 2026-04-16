@@ -67,6 +67,7 @@ export function IncomingDeliveryTable({
     initialEntries.forEach(e => {
       if (e.status) statuses.add(e.status)
     })
+    // Stable, de-duplicated list for the status filter.
     return Array.from(statuses).sort()
   }, [initialEntries])
 
@@ -85,6 +86,7 @@ export function IncomingDeliveryTable({
       if (statusFilter !== 'all' && entry.status !== statusFilter) return false
       if (!search) return true
       const q = search.toLowerCase()
+      // Search across identifier and summary fields.
       return (
         entry.incomingDeliveryNumber.toLowerCase().includes(q) ||
         (entry.purchaseNumber ?? '').toLowerCase().includes(q) ||
@@ -96,6 +98,7 @@ export function IncomingDeliveryTable({
       const dir = sortDir === 'asc' ? 1 : -1
       const cmpStr = (x: string | null | undefined, y: string | null | undefined) => dir * (x ?? '').localeCompare(y ?? '')
 
+      // Comparator switches on the active column.
       switch (sortField) {
         case 'incomingDeliveryNumber':
           return cmpStr(a.incomingDeliveryNumber, b.incomingDeliveryNumber)

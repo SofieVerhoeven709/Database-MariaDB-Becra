@@ -18,6 +18,7 @@ export function mapInventoryOrder(o: InventoryOrderWithRelations): MappedInvento
     inventoryBeNumber: o.Material.beNumber ?? null,
     inventoryDescription: o.Material.shortDescription ?? null,
     orderNumber: o.orderNumber,
+    // Default to 1 when legacy rows store a null requested quantity.
     requestedQty: o.requestedQty ?? 1,
     orderDate: o.orderDate.toISOString(),
     shortDescription: o.shortDescription,
@@ -28,6 +29,7 @@ export function mapInventoryOrder(o: InventoryOrderWithRelations): MappedInvento
     approved: o.approved,
     approvedAt: o.approvedAt?.toISOString() ?? null,
     approvedBy: o.approvedBy ?? null,
+    // Names are optional when no approval has occurred.
     approvedByName: o.Employee_InventoryOrder_approvedByToEmployee
       ? `${o.Employee_InventoryOrder_approvedByToEmployee.firstName} ${o.Employee_InventoryOrder_approvedByToEmployee.lastName}`
       : null,
@@ -49,4 +51,3 @@ export function mapInventoryOrder(o: InventoryOrderWithRelations): MappedInvento
       : null,
   }
 }
-

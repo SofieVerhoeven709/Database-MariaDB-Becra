@@ -3,11 +3,13 @@ import {prismaClient} from '@/dal/prismaClient'
 
 const employeeSelect = {select: {id: true, firstName: true, lastName: true}} as const
 
+// Shared include shape for payment condition audit data.
 const paymentConditionInclude = {
   Employee_PaymentCondition_createdByToEmployee: employeeSelect,
   Employee_PaymentCondition_deletedByToEmployee: employeeSelect,
 } as const
 
+// Include the relations needed for list rendering and line counts.
 const quoteSupplierInclude = {
   Employee: employeeSelect,
   Employee_QuoteSupplier_deletedByToEmployee: employeeSelect,
@@ -32,6 +34,7 @@ const quoteSupplierDetailInclude = {
         },
       },
     },
+    // Stable order for detail line rendering.
     orderBy: {id: 'asc'},
   },
 } as const
@@ -61,4 +64,3 @@ export async function getPaymentConditions() {
     orderBy: {name: 'asc'},
   })
 }
-

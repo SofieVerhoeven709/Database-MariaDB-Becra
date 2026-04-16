@@ -7,6 +7,7 @@ export const createTimeRegistrySchema = z.object({
   activityDescription: z.string().nullable().optional(),
   additionalInfo: z.string().nullable().optional(),
   invoiceInfo: z.string().nullable().optional(),
+  // Work date and start time are required for a valid entry.
   workDate: requiredDateSchema,
   startTime: requiredDateSchema,
   endTime: dateSchema.optional(),
@@ -17,6 +18,7 @@ export const createTimeRegistrySchema = z.object({
   stayOver: z.boolean().default(false),
   workOrderId: z.string(),
   hourTypeId: z.string(),
+  // Selected employees for the join table.
   employeeIds: z.array(z.string()).default([]),
 })
 

@@ -89,6 +89,7 @@ export async function getMaterialDemands(includeFulfilled = false) {
       ...materialDemandInclude,
       MaterialDemandSource: {
         ...materialDemandInclude.MaterialDemandSource,
+        // Optionally hide fulfilled sources in the demand view.
         where: includeFulfilled ? {} : {fulfilled: false},
       },
     },
@@ -302,6 +303,7 @@ export async function removeMaterialDemandSourceForInventoryOrder(params: {
   const sourceReservedQty = source.reservedQty ?? 0
   const nextReservedQty = Math.max(currentReservedQty - sourceReservedQty, 0)
 
+  // Keep demand totals in sync when removing a source.
   await db.materialDemand.update({
     where: {id: demand.id},
     data: {
@@ -364,6 +366,7 @@ export async function syncMaterialDemandReservations(materialDemandId: string) {
     throw new Error('Selected quote quantities cannot exceed the total required quantity.')
   }
 
+  // Allocate reserved quantities in source creation order.
   let remainingQty = selectedQty
   const nextReservations = demand.MaterialDemandSource.map(source => {
     const nextReservedQty = Math.min(source.requiredQty, remainingQty)
@@ -440,13 +443,16 @@ export async function syncMaterialDemandFromIncomingAllocations(
 
       if (!currentExecution) return
 
+      const canUpdateExecutionQty = !currentExecution.completedDate
+      const nextCompletedDate = currentExecution.completedDate ?? (params.fulfilled ? params.now : null)
+
       await db.bOMExecution.update({
         where: {projectBOMStructureId},
         data: {
-          purchaseReceivedQuantity: params.reservedQty,
+          ...(canUpdateExecutionQty ? {purchaseReceivedQuantity: params.reservedQty} : {}),
           notCorrect: params.hasNotCorrect,
           notCorrectReason: params.hasNotCorrect ? params.notCorrectReason : null,
-          completedDate: params.fulfilled ? (currentExecution.completedDate ?? params.now) : null,
+          completedDate: nextCompletedDate,
         },
       })
     }
@@ -564,6 +570,7 @@ export async function syncMaterialDemandFromIncomingAllocations(
         })
       }
 
+      // Propagate fulfillment state back to the originating source records.
       await syncSourceOriginFeedback(db, {
         sourceTypeName: source.MaterialDemandSourceType.name,
         sourceReferenceId: source.sourceReferenceId,

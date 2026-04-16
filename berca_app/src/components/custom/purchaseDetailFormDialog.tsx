@@ -82,10 +82,12 @@ export function PurchaseDetailFormDialog({
     setForm(prev => {
       const next = {...prev, [key]: value}
       if (key === 'materialId') {
+        // Keep the label in sync when the material changes manually.
         const match = materialOptions.find(opt => opt.id === value)
         next.materialLabel = match?.name ?? ''
       }
       if (key === 'quoteSupplierLineId') {
+        // Selecting a quote line pre-fills the rest of the detail fields.
         const line = quoteLineOptions.find(opt => opt.id === value)
         if (line) {
           next.materialId = line.materialId

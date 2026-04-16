@@ -21,6 +21,7 @@ interface EmployeeFormDialogProps {
   onSave: (employee: MappedEmployee, password: string) => void
 }
 
+// Defaults used when creating a new employee or resetting the form.
 export const EMPTY_EMPLOYEE: MappedEmployee = {
   id: '',
   firstName: '',
@@ -87,6 +88,7 @@ export function EmployeeFormDialog({
 
   useEffect(() => {
     if (open) {
+      // Re-seed the form when opening or switching the edited employee.
       if (employee) {
         setForm({
           ...employee,

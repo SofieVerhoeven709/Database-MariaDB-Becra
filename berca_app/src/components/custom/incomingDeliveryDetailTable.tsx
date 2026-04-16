@@ -150,6 +150,7 @@ export function IncomingDeliveryDetailTable({
     if (!editingLineId && !canCreate) return
     if (!form.materialId || form.materialId === '__none__') return
 
+    // Normalize string inputs into numeric payload values.
     const payload = {
       incomingDeliveryId,
       purchaseDetailId: form.purchaseDetailId === '__none__' ? null : form.purchaseDetailId,
@@ -252,6 +253,7 @@ export function IncomingDeliveryDetailTable({
   function allocationLabel(allocation: MappedIncomingDeliveryLineAllocation) {
     if (allocation.sourceTypeName.toLowerCase() !== 'warehouseplace') return allocation.materialDemandSourceLabel
     const locationLabel = allocation.sourceReferenceId ? warehousePlaceById.get(allocation.sourceReferenceId) : null
+    // Prefer warehouse location label for over-delivery allocations.
     return `WarehousePlace - ${locationLabel ?? allocation.sourceReferenceId ?? allocation.materialDemandSourceLabel}`
   }
 

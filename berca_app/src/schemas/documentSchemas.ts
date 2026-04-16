@@ -249,7 +249,7 @@ export const createDocumentStructureSchema = documentStructureSchema
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
     documentTargetId: z.string().nullable().optional(),
     documentTargetTypeName: z.enum(DOCUMENT_TARGET_TYPE_NAMES).nullable().optional(),
-    // Add this:
+    // Additional target links beyond the primary document target.
     targetAssignments: z
       .array(z.object({typeName: z.enum(DOCUMENT_TARGET_TYPE_NAMES), targetId: z.string()}))
       .optional(),
@@ -259,6 +259,7 @@ export const updateDocumentStructureSchema = documentStructureSchema
   .omit({createdAt: true, createdBy: true, targetId: true, deleted: true, deletedAt: true, deletedBy: true})
   .extend({
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
+    // Optional target link updates sent from the edit form.
     targetAssignments: z
       .array(
         z.object({

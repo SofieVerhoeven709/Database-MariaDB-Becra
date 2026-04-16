@@ -73,6 +73,7 @@ export function PurchaseTable({
     initialPurchases.forEach(p => {
       if (p.status) statuses.add(p.status)
     })
+    // Stable, de-duplicated list for the status filter dropdown.
     return Array.from(statuses).sort()
   }, [initialPurchases])
 
@@ -88,6 +89,7 @@ export function PurchaseTable({
       if (statusFilter !== 'all' && p.status !== statusFilter) return false
       if (!search) return true
       const q = search.toLowerCase()
+      // Match against the most common purchase identifiers and labels.
       return (
         (p.purchaseNumber ?? '').toLowerCase().includes(q) ||
         (p.companyName ?? '').toLowerCase().includes(q) ||
@@ -102,6 +104,7 @@ export function PurchaseTable({
       const dir = sortDir === 'asc' ? 1 : -1
       const cmpStr = (x: string | null | undefined, y: string | null | undefined) =>
         dir * (x ?? '').localeCompare(y ?? '')
+      // Comparator switches on the active column, falling back to 0.
       switch (sortField) {
         case 'purchaseNumber':
           return cmpStr(a.purchaseNumber, b.purchaseNumber)
@@ -253,6 +256,7 @@ export function PurchaseTable({
                 const secondaryLabel = purchase.shortDescription ?? purchase.paymentConditionName ?? ''
                 const detailHref = `/departments/${departmentId}/orders/${purchase.id}` as Route
                 const isOrderedNotSent = isOrderedNotSentStatus(purchase.status)
+                // Ordered purchases are locked unless the user meets the manager threshold.
                 const canMutatePurchase = !isOrderedNotSent || canManageOrderedPurchases
                 return (
                   <TableRow

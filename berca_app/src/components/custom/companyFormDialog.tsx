@@ -252,6 +252,7 @@ export function CompanyFormDialog({
     }
     setSaving(true)
     try {
+      // Default official name to company name when empty.
       const formToSave = {
         ...form,
         officialName: form.officialName?.trim() || form.name,
@@ -264,6 +265,7 @@ export function CompanyFormDialog({
 
   async function handleAddAddr() {
     if (!form.id) {
+      // If company is new, keep addresses locally until the company is created.
       const addr: MappedCompanyAddress = {
         ...newAddr,
         id: `temp-${crypto.randomUUID()}`,
@@ -321,6 +323,7 @@ export function CompanyFormDialog({
   const parentOptions = companies.filter(c => c.id !== form.id)
   const visibleAddrs = form.addresses.filter(a => (showDeletedAddrs ? true : !a.deleted))
   const activeAddrCount = form.addresses.filter(a => !a.deleted).length
+  // Lock the number on edit for non-admin users.
   const numberEditable = !isEdit || canEditNumber
 
   return (

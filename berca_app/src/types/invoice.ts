@@ -87,6 +87,7 @@ export interface MappedInvoiceOut {
   invoiceSentTypeName: string
   invoiceStatusId: string
   invoiceStatusName: string
+  // Optional price list used to calculate billing totals.
   priceListId: string | null
   priceListName: string | null
   contacts: MappedInvoiceOutContact[]

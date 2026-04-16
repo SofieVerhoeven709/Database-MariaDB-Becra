@@ -184,6 +184,7 @@ export function DocumentFormDialog({
       .map(g => g.groupDId!),
   )
 
+  // Filter out options not present in any valid junction row for the current selection.
   const filteredGroupBs = groupBOptions.filter(o => validBIds.has(o.id))
   const filteredGroupCs = groupCOptions.filter(o => validCIds.has(o.id))
   const filteredGroupDs = groupDOptions.filter(o => validDIds.has(o.id))
@@ -227,6 +228,7 @@ export function DocumentFormDialog({
     }
     setSaving(true)
     try {
+      // Build target assignments only for selectors that are filled in.
       const assignments: DocumentTargetAssignment[] = []
       if (targetMaterial) assignments.push({typeName: 'Material', targetId: targetMaterial})
       if (targetProject) assignments.push({typeName: 'Project', targetId: targetProject})
@@ -235,6 +237,7 @@ export function DocumentFormDialog({
         return id ?? ''
       }
 
+      // Resolve the selected A/B/C/D into a single DocumentGroup junction row.
       const docGroup = documentGroups.find(
         group =>
           normalizeGroupId(group.groupAId) === selAId &&

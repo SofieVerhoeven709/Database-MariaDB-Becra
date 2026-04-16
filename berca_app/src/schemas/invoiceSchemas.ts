@@ -24,6 +24,7 @@ export const invoiceOutSchema = z.object({
   paymentMethodId: z.string(),
   invoiceSentTypeId: z.string(),
   invoiceStatusId: z.string(),
+  // Optional price list applied to billing line calculations.
   priceListId: z.string().nullable().optional(), // ← new
 })
 
@@ -41,6 +42,7 @@ export const createInvoiceOutSchema = invoiceOutSchema
     targetId: true,
   })
   .extend({
+    // Allow user-supplied invoice number on create; server may override.
     invoiceNumber: z.string().min(1).max(255).optional(),
   })
 
@@ -95,6 +97,7 @@ export const createInvoiceInSchema = invoiceInSchema
     targetId: true,
   })
   .extend({
+    // Allow user-supplied invoice number on create; server may override.
     invoiceNumber: z.string().min(1).max(255).optional(),
   })
 

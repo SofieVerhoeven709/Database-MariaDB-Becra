@@ -108,6 +108,7 @@ export function ProjectTable({
 
   const router = useRouter()
 
+  // Resolve employee IDs to display names for table columns.
   const getEmployeeName = (id: string | null) => {
     if (!id) return '-'
     const emp = employees.find(e => e.id === id)
@@ -120,6 +121,7 @@ export function ProjectTable({
     return p ? p.projectNumber : '-'
   }
 
+  // Apply open/deleted filters and search terms before sorting.
   const filtered = projects
     .filter(p => {
       if (filterOpen === 'open' && !p.isOpen) return false
@@ -201,6 +203,7 @@ export function ProjectTable({
       engineeringStartDate: p.engineeringStartDate ? new Date(p.engineeringStartDate) : null,
       createdAt: new Date(p.createdAt),
       deletedAt: p.deletedAt ? new Date(p.deletedAt) : null,
+      // Strip view-only fields before sending to the server.
       companyName: undefined,
       projectTypeName: undefined,
       visibilityForRoles: visibilityRows,

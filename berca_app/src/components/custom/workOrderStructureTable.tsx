@@ -85,6 +85,7 @@ export function WorkOrderStructureTable({
   departmentId,
 }: WorkOrderStructureTableProps) {
   const router = useRouter()
+  // Role/level gates control delete/restore actions.
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
 
@@ -103,6 +104,7 @@ export function WorkOrderStructureTable({
     }
   }
 
+  // Apply search/deleted filters before sorting the list.
   const filtered = initialStructures
     .filter(s => {
       if (filterDeleted === 'not-deleted' && s.deleted) return false

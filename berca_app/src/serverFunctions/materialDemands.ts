@@ -59,6 +59,7 @@ export const updateMaterialDemandAction = protectedServerFunction({
     const isManagerOrAdmin = profile.RoleLevelEmployee.some(
       rle => rle.RoleLevel.Role.name === 'Administrator' || rle.RoleLevel.SubRole.level >= 80,
     )
+    // Managers can edit required qty; editors can adjust reserved qty.
     const canEditReservedQty = isManagerOrAdmin || profile.RoleLevelEmployee.some(rle => rle.RoleLevel.SubRole.level >= 40)
 
     const existing = await prismaClient.materialDemand.findUnique({
@@ -144,6 +145,7 @@ export const removeMaterialDemandSourceAction = protectedServerFunction({
       const selectedQty = demand.QuoteSupplierLine.reduce((sum, line) => sum + line.quantity, 0)
       const nextTotalRequiredQty = Math.max(demand.totalRequiredQty - source.requiredQty, 0)
 
+      // Prevent removing a source if it would undercut selected quote quantities.
       if (selectedQty > nextTotalRequiredQty) {
         throw new Error(
           `Cannot remove this source line. Selected quote quantity (${selectedQty}) would exceed required quantity (${nextTotalRequiredQty}).`,

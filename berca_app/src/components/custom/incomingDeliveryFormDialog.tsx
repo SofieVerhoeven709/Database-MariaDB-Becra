@@ -20,6 +20,7 @@ interface IncomingDeliveryFormDialogProps {
 const STATUS_OPTIONS = ['DRAFT', 'RECEIVED', 'PARTIAL', 'CLOSED', 'CANCELLED']
 
 function emptyDelivery(): MappedIncomingDelivery {
+  // Defaults used for a new incoming delivery form.
   return {
     id: '',
     incomingDeliveryNumber: generateIncomingDeliveryNumber(),
@@ -146,6 +147,7 @@ export function IncomingDeliveryFormDialog({
               id="deliveryDate"
               type="date"
               value={form.deliveryDate ? form.deliveryDate.slice(0, 10) : ''}
+              // Convert date input back to ISO for storage.
               onChange={e => set('deliveryDate', e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString())}
               className="bg-secondary border-border"
             />
@@ -157,6 +159,7 @@ export function IncomingDeliveryFormDialog({
               id="receivedAt"
               type="datetime-local"
               value={form.receivedAt ? form.receivedAt.slice(0, 16) : ''}
+              // Normalize local datetime input to ISO.
               onChange={e => set('receivedAt', e.target.value ? new Date(e.target.value).toISOString() : null)}
               className="bg-secondary border-border"
             />

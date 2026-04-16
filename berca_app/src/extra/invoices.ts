@@ -67,6 +67,7 @@ function buildTargetPriceMap(
 ): Map<string, {itemId: string; unit: string; basePrice: number}> {
   const map = new Map<string, {itemId: string; unit: string; basePrice: number}>()
   for (const item of items) {
+    // Only map explicit target price items (exclude cost-margin rows).
     if (!item.isCostMargin && item.PriceListItemTarget) {
       map.set(item.PriceListItemTarget.targetId, {
         itemId: item.id,
@@ -471,7 +472,7 @@ export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
       invoiceVatByRateMap.set(rate, (invoiceVatByRateMap.get(rate) ?? 0) + amount)
     }
   }
-
+  // Compute totals from all matched billing lines.
   const subtotalExVat = workOrders.reduce((sum, wo) => sum + wo.subtotalExVat, 0)
   const totalVat = workOrders.reduce((sum, wo) => sum + wo.totalVat, 0)
   const totalInclVat = subtotalExVat + totalVat

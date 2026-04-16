@@ -16,6 +16,7 @@ interface PageProps {
 export default async function OrderQuotePage({params, searchParams}: PageProps) {
   const {departmentId} = await params
   const {materialId, materialDemandId, supplierId, quoteQty} = (await searchParams) ?? {}
+  // Parse the query string into a numeric default for the quote line quantity.
   const initialQuoteQty = quoteQty ? Number.parseInt(quoteQty, 10) : undefined
 
   const [department, entriesFromDAL, companiesRaw, paymentConditionsRaw, paymentConditionRowsRaw, profile, materialData] = await Promise.all([
@@ -35,6 +36,7 @@ export default async function OrderQuotePage({params, searchParams}: PageProps) 
   const entries = entriesFromDAL.map(mapQuoteSupplier)
   const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'orderQuote')
 
+  // Sort dropdown options for a stable, easy-to-scan list.
   const companyOptions = companiesRaw
     .map(c => ({id: c.id, name: c.name}))
     .sort((a, b) => a.name.localeCompare(b.name))
@@ -47,6 +49,7 @@ export default async function OrderQuotePage({params, searchParams}: PageProps) 
     .map(mapPaymentCondition)
     .sort((a, b) => a.name.localeCompare(b.name))
 
+  // Preselect the supplier when the page is opened from a material context.
   const selectedSupplier = supplierId ? companyOptions.find(c => c.id === supplierId) ?? null : null
 
   return (

@@ -42,6 +42,7 @@ export interface MappedContact {
   deletedAt: string | null
   deletedBy: string | null
   deletedByName: string | null
+  // Current active company link (if any).
   currentCompanyName: string | null
   currentRoleWithCompany: string | null
   visibilityForRoles: MappedVisibilityForRole[]

@@ -11,7 +11,7 @@ import type {
 } from '@/types/training'
 import {mapVisibility} from '@/extra/visibilityForRole'
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// ─── Helpers ─────────────────────────────────────────────────────────────────-
 
 function getCurrentCompanyName(links: {endDate: Date | null; Company: {name: string}}[]): string | null {
   const now = new Date()
@@ -137,6 +137,7 @@ export function mapTrainingStandard(ts: TrainingStandardWithRelations): MappedTr
     location: ts.location,
     certificate: ts.certificate,
     repeat: ts.repeat,
+    // Normalize dates to ISO strings for the client.
     createdAt: ts.createdAt.toISOString(),
     createdByName: `${ts.Employee.firstName} ${ts.Employee.lastName}`,
     certificateId: ts.certificateId,
@@ -227,6 +228,7 @@ export function mapTraining(t: TrainingWithRelations): MappedTraining {
     trainingNumber: t.trainingNumber,
     trainingDate: t.trainingDate.toISOString(),
     closed: t.closed,
+    // Normalize dates to ISO strings for the client.
     createdAt: t.createdAt.toISOString(),
     createdByName: `${t.Employee.firstName} ${t.Employee.lastName}`,
     workOrderId: t.workOrderId,
@@ -291,6 +293,7 @@ function mapTrainingContact(tc: TrainingDetailPayload['TrainingContact'][number]
     attended: tc.attended,
     certificateSent: tc.certificateSent,
     certSentDate: tc.certSentDate?.toISOString() ?? null,
+    // Normalize dates to ISO strings for the client.
     createdAt: tc.createdAt.toISOString(),
     createdByName: `${tc.Employee.firstName} ${tc.Employee.lastName}`,
     deleted: tc.deleted,
@@ -311,6 +314,7 @@ function mapTrainingContact(tc: TrainingDetailPayload['TrainingContact'][number]
 export function mapTrainingDetail(t: TrainingDetailPayload): TrainingDetailData {
   return {
     ...mapTraining(t as TrainingWithRelations),
+    // Inline training standard details for the detail view.
     trainingStandard: {
       id: t.TrainingStandard.id,
       description: t.TrainingStandard.description,

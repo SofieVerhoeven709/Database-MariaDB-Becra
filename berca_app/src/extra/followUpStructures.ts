@@ -62,6 +62,7 @@ export function mapFollowUpStructure(s: FollowUpStructureListPayload): MappedFol
     id: s.id,
     activityDescription: s.activityDescription,
     additionalInfo: s.additionalInfo,
+    // Normalize dates to ISO strings for the client.
     actionAgenda: s.actionAgenda?.toISOString() ?? null,
     closedAgenda: s.closedAgenda?.toISOString() ?? null,
     recurringItem: s.recurringItem,
@@ -102,6 +103,7 @@ export function mapFollowUpStructureDetail(s: FollowUpStructureDetailPayload): F
   const base = mapFollowUpStructure(s as unknown as FollowUpStructureListPayload)
   return {
     ...base,
+    // Provide a compact parent follow-up summary for headers.
     followUp: {
       id: s.FollowUp.id,
       activityDescription: s.FollowUp.activityDescription,

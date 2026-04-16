@@ -127,6 +127,7 @@ export function InvoiceInTable({
   }
 
   const filtered = initialInvoices
+    // Client-side filter/sort for responsive tables.
     .filter(inv => {
       if (filterDeleted === 'not-deleted' && inv.deleted) return false
       if (filterDeleted === 'deleted' && !inv.deleted) return false
@@ -369,8 +370,8 @@ export function InvoiceInTable({
                     </div>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
+              )))
+            }
           </TableBody>
         </Table>
       </div>

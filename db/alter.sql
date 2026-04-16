@@ -1804,7 +1804,6 @@ ALTER TABLE WorkOrderStructure
 ADD CONSTRAINT fk_workOrderStructure_vatMarginId
 FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
-
 -- Remove VAT from InvoiceOut
 ALTER TABLE InvoiceOut
 DROP FOREIGN KEY IF EXISTS InvoiceOut_ibfk_9;

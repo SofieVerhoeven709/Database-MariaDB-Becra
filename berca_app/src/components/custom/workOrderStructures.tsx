@@ -54,6 +54,7 @@ export function WorkOrderStructures({structures, workOrderId, materials, permiss
   const router = useRouter()
   const {canAdd, canDelete, isAdmin} = permissions
 
+  // Track inline vs dialog creation flows.
   const [showInline, setShowInline] = useState(false)
   const [inlineForm, setInlineForm] = useState(emptyForm())
 
@@ -64,6 +65,7 @@ export function WorkOrderStructures({structures, workOrderId, materials, permiss
   const [showDeleted, setShowDeleted] = useState(false)
 
   function buildPayload(f: StructureForm) {
+    // Normalize empty strings and convert quantity to number.
     return {
       clientNumber: f.clientNumber || null,
       tag: f.tag || null,

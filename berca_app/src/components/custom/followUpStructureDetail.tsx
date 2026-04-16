@@ -80,6 +80,7 @@ export function FollowUpStructureDetail({
 
   // ─── Edit form ─────────────────────────────────────────────────────────────
   const buildForm = () => ({
+    // Seed form state from the current detail payload.
     activityDescription: structure.activityDescription ?? '',
     additionalInfo: structure.additionalInfo ?? '',
     actionAgenda: structure.actionAgenda ? structure.actionAgenda.slice(0, 10) : '',
@@ -123,6 +124,7 @@ export function FollowUpStructureDetail({
         id: structure.id,
         activityDescription: form.activityDescription || null,
         additionalInfo: form.additionalInfo || null,
+        // Convert string inputs back to dates for the API.
         actionAgenda: form.actionAgenda ? new Date(form.actionAgenda) : null,
         closedAgenda: form.closedAgenda ? new Date(form.closedAgenda) : null,
         recurringItem: form.recurringItem || null,

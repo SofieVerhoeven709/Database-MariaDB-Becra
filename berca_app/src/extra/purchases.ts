@@ -13,6 +13,7 @@ type PurchaseWithRelations = Prisma.PurchaseGetPayload<{
 const PURCHASE_STATUSES = new Set(['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED'])
 
 export function normalizePurchaseStatus(status: string | null | undefined): string {
+  // Enforce a known status set; fall back to DRAFT/ORDERED when input is missing or unexpected.
   if (!status) return 'DRAFT'
   return PURCHASE_STATUSES.has(status) ? status : 'ORDERED'
 }
@@ -54,6 +55,7 @@ export function mapPurchaseDetail(d: PurchaseDetailWithRelations): MappedPurchas
     purchaseId: d.purchaseId,
     quoteSupplierLineId: d.quoteSupplierLineId,
     materialId: d.materialId,
+    // Prefer BE number + name; fall back to short description when name is missing.
     materialLabel: [d.Material?.beNumber, d.Material?.name ?? d.Material?.shortDescription]
       .filter(Boolean)
       .join(' - '),
@@ -61,6 +63,7 @@ export function mapPurchaseDetail(d: PurchaseDetailWithRelations): MappedPurchas
     unitPrice: d.unitPrice?.toString() ?? null,
     quantity: d.quantity ?? 0,
     minQuantity: d.minQuantity,
+    // Default new lines to OPEN when no line status is stored.
     lineStatus: d.lineStatus ?? 'OPEN',
     additionalInfo: d.additionalInfo,
     notDeliverable: d.notDeliverable,

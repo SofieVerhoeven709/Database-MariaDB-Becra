@@ -2,6 +2,7 @@ import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 
 const workOrderListInclude = {
+  // Include display fields for list views.
   Employee: {select: {firstName: true, lastName: true}},
   Employee_WorkOrder_deletedByToEmployee: {select: {firstName: true, lastName: true}},
   Project: {select: {projectNumber: true, projectName: true}},
@@ -17,9 +18,11 @@ export async function getWorkOrderById(id: string) {
   return prismaClient.workOrder.findUniqueOrThrow({
     where: {id},
     include: {
+      // Include related rows used by detail tabs.
       Employee: {select: {id: true, firstName: true, lastName: true}},
       Project: {select: {projectNumber: true, projectName: true}},
       TimeRegistry: {
+        // Pull hour types and extra employees for the time registry tab.
         include: {
           Employee: {select: {id: true, firstName: true, lastName: true}},
           HourType: {select: {id: true, name: true}},
@@ -31,6 +34,7 @@ export async function getWorkOrderById(id: string) {
         },
       },
       WorkOrderStructure: {
+        // Include material and creator for the structures tab.
         include: {
           Employee: {select: {id: true, firstName: true, lastName: true}},
           Material: {select: {id: true, name: true, beNumber: true}},

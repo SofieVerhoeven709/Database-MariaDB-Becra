@@ -206,6 +206,7 @@ export function DocumentTable({
 
   // ─── Derived options ───────────────────────────────────────────────────────
 
+  // Only show non-deleted items in selectors used by the form.
   const groupAOptions = initialGroupAs.filter(g => !g.deleted).map(g => ({id: g.id, name: g.name}))
   const groupBOptions = initialGroupBs.filter(g => !g.deleted).map(g => ({id: g.id, name: g.name}))
   const groupCOptions = initialGroupCs.filter(g => !g.deleted).map(g => ({id: g.id, name: g.name}))
@@ -252,6 +253,7 @@ export function DocumentTable({
         (d.documentStatusName?.toLowerCase().includes(q) ?? false)
       )
     })
+    // Apply the active sort field + direction to the filtered list.
     .sort((a, b) => {
       const dir = sortDir === 'asc' ? 1 : -1
       const s = (x: string | null, y: string | null) => dir * (x ?? '').localeCompare(y ?? '')
@@ -310,6 +312,7 @@ export function DocumentTable({
       documentStatusId: doc.documentStatusId,
     }
 
+    // Decide between create vs update based on whether we're editing.
     if (editingDocument) {
       await updateDocumentAction({id: doc.id, ...core, visibilityForRoles: visibilityRows, targetAssignments})
     } else {

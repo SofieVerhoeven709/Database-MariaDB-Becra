@@ -99,6 +99,7 @@ export function FollowUpDetail({
 
   // ─── Edit form ─────────────────────────────────────────────────────────────
   const buildForm = () => ({
+    // Seed form state from the current detail payload.
     activityDescription: followUp.activityDescription ?? '',
     additionalInfo: followUp.additionalInfo ?? '',
     actionAgenda: followUp.actionAgenda ? followUp.actionAgenda.slice(0, 10) : '',
@@ -141,6 +142,7 @@ export function FollowUpDetail({
         id: followUp.id,
         activityDescription: form.activityDescription || null,
         additionalInfo: form.additionalInfo || null,
+        // Convert string inputs back to dates for the API.
         actionAgenda: form.actionAgenda ? new Date(form.actionAgenda) : null,
         closedAgenda: form.closedAgenda ? new Date(form.closedAgenda) : null,
         recurringCallDays: form.recurringCallDays ? Number(form.recurringCallDays) : null,
@@ -169,6 +171,7 @@ export function FollowUpDetail({
     const core = {
       activityDescription: st.activityDescription,
       additionalInfo: st.additionalInfo,
+      // Normalize dates for create/update.
       actionAgenda: st.actionAgenda ? new Date(st.actionAgenda) : null,
       closedAgenda: st.closedAgenda ? new Date(st.closedAgenda) : null,
       recurringItem: st.recurringItem,
@@ -274,6 +277,7 @@ export function FollowUpDetail({
   )
 
   // ─── Derived ───────────────────────────────────────────────────────────────
+  // Split entries for active vs deleted sections.
   const activeStructures = followUp.structures.filter(st => !st.deleted)
   const deletedStructures = followUp.structures.filter(st => st.deleted)
 

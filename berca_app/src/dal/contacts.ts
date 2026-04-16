@@ -17,6 +17,7 @@ export async function getContacts() {
           Company: {select: {name: true}},
         },
       },
+      // Visibility includes role + subrole labels for UI.
       Target: {
         select: {
           id: true,
@@ -26,6 +27,7 @@ export async function getContacts() {
         },
       },
     },
+    // Stable ordering for list view.
     orderBy: [{lastName: 'asc'}, {firstName: 'asc'}],
   })
 }
@@ -116,7 +118,7 @@ export async function getContactDetail(id: string) {
           },
           Employee: {select: {firstName: true, lastName: true}},
           CompanyAddress: {
-            // ← add this
+            // Include linked address (with country) for company-contact rows.
             include: {Country: {select: {name: true}}},
           },
         },

@@ -100,6 +100,7 @@ export function CertificateTable({
     )
   }
 
+  // Apply filters and sorting for the certificate list.
   const filteredCerts = initialCertificates
     .filter(c => {
       if (filterDeleted === 'not-deleted' && c.deleted) return false
@@ -120,6 +121,7 @@ export function CertificateTable({
       return s(a.createdAt, b.createdAt)
     })
 
+  // Apply filters for the certificate type list.
   const filteredTypes = initialCertificateTypes
     .filter(t => {
       if (typeFilterDeleted === 'not-deleted' && t.deleted) return false
@@ -129,6 +131,7 @@ export function CertificateTable({
     })
     .sort((a, b) => a.name.localeCompare(b.name))
 
+  // Options for the certificate type dropdown (non-deleted only).
   const certificateTypeOptions = initialCertificateTypes.filter(t => !t.deleted).map(t => ({id: t.id, name: t.name}))
 
   async function handleSaveCert(c: MappedCertificate, visibilityRows: VisibilityRow[]) {

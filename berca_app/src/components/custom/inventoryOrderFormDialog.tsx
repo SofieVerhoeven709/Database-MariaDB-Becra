@@ -25,6 +25,7 @@ interface Props {
 }
 
 function empty(): MappedInventoryOrder {
+  // Defaults for a new order request form.
   return {
     id: '', materialId: '', inventoryBeNumber: null, inventoryDescription: null,
     orderNumber: generateIncomingDeliveryNumber('OR'), requestedQty: 1, orderDate: new Date().toISOString().split('T')[0],
@@ -53,6 +54,7 @@ export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories
   const filteredInventories = inventories.filter(i => {
     if (!materialSearch) return true
     const q = materialSearch.toLowerCase()
+    // Search inventory by BE number or description.
     return (
       (i.beNumber ?? '').toLowerCase().includes(q) ||
       (i.shortDescription ?? '').toLowerCase().includes(q)
@@ -134,6 +136,7 @@ export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories
           <div className="grid gap-1.5">
             <Label htmlFor="requestedQty">Requested Quantity</Label>
             <Input id="requestedQty" type="number" min={1} value={form.requestedQty}
+              // Convert string input to integer quantity.
               onChange={e => set('requestedQty', Number.parseInt(e.target.value, 10) || 0)}
               className="bg-secondary border-border" />
           </div>
@@ -141,6 +144,7 @@ export function InventoryOrderFormDialog({open, onOpenChange, entry, inventories
           <div className="grid gap-1.5">
             <Label htmlFor="orderDate">Order Date</Label>
             <Input id="orderDate" type="date" value={form.orderDate ? form.orderDate.split('T')[0] : ''}
+              // Keep the date in ISO string form for the API.
               onChange={e => set('orderDate', e.target.value)} className="bg-secondary border-border" />
           </div>
 

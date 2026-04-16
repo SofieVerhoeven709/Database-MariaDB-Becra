@@ -241,6 +241,7 @@ export function ContactDetail({
 
   function handleCancel() {
     setForm(buildForm())
+    // Reset to original visibility when canceling edits.
     setVisibilityRows(buildInitialVisibilityRows(contact.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
     setEditing(false)
   }
@@ -291,6 +292,7 @@ export function ContactDetail({
   const hasDeletedCompanies = contact.companies.some(cc => cc.deleted)
   const nonDeletedCompanies = contact.companies.filter(cc => !cc.deleted)
   const activeCompanies = nonDeletedCompanies.filter(cc => isActiveCompanyLink(cc.endDate))
+  // Toggle between active-only, all non-deleted, or full list with deleted.
   const visibleCompanies = showDeletedCompanies
     ? contact.companies
     : showAllCompanies

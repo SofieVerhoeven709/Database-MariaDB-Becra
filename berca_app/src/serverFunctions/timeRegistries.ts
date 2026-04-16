@@ -5,6 +5,7 @@ import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTimeRegistrySchema, timeRegistryIdSchema, updateTimeRegistrySchema} from '@/schemas/timeRegistrySchemas'
 
 function revalidateTimeRegistryPaths(workOrderId?: string) {
+  // Update both the registry list and the related work order page when present.
   revalidatePath('/departments/timeregistries')
   if (workOrderId) {
     revalidatePath(`/departments/project/project/${workOrderId}`)
@@ -22,6 +23,7 @@ export const createTimeRegistryAction = protectedServerFunction({
         createdBy: profile.id,
         createdAt: new Date(),
         TimeRegistryEmployee: {
+          // Create join rows for all selected employees.
           create: employeeIds.map(employeeId => ({
             id: crypto.randomUUID(),
             employeeId,
@@ -44,6 +46,7 @@ export const updateTimeRegistryAction = protectedServerFunction({
       data: {
         ...data,
         TimeRegistryEmployee: {
+          // Replace all join rows to match the new selection.
           deleteMany: {},
           create: employeeIds.map(employeeId => ({
             id: crypto.randomUUID(),
@@ -81,6 +84,7 @@ export const hardDeleteTimeRegistryAction = protectedServerFunction({
       where: {id},
       select: {workOrderId: true},
     })
+    // Remove join rows before deleting the registry record.
     await prismaClient.timeRegistryEmployee.deleteMany({
       where: {timeRegistryId: id},
     })

@@ -1016,7 +1016,7 @@ CREATE TABLE
     contactId CHAR(36) NOT NULL,
     invoiceOutId CHAR(36) NOT NULL,
     FOREIGN KEY (contactId) REFERENCES Contact (id) ON DELETE RESTRICT,
-    FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE RESTRICT
+    FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE
     ) ENGINE = InnoDB;
 
 CREATE TABLE

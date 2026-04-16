@@ -1,10 +1,11 @@
 /**
- * Het 'use server' directive wordt gebruikt om aan te geven dat de code in dit bestand enkel server actions bevat.
- * Server actions zijn asynchrone functies die enkel op de server uitgevoerd kunnen worden.
- * Een server action wordt automatisch geconverteerd naar HTTP endpoints door Next.js en kunnen dus aangeroepen worden
- * van op de client.
+ * The 'use server' directive marks this file as server actions only.
+ * Server actions are async functions that can only run on the server.
+ * Next.js turns server actions into HTTP endpoints so they can be called
+ * from the client.
  *
- * Zodra het 'use server' directive toegevoegd wordt, mag het bestand enkel asynchrone functies exporteren.
+ * Once the 'use server' directive is present, this file may only export
+ * async functions.
  */
 'use server'
 
@@ -22,14 +23,12 @@ export const signInAction = publicFormAction({
   serverFn: async ({data, logger}) => {
     const employee = await getEmployeeByUsername(data.username)
 
-    // Als we meteen een unauthorized terug geven nadat een gebruiker niet gevonden is in de database, kan een aanvaller
-    // hieruit afleiden dat het e-mailadres niet bestaat.
-    // Vervolgens kan de aanvaller overgaan naar andere email addressen, en moet deze geen tijd meer spenderen aan het adres
-    // dat niet bestaat.
-    // Als oplossing voegen we een alternatief wachtwoord toe dat gebruikt wordt als de gebruiker niet gevonden is in de
-    // database.
-    // Omdat we nu in alle gevallen een wachtwoord hashen, is het moeilijker om te bepalen of een e-mailadres bestaat of
-    // niet op basis van de response tijd.
+    // If we immediately return unauthorized when a user is not found,
+    // an attacker can infer that the email does not exist.
+    // They can then move on to other email addresses without wasting time
+    // on nonexistent accounts.
+    // To avoid this, we hash a fallback password even when the user is missing.
+    // This makes response timing less useful for account enumeration.
     const timingSafePassword = `${hashOptions.iterations}$${hashOptions.keyLength}$preventTimingBasedAttacks123$${getSalt()}`
     const isValidPassword = verifyPassword(employee?.password_hash ?? timingSafePassword, data.password_hash)
 
@@ -59,42 +58,40 @@ export const signInAction = publicFormAction({
 
     await setSessionCookie(session)
 
-    // De gebruiker is ingelogd, dus redirecten we naar de contactenpagina.
+    // User is signed in, redirect to the dashboard.
     redirect('/dashboard')
   },
   functionName: 'Sign in action',
 })
 
 /**
- * Pas de profielgegevens van de ingelogde gebruiker aan.
+ * Update profile details for the signed-in user.
  *
- * @param _prevData De vorige data die ingestuurd werd naar de actie. We maken hier geen gebruik van, de parameter is
- * enkel aanwezig om de signatuur van de functie gelijkt te stellen met wat Next.js/React verwacht.
- * @param formData De data die ingestuurd werd naar de actie.
+ * @param _prevData Previous data submitted to the action. Not used here; it exists
+ * to match the signature expected by Next.js/React.
+ * @param formData The data submitted to the action.
  */
 export const updateProfileAction = protectedFormAction({
   schema: updateEmployeeSchema,
   serverFn: async ({data, profile}) => {
-    // Het is belangrijk dat het id van de gebruiker opgehaald wordt op basis van de sessie (via de backend) en niet
-    // zomaar door de client ingevuld kan worden.
-    // Als je de formuliergegevens die de client doorstuurt blindelings vertrouwd, kan een kwaadwillige gebruiker data van
-    // andere gebruikers aanpassen.
+    // The user id must come from the session (server-side), not from the client.
+    // Trusting client-sent ids would allow modifying other users' data.
     await updateEmployee({...data, id: profile.id})
 
-    // Het profiel wordt gebruikt in de Navbar component, aangezien deze component op de homepagina staat moeten we
-    // het root path van de applicatie revalideren.
+    // The profile is used in the Navbar (rendered on the home layout),
+    // so we revalidate the app root layout.
     revalidatePath('/', 'layout')
   },
   functionName: 'Update profile action',
 })
 
 /**
- * Log uit en redirect naar de homepagina.
+ * Sign out and redirect to the home page.
  */
 export const signOutServerFunction = protectedServerFunction({
   serverFn: async ({logger}) => {
-    // Deze server action heeft geen parameters, dit betekent dat we deze actie niet kunnen aanroepen via een formulier.
-    // De action kan echter wel gewoon opgeroepen worden als klik handler op een knop.
+    // This action has no parameters, so it cannot be invoked via a form.
+    // It can still be called from a button click handler.
     const sessionId = await getSessionId()
 
     if (sessionId) {
@@ -125,6 +122,7 @@ export const createEmployeeAction = protectedServerFunction({
         createdBy: profile.id,
         createdAt: new Date(),
         passwordCreatedAt: new Date(),
+        // Create role-level links only when provided.
         RoleLevelEmployee: roleLevelIds?.length
           ? {
               create: roleLevelIds.map((roleLevelId: string) => ({
@@ -133,6 +131,7 @@ export const createEmployeeAction = protectedServerFunction({
               })),
             }
           : undefined,
+        // Seed emergency contacts when provided.
         EmergencyContact: emergencyContacts?.length
           ? {
               create: emergencyContacts.map(c => ({
@@ -160,8 +159,10 @@ export const updateEmployeeAdminAction = protectedServerFunction({
       where: {id},
       data: {
         ...data,
+        // Update password only when provided.
         ...(password_hash ? {password_hash: hashPassword(password_hash), passwordCreatedAt: new Date()} : {}),
         RoleLevelEmployee: {
+          // Replace role links to match current selection.
           deleteMany: {employeeId: id},
           ...(roleLevelIds?.length
             ? {
@@ -173,6 +174,7 @@ export const updateEmployeeAdminAction = protectedServerFunction({
             : {}),
         },
         EmergencyContact: {
+          // Replace emergency contacts to match current list.
           deleteMany: {employeeId: id},
           ...(emergencyContacts?.length
             ? {

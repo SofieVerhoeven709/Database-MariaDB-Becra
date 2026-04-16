@@ -22,6 +22,7 @@ export const createCompanyAction = protectedServerFunction({
   serverFn: async ({data: {addresses, visibilityForRoles, ...data}, logger, profile}) => {
     logger.info(`Creating company, createdBy: ${profile.id}`)
 
+    // Create a target row for visibility scoping and future links.
     const target = await createTargetForType('Company', profile.id)
     const companyId = crypto.randomUUID()
     const now = new Date()
@@ -124,6 +125,7 @@ export const createCompanyAction = protectedServerFunction({
       throw new Error('Failed to generate a unique company number after 5 attempts')
     }
 
+    // Persist role visibility rules for the company target.
     if (visibilityForRoles.length > 0) {
       await upsertVisibilityRows(target.id, visibilityForRoles)
     }
@@ -140,6 +142,7 @@ export const updateCompanyAction = protectedServerFunction({
   schema: updateCompanySchema,
   functionName: 'Update company action',
   serverFn: async ({data: {id, visibilityForRoles, ...data}, logger}) => {
+    // Fetch target id so visibility stays in sync with this company.
     const {targetId} = await prismaClient.company.findUniqueOrThrow({
       where: {id},
       select: {targetId: true},
@@ -188,7 +191,7 @@ export const undeleteCompanyAction = protectedServerFunction({
   },
 })
 
-// ─── Company Address ──────────────────────────────────────────────────────────
+// ─── Company Address ─────────────────────────────────────────────────────────-
 export const createCompanyAddressAction = protectedServerFunction({
   schema: createCompanyAddressSchema,
   functionName: 'Create company address action',
@@ -274,6 +277,7 @@ export async function getCompanyAddressesAction(companyId: string): Promise<Comp
   const addresses = await getCompanyAddresses(companyId)
   return addresses.map(a => ({
     id: a.id,
+    // Build a compact label for select inputs.
     label: buildAddressLabel(a),
   }))
 }

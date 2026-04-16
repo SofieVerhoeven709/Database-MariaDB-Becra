@@ -76,6 +76,7 @@ export const trainingStandardSchema = z.object({
   deletedBy: z.string().nullable().optional(),
 })
 
+// Payloads for create/update actions.
 export const createTrainingStandardSchema = trainingStandardSchema
   .omit({id: true, createdAt: true, createdBy: true, targetId: true, deleted: true, deletedAt: true, deletedBy: true})
   .extend({visibilityForRoles: z.array(visibilityInputSchema).default([])})
@@ -103,6 +104,7 @@ export const trainingSchema = z.object({
   deletedBy: z.string().nullable().optional(),
 })
 
+// Payloads for create/update actions.
 export const createTrainingSchema = trainingSchema
   .omit({id: true, createdAt: true, createdBy: true, targetId: true, deleted: true, deletedAt: true, deletedBy: true})
   .extend({visibilityForRoles: z.array(visibilityInputSchema).default([])})
@@ -131,6 +133,7 @@ export const trainingContactSchema = z.object({
   deletedBy: z.string().nullable().optional(),
 })
 
+// Add participant to a training.
 export const addTrainingContactSchema = trainingContactSchema.omit({
   id: true,
   createdAt: true,
@@ -141,6 +144,7 @@ export const addTrainingContactSchema = trainingContactSchema.omit({
   attendeeNumber: true,
 })
 
+// Update participant completion flags.
 export const updateTrainingContactSchema = trainingContactSchema.pick({
   id: true,
   succeeded: true,

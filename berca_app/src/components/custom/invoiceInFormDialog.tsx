@@ -9,7 +9,6 @@ import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption} from '@/types/invoice'
 import {createInvoiceInAction, updateInvoiceInAction} from '@/serverFunctions/invoices'
-// TODO: create this server action — should return generateInvoiceInNumber(currentYear, nextSequence)
 // e.g. export async function getNextInvoiceInNumberAction(): Promise<string>
 import {getNextInvoiceInNumberAction} from '@/serverFunctions/invoices'
 

@@ -56,6 +56,7 @@ async function assertMaterialIsSupplierLinked(quoteSupplierId: string, materialI
     throw new Error('Quote supplier not found.')
   }
 
+  // Prevent adding new lines once the quote has been sent.
   if (quote.sent) {
     throw new Error('Cannot add new lines after the quote is sent.')
   }
@@ -77,6 +78,7 @@ async function resyncMaterialDemand(materialDemandId: string | null | undefined,
   if (!materialDemandId) return
 
   const result = await syncMaterialDemandReservations(materialDemandId)
+  // Warn when selected quantities exceed source allocations.
   if (result.unallocatedQty > 0 && result.sourceCount > 0) {
     logger.warn(
       `MaterialDemand ${materialDemandId} has ${result.unallocatedQty} selected unit(s) without enough source capacity to distribute them.`,

@@ -161,6 +161,7 @@ export function FollowUpTable({
 
   const filtered = initialFollowUps
     .filter(f => {
+      // Client-side filtering by soft-delete, type, status, and search.
       if (filterDeleted === 'not-deleted' && f.deleted) return false
       if (filterDeleted === 'deleted' && !f.deleted) return false
       if (filterType !== 'all' && f.followUpTypeId !== filterType) return false
@@ -178,6 +179,7 @@ export function FollowUpTable({
       )
     })
     .sort((a, b) => {
+      // Sort client-side to keep UI responsive without round-trips.
       const dir = sortDir === 'asc' ? 1 : -1
       const s = (x: string | null, y: string | null) => dir * (x ?? '').localeCompare(y ?? '')
       const n = (x: boolean, y: boolean) => dir * (Number(x) - Number(y))
@@ -223,7 +225,7 @@ export function FollowUpTable({
       }
     })
 
-  // ─── Save handler ──────────────────────────────────────────────────────────
+  // ─── Save handler ─────────────────────────────────────────────────────────-
 
   async function handleSave(
     f: MappedFollowUp,
@@ -251,8 +253,10 @@ export function FollowUpTable({
     }
 
     if (editingFollowUp) {
+      // Updates keep the existing target link.
       await updateFollowUpAction({id: f.id, ...core, visibilityForRoles: visibilityRows})
     } else {
+      // Creates can attach an initial target link.
       await createFollowUpAction({
         ...core,
         visibilityForRoles: visibilityRows,

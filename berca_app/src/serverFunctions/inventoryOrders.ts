@@ -60,6 +60,7 @@ export const createInventoryOrderAction = protectedServerFunction({
         select: {id: true},
       })
 
+      // Only one pending low-stock request per material.
       if (existingPendingLowStock) {
         throw new Error('There is already a pending low-stock request for this material.')
       }
@@ -137,6 +138,7 @@ export const approveInventoryOrderAction = protectedServerFunction({
     }
 
     const legacyRequestedQty = resolveRequestedQtyFromDescription(order.longDescription)
+    // Preserve legacy qty tags when requestedQty was not stored.
     const requestedQty = Math.max(order.requestedQty ?? 1, legacyRequestedQty)
 
     await prismaClient.$transaction(async tx => {
@@ -306,6 +308,7 @@ export const undeleteInventoryOrderAction = protectedServerFunction({
         const legacyRequestedQty = resolveRequestedQtyFromDescription(order.longDescription)
         const requestedQty = Math.max(order.requestedQty ?? 1, legacyRequestedQty)
 
+        // Restore the demand source when an approved request is undeleted.
         await createMaterialDemandSourceForInventoryOrder({
           materialId: order.materialId,
           inventoryOrderId: id,

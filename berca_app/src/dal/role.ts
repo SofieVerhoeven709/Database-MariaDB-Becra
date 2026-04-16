@@ -3,5 +3,6 @@ import type {Role} from '@/generated/prisma/client'
 import {prismaClient} from '@/dal/prismaClient'
 
 export async function getRoleById(id: string): Promise<Role | null> {
+  // Look up a role record by its id.
   return prismaClient.role.findFirst({where: {id}})
 }

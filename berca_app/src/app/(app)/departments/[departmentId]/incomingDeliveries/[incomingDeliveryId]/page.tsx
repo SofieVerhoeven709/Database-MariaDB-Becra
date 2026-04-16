@@ -48,11 +48,13 @@ export default async function IncomingDeliveryDetailPage({params}: PageProps) {
 
   const allocationsByLineId: Record<string, ReturnType<typeof mapIncomingDeliveryLineAllocation>[]> = {}
   for (const line of incomingDelivery.IncomingDeliveryLine) {
+    // Group allocations by line for fast lookup in the UI.
     allocationsByLineId[line.id] = line.IncomingDeliveryLineAllocation.map(mapIncomingDeliveryLineAllocation)
   }
 
   const materialOptions = materialOptionsRaw.map(material => ({
     id: material.id,
+    // Build human-friendly labels for dropdowns.
     label: [material.beNumber, material.shortDescription ?? material.name].filter(Boolean).join(' - ') || material.id,
   }))
 

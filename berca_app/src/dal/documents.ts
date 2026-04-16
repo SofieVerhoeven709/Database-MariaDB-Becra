@@ -30,6 +30,7 @@ const documentTargetInclude = {
 } as const
 
 const documentListInclude = {
+  // Shared include bundle for list views (keeps all list queries consistent).
   Employee_DocumentStructure_createdByToEmployee: employeeSelect,
   Employee_DocumentStructure_revisedByIdToEmployee: employeeSelect,
   Employee_DocumentStructure_managedByIdToEmployee: employeeSelect,
@@ -164,6 +165,7 @@ export async function getDocumentStatuses() {
 // ─── Target options (for the 3 allowed types) ─────────────────────────────────
 
 export async function getDocumentTargetOptions() {
+  // Fetch the three allowed target types in parallel for selector options.
   const [materials, projects, companies] = await Promise.all([
     prismaClient.material.findMany({
       where: {deleted: false},
@@ -215,6 +217,7 @@ export async function getDocumentStructureTargetNames(documentId: string) {
     },
   })
 
+  // Resolve a display label by picking the first populated relation in priority order.
   return targets.map(t => ({
     id: t.id,
     targetId: t.Target.id,

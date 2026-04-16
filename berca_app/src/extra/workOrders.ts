@@ -23,6 +23,7 @@ export function mapWorkOrder(wo: WorkOrderWithRelations): MappedWorkOrder {
     workOrderNumber: wo.workOrderNumber,
     description: wo.description,
     additionalInfo: wo.additionalInfo,
+    // Normalize dates to ISO strings for the client.
     startDate: wo.startDate.toISOString(),
     endDate: wo.endDate?.toISOString() ?? null,
     createdAt: wo.createdAt.toISOString(),
@@ -34,6 +35,7 @@ export function mapWorkOrder(wo: WorkOrderWithRelations): MappedWorkOrder {
     deleted: wo.deleted,
     deletedAt: wo.deletedAt?.toISOString() ?? null,
     deletedBy: wo.deletedBy,
+    // Denormalized display fields used in list views.
     createdByName: `${wo.Employee.firstName} ${wo.Employee.lastName}`,
     deletedByName: wo.Employee_WorkOrder_deletedByToEmployee
       ? `${wo.Employee_WorkOrder_deletedByToEmployee.firstName} ${wo.Employee_WorkOrder_deletedByToEmployee.lastName}`
@@ -44,6 +46,7 @@ export function mapWorkOrder(wo: WorkOrderWithRelations): MappedWorkOrder {
 }
 
 // ─── Full detail shape passed to the UI component ────────────────────────────
+// Matches the include shape from getWorkOrderById for the detail tabs.
 export type WorkOrderDetailData = WorkOrder & {
   Employee: Pick<Employee, 'firstName' | 'lastName'>
   Project: Pick<Project, 'projectNumber' | 'projectName'>

@@ -17,6 +17,7 @@ import {generateIncomingDeliveryNumber, generatePurchaseNumber} from '@/lib/util
 const REVALIDATE_PATH = '/departments/purchasing/orders'
 const INCOMING_REVALIDATE_PATH = '/departments/purchasing/incomingDeliveries'
 const PURCHASE_STATUSES = new Set(['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED'])
+// These thresholds mirror the purchasing permission model used by the detail actions below.
 const PURCHASE_DETAIL_PERMISSION_LEVELS = {
   edit: 40,
   create: 60,
@@ -37,6 +38,7 @@ function isOrderedNotSentStatus(status: string | null | undefined): boolean {
 }
 
 function normalizePurchaseStatus(status: string | null | undefined): string {
+  // Unknown values fall back to ORDERED so the lifecycle never stores an invalid status.
   if (!status) return 'DRAFT'
   return PURCHASE_STATUSES.has(status) ? status : 'ORDERED'
 }
@@ -90,6 +92,7 @@ async function ensurePendingIncomingLinesFromPurchase(
   purchaseId: string,
   createdBy: string,
 ) {
+  // Mirror active purchase details into the draft incoming delivery so receiving can start immediately.
   const purchaseDetails = await tx.purchaseDetail.findMany({
     where: {purchaseId, deleted: false},
     select: {id: true, materialId: true, quantity: true, unitPrice: true},
@@ -130,6 +133,7 @@ async function ensureDraftIncomingDeliveryForPurchase(
   purchaseId: string,
   createdBy: string,
 ): Promise<string> {
+  // Reuse the first draft incoming delivery if one already exists; otherwise create a unique draft.
   const existing = await tx.incomingDelivery.findFirst({
     where: {purchaseId, deleted: false},
     orderBy: {createdAt: 'asc'},
@@ -231,6 +235,7 @@ export const createPurchaseAction = protectedServerFunction({
     }
 
     if (createdPurchaseId && createdStatus === 'ORDERED') {
+      // Ordered purchases must immediately reconcile their approved BOM structures.
       await syncPurchaseBOMStructuresForOrderedApprovedPurchase(createdPurchaseId)
     }
 
@@ -251,6 +256,7 @@ export const updatePurchaseAction = protectedServerFunction({
       throw new Error('Purchase not found.')
     }
 
+    // Once a purchase is ordered, only managers may keep editing it.
     if (isOrderedNotSentStatus(before.status) && !isManagerLevel(profile)) {
       throw new Error('Only managers can edit an ordered purchase.')
     }
@@ -268,6 +274,7 @@ export const updatePurchaseAction = protectedServerFunction({
       })
 
       if (!isOrderedNotSentStatus(before.status) && isOrderedNotSentStatus(nextStatus)) {
+        // Switching into ORDERED also flips all active purchase details and prepares a draft incoming delivery.
         await tx.purchaseDetail.updateMany({
           where: {purchaseId: id, deleted: false},
           data: {lineStatus: 'ORDERED'},
@@ -282,6 +289,7 @@ export const updatePurchaseAction = protectedServerFunction({
     logger.info(`Purchase updated: ${id}`)
 
     if (nextStatus === 'ORDERED') {
+      // The ordered state is what links the purchase back to approved BOM structures.
       await syncPurchaseBOMStructuresForOrderedApprovedPurchase(id)
     }
 

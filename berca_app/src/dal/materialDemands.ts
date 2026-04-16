@@ -2,6 +2,7 @@ import 'server-only'
 import type {Prisma} from '@/generated/prisma/client'
 import {prismaClient} from '@/dal/prismaClient'
 
+// This includes bundle powers the demand and quote screens, so it intentionally brings along the related material, source, and quote context in one query.
 const materialDemandInclude = {
   Material: {
     select: {
@@ -102,6 +103,7 @@ export async function getMaterialDemandSourceReferenceLabels(
   const inventoryOrderIds = new Set<string>()
   const projectStructureIds = new Set<string>()
 
+  // Labels are batched by source type so the UI can render readable references without N+1 lookups.
   for (const entry of entries) {
     if (!entry.sourceReferenceId) continue
     const typeName = (entry.sourceTypeName ?? '').toLowerCase()
@@ -159,6 +161,7 @@ export async function getMaterialDemandMaterialOptions() {
 
 export async function ensureMaterialDemandForMaterial(materialId: string, tx?: Prisma.TransactionClient) {
   const db = tx ?? prismaClient
+  // Every material gets exactly one demand row, so upsert keeps the relationship stable even if creation races happen.
   return db.materialDemand.upsert({
     where: {materialId},
     update: {},
@@ -217,6 +220,7 @@ export async function createMaterialDemandSourceForInventoryOrder(params: {
   })
 
   if (existing) {
+    // When the source already exists, only the delta should flow into the demand totals.
     const delta = params.requiredQty - existing.requiredQty
     if (delta !== 0) {
       await db.materialDemandSource.update({
@@ -224,6 +228,7 @@ export async function createMaterialDemandSourceForInventoryOrder(params: {
         data: {requiredQty: params.requiredQty},
       })
       if (delta !== 0) {
+        // Keep the aggregate demand aligned with the updated source quantity.
         await db.materialDemand.update({
           where: {id: existing.materialDemandId},
           data: {totalRequiredQty: {increment: delta}},
@@ -248,6 +253,7 @@ export async function createMaterialDemandSourceForInventoryOrder(params: {
   })
 
   if (params.requiredQty > 0) {
+    // Only positive requirements increase the aggregate demand quantity.
     await db.materialDemand.update({
       where: {id: materialDemand.id},
       data: {totalRequiredQty: {increment: params.requiredQty}},
@@ -512,7 +518,9 @@ export async function syncMaterialDemandFromIncomingAllocations(
     let nextDemandReservedQty = 0
 
     for (const source of demand.MaterialDemandSource) {
-      const activeAllocations = source.IncomingDeliveryLineAllocation.filter(allocation => !allocation.IncomingDeliveryLine?.deleted)
+      const activeAllocations = source.IncomingDeliveryLineAllocation.filter(
+        allocation => !allocation.IncomingDeliveryLine?.deleted,
+      )
       const allocatedQty = activeAllocations.reduce((sum, allocation) => sum + allocation.allocatedQty, 0)
       const matchedQty = Math.min(source.requiredQty, allocatedQty)
       const nextOutstandingQty = Math.max(source.requiredQty - matchedQty, 0)

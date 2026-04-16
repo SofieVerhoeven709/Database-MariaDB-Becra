@@ -10,7 +10,11 @@ import {Badge} from '@/components/ui/badge'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {deleteMaterialSerialTrackedAction} from '@/serverFunctions/materialSerialTracked'
+import {
+  deleteMaterialSerialTrackedAction,
+  undeleteMaterialSerialTrackedAction,
+  hardDeleteMaterialSerialTrackedAction,
+} from '@/serverFunctions/materialSerialTracked'
 // replace with your real dialogue once you create it
 import {MaterialSerialTrackedFormDialog} from '@/components/custom/serialTrackedFormDialog'
 
@@ -279,17 +283,20 @@ export function SerialTrackedTable({
   )
 
   async function handleSoftDelete(item: MappedMaterialSerialTracked) {
+    if (!confirm('Are you sure you want to delete this serial tracked item?')) return
     await deleteMaterialSerialTrackedAction({id: item.id})
     router.refresh()
   }
 
-  async function handleHardDelete(_item: MappedMaterialSerialTracked) {
-    // add later if you make a hard delete action
+  async function handleHardDelete(item: MappedMaterialSerialTracked) {
+    if (!confirm('Permanently delete this serial tracked item? This cannot be undone.')) return
+    await hardDeleteMaterialSerialTrackedAction({id: item.id})
     router.refresh()
   }
 
-  async function handleUndelete(_item: MappedMaterialSerialTracked) {
-    // add later if you make an undelete action
+  async function handleUndelete(item: MappedMaterialSerialTracked) {
+    if (!confirm('Restore this serial tracked item?')) return
+    await undeleteMaterialSerialTrackedAction({id: item.id})
     router.refresh()
   }
 

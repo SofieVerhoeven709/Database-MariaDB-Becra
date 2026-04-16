@@ -72,7 +72,7 @@ export async function enrichLinkedTargets(
   const result = new Map<string, {targetType: LinkableTargetType; displayLabel: string}>()
 
   // Resolve each target type in parallel for display labels.
-  const [hourTypes, materials, trainings, trainingStandards] = await Promise.all([
+  const [hourTypes, materials, trainings] = await Promise.all([
     prismaClient.hourType.findMany({
       where: {targetId: {in: targetIds}},
       select: {name: true, targetId: true},
@@ -84,10 +84,6 @@ export async function enrichLinkedTargets(
     prismaClient.training.findMany({
       where: {targetId: {in: targetIds}},
       select: {trainingNumber: true, targetId: true},
-    }),
-    prismaClient.trainingStandard.findMany({
-      where: {targetId: {in: targetIds}},
-      select: {descriptionShort: true, targetId: true},
     }),
   ])
 
@@ -102,11 +98,6 @@ export async function enrichLinkedTargets(
   for (const r of trainings) {
     if (r.targetId) {
       result.set(r.targetId, {targetType: 'Training', displayLabel: r.trainingNumber ?? r.targetId})
-    }
-  }
-  for (const r of trainingStandards) {
-    if (r.targetId) {
-      result.set(r.targetId, {targetType: 'TrainingStandard', displayLabel: r.descriptionShort ?? r.targetId})
     }
   }
 
@@ -143,15 +134,6 @@ export async function searchLinkableTargets(type: LinkableTargetType, query: str
       where: {deleted: false, ...(q ? {trainingNumber: {contains: q}} : {})},
       select: {id: true, trainingNumber: true, targetId: true},
       orderBy: {trainingNumber: 'asc'},
-      take: 20,
-    })
-  }
-
-  if (type === 'TrainingStandard') {
-    return prismaClient.trainingStandard.findMany({
-      where: {deleted: false, ...(q ? {descriptionShort: {contains: q}} : {})},
-      select: {id: true, descriptionShort: true, targetId: true},
-      orderBy: {descriptionShort: 'asc'},
       take: 20,
     })
   }

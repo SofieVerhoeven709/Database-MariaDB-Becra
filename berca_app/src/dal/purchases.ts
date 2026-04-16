@@ -55,6 +55,7 @@ export async function syncPurchaseBOMStructuresForOrderedApprovedPurchase(
     return {updatedCount: 0, matchedStructureCount: 0}
   }
 
+  // Match structures from both the original quote lines and demand-driven source links.
   const structureIds = new Set<string>()
   const quoteLineIds = purchase.PurchaseDetail.map(detail => detail.quoteSupplierLineId).filter(
     (id): id is string => !!id,
@@ -104,11 +105,13 @@ export async function syncPurchaseBOMStructuresForOrderedApprovedPurchase(
       if (demandDetails.length === 0) continue
 
       if (source.MaterialDemandSourceType.name === 'PurchaseBOMStructure') {
+        // Purchase BOM sources can be linked directly, so mark the originating structure as purchased immediately.
         structureIds.add(sourceRef)
         continue
       }
 
       if (source.MaterialDemandSourceType.name === 'ProjectBOMStructure') {
+        // Project BOM sources need a material-aware match because multiple purchase BOM rows may point to the same project structure.
         for (const detail of demandDetails) {
           const matched = await db.purchaseBOMStructure.findMany({
             where: {
@@ -164,6 +167,7 @@ export async function syncPurchaseStatusFromFulfilledSources(
   const demandIds = [...new Set(purchase.PurchaseDetail.map(line => line.materialDemandId).filter((id): id is string => !!id))]
   if (demandIds.length === 0) return {updated: false, status: purchase.status}
 
+  // Only non-warehouse demand sources affect the purchase lifecycle here; warehouse place sources are fulfillment context, not receipt progress.
   const linkedSources = await db.materialDemandSource.findMany({
     where: {
       materialDemandId: {in: demandIds},
@@ -183,6 +187,7 @@ export async function syncPurchaseStatusFromFulfilledSources(
 
   // Advance status based on fulfillment coverage across linked demand sources.
   let nextStatus = purchase.status
+  // Fully fulfilled demand means the purchase can move straight to RECEIVED; partial fulfillment only advances ORDERED -> PARTIAL_RECEIVED.
   if (allFulfilled) {
     nextStatus = 'RECEIVED'
   } else if (anyFulfilled && purchase.status === 'ORDERED') {
@@ -208,6 +213,7 @@ export async function ensurePurchaseFromApprovedQuote(quoteSupplierId: string, c
   })
 
   if (existing) {
+    // If a purchase already exists for the quote, just refresh its BOM synchronization.
     await syncPurchaseBOMStructuresForOrderedApprovedPurchase(existing.id)
     return {purchaseId: existing.id, created: false}
   }
@@ -244,6 +250,7 @@ export async function ensurePurchaseFromApprovedQuote(quoteSupplierId: string, c
     return {purchaseId: null, created: false}
   }
 
+  // Approved quotes are the source of truth for the initial purchase header and line items.
   const purchaseNumber = await getNextAvailablePurchaseNumber()
   const purchaseId = crypto.randomUUID()
 

@@ -201,6 +201,7 @@ export type CountryWhereInput = {
   CompanyAddress?: Prisma.CompanyAddressListRelationFilter
   Employee_Country_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_Country_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  VatMargin?: Prisma.VatMarginListRelationFilter
 }
 
 export type CountryOrderByWithRelationInput = {
@@ -214,6 +215,7 @@ export type CountryOrderByWithRelationInput = {
   CompanyAddress?: Prisma.CompanyAddressOrderByRelationAggregateInput
   Employee_Country_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_Country_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  VatMargin?: Prisma.VatMarginOrderByRelationAggregateInput
   _relevance?: Prisma.CountryOrderByRelevanceInput
 }
 
@@ -231,6 +233,7 @@ export type CountryWhereUniqueInput = Prisma.AtLeast<{
   CompanyAddress?: Prisma.CompanyAddressListRelationFilter
   Employee_Country_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_Country_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  VatMargin?: Prisma.VatMarginListRelationFilter
 }, "id">
 
 export type CountryOrderByWithAggregationInput = {
@@ -268,6 +271,7 @@ export type CountryCreateInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCountryInput
   Employee_Country_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCountry_Country_deletedByToEmployeeInput
   Employee_Country_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutCountry_Country_createdByToEmployeeInput
+  VatMargin?: Prisma.VatMarginCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUncheckedCreateInput = {
@@ -279,6 +283,7 @@ export type CountryUncheckedCreateInput = {
   createdBy: string
   deletedBy?: string | null
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCountryInput
+  VatMargin?: Prisma.VatMarginUncheckedCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUpdateInput = {
@@ -290,6 +295,7 @@ export type CountryUpdateInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCountryNestedInput
   Employee_Country_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCountry_Country_deletedByToEmployeeNestedInput
   Employee_Country_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutCountry_Country_createdByToEmployeeNestedInput
+  VatMargin?: Prisma.VatMarginUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateInput = {
@@ -301,6 +307,7 @@ export type CountryUncheckedUpdateInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCountryNestedInput
+  VatMargin?: Prisma.VatMarginUncheckedUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryCreateManyInput = {
@@ -466,6 +473,22 @@ export type CountryUncheckedUpdateManyWithoutEmployee_Country_createdByToEmploye
   deleteMany?: Prisma.CountryScalarWhereInput | Prisma.CountryScalarWhereInput[]
 }
 
+export type CountryCreateNestedOneWithoutVatMarginInput = {
+  create?: Prisma.XOR<Prisma.CountryCreateWithoutVatMarginInput, Prisma.CountryUncheckedCreateWithoutVatMarginInput>
+  connectOrCreate?: Prisma.CountryCreateOrConnectWithoutVatMarginInput
+  connect?: Prisma.CountryWhereUniqueInput
+}
+
+export type CountryUpdateOneWithoutVatMarginNestedInput = {
+  create?: Prisma.XOR<Prisma.CountryCreateWithoutVatMarginInput, Prisma.CountryUncheckedCreateWithoutVatMarginInput>
+  connectOrCreate?: Prisma.CountryCreateOrConnectWithoutVatMarginInput
+  upsert?: Prisma.CountryUpsertWithoutVatMarginInput
+  disconnect?: Prisma.CountryWhereInput | boolean
+  delete?: Prisma.CountryWhereInput | boolean
+  connect?: Prisma.CountryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CountryUpdateToOneWithWhereWithoutVatMarginInput, Prisma.CountryUpdateWithoutVatMarginInput>, Prisma.CountryUncheckedUpdateWithoutVatMarginInput>
+}
+
 export type CountryCreateNestedOneWithoutCompanyAddressInput = {
   create?: Prisma.XOR<Prisma.CountryCreateWithoutCompanyAddressInput, Prisma.CountryUncheckedCreateWithoutCompanyAddressInput>
   connectOrCreate?: Prisma.CountryCreateOrConnectWithoutCompanyAddressInput
@@ -490,6 +513,7 @@ export type CountryCreateWithoutEmployee_Country_deletedByToEmployeeInput = {
   deletedAt?: Date | string | null
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCountryInput
   Employee_Country_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutCountry_Country_createdByToEmployeeInput
+  VatMargin?: Prisma.VatMarginCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUncheckedCreateWithoutEmployee_Country_deletedByToEmployeeInput = {
@@ -500,6 +524,7 @@ export type CountryUncheckedCreateWithoutEmployee_Country_deletedByToEmployeeInp
   deletedAt?: Date | string | null
   createdBy: string
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCountryInput
+  VatMargin?: Prisma.VatMarginUncheckedCreateNestedManyWithoutCountryInput
 }
 
 export type CountryCreateOrConnectWithoutEmployee_Country_deletedByToEmployeeInput = {
@@ -520,6 +545,7 @@ export type CountryCreateWithoutEmployee_Country_createdByToEmployeeInput = {
   deletedAt?: Date | string | null
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCountryInput
   Employee_Country_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCountry_Country_deletedByToEmployeeInput
+  VatMargin?: Prisma.VatMarginCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUncheckedCreateWithoutEmployee_Country_createdByToEmployeeInput = {
@@ -530,6 +556,7 @@ export type CountryUncheckedCreateWithoutEmployee_Country_createdByToEmployeeInp
   deletedAt?: Date | string | null
   deletedBy?: string | null
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCountryInput
+  VatMargin?: Prisma.VatMarginUncheckedCreateNestedManyWithoutCountryInput
 }
 
 export type CountryCreateOrConnectWithoutEmployee_Country_createdByToEmployeeInput = {
@@ -587,6 +614,66 @@ export type CountryUpdateManyWithWhereWithoutEmployee_Country_createdByToEmploye
   data: Prisma.XOR<Prisma.CountryUpdateManyMutationInput, Prisma.CountryUncheckedUpdateManyWithoutEmployee_Country_createdByToEmployeeInput>
 }
 
+export type CountryCreateWithoutVatMarginInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCountryInput
+  Employee_Country_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCountry_Country_deletedByToEmployeeInput
+  Employee_Country_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutCountry_Country_createdByToEmployeeInput
+}
+
+export type CountryUncheckedCreateWithoutVatMarginInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  createdBy: string
+  deletedBy?: string | null
+  CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCountryInput
+}
+
+export type CountryCreateOrConnectWithoutVatMarginInput = {
+  where: Prisma.CountryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CountryCreateWithoutVatMarginInput, Prisma.CountryUncheckedCreateWithoutVatMarginInput>
+}
+
+export type CountryUpsertWithoutVatMarginInput = {
+  update: Prisma.XOR<Prisma.CountryUpdateWithoutVatMarginInput, Prisma.CountryUncheckedUpdateWithoutVatMarginInput>
+  create: Prisma.XOR<Prisma.CountryCreateWithoutVatMarginInput, Prisma.CountryUncheckedCreateWithoutVatMarginInput>
+  where?: Prisma.CountryWhereInput
+}
+
+export type CountryUpdateToOneWithWhereWithoutVatMarginInput = {
+  where?: Prisma.CountryWhereInput
+  data: Prisma.XOR<Prisma.CountryUpdateWithoutVatMarginInput, Prisma.CountryUncheckedUpdateWithoutVatMarginInput>
+}
+
+export type CountryUpdateWithoutVatMarginInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCountryNestedInput
+  Employee_Country_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCountry_Country_deletedByToEmployeeNestedInput
+  Employee_Country_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutCountry_Country_createdByToEmployeeNestedInput
+}
+
+export type CountryUncheckedUpdateWithoutVatMarginInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCountryNestedInput
+}
+
 export type CountryCreateWithoutCompanyAddressInput = {
   id: string
   name: string
@@ -595,6 +682,7 @@ export type CountryCreateWithoutCompanyAddressInput = {
   deletedAt?: Date | string | null
   Employee_Country_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCountry_Country_deletedByToEmployeeInput
   Employee_Country_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutCountry_Country_createdByToEmployeeInput
+  VatMargin?: Prisma.VatMarginCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUncheckedCreateWithoutCompanyAddressInput = {
@@ -605,6 +693,7 @@ export type CountryUncheckedCreateWithoutCompanyAddressInput = {
   deletedAt?: Date | string | null
   createdBy: string
   deletedBy?: string | null
+  VatMargin?: Prisma.VatMarginUncheckedCreateNestedManyWithoutCountryInput
 }
 
 export type CountryCreateOrConnectWithoutCompanyAddressInput = {
@@ -631,6 +720,7 @@ export type CountryUpdateWithoutCompanyAddressInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_Country_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCountry_Country_deletedByToEmployeeNestedInput
   Employee_Country_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutCountry_Country_createdByToEmployeeNestedInput
+  VatMargin?: Prisma.VatMarginUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateWithoutCompanyAddressInput = {
@@ -641,6 +731,7 @@ export type CountryUncheckedUpdateWithoutCompanyAddressInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  VatMargin?: Prisma.VatMarginUncheckedUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryCreateManyEmployee_Country_deletedByToEmployeeInput = {
@@ -669,6 +760,7 @@ export type CountryUpdateWithoutEmployee_Country_deletedByToEmployeeInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCountryNestedInput
   Employee_Country_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutCountry_Country_createdByToEmployeeNestedInput
+  VatMargin?: Prisma.VatMarginUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateWithoutEmployee_Country_deletedByToEmployeeInput = {
@@ -679,6 +771,7 @@ export type CountryUncheckedUpdateWithoutEmployee_Country_deletedByToEmployeeInp
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCountryNestedInput
+  VatMargin?: Prisma.VatMarginUncheckedUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateManyWithoutEmployee_Country_deletedByToEmployeeInput = {
@@ -698,6 +791,7 @@ export type CountryUpdateWithoutEmployee_Country_createdByToEmployeeInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCountryNestedInput
   Employee_Country_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCountry_Country_deletedByToEmployeeNestedInput
+  VatMargin?: Prisma.VatMarginUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateWithoutEmployee_Country_createdByToEmployeeInput = {
@@ -708,6 +802,7 @@ export type CountryUncheckedUpdateWithoutEmployee_Country_createdByToEmployeeInp
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCountryNestedInput
+  VatMargin?: Prisma.VatMarginUncheckedUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateManyWithoutEmployee_Country_createdByToEmployeeInput = {
@@ -726,10 +821,12 @@ export type CountryUncheckedUpdateManyWithoutEmployee_Country_createdByToEmploye
 
 export type CountryCountOutputType = {
   CompanyAddress: number
+  VatMargin: number
 }
 
 export type CountryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   CompanyAddress?: boolean | CountryCountOutputTypeCountCompanyAddressArgs
+  VatMargin?: boolean | CountryCountOutputTypeCountVatMarginArgs
 }
 
 /**
@@ -749,6 +846,13 @@ export type CountryCountOutputTypeCountCompanyAddressArgs<ExtArgs extends runtim
   where?: Prisma.CompanyAddressWhereInput
 }
 
+/**
+ * CountryCountOutputType without action
+ */
+export type CountryCountOutputTypeCountVatMarginArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VatMarginWhereInput
+}
+
 
 export type CountrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -761,6 +865,7 @@ export type CountrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   CompanyAddress?: boolean | Prisma.Country$CompanyAddressArgs<ExtArgs>
   Employee_Country_deletedByToEmployee?: boolean | Prisma.Country$Employee_Country_deletedByToEmployeeArgs<ExtArgs>
   Employee_Country_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  VatMargin?: boolean | Prisma.Country$VatMarginArgs<ExtArgs>
   _count?: boolean | Prisma.CountryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["country"]>
 
@@ -781,6 +886,7 @@ export type CountryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   CompanyAddress?: boolean | Prisma.Country$CompanyAddressArgs<ExtArgs>
   Employee_Country_deletedByToEmployee?: boolean | Prisma.Country$Employee_Country_deletedByToEmployeeArgs<ExtArgs>
   Employee_Country_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  VatMargin?: boolean | Prisma.Country$VatMarginArgs<ExtArgs>
   _count?: boolean | Prisma.CountryCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -790,6 +896,7 @@ export type $CountryPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     CompanyAddress: Prisma.$CompanyAddressPayload<ExtArgs>[]
     Employee_Country_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Employee_Country_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
+    VatMargin: Prisma.$VatMarginPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1142,6 +1249,7 @@ export interface Prisma__CountryClient<T, Null = never, ExtArgs extends runtime.
   CompanyAddress<T extends Prisma.Country$CompanyAddressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Country$CompanyAddressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyAddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee_Country_deletedByToEmployee<T extends Prisma.Country$Employee_Country_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Country$Employee_Country_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_Country_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  VatMargin<T extends Prisma.Country$VatMarginArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Country$VatMarginArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VatMarginPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1561,6 +1669,30 @@ export type Country$Employee_Country_deletedByToEmployeeArgs<ExtArgs extends run
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * Country.VatMargin
+ */
+export type Country$VatMarginArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VatMargin
+   */
+  select?: Prisma.VatMarginSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the VatMargin
+   */
+  omit?: Prisma.VatMarginOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VatMarginInclude<ExtArgs> | null
+  where?: Prisma.VatMarginWhereInput
+  orderBy?: Prisma.VatMarginOrderByWithRelationInput | Prisma.VatMarginOrderByWithRelationInput[]
+  cursor?: Prisma.VatMarginWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.VatMarginScalarFieldEnum | Prisma.VatMarginScalarFieldEnum[]
 }
 
 /**

@@ -8,7 +8,9 @@ const invoiceOutInclude = {
   PaymentMethod: {select: {id: true, name: true}},
   InvoiceSentType: {select: {id: true, name: true}},
   InvoiceStatus: {select: {id: true, name: true}},
-  VatMargin: {select: {id: true, vat: true}},
+  Target: true,
+  Employee_InvoiceOut_deletedByToEmployee: true,
+  Employee_InvoiceOut_modifiedByToEmployee: true,
   // ← Price list at invoice level
   PriceList: {
     select: {
@@ -65,12 +67,16 @@ const invoiceOutInclude = {
             where: {deleted: false},
             select: {
               id: true,
+              invoiceTime: true,
+              stayOver: true,
               startTime: true,
               endTime: true,
               startBreak: true,
               endBreak: true,
               hourTypeId: true,
+              vatMarginId: true,
               HourType: {select: {id: true, name: true, targetId: true}},
+              VatMargin: {select: {id: true, vat: true}},
               TimeRegistryEmployee: {select: {id: true, employeeId: true}},
             },
           },
@@ -81,6 +87,13 @@ const invoiceOutInclude = {
               quantity: true,
               shortDescription: true,
               materialId: true,
+              vatMarginId: true,
+              VatMargin: {
+                select: {
+                  id: true,
+                  vat: true,
+                },
+              },
               Material: {
                 select: {
                   id: true,
@@ -99,6 +112,8 @@ const invoiceOutInclude = {
               id: true,
               trainingNumber: true,
               targetId: true,
+              vatMarginId: true,
+              VatMargin: {select: {id: true, vat: true}},
               TrainingStandard: {
                 select: {
                   id: true,
@@ -239,8 +254,58 @@ export async function getInvoiceStatuses() {
 export async function getVatMargins() {
   return prismaClient.vatMargin.findMany({
     where: {deleted: false},
-    select: {id: true, vat: true},
+    select: {id: true, vat: true, countryId: true, Country: {select: {id: true, name: true}}},
     orderBy: {vat: 'asc'},
+  })
+}
+
+export async function getAllVatMargins() {
+  const rows = await prismaClient.vatMargin.findMany({
+    orderBy: {vat: 'asc'},
+  })
+
+  const countryIds = [...new Set(rows.map(r => r.countryId).filter((id): id is string => !!id))]
+  const employeeIds = [
+    ...new Set(rows.flatMap(r => [r.createdBy, r.deletedBy]).filter((id): id is string => !!id)),
+  ]
+
+  const [countries, employees] = await Promise.all([
+    countryIds.length
+      ? prismaClient.country.findMany({
+          where: {id: {in: countryIds}},
+          select: {id: true, name: true},
+        })
+      : Promise.resolve([]),
+    employeeIds.length
+      ? prismaClient.employee.findMany({
+          where: {id: {in: employeeIds}},
+          select: {id: true, firstName: true, lastName: true},
+        })
+      : Promise.resolve([]),
+  ])
+
+  const countryById = new Map(countries.map(c => [c.id, c]))
+  const employeeById = new Map(employees.map(e => [e.id, e]))
+
+  return rows.map(r => ({
+    ...r,
+    countryName: r.countryId ? countryById.get(r.countryId)?.name ?? null : null,
+    createdByName: employeeById.get(r.createdBy)
+      ? `${employeeById.get(r.createdBy)!.firstName} ${employeeById.get(r.createdBy)!.lastName}`
+      : r.createdBy,
+    deletedByName: r.deletedBy
+      ? employeeById.get(r.deletedBy)
+        ? `${employeeById.get(r.deletedBy)!.firstName} ${employeeById.get(r.deletedBy)!.lastName}`
+        : r.deletedBy
+      : null,
+  }))
+}
+
+export async function getCountries() {
+  return prismaClient.country.findMany({
+    where: {deleted: false},
+    select: {id: true, name: true},
+    orderBy: {name: 'asc'},
   })
 }
 
@@ -259,7 +324,14 @@ export async function getOpenProjects() {
 
 export async function getActiveWorkOrdersForProject(projectId: string) {
   return prismaClient.workOrder.findMany({
-    where: {deleted: false, completed: false, projectId},
+    where: {
+      deleted: false,
+      completed: false,
+      projectId,
+      WorkOrderInvoice: {
+        none: {deleted: false},
+      },
+    },
     select: {id: true, workOrderNumber: true, description: true},
     orderBy: {workOrderNumber: 'asc'},
   })

@@ -1,10 +1,12 @@
 import {ContactTable} from '@/components/custom/contactTable'
 import {getContacts} from '@/dal/contacts'
-import {getFunctions} from '@/dal/functions'
-import {getDepartmentExterns} from '@/dal/departmentExterns'
+import {getFunctions, getFunctionsWithAudit} from '@/dal/functions'
+import {getDepartmentExterns, getDepartmentExternsWithAudit} from '@/dal/departmentExterns'
 import {getTitles} from '@/dal/titles'
 import {getAllRoleLevels} from '@/dal/roleLevel'
 import {mapContact} from '@/extra/contacts'
+import {mapFunctionItem} from '@/extra/functions'
+import {mapDepartmentExternItem} from '@/extra/departmentExterns'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
@@ -19,18 +21,31 @@ interface PageProps {
 export default async function ContactsPage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [department, contactsFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies, countries] =
-    await Promise.all([
-      getDepartmentById(departmentId),
-      getContacts(),
-      getAllRoleLevels(),
-      getSessionProfileFromCookieOrThrow(),
-      getFunctions(),
-      getDepartmentExterns(),
-      getTitles(),
-      prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-      getCountries(),
-    ])
+  const [
+    department,
+    contactsFromDAL,
+    roleLevels,
+    profile,
+    functions,
+    departmentExterns,
+    titles,
+    companies,
+    countries,
+    functionsWithAudit,
+    departmentExternsWithAudit,
+  ] = await Promise.all([
+    getDepartmentById(departmentId),
+    getContacts(),
+    getAllRoleLevels(),
+    getSessionProfileFromCookieOrThrow(),
+    getFunctions(),
+    getDepartmentExterns(),
+    getTitles(),
+    prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+    getCountries(),
+    getFunctionsWithAudit(),
+    getDepartmentExternsWithAudit(),
+  ])
 
   if (!department) return <p>Department not found</p>
 
@@ -61,6 +76,8 @@ export default async function ContactsPage({params}: PageProps) {
 
         <ContactTable
           initialContacts={contacts}
+          initialFunctions={functionsWithAudit.map(mapFunctionItem)}
+          initialDepartmentExterns={departmentExternsWithAudit.map(mapDepartmentExternItem)}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}

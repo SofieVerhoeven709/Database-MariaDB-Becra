@@ -99,6 +99,7 @@ export async function searchProjects(query: string) {
 
 export async function getDescendantBOMIds(parentId: string): Promise<string[]> {
   // Depth-first traversal of all non-deleted children.
+  // The purchase BOM tree can be nested, so descendants are collected recursively to keep cascade actions complete.
   const children = await prismaClient.purchaseBOM.findMany({
     where: {purchaseBomId: parentId, deleted: false},
     select: {id: true},
@@ -111,6 +112,7 @@ export async function getDescendantBOMIds(parentId: string): Promise<string[]> {
 
 export async function getAncestorBOMIds(bomId: string): Promise<string[]> {
   // Walk up the parent chain until the root.
+  // Ancestors are resolved recursively so edits can understand the full chain above a nested BOM.
   const bom = await prismaClient.purchaseBOM.findUnique({
     where: {id: bomId},
     select: {purchaseBomId: true},

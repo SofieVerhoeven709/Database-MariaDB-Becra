@@ -323,15 +323,6 @@ export async function searchLinkableTargetsAction(
     }))
   }
 
-  if (type === 'TrainingStandard') {
-    return (results as {id: string; descriptionShort: string | null; targetId: string}[]).map(r => ({
-      targetId: r.targetId,
-      targetType: 'TrainingStandard' as const,
-      displayLabel: r.descriptionShort ?? r.id,
-      subLabel: null,
-    }))
-  }
-
   return []
 }
 

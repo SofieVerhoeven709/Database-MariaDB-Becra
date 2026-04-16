@@ -103,6 +103,7 @@ export const createQuoteSupplierAction = protectedServerFunction({
   schema: createQuoteSupplierSchema,
   functionName: 'Create quote supplier action',
   serverFn: async ({data, profile, logger}) => {
+    // If a material-demand quote already exists, reuse the latest draft instead of creating duplicates.
     if (data.initialMaterialId) {
       await assertMaterialIsSupplierLinked(data.companyId, data.initialMaterialId)
     }
@@ -141,6 +142,7 @@ export const createQuoteSupplierAction = protectedServerFunction({
 
       // Reuse the latest unsent quote for the same supplier instead of creating a new header.
       if (reusableQuote) {
+        // One unsent quote can collect multiple lines for the same supplier while it is still being prepared.
         await prismaClient.quoteSupplierLine.create({
           data: {
             id: crypto.randomUUID(),
@@ -207,6 +209,7 @@ export const createQuoteSupplierAction = protectedServerFunction({
 
     if (data.acceptedForPOB ?? false) {
       // Approved quotes ensure a matching purchase order in the purchasing module.
+      // A quote can be approved at creation time, which immediately creates the linked purchase.
       const result = await ensurePurchaseFromApprovedQuote(id, profile.id)
       if (result.purchaseId) {
         logger.info(`Purchase ensured from quote create approval: quote=${id}, purchase=${result.purchaseId}`)
@@ -232,6 +235,7 @@ export const updateQuoteSupplierAction = protectedServerFunction({
 
     const highestRoleLevel = getHighestRoleLevel(profile)
     const canManageApprovedQuotes = highestRoleLevel >= 80
+    // Approved quotes become manager-only because they can already drive purchase creation.
     if (before.acceptedForPOB && !canManageApprovedQuotes) {
       throw new Error('Only managers can edit an approved quote.')
     }
@@ -271,6 +275,7 @@ export const updateQuoteSupplierAction = protectedServerFunction({
 
     if (!before.acceptedForPOB && nextApproved) {
       // Newly approved quotes trigger a purchase order check/create.
+      // The approval transition is what materializes the purchase record when one does not already exist.
       const result = await ensurePurchaseFromApprovedQuote(id, profile.id)
       if (result.purchaseId) {
         logger.info(`Purchase ensured from quote approval: quote=${id}, purchase=${result.purchaseId}`)
@@ -402,6 +407,7 @@ export const setQuoteSupplierSentAction = protectedServerFunction({
       throw new Error('Only managers can edit an approved quote.')
     }
 
+    // Clearing the sent flag also clears the received state so the quote returns to draft-like status.
     await prismaClient.quoteSupplier.update({
       where: {id},
       data: sent
@@ -440,6 +446,7 @@ export const setQuoteSupplierReceivedAction = protectedServerFunction({
       throw new Error('Only managers can edit an approved quote.')
     }
 
+    // Marking a quote as received also makes sure it is treated as sent and records the first send timestamp if needed.
     await prismaClient.quoteSupplier.update({
       where: {id},
       data: received

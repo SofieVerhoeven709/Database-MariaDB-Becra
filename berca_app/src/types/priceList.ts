@@ -1,6 +1,6 @@
 // ─── PriceListItemTarget ───────────────────────────────────────────────────────
 // Target types that can be linked to price list items.
-export type LinkableTargetType = 'HourType' | 'Material' | 'Training' | 'TrainingStandard'
+export type LinkableTargetType = 'HourType' | 'Material' | 'Training'
 
 export interface MappedPriceListItemTarget {
   id: string

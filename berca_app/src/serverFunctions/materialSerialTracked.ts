@@ -5,7 +5,13 @@ import {randomUUID} from 'crypto'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {prismaClient} from '@/dal/prismaClient'
 
-import {createSerialTracked, updateSerialTracked, softDeleteSerialTracked} from '@/dal/materialSerialTracked'
+import {
+  createSerialTracked,
+  updateSerialTracked,
+  softDeleteSerialTracked,
+  undeleteSerialTracked,
+  hardDeleteSerialTracked,
+} from '@/dal/materialSerialTracked'
 
 import {
   createMaterialSerialTrackedSchema,
@@ -20,7 +26,7 @@ export const createMaterialSerialTrackedAction = protectedServerFunction({
   functionName: 'Create serial tracked item',
   serverFn: async ({data, profile, logger}) => {
     if (!data.materialId) {
-      throw new Error('Selecteer eerst een materiaal dat als serial tracked staat gemarkeerd.')
+      throw new Error('First select a material that is marked as a serial tracked.')
     }
 
     const material = await prismaClient.material.findUnique({
@@ -35,11 +41,13 @@ export const createMaterialSerialTrackedAction = protectedServerFunction({
     })
 
     if (!material || material.deleted) {
-      throw new Error('Geselecteerd materiaal bestaat niet of is verwijderd.')
+      throw new Error('The selected material does not exist or has been deleted.')
     }
 
     if (!material.isSerialTracked) {
-      throw new Error('Dit materiaal staat niet op serial tracked. Zet dit eerst aan in Materials.')
+      throw new Error(
+        'This material is not marked as a serial tracked. First mark it as a serial tracked in the Materials.',
+      )
     }
 
     const existing = await prismaClient.materialSerialTrack.findFirst({
@@ -48,7 +56,7 @@ export const createMaterialSerialTrackedAction = protectedServerFunction({
     })
 
     if (existing) {
-      throw new Error('Er bestaat al een serial tracked record voor dit materiaal.')
+      throw new Error('There is already a serial tracked for this material.')
     }
 
     if (data.warehousePlaceId) {
@@ -58,7 +66,7 @@ export const createMaterialSerialTrackedAction = protectedServerFunction({
       })
 
       if (!warehousePlace || warehousePlace.deleted) {
-        throw new Error('Geselecteerde stockplaats bestaat niet of is verwijderd.')
+        throw new Error('Selected warehouse place does not exist or is deleted.')
       }
     }
 
@@ -91,7 +99,7 @@ export const updateMaterialSerialTrackedAction = protectedServerFunction({
       })
 
       if (!warehousePlace || warehousePlace.deleted) {
-        throw new Error('Geselecteerde stockplaats bestaat niet of is verwijderd.')
+        throw new Error('Selected warehouse place does not exist or is deleted.')
       }
     }
 
@@ -109,6 +117,44 @@ export const deleteMaterialSerialTrackedAction = protectedServerFunction({
     await softDeleteSerialTracked(data.id, profile.id)
 
     logger.info(`Serial tracked item soft-deleted: ${data.id}`)
+    revalidatePath(REVALIDATE)
+  },
+})
+
+export const undeleteMaterialSerialTrackedAction = protectedServerFunction({
+  schema: deleteMaterialSerialTrackedSchema,
+  functionName: 'Undelete serial tracked item',
+  serverFn: async ({data, profile, logger}) => {
+    const canDelete = profile.RoleLevelEmployee.some(
+      rle => rle.RoleLevel.Role.name === 'Administrator' || rle.RoleLevel.SubRole.level >= 80,
+    )
+
+    if (!canDelete) {
+      throw new Error('You are not allowed to restore serial tracked items.')
+    }
+
+    await undeleteSerialTracked(data.id)
+
+    logger.info(`Serial tracked item restored: ${data.id}`)
+    revalidatePath(REVALIDATE)
+  },
+})
+
+export const hardDeleteMaterialSerialTrackedAction = protectedServerFunction({
+  schema: deleteMaterialSerialTrackedSchema,
+  functionName: 'Hard delete serial tracked item',
+  serverFn: async ({data, profile, logger}) => {
+    const isAdmin = profile.RoleLevelEmployee.some(
+      rle => rle.RoleLevel.Role.name === 'Administrator' || rle.RoleLevel.SubRole.level >= 100,
+    )
+
+    if (!isAdmin) {
+      throw new Error('Only administrators can permanently delete serial tracked items.')
+    }
+
+    await hardDeleteSerialTracked(data.id)
+
+    logger.info(`Serial tracked item hard-deleted: ${data.id}`)
     revalidatePath(REVALIDATE)
   },
 })

@@ -13,7 +13,14 @@ import {
 } from '@/serverFunctions/warehousePlaces'
 import {useRouter} from 'next/navigation'
 /* type SortField = 'abbreviation' | 'beNumber' | 'place' | 'quantityInStock'*/
-type SortField = 'abbreviation' | 'beNumber' | 'place' | 'xCoordinate' | 'yCoordinate' | 'zCoordinate' | 'quantityInStock'
+type SortField =
+  | 'abbreviation'
+  | 'beNumber'
+  | 'place'
+  | 'xCoordinate'
+  | 'yCoordinate'
+  | 'zCoordinate'
+  | 'quantityInStock'
 type SortDir = 'asc' | 'desc'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -143,7 +150,7 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
     <div className="flex flex-col gap-4">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px]">
+        <div className="relative flex-1 min-w-50">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             className="pl-9 bg-secondary border-border"
@@ -180,7 +187,7 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Information
               </TableHead>
-              <TableHead className="w-[90px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <TableHead className="w-22.5 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
             </TableRow>
@@ -212,9 +219,7 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
                     {item.layer ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
                   <TableCell className="text-sm font-semibold">{item.quantityInStock}</TableCell>
-                  <TableCell
-                    className="text-sm text-muted-foreground max-w-[200px] truncate"
-                    title={item.information ?? ''}>
+                  <TableCell className="text-sm text-muted-foreground max-w-50 truncate" title={item.information ?? ''}>
                     {item.information ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
                   <TableCell className="text-right">

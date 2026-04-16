@@ -110,6 +110,7 @@ export function CompanyDetail({
 
   // ─── Edit form ─────────────────────────────────────────────────────────────
   const buildForm = () => ({
+    // Seed form state from the current detail payload.
     name: company.name,
     number: company.number,
     officialName: company.officialName,
@@ -420,6 +421,7 @@ export function CompanyDetail({
   }
 
   // ─── Derived ───────────────────────────────────────────────────────────────
+  // Track visibility filters for contact links and addresses.
   const linkedContactIds = new Set(company.contacts.filter(cc => !cc.deleted).map(cc => cc.contact.id))
   const activeContactCount = company.contacts.filter(cc => !cc.deleted && isActiveContact(cc.endDate)).length
   const hasDeletedContacts = company.contacts.some(cc => cc.deleted)

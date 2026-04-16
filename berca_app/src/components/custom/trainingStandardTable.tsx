@@ -85,6 +85,7 @@ export function TrainingStandardTable({
     )
   }
 
+  // Apply search, filter, and sort for the standards list.
   const filtered = initialStandards
     .filter(s => {
       if (filterDeleted === 'not-deleted' && s.deleted) return false
@@ -117,6 +118,7 @@ export function TrainingStandardTable({
       certificateId: std.certificateId,
       visibilityForRoles: visibilityRows,
     }
+    // Create or update based on the active edit state.
     if (editing) {
       await updateTrainingStandardAction({id: std.id, ...core})
     } else {

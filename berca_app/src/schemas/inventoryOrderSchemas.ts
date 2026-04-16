@@ -3,6 +3,7 @@ import {z} from 'zod/v4'
 export const createInventoryOrderSchema = z.object({
   materialId: z.string().min(1),
   orderNumber: z.string().min(1).max(255),
+  // Coerce numeric inputs from forms into integer quantities.
   requestedQty: z.coerce.number().int().min(1),
   orderDate: z.string().min(1),
   shortDescription: z.string().min(1).max(255),
@@ -14,4 +15,3 @@ export const updateInventoryOrderSchema = createInventoryOrderSchema.extend({
 })
 
 export const inventoryOrderIdSchema = z.object({id: z.string()})
-

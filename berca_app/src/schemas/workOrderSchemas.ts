@@ -21,6 +21,7 @@ export const workOrderSchema = z.object({
 
 export const createWorkOrderSchema = workOrderSchema
   .omit({
+    // Server-managed fields are set on create.
     id: true,
     createdAt: true,
     createdBy: true,
@@ -29,10 +30,12 @@ export const createWorkOrderSchema = workOrderSchema
     deletedBy: true,
   })
   .extend({
+    // Allow UI to redirect back to project detail after creation.
     redirectToProject: z.boolean().default(false),
   })
 
 export const updateWorkOrderSchema = workOrderSchema.pick({
+  // Only mutable fields are allowed on update.
   id: true,
   workOrderNumber: true,
   description: true,

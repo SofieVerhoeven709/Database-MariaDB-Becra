@@ -104,6 +104,7 @@ export function QuoteSupplierTable({
   departmentId,
 }: Props) {
   const router = useRouter()
+  // Role thresholds drive which actions are visible/enabled in the UI.
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canEdit = currentUserLevel >= 40
   const canCreate = currentUserLevel >= 60
@@ -133,6 +134,7 @@ export function QuoteSupplierTable({
     const parsed = parseQuoteNumber(entry.quoteNumber)
     return parsed !== null && parsed > max ? parsed : max
   }, QUOTE_NUMBER_BASE - 1)
+  // Default to the next numeric quote number, starting from the base prefix.
   const defaultQuoteNumber = formatQuoteNumber(Math.max(QUOTE_NUMBER_BASE, highestQuoteNumber + 1))
 
   const filtered = initialEntries
@@ -145,6 +147,7 @@ export function QuoteSupplierTable({
       if (executionFilter === 'executed' && !e.sent) return false
       if (executionFilter === 'active' && e.sent) return false
 
+      // Lifecycle is derived from rejected/approved/received/sent flags.
       if (statusFilter !== 'all' && lifecycle !== statusFilter) return false
 
       if (paymentConditionFilter === PAYMENT_FILTER_NONE && e.paymentConditionId !== null) return false
@@ -270,6 +273,7 @@ export function QuoteSupplierTable({
     if (!entry.acceptedForPOB || !entry.validUntil) return false
     const validDate = new Date(entry.validUntil)
     if (Number.isNaN(validDate.getTime())) return false
+    // Mark approved quotes that have passed their validity date.
     return validDate.getTime() < Date.now()
   }
 

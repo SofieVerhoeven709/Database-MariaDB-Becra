@@ -70,6 +70,7 @@ function ItemDialog({
   const prevOpenRef = useRef(false)
   useEffect(() => {
     if (open && !prevOpenRef.current) {
+      // Cost margin rows are locked to a fixed description/unit.
       const isMargin = item?.isCostMargin ?? isCostMargin
       setDescription(isMargin ? 'Cost Margin' : (item?.description ?? ''))
       setUnit(isMargin ? '%' : (item?.unit ?? ''))

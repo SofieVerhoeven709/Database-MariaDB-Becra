@@ -143,6 +143,7 @@ export function TrainingContactTable({
     )
   }
 
+  // Apply search, filter, and sort for participant rows.
   const filtered = initialTrainingContacts
     .filter(tc => {
       if (filterDeleted === 'not-deleted' && tc.deleted) return false

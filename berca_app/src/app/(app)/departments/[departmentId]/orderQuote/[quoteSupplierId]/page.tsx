@@ -32,6 +32,7 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
   const quote = mapQuoteSupplierDetail(quoteRaw)
   const {currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
+  // Limit selectable materials to the supplier linked to this quote.
   const materialOptions = materialsRaw.map(material => ({
     id: material.id,
     beNumber: material.beNumber ?? null,
@@ -41,6 +42,7 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
 
   const allowedMaterialIds = new Set(materialOptions.map(material => material.id))
 
+  // Only expose material demands that match the supplier's available materials.
   const materialDemandOptions = demandsRaw
     .filter(demand => allowedMaterialIds.has(demand.materialId))
     .map(demand => ({
@@ -49,6 +51,7 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
     label: `${demand.Material.beNumber ?? '—'} — ${demand.Material.shortDescription ?? demand.Material.name ?? demand.id}`,
     }))
 
+  // Guard against invalid defaults passed through query params.
   const safeDefaultMaterialId = materialId && allowedMaterialIds.has(materialId) ? materialId : undefined
   const safeDefaultMaterialDemandId =
     materialDemandId && materialDemandOptions.some(option => option.id === materialDemandId)

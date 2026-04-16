@@ -13,6 +13,7 @@ export const priceListSchema = z.object({
   targetId: z.string(),
 })
 
+// Payloads for create/update actions.
 export const createPriceListSchema = priceListSchema.omit({
   id: true,
   createdAt: true,
@@ -31,6 +32,7 @@ export const updatePriceListSchema = priceListSchema.pick({
 
 export const priceListIdSchema = priceListSchema.pick({id: true})
 
+// Clone uses a source id and new metadata.
 export const clonePriceListSchema = z.object({
   sourceId: z.string(),
   name: z.string().min(1).max(255),

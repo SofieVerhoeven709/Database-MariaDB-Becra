@@ -2,6 +2,7 @@ import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 
 const invoiceOutInclude = {
+  // Shared include bundle for invoice-out list/detail.
   InvoiceType: {select: {id: true, name: true}},
   Employee: {select: {id: true, firstName: true, lastName: true}},
   PaymentMethod: {select: {id: true, name: true}},
@@ -132,6 +133,7 @@ const invoiceOutInclude = {
 } as const
 
 const invoiceInInclude = {
+  // Shared include bundle for invoice-in list/detail.
   InvoiceType: {select: {id: true, name: true}},
   Employee: {select: {id: true, firstName: true, lastName: true}},
   PaymentMethod: {select: {id: true, name: true}},
@@ -198,6 +200,7 @@ export async function getCompanyContactsForInvoice(companyIds: string[]) {
       companyId: {in: companyIds},
       endDate: null,
     },
+    // Active contacts ordered by contact last name for dropdowns.
     select: {
       id: true,
       Contact: {
@@ -219,6 +222,7 @@ export async function getInvoiceTypes() {
   return prismaClient.invoiceType.findMany({
     where: {deleted: false},
     select: {id: true, name: true},
+    // Stable ordering for select inputs.
     orderBy: {name: 'asc'},
   })
 }

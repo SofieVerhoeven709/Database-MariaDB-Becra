@@ -55,6 +55,7 @@ export function mapQuoteSupplier(q: QuoteSupplierWithRelations): MappedQuoteSupp
     paymentConditionId: q.paymentConditionId ?? null,
     paymentConditionName: q.PaymentCondition?.name ?? null,
     createdBy: q.createdBy,
+    // Flatten creator name for list display.
     createdByName: `${q.Employee.firstName} ${q.Employee.lastName}`,
     deleted: q.deleted,
     deletedAt: q.deletedAt?.toISOString() ?? null,
@@ -78,10 +79,12 @@ export function mapQuoteSupplierDetail(q: QuoteSupplierDetailWithRelations): Map
       materialName: line.Material.name ?? null,
       materialShortDescription: line.Material.shortDescription ?? null,
       materialDemandId: line.materialDemandId ?? null,
+      // Human-readable label for demand context in the detail table.
       materialDemandLabel: line.MaterialDemand
         ? `${line.MaterialDemand.Material.beNumber ?? '—'} — ${line.MaterialDemand.Material.shortDescription ?? line.MaterialDemand.Material.name ?? line.MaterialDemand.id}`
         : null,
       quantity: line.quantity,
+      // Prisma returns Decimal for unitPrice; cast to number for UI math/formatting.
       unitPrice: Number(line.unitPrice),
       minQuantity: line.minQuantity ?? null,
       selected: !!line.selected,
@@ -105,4 +108,3 @@ export function mapPaymentCondition(row: PaymentConditionWithRelations): MappedP
       : null,
   }
 }
-

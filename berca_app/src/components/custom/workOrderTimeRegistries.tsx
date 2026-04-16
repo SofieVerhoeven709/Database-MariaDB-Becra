@@ -114,6 +114,7 @@ function CompactEmployeeMultiSelect({
 export function WorkOrderTimeRegistries({
   timeRegistries,
   workOrderId,
+  projectId,
   employees,
   hourTypes,
   permissions,
@@ -122,6 +123,7 @@ export function WorkOrderTimeRegistries({
   const router = useRouter()
   const {canAdd, canDelete, isAdmin} = permissions
 
+  // Default inline form includes the current user.
   const emptyInlineFormWithUser = () => ({...emptyInlineForm(), employeeIds: [currentUserId]})
 
   const [showInline, setShowInline] = useState(false)
@@ -136,6 +138,7 @@ export function WorkOrderTimeRegistries({
   const detailRecord = detailId ? timeRegistries.find(tr => tr.id === detailId) : null
 
   function buildInlinePayload(f: InlineForm) {
+    // Inline payload uses minimal fields; unused fields are nulled.
     return {
       activityDescription: f.activityDescription || null,
       additionalInfo: null,
@@ -155,6 +158,7 @@ export function WorkOrderTimeRegistries({
   }
 
   function buildDialogPayload(f: TimeRegistryFormData) {
+    // Dialog payload supports the full form fields.
     return {
       activityDescription: f.activityDescription || null,
       additionalInfo: f.additionalInfo || null,

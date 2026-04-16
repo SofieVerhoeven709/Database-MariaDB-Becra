@@ -4,7 +4,9 @@ export const createQuoteSupplierLineSchema = z.object({
   quoteSupplierId: z.string().uuid(),
   materialId: z.string().uuid(),
   materialDemandId: z.string().uuid().optional(),
+  // Line quantities must be positive integers.
   quantity: z.number().int().positive(),
+  // Unit price is positive and validated as a numeric value.
   unitPrice: z.number().positive(),
   minQuantity: z.number().int().nonnegative().optional(),
   notDeliverable: z.boolean().optional(),

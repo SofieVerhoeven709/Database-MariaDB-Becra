@@ -9,6 +9,7 @@ export type VisibilityWithRoleLevel = VisibilityForRole & {
 }
 
 export function mapVisibility(v: VisibilityWithRoleLevel): MappedVisibilityForRole {
+  // Project Prisma relations into the flattened UI-friendly shape.
   return {
     id: v.id,
     visible: v.visible,

@@ -53,6 +53,7 @@ export function WorkOrderStructureFormDialog({
 
   useEffect(() => {
     if (structure) {
+      // Seed form values from the selected structure.
       setForm({
         clientNumber: structure.clientNumber ?? '',
         tag: structure.tag ?? '',
@@ -117,6 +118,7 @@ export function WorkOrderStructureFormDialog({
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
                 {workOrderOptions
+                  // Hide work orders that are closed for materials/hours.
                   .filter(w => !w.isMaterialHoursClosed)
                   .map(w => (
                     <SelectItem key={w.id} value={w.id}>

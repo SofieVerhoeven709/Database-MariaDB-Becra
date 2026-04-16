@@ -31,6 +31,7 @@ type ContactWithRelations = Contact & {
 
 function getCurrentCompany(links: CompanyContactLink[]): CompanyContactLink | null {
   const now = new Date()
+  // Active link = no endDate or endDate in the future.
   return links.find(cc => cc.endDate === null || cc.endDate > now) ?? null
 }
 
@@ -97,7 +98,7 @@ type ContactDetailPayload = Prisma.ContactGetPayload<{
         Company: true
         Employee: {select: {firstName: true; lastName: true}}
         CompanyAddress: {
-          // add this
+          // Include address details so contact-company links can show locations.
           include: {
             Country: {select: {name: true}}
           }
@@ -280,6 +281,7 @@ export function mapContactDetail(c: ContactDetailPayload): ContactDetailData {
     projects: c.ProjectContact.map(mapProjectContact),
     trainings: c.TrainingContact.map(mapTrainingContact),
     followUps: c.FollowUpStructure.map(mapFollowUp),
+    // Visibility rows include role/subrole names for UI.
     visibilityForRoles: c.Target.VisibilityForRole.map(v => ({
       id: v.id,
       visible: v.visible,

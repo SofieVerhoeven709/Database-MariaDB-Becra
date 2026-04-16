@@ -14,6 +14,7 @@ export const createWorkOrderStructureAction = protectedServerFunction({
   schema: createWorkOrderStructureSchema,
   functionName: 'Create work order structure action',
   serverFn: async ({data, logger, profile}) => {
+    // Create a target row to scope visibility for this structure.
     const target = await createTargetForType('WorkOrderStructure', profile.id)
 
     const structure = await prismaClient.workOrderStructure.create({
@@ -27,6 +28,7 @@ export const createWorkOrderStructureAction = protectedServerFunction({
     })
 
     logger.info(`Work order structure created: ${structure.id}`)
+    // Revalidate the parent work order detail view.
     revalidatePath(`/departments/project/project/${data.workOrderId}`)
   },
 })
@@ -41,6 +43,7 @@ export const updateWorkOrderStructureAction = protectedServerFunction({
     })
 
     logger.info(`Work order structure updated: ${id}`)
+    // Revalidate the parent work order detail view.
     revalidatePath(`/departments/project/project/${data.workOrderId}`)
   },
 })
@@ -56,6 +59,7 @@ export const softDeleteWorkOrderStructureAction = protectedServerFunction({
     })
 
     logger.info(`Work order structure soft deleted: ${id}`)
+    // Revalidate the parent work order detail view.
     revalidatePath(`/departments/project/project/${structure.workOrderId}`)
   },
 })
@@ -64,12 +68,14 @@ export const hardDeleteWorkOrderStructureAction = protectedServerFunction({
   schema: workOrderStructureIdSchema,
   functionName: 'Hard delete work order structure action',
   serverFn: async ({data: {id}, logger}) => {
+    // Fetch parent id before deletion so we can revalidate the detail route.
     const structure = await prismaClient.workOrderStructure.findUniqueOrThrow({
       where: {id},
       select: {workOrderId: true},
     })
     await prismaClient.workOrderStructure.delete({where: {id}})
     logger.info(`Work order structure hard deleted: ${id}`)
+    // Revalidate the parent work order detail view.
     revalidatePath(`/departments/project/project/${structure.workOrderId}`)
   },
 })
@@ -84,6 +90,7 @@ export const undeleteWorkOrderStructureAction = protectedServerFunction({
       select: {workOrderId: true},
     })
     logger.info(`Work order structure undeleted: ${id}`)
+    // Revalidate the parent work order detail view.
     revalidatePath(`/departments/project/project/${structure.workOrderId}`)
   },
 })

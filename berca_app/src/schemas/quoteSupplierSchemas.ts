@@ -10,6 +10,7 @@ export const quoteSupplierSchema = z.object({
   additionalInfo: z.string().max(255).nullable().optional(),
   acceptedForPOB: z.boolean().default(false),
   validUntil: z.string().nullable().optional(),
+  // Accept numeric input from form fields for delivery time.
   deliveryTimeDays: z.coerce.number().int().nullable().optional(),
   paymentConditionId: z.string().nullable().optional(),
   createdBy: z.string(),
@@ -27,6 +28,7 @@ export const createQuoteSupplierSchema = quoteSupplierSchema.omit({
 }).extend({
   initialMaterialId: z.string().uuid().optional(),
   initialMaterialDemandId: z.string().uuid().optional(),
+  // Optional initial line quantity when creating from a material context.
   initialQuantity: z.coerce.number().int().positive().optional(),
 })
 

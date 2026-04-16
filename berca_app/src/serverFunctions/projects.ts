@@ -15,6 +15,7 @@ export const createProjectAction = protectedServerFunction({
 
     const {visibilityForRoles, ...projectData} = data
 
+    // Create a target row to scope visibility for this project.
     const target = await createTargetForType('Project', profile.id)
 
     let projectNumber = projectData.projectNumber || generateProjectNumber()
@@ -22,6 +23,7 @@ export const createProjectAction = protectedServerFunction({
     let attempts = 0
     let project
 
+    // Retry on unique-number collisions by generating a new project number.
     while (attempts < 5) {
       try {
         project = await prismaClient.project.create({

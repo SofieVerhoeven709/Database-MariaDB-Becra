@@ -31,6 +31,7 @@ export function mapProject(p: ProjectWithRelations): MappedProject {
     projectName: p.projectName,
     description: p.description,
     extraInfo: p.extraInfo,
+    // Normalize dates to ISO strings for the client.
     startDate: p.startDate?.toISOString() ?? null,
     endDate: p.endDate?.toISOString() ?? null,
     closingDate: p.closingDate?.toISOString() ?? null,
@@ -50,6 +51,7 @@ export function mapProject(p: ProjectWithRelations): MappedProject {
     deletedAt: p.deletedAt?.toISOString() ?? null,
     deletedBy: p.deletedBy,
     targetId: p.Target.id,
+    // Map role visibility from the target relation for UI controls.
     visibilityForRoles: p.Target.VisibilityForRole.map(mapVisibility),
   }
 }

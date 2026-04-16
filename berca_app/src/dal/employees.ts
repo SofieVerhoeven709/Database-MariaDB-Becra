@@ -106,6 +106,7 @@ export async function getEmployees(): Promise<
  * @param role The role of the user for whom to start the session.
  */
 export async function startSession(employeeId: string, subRole: {name: string}): Promise<SessionWithProfile> {
+  // Map sub-role name to a session duration, falling back to the default.
   const duration = SessionDuration[subRole.name.toLowerCase()] ?? DEFAULT_SESSION_DURATION
 
   logger.warn(subRole.name)
@@ -191,6 +192,7 @@ export async function updateEmployee({id, ...data}: UpdateEmployeeParams): Promi
  * @param role The role of the user for whom to start the session.
  */
 export async function extendSession(id: string, subRole: {name: string}): Promise<SessionWithProfile> {
+  // Reuse the same duration mapping when extending an existing session.
   const duration = SessionDuration[subRole.name.toLowerCase()] ?? DEFAULT_SESSION_DURATION
 
   return prismaClient.session.update({
@@ -203,6 +205,7 @@ export async function extendSession(id: string, subRole: {name: string}): Promis
 }
 
 export async function getEmployeeDetail(id: string) {
+  // Load the employee plus recent created/deleted audit lists for detail tabs.
   const [employee, createdEmployees, deletedEmployees] = await Promise.all([
     prismaClient.employee.findUniqueOrThrow({
       where: {id},
@@ -1150,13 +1153,13 @@ export async function getEmployeeDetail(id: string) {
         },
         PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {
           where: {deleted: true},
-          orderBy: {deletedAt: 'desc'},
+          orderBy: {date: 'desc'},
           take: 50,
           select: {id: true, description: true, deletedAt: true},
         },
         QuoteBecra_QuoteBecra_deletedByToEmployee: {
           where: {deleted: true},
-          orderBy: {deletedAt: 'desc'},
+          orderBy: {date: 'desc'},
           take: 50,
           select: {id: true, description: true, deletedAt: true},
         },

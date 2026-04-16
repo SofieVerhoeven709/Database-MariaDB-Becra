@@ -110,6 +110,7 @@ export function TrainingDetail({
     certSentDate: '',
   })
 
+  // Build form defaults from the current training.
   const buildForm = () => ({
     trainingNumber: training.trainingNumber ?? '',
     trainingDate: training.trainingDate.slice(0, 10),
@@ -150,6 +151,7 @@ export function TrainingDetail({
     }
   }
 
+  // Toggle between active-only and full contact lists.
   const nonDeletedContacts = training.contacts.filter(c => !c.deleted)
   const visibleContacts = showDeletedContacts ? training.contacts : nonDeletedContacts
   const hasDeletedContacts = training.contacts.some(c => c.deleted)

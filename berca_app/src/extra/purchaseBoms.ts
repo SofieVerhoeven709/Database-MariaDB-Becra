@@ -79,6 +79,7 @@ function mapStructure(r: PurchaseBOMStructureRaw): MappedPurchaseBOMStructure {
     purchaseBOMId: r.purchaseBOMId,
     projectBOMStructureId: r.projectBOMStructureId,
     materialId: r.materialId,
+    // Prefer the most descriptive material label available.
     materialName: r.Material.name ?? r.Material.shortDescription ?? r.Material.beNumber ?? r.materialId,
     materialBeNumber: r.Material.beNumber ?? '',
     // ─── Read-only (from project side) ──────────────────────────────────────
@@ -152,6 +153,7 @@ export function mapPurchaseBOM(r: PurchaseBOMRaw): MappedPurchaseBOM {
       ? `${r.Employee_PurchaseBOM_deletedByToEmployee.firstName} ${r.Employee_PurchaseBOM_deletedByToEmployee.lastName}`
       : null,
     structures,
+    // Count only active (non-deleted) structures for summary displays.
     structureCount: structures.filter(s => !s.deleted).length,
     children: r.other_PurchaseBOM.map(mapChild),
   }

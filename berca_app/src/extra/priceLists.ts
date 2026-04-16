@@ -55,6 +55,7 @@ function mapItem(
 
   if (r.PriceListItemTarget) {
     const resolved = resolvedTargets.get(r.PriceListItemTarget.targetId)
+    // Fall back to the raw target id when no label is resolved.
     linkedTarget = {
       id: r.PriceListItemTarget.id,
       priceListItemId: r.PriceListItemTarget.priceListItemId,
@@ -71,6 +72,7 @@ function mapItem(
     unit: r.unit,
     price: r.price.toNumber(),
     isCostMargin: r.isCostMargin,
+    // Normalize dates to ISO strings for the client.
     createdAt: r.createdAt.toISOString(),
     createdBy: r.createdBy,
     createdByName: `${r.Employee_PriceListItem_createdByToEmployee.firstName} ${r.Employee_PriceListItem_createdByToEmployee.lastName}`,
@@ -108,6 +110,7 @@ export function mapPriceList(
     targetId: r.targetId,
     items,
     companies,
+    // Only count active items for badges and list view.
     itemCount: items.filter(i => !i.deleted).length,
   }
 }

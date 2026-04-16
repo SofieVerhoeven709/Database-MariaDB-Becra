@@ -20,6 +20,7 @@ interface PageProps {
 export default async function MaterialDemandPage({params, searchParams}: PageProps) {
   const {departmentId} = await params
   const resolvedSearchParams = await searchParams
+  // Toggle inclusion of fulfilled sources in the demand list.
   const showFulfilled = resolvedSearchParams?.showFulfilled === 'true'
 
   const [department, demandsFromDAL, materialsRaw, supplierCompaniesRaw, profile] = await Promise.all([
@@ -40,6 +41,7 @@ export default async function MaterialDemandPage({params, searchParams}: PagePro
       sourceReferenceId: source.sourceReferenceId,
     })),
   )
+  // Resolve human-friendly labels for demand source references.
   const sourceReferenceLabels = await getMaterialDemandSourceReferenceLabels(sourceLabelEntries)
   const entries = demandsFromDAL.map(demand => mapMaterialDemand(demand, sourceReferenceLabels))
   const suppliers = supplierCompaniesRaw

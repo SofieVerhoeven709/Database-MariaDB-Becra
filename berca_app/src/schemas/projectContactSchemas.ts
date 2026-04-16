@@ -1,5 +1,6 @@
 import {z} from 'zod/v4'
 
+// Payload for creating a project-contact link.
 export const createProjectContactSchema = z.object({
   projectId: z.string(),
   contactId: z.string(),
@@ -8,6 +9,7 @@ export const createProjectContactSchema = z.object({
   isValid: z.boolean().default(true),
 })
 
+// Payload for updating a link row.
 export const updateProjectContactSchema = z.object({
   id: z.string(),
   projectId: z.string(),
@@ -16,6 +18,7 @@ export const updateProjectContactSchema = z.object({
   isValid: z.boolean(),
 })
 
+// Id envelope for delete/restore actions.
 export const projectContactIdSchema = z.object({
   id: z.string(),
   projectId: z.string(),

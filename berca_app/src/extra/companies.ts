@@ -35,6 +35,7 @@ function mapAddress(a: AddressWithCountry): MappedCompanyAddress {
     typeAddress: a.typeAddress,
     countryId: a.countryId ?? null,
     countryName: a.Country?.name ?? null,
+    // Normalize dates to ISO strings for the client.
     createdAt: a.createdAt.toISOString(),
     createdBy: a.createdBy,
     companyId: a.companyId,
@@ -97,7 +98,7 @@ type CompanyDetailPayload = Prisma.CompanyGetPayload<{
     CompanyContact: {
       include: {
         CompanyAddress: {
-          // add this
+          // Include address details so company-contact links can show locations.
           include: {
             Country: {select: {name: true}}
           }
@@ -177,6 +178,7 @@ function mapContact(cc: CompanyDetailPayload['CompanyContact'][number]): MappedC
       active: cc.Contact.active,
     },
     companyAddressId: cc.companyAddressId,
+    // Inline the address label for UI display.
     companyAddress: cc.CompanyAddress
       ? {
           id: cc.CompanyAddress.id,
@@ -250,6 +252,7 @@ export function mapCompanyDetail(c: CompanyDetailPayload): CompanyDetailData {
       number: s.number,
       companyActive: s.companyActive,
     })),
+    // Inline role/subrole labels for visibility controls.
     visibilityForRoles: c.Target.VisibilityForRole.map(v => ({
       id: v.id,
       visible: v.visible,

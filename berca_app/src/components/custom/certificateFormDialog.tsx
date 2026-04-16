@@ -60,12 +60,14 @@ export function CertificateFormDialog({
   const [form, setForm] = useState<MappedCertificate>(emptyCertificate())
   const [saving, setSaving] = useState(false)
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
+    // Seed visibility rows based on the current certificate (or defaults for new).
     buildInitialVisibilityRows(certificate?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
 
   useEffect(() => {
     const next = certificate ?? emptyCertificate()
     setForm(next)
+    // Keep visibility state in sync when switching between certificates.
     setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
   }, [certificate?.id, open])
 

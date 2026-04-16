@@ -97,6 +97,7 @@ export function WorkOrderTable({
   departmentId,
 }: WorkOrderTableProps) {
   const router = useRouter()
+  // Role/level gates control delete/restore actions.
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
 
@@ -115,6 +116,7 @@ export function WorkOrderTable({
     }
   }
 
+  // Apply search/deleted filters before sorting the list.
   const filtered = initialWorkOrders
     .filter(w => {
       if (filterDeleted === 'not-deleted' && w.deleted) return false
@@ -153,7 +155,7 @@ export function WorkOrderTable({
         case 'createdAt':
           return s(a.createdAt, b.createdAt)
         case 'createdBy':
-          return s(a.createdByName, b.createdByName)
+          return s(a.createdByName, b.createdBy)
         case 'deleted':
           return n(a.deleted, b.deleted)
         default:

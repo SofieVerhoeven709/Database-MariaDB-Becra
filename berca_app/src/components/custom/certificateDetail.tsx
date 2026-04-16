@@ -56,6 +56,7 @@ export function CertificateDetail({
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
 
+  // Build form defaults from the current certificate.
   const buildForm = () => ({
     descriptionShort: certificate.descriptionShort ?? '',
     description: certificate.description ?? '',
@@ -92,6 +93,7 @@ export function CertificateDetail({
     }
   }
 
+  // Select options for the type dropdown (non-deleted only).
   const certificateTypeOptions: SelectOption[] = certificateTypes
     .filter(t => !t.deleted)
     .map(t => ({id: t.id, name: t.name}))

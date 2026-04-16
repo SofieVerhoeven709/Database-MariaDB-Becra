@@ -43,6 +43,7 @@ export function WorkOrderDetail({
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
 
+  // Seed editable fields from the current work order.
   const [form, setForm] = useState({
     workOrderNumber: workOrder?.workOrderNumber ?? '',
     description: workOrder?.description ?? '',
@@ -57,6 +58,7 @@ export function WorkOrderDetail({
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80 || currentUserRole === 'Project'
 
+  // Pass role-derived permissions down to nested tabs.
   const permissions = {
     canAdd: currentUserLevel >= 20 && !workOrder.hoursMaterialClosed,
     canDelete,

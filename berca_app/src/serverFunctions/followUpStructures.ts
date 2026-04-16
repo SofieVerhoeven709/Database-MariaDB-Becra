@@ -18,6 +18,7 @@ export const createFollowUpStructureAction = protectedServerFunction({
   serverFn: async ({data: {visibilityForRoles, documentId, ...data}, logger, profile}) => {
     logger.info(`Creating follow-up structure, createdBy: ${profile.id}`)
 
+    // Create a target row for visibility scoping and future links.
     const target = await createTargetForType('FollowUpStructure', profile.id)
     const structureId = crypto.randomUUID()
     const now = new Date()
@@ -34,6 +35,7 @@ export const createFollowUpStructureAction = protectedServerFunction({
       },
     })
 
+    // Persist role visibility rules for the structure target.
     if (visibilityForRoles.length > 0) {
       await upsertVisibilityRows(target.id, visibilityForRoles)
     }
@@ -49,6 +51,7 @@ export const updateFollowUpStructureAction = protectedServerFunction({
   schema: updateFollowUpStructureSchema,
   functionName: 'Update follow-up structure action',
   serverFn: async ({data: {id, visibilityForRoles, documentId, ...data}, logger}) => {
+    // Fetch target id so visibility stays in sync with this structure.
     const {targetId} = await prismaClient.followUpStructure.findUniqueOrThrow({
       where: {id},
       select: {targetId: true},
@@ -56,6 +59,7 @@ export const updateFollowUpStructureAction = protectedServerFunction({
 
     await Promise.all([
       prismaClient.followUpStructure.update({where: {id}, data}),
+      // Keep role visibility in sync with the structure target.
       upsertVisibilityRows(targetId, visibilityForRoles),
     ])
 
@@ -85,6 +89,7 @@ export const hardDeleteFollowUpStructureAction = protectedServerFunction({
   schema: followUpStructureIdSchema,
   functionName: 'Hard delete follow-up structure action',
   serverFn: async ({data: {id}, logger}) => {
+    // Remove the follow-up structure row entirely.
     await prismaClient.followUpStructure.delete({where: {id}})
     logger.info(`Follow-up structure hard deleted: ${id}`)
     revalidatePath('/followupstructures')
@@ -97,6 +102,7 @@ export const undeleteFollowUpStructureAction = protectedServerFunction({
   schema: followUpStructureIdSchema,
   functionName: 'Undelete follow-up structure action',
   serverFn: async ({data: {id}, logger}) => {
+    // Restore the follow-up structure without touching other fields.
     await prismaClient.followUpStructure.update({
       where: {id},
       data: {deleted: false, deletedAt: null, deletedBy: null},

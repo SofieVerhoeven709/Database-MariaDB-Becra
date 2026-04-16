@@ -8,6 +8,7 @@ export async function getIncomingDeliveries() {
       Purchase: {select: {id: true, purchaseNumber: true}},
       Employee_IncomingDelivery_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       IncomingDeliveryLine: {
+        // Exclude deleted lines when computing totals/flags.
         where: {deleted: false},
         select: {id: true, orderedQty: true, acceptedQty: true, backorderQty: true, notCorrect: true, notCorrectReason: true},
       },
@@ -80,6 +81,7 @@ export async function getIncomingDeliveryMaterialOptions() {
 
 export async function getIncomingDeliveryPurchaseDetailOptions(purchaseId: string | null | undefined) {
   if (!purchaseId) return []
+  // Limit options to lines belonging to the selected purchase.
   return prismaClient.purchaseDetail.findMany({
     where: {purchaseId, deleted: false},
     orderBy: {createdAt: 'desc'},
@@ -95,6 +97,7 @@ export async function getIncomingDeliveryPurchaseDetailOptions(purchaseId: strin
 
 export async function getMaterialDemandSourceOptions() {
   return prismaClient.materialDemandSource.findMany({
+    // Only list open demand sources for allocation.
     where: {fulfilled: false},
     orderBy: {createdAt: 'desc'},
     select: {

@@ -61,12 +61,14 @@ export function TrainingFormDialog({
   const [form, setForm] = useState<MappedTraining>(emptyTraining())
   const [saving, setSaving] = useState(false)
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
+    // Seed visibility rows based on the current training (or defaults for new).
     buildInitialVisibilityRows(training?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
 
   useEffect(() => {
     const next = training ?? emptyTraining()
     setForm(next)
+    // Keep visibility state in sync when switching between trainings.
     setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
   }, [training?.id, open])
 

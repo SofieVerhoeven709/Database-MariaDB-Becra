@@ -52,9 +52,12 @@ export const createContactSchema = contactSchema
     deletedBy: true,
   })
   .extend({
+    // Visibility payload for the contact's target.
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
+    // Optional initial links created only on contact creation.
     initialCompanyId: z.string().nullable().optional(),
     initialRoleWithCompany: z.string().nullable().optional(),
+    initialCompanyAddressId: z.string().nullable().optional(),
     initialProjectId: z.string().nullable().optional(),
   })
 
@@ -68,6 +71,7 @@ export const updateContactSchema = contactSchema
     deletedBy: true,
   })
   .extend({
+    // Visibility rows are always sent by the UI.
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
   })
 

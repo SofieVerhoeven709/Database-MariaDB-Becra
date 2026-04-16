@@ -5,6 +5,7 @@ const dateSchema = z.preprocess(val => (typeof val === 'string' || val instanceo
 const idSchema = z.string().length(36)
 
 const auditFields = {
+  // Standard audit columns shared by role-related entities.
   createdAt: dateSchema,
   createdBy: idSchema,
   deleted: z.boolean(),
@@ -54,6 +55,7 @@ export const roleContextSchema = roleLevelSchema
     Role: true,
     SubRole: true,
   })
+  // Flatten to a minimal context object used by the UI.
   .transform(data => ({
     level: data.level,
     role: data.Role.name,

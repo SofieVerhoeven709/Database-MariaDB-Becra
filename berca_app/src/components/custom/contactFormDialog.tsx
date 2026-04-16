@@ -188,6 +188,7 @@ export function ContactFormDialog({
   async function handleSubmit() {
     setSaving(true)
     try {
+      // Trim text fields before sending.
       const trimmedForm: MappedContact = {
         ...form,
         firstName: form.firstName.trim(),
@@ -209,6 +210,7 @@ export function ContactFormDialog({
         initialRoleWithCompany?.trim() || undefined,
         initialCompanyAddressId !== 'none' ? initialCompanyAddressId : undefined,
       )
+      // When editing, optionally add a new company link after saving.
       if (isEdit && newCompanyId !== 'none') {
         await addCompanyContactAction({
           contactId: form.id,

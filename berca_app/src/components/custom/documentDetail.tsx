@@ -161,6 +161,7 @@ export function DocumentDetail({
       .map(g => g.groupDId!),
   )
 
+  // Filter out options that are not part of any valid junction row for the selection.
   const filteredGroupBs = groupBOptions.filter(o => validBIds.has(o.id))
   const filteredGroupCs = groupCOptions.filter(o => validCIds.has(o.id))
   const filteredGroupDs = groupDOptions.filter(o => validDIds.has(o.id))
@@ -205,6 +206,7 @@ export function DocumentDetail({
   async function handleSave() {
     setSaving(true)
     try {
+      // Only send target links the user explicitly selected.
       const targetAssignments: {typeName: DocumentTargetTypeName; targetId: string}[] = []
       if (targetMaterial) targetAssignments.push({typeName: 'Material', targetId: targetMaterial})
       if (targetProject) targetAssignments.push({typeName: 'Project', targetId: targetProject})

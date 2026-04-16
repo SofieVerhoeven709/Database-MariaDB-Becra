@@ -33,6 +33,7 @@ function assertMinRoleLevel(
   minLevel: number,
   message: string,
 ) {
+  // Centralized guard for role-level gated actions.
   if (getHighestRoleLevel(profile) < minLevel) {
     throw new Error(message)
   }
@@ -98,6 +99,7 @@ async function ensurePendingIncomingLinesFromPurchase(incomingDeliveryId: string
   const toCreate = purchaseDetails.filter(detail => !existingPurchaseDetailIds.has(detail.id))
   if (toCreate.length === 0) return
 
+  // Seed incoming lines from purchase details that are not yet linked.
   await prismaClient.incomingDeliveryLine.createMany({
     data: toCreate.map(detail => ({
       id: crypto.randomUUID(),
@@ -129,6 +131,7 @@ export const createIncomingDeliveryAction = protectedServerFunction({
     let attempts = 0
     let created: {id: string} | null = null
 
+    // Retry number generation when unique constraints collide.
     while (attempts < 5) {
       try {
         created = await prismaClient.incomingDelivery.create({
@@ -305,6 +308,7 @@ export const updateIncomingDeliveryLineAction = protectedServerFunction({
       return sum + allocation.allocatedQty
     }, 0)
     const nextOverDeliveredQty = Math.max((data.deliveredQty ?? 0) - (data.orderedQty ?? 0), 0)
+    // Prevent reducing over-delivered qty below what is already assigned to warehouse.
     if (assignedOverDeliveryQty > nextOverDeliveredQty) {
       throw new Error(
         `Over-delivery assigned quantity (${assignedOverDeliveryQty}) exceeds remaining over-delivered quantity (${nextOverDeliveredQty}). Remove warehouse assignments first.`,
@@ -401,6 +405,7 @@ export const softDeleteIncomingDeliveryLineAction = protectedServerFunction({
       }
     }
 
+    // Roll back warehouse stock for warehouse-place allocations.
     for (const [warehousePlaceId, qtyToRollback] of warehouseAdjustments.entries()) {
       const place = await prismaClient.warehousePlace.findUnique({
         where: {id: warehousePlaceId},
@@ -567,6 +572,7 @@ export const createIncomingDeliveryOverDeliveryAllocationAction = protectedServe
         data: {quantityInStock: warehousePlace.quantityInStock + data.allocatedQty},
       })
 
+      // Keep material pointing at the latest warehouse location.
       await tx.material.update({
         where: {id: line.materialId},
         data: {warehousePlaceId: data.warehousePlaceId},

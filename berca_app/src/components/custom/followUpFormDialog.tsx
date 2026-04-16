@@ -100,7 +100,7 @@ export function FollowUpFormDialog({
     buildInitialVisibilityRows(followUp?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
 
-  // target — create only
+  // Target selection is only available on create.
   const [targetTypeName, setTargetTypeName] = useState<TargetTypeName | ''>('')
   const [targetEntityId, setTargetEntityId] = useState('')
 
@@ -132,6 +132,7 @@ export function FollowUpFormDialog({
   async function handleSubmit() {
     setSaving(true)
     try {
+      // Trim user input before persisting.
       const trimmedForm = {
         ...form,
         activityDescription: form.activityDescription?.trim() || null,
@@ -148,6 +149,7 @@ export function FollowUpFormDialog({
     }
   }
 
+  // Require core classification/assignment fields (and target on create).
   const isValid =
     form.statusId !== '' &&
     form.urgencyTypeId !== '' &&

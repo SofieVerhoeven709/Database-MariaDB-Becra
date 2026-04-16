@@ -3,6 +3,7 @@ import {z} from 'zod/v4'
 export const materialDemandSchema = z.object({
   id: z.string(),
   materialId: z.string(),
+  // Coerce numeric inputs from forms into integer quantities.
   totalRequiredQty: z.coerce.number().int().min(0),
   reservedQty: z.coerce.number().int().min(0),
   createdAt: z.date(),

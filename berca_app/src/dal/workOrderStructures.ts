@@ -2,6 +2,7 @@ import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 
 const workOrderStructureListInclude = {
+  // Include display fields for list views.
   Employee: {select: {firstName: true, lastName: true}},
   Employee_WorkOrderStructure_deletedByToEmployee: {select: {firstName: true, lastName: true}},
   Material: {select: {id: true, name: true, beNumber: true}},

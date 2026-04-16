@@ -28,6 +28,7 @@ export const createPriceListAction = protectedServerFunction({
   serverFn: async ({data, logger, profile}) => {
     logger.info(`Creating price list, createdBy: ${profile.id}`)
 
+    // Create a visibility target for price list items.
     const target = await createTargetForType('PriceList', profile.id)
     const id = crypto.randomUUID()
     const now = new Date()
@@ -42,6 +43,7 @@ export const createPriceListAction = protectedServerFunction({
       },
     })
 
+    // Seed a cost margin line so calculations always have a baseline.
     await prismaClient.priceListItem.create({
       data: {
         id: crypto.randomUUID(),
@@ -76,6 +78,7 @@ export const clonePriceListAction = protectedServerFunction({
       },
     })
 
+    // New target to keep cloned list visibility distinct.
     const target = await createTargetForType('PriceList', profile.id)
     const newId = crypto.randomUUID()
     const now = new Date()
@@ -92,6 +95,7 @@ export const clonePriceListAction = protectedServerFunction({
     })
 
     if (source.PriceListItem.length > 0) {
+      // Re-key items so linked targets can be re-attached.
       const itemIdMap = new Map<string, string>()
       for (const item of source.PriceListItem) {
         itemIdMap.set(item.id, crypto.randomUUID())
@@ -110,6 +114,7 @@ export const clonePriceListAction = protectedServerFunction({
         })),
       })
 
+      // Re-create target links using the new item ids.
       const targetLinks = source.PriceListItem.filter(item => item.PriceListItemTarget !== null).map(item => ({
         id: crypto.randomUUID(),
         priceListItemId: itemIdMap.get(item.id)!,
@@ -120,6 +125,7 @@ export const clonePriceListAction = protectedServerFunction({
         await prismaClient.priceListItemTarget.createMany({data: targetLinks})
       }
     } else {
+      // Ensure every price list has a cost margin entry.
       await prismaClient.priceListItem.create({
         data: {
           id: crypto.randomUUID(),
@@ -208,6 +214,7 @@ export async function createPriceListItemAndReturnIdAction(
   data: Parameters<typeof createPriceListItemAction>[0],
 ): Promise<{id: string}> {
   await createPriceListItemAction(data)
+  // Read back the newest match to get the generated id.
   const record = await prismaClient.priceListItem.findFirstOrThrow({
     where: {description: data.description},
     orderBy: {createdAt: 'desc'},

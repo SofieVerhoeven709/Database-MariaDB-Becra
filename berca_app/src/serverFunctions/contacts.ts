@@ -11,12 +11,20 @@ export const createContactAction = protectedServerFunction({
   schema: createContactSchema,
   functionName: 'Create contact action',
   serverFn: async ({
-    data: {visibilityForRoles, initialCompanyId, initialRoleWithCompany, initialProjectId, ...data},
+    data: {
+      visibilityForRoles,
+      initialCompanyId,
+      initialRoleWithCompany,
+      initialCompanyAddressId,
+      initialProjectId,
+      ...data
+    },
     logger,
     profile,
   }) => {
     logger.info(`Creating contact, createdBy: ${profile.id}`)
 
+    // Target row scopes visibility for this contact.
     const target = await createTargetForType('Contact', profile.id)
     const contactId = crypto.randomUUID()
     const now = new Date()
@@ -39,6 +47,7 @@ export const createContactAction = protectedServerFunction({
           contactId,
           companyId: initialCompanyId,
           roleWithCompany: initialRoleWithCompany ?? null,
+          companyAddressId: initialCompanyAddressId ?? null,
           startedDate: now,
           createdBy: profile.id,
           createdAt: now,
@@ -61,6 +70,7 @@ export const createContactAction = protectedServerFunction({
       })
     }
 
+    // Persist role visibility rows for the contact target.
     if (visibilityForRoles.length > 0) {
       await upsertVisibilityRows(target.id, visibilityForRoles)
     }
@@ -81,6 +91,7 @@ export const updateContactAction = protectedServerFunction({
       select: {targetId: true},
     })
 
+    // Update core fields and visibility in parallel.
     await Promise.all([
       prismaClient.contact.update({where: {id}, data}),
       upsertVisibilityRows(targetId, visibilityForRoles),
@@ -128,6 +139,7 @@ export async function createContactAndReturnIdAction(
   data: Parameters<typeof createContactAction>[0],
 ): Promise<{id: string; firstName: string; lastName: string}> {
   await createContactAction(data)
+  // Read back the newest match to get the generated id.
   const record = await prismaClient.contact.findFirstOrThrow({
     where: {firstName: data.firstName, lastName: data.lastName},
     orderBy: {createdAt: 'desc'},

@@ -24,7 +24,6 @@ export const invoiceOutSchema = z.object({
   paymentMethodId: z.string(),
   invoiceSentTypeId: z.string(),
   invoiceStatusId: z.string(),
-  vatMarginId: z.string(),
   // Optional price list applied to billing line calculations.
   priceListId: z.string().nullable().optional(), // ← new
 })

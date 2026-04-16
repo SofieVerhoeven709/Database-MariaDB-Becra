@@ -87,8 +87,6 @@ export interface MappedInvoiceOut {
   invoiceSentTypeName: string
   invoiceStatusId: string
   invoiceStatusName: string
-  vatMarginId: string
-  vatMarginVat: number
   // Optional price list used to calculate billing totals.
   priceListId: string | null
   priceListName: string | null

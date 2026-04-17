@@ -8,6 +8,12 @@ const booleanFromString = z.preprocess(
 
 const nullableText = z.preprocess(val => (val === '' ? null : val), z.string().max(255).nullable().optional())
 
+const nullableNumber = z.preprocess(val => {
+  if (val === '' || val === null || val === undefined) return null
+  const parsed = Number(val)
+  return Number.isFinite(parsed) ? parsed : val
+}, z.number().min(0, 'Quantity value must be 0 or greater').nullable().optional())
+
 // ─── MaterialGroup ───────────────────────────────────────────────────────────
 
 export const materialGroupSchema = z.object({
@@ -29,6 +35,7 @@ export const unitSchema = z.object({
   unitName: z.string().min(1).max(255),
   physicalQuantity: z.string().min(1).max(255),
   abbreviation: z.string().min(1).max(255),
+  quantityValue: nullableNumber,
   shortDescription: z.string().max(255).nullable().optional(),
   longDescription: z.string().nullable().optional(),
   valid: booleanFromString,

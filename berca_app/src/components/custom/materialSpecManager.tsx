@@ -45,6 +45,7 @@ export interface MappedUnit {
   unitName: string
   physicalQuantity: string
   abbreviation: string
+  quantityValue: number | null
   shortDescription: string | null
   longDescription: string | null
   createdAt: string | null
@@ -529,13 +530,14 @@ function MaterialGroupTab({
 
 // ─── Unit Tab ─────────────────────────────────────────────────────────────────
 
-type UnitSortField = 'unitName' | 'abbreviation' | 'physicalQuantity' | 'valid'
+type UnitSortField = 'unitName' | 'abbreviation' | 'physicalQuantity' | 'quantityValue' | 'valid'
 
 const EMPTY_UNIT: MappedUnit = {
   id: '',
   unitName: '',
   physicalQuantity: '',
   abbreviation: '',
+  quantityValue: null,
   shortDescription: null,
   longDescription: null,
   createdAt: null,
@@ -555,6 +557,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
   const [editing, setEditing] = useState<MappedUnit | null>(null)
   const [form, setForm] = useState<MappedUnit>(EMPTY_UNIT)
   const [saving, setSaving] = useState(false)
+  const quantityValueInvalid = form.quantityValue != null && form.quantityValue < 0
 
   function openNew() {
     setEditing(null)
@@ -589,6 +592,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
     fd.append('unitName', form.unitName)
     fd.append('physicalQuantity', String(form.physicalQuantity))
     fd.append('abbreviation', form.abbreviation)
+    fd.append('quantityValue', form.quantityValue == null ? '' : String(form.quantityValue))
     if (form.shortDescription) fd.append('shortDescription', form.shortDescription)
     if (form.longDescription) fd.append('longDescription', form.longDescription)
     fd.append('valid', String(form.valid))
@@ -634,11 +638,16 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
     .filter(u => {
       if (!search) return true
       const q = search.toLowerCase()
-      return u.unitName.toLowerCase().includes(q) || u.abbreviation.toLowerCase().includes(q)
+      return (
+        u.unitName.toLowerCase().includes(q) ||
+        u.abbreviation.toLowerCase().includes(q) ||
+        u.physicalQuantity.toLowerCase().includes(q)
+      )
     })
     .sort((a, b) => {
       let cmp: number
       if (sortField === 'physicalQuantity') cmp = a.physicalQuantity.localeCompare(b.physicalQuantity)
+      else if (sortField === 'quantityValue') cmp = (a.quantityValue ?? Number.NEGATIVE_INFINITY) - (b.quantityValue ?? Number.NEGATIVE_INFINITY)
       else cmp = String(a[sortField]).localeCompare(String(b[sortField]))
       return sortDir === 'asc' ? cmp : -cmp
     })
@@ -647,6 +656,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
     {key: 'unitName', label: 'Unit Name'},
     {key: 'abbreviation', label: 'Abbreviation'},
     {key: 'physicalQuantity', label: 'Physical Quantity'},
+    {key: 'quantityValue', label: 'Quantity Value'},
     {key: 'valid', label: 'Valid'},
   ]
 
@@ -718,7 +728,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={9} className="text-center text-muted-foreground py-10">
                   No units found
                 </TableCell>
               </TableRow>
@@ -728,6 +738,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
                   <TableCell className="font-medium text-sm">{u.unitName}</TableCell>
                   <TableCell className="font-mono text-sm">{u.abbreviation}</TableCell>
                   <TableCell className="text-sm">{u.physicalQuantity}</TableCell>
+                  <TableCell className="font-mono text-sm">{u.quantityValue ?? '—'}</TableCell>
                   <TableCell>
                     {u.valid ? (
                       <Badge
@@ -850,19 +861,40 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="unit-physicalQuantity" className="text-xs text-muted-foreground">
-                Physical Quantity *
-              </Label>
-              <Input
-                id="unit-physicalQuantity"
-                type="string"
-                className={inputStyles}
-                value={form.physicalQuantity}
-                onChange={e => setForm(prev => ({...prev, physicalQuantity: e.target.value}))}
-                placeholder="e.g. 1"
-                required
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="unit-physicalQuantity" className="text-xs text-muted-foreground">
+                  Physical Quantity *
+                </Label>
+                <Input
+                  id="unit-physicalQuantity"
+                  className={inputStyles}
+                  value={form.physicalQuantity}
+                  onChange={e => setForm(prev => ({...prev, physicalQuantity: e.target.value}))}
+                  placeholder="e.g. Length"
+                  required
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="unit-quantityValue" className="text-xs text-muted-foreground">
+                  Quantity Value
+                </Label>
+                <Input
+                  id="unit-quantityValue"
+                  type="number"
+                  min="0"
+                  step="0.001"
+                  className={inputStyles}
+                  value={form.quantityValue ?? ''}
+                  onChange={e =>
+                    setForm(prev => ({...prev, quantityValue: e.target.value === '' ? null : Number(e.target.value)}))
+                  }
+                  placeholder="e.g. 1"
+                />
+                {quantityValueInvalid && (
+                  <p className="text-xs text-destructive">Quantity value must be 0 or greater.</p>
+                )}
+              </div>
             </div>
 
             <div className="flex flex-col gap-2">
@@ -906,7 +938,9 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
             <Button variant="outline" onClick={() => setDialogOpen(false)} disabled={saving}>
               Cancel
             </Button>
-            <Button onClick={handleSave} disabled={!form.unitName || !form.abbreviation || saving}>
+            <Button
+              onClick={handleSave}
+              disabled={!form.unitName || !form.abbreviation || !form.physicalQuantity || quantityValueInvalid || saving}>
               {saving ? 'Saving…' : editing ? 'Save changes' : 'Create unit'}
             </Button>
           </DialogFooter>

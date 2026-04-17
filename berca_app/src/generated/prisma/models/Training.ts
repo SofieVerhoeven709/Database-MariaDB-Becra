@@ -34,10 +34,10 @@ export type TrainingMinAggregateOutputType = {
   workOrderId: string | null
   trainingStandardId: string | null
   targetId: string | null
+  vatMarginId: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
-  vatMarginId: string | null
 }
 
 export type TrainingMaxAggregateOutputType = {
@@ -50,10 +50,10 @@ export type TrainingMaxAggregateOutputType = {
   workOrderId: string | null
   trainingStandardId: string | null
   targetId: string | null
+  vatMarginId: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
-  vatMarginId: string | null
 }
 
 export type TrainingCountAggregateOutputType = {
@@ -66,10 +66,10 @@ export type TrainingCountAggregateOutputType = {
   workOrderId: number
   trainingStandardId: number
   targetId: number
+  vatMarginId: number
   deleted: number
   deletedAt: number
   deletedBy: number
-  vatMarginId: number
   _all: number
 }
 
@@ -84,10 +84,10 @@ export type TrainingMinAggregateInputType = {
   workOrderId?: true
   trainingStandardId?: true
   targetId?: true
+  vatMarginId?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  vatMarginId?: true
 }
 
 export type TrainingMaxAggregateInputType = {
@@ -100,10 +100,10 @@ export type TrainingMaxAggregateInputType = {
   workOrderId?: true
   trainingStandardId?: true
   targetId?: true
+  vatMarginId?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  vatMarginId?: true
 }
 
 export type TrainingCountAggregateInputType = {
@@ -116,10 +116,10 @@ export type TrainingCountAggregateInputType = {
   workOrderId?: true
   trainingStandardId?: true
   targetId?: true
+  vatMarginId?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  vatMarginId?: true
   _all?: true
 }
 
@@ -205,10 +205,10 @@ export type TrainingGroupByOutputType = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  vatMarginId: string | null
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
-  vatMarginId: string | null
   _count: TrainingCountAggregateOutputType | null
   _min: TrainingMinAggregateOutputType | null
   _max: TrainingMaxAggregateOutputType | null
@@ -242,10 +242,10 @@ export type TrainingWhereInput = {
   workOrderId?: Prisma.StringFilter<"Training"> | string
   trainingStandardId?: Prisma.StringFilter<"Training"> | string
   targetId?: Prisma.StringFilter<"Training"> | string
+  vatMarginId?: Prisma.StringNullableFilter<"Training"> | string | null
   deleted?: Prisma.BoolFilter<"Training"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Training"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Training"> | string | null
-  vatMarginId?: Prisma.StringNullableFilter<"Training"> | string | null
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
@@ -265,10 +265,10 @@ export type TrainingOrderByWithRelationInput = {
   workOrderId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
   WorkOrder?: Prisma.WorkOrderOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   TrainingStandard?: Prisma.TrainingStandardOrderByWithRelationInput
@@ -292,10 +292,10 @@ export type TrainingWhereUniqueInput = Prisma.AtLeast<{
   workOrderId?: Prisma.StringFilter<"Training"> | string
   trainingStandardId?: Prisma.StringFilter<"Training"> | string
   targetId?: Prisma.StringFilter<"Training"> | string
+  vatMarginId?: Prisma.StringNullableFilter<"Training"> | string | null
   deleted?: Prisma.BoolFilter<"Training"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Training"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Training"> | string | null
-  vatMarginId?: Prisma.StringNullableFilter<"Training"> | string | null
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
@@ -315,10 +315,10 @@ export type TrainingOrderByWithAggregationInput = {
   workOrderId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TrainingCountOrderByAggregateInput
   _max?: Prisma.TrainingMaxOrderByAggregateInput
   _min?: Prisma.TrainingMinOrderByAggregateInput
@@ -337,10 +337,10 @@ export type TrainingScalarWhereWithAggregatesInput = {
   workOrderId?: Prisma.StringWithAggregatesFilter<"Training"> | string
   trainingStandardId?: Prisma.StringWithAggregatesFilter<"Training"> | string
   targetId?: Prisma.StringWithAggregatesFilter<"Training"> | string
+  vatMarginId?: Prisma.StringNullableWithAggregatesFilter<"Training"> | string | null
   deleted?: Prisma.BoolWithAggregatesFilter<"Training"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Training"> | Date | string | null
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Training"> | string | null
-  vatMarginId?: Prisma.StringNullableWithAggregatesFilter<"Training"> | string | null
 }
 
 export type TrainingCreateInput = {
@@ -370,10 +370,10 @@ export type TrainingUncheckedCreateInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -404,10 +404,10 @@ export type TrainingUncheckedUpdateInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -421,10 +421,10 @@ export type TrainingCreateManyInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type TrainingUpdateManyMutationInput = {
@@ -447,10 +447,10 @@ export type TrainingUncheckedUpdateManyInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingListRelationFilter = {
@@ -479,10 +479,10 @@ export type TrainingCountOrderByAggregateInput = {
   workOrderId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  vatMarginId?: Prisma.SortOrder
 }
 
 export type TrainingMaxOrderByAggregateInput = {
@@ -495,10 +495,10 @@ export type TrainingMaxOrderByAggregateInput = {
   workOrderId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  vatMarginId?: Prisma.SortOrder
 }
 
 export type TrainingMinOrderByAggregateInput = {
@@ -511,10 +511,10 @@ export type TrainingMinOrderByAggregateInput = {
   workOrderId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  vatMarginId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  vatMarginId?: Prisma.SortOrder
 }
 
 export type TrainingScalarRelationFilter = {
@@ -813,10 +813,10 @@ export type TrainingUncheckedCreateWithoutEmployeeInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -856,9 +856,9 @@ export type TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeI
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  vatMarginId?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -901,10 +901,10 @@ export type TrainingScalarWhereInput = {
   workOrderId?: Prisma.StringFilter<"Training"> | string
   trainingStandardId?: Prisma.StringFilter<"Training"> | string
   targetId?: Prisma.StringFilter<"Training"> | string
+  vatMarginId?: Prisma.StringNullableFilter<"Training"> | string | null
   deleted?: Prisma.BoolFilter<"Training"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Training"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Training"> | string | null
-  vatMarginId?: Prisma.StringNullableFilter<"Training"> | string | null
 }
 
 export type TrainingUpsertWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput = {
@@ -948,10 +948,10 @@ export type TrainingUncheckedCreateWithoutTargetInput = {
   createdBy: string
   workOrderId: string
   trainingStandardId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -1007,10 +1007,10 @@ export type TrainingUncheckedCreateWithoutTrainingContactInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type TrainingCreateOrConnectWithoutTrainingContactInput = {
@@ -1055,10 +1055,10 @@ export type TrainingUncheckedUpdateWithoutTrainingContactInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingCreateWithoutTrainingStandardInput = {
@@ -1086,10 +1086,10 @@ export type TrainingUncheckedCreateWithoutTrainingStandardInput = {
   createdBy: string
   workOrderId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -1144,10 +1144,10 @@ export type TrainingUncheckedCreateWithoutWorkOrderInput = {
   createdBy: string
   trainingStandardId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -1244,10 +1244,10 @@ export type TrainingCreateManyEmployeeInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type TrainingCreateManyEmployee_Training_deletedByToEmployeeInput = {
@@ -1260,9 +1260,9 @@ export type TrainingCreateManyEmployee_Training_deletedByToEmployeeInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  vatMarginId?: string | null
 }
 
 export type TrainingUpdateWithoutEmployeeInput = {
@@ -1290,10 +1290,10 @@ export type TrainingUncheckedUpdateWithoutEmployeeInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1306,10 +1306,10 @@ export type TrainingUncheckedUpdateManyWithoutEmployeeInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingUpdateWithoutEmployee_Training_deletedByToEmployeeInput = {
@@ -1338,9 +1338,9 @@ export type TrainingUncheckedUpdateWithoutEmployee_Training_deletedByToEmployeeI
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1354,9 +1354,9 @@ export type TrainingUncheckedUpdateManyWithoutEmployee_Training_deletedByToEmplo
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingCreateManyTargetInput = {
@@ -1368,10 +1368,10 @@ export type TrainingCreateManyTargetInput = {
   createdBy: string
   workOrderId: string
   trainingStandardId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type TrainingUpdateWithoutTargetInput = {
@@ -1399,10 +1399,10 @@ export type TrainingUncheckedUpdateWithoutTargetInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1415,10 +1415,10 @@ export type TrainingUncheckedUpdateManyWithoutTargetInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingCreateManyTrainingStandardInput = {
@@ -1430,10 +1430,10 @@ export type TrainingCreateManyTrainingStandardInput = {
   createdBy: string
   workOrderId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type TrainingUpdateWithoutTrainingStandardInput = {
@@ -1461,10 +1461,10 @@ export type TrainingUncheckedUpdateWithoutTrainingStandardInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1477,10 +1477,10 @@ export type TrainingUncheckedUpdateManyWithoutTrainingStandardInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingCreateManyWorkOrderInput = {
@@ -1492,10 +1492,10 @@ export type TrainingCreateManyWorkOrderInput = {
   createdBy: string
   trainingStandardId: string
   targetId: string
+  vatMarginId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  vatMarginId?: string | null
 }
 
 export type TrainingUpdateWithoutWorkOrderInput = {
@@ -1523,10 +1523,10 @@ export type TrainingUncheckedUpdateWithoutWorkOrderInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1539,10 +1539,10 @@ export type TrainingUncheckedUpdateManyWithoutWorkOrderInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingCreateManyVatMarginInput = {
@@ -1648,10 +1648,10 @@ export type TrainingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   workOrderId?: boolean
   trainingStandardId?: boolean
   targetId?: boolean
+  vatMarginId?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  vatMarginId?: boolean
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.TrainingStandardDefaultArgs<ExtArgs>
@@ -1674,13 +1674,13 @@ export type TrainingSelectScalar = {
   workOrderId?: boolean
   trainingStandardId?: boolean
   targetId?: boolean
+  vatMarginId?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  vatMarginId?: boolean
 }
 
-export type TrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "trainingNumber" | "trainingDate" | "createdAt" | "closed" | "createdBy" | "workOrderId" | "trainingStandardId" | "targetId" | "deleted" | "deletedAt" | "deletedBy" | "vatMarginId", ExtArgs["result"]["training"]>
+export type TrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "trainingNumber" | "trainingDate" | "createdAt" | "closed" | "createdBy" | "workOrderId" | "trainingStandardId" | "targetId" | "vatMarginId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["training"]>
 export type TrainingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -1713,10 +1713,10 @@ export type $TrainingPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     workOrderId: string
     trainingStandardId: string
     targetId: string
+    vatMarginId: string | null
     deleted: boolean
     deletedAt: Date | null
     deletedBy: string | null
-    vatMarginId: string | null
   }, ExtArgs["result"]["training"]>
   composites: {}
 }
@@ -2102,10 +2102,10 @@ export interface TrainingFieldRefs {
   readonly workOrderId: Prisma.FieldRef<"Training", 'String'>
   readonly trainingStandardId: Prisma.FieldRef<"Training", 'String'>
   readonly targetId: Prisma.FieldRef<"Training", 'String'>
+  readonly vatMarginId: Prisma.FieldRef<"Training", 'String'>
   readonly deleted: Prisma.FieldRef<"Training", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"Training", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"Training", 'String'>
-  readonly vatMarginId: Prisma.FieldRef<"Training", 'String'>
 }
     
 

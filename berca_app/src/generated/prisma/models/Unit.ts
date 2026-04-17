@@ -20,14 +20,25 @@ export type UnitModel = runtime.Types.Result.DefaultSelection<Prisma.$UnitPayloa
 
 export type AggregateUnit = {
   _count: UnitCountAggregateOutputType | null
+  _avg: UnitAvgAggregateOutputType | null
+  _sum: UnitSumAggregateOutputType | null
   _min: UnitMinAggregateOutputType | null
   _max: UnitMaxAggregateOutputType | null
+}
+
+export type UnitAvgAggregateOutputType = {
+  quantityValue: runtime.Decimal | null
+}
+
+export type UnitSumAggregateOutputType = {
+  quantityValue: runtime.Decimal | null
 }
 
 export type UnitMinAggregateOutputType = {
   id: string | null
   unitName: string | null
   physicalQuantity: string | null
+  quantityValue: runtime.Decimal | null
   abbreviation: string | null
   shortDescription: string | null
   longDescription: string | null
@@ -43,6 +54,7 @@ export type UnitMaxAggregateOutputType = {
   id: string | null
   unitName: string | null
   physicalQuantity: string | null
+  quantityValue: runtime.Decimal | null
   abbreviation: string | null
   shortDescription: string | null
   longDescription: string | null
@@ -58,6 +70,7 @@ export type UnitCountAggregateOutputType = {
   id: number
   unitName: number
   physicalQuantity: number
+  quantityValue: number
   abbreviation: number
   shortDescription: number
   longDescription: number
@@ -71,10 +84,19 @@ export type UnitCountAggregateOutputType = {
 }
 
 
+export type UnitAvgAggregateInputType = {
+  quantityValue?: true
+}
+
+export type UnitSumAggregateInputType = {
+  quantityValue?: true
+}
+
 export type UnitMinAggregateInputType = {
   id?: true
   unitName?: true
   physicalQuantity?: true
+  quantityValue?: true
   abbreviation?: true
   shortDescription?: true
   longDescription?: true
@@ -90,6 +112,7 @@ export type UnitMaxAggregateInputType = {
   id?: true
   unitName?: true
   physicalQuantity?: true
+  quantityValue?: true
   abbreviation?: true
   shortDescription?: true
   longDescription?: true
@@ -105,6 +128,7 @@ export type UnitCountAggregateInputType = {
   id?: true
   unitName?: true
   physicalQuantity?: true
+  quantityValue?: true
   abbreviation?: true
   shortDescription?: true
   longDescription?: true
@@ -155,6 +179,18 @@ export type UnitAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UnitAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UnitSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UnitMinAggregateInputType
@@ -185,6 +221,8 @@ export type UnitGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UnitCountAggregateInputType | true
+  _avg?: UnitAvgAggregateInputType
+  _sum?: UnitSumAggregateInputType
   _min?: UnitMinAggregateInputType
   _max?: UnitMaxAggregateInputType
 }
@@ -193,6 +231,7 @@ export type UnitGroupByOutputType = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue: runtime.Decimal | null
   abbreviation: string
   shortDescription: string | null
   longDescription: string | null
@@ -203,6 +242,8 @@ export type UnitGroupByOutputType = {
   deletedAt: Date | null
   deletedBy: string | null
   _count: UnitCountAggregateOutputType | null
+  _avg: UnitAvgAggregateOutputType | null
+  _sum: UnitSumAggregateOutputType | null
   _min: UnitMinAggregateOutputType | null
   _max: UnitMaxAggregateOutputType | null
 }
@@ -229,6 +270,7 @@ export type UnitWhereInput = {
   id?: Prisma.StringFilter<"Unit"> | string
   unitName?: Prisma.StringFilter<"Unit"> | string
   physicalQuantity?: Prisma.StringFilter<"Unit"> | string
+  quantityValue?: Prisma.DecimalNullableFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFilter<"Unit"> | string
   shortDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
   longDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
@@ -247,6 +289,7 @@ export type UnitOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   unitName?: Prisma.SortOrder
   physicalQuantity?: Prisma.SortOrder
+  quantityValue?: Prisma.SortOrderInput | Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -269,6 +312,7 @@ export type UnitWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UnitWhereInput | Prisma.UnitWhereInput[]
   unitName?: Prisma.StringFilter<"Unit"> | string
   physicalQuantity?: Prisma.StringFilter<"Unit"> | string
+  quantityValue?: Prisma.DecimalNullableFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFilter<"Unit"> | string
   shortDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
   longDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
@@ -287,6 +331,7 @@ export type UnitOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   unitName?: Prisma.SortOrder
   physicalQuantity?: Prisma.SortOrder
+  quantityValue?: Prisma.SortOrderInput | Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -297,8 +342,10 @@ export type UnitOrderByWithAggregationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UnitCountOrderByAggregateInput
+  _avg?: Prisma.UnitAvgOrderByAggregateInput
   _max?: Prisma.UnitMaxOrderByAggregateInput
   _min?: Prisma.UnitMinOrderByAggregateInput
+  _sum?: Prisma.UnitSumOrderByAggregateInput
 }
 
 export type UnitScalarWhereWithAggregatesInput = {
@@ -308,6 +355,7 @@ export type UnitScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Unit"> | string
   unitName?: Prisma.StringWithAggregatesFilter<"Unit"> | string
   physicalQuantity?: Prisma.StringWithAggregatesFilter<"Unit"> | string
+  quantityValue?: Prisma.DecimalNullableWithAggregatesFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringWithAggregatesFilter<"Unit"> | string
   shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
   longDescription?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
@@ -323,6 +371,7 @@ export type UnitCreateInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -339,6 +388,7 @@ export type UnitUncheckedCreateInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -355,6 +405,7 @@ export type UnitUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -371,6 +422,7 @@ export type UnitUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -387,6 +439,7 @@ export type UnitCreateManyInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -402,6 +455,7 @@ export type UnitUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -415,6 +469,7 @@ export type UnitUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -451,6 +506,7 @@ export type UnitCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   unitName?: Prisma.SortOrder
   physicalQuantity?: Prisma.SortOrder
+  quantityValue?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
@@ -462,10 +518,15 @@ export type UnitCountOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
+export type UnitAvgOrderByAggregateInput = {
+  quantityValue?: Prisma.SortOrder
+}
+
 export type UnitMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   unitName?: Prisma.SortOrder
   physicalQuantity?: Prisma.SortOrder
+  quantityValue?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
@@ -481,6 +542,7 @@ export type UnitMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   unitName?: Prisma.SortOrder
   physicalQuantity?: Prisma.SortOrder
+  quantityValue?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
@@ -490,6 +552,10 @@ export type UnitMinOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+}
+
+export type UnitSumOrderByAggregateInput = {
+  quantityValue?: Prisma.SortOrder
 }
 
 export type UnitCreateNestedManyWithoutEmployeeInput = {
@@ -594,6 +660,7 @@ export type UnitCreateWithoutEmployeeInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -609,6 +676,7 @@ export type UnitUncheckedCreateWithoutEmployeeInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -634,6 +702,7 @@ export type UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -649,6 +718,7 @@ export type UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -693,6 +763,7 @@ export type UnitScalarWhereInput = {
   id?: Prisma.StringFilter<"Unit"> | string
   unitName?: Prisma.StringFilter<"Unit"> | string
   physicalQuantity?: Prisma.StringFilter<"Unit"> | string
+  quantityValue?: Prisma.DecimalNullableFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFilter<"Unit"> | string
   shortDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
   longDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
@@ -724,6 +795,7 @@ export type UnitCreateWithoutMaterialInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -739,6 +811,7 @@ export type UnitUncheckedCreateWithoutMaterialInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -770,6 +843,7 @@ export type UnitUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -785,6 +859,7 @@ export type UnitUncheckedUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -800,6 +875,7 @@ export type UnitCreateManyEmployeeInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -814,6 +890,7 @@ export type UnitCreateManyEmployee_Unit_deletedByToEmployeeInput = {
   id: string
   unitName: string
   physicalQuantity: string
+  quantityValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -828,6 +905,7 @@ export type UnitUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -843,6 +921,7 @@ export type UnitUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -858,6 +937,7 @@ export type UnitUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -872,6 +952,7 @@ export type UnitUpdateWithoutEmployee_Unit_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -887,6 +968,7 @@ export type UnitUncheckedUpdateWithoutEmployee_Unit_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -902,6 +984,7 @@ export type UnitUncheckedUpdateManyWithoutEmployee_Unit_deletedByToEmployeeInput
   id?: Prisma.StringFieldUpdateOperationsInput | string
   unitName?: Prisma.StringFieldUpdateOperationsInput | string
   physicalQuantity?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -947,6 +1030,7 @@ export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   unitName?: boolean
   physicalQuantity?: boolean
+  quantityValue?: boolean
   abbreviation?: boolean
   shortDescription?: boolean
   longDescription?: boolean
@@ -968,6 +1052,7 @@ export type UnitSelectScalar = {
   id?: boolean
   unitName?: boolean
   physicalQuantity?: boolean
+  quantityValue?: boolean
   abbreviation?: boolean
   shortDescription?: boolean
   longDescription?: boolean
@@ -979,7 +1064,7 @@ export type UnitSelectScalar = {
   deletedBy?: boolean
 }
 
-export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "unitName" | "physicalQuantity" | "abbreviation" | "shortDescription" | "longDescription" | "valid" | "createdBy" | "createdAt" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["unit"]>
+export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "unitName" | "physicalQuantity" | "quantityValue" | "abbreviation" | "shortDescription" | "longDescription" | "valid" | "createdBy" | "createdAt" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["unit"]>
 export type UnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Material?: boolean | Prisma.Unit$MaterialArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -998,6 +1083,7 @@ export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     unitName: string
     physicalQuantity: string
+    quantityValue: runtime.Decimal | null
     abbreviation: string
     shortDescription: string | null
     longDescription: string | null
@@ -1382,6 +1468,7 @@ export interface UnitFieldRefs {
   readonly id: Prisma.FieldRef<"Unit", 'String'>
   readonly unitName: Prisma.FieldRef<"Unit", 'String'>
   readonly physicalQuantity: Prisma.FieldRef<"Unit", 'String'>
+  readonly quantityValue: Prisma.FieldRef<"Unit", 'Decimal'>
   readonly abbreviation: Prisma.FieldRef<"Unit", 'String'>
   readonly shortDescription: Prisma.FieldRef<"Unit", 'String'>
   readonly longDescription: Prisma.FieldRef<"Unit", 'String'>

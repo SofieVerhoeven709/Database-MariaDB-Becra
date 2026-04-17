@@ -5,12 +5,8 @@ export interface MappedMaterial {
   brandOrderNr: string | null
   shortDescription: string
   longDescription: string | null
-  preferredSupplierCompanyId: string | null
-  preferredSupplierCompanyName: string | null
-  preferredSupplierOrderId: string | null
-  preferredSupplierShortDescription: string | null
-  supplierCompanyIds: string[]
-  supplierCompanyNames: string[]
+  supplierCompanyId: string | null
+  supplierCompanyName: string | null
   parentBeNumbers: string[]
   brandName: string | null
   warehousePlace: string | null

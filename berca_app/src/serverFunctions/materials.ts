@@ -73,15 +73,8 @@ export const createMaterialAction = protectedFormAction({
   globalErrorMessage: 'Could not create the material, please try again.',
   serverFn: async ({data, profile, logger}) => {
     const target = await createTargetForType('Company', profile.id)
-    const {brandOrderNr, ...restData} = data
+    const {brandOrderNr, supplierCompanyId, ...restData} = data
     let beNumber = data.beNumber?.trim()
-    const preferredSupplierCompanyId = data.preferredSupplierCompanyId ?? null
-    const supplierCompanyIds = Array.from(
-      new Set([
-        ...(data.supplierCompanyIds ?? []),
-        ...(preferredSupplierCompanyId ? [preferredSupplierCompanyId] : []),
-      ]),
-    )
 
     const warehousePlaceId = await resolveValidWarehousePlaceId(data.warehousePlace ?? null)
     if (data.warehousePlace && !warehousePlaceId) {
@@ -97,15 +90,12 @@ export const createMaterialAction = protectedFormAction({
 
     let material
     try {
-      material = await createMaterial({
+      const createPayload = {
         ...restData,
         id: data.id || randomUUID(),
         beNumber,
         brandOrderNr: brandOrderNr ?? null,
-        preferredSupplierCompanyId,
-        preferredSupplierOrderId: data.preferredSupplierOrderId ?? null,
-        preferredSupplierShortDescription: data.preferredSupplierShortDescription ?? null,
-        supplierCompanyIds,
+        supplierCompanyId: supplierCompanyId ?? null,
         warehousePlace: warehousePlaceId,
         leadTimeValue: data.longLeadTime ? (data.leadTimeValue ?? null) : null,
         leadTimeUnit: data.longLeadTime ? (data.leadTimeUnit ?? null) : null,
@@ -115,7 +105,9 @@ export const createMaterialAction = protectedFormAction({
         materialGroupIdD: data.materialGroupIdD ?? null,
         createdBy: profile.id,
         targetId: target.id,
-      })
+      } as Parameters<typeof createMaterial>[0]
+
+      material = await createMaterial(createPayload)
     } catch (error) {
       if (isWarehousePlaceForeignKeyError(error)) {
         return {
@@ -152,13 +144,7 @@ export const updateMaterialAction = protectedFormAction({
   globalErrorMessage: 'Could not update the material, please try again.',
   serverFn: async ({data, logger}) => {
     const {id, ...rest} = data
-    const preferredSupplierCompanyId = rest.preferredSupplierCompanyId ?? null
-    const supplierCompanyIds = Array.from(
-      new Set([
-        ...(rest.supplierCompanyIds ?? []),
-        ...(preferredSupplierCompanyId ? [preferredSupplierCompanyId] : []),
-      ]),
-    )
+    const {supplierCompanyId, ...restData} = rest
 
     const warehousePlaceId = await resolveValidWarehousePlaceId(rest.warehousePlace ?? null)
     if (rest.warehousePlace && !warehousePlaceId) {
@@ -170,15 +156,16 @@ export const updateMaterialAction = protectedFormAction({
 
     let updated
     try {
-      updated = await updateMaterial(id, {
-        ...rest,
+      const updatePayload = {
+        ...restData,
         brandOrderNr: rest.brandOrderNr ?? null,
-        preferredSupplierCompanyId,
-        supplierCompanyIds,
+        supplierCompanyId: supplierCompanyId ?? null,
         warehousePlace: warehousePlaceId,
         leadTimeValue: rest.longLeadTime ? (rest.leadTimeValue ?? null) : null,
         leadTimeUnit: rest.longLeadTime ? (rest.leadTimeUnit ?? null) : null,
-      })
+      } as Parameters<typeof updateMaterial>[1]
+
+      updated = await updateMaterial(id, updatePayload)
     } catch (error) {
       if (isWarehousePlaceForeignKeyError(error)) {
         return {

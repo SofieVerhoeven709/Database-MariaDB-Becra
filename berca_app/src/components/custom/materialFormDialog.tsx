@@ -268,6 +268,7 @@ export function MaterialFormDialog({
   const [isParentPartEnabled, setIsParentPartEnabled] = useState(form.isParentPart ?? false)
   const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
   const [parentPartSearch, setParentPartSearch] = useState('')
+  const [supplierSearch, setSupplierSearch] = useState('')
   const [isSerialTracked, setIsSerialTracked] = useState(form.isSerialTracked ?? false)
   const [numberKind, setNumberKind] = useState<NumberKind>(detectNumberKind(form.beNumber))
 
@@ -282,6 +283,7 @@ export function MaterialFormDialog({
       setIsParentPartEnabled(nextForm.isParentPart ?? false)
       setHasParentParts((nextForm.parentBeNumbers ?? []).length > 0)
       setParentPartSearch('')
+      setSupplierSearch('')
       setIsSerialTracked(nextForm.isSerialTracked ?? false)
       setNumberKind(detectNumberKind(nextForm.beNumber))
     }
@@ -305,10 +307,6 @@ export function MaterialFormDialog({
     const current = form.supplierCompanyIds ?? []
     const next = current.includes(companyId) ? current.filter(id => id !== companyId) : [...current, companyId]
     update('supplierCompanyIds', next)
-
-    if (form.preferredSupplierCompanyId && !next.includes(form.preferredSupplierCompanyId)) {
-      update('preferredSupplierCompanyId', null)
-    }
   }
 
   function toggleParentBeNumber(beNumber: string) {
@@ -333,9 +331,11 @@ export function MaterialFormDialog({
       return option.beNumber.toLowerCase().includes(q) || option.shortDescription.toLowerCase().includes(q)
     })
 
-  const selectedSupplierCompanies = supplierCompanies.filter(company =>
-    (form.supplierCompanyIds ?? []).includes(company.id),
-  )
+  const filteredSupplierCompanies = supplierCompanies.filter(company => {
+    if (!supplierSearch) return true
+    const q = supplierSearch.toLowerCase()
+    return company.name.toLowerCase().includes(q) || company.number.toLowerCase().includes(q)
+  })
 
   const selectedGroupA = materialGroups.find(g => g.id === form.materialGroupIdA) ?? null
   const selectedGroupB = materialGroups.find(g => g.id === form.materialGroupIdB) ?? null
@@ -731,19 +731,25 @@ export function MaterialFormDialog({
             <PreferredSupplierPicker
               selectedCompanyId={form.preferredSupplierCompanyId ?? null}
               onSelect={companyId => update('preferredSupplierCompanyId', companyId)}
-              availableCompanies={selectedSupplierCompanies}
+              availableCompanies={supplierCompanies}
               inputStyles={inputStyles}
             />
-            {selectedSupplierCompanies.length === 0 ? (
-              <p className="text-xs text-muted-foreground">Select at least one supplier first.</p>
+            {supplierCompanies.length === 0 ? (
+              <p className="text-xs text-muted-foreground">No suppliers available. Add suppliers first.</p>
             ) : form.preferredSupplierCompanyId ? (
-              <p className="text-xs text-muted-foreground">Preferred supplier is selected from your supplier list.</p>
+              <p className="text-xs text-muted-foreground">Preferred supplier is selected from the full supplier list.</p>
             ) : null}
           </div>
           <div className="flex flex-col gap-2">
             <Label className="text-xs text-muted-foreground">Suppliers</Label>
+            <Input
+              className={inputStyles}
+              placeholder="Search suppliers by name or number"
+              value={supplierSearch}
+              onChange={e => setSupplierSearch(e.target.value)}
+            />
             <div className="rounded-md border border-border bg-secondary/40 p-3 max-h-44 overflow-y-auto space-y-2">
-              {supplierCompanies.map(company => {
+              {filteredSupplierCompanies.map(company => {
                 const checked = (form.supplierCompanyIds ?? []).includes(company.id)
                 return (
                   <label key={company.id} className="flex items-center justify-between gap-3 text-sm cursor-pointer">
@@ -759,9 +765,12 @@ export function MaterialFormDialog({
                   </label>
                 )
               })}
+              {filteredSupplierCompanies.length === 0 && (
+                <p className="text-xs text-muted-foreground">No suppliers match your search.</p>
+              )}
             </div>
             <p className="text-xs text-muted-foreground">
-              Select one or more suppliers. Preferred supplier must be selected from this list.
+              Select one or more suppliers. Preferred supplier can be chosen independently from the full supplier list.
             </p>
           </div>
 

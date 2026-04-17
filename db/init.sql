@@ -155,6 +155,7 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             unitName VARCHAR(255) NOT NULL,
             physicalQuantity VARCHAR(255) NOT NULL,
+            quantityValue DECIMAL (10, 3),
             abbreviation VARCHAR(255) NOT NULL,
             shortDescription VARCHAR(255),
             longDescription TEXT,

@@ -603,12 +603,12 @@ export const InventoryOrderScalarFieldEnum = {
   notDeliverable: 'notDeliverable',
   notCorrect: 'notCorrect',
   notCorrectReason: 'notCorrectReason',
+  snapshotTakenAt: 'snapshotTakenAt',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy',
-  snapshotTakenAt: 'snapshotTakenAt'
+  deletedBy: 'deletedBy'
 } as const
 
 export type InventoryOrderScalarFieldEnum = (typeof InventoryOrderScalarFieldEnum)[keyof typeof InventoryOrderScalarFieldEnum]
@@ -1397,10 +1397,10 @@ export const TrainingScalarFieldEnum = {
   workOrderId: 'workOrderId',
   trainingStandardId: 'trainingStandardId',
   targetId: 'targetId',
+  vatMarginId: 'vatMarginId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy',
-  vatMarginId: 'vatMarginId'
+  deletedBy: 'deletedBy'
 } as const
 
 export type TrainingScalarFieldEnum = (typeof TrainingScalarFieldEnum)[keyof typeof TrainingScalarFieldEnum]
@@ -1460,6 +1460,7 @@ export const UnitScalarFieldEnum = {
   id: 'id',
   unitName: 'unitName',
   physicalQuantity: 'physicalQuantity',
+  quantityValue: 'quantityValue',
   abbreviation: 'abbreviation',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -3045,8 +3046,8 @@ export const TrainingOrderByRelevanceFieldEnum = {
   workOrderId: 'workOrderId',
   trainingStandardId: 'trainingStandardId',
   targetId: 'targetId',
-  deletedBy: 'deletedBy',
-  vatMarginId: 'vatMarginId'
+  vatMarginId: 'vatMarginId',
+  deletedBy: 'deletedBy'
 } as const
 
 export type TrainingOrderByRelevanceFieldEnum = (typeof TrainingOrderByRelevanceFieldEnum)[keyof typeof TrainingOrderByRelevanceFieldEnum]

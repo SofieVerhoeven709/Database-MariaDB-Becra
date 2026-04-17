@@ -34,6 +34,7 @@ export default async function SpecPage() {
     unitName: u.unitName,
     physicalQuantity: u.physicalQuantity,
     abbreviation: u.abbreviation,
+    quantityValue: u.quantityValue == null ? null : Number(u.quantityValue),
     shortDescription: u.shortDescription ?? null,
     longDescription: u.longDescription ?? null,
     createdAt: u.createdAt.toISOString(),

@@ -69,6 +69,7 @@ type SortField =
   | 'warehouseLayer'
   | 'warehouseLayerPlace'
   | 'brandName'
+  | 'supplierCompanyName'
   | 'materialGroupLabelA'
   | 'materialGroupLabelB'
   | 'materialGroupLabelC'
@@ -287,8 +288,7 @@ export function MaterialTable({
         m.materialGroupLabelD.toLowerCase().includes(q) ||
         m.unitName.toLowerCase().includes(q) ||
         m.parentBeNumbers.some(parent => parent.toLowerCase().includes(q)) ||
-        (m.preferredSupplierCompanyName ?? '').toLowerCase().includes(q) ||
-        m.supplierCompanyNames.some(name => name.toLowerCase().includes(q))
+        (m.supplierCompanyName ?? '').toLowerCase().includes(q)
       )
     })
     .sort((a, b) => {
@@ -339,10 +339,7 @@ export function MaterialTable({
         'brandOrderNr',
         'shortDescription',
         'longDescription',
-        'preferredSupplierCompanyId',
-        'preferredSupplierOrderId',
-        'preferredSupplierShortDescription',
-        'supplierCompanyIds',
+        'supplierCompanyId',
         'parentBeNumbers',
         'brandName',
         'warehousePlace',
@@ -373,10 +370,13 @@ export function MaterialTable({
         'name',
         'brandOrderNr',
         'longDescription',
-        'preferredSupplierCompanyId',
-        'preferredSupplierOrderId',
-        'preferredSupplierShortDescription',
+       /*
+       'preferredSupplierCompanyId',
+       'preferredSupplierOrderId',
+       'preferredSupplierShortDescription',
+       */
         'brandName',
+        'supplierCompanyId',
         'warehousePlace',
         'leadTimeValue',
         'leadTimeUnit',
@@ -496,6 +496,7 @@ export function MaterialTable({
     {key: 'warehouseLayer', label: 'Z'},
     {key: 'warehouseLayerPlace', label: 'Position'},
     {key: 'brandName', label: 'Brand'},
+    {key: 'supplierCompanyName', label: 'Supplier'},
     {key: 'materialGroupLabelA', label: 'Group A'},
     {key: 'materialGroupLabelB', label: 'Group B'},
     {key: 'materialGroupLabelC', label: 'Group C'},
@@ -658,6 +659,9 @@ export function MaterialTable({
                   <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'layerPlace') || '—'}</TableCell>
                   <TableCell className="text-sm">
                     {m.brandName ?? <span className="text-muted-foreground">—</span>}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {m.supplierCompanyName ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
                   <TableCell className="text-sm">{m.materialGroupLabelA || '—'}</TableCell>
                   <TableCell className="text-sm">{m.materialGroupLabelB || '—'}</TableCell>

@@ -59,10 +59,7 @@ export default async function MaterialPage({params}: PageProps) {
     const materialWithDocuments = m as MaterialRow & MaterialDocumentFlags
     const createdByName = [m.Employee?.firstName, m.Employee?.lastName].filter(Boolean).join(' ').trim()
 
-    const preferredSupplierEntry =
-      m.MaterialSupplier.find(s => s.companyId === m.preferredSupplierCompanyId) ??
-      m.MaterialSupplier.find(s => s.isPreferred) ??
-      null
+    const selectedSupplier = m.MaterialSupplier.find(s => s.isPreferred) ?? m.MaterialSupplier[0] ?? null
 
     const mapped = {
       id: m.id,
@@ -71,12 +68,8 @@ export default async function MaterialPage({params}: PageProps) {
       brandOrderNr: m.brandOrderNr,
       shortDescription: m.shortDescription,
       longDescription: m.longDescription ?? null,
-      preferredSupplierCompanyId: m.preferredSupplierCompanyId ?? null,
-      preferredSupplierCompanyName: m.PreferredSupplierCompany?.name ?? null,
-      preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,
-      preferredSupplierShortDescription: preferredSupplierEntry?.shortDescription ?? null,
-      supplierCompanyIds: m.MaterialSupplier.map(s => s.companyId),
-      supplierCompanyNames: m.MaterialSupplier.map(s => s.Company.name),
+      supplierCompanyId: selectedSupplier?.companyId ?? m.preferredSupplierCompanyId ?? null,
+      supplierCompanyName: selectedSupplier?.Company.name ?? m.PreferredSupplierCompany?.name ?? null,
       parentBeNumbers: getParentBeNumbers(m),
       brandName: m.brandName ?? null,
       warehousePlace: m.warehousePlaceId ?? null,

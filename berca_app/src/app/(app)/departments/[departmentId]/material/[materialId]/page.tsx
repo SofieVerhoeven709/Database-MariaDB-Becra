@@ -23,10 +23,7 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
 
   const groupById = new Map(groups.map((g: any) => [g.id, g]))
 
-  const preferredSupplierEntry =
-    material.MaterialSupplier.find((s: any) => s.companyId === material.preferredSupplierCompanyId) ??
-    material.MaterialSupplier.find((s: any) => s.isPreferred) ??
-    null
+  const selectedSupplier = material.MaterialSupplier.find((s: any) => s.isPreferred) ?? material.MaterialSupplier[0] ?? null
 
   const createdByName = [material.Employee?.firstName, material.Employee?.lastName].filter(Boolean).join(' ').trim()
 
@@ -37,12 +34,8 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     brandOrderNr: material.brandOrderNr,
     shortDescription: material.shortDescription,
     longDescription: material.longDescription ?? null,
-    preferredSupplierCompanyId: material.preferredSupplierCompanyId ?? null,
-    preferredSupplierCompanyName: material.PreferredSupplierCompany?.name ?? null,
-    preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,
-    preferredSupplierShortDescription: preferredSupplierEntry?.shortDescription ?? null,
-    supplierCompanyIds: material.MaterialSupplier.map((s: any) => s.companyId),
-    supplierCompanyNames: material.MaterialSupplier.map((s: any) => s.Company.name),
+    supplierCompanyId: selectedSupplier?.companyId ?? material.preferredSupplierCompanyId ?? null,
+    supplierCompanyName: selectedSupplier?.Company?.name ?? material.PreferredSupplierCompany?.name ?? null,
     brandName: material.brandName ?? null,
     warehousePlace: material.warehousePlaceId ?? null,
     rejected: material.rejected ?? false,

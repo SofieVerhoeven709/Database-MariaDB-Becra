@@ -1,7 +1,7 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 
-const REQUIRED_PAYMENT_CONDITIONS = ['14 dagen', '30 dagen', '60 dagen', '30 dagen einde maand'] as const
+const REQUIRED_PAYMENT_CONDITIONS = ['14 days', '30 days', '60 days', '30 days end of month'] as const
 
 const employeeSelect = {select: {id: true, firstName: true, lastName: true}} as const
 

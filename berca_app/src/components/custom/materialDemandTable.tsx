@@ -119,7 +119,7 @@ function getQuoteState(entry: MappedMaterialDemand): {label: string; className: 
   if (activeOptions.length === 0) {
     return {
       label: 'No quote',
-      className: 'border border-border text-muted-foreground',
+      className: 'border border-slate-500/40 bg-slate-500/15 text-slate-700 dark:text-slate-200 font-medium',
     }
   }
 

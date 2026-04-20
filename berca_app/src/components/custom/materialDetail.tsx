@@ -234,8 +234,13 @@ export function MaterialDetail({
     setSaveError(null)
     try {
       const fd = new FormData()
+      const rawBeNumber = (form.beNumber ?? '').trim()
+      const existingBeNumber = (material.beNumber ?? '').trim()
+      const beNumber =
+        rawBeNumber === existingBeNumber ? material.beNumber : normalizeMaterialNumber(rawBeNumber, numberKind)
+
       fd.append('id', material.id)
-      fd.append('beNumber', normalizeMaterialNumber(form.beNumber, numberKind))
+      fd.append('beNumber', beNumber)
       if (form.name) fd.append('name', form.name)
       fd.append('brandOrderNr', form.brandOrderNr ?? '')
       fd.append('shortDescription', form.shortDescription)

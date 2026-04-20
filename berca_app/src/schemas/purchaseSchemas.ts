@@ -2,12 +2,13 @@ import {z} from 'zod/v4'
 
 export const createPurchaseSchema = z.object({
   purchaseNumber: z.string().max(255),
+  customerPoNumber: z.string().max(255).nullable().optional(),
+  bocNumber: z.string().max(255).nullable().optional(),
   purchaseDate: z.string(),
   status: z.string().max(50).optional(),
   companyId: z.string(),
   quoteSupplierId: z.string().nullable().optional(),
   paymentConditionId: z.string().nullable().optional(),
-  shortDescription: z.string().max(255).nullable().optional(),
   description: z.string().nullable().optional(),
   additionalInfo: z.string().max(255).nullable().optional(),
 })

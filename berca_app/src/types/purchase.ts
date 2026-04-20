@@ -1,6 +1,8 @@
 export interface MappedPurchase {
   id: string
   purchaseNumber: string
+  customerPoNumber: string | null
+  bocNumber: string | null
   purchaseDate: string | null
   status: string
   companyId: string
@@ -9,7 +11,6 @@ export interface MappedPurchase {
   quoteNumber: string | null
   paymentConditionId: string | null
   paymentConditionName: string | null
-  shortDescription: string | null
   createdAt: string | null
   createdBy: string
   createdByName: string

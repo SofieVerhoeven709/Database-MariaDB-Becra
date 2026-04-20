@@ -92,11 +92,12 @@ export function PurchaseTable({
       // Match against the most common purchase identifiers and labels.
       return (
         (p.purchaseNumber ?? '').toLowerCase().includes(q) ||
+        (p.customerPoNumber ?? '').toLowerCase().includes(q) ||
+        (p.bocNumber ?? '').toLowerCase().includes(q) ||
         (p.companyName ?? '').toLowerCase().includes(q) ||
         (p.quoteNumber ?? '').toLowerCase().includes(q) ||
         (p.paymentConditionName ?? '').toLowerCase().includes(q) ||
         (p.status ?? '').toLowerCase().includes(q) ||
-        (p.shortDescription ?? '').toLowerCase().includes(q) ||
         p.createdByName.toLowerCase().includes(q)
       )
     })
@@ -141,7 +142,8 @@ export function PurchaseTable({
         companyId: p.companyId,
         quoteSupplierId: p.quoteSupplierId,
         paymentConditionId: p.paymentConditionId,
-        shortDescription: p.shortDescription,
+        customerPoNumber: p.customerPoNumber,
+        bocNumber: p.bocNumber,
         description: p.description,
         additionalInfo: p.additionalInfo,
       })
@@ -153,7 +155,8 @@ export function PurchaseTable({
         companyId: p.companyId,
         quoteSupplierId: p.quoteSupplierId,
         paymentConditionId: p.paymentConditionId,
-        shortDescription: p.shortDescription,
+        customerPoNumber: p.customerPoNumber,
+        bocNumber: p.bocNumber,
         description: p.description,
         additionalInfo: p.additionalInfo,
       })
@@ -180,14 +183,14 @@ export function PurchaseTable({
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search number, company, quote or status..."
+              placeholder="Search PO, customer PO, BOC, company, quote or status..."
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
             />
           </div>
           <Select value={statusFilter} onValueChange={v => setStatusFilter(v)}>
-            <SelectTrigger className="w-[180px] bg-secondary border-border">
+            <SelectTrigger className="w-45 bg-secondary border-border">
               <SelectValue placeholder="All statuses" />
             </SelectTrigger>
             <SelectContent className="bg-card border-border">
@@ -253,7 +256,7 @@ export function PurchaseTable({
               </TableRow>
             ) : (
               filtered.map(purchase => {
-                const secondaryLabel = purchase.shortDescription ?? purchase.paymentConditionName ?? ''
+                const secondaryLabel = purchase.customerPoNumber ?? purchase.paymentConditionName ?? ''
                 const detailHref = `/departments/${departmentId}/orders/${purchase.id}` as Route
                 const isOrderedNotSent = isOrderedNotSentStatus(purchase.status)
                 // Ordered purchases are locked unless the user meets the manager threshold.
@@ -279,11 +282,15 @@ export function PurchaseTable({
                     <TableCell className={tdClass}>{purchase.companyName ?? '-'}</TableCell>
                     <TableCell className={tdClass}>
                       <div className="flex flex-col gap-0.5">
-                        <Badge variant="outline" className="border-border text-muted-foreground font-normal whitespace-nowrap">
+                        <Badge
+                          variant="outline"
+                          className="border-border text-muted-foreground font-normal whitespace-nowrap">
                           {purchase.quoteNumber ?? 'Manual'}
                         </Badge>
                         {purchase.paymentConditionName ? (
-                          <span className="text-[11px] text-muted-foreground truncate">{purchase.paymentConditionName}</span>
+                          <span className="text-[11px] text-muted-foreground truncate">
+                            {purchase.paymentConditionName}
+                          </span>
                         ) : null}
                       </div>
                     </TableCell>

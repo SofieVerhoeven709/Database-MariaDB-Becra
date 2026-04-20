@@ -1,7 +1,7 @@
 import {notFound} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {ArrowLeft, Building2, Calendar, CreditCard, FileText, User} from 'lucide-react'
+import {ArrowLeft, Building2, Calendar, CreditCard, FileText, Hash, User} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {
   getPurchaseById,
@@ -49,24 +49,29 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
   if (!department) return <p>Department not found</p>
   if (!purchase) notFound()
 
+  const purchaseWithCustomerRefs = purchase as typeof purchase & {
+    customerPoNumber?: string | null
+    bocNumber?: string | null
+  }
+
   const {currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const details: MappedPurchaseDetail[] = detailsRaw.map(d => mapPurchaseDetail(d))
+  const details: MappedPurchaseDetail[] = detailsRaw.map(d => mapPurchaseDetail(d as Parameters<typeof mapPurchaseDetail>[0]))
 
   const materialOptions = materialsRaw
     // Build human-friendly labels for the line item picker.
-    .map(m => ({id: m.id, name: `${m.beNumber} - ${m.name ?? m.shortDescription ?? 'Unnamed material'}`}))
+    .map(m => ({id: m.id, name: `${m.beNumber} - ${m.name ?? 'Unnamed material'}`}))
     .sort((a, b) => a.name.localeCompare(b.name))
 
   const materialDemandOptions = demandsRaw
     .map(d => ({
       id: d.id,
-      name: `${d.Material?.beNumber ?? 'N/A'} - ${d.Material?.name ?? d.Material?.shortDescription ?? 'Demand'}`,
+      name: `${d.Material?.beNumber ?? 'N/A'} - ${d.Material?.name ?? 'Demand'}`,
     }))
     .sort((a, b) => a.name.localeCompare(b.name))
 
   const quoteLineOptions = (purchase.QuoteSupplier?.QuoteSupplierLine ?? []).map(line => ({
     id: line.id,
-    name: `${line.Material?.beNumber ?? 'N/A'} - ${line.Material?.name ?? line.Material?.shortDescription ?? 'Line'} (${line.quantity})`,
+    name: `${line.Material?.beNumber ?? 'N/A'} - ${line.Material?.name ?? 'Line'} (${line.quantity})`,
     materialId: line.materialId,
     materialDemandId: line.materialDemandId,
     quantity: line.quantity,
@@ -107,7 +112,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5 pt-2 border-t border-border/50">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-7 pt-2 border-t border-border/50">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <Calendar className="h-3 w-3" /> Purchase Date
@@ -130,6 +135,18 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
+                <Hash className="h-3 w-3" /> PO Customer
+              </span>
+              <span className="text-sm text-foreground">{purchaseWithCustomerRefs.customerPoNumber ?? '—'}</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
+                <Hash className="h-3 w-3" /> BOC
+              </span>
+              <span className="text-sm text-foreground">{purchaseWithCustomerRefs.bocNumber ?? '—'}</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <CreditCard className="h-3 w-3" /> Payment
               </span>
               <span className="text-sm text-foreground">{purchase.PaymentCondition?.name ?? '—'}</span>
@@ -142,20 +159,12 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
           </div>
 
-          {(purchase.shortDescription ?? purchase.additionalInfo) && (
+          {purchase.additionalInfo && (
             <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border/50">
-              {purchase.shortDescription && (
-                <div className="flex flex-col gap-1">
-                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Short Description</span>
-                  <span className="text-sm text-foreground">{purchase.shortDescription}</span>
-                </div>
-              )}
-              {purchase.additionalInfo && (
-                <div className="flex flex-col gap-1">
-                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Additional Info</span>
-                  <span className="text-sm text-foreground">{purchase.additionalInfo}</span>
-                </div>
-              )}
+              <div className="flex flex-col gap-1">
+                <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Additional Info</span>
+                <span className="text-sm text-foreground">{purchase.additionalInfo}</span>
+              </div>
             </div>
           )}
         </div>

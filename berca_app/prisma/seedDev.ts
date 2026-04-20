@@ -170,6 +170,7 @@ const INVOICE_SENT_TYPES = ['Email', 'Post', 'Hand Delivery', 'Portal', 'Fax']
 const PAYMENT_METHODS = ['Bank Transfer', 'Cash', 'Credit Card', 'Debit Card', 'Direct Debit', 'Cheque']
 
 const INVOICE_TYPES = ['Standard', 'Credit Note', 'Proforma', 'Recurring', 'Intercompany']
+const DEFAULT_PAYMENT_CONDITIONS = ['14 days', '30 days', '60 days', '30 days end of month']
 
 export const seedDev = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
@@ -542,6 +543,26 @@ export const seedDev = async (prisma: PrismaClient) => {
   }
 
   console.log('Invoice types seeded')
+
+  // 22. Upsert default payment conditions
+  for (const name of DEFAULT_PAYMENT_CONDITIONS) {
+    const existing = await prisma.paymentCondition.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.paymentCondition.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+      continue
+    }
+
+    if (existing.deleted) {
+      await prisma.paymentCondition.update({
+        where: {id: existing.id},
+        data: {deleted: false, deletedAt: null, deletedBy: null},
+      })
+    }
+  }
+
+  console.log('Default payment conditions seeded')
 
   const companies = await prisma.company.findMany({
     select: {

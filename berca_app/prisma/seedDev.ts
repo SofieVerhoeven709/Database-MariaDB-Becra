@@ -172,6 +172,35 @@ const PAYMENT_METHODS = ['Bank Transfer', 'Cash', 'Credit Card', 'Debit Card', '
 const INVOICE_TYPES = ['Standard', 'Credit Note', 'Proforma', 'Recurring', 'Intercompany']
 const DEFAULT_PAYMENT_CONDITIONS = ['14 days', '30 days', '60 days', '30 days end of month']
 
+async function ensurePaymentConditions(prisma: PrismaClient, createdBy: string, now: Date) {
+  for (const name of DEFAULT_PAYMENT_CONDITIONS) {
+    const existing = await prisma.paymentCondition.findMany({
+      where: {name},
+      orderBy: {createdAt: 'asc'},
+      select: {id: true, deleted: true},
+    })
+
+    if (existing.length === 0) {
+      await prisma.paymentCondition.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy, deleted: false},
+      })
+      continue
+    }
+
+    const [keep, ...duplicates] = existing
+    if (keep.deleted) {
+      await prisma.paymentCondition.update({
+        where: {id: keep.id},
+        data: {deleted: false, deletedAt: null, deletedBy: null},
+      })
+    }
+
+    if (duplicates.length > 0) {
+      await prisma.paymentCondition.deleteMany({where: {id: {in: duplicates.map(row => row.id)}}})
+    }
+  }
+}
+
 export const seedDev = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
   const now = new Date()
@@ -545,22 +574,7 @@ export const seedDev = async (prisma: PrismaClient) => {
   console.log('Invoice types seeded')
 
   // 22. Upsert default payment conditions
-  for (const name of DEFAULT_PAYMENT_CONDITIONS) {
-    const existing = await prisma.paymentCondition.findFirst({where: {name}})
-    if (!existing) {
-      await prisma.paymentCondition.create({
-        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
-      })
-      continue
-    }
-
-    if (existing.deleted) {
-      await prisma.paymentCondition.update({
-        where: {id: existing.id},
-        data: {deleted: false, deletedAt: null, deletedBy: null},
-      })
-    }
-  }
+  await ensurePaymentConditions(prisma, adminEmployee.id, now)
 
   console.log('Default payment conditions seeded')
 

@@ -328,4 +328,29 @@ export async function softDeleteSerialTracked(id: string, deletedBy: string) {
   })
 }
 
+export async function undeleteSerialTracked(id: string) {
+  return prismaClient.materialSerialTrack.update({
+    where: {id},
+    data: {
+      deleted: false,
+      deletedAt: null,
+      deletedBy: null,
+    },
+  })
+}
+
+export async function hardDeleteSerialTracked(id: string) {
+  return prismaClient.$transaction(async tx => {
+    await tx.warehousePlace.updateMany({
+      where: {serialTrackedId: id},
+      data: {serialTrackedId: null, beNumber: null},
+    })
+
+    await tx.materialMovement.deleteMany({where: {serieId: id}})
+    await tx.materialSerialTrackedStructure.deleteMany({where: {serialTrackedId: id}})
+
+    return tx.materialSerialTrack.delete({where: {id}})
+  })
+}
+
 // cloneSerialTracked removed: no current callers in the codebase.

@@ -27,7 +27,11 @@ export default async function EmployeeDetailPage({params}: PageProps) {
   if (!employeeResult) notFound()
 
   const {employee: employeeFromDAL, createdEmployees, deletedEmployees} = employeeResult
-  const employee = mapEmployeeDetail(employeeFromDAL, createdEmployees, deletedEmployees)
+  const employee = mapEmployeeDetail(
+    employeeFromDAL as Parameters<typeof mapEmployeeDetail>[0],
+    createdEmployees,
+    deletedEmployees,
+  )
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100

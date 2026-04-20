@@ -88,11 +88,11 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.19.2
+ * Prisma Client JS version: 6.19.3
  * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.19.2",
+  client: "6.19.3",
   engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
 }
 
@@ -8741,7 +8741,8 @@ export const PurchaseScalarFieldEnum = {
   quoteSupplierId: 'quoteSupplierId',
   paymentConditionId: 'paymentConditionId',
   status: 'status',
-  poNumberClient: 'poNumberClient',
+  customerPoNumber: 'customerPoNumber',
+  bocNumber: 'bocNumber',
   description: 'description',
   additionalInfo: 'additionalInfo',
   createdAt: 'createdAt',
@@ -9035,6 +9036,7 @@ export const UnitScalarFieldEnum = {
   id: 'id',
   unitName: 'unitName',
   physicalQuantity: 'physicalQuantity',
+  quantityValue: 'quantityValue',
   abbreviation: 'abbreviation',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -10452,7 +10454,8 @@ export const PurchaseOrderByRelevanceFieldEnum = {
   quoteSupplierId: 'quoteSupplierId',
   paymentConditionId: 'paymentConditionId',
   status: 'status',
-  poNumberClient: 'poNumberClient',
+  customerPoNumber: 'customerPoNumber',
+  bocNumber: 'bocNumber',
   description: 'description',
   additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',

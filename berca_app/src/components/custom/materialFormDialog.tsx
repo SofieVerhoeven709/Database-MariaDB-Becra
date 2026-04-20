@@ -89,6 +89,10 @@ function normalizeMaterialNumber(value: string | null | undefined, kind: NumberK
   return `${kind === 'IOS' ? '4' : '1'}${tail}`
 }
 
+function formatSupplierLabel(company: SupplierCompanyOption): string {
+  return `${company.name} (${company.number})`
+}
+
 const DOCUMENT_FLAGS: Array<{key: keyof MaterialDocumentFlags; label: string}> = [
   {key: 'hasAtex', label: 'Atex'},
   {key: 'hasCe', label: 'CE'},
@@ -113,99 +117,6 @@ const DEFAULT_DOCUMENT_FLAGS: MaterialDocumentFlags = {
   hasInsp: false,
 }
 
-interface PreferredSupplierPickerProps {
-  selectedCompanyId: string | null
-  onSelect: (companyId: string | null) => void
-  availableCompanies: SupplierCompanyOption[]
-  inputStyles: string
-}
-
-function PreferredSupplierPicker({
-  selectedCompanyId,
-  onSelect,
-  availableCompanies,
-  inputStyles,
-}: PreferredSupplierPickerProps) {
-  const [search, setSearch] = useState('')
-  const [isOpen, setIsOpen] = useState(false)
-  const [isFocused, setIsFocused] = useState(false)
-
-  const filtered = availableCompanies.filter(
-    c => c.name.toLowerCase().includes(search.toLowerCase()) || c.number.toLowerCase().includes(search.toLowerCase()),
-  )
-
-  const selectedCompany = availableCompanies.find(c => c.id === selectedCompanyId)
-
-  // Show search text if user is typing, otherwise show selected company
-  const displayValue = isFocused
-    ? search
-    : search || (selectedCompany ? `${selectedCompany.name} (${selectedCompany.number})` : '')
-
-  const handleClear = () => {
-    onSelect(null)
-    setSearch('')
-    setIsOpen(false)
-  }
-
-  const handleSelect = (companyId: string) => {
-    onSelect(companyId)
-    setSearch('')
-    setIsOpen(false)
-    setIsFocused(false)
-  }
-
-  return (
-    <div className="relative">
-      <Input
-        className={inputStyles}
-        placeholder="Type to search suppliers..."
-        value={displayValue}
-        onChange={e => {
-          setSearch(e.target.value)
-          setIsOpen(true)
-        }}
-        onFocus={() => {
-          setIsFocused(true)
-          setIsOpen(true)
-        }}
-        onBlur={() => {
-          setIsFocused(false)
-          // Close dropdown after a brief delay to allow click handlers to fire
-          setTimeout(() => setIsOpen(false), 150)
-        }}
-      />
-      {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-secondary border border-border rounded-md max-h-48 overflow-y-auto z-50">
-          {selectedCompanyId && (
-            <div
-              className="px-2 py-1.5 text-sm text-muted-foreground hover:bg-secondary/80 cursor-pointer border-b border-border"
-              onClick={() => handleClear()}>
-              Clear Selection
-            </div>
-          )}
-          {filtered.map(company => (
-            <div
-              key={company.id}
-              className={`px-2 py-1.5 text-sm cursor-pointer hover:bg-secondary/80 ${
-                selectedCompanyId === company.id ? 'bg-secondary/80 font-semibold' : ''
-              }`}
-              onClick={() => handleSelect(company.id)}>
-              {company.name} ({company.number})
-            </div>
-          ))}
-          {filtered.length === 0 && search && (
-            <div className="px-2 py-1.5 text-xs text-muted-foreground">No suppliers match your search</div>
-          )}
-          {availableCompanies.length === 0 && !search && (
-            <div className="px-2 py-1.5 text-xs text-muted-foreground">
-              No suppliers available. Add suppliers first.
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  )
-}
 
 const EMPTY_MATERIAL: MaterialFormState = {
   id: '',
@@ -214,12 +125,8 @@ const EMPTY_MATERIAL: MaterialFormState = {
   brandOrderNr: '',
   shortDescription: '',
   longDescription: null,
-  preferredSupplierCompanyId: null,
-  preferredSupplierCompanyName: null,
-  preferredSupplierOrderId: null,
-  preferredSupplierShortDescription: null,
-  supplierCompanyIds: [],
-  supplierCompanyNames: [],
+  supplierCompanyId: null,
+  supplierCompanyName: null,
   parentBeNumbers: [],
   brandName: null,
   warehousePlace: null,
@@ -268,6 +175,8 @@ export function MaterialFormDialog({
   const [isParentPartEnabled, setIsParentPartEnabled] = useState(form.isParentPart ?? false)
   const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
   const [parentPartSearch, setParentPartSearch] = useState('')
+  const [supplierSearch, setSupplierSearch] = useState('')
+  const [isSupplierDropdownOpen, setIsSupplierDropdownOpen] = useState(false)
   const [isSerialTracked, setIsSerialTracked] = useState(form.isSerialTracked ?? false)
   const [numberKind, setNumberKind] = useState<NumberKind>(detectNumberKind(form.beNumber))
 
@@ -282,10 +191,13 @@ export function MaterialFormDialog({
       setIsParentPartEnabled(nextForm.isParentPart ?? false)
       setHasParentParts((nextForm.parentBeNumbers ?? []).length > 0)
       setParentPartSearch('')
+      const selectedSupplier = supplierCompanies.find(company => company.id === nextForm.supplierCompanyId)
+      setSupplierSearch(selectedSupplier ? formatSupplierLabel(selectedSupplier) : '')
+      setIsSupplierDropdownOpen(false)
       setIsSerialTracked(nextForm.isSerialTracked ?? false)
       setNumberKind(detectNumberKind(nextForm.beNumber))
     }
-  }, [open, material?.id, resolvedMode])
+  }, [open, material?.id, resolvedMode, supplierCompanies])
 
   function update<K extends keyof MappedMaterial>(field: K, value: MappedMaterial[K]) {
     setForm(prev => ({...prev, [field]: value}))
@@ -300,17 +212,6 @@ export function MaterialFormDialog({
   function updateFlag<K extends keyof MaterialDocumentFlags>(field: K, value: boolean) {
     setForm(prev => ({...prev, [field]: value}))
   }
-
-  function toggleSupplier(companyId: string) {
-    const current = form.supplierCompanyIds ?? []
-    const next = current.includes(companyId) ? current.filter(id => id !== companyId) : [...current, companyId]
-    update('supplierCompanyIds', next)
-
-    if (form.preferredSupplierCompanyId && !next.includes(form.preferredSupplierCompanyId)) {
-      update('preferredSupplierCompanyId', null)
-    }
-  }
-
   function toggleParentBeNumber(beNumber: string) {
     const current = form.parentBeNumbers ?? []
     const next = current.includes(beNumber) ? current.filter(item => item !== beNumber) : [...current, beNumber]
@@ -333,9 +234,15 @@ export function MaterialFormDialog({
       return option.beNumber.toLowerCase().includes(q) || option.shortDescription.toLowerCase().includes(q)
     })
 
-  const selectedSupplierCompanies = supplierCompanies.filter(company =>
-    (form.supplierCompanyIds ?? []).includes(company.id),
-  )
+  const filteredSupplierCompanies = supplierCompanies.filter(company => {
+    if (!supplierSearch) return true
+    const q = supplierSearch.toLowerCase()
+    return (
+      company.name.toLowerCase().includes(q) ||
+      company.number.toLowerCase().includes(q) ||
+      formatSupplierLabel(company).toLowerCase().includes(q)
+    )
+  })
 
   const selectedGroupA = materialGroups.find(g => g.id === form.materialGroupIdA) ?? null
   const selectedGroupB = materialGroups.find(g => g.id === form.materialGroupIdB) ?? null
@@ -676,7 +583,7 @@ export function MaterialFormDialog({
             </div>
           </div>
 
-          {/* Row 5: Optional Material Group D + Preferred Supplier Order ID */}
+          {/* Row 5: Optional Material Group D */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label className="text-xs text-muted-foreground">Material Group D</Label>
@@ -696,73 +603,54 @@ export function MaterialFormDialog({
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="preferredSupplierOrderId" className="text-xs text-muted-foreground">
-                Preferred Supplier Order ID
-              </Label>
+          </div>
+
+          {/* Supplier Company */}
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs text-muted-foreground">Supplier Company</Label>
+            <div className="relative">
               <Input
-                id="preferredSupplierOrderId"
                 className={inputStyles}
-                value={typeof form.preferredSupplierOrderId === 'string' ? form.preferredSupplierOrderId : ''}
-                onChange={e => update('preferredSupplierOrderId', e.target.value || null)}
-                placeholder="e.g. ABC-123"
+                placeholder="Search suppliers by name or number"
+                value={supplierSearch}
+                onFocus={() => setIsSupplierDropdownOpen(true)}
+                onBlur={() => setTimeout(() => setIsSupplierDropdownOpen(false), 120)}
+                onChange={e => {
+                  const next = e.target.value
+                  setSupplierSearch(next)
+                  setIsSupplierDropdownOpen(true)
+
+                  const selectedSupplier = supplierCompanies.find(company => company.id === form.supplierCompanyId)
+                  if (selectedSupplier && next !== formatSupplierLabel(selectedSupplier)) {
+                    update('supplierCompanyId', null)
+                  }
+                }}
               />
+
+              {isSupplierDropdownOpen && filteredSupplierCompanies.length > 0 && (
+                <div className="absolute z-20 mt-1 max-h-52 w-full overflow-y-auto rounded-md border border-border bg-card shadow-sm">
+                  {filteredSupplierCompanies.map(company => (
+                    <button
+                      key={company.id}
+                      type="button"
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-secondary"
+                      onMouseDown={e => {
+                        e.preventDefault()
+                        update('supplierCompanyId', company.id)
+                        setSupplierSearch(formatSupplierLabel(company))
+                        setIsSupplierDropdownOpen(false)
+                      }}>
+                      {formatSupplierLabel(company)}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
-          {/* Preferred Supplier Short Description */}
-          {/* <div className="flex flex-col gap-2">
-            <Label htmlFor="preferredSupplierShortDescription" className="text-xs text-muted-foreground">
-              Preferred Supplier Short Description
-            </Label>
-            <Input
-              id="preferredSupplierShortDescription"
-              className={inputStyles}
-              value={
-                typeof form.preferredSupplierShortDescription === 'string' ? form.preferredSupplierShortDescription : ''
-              }
-              onChange={e => update('preferredSupplierShortDescription', e.target.value || null)}
-              placeholder="Short description or notes about the preferred supplier"
-            />
-          </div>
- */}
-          {/* Preferred Supplier Company - Searchable */}
-          <div className="flex flex-col gap-2">
-            <Label className="text-xs text-muted-foreground">Preferred Supplier Company</Label>
-            <PreferredSupplierPicker
-              selectedCompanyId={form.preferredSupplierCompanyId ?? null}
-              onSelect={companyId => update('preferredSupplierCompanyId', companyId)}
-              availableCompanies={selectedSupplierCompanies}
-              inputStyles={inputStyles}
-            />
-            {selectedSupplierCompanies.length === 0 ? (
-              <p className="text-xs text-muted-foreground">Select at least one supplier first.</p>
-            ) : form.preferredSupplierCompanyId ? (
-              <p className="text-xs text-muted-foreground">Preferred supplier is selected from your supplier list.</p>
+            {supplierCompanies.length === 0 ? (
+              <p className="text-xs text-muted-foreground">No suppliers available. Add suppliers first.</p>
+            ) : isSupplierDropdownOpen && supplierSearch.trim().length > 0 && filteredSupplierCompanies.length === 0 ? (
+              <p className="text-xs text-muted-foreground">No suppliers match your search.</p>
             ) : null}
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label className="text-xs text-muted-foreground">Suppliers</Label>
-            <div className="rounded-md border border-border bg-secondary/40 p-3 max-h-44 overflow-y-auto space-y-2">
-              {supplierCompanies.map(company => {
-                const checked = (form.supplierCompanyIds ?? []).includes(company.id)
-                return (
-                  <label key={company.id} className="flex items-center justify-between gap-3 text-sm cursor-pointer">
-                    <span className="truncate">
-                      {company.name} <span className="text-muted-foreground">({company.number})</span>
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={checked}
-                      onChange={() => toggleSupplier(company.id)}
-                      className="h-4 w-4"
-                    />
-                  </label>
-                )
-              })}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Select one or more suppliers. Preferred supplier must be selected from this list.
-            </p>
           </div>
 
           {/*Row 6: WarehousePlace */}

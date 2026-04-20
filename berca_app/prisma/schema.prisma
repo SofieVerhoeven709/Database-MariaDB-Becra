@@ -1576,7 +1576,8 @@ model Purchase {
   quoteSupplierId                       String?            @db.Char(36)
   paymentConditionId                    String?            @db.Char(36)
   status                                String             @default("DRAFT") @db.VarChar(50)
-  poNumberClient                        String?            @db.VarChar(255)
+  customerPoNumber                      String?            @db.VarChar(255)
+  bocNumber                             String?            @db.VarChar(255)
   description                           String?            @db.Text
   additionalInfo                        String?            @db.VarChar(255)
   createdAt                             DateTime           @default(now()) @db.DateTime(0)
@@ -2002,6 +2003,7 @@ model Unit {
   id                                String     @id @db.Char(36)
   unitName                          String     @db.VarChar(255)
   physicalQuantity                  String     @db.VarChar(255)
+  quantityValue                     Decimal?   @db.Decimal(10, 3)
   abbreviation                      String     @db.VarChar(255)
   shortDescription                  String?    @db.VarChar(255)
   longDescription                   String?    @db.Text

@@ -24,13 +24,17 @@ interface PurchaseFormDialogProps {
   onSave: (purchase: MappedPurchase) => Promise<void>
 }
 
+type PurchaseFormState = MappedPurchase
+
 const STATUS_OPTIONS = ['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED']
 
-function emptyPurchase(): MappedPurchase {
+function emptyPurchase(): PurchaseFormState {
   // Defaults for a brand-new purchase order form.
   return {
     id: '',
     purchaseNumber: generatePurchaseNumber(),
+    customerPoNumber: null,
+    bocNumber: null,
     purchaseDate: new Date().toISOString(),
     status: 'DRAFT',
     companyId: '',
@@ -39,7 +43,6 @@ function emptyPurchase(): MappedPurchase {
     quoteNumber: null,
     paymentConditionId: null,
     paymentConditionName: null,
-    poNumberClient: null,
     createdAt: null,
     createdBy: '',
     createdByName: '',
@@ -60,7 +63,7 @@ export function PurchaseFormDialog({
   paymentConditions,
   onSave,
 }: PurchaseFormDialogProps) {
-  const [form, setForm] = useState<MappedPurchase>(emptyPurchase())
+  const [form, setForm] = useState<PurchaseFormState>(emptyPurchase())
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
@@ -69,7 +72,7 @@ export function PurchaseFormDialog({
     }
   }, [open, purchase])
 
-  function set<K extends keyof MappedPurchase>(key: K, value: MappedPurchase[K]) {
+  function set<K extends keyof PurchaseFormState>(key: K, value: PurchaseFormState[K]) {
     setForm(prev => ({...prev, [key]: value}))
   }
 
@@ -102,7 +105,7 @@ export function PurchaseFormDialog({
                 id="purchaseNumber"
                 value={form.purchaseNumber ?? ''}
                 onChange={e => set('purchaseNumber', e.target.value)}
-                placeholder="e.g. PO2026041301"
+                placeholder="e.g. POYYDDMMXX"
                 className="bg-secondary border-border flex-1"
               />
               {!isEdit && (
@@ -115,6 +118,41 @@ export function PurchaseFormDialog({
                   Regenerate
                 </Button>
               )}
+            </div>
+          </div>
+
+          {/* Customer PO number */}
+          <div className="grid gap-1.5">
+            <Label htmlFor="customerPoNumber">PO Number Customer</Label>
+            <Input
+              id="customerPoNumber"
+              value={form.customerPoNumber ?? ''}
+              onChange={e => set('customerPoNumber', e.target.value || null)}
+              placeholder="Free input"
+              className="bg-secondary border-border"
+            />
+          </div>
+
+          {/* BOC number */}
+          <div className="grid gap-1.5">
+            <Label htmlFor="bocNumber">BOC Number</Label>
+            <div className="flex gap-2">
+              <Input
+                id="bocNumber"
+                value={form.bocNumber ?? ''}
+                onChange={e => set('bocNumber', e.target.value || null)}
+                placeholder="Enter BOC"
+                className="bg-secondary border-border flex-1"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-10 px-3 border-border text-xs shrink-0"
+                disabled={!form.customerPoNumber?.trim()}
+                onClick={() => set('bocNumber', form.customerPoNumber?.trim() ?? null)}>
+                From PO customer
+              </Button>
             </div>
           </div>
 
@@ -208,18 +246,6 @@ export function PurchaseFormDialog({
                 ))}
               </SelectContent>
             </Select>
-          </div>
-
-          {/* PO Number Client */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="poNumberClient">PO Number Client</Label>
-            <Input
-              id="poNumberClient"
-              value={form.poNumberClient ?? ''}
-              onChange={e => set('poNumberClient', e.target.value || null)}
-              placeholder="Header note"
-              className="bg-secondary border-border"
-            />
           </div>
 
           {/* Description */}

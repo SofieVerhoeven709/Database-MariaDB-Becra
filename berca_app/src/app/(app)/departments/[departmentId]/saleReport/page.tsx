@@ -1,5 +1,6 @@
 import {prismaClient} from '@/dal/prismaClient'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {decodeQuoteBecraDescription} from '@/lib/quoteBecraCompany'
 import {FileText, Users, TrendingUp, CheckCircle, Clock, AlertCircle} from 'lucide-react'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
 import {Badge} from '@/components/ui/badge'
@@ -54,6 +55,16 @@ export default async function SaleReportPage() {
       },
     }),
   ])
+
+  const recentQuotesWithCompany = recentQuotes.map(q => {
+    const decoded = decodeQuoteBecraDescription(q.description)
+
+    return {
+      ...q,
+      displayCompany: decoded.company,
+      displayDescription: decoded.description,
+    }
+  })
 
   const stats = [
     {
@@ -123,14 +134,25 @@ export default async function SaleReportPage() {
               {recentQuotes.length === 0 ? (
                 <p className="text-sm text-muted-foreground">No quotes yet.</p>
               ) : (
-                recentQuotes.map(q => (
+                recentQuotesWithCompany.map(q => (
                   <div key={q.id} className="flex items-start justify-between gap-2 text-sm">
                     <div className="min-w-0">
-                      <p className="truncate text-foreground">
-                        {q.description
-                          ? q.description.slice(0, 50) + (q.description.length > 50 ? '…' : '')
-                          : <span className="italic text-muted-foreground">No description</span>}
-                      </p>
+                      {q.displayCompany ? (
+                        <p className="truncate text-foreground">
+                          {q.displayCompany.slice(0, 50) + (q.displayCompany.length > 50 ? '…' : '')}
+                        </p>
+                      ) : q.displayDescription ? (
+                        <p className="truncate text-foreground">
+                          {q.displayDescription.slice(0, 50) + (q.displayDescription.length > 50 ? '…' : '')}
+                        </p>
+                      ) : (
+                        <p className="italic text-muted-foreground">No description</p>
+                      )}
+                      {q.displayCompany && q.displayDescription ? (
+                        <p className="truncate text-xs text-muted-foreground">
+                          {q.displayDescription.slice(0, 80) + (q.displayDescription.length > 80 ? '…' : '')}
+                        </p>
+                      ) : null}
                       <p className="text-xs text-muted-foreground">
                         {q.Employee_QuoteBecra_createdByToEmployee.firstName}{' '}
                         {q.Employee_QuoteBecra_createdByToEmployee.lastName} · {formatDate(q.date)}

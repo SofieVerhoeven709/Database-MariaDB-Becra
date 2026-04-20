@@ -195,7 +195,7 @@ export function MaterialPriceFormDialog({
             </div>
           </div>
           <p className="-mt-2 text-xs text-muted-foreground">
-            Leave Unit Quantity empty to copy defaults from the preferred supplier when available.
+            Leave Unit Quantity empty to copy defaults from the selected material supplier when available.
           </p>
 
           {/* Order No. */}

@@ -20,28 +20,39 @@ export const createMaterialPriceAction = protectedServerFunction({
     let quantityPrice = data.quantityPrice ?? null
     const normalizedBeNumber = data.beNumber?.trim() || null
 
-    // If unit quantity is omitted, copy default from preferred supplier for this BE number.
+    // If unit quantity is omitted, copy it from the material's selected supplier when available.
     if (normalizedBeNumber && quantityPrice == null) {
       const material = await prismaClient.material.findFirst({
         where: {beNumber: normalizedBeNumber, deleted: false},
-        select: {preferredSupplierCompanyId: true},
+        select: {
+          preferredSupplierCompanyId: true,
+          MaterialSupplier: {
+            where: {Company: {deleted: false}},
+            select: {companyId: true, isPreferred: true},
+            orderBy: {id: 'asc'},
+          },
+        },
       })
 
-      if (material?.preferredSupplierCompanyId) {
-        const preferredSupplierPrice = await prismaClient.materialPrice.findFirst({
+      const supplierCompanyId =
+        material?.MaterialSupplier.find(supplier => supplier.isPreferred)?.companyId ??
+        material?.MaterialSupplier[0]?.companyId ??
+        material?.preferredSupplierCompanyId ??
+        null
+
+      if (supplierCompanyId) {
+        const supplierPrice = await prismaClient.materialPrice.findFirst({
           where: {
             beNumber: normalizedBeNumber,
-            companyId: material.preferredSupplierCompanyId,
+            companyId: supplierCompanyId,
             deleted: false,
           },
           select: {quantityPrice: true},
           orderBy: {updatedAt: 'desc'},
         })
 
-        if (preferredSupplierPrice) {
-          quantityPrice ??= preferredSupplierPrice.quantityPrice != null
-            ? Number(preferredSupplierPrice.quantityPrice.toString())
-            : null
+        if (supplierPrice) {
+          quantityPrice ??= supplierPrice.quantityPrice != null ? Number(supplierPrice.quantityPrice.toString()) : null
         }
       }
     }

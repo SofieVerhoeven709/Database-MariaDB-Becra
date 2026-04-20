@@ -54,12 +54,8 @@ interface MappedMaterialDetail {
   brandOrderNr: string | null
   shortDescription: string
   longDescription: string | null
-  preferredSupplierCompanyId: string | null
-  preferredSupplierCompanyName: string | null
-  preferredSupplierOrderId: string | null
-  preferredSupplierShortDescription: string | null
-  supplierCompanyIds: string[]
-  supplierCompanyNames: string[]
+  supplierCompanyId: string | null
+  supplierCompanyName: string | null
   brandName: string | null
   warehousePlace: string | null
   rejected: boolean | null
@@ -179,10 +175,7 @@ export function MaterialDetail({
     brandOrderNr: material.brandOrderNr ?? '',
     shortDescription: material.shortDescription,
     longDescription: material.longDescription ?? '',
-    preferredSupplierCompanyId: material.preferredSupplierCompanyId ?? '__none__',
-    preferredSupplierOrderId: material.preferredSupplierOrderId ?? '',
-    preferredSupplierShortDescription: material.preferredSupplierShortDescription ?? '',
-    supplierCompanyIds: material.supplierCompanyIds ?? [],
+    supplierCompanyId: material.supplierCompanyId ?? '',
     brandName: material.brandName ?? '',
     warehousePlace: material.warehousePlace ?? '',
     rejected: material.rejected ?? false,
@@ -212,18 +205,8 @@ export function MaterialDetail({
     setForm(f => ({...f, [key]: value}))
   }
 
-  function toggleSupplier(companyId: string) {
-    const next = form.supplierCompanyIds.includes(companyId)
-      ? form.supplierCompanyIds.filter(id => id !== companyId)
-      : [...form.supplierCompanyIds, companyId]
-    handleField('supplierCompanyIds', next)
-
-    if (form.preferredSupplierCompanyId !== '__none__' && !next.includes(form.preferredSupplierCompanyId)) {
-      handleField('preferredSupplierCompanyId', '__none__')
-    }
-  }
-
   const warehousePlaceById = new Map(warehousePlaces.map(place => [place.id, place]))
+  const selectedSupplierCompany = supplierCompanies.find(company => company.id === form.supplierCompanyId) ?? null
 
   const resolvedWarehousePlace = form.warehousePlace ? (warehousePlaceById.get(form.warehousePlace) ?? null) : null
 
@@ -251,19 +234,22 @@ export function MaterialDetail({
     setSaveError(null)
     try {
       const fd = new FormData()
+      const rawBeNumber = (form.beNumber ?? '').trim()
+      const existingBeNumber = (material.beNumber ?? '').trim()
+      const beNumber =
+        rawBeNumber === existingBeNumber ? material.beNumber : normalizeMaterialNumber(rawBeNumber, numberKind)
+
       fd.append('id', material.id)
-      fd.append('beNumber', normalizeMaterialNumber(form.beNumber, numberKind))
+      fd.append('beNumber', beNumber)
       if (form.name) fd.append('name', form.name)
       fd.append('brandOrderNr', form.brandOrderNr ?? '')
       fd.append('shortDescription', form.shortDescription)
       if (form.longDescription) fd.append('longDescription', form.longDescription)
-      if (form.preferredSupplierCompanyId !== '__none__') {
-        fd.append('preferredSupplierCompanyId', form.preferredSupplierCompanyId)
+      if (form.supplierCompanyId) {
+        fd.append('supplierCompanyId', form.supplierCompanyId)
+      } else {
+        fd.append('supplierCompanyId', '')
       }
-      if (form.preferredSupplierOrderId) fd.append('preferredSupplierOrderId', form.preferredSupplierOrderId)
-      if (form.preferredSupplierShortDescription)
-        fd.append('preferredSupplierShortDescription', form.preferredSupplierShortDescription)
-      form.supplierCompanyIds.forEach(id => fd.append('supplierCompanyIds', id))
       if (form.brandName) fd.append('brandName', form.brandName)
       if (form.warehousePlace) fd.append('warehousePlace', form.warehousePlace)
       fd.append('rejected', String(form.rejected))
@@ -621,90 +607,42 @@ export function MaterialDetail({
               )}
             </div>
 
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Preferred Supplier Order ID</Label>
-              {editing ? (
-                <Input
-                  value={form.preferredSupplierOrderId}
-                  onChange={e => handleField('preferredSupplierOrderId', e.target.value)}
-                  placeholder="e.g. ABC-123"
-                />
-              ) : (
-                <p className="text-sm">
-                  {material.preferredSupplierOrderId ?? <span className="text-muted-foreground">—</span>}
-                </p>
-              )}
-            </div>
-
             <div className="flex flex-col gap-1.5 md:col-span-2">
-              <Label className="text-xs text-muted-foreground">Preferred Supplier Short Description</Label>
+              <Label className="text-xs text-muted-foreground">Supplier</Label>
               {editing ? (
-                <Input
-                  value={form.preferredSupplierShortDescription}
-                  onChange={e => handleField('preferredSupplierShortDescription', e.target.value)}
-                  placeholder="Short description or notes"
-                />
-              ) : (
-                <p className="text-sm">
-                  {material.preferredSupplierShortDescription ?? <span className="text-muted-foreground">—</span>}
-                </p>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Preferred Supplier Company</Label>
-              {editing ? (
-                <Select
-                  value={form.preferredSupplierCompanyId}
-                  onValueChange={v => handleField('preferredSupplierCompanyId', v)}>
-                  <SelectTrigger className="bg-secondary border-border">
-                    <SelectValue placeholder="Select preferred supplier" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="__none__">None</SelectItem>
-                    {form.supplierCompanyIds.map(id => {
-                      const company = supplierCompanies.find(c => c.id === id)
-                      if (!company) return null
-                      return (
+                <div className="space-y-2">
+                  <Select
+                    value={form.supplierCompanyId || undefined}
+                    onValueChange={v => handleField('supplierCompanyId', v)}>
+                    <SelectTrigger className="bg-secondary border-border">
+                      <SelectValue placeholder="Select supplier" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {supplierCompanies.map(company => (
                         <SelectItem key={company.id} value={company.id}>
                           {company.name} ({company.number})
                         </SelectItem>
-                      )
-                    })}
-                  </SelectContent>
-                </Select>
-              ) : (
-                <p className="text-sm">
-                  {material.preferredSupplierCompanyName ?? <span className="text-muted-foreground">—</span>}
-                </p>
-              )}
-            </div>
+                      ))}
+                    </SelectContent>
+                  </Select>
 
-            <div className="flex flex-col gap-1.5 md:col-span-2">
-              <Label className="text-xs text-muted-foreground">Suppliers</Label>
-              {editing ? (
-                <div className="rounded-md border border-border bg-secondary/40 p-3 max-h-44 overflow-y-auto space-y-2">
-                  {supplierCompanies.map(company => {
-                    const checked = form.supplierCompanyIds.includes(company.id)
-                    return (
-                      <label
-                        key={company.id}
-                        className="flex items-center justify-between gap-3 text-sm cursor-pointer">
-                        <span>
-                          {company.name} <span className="text-muted-foreground">({company.number})</span>
-                        </span>
-                        <input
-                          type="checkbox"
-                          checked={checked}
-                          onChange={() => toggleSupplier(company.id)}
-                          className="h-4 w-4"
-                        />
-                      </label>
-                    )
-                  })}
+                  <div className="rounded-md border border-border bg-secondary/20 overflow-hidden">
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="w-28 text-xs text-muted-foreground">Name</TableCell>
+                          <TableCell className="text-sm">{selectedSupplierCompany?.name ?? '-'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="w-28 text-xs text-muted-foreground">Number</TableCell>
+                          <TableCell className="text-sm">{selectedSupplierCompany?.number ?? '-'}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
                 </div>
-              ) : material.supplierCompanyNames.length > 0 ? (
-                <p className="text-sm">{material.supplierCompanyNames.join(', ')}</p>
+              ) : material.supplierCompanyName ? (
+                <p className="text-sm">{material.supplierCompanyName}</p>
               ) : (
                 <p className="text-sm text-muted-foreground">—</p>
               )}

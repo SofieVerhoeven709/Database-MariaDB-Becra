@@ -345,10 +345,7 @@ export async function createMaterial(data: {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplierCompanyId?: string | null
-  preferredSupplierOrderId?: string | null
-  preferredSupplierShortDescription?: string | null
-  supplierCompanyIds?: string[]
+  supplierCompanyId?: string | null
   parentBeNumbers?: string[]
   brandName?: string | null
   warehousePlace?: string | null
@@ -377,12 +374,9 @@ export async function createMaterial(data: {
   isParentPart?: boolean
 }) {
   const {
-    supplierCompanyIds = [],
+    supplierCompanyId,
     parentBeNumbers = [],
     warehousePlace,
-    preferredSupplierCompanyId,
-    preferredSupplierOrderId,
-    preferredSupplierShortDescription,
     leadTimeValue,
     leadTimeUnit,
     isParentPart,
@@ -423,19 +417,17 @@ export async function createMaterial(data: {
           hasBdoc,
           hasInsp,
         }),
+        preferredSupplierCompanyId: supplierCompanyId ?? null,
         warehousePlaceId: warehousePlace ?? null,
         isSerialTracked: data.isSerialTracked ?? false,
         MaterialSupplier:
-          supplierCompanyIds.length > 0
+          supplierCompanyId
             ? {
-                create: supplierCompanyIds.map(companyId => ({
+                create: {
                   id: randomUUID(),
-                  companyId,
-                  isPreferred: preferredSupplierCompanyId === companyId,
-                  supplierOrderNr: preferredSupplierCompanyId === companyId ? (preferredSupplierOrderId ?? null) : null,
-                  shortDescription:
-                    preferredSupplierCompanyId === companyId ? (preferredSupplierShortDescription ?? null) : null,
-                })),
+                  companyId: supplierCompanyId,
+                  isPreferred: true,
+                },
               }
             : undefined,
         MaterialStructure_MaterialStructure_materialIdToMaterial:
@@ -516,10 +508,7 @@ export async function updateMaterial(
     brandOrderNr?: string | null
     shortDescription?: string
     longDescription?: string | null
-    preferredSupplierCompanyId?: string | null
-    preferredSupplierOrderId?: string | null
-    preferredSupplierShortDescription?: string | null
-    supplierCompanyIds?: string[]
+    supplierCompanyId?: string | null
     parentBeNumbers?: string[]
     brandName?: string | null
     warehousePlace?: string | null
@@ -547,12 +536,9 @@ export async function updateMaterial(
   },
 ) {
   const {
-    supplierCompanyIds,
+    supplierCompanyId,
     parentBeNumbers,
     warehousePlace,
-    preferredSupplierCompanyId,
-    preferredSupplierOrderId,
-    preferredSupplierShortDescription,
     leadTimeValue,
     leadTimeUnit,
     isParentPart,
@@ -611,20 +597,20 @@ export async function updateMaterial(
           hasBdoc,
           hasInsp,
         }),
+        preferredSupplierCompanyId: supplierCompanyId,
         warehousePlaceId: warehousePlace !== undefined ? warehousePlace : undefined,
         MaterialSupplier:
-          supplierCompanyIds === undefined
+          supplierCompanyId === undefined
             ? undefined
             : {
                 deleteMany: {},
-                create: supplierCompanyIds.map(companyId => ({
-                  id: randomUUID(),
-                  companyId,
-                  isPreferred: preferredSupplierCompanyId === companyId,
-                  supplierOrderNr: preferredSupplierCompanyId === companyId ? (preferredSupplierOrderId ?? null) : null,
-                  shortDescription:
-                    preferredSupplierCompanyId === companyId ? (preferredSupplierShortDescription ?? null) : null,
-                })),
+                create: supplierCompanyId
+                  ? {
+                      id: randomUUID(),
+                      companyId: supplierCompanyId,
+                      isPreferred: true,
+                    }
+                  : undefined,
               },
         MaterialStructure_MaterialStructure_materialIdToMaterial:
           uniqueParentBeNumbers === undefined

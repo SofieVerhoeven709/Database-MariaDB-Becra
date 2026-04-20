@@ -203,20 +203,22 @@ export const createPurchaseAction = protectedServerFunction({
     while (attempts < 5) {
       try {
         const nextStatus = normalizePurchaseStatus(d.status)
-        const createdPurchase = await prismaClient.purchase.create({
-          data: {
-            id: crypto.randomUUID(),
-            purchaseNumber,
-            purchaseDate: toDate(d.purchaseDate) ?? new Date(),
-            status: nextStatus,
-            companyId: d.companyId,
-            quoteSupplierId: d.quoteSupplierId ?? null,
-            paymentConditionId: d.paymentConditionId ?? null,
-            poNumberClient: d.poNumberClient ?? null,
-            description: d.description ?? null,
-            additionalInfo: d.additionalInfo ?? null,
-            createdBy: profile.id,
-          },
+        const purchaseCreateData: any = {
+          id: crypto.randomUUID(),
+          purchaseNumber,
+          customerPoNumber: d.customerPoNumber ?? null,
+          bocNumber: d.bocNumber ?? null,
+          purchaseDate: toDate(d.purchaseDate) ?? new Date(),
+          status: nextStatus,
+          companyId: d.companyId,
+          quoteSupplierId: d.quoteSupplierId ?? null,
+          paymentConditionId: d.paymentConditionId ?? null,
+          description: d.description ?? null,
+          additionalInfo: d.additionalInfo ?? null,
+          createdBy: profile.id,
+        }
+        const createdPurchase = await (prismaClient as any).purchase.create({
+          data: purchaseCreateData,
           select: {id: true},
         })
         createdPurchaseId = createdPurchase.id

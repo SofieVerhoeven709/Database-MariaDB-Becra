@@ -22,12 +22,6 @@ const brandOrderNrSchema = z.preprocess(
   z.string().trim().max(255).nullable().optional(),
 )
 
-const supplierCompanyIdsSchema = z.preprocess(val => {
-  if (Array.isArray(val)) return val
-  if (val == null || val === '') return []
-  return [val]
-}, z.array(z.string().uuid()).default([]))
-
 const parentBeNumbersSchema = z.preprocess(
   val => {
     if (Array.isArray(val)) return val
@@ -40,16 +34,6 @@ const parentBeNumbersSchema = z.preprocess(
 const nullableUuidSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
   z.string().uuid().nullable().optional(),
-)
-
-const preferredSupplierOrderIdSchema = z.preprocess(
-  val => (val === '' || val == null ? null : val),
-  z.string().trim().max(255).nullable().optional(),
-)
-
-const preferredSupplierShortDescriptionSchema = z.preprocess(
-  val => (val === '' || val == null ? null : val),
-  z.string().trim().max(255).nullable().optional(),
 )
 
 const leadTimeValueSchema = z.preprocess(
@@ -81,10 +65,7 @@ const materialSchemaBase = z.object({
   brandOrderNr: brandOrderNrSchema,
   shortDescription: z.string().min(1).max(255),
   longDescription: z.string().nullable().optional(),
-  preferredSupplierCompanyId: nullableUuidSchema,
-  preferredSupplierOrderId: preferredSupplierOrderIdSchema,
-  preferredSupplierShortDescription: preferredSupplierShortDescriptionSchema,
-  supplierCompanyIds: supplierCompanyIdsSchema,
+  supplierCompanyId: nullableUuidSchema,
   parentBeNumbers: parentBeNumbersSchema,
   brandName: z.string().max(255).nullable().optional(),
   warehousePlace: nullableUuidSchema,

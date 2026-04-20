@@ -74,7 +74,7 @@ export function generatePurchaseNumber() {
     .toString()
     .padStart(2, '0') // two random digits
 
-  return `PO${year}${month}${day}${random}`
+  return `PO${year}${day}${month}${random}`
 }
 
 export function generateIncomingDeliveryNumber(prefix = 'DEL') {

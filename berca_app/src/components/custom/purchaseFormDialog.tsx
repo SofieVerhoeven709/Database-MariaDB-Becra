@@ -105,7 +105,7 @@ export function PurchaseFormDialog({
                 id="purchaseNumber"
                 value={form.purchaseNumber ?? ''}
                 onChange={e => set('purchaseNumber', e.target.value)}
-                placeholder="e.g. POYYMMDDXX"
+                placeholder="e.g. POYYDDMMXX"
                 className="bg-secondary border-border flex-1"
               />
               {!isEdit && (

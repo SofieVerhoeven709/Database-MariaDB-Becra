@@ -319,7 +319,6 @@ export type InvoiceOutWhereInput = {
   invoiceStatusId?: Prisma.StringFilter<"InvoiceOut"> | string
   priceListId?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   InvoiceType?: Prisma.XOR<Prisma.InvoiceTypeScalarRelationFilter, Prisma.InvoiceTypeWhereInput>
-  PriceList?: Prisma.XOR<Prisma.PriceListNullableScalarRelationFilter, Prisma.PriceListWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
@@ -327,6 +326,7 @@ export type InvoiceOutWhereInput = {
   PaymentMethod?: Prisma.XOR<Prisma.PaymentMethodScalarRelationFilter, Prisma.PaymentMethodWhereInput>
   InvoiceSentType?: Prisma.XOR<Prisma.InvoiceSentTypeScalarRelationFilter, Prisma.InvoiceSentTypeWhereInput>
   InvoiceStatus?: Prisma.XOR<Prisma.InvoiceStatusScalarRelationFilter, Prisma.InvoiceStatusWhereInput>
+  PriceList?: Prisma.XOR<Prisma.PriceListNullableScalarRelationFilter, Prisma.PriceListWhereInput> | null
   InvoiceOutContact?: Prisma.InvoiceOutContactListRelationFilter
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceListRelationFilter
 }
@@ -355,7 +355,6 @@ export type InvoiceOutOrderByWithRelationInput = {
   invoiceStatusId?: Prisma.SortOrder
   priceListId?: Prisma.SortOrderInput | Prisma.SortOrder
   InvoiceType?: Prisma.InvoiceTypeOrderByWithRelationInput
-  PriceList?: Prisma.PriceListOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
@@ -363,6 +362,7 @@ export type InvoiceOutOrderByWithRelationInput = {
   PaymentMethod?: Prisma.PaymentMethodOrderByWithRelationInput
   InvoiceSentType?: Prisma.InvoiceSentTypeOrderByWithRelationInput
   InvoiceStatus?: Prisma.InvoiceStatusOrderByWithRelationInput
+  PriceList?: Prisma.PriceListOrderByWithRelationInput
   InvoiceOutContact?: Prisma.InvoiceOutContactOrderByRelationAggregateInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceOrderByRelationAggregateInput
   _relevance?: Prisma.InvoiceOutOrderByRelevanceInput
@@ -395,7 +395,6 @@ export type InvoiceOutWhereUniqueInput = Prisma.AtLeast<{
   invoiceStatusId?: Prisma.StringFilter<"InvoiceOut"> | string
   priceListId?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   InvoiceType?: Prisma.XOR<Prisma.InvoiceTypeScalarRelationFilter, Prisma.InvoiceTypeWhereInput>
-  PriceList?: Prisma.XOR<Prisma.PriceListNullableScalarRelationFilter, Prisma.PriceListWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
@@ -403,6 +402,7 @@ export type InvoiceOutWhereUniqueInput = Prisma.AtLeast<{
   PaymentMethod?: Prisma.XOR<Prisma.PaymentMethodScalarRelationFilter, Prisma.PaymentMethodWhereInput>
   InvoiceSentType?: Prisma.XOR<Prisma.InvoiceSentTypeScalarRelationFilter, Prisma.InvoiceSentTypeWhereInput>
   InvoiceStatus?: Prisma.XOR<Prisma.InvoiceStatusScalarRelationFilter, Prisma.InvoiceStatusWhereInput>
+  PriceList?: Prisma.XOR<Prisma.PriceListNullableScalarRelationFilter, Prisma.PriceListWhereInput> | null
   InvoiceOutContact?: Prisma.InvoiceOutContactListRelationFilter
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceListRelationFilter
 }, "id" | "invoiceNumber">
@@ -478,7 +478,6 @@ export type InvoiceOutCreateInput = {
   outstanding?: boolean
   deleted?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput
@@ -486,6 +485,7 @@ export type InvoiceOutCreateInput = {
   PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutInvoiceOutInput
   InvoiceSentType: Prisma.InvoiceSentTypeCreateNestedOneWithoutInvoiceOutInput
   InvoiceStatus: Prisma.InvoiceStatusCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutInvoiceOutInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
@@ -532,7 +532,6 @@ export type InvoiceOutUpdateInput = {
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeNestedInput
@@ -540,6 +539,7 @@ export type InvoiceOutUpdateInput = {
   PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceSentType?: Prisma.InvoiceSentTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceStatus?: Prisma.InvoiceStatusUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutInvoiceOutNestedInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
@@ -1154,13 +1154,13 @@ export type InvoiceOutCreateWithoutEmployeeInput = {
   outstanding?: boolean
   deleted?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeInput
   PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutInvoiceOutInput
   InvoiceSentType: Prisma.InvoiceSentTypeCreateNestedOneWithoutInvoiceOutInput
   InvoiceStatus: Prisma.InvoiceStatusCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutInvoiceOutInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
@@ -1216,13 +1216,13 @@ export type InvoiceOutCreateWithoutEmployee_InvoiceOut_deletedByToEmployeeInput 
   outstanding?: boolean
   deleted?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeInput
   PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutInvoiceOutInput
   InvoiceSentType: Prisma.InvoiceSentTypeCreateNestedOneWithoutInvoiceOutInput
   InvoiceStatus: Prisma.InvoiceStatusCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutInvoiceOutInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
@@ -1278,13 +1278,13 @@ export type InvoiceOutCreateWithoutEmployee_InvoiceOut_modifiedByToEmployeeInput
   outstanding?: boolean
   deleted?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput
   PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutInvoiceOutInput
   InvoiceSentType: Prisma.InvoiceSentTypeCreateNestedOneWithoutInvoiceOutInput
   InvoiceStatus: Prisma.InvoiceStatusCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutInvoiceOutInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
@@ -1415,7 +1415,6 @@ export type InvoiceOutCreateWithoutInvoiceTypeInput = {
   reminderSent?: boolean
   outstanding?: boolean
   deleted?: boolean
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput
@@ -1423,6 +1422,7 @@ export type InvoiceOutCreateWithoutInvoiceTypeInput = {
   PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutInvoiceOutInput
   InvoiceSentType: Prisma.InvoiceSentTypeCreateNestedOneWithoutInvoiceOutInput
   InvoiceStatus: Prisma.InvoiceStatusCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutInvoiceOutInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
@@ -1494,13 +1494,13 @@ export type InvoiceOutCreateWithoutTargetInput = {
   outstanding?: boolean
   deleted?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeInput
   PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutInvoiceOutInput
   InvoiceSentType: Prisma.InvoiceSentTypeCreateNestedOneWithoutInvoiceOutInput
   InvoiceStatus: Prisma.InvoiceStatusCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutInvoiceOutInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
@@ -1572,7 +1572,6 @@ export type InvoiceOutCreateWithoutWorkOrderInvoiceInput = {
   outstanding?: boolean
   deleted?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput
@@ -1580,6 +1579,7 @@ export type InvoiceOutCreateWithoutWorkOrderInvoiceInput = {
   PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutInvoiceOutInput
   InvoiceSentType: Prisma.InvoiceSentTypeCreateNestedOneWithoutInvoiceOutInput
   InvoiceStatus: Prisma.InvoiceStatusCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutInvoiceOutInput
 }
 
@@ -1640,7 +1640,6 @@ export type InvoiceOutUpdateWithoutWorkOrderInvoiceInput = {
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeNestedInput
@@ -1648,6 +1647,7 @@ export type InvoiceOutUpdateWithoutWorkOrderInvoiceInput = {
   PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceSentType?: Prisma.InvoiceSentTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceStatus?: Prisma.InvoiceStatusUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutInvoiceOutNestedInput
 }
 
@@ -1692,7 +1692,6 @@ export type InvoiceOutCreateWithoutInvoiceOutContactInput = {
   outstanding?: boolean
   deleted?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput
@@ -1700,6 +1699,7 @@ export type InvoiceOutCreateWithoutInvoiceOutContactInput = {
   PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutInvoiceOutInput
   InvoiceSentType: Prisma.InvoiceSentTypeCreateNestedOneWithoutInvoiceOutInput
   InvoiceStatus: Prisma.InvoiceStatusCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
 
@@ -1760,7 +1760,6 @@ export type InvoiceOutUpdateWithoutInvoiceOutContactInput = {
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeNestedInput
@@ -1768,6 +1767,7 @@ export type InvoiceOutUpdateWithoutInvoiceOutContactInput = {
   PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceSentType?: Prisma.InvoiceSentTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceStatus?: Prisma.InvoiceStatusUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
 
@@ -1812,13 +1812,13 @@ export type InvoiceOutCreateWithoutInvoiceSentTypeInput = {
   outstanding?: boolean
   deleted?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeInput
   PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutInvoiceOutInput
   InvoiceStatus: Prisma.InvoiceStatusCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutInvoiceOutInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
@@ -1890,13 +1890,13 @@ export type InvoiceOutCreateWithoutInvoiceStatusInput = {
   outstanding?: boolean
   deleted?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeInput
   PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutInvoiceOutInput
   InvoiceSentType: Prisma.InvoiceSentTypeCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutInvoiceOutInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
@@ -1968,13 +1968,13 @@ export type InvoiceOutCreateWithoutPaymentMethodInput = {
   outstanding?: boolean
   deleted?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeInput
   InvoiceSentType: Prisma.InvoiceSentTypeCreateNestedOneWithoutInvoiceOutInput
   InvoiceStatus: Prisma.InvoiceStatusCreateNestedOneWithoutInvoiceOutInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutInvoiceOutInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutInvoiceOutInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
@@ -2196,13 +2196,13 @@ export type InvoiceOutUpdateWithoutEmployeeInput = {
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeNestedInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeNestedInput
   PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceSentType?: Prisma.InvoiceSentTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceStatus?: Prisma.InvoiceStatusUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutInvoiceOutNestedInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
@@ -2272,13 +2272,13 @@ export type InvoiceOutUpdateWithoutEmployee_InvoiceOut_deletedByToEmployeeInput 
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeNestedInput
   PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceSentType?: Prisma.InvoiceSentTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceStatus?: Prisma.InvoiceStatusUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutInvoiceOutNestedInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
@@ -2348,13 +2348,13 @@ export type InvoiceOutUpdateWithoutEmployee_InvoiceOut_modifiedByToEmployeeInput
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeNestedInput
   PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceSentType?: Prisma.InvoiceSentTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceStatus?: Prisma.InvoiceStatusUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutInvoiceOutNestedInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
@@ -2447,7 +2447,6 @@ export type InvoiceOutUpdateWithoutInvoiceTypeInput = {
   reminderSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeNestedInput
@@ -2455,6 +2454,7 @@ export type InvoiceOutUpdateWithoutInvoiceTypeInput = {
   PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceSentType?: Prisma.InvoiceSentTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceStatus?: Prisma.InvoiceStatusUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutInvoiceOutNestedInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
@@ -2548,13 +2548,13 @@ export type InvoiceOutUpdateWithoutTargetInput = {
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeNestedInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeNestedInput
   PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceSentType?: Prisma.InvoiceSentTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceStatus?: Prisma.InvoiceStatusUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutInvoiceOutNestedInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
@@ -2648,13 +2648,13 @@ export type InvoiceOutUpdateWithoutInvoiceSentTypeInput = {
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeNestedInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeNestedInput
   PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceStatus?: Prisma.InvoiceStatusUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutInvoiceOutNestedInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
@@ -2748,13 +2748,13 @@ export type InvoiceOutUpdateWithoutInvoiceStatusInput = {
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeNestedInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeNestedInput
   PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceSentType?: Prisma.InvoiceSentTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutInvoiceOutNestedInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
@@ -2848,13 +2848,13 @@ export type InvoiceOutUpdateWithoutPaymentMethodInput = {
   outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_deletedByToEmployeeNestedInput
   Employee_InvoiceOut_modifiedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOut_InvoiceOut_modifiedByToEmployeeNestedInput
   InvoiceSentType?: Prisma.InvoiceSentTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   InvoiceStatus?: Prisma.InvoiceStatusUpdateOneRequiredWithoutInvoiceOutNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutInvoiceOutNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutInvoiceOutNestedInput
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
@@ -3073,7 +3073,6 @@ export type InvoiceOutSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   invoiceStatusId?: boolean
   priceListId?: boolean
   InvoiceType?: boolean | Prisma.InvoiceTypeDefaultArgs<ExtArgs>
-  PriceList?: boolean | Prisma.InvoiceOut$PriceListArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   Employee_InvoiceOut_deletedByToEmployee?: boolean | Prisma.InvoiceOut$Employee_InvoiceOut_deletedByToEmployeeArgs<ExtArgs>
@@ -3081,6 +3080,7 @@ export type InvoiceOutSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   PaymentMethod?: boolean | Prisma.PaymentMethodDefaultArgs<ExtArgs>
   InvoiceSentType?: boolean | Prisma.InvoiceSentTypeDefaultArgs<ExtArgs>
   InvoiceStatus?: boolean | Prisma.InvoiceStatusDefaultArgs<ExtArgs>
+  PriceList?: boolean | Prisma.InvoiceOut$PriceListArgs<ExtArgs>
   InvoiceOutContact?: boolean | Prisma.InvoiceOut$InvoiceOutContactArgs<ExtArgs>
   WorkOrderInvoice?: boolean | Prisma.InvoiceOut$WorkOrderInvoiceArgs<ExtArgs>
   _count?: boolean | Prisma.InvoiceOutCountOutputTypeDefaultArgs<ExtArgs>
@@ -3116,7 +3116,6 @@ export type InvoiceOutSelectScalar = {
 export type InvoiceOutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "poNumber" | "humanId" | "invoiceDate" | "createdAt" | "dueDate" | "sentDate" | "deletedAt" | "modifiedAt" | "reminderSent" | "outstanding" | "deleted" | "deletedBy" | "createdBy" | "modifiedBy" | "invoiceTypeId" | "targetId" | "paymentMethodId" | "invoiceSentTypeId" | "invoiceStatusId" | "priceListId", ExtArgs["result"]["invoiceOut"]>
 export type InvoiceOutInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   InvoiceType?: boolean | Prisma.InvoiceTypeDefaultArgs<ExtArgs>
-  PriceList?: boolean | Prisma.InvoiceOut$PriceListArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   Employee_InvoiceOut_deletedByToEmployee?: boolean | Prisma.InvoiceOut$Employee_InvoiceOut_deletedByToEmployeeArgs<ExtArgs>
@@ -3124,6 +3123,7 @@ export type InvoiceOutInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   PaymentMethod?: boolean | Prisma.PaymentMethodDefaultArgs<ExtArgs>
   InvoiceSentType?: boolean | Prisma.InvoiceSentTypeDefaultArgs<ExtArgs>
   InvoiceStatus?: boolean | Prisma.InvoiceStatusDefaultArgs<ExtArgs>
+  PriceList?: boolean | Prisma.InvoiceOut$PriceListArgs<ExtArgs>
   InvoiceOutContact?: boolean | Prisma.InvoiceOut$InvoiceOutContactArgs<ExtArgs>
   WorkOrderInvoice?: boolean | Prisma.InvoiceOut$WorkOrderInvoiceArgs<ExtArgs>
   _count?: boolean | Prisma.InvoiceOutCountOutputTypeDefaultArgs<ExtArgs>
@@ -3133,7 +3133,6 @@ export type $InvoiceOutPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "InvoiceOut"
   objects: {
     InvoiceType: Prisma.$InvoiceTypePayload<ExtArgs>
-    PriceList: Prisma.$PriceListPayload<ExtArgs> | null
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
     Employee_InvoiceOut_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
@@ -3141,6 +3140,7 @@ export type $InvoiceOutPayload<ExtArgs extends runtime.Types.Extensions.Internal
     PaymentMethod: Prisma.$PaymentMethodPayload<ExtArgs>
     InvoiceSentType: Prisma.$InvoiceSentTypePayload<ExtArgs>
     InvoiceStatus: Prisma.$InvoiceStatusPayload<ExtArgs>
+    PriceList: Prisma.$PriceListPayload<ExtArgs> | null
     InvoiceOutContact: Prisma.$InvoiceOutContactPayload<ExtArgs>[]
     WorkOrderInvoice: Prisma.$WorkOrderInvoicePayload<ExtArgs>[]
   }
@@ -3508,7 +3508,6 @@ readonly fields: InvoiceOutFieldRefs;
 export interface Prisma__InvoiceOutClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   InvoiceType<T extends Prisma.InvoiceTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__InvoiceTypeClient<runtime.Types.Result.GetResult<Prisma.$InvoiceTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  PriceList<T extends Prisma.InvoiceOut$PriceListArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOut$PriceListArgs<ExtArgs>>): Prisma.Prisma__PriceListClient<runtime.Types.Result.GetResult<Prisma.$PriceListPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_InvoiceOut_deletedByToEmployee<T extends Prisma.InvoiceOut$Employee_InvoiceOut_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOut$Employee_InvoiceOut_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -3516,6 +3515,7 @@ export interface Prisma__InvoiceOutClient<T, Null = never, ExtArgs extends runti
   PaymentMethod<T extends Prisma.PaymentMethodDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PaymentMethodDefaultArgs<ExtArgs>>): Prisma.Prisma__PaymentMethodClient<runtime.Types.Result.GetResult<Prisma.$PaymentMethodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   InvoiceSentType<T extends Prisma.InvoiceSentTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceSentTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__InvoiceSentTypeClient<runtime.Types.Result.GetResult<Prisma.$InvoiceSentTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   InvoiceStatus<T extends Prisma.InvoiceStatusDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceStatusDefaultArgs<ExtArgs>>): Prisma.Prisma__InvoiceStatusClient<runtime.Types.Result.GetResult<Prisma.$InvoiceStatusPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  PriceList<T extends Prisma.InvoiceOut$PriceListArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOut$PriceListArgs<ExtArgs>>): Prisma.Prisma__PriceListClient<runtime.Types.Result.GetResult<Prisma.$PriceListPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   InvoiceOutContact<T extends Prisma.InvoiceOut$InvoiceOutContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOut$InvoiceOutContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceOutContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   WorkOrderInvoice<T extends Prisma.InvoiceOut$WorkOrderInvoiceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOut$WorkOrderInvoiceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkOrderInvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -3912,25 +3912,6 @@ export type InvoiceOutDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * InvoiceOut.PriceList
- */
-export type InvoiceOut$PriceListArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PriceList
-   */
-  select?: Prisma.PriceListSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PriceList
-   */
-  omit?: Prisma.PriceListOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PriceListInclude<ExtArgs> | null
-  where?: Prisma.PriceListWhereInput
-}
-
-/**
  * InvoiceOut.Employee_InvoiceOut_deletedByToEmployee
  */
 export type InvoiceOut$Employee_InvoiceOut_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3966,6 +3947,25 @@ export type InvoiceOut$Employee_InvoiceOut_modifiedByToEmployeeArgs<ExtArgs exte
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * InvoiceOut.PriceList
+ */
+export type InvoiceOut$PriceListArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PriceList
+   */
+  select?: Prisma.PriceListSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PriceList
+   */
+  omit?: Prisma.PriceListOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PriceListInclude<ExtArgs> | null
+  where?: Prisma.PriceListWhereInput
 }
 
 /**

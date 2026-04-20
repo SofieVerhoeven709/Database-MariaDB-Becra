@@ -66,7 +66,7 @@ export function generateCompanyNumber() {
 export function generatePurchaseNumber() {
   const now = new Date()
 
-  const year = now.getFullYear().toString() // 2026
+  const year = now.getFullYear().toString().slice(-2) // 2026
   const month = String(now.getMonth() + 1).padStart(2, '0') // 02
   const day = String(now.getDate()).padStart(2, '0') // 24
 
@@ -80,7 +80,7 @@ export function generatePurchaseNumber() {
 export function generateIncomingDeliveryNumber(prefix = 'DEL') {
   const now = new Date()
 
-  const year = now.getFullYear().toString() // 2026
+  const year = now.getFullYear().toString().slice(-2) // 2026
   const month = String(now.getMonth() + 1).padStart(2, '0') // 02
   const day = String(now.getDate()).padStart(2, '0') // 24
 

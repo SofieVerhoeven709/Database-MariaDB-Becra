@@ -803,12 +803,12 @@ model InventoryOrder {
   notDeliverable                               Boolean   @default(false)
   notCorrect                                   Boolean   @default(false)
   notCorrectReason                             String?   @db.Text
+  snapshotTakenAt                              DateTime? @db.DateTime(0)
   createdAt                                    DateTime  @default(now()) @db.DateTime(0)
   createdBy                                    String    @db.Char(36)
   deleted                                      Boolean   @default(false)
   deletedAt                                    DateTime? @db.DateTime(0)
   deletedBy                                    String?   @db.Char(36)
-  snapshotTakenAt                              DateTime? @db.DateTime(0)
   Material                                     Material  @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "fk_inventoryOrder_materialId")
   Employee                                     Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_2")
   Employee_InventoryOrder_approvedByToEmployee Employee? @relation("InventoryOrder_approvedByToEmployee", fields: [approvedBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_3")
@@ -943,7 +943,6 @@ model InvoiceOut {
   invoiceStatusId                          String              @db.Char(36)
   priceListId                              String?             @db.Char(36)
   InvoiceType                              InvoiceType         @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
-  PriceList                                PriceList?          @relation(fields: [priceListId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOut_ibfk_10")
   Employee                                 Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_2")
   Target                                   Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_3")
   Employee_InvoiceOut_deletedByToEmployee  Employee?           @relation("InvoiceOut_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_4")
@@ -951,6 +950,7 @@ model InvoiceOut {
   PaymentMethod                            PaymentMethod       @relation(fields: [paymentMethodId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_6")
   InvoiceSentType                          InvoiceSentType     @relation(fields: [invoiceSentTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_7")
   InvoiceStatus                            InvoiceStatus       @relation(fields: [invoiceStatusId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_8")
+  PriceList                                PriceList?          @relation(fields: [priceListId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOut_ibfk_10")
   InvoiceOutContact                        InvoiceOutContact[]
   WorkOrderInvoice                         WorkOrderInvoice[]
 
@@ -1576,7 +1576,7 @@ model Purchase {
   quoteSupplierId                       String?            @db.Char(36)
   paymentConditionId                    String?            @db.Char(36)
   status                                String             @default("DRAFT") @db.VarChar(50)
-  shortDescription                      String?            @db.VarChar(255)
+  poNumberClient                        String?            @db.VarChar(255)
   description                           String?            @db.Text
   additionalInfo                        String?            @db.VarChar(255)
   createdAt                             DateTime           @default(now()) @db.DateTime(0)
@@ -1869,7 +1869,7 @@ model TimeRegistry {
   @@index([workOrderId], map: "workOrderId")
   @@index([deletedBy], map: "deletedBy")
   @@index([hourTypeId], map: "hourTypeId")
-  @@index([vatMarginId], map: "fk_timeRegistry_vatMarginId")
+  @@index([vatMarginId], map: "vatMarginId")
 }
 
 model TimeRegistryEmployee {
@@ -1910,10 +1910,10 @@ model Training {
   workOrderId                           String            @db.Char(36)
   trainingStandardId                    String            @db.Char(36)
   targetId                              String            @db.Char(36)
+  vatMarginId                           String?           @db.Char(36)
   deleted                               Boolean           @default(false)
   deletedAt                             DateTime?         @db.DateTime(0)
   deletedBy                             String?           @db.Char(36)
-  vatMarginId                           String?           @db.Char(36)
   WorkOrder                             WorkOrder         @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "Training_ibfk_1")
   Employee                              Employee          @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Training_ibfk_2")
   TrainingStandard                      TrainingStandard  @relation(fields: [trainingStandardId], references: [id], onUpdate: Restrict, map: "Training_ibfk_3")
@@ -1927,7 +1927,7 @@ model Training {
   @@index([trainingStandardId], map: "trainingStandardId")
   @@index([workOrderId], map: "workOrderId")
   @@index([deletedBy], map: "deletedBy")
-  @@index([vatMarginId], map: "fk_training_vatMarginId")
+  @@index([vatMarginId], map: "vatMarginId")
 }
 
 model TrainingContact {
@@ -2264,7 +2264,7 @@ model InvoiceOutContact {
   contactId    String     @db.Char(36)
   invoiceOutId String     @db.Char(36)
   Contact      Contact    @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "InvoiceOutContact_ibfk_1")
-  InvoiceOut   InvoiceOut @relation(fields: [invoiceOutId], references: [id], onUpdate: Restrict, map: "InvoiceOutContact_ibfk_2")
+  InvoiceOut   InvoiceOut @relation(fields: [invoiceOutId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "InvoiceOutContact_ibfk_2")
 
   @@index([contactId], map: "contactId")
   @@index([invoiceOutId], map: "invoiceOutId")

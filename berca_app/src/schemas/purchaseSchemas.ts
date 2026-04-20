@@ -7,7 +7,7 @@ export const createPurchaseSchema = z.object({
   companyId: z.string(),
   quoteSupplierId: z.string().nullable().optional(),
   paymentConditionId: z.string().nullable().optional(),
-  shortDescription: z.string().max(255).nullable().optional(),
+  poNumberClient: z.string().max(255).nullable().optional(),
   description: z.string().nullable().optional(),
   additionalInfo: z.string().max(255).nullable().optional(),
 })

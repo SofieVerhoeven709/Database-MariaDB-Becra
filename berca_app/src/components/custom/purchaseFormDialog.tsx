@@ -39,7 +39,7 @@ function emptyPurchase(): MappedPurchase {
     quoteNumber: null,
     paymentConditionId: null,
     paymentConditionName: null,
-    shortDescription: null,
+    poNumberClient: null,
     createdAt: null,
     createdBy: '',
     createdByName: '',
@@ -126,7 +126,9 @@ export function PurchaseFormDialog({
               type="date"
               value={form.purchaseDate ? form.purchaseDate.slice(0, 10) : ''}
               // Convert the date input back to ISO for storage.
-              onChange={e => set('purchaseDate', e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString())}
+              onChange={e =>
+                set('purchaseDate', e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString())
+              }
               className="bg-secondary border-border"
             />
           </div>
@@ -151,7 +153,9 @@ export function PurchaseFormDialog({
           {/* Company (supplier) */}
           <div className="grid gap-1.5">
             <Label>Supplier Company</Label>
-            <Select value={form.companyId || '__none__'} onValueChange={v => set('companyId', v === '__none__' ? '' : v)}>
+            <Select
+              value={form.companyId || '__none__'}
+              onValueChange={v => set('companyId', v === '__none__' ? '' : v)}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select company" />
               </SelectTrigger>
@@ -169,7 +173,9 @@ export function PurchaseFormDialog({
           {/* Quote (optional) */}
           <div className="grid gap-1.5">
             <Label>Quote (optional)</Label>
-            <Select value={form.quoteSupplierId ?? '__none__'} onValueChange={v => set('quoteSupplierId', v === '__none__' ? null : v)}>
+            <Select
+              value={form.quoteSupplierId ?? '__none__'}
+              onValueChange={v => set('quoteSupplierId', v === '__none__' ? null : v)}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select quote" />
               </SelectTrigger>
@@ -204,13 +210,13 @@ export function PurchaseFormDialog({
             </Select>
           </div>
 
-          {/* Short description */}
+          {/* PO Number Client */}
           <div className="grid gap-1.5">
-            <Label htmlFor="shortDescription">Short Description</Label>
+            <Label htmlFor="poNumberClient">PO Number Client</Label>
             <Input
-              id="shortDescription"
-              value={form.shortDescription ?? ''}
-              onChange={e => set('shortDescription', e.target.value || null)}
+              id="poNumberClient"
+              value={form.poNumberClient ?? ''}
+              onChange={e => set('poNumberClient', e.target.value || null)}
               placeholder="Header note"
               className="bg-secondary border-border"
             />

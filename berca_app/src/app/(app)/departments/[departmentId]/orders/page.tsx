@@ -1,10 +1,11 @@
 import {PurchaseTable} from '@/components/custom/purchaseTable'
 import {getPurchases} from '@/dal/purchases'
 import {mapPurchase} from '@/extra/purchases'
+import {mapPaymentCondition} from '@/extra/quoteSuppliers'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getCompanies} from '@/dal/companies'
-import {getPaymentConditionOptions, getQuoteSuppliers} from '@/dal/quoteSuppliers'
+import {getPaymentConditionOptions, getPaymentConditions, getQuoteSuppliers} from '@/dal/quoteSuppliers'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
@@ -19,13 +20,14 @@ function formatShortDate(date: Date) {
 export default async function PurchaseOrdersPage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [department, purchasesFromDAL, profile, companiesRaw, quoteSuppliersRaw, paymentConditionsRaw] = await Promise.all([
+  const [department, purchasesFromDAL, profile, companiesRaw, quoteSuppliersRaw, paymentConditionsRaw, paymentConditionRowsRaw] = await Promise.all([
     getDepartmentById(departmentId),
     getPurchases(),
     getSessionProfileFromCookieOrThrow(),
     getCompanies(),
     getQuoteSuppliers(),
     getPaymentConditionOptions(),
+    getPaymentConditions(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -48,6 +50,10 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
 
   const paymentConditionOptions = paymentConditionsRaw
     .map(pc => ({id: pc.id, name: pc.name}))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  const paymentConditionRows = paymentConditionRowsRaw
+    .map(mapPaymentCondition)
     .sort((a, b) => a.name.localeCompare(b.name))
 
   const datedEntries = purchases
@@ -100,6 +106,7 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
           companies={companyOptions}
           quoteSuppliers={quoteSupplierOptions}
           paymentConditions={paymentConditionOptions}
+          paymentConditionRows={paymentConditionRows}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           departmentId={departmentId}

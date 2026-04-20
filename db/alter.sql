@@ -1833,3 +1833,5 @@ DROP FOREIGN KEY IF EXISTS fk_training_vatMarginId;
 ALTER TABLE Training
 ADD CONSTRAINT fk_training_vatMarginId
 FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE Purchase CHANGE COLUMN IF EXISTS `shortDescription` `poNumberClient` VARCHAR(255);

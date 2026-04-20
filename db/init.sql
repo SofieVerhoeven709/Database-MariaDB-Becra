@@ -1735,7 +1735,7 @@ CREATE TABLE
             quoteSupplierId CHAR(36),
             paymentConditionId CHAR(36),
             status VARCHAR(50) NOT NULL DEFAULT 'DRAFT',
-            shortDescription VARCHAR(255),
+            poNumberClient VARCHAR(255),
             description TEXT,
             additionalInfo VARCHAR(255),
             createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -106,7 +106,9 @@ async function ensurePendingIncomingLinesFromPurchase(
     select: {purchaseDetailId: true},
   })
 
-  const existingPurchaseDetailIds = new Set(existing.map(line => line.purchaseDetailId).filter((id): id is string => !!id))
+  const existingPurchaseDetailIds = new Set(
+    existing.map(line => line.purchaseDetailId).filter((id): id is string => !!id),
+  )
   const toCreate = purchaseDetails.filter(detail => !existingPurchaseDetailIds.has(detail.id))
   if (toCreate.length === 0) return
 
@@ -210,7 +212,7 @@ export const createPurchaseAction = protectedServerFunction({
             companyId: d.companyId,
             quoteSupplierId: d.quoteSupplierId ?? null,
             paymentConditionId: d.paymentConditionId ?? null,
-            shortDescription: d.shortDescription ?? null,
+            poNumberClient: d.poNumberClient ?? null,
             description: d.description ?? null,
             additionalInfo: d.additionalInfo ?? null,
             createdBy: profile.id,

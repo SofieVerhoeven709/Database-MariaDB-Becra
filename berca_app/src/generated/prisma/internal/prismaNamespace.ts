@@ -8178,12 +8178,12 @@ export const InventoryOrderScalarFieldEnum = {
   notDeliverable: 'notDeliverable',
   notCorrect: 'notCorrect',
   notCorrectReason: 'notCorrectReason',
+  snapshotTakenAt: 'snapshotTakenAt',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy',
-  snapshotTakenAt: 'snapshotTakenAt'
+  deletedBy: 'deletedBy'
 } as const
 
 export type InventoryOrderScalarFieldEnum = (typeof InventoryOrderScalarFieldEnum)[keyof typeof InventoryOrderScalarFieldEnum]
@@ -8741,7 +8741,7 @@ export const PurchaseScalarFieldEnum = {
   quoteSupplierId: 'quoteSupplierId',
   paymentConditionId: 'paymentConditionId',
   status: 'status',
-  shortDescription: 'shortDescription',
+  poNumberClient: 'poNumberClient',
   description: 'description',
   additionalInfo: 'additionalInfo',
   createdAt: 'createdAt',
@@ -8972,10 +8972,10 @@ export const TrainingScalarFieldEnum = {
   workOrderId: 'workOrderId',
   trainingStandardId: 'trainingStandardId',
   targetId: 'targetId',
+  vatMarginId: 'vatMarginId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy',
-  vatMarginId: 'vatMarginId'
+  deletedBy: 'deletedBy'
 } as const
 
 export type TrainingScalarFieldEnum = (typeof TrainingScalarFieldEnum)[keyof typeof TrainingScalarFieldEnum]
@@ -10452,7 +10452,7 @@ export const PurchaseOrderByRelevanceFieldEnum = {
   quoteSupplierId: 'quoteSupplierId',
   paymentConditionId: 'paymentConditionId',
   status: 'status',
-  shortDescription: 'shortDescription',
+  poNumberClient: 'poNumberClient',
   description: 'description',
   additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
@@ -10620,8 +10620,8 @@ export const TrainingOrderByRelevanceFieldEnum = {
   workOrderId: 'workOrderId',
   trainingStandardId: 'trainingStandardId',
   targetId: 'targetId',
-  deletedBy: 'deletedBy',
-  vatMarginId: 'vatMarginId'
+  vatMarginId: 'vatMarginId',
+  deletedBy: 'deletedBy'
 } as const
 
 export type TrainingOrderByRelevanceFieldEnum = (typeof TrainingOrderByRelevanceFieldEnum)[keyof typeof TrainingOrderByRelevanceFieldEnum]

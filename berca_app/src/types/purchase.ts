@@ -9,7 +9,7 @@ export interface MappedPurchase {
   quoteNumber: string | null
   paymentConditionId: string | null
   paymentConditionName: string | null
-  shortDescription: string | null
+  poNumberClient: string | null
   createdAt: string | null
   createdBy: string
   createdByName: string

@@ -32,7 +32,7 @@ export type PurchaseMinAggregateOutputType = {
   quoteSupplierId: string | null
   paymentConditionId: string | null
   status: string | null
-  shortDescription: string | null
+  poNumberClient: string | null
   description: string | null
   additionalInfo: string | null
   createdAt: Date | null
@@ -50,7 +50,7 @@ export type PurchaseMaxAggregateOutputType = {
   quoteSupplierId: string | null
   paymentConditionId: string | null
   status: string | null
-  shortDescription: string | null
+  poNumberClient: string | null
   description: string | null
   additionalInfo: string | null
   createdAt: Date | null
@@ -68,7 +68,7 @@ export type PurchaseCountAggregateOutputType = {
   quoteSupplierId: number
   paymentConditionId: number
   status: number
-  shortDescription: number
+  poNumberClient: number
   description: number
   additionalInfo: number
   createdAt: number
@@ -88,7 +88,7 @@ export type PurchaseMinAggregateInputType = {
   quoteSupplierId?: true
   paymentConditionId?: true
   status?: true
-  shortDescription?: true
+  poNumberClient?: true
   description?: true
   additionalInfo?: true
   createdAt?: true
@@ -106,7 +106,7 @@ export type PurchaseMaxAggregateInputType = {
   quoteSupplierId?: true
   paymentConditionId?: true
   status?: true
-  shortDescription?: true
+  poNumberClient?: true
   description?: true
   additionalInfo?: true
   createdAt?: true
@@ -124,7 +124,7 @@ export type PurchaseCountAggregateInputType = {
   quoteSupplierId?: true
   paymentConditionId?: true
   status?: true
-  shortDescription?: true
+  poNumberClient?: true
   description?: true
   additionalInfo?: true
   createdAt?: true
@@ -215,7 +215,7 @@ export type PurchaseGroupByOutputType = {
   quoteSupplierId: string | null
   paymentConditionId: string | null
   status: string
-  shortDescription: string | null
+  poNumberClient: string | null
   description: string | null
   additionalInfo: string | null
   createdAt: Date
@@ -254,7 +254,7 @@ export type PurchaseWhereInput = {
   quoteSupplierId?: Prisma.StringNullableFilter<"Purchase"> | string | null
   paymentConditionId?: Prisma.StringNullableFilter<"Purchase"> | string | null
   status?: Prisma.StringFilter<"Purchase"> | string
-  shortDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  poNumberClient?: Prisma.StringNullableFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Purchase"> | Date | string
@@ -279,7 +279,7 @@ export type PurchaseOrderByWithRelationInput = {
   quoteSupplierId?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentConditionId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  poNumberClient?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -308,7 +308,7 @@ export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
   quoteSupplierId?: Prisma.StringNullableFilter<"Purchase"> | string | null
   paymentConditionId?: Prisma.StringNullableFilter<"Purchase"> | string | null
   status?: Prisma.StringFilter<"Purchase"> | string
-  shortDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  poNumberClient?: Prisma.StringNullableFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Purchase"> | Date | string
@@ -333,7 +333,7 @@ export type PurchaseOrderByWithAggregationInput = {
   quoteSupplierId?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentConditionId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  poNumberClient?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -357,7 +357,7 @@ export type PurchaseScalarWhereWithAggregatesInput = {
   quoteSupplierId?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   paymentConditionId?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   status?: Prisma.StringWithAggregatesFilter<"Purchase"> | string
-  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  poNumberClient?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Purchase"> | Date | string
@@ -372,7 +372,7 @@ export type PurchaseCreateInput = {
   purchaseNumber: string
   purchaseDate: Date | string
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -395,7 +395,7 @@ export type PurchaseUncheckedCreateInput = {
   quoteSupplierId?: string | null
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -412,7 +412,7 @@ export type PurchaseUpdateInput = {
   purchaseNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -435,7 +435,7 @@ export type PurchaseUncheckedUpdateInput = {
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -455,7 +455,7 @@ export type PurchaseCreateManyInput = {
   quoteSupplierId?: string | null
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -470,7 +470,7 @@ export type PurchaseUpdateManyMutationInput = {
   purchaseNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -486,7 +486,7 @@ export type PurchaseUncheckedUpdateManyInput = {
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -520,7 +520,7 @@ export type PurchaseCountOrderByAggregateInput = {
   quoteSupplierId?: Prisma.SortOrder
   paymentConditionId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
+  poNumberClient?: Prisma.SortOrder
   description?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -538,7 +538,7 @@ export type PurchaseMaxOrderByAggregateInput = {
   quoteSupplierId?: Prisma.SortOrder
   paymentConditionId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
+  poNumberClient?: Prisma.SortOrder
   description?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -556,7 +556,7 @@ export type PurchaseMinOrderByAggregateInput = {
   quoteSupplierId?: Prisma.SortOrder
   paymentConditionId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
+  poNumberClient?: Prisma.SortOrder
   description?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -821,7 +821,7 @@ export type PurchaseCreateWithoutCompanyInput = {
   purchaseNumber: string
   purchaseDate: Date | string
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -842,7 +842,7 @@ export type PurchaseUncheckedCreateWithoutCompanyInput = {
   quoteSupplierId?: string | null
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -891,7 +891,7 @@ export type PurchaseScalarWhereInput = {
   quoteSupplierId?: Prisma.StringNullableFilter<"Purchase"> | string | null
   paymentConditionId?: Prisma.StringNullableFilter<"Purchase"> | string | null
   status?: Prisma.StringFilter<"Purchase"> | string
-  shortDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  poNumberClient?: Prisma.StringNullableFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Purchase"> | Date | string
@@ -906,7 +906,7 @@ export type PurchaseCreateWithoutEmployeeInput = {
   purchaseNumber: string
   purchaseDate: Date | string
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -928,7 +928,7 @@ export type PurchaseUncheckedCreateWithoutEmployeeInput = {
   quoteSupplierId?: string | null
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -954,7 +954,7 @@ export type PurchaseCreateWithoutEmployee_Purchase_deletedByToEmployeeInput = {
   purchaseNumber: string
   purchaseDate: Date | string
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -976,7 +976,7 @@ export type PurchaseUncheckedCreateWithoutEmployee_Purchase_deletedByToEmployeeI
   quoteSupplierId?: string | null
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1034,7 +1034,7 @@ export type PurchaseCreateWithoutPurchaseDetailInput = {
   purchaseNumber: string
   purchaseDate: Date | string
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1056,7 +1056,7 @@ export type PurchaseUncheckedCreateWithoutPurchaseDetailInput = {
   quoteSupplierId?: string | null
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1088,7 +1088,7 @@ export type PurchaseUpdateWithoutPurchaseDetailInput = {
   purchaseNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1110,7 +1110,7 @@ export type PurchaseUncheckedUpdateWithoutPurchaseDetailInput = {
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1126,7 +1126,7 @@ export type PurchaseCreateWithoutQuoteSupplierInput = {
   purchaseNumber: string
   purchaseDate: Date | string
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1147,7 +1147,7 @@ export type PurchaseUncheckedCreateWithoutQuoteSupplierInput = {
   companyId: string
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1190,7 +1190,7 @@ export type PurchaseCreateWithoutPaymentConditionInput = {
   purchaseNumber: string
   purchaseDate: Date | string
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1211,7 +1211,7 @@ export type PurchaseUncheckedCreateWithoutPaymentConditionInput = {
   companyId: string
   quoteSupplierId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1254,7 +1254,7 @@ export type PurchaseCreateWithoutIncomingDeliveryInput = {
   purchaseNumber: string
   purchaseDate: Date | string
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1276,7 +1276,7 @@ export type PurchaseUncheckedCreateWithoutIncomingDeliveryInput = {
   quoteSupplierId?: string | null
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1308,7 +1308,7 @@ export type PurchaseUpdateWithoutIncomingDeliveryInput = {
   purchaseNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1330,7 +1330,7 @@ export type PurchaseUncheckedUpdateWithoutIncomingDeliveryInput = {
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1348,7 +1348,7 @@ export type PurchaseCreateManyCompanyInput = {
   quoteSupplierId?: string | null
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1363,7 +1363,7 @@ export type PurchaseUpdateWithoutCompanyInput = {
   purchaseNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1384,7 +1384,7 @@ export type PurchaseUncheckedUpdateWithoutCompanyInput = {
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1403,7 +1403,7 @@ export type PurchaseUncheckedUpdateManyWithoutCompanyInput = {
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1421,7 +1421,7 @@ export type PurchaseCreateManyEmployeeInput = {
   quoteSupplierId?: string | null
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1438,7 +1438,7 @@ export type PurchaseCreateManyEmployee_Purchase_deletedByToEmployeeInput = {
   quoteSupplierId?: string | null
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1452,7 +1452,7 @@ export type PurchaseUpdateWithoutEmployeeInput = {
   purchaseNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1474,7 +1474,7 @@ export type PurchaseUncheckedUpdateWithoutEmployeeInput = {
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1493,7 +1493,7 @@ export type PurchaseUncheckedUpdateManyWithoutEmployeeInput = {
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1507,7 +1507,7 @@ export type PurchaseUpdateWithoutEmployee_Purchase_deletedByToEmployeeInput = {
   purchaseNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1529,7 +1529,7 @@ export type PurchaseUncheckedUpdateWithoutEmployee_Purchase_deletedByToEmployeeI
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1548,7 +1548,7 @@ export type PurchaseUncheckedUpdateManyWithoutEmployee_Purchase_deletedByToEmplo
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1564,7 +1564,7 @@ export type PurchaseCreateManyQuoteSupplierInput = {
   companyId: string
   paymentConditionId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1579,7 +1579,7 @@ export type PurchaseUpdateWithoutQuoteSupplierInput = {
   purchaseNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1600,7 +1600,7 @@ export type PurchaseUncheckedUpdateWithoutQuoteSupplierInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1619,7 +1619,7 @@ export type PurchaseUncheckedUpdateManyWithoutQuoteSupplierInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1636,7 +1636,7 @@ export type PurchaseCreateManyPaymentConditionInput = {
   companyId: string
   quoteSupplierId?: string | null
   status?: string
-  shortDescription?: string | null
+  poNumberClient?: string | null
   description?: string | null
   additionalInfo?: string | null
   createdAt?: Date | string
@@ -1651,7 +1651,7 @@ export type PurchaseUpdateWithoutPaymentConditionInput = {
   purchaseNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1672,7 +1672,7 @@ export type PurchaseUncheckedUpdateWithoutPaymentConditionInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1691,7 +1691,7 @@ export type PurchaseUncheckedUpdateManyWithoutPaymentConditionInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumberClient?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1749,7 +1749,7 @@ export type PurchaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   quoteSupplierId?: boolean
   paymentConditionId?: boolean
   status?: boolean
-  shortDescription?: boolean
+  poNumberClient?: boolean
   description?: boolean
   additionalInfo?: boolean
   createdAt?: boolean
@@ -1777,7 +1777,7 @@ export type PurchaseSelectScalar = {
   quoteSupplierId?: boolean
   paymentConditionId?: boolean
   status?: boolean
-  shortDescription?: boolean
+  poNumberClient?: boolean
   description?: boolean
   additionalInfo?: boolean
   createdAt?: boolean
@@ -1787,7 +1787,7 @@ export type PurchaseSelectScalar = {
   deletedBy?: boolean
 }
 
-export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseNumber" | "purchaseDate" | "companyId" | "quoteSupplierId" | "paymentConditionId" | "status" | "shortDescription" | "description" | "additionalInfo" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["purchase"]>
+export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseNumber" | "purchaseDate" | "companyId" | "quoteSupplierId" | "paymentConditionId" | "status" | "poNumberClient" | "description" | "additionalInfo" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["purchase"]>
 export type PurchaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   IncomingDelivery?: boolean | Prisma.Purchase$IncomingDeliveryArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
@@ -1818,7 +1818,7 @@ export type $PurchasePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     quoteSupplierId: string | null
     paymentConditionId: string | null
     status: string
-    shortDescription: string | null
+    poNumberClient: string | null
     description: string | null
     additionalInfo: string | null
     createdAt: Date
@@ -2209,7 +2209,7 @@ export interface PurchaseFieldRefs {
   readonly quoteSupplierId: Prisma.FieldRef<"Purchase", 'String'>
   readonly paymentConditionId: Prisma.FieldRef<"Purchase", 'String'>
   readonly status: Prisma.FieldRef<"Purchase", 'String'>
-  readonly shortDescription: Prisma.FieldRef<"Purchase", 'String'>
+  readonly poNumberClient: Prisma.FieldRef<"Purchase", 'String'>
   readonly description: Prisma.FieldRef<"Purchase", 'String'>
   readonly additionalInfo: Prisma.FieldRef<"Purchase", 'String'>
   readonly createdAt: Prisma.FieldRef<"Purchase", 'DateTime'>

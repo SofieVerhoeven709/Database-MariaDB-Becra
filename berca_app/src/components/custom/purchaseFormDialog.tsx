@@ -7,7 +7,7 @@ import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedPurchase} from '@/types/purchase'
-import {generatePurchaseNumber} from '@/lib/utils'
+import {generateOrderConfirmationNumber, generatePurchaseNumber} from '@/lib/utils'
 
 export interface PurchaseOption {
   id: string
@@ -27,6 +27,7 @@ interface PurchaseFormDialogProps {
 type PurchaseFormState = MappedPurchase
 
 const STATUS_OPTIONS = ['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED']
+const BOC_STATUS_OPTIONS = ['DRAFT', 'SENT', 'CONFIRMED', 'CANCELLED']
 
 function emptyPurchase(): PurchaseFormState {
   // Defaults for a brand-new purchase order form.
@@ -35,6 +36,10 @@ function emptyPurchase(): PurchaseFormState {
     purchaseNumber: generatePurchaseNumber(),
     customerPoNumber: null,
     bocNumber: null,
+    bocCustomerName: null,
+    bocDescription: null,
+    bocCreatedAt: null,
+    bocStatus: 'DRAFT',
     purchaseDate: new Date().toISOString(),
     status: 'DRAFT',
     companyId: '',
@@ -150,10 +155,69 @@ export function PurchaseFormDialog({
                 size="sm"
                 className="h-10 px-3 border-border text-xs shrink-0"
                 disabled={!form.customerPoNumber?.trim()}
-                onClick={() => set('bocNumber', form.customerPoNumber?.trim() ?? null)}>
-                From PO customer
+                onClick={() => {
+                  set('bocNumber', generateOrderConfirmationNumber())
+                  set('bocCreatedAt', new Date().toISOString())
+                }}>
+                Generate OC
               </Button>
             </div>
+          </div>
+
+          {/* BOC customer */}
+          <div className="grid gap-1.5">
+            <Label htmlFor="bocCustomerName">Custumor</Label>
+            <Input
+              id="bocCustomerName"
+              value={form.bocCustomerName ?? ''}
+              onChange={e => set('bocCustomerName', e.target.value || null)}
+              placeholder="Customer name"
+              className="bg-secondary border-border"
+            />
+          </div>
+
+          {/* BOC description */}
+          <div className="grid gap-1.5">
+            <Label htmlFor="bocDescription">Description of BOC</Label>
+            <Input
+              id="bocDescription"
+              value={form.bocDescription ?? ''}
+              onChange={e => set('bocDescription', e.target.value || null)}
+              placeholder="Confirmation description"
+              className="bg-secondary border-border"
+            />
+          </div>
+
+          {/* BOC creation date */}
+          <div className="grid gap-1.5">
+            <Label htmlFor="bocCreatedAt">Created on date</Label>
+            <Input
+              id="bocCreatedAt"
+              type="date"
+              value={form.bocCreatedAt ? form.bocCreatedAt.slice(0, 10) : ''}
+              onChange={e => set('bocCreatedAt', e.target.value ? new Date(e.target.value).toISOString() : null)}
+              className="bg-secondary border-border"
+            />
+          </div>
+
+          {/* BOC status */}
+          <div className="grid gap-1.5">
+            <Label>BOC status</Label>
+            <Select
+              value={form.bocStatus ?? '__none__'}
+              onValueChange={v => set('bocStatus', v === '__none__' ? null : v)}>
+              <SelectTrigger className="bg-secondary border-border">
+                <SelectValue placeholder="Select BOC status" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                <SelectItem value="__none__">— None —</SelectItem>
+                {BOC_STATUS_OPTIONS.map(s => (
+                  <SelectItem key={s} value={s}>
+                    {s}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Purchase date */}

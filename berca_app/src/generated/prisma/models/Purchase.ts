@@ -33,6 +33,10 @@ export type PurchaseMinAggregateOutputType = {
   paymentConditionId: string | null
   status: string | null
   customerPoNumber: string | null
+  bocCustomerName: string | null
+  bocDescription: string | null
+  bocCreatedAt: Date | null
+  bocStatus: string | null
   bocNumber: string | null
   description: string | null
   additionalInfo: string | null
@@ -52,6 +56,10 @@ export type PurchaseMaxAggregateOutputType = {
   paymentConditionId: string | null
   status: string | null
   customerPoNumber: string | null
+  bocCustomerName: string | null
+  bocDescription: string | null
+  bocCreatedAt: Date | null
+  bocStatus: string | null
   bocNumber: string | null
   description: string | null
   additionalInfo: string | null
@@ -71,6 +79,10 @@ export type PurchaseCountAggregateOutputType = {
   paymentConditionId: number
   status: number
   customerPoNumber: number
+  bocCustomerName: number
+  bocDescription: number
+  bocCreatedAt: number
+  bocStatus: number
   bocNumber: number
   description: number
   additionalInfo: number
@@ -92,6 +104,10 @@ export type PurchaseMinAggregateInputType = {
   paymentConditionId?: true
   status?: true
   customerPoNumber?: true
+  bocCustomerName?: true
+  bocDescription?: true
+  bocCreatedAt?: true
+  bocStatus?: true
   bocNumber?: true
   description?: true
   additionalInfo?: true
@@ -111,6 +127,10 @@ export type PurchaseMaxAggregateInputType = {
   paymentConditionId?: true
   status?: true
   customerPoNumber?: true
+  bocCustomerName?: true
+  bocDescription?: true
+  bocCreatedAt?: true
+  bocStatus?: true
   bocNumber?: true
   description?: true
   additionalInfo?: true
@@ -130,6 +150,10 @@ export type PurchaseCountAggregateInputType = {
   paymentConditionId?: true
   status?: true
   customerPoNumber?: true
+  bocCustomerName?: true
+  bocDescription?: true
+  bocCreatedAt?: true
+  bocStatus?: true
   bocNumber?: true
   description?: true
   additionalInfo?: true
@@ -222,6 +246,10 @@ export type PurchaseGroupByOutputType = {
   paymentConditionId: string | null
   status: string
   customerPoNumber: string | null
+  bocCustomerName: string | null
+  bocDescription: string | null
+  bocCreatedAt: Date | null
+  bocStatus: string | null
   bocNumber: string | null
   description: string | null
   additionalInfo: string | null
@@ -262,6 +290,10 @@ export type PurchaseWhereInput = {
   paymentConditionId?: Prisma.StringNullableFilter<"Purchase"> | string | null
   status?: Prisma.StringFilter<"Purchase"> | string
   customerPoNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  bocCustomerName?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  bocDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  bocCreatedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
+  bocStatus?: Prisma.StringNullableFilter<"Purchase"> | string | null
   bocNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
@@ -288,6 +320,10 @@ export type PurchaseOrderByWithRelationInput = {
   paymentConditionId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   customerPoNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  bocCustomerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  bocDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  bocCreatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  bocStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   bocNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -318,6 +354,10 @@ export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
   paymentConditionId?: Prisma.StringNullableFilter<"Purchase"> | string | null
   status?: Prisma.StringFilter<"Purchase"> | string
   customerPoNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  bocCustomerName?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  bocDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  bocCreatedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
+  bocStatus?: Prisma.StringNullableFilter<"Purchase"> | string | null
   bocNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
@@ -344,6 +384,10 @@ export type PurchaseOrderByWithAggregationInput = {
   paymentConditionId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   customerPoNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  bocCustomerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  bocDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  bocCreatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  bocStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   bocNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -369,6 +413,10 @@ export type PurchaseScalarWhereWithAggregatesInput = {
   paymentConditionId?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   status?: Prisma.StringWithAggregatesFilter<"Purchase"> | string
   customerPoNumber?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  bocCustomerName?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  bocDescription?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  bocCreatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Purchase"> | Date | string | null
+  bocStatus?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   bocNumber?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
@@ -385,6 +433,10 @@ export type PurchaseCreateInput = {
   purchaseDate: Date | string
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -409,6 +461,10 @@ export type PurchaseUncheckedCreateInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -427,6 +483,10 @@ export type PurchaseUpdateInput = {
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -451,6 +511,10 @@ export type PurchaseUncheckedUpdateInput = {
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -472,6 +536,10 @@ export type PurchaseCreateManyInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -488,6 +556,10 @@ export type PurchaseUpdateManyMutationInput = {
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -505,6 +577,10 @@ export type PurchaseUncheckedUpdateManyInput = {
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -540,6 +616,10 @@ export type PurchaseCountOrderByAggregateInput = {
   paymentConditionId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerPoNumber?: Prisma.SortOrder
+  bocCustomerName?: Prisma.SortOrder
+  bocDescription?: Prisma.SortOrder
+  bocCreatedAt?: Prisma.SortOrder
+  bocStatus?: Prisma.SortOrder
   bocNumber?: Prisma.SortOrder
   description?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
@@ -559,6 +639,10 @@ export type PurchaseMaxOrderByAggregateInput = {
   paymentConditionId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerPoNumber?: Prisma.SortOrder
+  bocCustomerName?: Prisma.SortOrder
+  bocDescription?: Prisma.SortOrder
+  bocCreatedAt?: Prisma.SortOrder
+  bocStatus?: Prisma.SortOrder
   bocNumber?: Prisma.SortOrder
   description?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
@@ -578,6 +662,10 @@ export type PurchaseMinOrderByAggregateInput = {
   paymentConditionId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerPoNumber?: Prisma.SortOrder
+  bocCustomerName?: Prisma.SortOrder
+  bocDescription?: Prisma.SortOrder
+  bocCreatedAt?: Prisma.SortOrder
+  bocStatus?: Prisma.SortOrder
   bocNumber?: Prisma.SortOrder
   description?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
@@ -844,6 +932,10 @@ export type PurchaseCreateWithoutCompanyInput = {
   purchaseDate: Date | string
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -866,6 +958,10 @@ export type PurchaseUncheckedCreateWithoutCompanyInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -916,6 +1012,10 @@ export type PurchaseScalarWhereInput = {
   paymentConditionId?: Prisma.StringNullableFilter<"Purchase"> | string | null
   status?: Prisma.StringFilter<"Purchase"> | string
   customerPoNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  bocCustomerName?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  bocDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  bocCreatedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
+  bocStatus?: Prisma.StringNullableFilter<"Purchase"> | string | null
   bocNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
@@ -932,6 +1032,10 @@ export type PurchaseCreateWithoutEmployeeInput = {
   purchaseDate: Date | string
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -955,6 +1059,10 @@ export type PurchaseUncheckedCreateWithoutEmployeeInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -982,6 +1090,10 @@ export type PurchaseCreateWithoutEmployee_Purchase_deletedByToEmployeeInput = {
   purchaseDate: Date | string
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1005,6 +1117,10 @@ export type PurchaseUncheckedCreateWithoutEmployee_Purchase_deletedByToEmployeeI
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1064,6 +1180,10 @@ export type PurchaseCreateWithoutPurchaseDetailInput = {
   purchaseDate: Date | string
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1087,6 +1207,10 @@ export type PurchaseUncheckedCreateWithoutPurchaseDetailInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1120,6 +1244,10 @@ export type PurchaseUpdateWithoutPurchaseDetailInput = {
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1143,6 +1271,10 @@ export type PurchaseUncheckedUpdateWithoutPurchaseDetailInput = {
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1160,6 +1292,10 @@ export type PurchaseCreateWithoutQuoteSupplierInput = {
   purchaseDate: Date | string
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1182,6 +1318,10 @@ export type PurchaseUncheckedCreateWithoutQuoteSupplierInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1226,6 +1366,10 @@ export type PurchaseCreateWithoutPaymentConditionInput = {
   purchaseDate: Date | string
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1248,6 +1392,10 @@ export type PurchaseUncheckedCreateWithoutPaymentConditionInput = {
   quoteSupplierId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1292,6 +1440,10 @@ export type PurchaseCreateWithoutIncomingDeliveryInput = {
   purchaseDate: Date | string
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1315,6 +1467,10 @@ export type PurchaseUncheckedCreateWithoutIncomingDeliveryInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1348,6 +1504,10 @@ export type PurchaseUpdateWithoutIncomingDeliveryInput = {
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1371,6 +1531,10 @@ export type PurchaseUncheckedUpdateWithoutIncomingDeliveryInput = {
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1390,6 +1554,10 @@ export type PurchaseCreateManyCompanyInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1406,6 +1574,10 @@ export type PurchaseUpdateWithoutCompanyInput = {
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1428,6 +1600,10 @@ export type PurchaseUncheckedUpdateWithoutCompanyInput = {
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1448,6 +1624,10 @@ export type PurchaseUncheckedUpdateManyWithoutCompanyInput = {
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1467,6 +1647,10 @@ export type PurchaseCreateManyEmployeeInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1485,6 +1669,10 @@ export type PurchaseCreateManyEmployee_Purchase_deletedByToEmployeeInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1500,6 +1688,10 @@ export type PurchaseUpdateWithoutEmployeeInput = {
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1523,6 +1715,10 @@ export type PurchaseUncheckedUpdateWithoutEmployeeInput = {
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1543,6 +1739,10 @@ export type PurchaseUncheckedUpdateManyWithoutEmployeeInput = {
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1558,6 +1758,10 @@ export type PurchaseUpdateWithoutEmployee_Purchase_deletedByToEmployeeInput = {
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1581,6 +1785,10 @@ export type PurchaseUncheckedUpdateWithoutEmployee_Purchase_deletedByToEmployeeI
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1601,6 +1809,10 @@ export type PurchaseUncheckedUpdateManyWithoutEmployee_Purchase_deletedByToEmplo
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1618,6 +1830,10 @@ export type PurchaseCreateManyQuoteSupplierInput = {
   paymentConditionId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1634,6 +1850,10 @@ export type PurchaseUpdateWithoutQuoteSupplierInput = {
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1656,6 +1876,10 @@ export type PurchaseUncheckedUpdateWithoutQuoteSupplierInput = {
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1676,6 +1900,10 @@ export type PurchaseUncheckedUpdateManyWithoutQuoteSupplierInput = {
   paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1694,6 +1922,10 @@ export type PurchaseCreateManyPaymentConditionInput = {
   quoteSupplierId?: string | null
   status?: string
   customerPoNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | string | null
+  bocStatus?: string | null
   bocNumber?: string | null
   description?: string | null
   additionalInfo?: string | null
@@ -1710,6 +1942,10 @@ export type PurchaseUpdateWithoutPaymentConditionInput = {
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1732,6 +1968,10 @@ export type PurchaseUncheckedUpdateWithoutPaymentConditionInput = {
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1752,6 +1992,10 @@ export type PurchaseUncheckedUpdateManyWithoutPaymentConditionInput = {
   quoteSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   customerPoNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCustomerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bocCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bocStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bocNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1811,6 +2055,10 @@ export type PurchaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   paymentConditionId?: boolean
   status?: boolean
   customerPoNumber?: boolean
+  bocCustomerName?: boolean
+  bocDescription?: boolean
+  bocCreatedAt?: boolean
+  bocStatus?: boolean
   bocNumber?: boolean
   description?: boolean
   additionalInfo?: boolean
@@ -1840,6 +2088,10 @@ export type PurchaseSelectScalar = {
   paymentConditionId?: boolean
   status?: boolean
   customerPoNumber?: boolean
+  bocCustomerName?: boolean
+  bocDescription?: boolean
+  bocCreatedAt?: boolean
+  bocStatus?: boolean
   bocNumber?: boolean
   description?: boolean
   additionalInfo?: boolean
@@ -1850,7 +2102,7 @@ export type PurchaseSelectScalar = {
   deletedBy?: boolean
 }
 
-export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseNumber" | "purchaseDate" | "companyId" | "quoteSupplierId" | "paymentConditionId" | "status" | "customerPoNumber" | "bocNumber" | "description" | "additionalInfo" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["purchase"]>
+export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseNumber" | "purchaseDate" | "companyId" | "quoteSupplierId" | "paymentConditionId" | "status" | "customerPoNumber" | "bocCustomerName" | "bocDescription" | "bocCreatedAt" | "bocStatus" | "bocNumber" | "description" | "additionalInfo" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["purchase"]>
 export type PurchaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   IncomingDelivery?: boolean | Prisma.Purchase$IncomingDeliveryArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
@@ -1882,6 +2134,10 @@ export type $PurchasePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     paymentConditionId: string | null
     status: string
     customerPoNumber: string | null
+    bocCustomerName: string | null
+    bocDescription: string | null
+    bocCreatedAt: Date | null
+    bocStatus: string | null
     bocNumber: string | null
     description: string | null
     additionalInfo: string | null
@@ -2274,6 +2530,10 @@ export interface PurchaseFieldRefs {
   readonly paymentConditionId: Prisma.FieldRef<"Purchase", 'String'>
   readonly status: Prisma.FieldRef<"Purchase", 'String'>
   readonly customerPoNumber: Prisma.FieldRef<"Purchase", 'String'>
+  readonly bocCustomerName: Prisma.FieldRef<"Purchase", 'String'>
+  readonly bocDescription: Prisma.FieldRef<"Purchase", 'String'>
+  readonly bocCreatedAt: Prisma.FieldRef<"Purchase", 'DateTime'>
+  readonly bocStatus: Prisma.FieldRef<"Purchase", 'String'>
   readonly bocNumber: Prisma.FieldRef<"Purchase", 'String'>
   readonly description: Prisma.FieldRef<"Purchase", 'String'>
   readonly additionalInfo: Prisma.FieldRef<"Purchase", 'String'>

@@ -13,6 +13,10 @@ type PurchaseWithRelations = Prisma.PurchaseGetPayload<{
 type PurchaseWithOptionalCustomerRefs = PurchaseWithRelations & {
   customerPoNumber?: string | null
   bocNumber?: string | null
+  bocCustomerName?: string | null
+  bocDescription?: string | null
+  bocCreatedAt?: Date | null
+  bocStatus?: string | null
 }
 
 const PURCHASE_STATUSES = new Set(['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED'])
@@ -30,6 +34,10 @@ export function mapPurchase(p: PurchaseWithRelations): MappedPurchase {
     purchaseNumber: purchase.purchaseNumber,
     customerPoNumber: purchase.customerPoNumber ?? null,
     bocNumber: purchase.bocNumber ?? null,
+    bocCustomerName: purchase.bocCustomerName ?? null,
+    bocDescription: purchase.bocDescription ?? null,
+    bocCreatedAt: purchase.bocCreatedAt?.toISOString() ?? null,
+    bocStatus: purchase.bocStatus ?? null,
     purchaseDate: purchase.purchaseDate?.toISOString() ?? null,
     status: normalizePurchaseStatus(purchase.status),
     companyId: purchase.companyId,

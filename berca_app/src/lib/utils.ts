@@ -77,6 +77,20 @@ export function generatePurchaseNumber() {
   return `PO${year}${day}${month}${random}`
 }
 
+export function generateOrderConfirmationNumber() {
+  const now = new Date()
+
+  const year = now.getFullYear().toString().slice(-2) // 26
+  const day = String(now.getDate()).padStart(2, '0') // 24
+  const month = String(now.getMonth() + 1).padStart(2, '0') // 02
+
+  const random = Math.floor(Math.random() * 100)
+    .toString()
+    .padStart(2, '0') // two random digits
+
+  return `${year}${day}${month}${random}`
+}
+
 export function generateIncomingDeliveryNumber(prefix = 'DEL') {
   const now = new Date()
 

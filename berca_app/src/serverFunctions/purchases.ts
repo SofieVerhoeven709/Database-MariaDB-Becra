@@ -206,6 +206,10 @@ export const createPurchaseAction = protectedServerFunction({
           purchaseNumber,
           customerPoNumber: d.customerPoNumber ?? null,
           bocNumber: d.bocNumber ?? null,
+          bocCustomerName: d.bocCustomerName ?? null,
+          bocDescription: d.bocDescription ?? null,
+          bocCreatedAt: toDate(d.bocCreatedAt) ?? null,
+          bocStatus: d.bocStatus ?? null,
           purchaseDate: toDate(d.purchaseDate) ?? new Date(),
           status: nextStatus,
           companyId: d.companyId,
@@ -272,6 +276,7 @@ export const updatePurchaseAction = protectedServerFunction({
         where: {id},
         data: {
           ...rest,
+          bocCreatedAt: toDate(rest.bocCreatedAt) ?? null,
           ...(rest.status !== undefined ? {status: normalizePurchaseStatus(rest.status)} : {}),
           purchaseDate: toDate(purchaseDate) ?? new Date(),
         },

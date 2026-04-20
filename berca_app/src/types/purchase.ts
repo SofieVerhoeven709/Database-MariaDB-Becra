@@ -3,6 +3,10 @@ export interface MappedPurchase {
   purchaseNumber: string
   customerPoNumber: string | null
   bocNumber: string | null
+  bocCustomerName: string | null
+  bocDescription: string | null
+  bocCreatedAt: string | null
+  bocStatus: string | null
   purchaseDate: string | null
   status: string
   companyId: string

@@ -3,21 +3,31 @@
 import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
 import type {Route} from 'next'
-import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, ExternalLink} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, ExternalLink, RotateCcw} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {PurchaseFormDialog, type PurchaseOption} from '@/components/custom/purchaseFormDialog'
+import {PaymentConditionFormDialog} from '@/components/custom/paymentConditionFormDialog'
 import {normalizePurchaseStatus} from '@/extra/purchases'
 import type {MappedPurchase} from '@/types/purchase'
+import type {MappedPaymentCondition} from '@/types/quoteSupplier'
 import {
   createPurchaseAction,
   updatePurchaseAction,
   softDeletePurchaseAction,
   hardDeletePurchaseAction,
 } from '@/serverFunctions/purchases'
+import {
+  createPaymentConditionAction,
+  updatePaymentConditionAction,
+  softDeletePaymentConditionAction,
+  hardDeletePaymentConditionAction,
+  undeletePaymentConditionAction,
+} from '@/serverFunctions/quoteSuppliers'
 
 type SortField = 'purchaseNumber' | 'purchaseDate' | 'companyName' | 'quote' | 'status' | 'createdBy'
 type SortDir = 'asc' | 'desc'
@@ -47,6 +57,7 @@ interface PurchaseTableProps {
   companies: PurchaseOption[]
   quoteSuppliers: PurchaseOption[]
   paymentConditions: PurchaseOption[]
+  paymentConditionRows: MappedPaymentCondition[]
   currentUserRole: string
   currentUserLevel: number
   departmentId: string
@@ -60,12 +71,16 @@ export function PurchaseTable({
   companies,
   quoteSuppliers,
   paymentConditions,
+  paymentConditionRows,
   currentUserRole,
   currentUserLevel,
   departmentId,
 }: PurchaseTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
   const canManageOrderedPurchases = currentUserLevel >= 80
 
   const statusOptions = useMemo(() => {
@@ -83,6 +98,13 @@ export function PurchaseTable({
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<MappedPurchase | null>(null)
+  const [paymentSearch, setPaymentSearch] = useState('')
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false)
+  const [editingPaymentCondition, setEditingPaymentCondition] = useState<MappedPaymentCondition | null>(null)
+  const filteredPaymentConditions = paymentConditionRows
+    .filter(row => row.name.toLowerCase().includes(paymentSearch.toLowerCase()))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
 
   const filtered = initialPurchases
     .filter(p => {
@@ -144,6 +166,10 @@ export function PurchaseTable({
         paymentConditionId: p.paymentConditionId,
         customerPoNumber: p.customerPoNumber,
         bocNumber: p.bocNumber,
+        bocCustomerName: p.bocCustomerName,
+        bocDescription: p.bocDescription,
+        bocCreatedAt: p.bocCreatedAt,
+        bocStatus: p.bocStatus,
         description: p.description,
         additionalInfo: p.additionalInfo,
       })
@@ -157,6 +183,10 @@ export function PurchaseTable({
         paymentConditionId: p.paymentConditionId,
         customerPoNumber: p.customerPoNumber,
         bocNumber: p.bocNumber,
+        bocCustomerName: p.bocCustomerName,
+        bocDescription: p.bocDescription,
+        bocCreatedAt: p.bocCreatedAt,
+        bocStatus: p.bocStatus,
         description: p.description,
         additionalInfo: p.additionalInfo,
       })
@@ -175,9 +205,23 @@ export function PurchaseTable({
     router.refresh()
   }
 
+  async function handleSavePaymentCondition(name: string, id?: string) {
+    if (id) await updatePaymentConditionAction({id, name})
+    else await createPaymentConditionAction({name})
+    setPaymentDialogOpen(false)
+    setEditingPaymentCondition(null)
+    router.refresh()
+  }
+
   return (
     <div className="flex flex-col gap-6">
-      {/* Toolbar */}
+      <Tabs defaultValue="orders">
+        <TabsList className="bg-secondary border border-border/60">
+          <TabsTrigger value="orders">Purchase Orders</TabsTrigger>
+          <TabsTrigger value="payment-conditions">Payment Conditions</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="orders" className="mt-4 space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center flex-1">
           <div className="relative max-w-sm flex-1">
@@ -212,6 +256,7 @@ export function PurchaseTable({
               setEditing(null)
               setDialogOpen(true)
             }}
+            disabled={!canCreate}
             className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
             <Plus className="h-4 w-4" />
             New Purchase Order
@@ -343,6 +388,115 @@ export function PurchaseTable({
         </Table>
       </div>
 
+        </TabsContent>
+
+        <TabsContent value="payment-conditions" className="mt-4 space-y-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="relative max-w-sm flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search payment conditions..."
+                value={paymentSearch}
+                onChange={e => setPaymentSearch(e.target.value)}
+                className="pl-10 bg-secondary border-border"
+              />
+            </div>
+            <Button
+              onClick={() => {
+                setEditingPaymentCondition(null)
+                setPaymentDialogOpen(true)
+              }}
+              disabled={!canCreate}
+              className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+              <Plus className="h-4 w-4" />
+              New Payment Condition
+            </Button>
+          </div>
+
+          <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent border-border/60">
+                  <TableHead className="text-xs whitespace-nowrap">Name</TableHead>
+                  <TableHead className="text-xs whitespace-nowrap">Created At</TableHead>
+                  <TableHead className="text-xs whitespace-nowrap">Created By</TableHead>
+                  <TableHead className="w-24"><span className="sr-only">Actions</span></TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredPaymentConditions.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
+                      No payment conditions found.
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  filteredPaymentConditions.map(row => (
+                    <TableRow key={row.id} className={`border-border/40 hover:bg-secondary/50 ${row.deleted ? 'opacity-50' : ''}`}>
+                      <TableCell className="text-sm text-foreground font-medium">{row.name}</TableCell>
+                      <TableCell className={tdClass}>{formatDate(row.createdAt)}</TableCell>
+                      <TableCell className={tdClass}>{row.createdByName}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          {!row.deleted && canEdit && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                              onClick={() => {
+                                setEditingPaymentCondition(row)
+                                setPaymentDialogOpen(true)
+                              }}>
+                              <Pencil className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+                          {!row.deleted && canDelete && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                              onClick={async () => {
+                                await softDeletePaymentConditionAction({id: row.id})
+                                router.refresh()
+                              }}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+                          {row.deleted && canDelete && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                              onClick={async () => {
+                                await undeletePaymentConditionAction({id: row.id})
+                                router.refresh()
+                              }}>
+                              <RotateCcw className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+                          {row.deleted && isAdmin && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-destructive hover:bg-destructive/10"
+                              onClick={async () => {
+                                await hardDeletePaymentConditionAction({id: row.id})
+                                router.refresh()
+                              }}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+      </Tabs>
+
       <PurchaseFormDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
@@ -351,6 +505,13 @@ export function PurchaseTable({
         quoteSuppliers={quoteSuppliers}
         paymentConditions={paymentConditions}
         onSave={handleSave}
+      />
+
+      <PaymentConditionFormDialog
+        open={paymentDialogOpen}
+        onOpenChange={setPaymentDialogOpen}
+        paymentCondition={editingPaymentCondition}
+        onSave={handleSavePaymentCondition}
       />
     </div>
   )

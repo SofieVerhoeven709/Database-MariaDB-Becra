@@ -52,6 +52,10 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
   const purchaseWithCustomerRefs = purchase as typeof purchase & {
     customerPoNumber?: string | null
     bocNumber?: string | null
+    bocCustomerName?: string | null
+    bocDescription?: string | null
+    bocCreatedAt?: Date | null
+    bocStatus?: string | null
   }
 
   const {currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
@@ -112,7 +116,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-7 pt-2 border-t border-border/50">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-9 pt-2 border-t border-border/50">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <Calendar className="h-3 w-3" /> Purchase Date
@@ -147,6 +151,24 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
+                <Building2 className="h-3 w-3" /> BOC Klant
+              </span>
+              <span className="text-sm text-foreground">{purchaseWithCustomerRefs.bocCustomerName ?? '—'}</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
+                <Calendar className="h-3 w-3" /> BOC Datum
+              </span>
+              <span className="text-sm text-foreground">{formatDate(purchaseWithCustomerRefs.bocCreatedAt)}</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
+                <Hash className="h-3 w-3" /> BOC Status
+              </span>
+              <span className="text-sm text-foreground">{purchaseWithCustomerRefs.bocStatus ?? '—'}</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <CreditCard className="h-3 w-3" /> Payment
               </span>
               <span className="text-sm text-foreground">{purchase.PaymentCondition?.name ?? '—'}</span>
@@ -159,12 +181,20 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
           </div>
 
-          {purchase.additionalInfo && (
+          {(purchase.additionalInfo || purchaseWithCustomerRefs.bocDescription) && (
             <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border/50">
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Additional Info</span>
-                <span className="text-sm text-foreground">{purchase.additionalInfo}</span>
-              </div>
+              {purchaseWithCustomerRefs.bocDescription && (
+                <div className="flex flex-col gap-1">
+                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Description of BOC</span>
+                  <span className="text-sm text-foreground">{purchaseWithCustomerRefs.bocDescription}</span>
+                </div>
+              )}
+              {purchase.additionalInfo && (
+                <div className="flex flex-col gap-1">
+                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Additional Info</span>
+                  <span className="text-sm text-foreground">{purchase.additionalInfo}</span>
+                </div>
+              )}
             </div>
           )}
         </div>

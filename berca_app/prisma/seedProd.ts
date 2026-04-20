@@ -168,7 +168,13 @@ const INVOICE_SENT_TYPES = ['Email', 'Post', 'Hand Delivery', 'Portal', 'Fax']
 const PAYMENT_METHODS = ['Bank Transfer', 'Cash', 'Credit Card', 'Debit Card', 'Direct Debit', 'Cheque']
 
 const INVOICE_TYPES = ['Standard', 'Credit Note', 'Proforma', 'Recurring', 'Intercompany']
-const DEFAULT_PAYMENT_CONDITIONS = ['14 days', '30 days', '60 days', '30 days end of month']
+const DEFAULT_PAYMENT_CONDITIONS = [
+  '14 days',
+  '30 days invoice date',
+  '30 days end of month',
+  '60 days invoice date',
+  '60 days end of month',
+]
 
 export const seedProd = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')

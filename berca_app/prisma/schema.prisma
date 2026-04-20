@@ -1577,6 +1577,10 @@ model Purchase {
   paymentConditionId                    String?            @db.Char(36)
   status                                String             @default("DRAFT") @db.VarChar(50)
   customerPoNumber                      String?            @db.VarChar(255)
+  bocCustomerName                       String?            @db.VarChar(255)
+  bocDescription                        String?            @db.Text
+  bocCreatedAt                          DateTime?          @db.DateTime(0)
+  bocStatus                             String?            @db.VarChar(50)
   bocNumber                             String?            @db.VarChar(255)
   description                           String?            @db.Text
   additionalInfo                        String?            @db.VarChar(255)

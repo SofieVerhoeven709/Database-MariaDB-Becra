@@ -4,7 +4,8 @@ import {mapPurchase} from '@/extra/purchases'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getCompanies} from '@/dal/companies'
-import {getPaymentConditionOptions, getQuoteSuppliers} from '@/dal/quoteSuppliers'
+import {getPaymentConditionOptions, getPaymentConditions, getQuoteSuppliers} from '@/dal/quoteSuppliers'
+import {mapPaymentCondition} from '@/extra/quoteSuppliers'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
@@ -19,13 +20,14 @@ function formatShortDate(date: Date) {
 export default async function PurchaseOrdersPage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [department, purchasesFromDAL, profile, companiesRaw, quoteSuppliersRaw, paymentConditionsRaw] = await Promise.all([
+  const [department, purchasesFromDAL, profile, companiesRaw, quoteSuppliersRaw, paymentConditionsRaw, paymentConditionRowsRaw] = await Promise.all([
     getDepartmentById(departmentId),
     getPurchases(),
     getSessionProfileFromCookieOrThrow(),
     getCompanies(),
     getQuoteSuppliers(),
     getPaymentConditionOptions(),
+    getPaymentConditions(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -48,6 +50,10 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
 
   const paymentConditionOptions = paymentConditionsRaw
     .map(pc => ({id: pc.id, name: pc.name}))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  const paymentConditionRows = paymentConditionRowsRaw
+    .map(mapPaymentCondition)
     .sort((a, b) => a.name.localeCompare(b.name))
 
   const datedEntries = purchases
@@ -73,6 +79,17 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
 
   const userName = `${profile.firstName} ${profile.lastName}`
 
+  const purchaseTableProps = {
+    initialPurchases: purchases,
+    companies: companyOptions,
+    quoteSuppliers: quoteSupplierOptions,
+    paymentConditions: paymentConditionOptions,
+    paymentConditionRows,
+    currentUserRole,
+    currentUserLevel,
+    departmentId,
+  }
+
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-7xl space-y-6">
@@ -95,15 +112,7 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
           </div>
         </header>
 
-        <PurchaseTable
-          initialPurchases={purchases}
-          companies={companyOptions}
-          quoteSuppliers={quoteSupplierOptions}
-          paymentConditions={paymentConditionOptions}
-          currentUserRole={currentUserRole}
-          currentUserLevel={currentUserLevel}
-          departmentId={departmentId}
-        />
+        <PurchaseTable {...(purchaseTableProps as any)} />
       </div>
     </main>
   )

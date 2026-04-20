@@ -1841,7 +1841,18 @@ ADD COLUMN IF NOT EXISTS customerPoNumber VARCHAR(255) NULL AFTER purchaseNumber
 ALTER TABLE Purchase
 ADD COLUMN IF NOT EXISTS bocNumber VARCHAR(255) NULL AFTER customerPoNumber;
 
+ALTER TABLE Purchase
+ADD COLUMN IF NOT EXISTS bocCustomerName VARCHAR(255) NULL AFTER bocNumber;
+
+ALTER TABLE Purchase
+ADD COLUMN IF NOT EXISTS bocDescription TEXT NULL AFTER bocCustomerName;
+
+ALTER TABLE Purchase
+ADD COLUMN IF NOT EXISTS bocCreatedAt DATETIME NULL AFTER bocDescription;
+
+ALTER TABLE Purchase
+ADD COLUMN IF NOT EXISTS bocStatus VARCHAR(50) NULL AFTER bocCreatedAt;
+
 -- Prisma sync: older DBs can miss this Unit column
 ALTER TABLE Unit
 ADD COLUMN IF NOT EXISTS quantityValue DECIMAL(10,3) NULL AFTER physicalQuantity;
-

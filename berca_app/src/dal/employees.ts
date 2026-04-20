@@ -400,7 +400,6 @@ export async function getEmployeeDetail(id: string) {
           select: {
             id: true,
             purchaseNumber: true,
-            shortDescription: true,
             purchaseDate: true,
             status: true,
             Company: {select: {name: true}},
@@ -864,7 +863,6 @@ export async function getEmployeeDetail(id: string) {
           select: {
             id: true,
             purchaseNumber: true,
-            shortDescription: true,
             deletedAt: true,
             purchaseDate: true,
             Company: {select: {name: true}},

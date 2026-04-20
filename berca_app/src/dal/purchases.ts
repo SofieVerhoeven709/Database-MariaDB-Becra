@@ -271,7 +271,6 @@ export async function ensurePurchaseFromApprovedQuote(quoteSupplierId: string, c
         quoteSupplierId: quote.id,
         paymentConditionId: quote.paymentConditionId,
         status: 'DRAFT',
-        shortDescription: quote.description ?? `Auto from quote ${quote.quoteNumber}`,
         description: quote.description,
         additionalInfo: quote.additionalInfo,
         createdBy,
@@ -342,7 +341,7 @@ export async function getPurchaseById(id: string) {
               unitPrice: true,
               minQuantity: true,
               notDeliverable: true,
-              Material: {select: {id: true, beNumber: true, name: true, shortDescription: true}},
+              Material: {select: {id: true, beNumber: true, name: true}},
             },
             orderBy: {id: 'asc'},
           },
@@ -360,7 +359,7 @@ export async function getPurchaseDetails(purchaseId: string) {
     orderBy: {createdAt: 'desc'},
     include: {
       Employee: {select: {id: true, firstName: true, lastName: true}},
-      Material: {select: {id: true, beNumber: true, name: true, shortDescription: true}},
+      Material: {select: {id: true, beNumber: true, name: true}},
     },
   })
 }
@@ -368,7 +367,7 @@ export async function getPurchaseDetails(purchaseId: string) {
 export async function getPurchaseDetailMaterialOptions() {
   return prismaClient.material.findMany({
     where: {deleted: false},
-    select: {id: true, beNumber: true, name: true, shortDescription: true},
+    select: {id: true, beNumber: true, name: true},
     orderBy: {beNumber: 'asc'},
   })
 }
@@ -377,7 +376,7 @@ export async function getPurchaseDetailMaterialDemandOptions() {
   return prismaClient.materialDemand.findMany({
     select: {
       id: true,
-      Material: {select: {beNumber: true, name: true, shortDescription: true}},
+      Material: {select: {beNumber: true, name: true}},
     },
     orderBy: {createdAt: 'desc'},
   })

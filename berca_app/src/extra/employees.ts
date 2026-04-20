@@ -185,7 +185,6 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {
         id: true
         purchaseNumber: true
-        shortDescription: true
         purchaseDate: true
         status: true
         Company: {select: {name: true}}
@@ -264,7 +263,6 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {
         id: true
         purchaseNumber: true
-        shortDescription: true
         deletedAt: true
         purchaseDate: true
         Company: {select: {name: true}}
@@ -595,7 +593,7 @@ export function mapEmployeeDetail(
     ...e.Purchase.map(p => ({
       id: p.id,
       type: 'Purchase' as const,
-      label: p.purchaseNumber ?? p.shortDescription ?? '(no number)',
+      label: p.purchaseNumber ?? '(no number)',
       detail: [p.Company?.name, p.status].filter(Boolean).join(' · ') || null,
       date: p.purchaseDate?.toISOString() ?? null,
       deletedAt: null,
@@ -788,7 +786,7 @@ export function mapEmployeeDetail(
     ...e.Purchase_Purchase_deletedByToEmployee.map(p => ({
       id: p.id,
       type: 'Purchase' as const,
-      label: p.purchaseNumber ?? p.shortDescription ?? '(no number)',
+      label: p.purchaseNumber ?? '(no number)',
       detail: p.Company?.name ?? null,
       date: p.purchaseDate?.toISOString() ?? null,
       deletedAt: p.deletedAt?.toISOString() ?? null,

@@ -10,6 +10,11 @@ type PurchaseWithRelations = Prisma.PurchaseGetPayload<{
   }
 }>
 
+type PurchaseWithOptionalCustomerRefs = PurchaseWithRelations & {
+  customerPoNumber?: string | null
+  bocNumber?: string | null
+}
+
 const PURCHASE_STATUSES = new Set(['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED'])
 
 export function normalizePurchaseStatus(status: string | null | undefined): string {
@@ -19,44 +24,55 @@ export function normalizePurchaseStatus(status: string | null | undefined): stri
 }
 
 export function mapPurchase(p: PurchaseWithRelations): MappedPurchase {
+  const purchase = p as PurchaseWithOptionalCustomerRefs
   return {
-    id: p.id,
-    purchaseNumber: p.purchaseNumber,
-    purchaseDate: p.purchaseDate?.toISOString() ?? null,
-    status: normalizePurchaseStatus(p.status),
-    companyId: p.companyId,
-    companyName: p.Company?.name ?? null,
-    quoteSupplierId: p.quoteSupplierId,
-    quoteNumber: p.QuoteSupplier?.quoteNumber ?? null,
-    paymentConditionId: p.paymentConditionId,
-    paymentConditionName: p.PaymentCondition?.name ?? null,
-    shortDescription: p.shortDescription,
-    createdAt: p.createdAt?.toISOString() ?? null,
-    createdBy: p.createdBy,
-    createdByName: `${p.Employee.firstName} ${p.Employee.lastName}`,
-    description: p.description,
-    additionalInfo: p.additionalInfo,
-    deleted: p.deleted,
-    deletedAt: p.deletedAt?.toISOString() ?? null,
-    deletedBy: p.deletedBy,
+    id: purchase.id,
+    purchaseNumber: purchase.purchaseNumber,
+    customerPoNumber: purchase.customerPoNumber ?? null,
+    bocNumber: purchase.bocNumber ?? null,
+    purchaseDate: purchase.purchaseDate?.toISOString() ?? null,
+    status: normalizePurchaseStatus(purchase.status),
+    companyId: purchase.companyId,
+    companyName: purchase.Company?.name ?? null,
+    quoteSupplierId: purchase.quoteSupplierId,
+    quoteNumber: purchase.QuoteSupplier?.quoteNumber ?? null,
+    paymentConditionId: purchase.paymentConditionId,
+    paymentConditionName: purchase.PaymentCondition?.name ?? null,
+    createdAt: purchase.createdAt?.toISOString() ?? null,
+    createdBy: purchase.createdBy,
+    createdByName: `${purchase.Employee.firstName} ${purchase.Employee.lastName}`,
+    description: purchase.description,
+    additionalInfo: purchase.additionalInfo,
+    deleted: purchase.deleted,
+    deletedAt: purchase.deletedAt?.toISOString() ?? null,
+    deletedBy: purchase.deletedBy,
   }
 }
 
 type PurchaseDetailWithRelations = Prisma.PurchaseDetailGetPayload<{
   include: {
     Employee: {select: {id: true; firstName: true; lastName: true}}
+    Material: {select: {id: true; beNumber: true; name: true}}
+  }
+}>
+
+type PurchaseDetailWithLegacyMaterialShape = Prisma.PurchaseDetailGetPayload<{
+  include: {
+    Employee: {select: {id: true; firstName: true; lastName: true}}
     Material: {select: {id: true; beNumber: true; name: true; shortDescription: true}}
   }
 }>
 
-export function mapPurchaseDetail(d: PurchaseDetailWithRelations): MappedPurchaseDetail {
+export function mapPurchaseDetail(
+  d: PurchaseDetailWithRelations | PurchaseDetailWithLegacyMaterialShape,
+): MappedPurchaseDetail {
   return {
     id: d.id,
     purchaseId: d.purchaseId,
     quoteSupplierLineId: d.quoteSupplierLineId,
     materialId: d.materialId,
-    // Prefer BE number + name; fall back to short description when name is missing.
-    materialLabel: [d.Material?.beNumber, d.Material?.name ?? d.Material?.shortDescription]
+    // Prefer BE number + name for purchase labels.
+    materialLabel: [d.Material?.beNumber, d.Material?.name]
       .filter(Boolean)
       .join(' - '),
     materialDemandId: d.materialDemandId,

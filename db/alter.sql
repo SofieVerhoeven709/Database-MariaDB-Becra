@@ -1833,3 +1833,15 @@ DROP FOREIGN KEY IF EXISTS fk_training_vatMarginId;
 ALTER TABLE Training
 ADD CONSTRAINT fk_training_vatMarginId
 FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+-- Purchase customer references (PO customer + BOC)
+ALTER TABLE Purchase
+ADD COLUMN IF NOT EXISTS customerPoNumber VARCHAR(255) NULL AFTER purchaseNumber;
+
+ALTER TABLE Purchase
+ADD COLUMN IF NOT EXISTS bocNumber VARCHAR(255) NULL AFTER customerPoNumber;
+
+-- Prisma sync: older DBs can miss this Unit column
+ALTER TABLE Unit
+ADD COLUMN IF NOT EXISTS quantityValue DECIMAL(10,3) NULL AFTER physicalQuantity;
+

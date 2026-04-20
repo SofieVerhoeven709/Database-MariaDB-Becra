@@ -24,13 +24,17 @@ interface PurchaseFormDialogProps {
   onSave: (purchase: MappedPurchase) => Promise<void>
 }
 
+type PurchaseFormState = MappedPurchase
+
 const STATUS_OPTIONS = ['DRAFT', 'ORDERED', 'PARTIAL_RECEIVED', 'RECEIVED', 'CLOSED', 'CANCELLED']
 
-function emptyPurchase(): MappedPurchase {
+function emptyPurchase(): PurchaseFormState {
   // Defaults for a brand-new purchase order form.
   return {
     id: '',
     purchaseNumber: generatePurchaseNumber(),
+    customerPoNumber: null,
+    bocNumber: null,
     purchaseDate: new Date().toISOString(),
     status: 'DRAFT',
     companyId: '',
@@ -39,7 +43,6 @@ function emptyPurchase(): MappedPurchase {
     quoteNumber: null,
     paymentConditionId: null,
     paymentConditionName: null,
-    shortDescription: null,
     createdAt: null,
     createdBy: '',
     createdByName: '',
@@ -60,7 +63,7 @@ export function PurchaseFormDialog({
   paymentConditions,
   onSave,
 }: PurchaseFormDialogProps) {
-  const [form, setForm] = useState<MappedPurchase>(emptyPurchase())
+  const [form, setForm] = useState<PurchaseFormState>(emptyPurchase())
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
@@ -69,7 +72,7 @@ export function PurchaseFormDialog({
     }
   }, [open, purchase])
 
-  function set<K extends keyof MappedPurchase>(key: K, value: MappedPurchase[K]) {
+  function set<K extends keyof PurchaseFormState>(key: K, value: PurchaseFormState[K]) {
     setForm(prev => ({...prev, [key]: value}))
   }
 
@@ -102,7 +105,7 @@ export function PurchaseFormDialog({
                 id="purchaseNumber"
                 value={form.purchaseNumber ?? ''}
                 onChange={e => set('purchaseNumber', e.target.value)}
-                placeholder="e.g. PO2026041301"
+                placeholder="e.g. Becra 26042001"
                 className="bg-secondary border-border flex-1"
               />
               {!isEdit && (
@@ -118,6 +121,41 @@ export function PurchaseFormDialog({
             </div>
           </div>
 
+          {/* Customer PO number */}
+          <div className="grid gap-1.5">
+            <Label htmlFor="customerPoNumber">PO Number Customer</Label>
+            <Input
+              id="customerPoNumber"
+              value={form.customerPoNumber ?? ''}
+              onChange={e => set('customerPoNumber', e.target.value || null)}
+              placeholder="Free input"
+              className="bg-secondary border-border"
+            />
+          </div>
+
+          {/* BOC number */}
+          <div className="grid gap-1.5">
+            <Label htmlFor="bocNumber">BOC Number</Label>
+            <div className="flex gap-2">
+              <Input
+                id="bocNumber"
+                value={form.bocNumber ?? ''}
+                onChange={e => set('bocNumber', e.target.value || null)}
+                placeholder="Enter BOC"
+                className="bg-secondary border-border flex-1"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-10 px-3 border-border text-xs shrink-0"
+                disabled={!form.customerPoNumber?.trim()}
+                onClick={() => set('bocNumber', form.customerPoNumber?.trim() ?? null)}>
+                From PO customer
+              </Button>
+            </div>
+          </div>
+
           {/* Purchase date */}
           <div className="grid gap-1.5">
             <Label htmlFor="purchaseDate">Purchase Date</Label>
@@ -126,7 +164,9 @@ export function PurchaseFormDialog({
               type="date"
               value={form.purchaseDate ? form.purchaseDate.slice(0, 10) : ''}
               // Convert the date input back to ISO for storage.
-              onChange={e => set('purchaseDate', e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString())}
+              onChange={e =>
+                set('purchaseDate', e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString())
+              }
               className="bg-secondary border-border"
             />
           </div>
@@ -151,7 +191,9 @@ export function PurchaseFormDialog({
           {/* Company (supplier) */}
           <div className="grid gap-1.5">
             <Label>Supplier Company</Label>
-            <Select value={form.companyId || '__none__'} onValueChange={v => set('companyId', v === '__none__' ? '' : v)}>
+            <Select
+              value={form.companyId || '__none__'}
+              onValueChange={v => set('companyId', v === '__none__' ? '' : v)}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select company" />
               </SelectTrigger>
@@ -169,7 +211,9 @@ export function PurchaseFormDialog({
           {/* Quote (optional) */}
           <div className="grid gap-1.5">
             <Label>Quote (optional)</Label>
-            <Select value={form.quoteSupplierId ?? '__none__'} onValueChange={v => set('quoteSupplierId', v === '__none__' ? null : v)}>
+            <Select
+              value={form.quoteSupplierId ?? '__none__'}
+              onValueChange={v => set('quoteSupplierId', v === '__none__' ? null : v)}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select quote" />
               </SelectTrigger>
@@ -202,18 +246,6 @@ export function PurchaseFormDialog({
                 ))}
               </SelectContent>
             </Select>
-          </div>
-
-          {/* Short description */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="shortDescription">Short Description</Label>
-            <Input
-              id="shortDescription"
-              value={form.shortDescription ?? ''}
-              onChange={e => set('shortDescription', e.target.value || null)}
-              placeholder="Header note"
-              className="bg-secondary border-border"
-            />
           </div>
 
           {/* Description */}

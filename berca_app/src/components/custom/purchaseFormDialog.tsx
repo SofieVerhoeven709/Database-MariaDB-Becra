@@ -21,6 +21,7 @@ interface PurchaseFormDialogProps {
   companies: PurchaseOption[]
   quoteSuppliers: PurchaseOption[]
   paymentConditions: PurchaseOption[]
+  confirmationOnly?: boolean
   onSave: (purchase: MappedPurchase) => Promise<void>
 }
 
@@ -66,6 +67,7 @@ export function PurchaseFormDialog({
   companies,
   quoteSuppliers,
   paymentConditions,
+  confirmationOnly = false,
   onSave,
 }: PurchaseFormDialogProps) {
   const [form, setForm] = useState<PurchaseFormState>(emptyPurchase())
@@ -92,16 +94,29 @@ export function PurchaseFormDialog({
   }
 
   const isEdit = Boolean(purchase?.id)
-  const canSubmit = !!form.purchaseNumber.trim() && !!form.companyId
+  const isConfirmationOnly = confirmationOnly
+  const canSubmit = isConfirmationOnly
+    ? !!form.bocNumber?.trim() && !!form.bocCustomerName?.trim() && !!form.bocDescription?.trim()
+    : !!form.purchaseNumber.trim() && !!form.companyId
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg bg-card border-border">
         <DialogHeader>
-          <DialogTitle>{isEdit ? 'Edit Purchase Order' : 'New Purchase Order'}</DialogTitle>
+          <DialogTitle>
+            {isConfirmationOnly
+              ? isEdit
+                ? 'Edit Purchase Orders Confirmation'
+                : 'New Purchase Orders Confirmation'
+              : isEdit
+                ? 'Edit Purchase Order'
+                : 'New Purchase Order'}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="grid gap-4 py-2">
+          {!isConfirmationOnly && (
+            <>
           {/* Purchase number */}
           <div className="grid gap-1.5">
             <Label htmlFor="purchaseNumber">Purchase Number</Label>
@@ -137,6 +152,8 @@ export function PurchaseFormDialog({
               className="bg-secondary border-border"
             />
           </div>
+            </>
+          )}
 
           {/* BOC number */}
           <div className="grid gap-1.5">
@@ -154,10 +171,10 @@ export function PurchaseFormDialog({
                 variant="outline"
                 size="sm"
                 className="h-10 px-3 border-border text-xs shrink-0"
-                disabled={!form.customerPoNumber?.trim()}
                 onClick={() => {
                   set('bocNumber', generateOrderConfirmationNumber())
                   set('bocCreatedAt', new Date().toISOString())
+                  if (!form.bocStatus) set('bocStatus', 'DRAFT')
                 }}>
                 Generate OC
               </Button>
@@ -188,37 +205,44 @@ export function PurchaseFormDialog({
             />
           </div>
 
-          {/* BOC creation date */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="bocCreatedAt">Created on date</Label>
-            <Input
-              id="bocCreatedAt"
-              type="date"
-              value={form.bocCreatedAt ? form.bocCreatedAt.slice(0, 10) : ''}
-              onChange={e => set('bocCreatedAt', e.target.value ? new Date(e.target.value).toISOString() : null)}
-              className="bg-secondary border-border"
-            />
-          </div>
+          {!isConfirmationOnly && (
+            <>
+              {/* BOC creation date */}
+              <div className="grid gap-1.5">
+                <Label htmlFor="bocCreatedAt">Created on date</Label>
+                <Input
+                  id="bocCreatedAt"
+                  type="date"
+                  value={form.bocCreatedAt ? form.bocCreatedAt.slice(0, 10) : ''}
+                  onChange={e => set('bocCreatedAt', e.target.value ? new Date(e.target.value).toISOString() : null)}
+                  className="bg-secondary border-border"
+                />
+              </div>
 
-          {/* BOC status */}
-          <div className="grid gap-1.5">
-            <Label>BOC status</Label>
-            <Select
-              value={form.bocStatus ?? '__none__'}
-              onValueChange={v => set('bocStatus', v === '__none__' ? null : v)}>
-              <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select BOC status" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                <SelectItem value="__none__">— None —</SelectItem>
-                {BOC_STATUS_OPTIONS.map(s => (
-                  <SelectItem key={s} value={s}>
-                    {s}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+              {/* BOC status */}
+              <div className="grid gap-1.5">
+                <Label>BOC status</Label>
+                <Select
+                  value={form.bocStatus ?? '__none__'}
+                  onValueChange={v => set('bocStatus', v === '__none__' ? null : v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select BOC status" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="__none__">— None —</SelectItem>
+                    {BOC_STATUS_OPTIONS.map(s => (
+                      <SelectItem key={s} value={s}>
+                        {s}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </>
+          )}
+
+          {!isConfirmationOnly && (
+            <>
 
           {/* Purchase date */}
           <div className="grid gap-1.5">
@@ -335,6 +359,8 @@ export function PurchaseFormDialog({
               className="bg-secondary border-border"
             />
           </div>
+            </>
+          )}
         </div>
 
         <DialogFooter>
@@ -345,7 +371,7 @@ export function PurchaseFormDialog({
             onClick={handleSubmit}
             disabled={saving || !canSubmit}
             className="bg-accent text-accent-foreground hover:bg-accent/80">
-            {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Create Order'}
+            {saving ? 'Saving…' : isConfirmationOnly ? 'Save Confirmation' : isEdit ? 'Save Changes' : 'Create Order'}
           </Button>
         </DialogFooter>
       </DialogContent>

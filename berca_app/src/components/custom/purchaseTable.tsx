@@ -15,7 +15,7 @@ import {PaymentConditionFormDialog} from '@/components/custom/paymentConditionFo
 import {normalizePurchaseStatus} from '@/extra/purchases'
 import type {MappedPurchase} from '@/types/purchase'
 import type {MappedPaymentCondition} from '@/types/quoteSupplier'
-import {generateOrderConfirmationNumber, generatePurchaseNumber} from '@/lib/utils'
+import {generateOrderConfirmationNumber} from '@/lib/utils'
 import {
   createPurchaseAction,
   updatePurchaseAction,
@@ -33,6 +33,7 @@ import {
 type SortField = 'purchaseNumber' | 'purchaseDate' | 'companyName' | 'quote' | 'status' | 'createdBy'
 type SortDir = 'asc' | 'desc'
 type StatusFilter = string
+type ConfirmationFilter = 'all' | 'confirmed' | 'not-confirmed'
 
 function isOrderedNotSentStatus(status: string | null | undefined): boolean {
   const normalized = normalizePurchaseStatus(status)
@@ -99,6 +100,7 @@ export function PurchaseTable({
 
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [confirmationFilter, setConfirmationFilter] = useState<ConfirmationFilter>('all')
   const [sortField, setSortField] = useState<SortField>('purchaseDate')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -113,10 +115,12 @@ export function PurchaseTable({
     .filter(row => row.name.toLowerCase().includes(paymentSearch.toLowerCase()))
     .sort((a, b) => a.name.localeCompare(b.name))
 
-
   const filtered = initialPurchases
     .filter(p => {
       if (statusFilter !== 'all' && p.status !== statusFilter) return false
+      const hasConfirmation = !!p.bocNumber?.trim()
+      if (confirmationFilter === 'confirmed' && !hasConfirmation) return false
+      if (confirmationFilter === 'not-confirmed' && hasConfirmation) return false
       if (!search) return true
       const q = search.toLowerCase()
       // Match against the most common purchase identifiers and labels.
@@ -157,25 +161,15 @@ export function PurchaseTable({
   useEffect(() => {
     if (!prefillPurchase || prefillHandled) return
 
-    // Start a create flow with copied values from the selected source purchase.
-    setDraftPurchase({
+    // Confirmation is linked to the original purchase order, so update that record.
+    setDraftPurchase(null)
+    setEditing({
       ...prefillPurchase,
-      id: '',
-      purchaseNumber: generatePurchaseNumber(),
-      purchaseDate: new Date().toISOString(),
-      bocNumber: generateOrderConfirmationNumber(),
+      bocNumber: prefillPurchase.bocNumber ?? generateOrderConfirmationNumber(),
       bocDescription: prefillPurchase.bocDescription ?? prefillPurchase.description ?? null,
-      bocCreatedAt: new Date().toISOString(),
-      bocStatus: 'DRAFT',
-      status: 'DRAFT',
-      createdAt: null,
-      createdBy: '',
-      createdByName: '',
-      deleted: false,
-      deletedAt: null,
-      deletedBy: null,
+      bocCreatedAt: prefillPurchase.bocCreatedAt ?? new Date().toISOString(),
+      bocStatus: prefillPurchase.bocStatus ?? 'DRAFT',
     })
-    setEditing(null)
     setDialogOpen(true)
     setPrefillHandled(true)
     setConfirmationCreateFlow(true)
@@ -267,187 +261,206 @@ export function PurchaseTable({
         </TabsList>
 
         <TabsContent value="orders" className="mt-4 space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center flex-1">
-          <div className="relative max-w-sm flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search PO, customer PO, BOC, company, quote or status..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
-            />
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center flex-1">
+              <div className="relative max-w-sm flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search PO, customer PO, BOC, company, quote or status..."
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
+                />
+              </div>
+              <Select value={statusFilter} onValueChange={v => setStatusFilter(v)}>
+                <SelectTrigger className="w-45 bg-secondary border-border">
+                  <SelectValue placeholder="All statuses" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="all">All statuses</SelectItem>
+                  {statusOptions.map(s => (
+                    <SelectItem key={s} value={s}>
+                      {s}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={confirmationFilter} onValueChange={v => setConfirmationFilter(v as ConfirmationFilter)}>
+                <SelectTrigger className="w-45 bg-secondary border-border">
+                  <SelectValue placeholder="All confirmations" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="all">All confirmations</SelectItem>
+                  <SelectItem value="confirmed">Confirmed</SelectItem>
+                  <SelectItem value="not-confirmed">Not confirmed</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-xs uppercase tracking-wide text-muted-foreground">
+                {filtered.length} / {initialPurchases.length}
+              </span>
+              <Button
+                onClick={() => {
+                  setEditing(null)
+                  setDraftPurchase(null)
+                  setConfirmationCreateFlow(false)
+                  setDialogOpen(true)
+                }}
+                disabled={!canCreate}
+                className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+                <Plus className="h-4 w-4" />
+                New Purchase Order
+              </Button>
+            </div>
           </div>
-          <Select value={statusFilter} onValueChange={v => setStatusFilter(v)}>
-            <SelectTrigger className="w-45 bg-secondary border-border">
-              <SelectValue placeholder="All statuses" />
-            </SelectTrigger>
-            <SelectContent className="bg-card border-border">
-              <SelectItem value="all">All statuses</SelectItem>
-              {statusOptions.map(s => (
-                <SelectItem key={s} value={s}>
-                  {s}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-xs uppercase tracking-wide text-muted-foreground">
-            {filtered.length} / {initialPurchases.length}
-          </span>
-          <Button
-            onClick={() => {
-              setEditing(null)
-              setDraftPurchase(null)
-              setConfirmationCreateFlow(false)
-              setDialogOpen(true)
-            }}
-            disabled={!canCreate}
-            className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-            <Plus className="h-4 w-4" />
-            New Purchase Order
-          </Button>
-        </div>
-      </div>
 
-      {/* Table */}
-      <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow className="hover:bg-transparent border-border/60">
-              <TableHead className={thClass} onClick={() => toggleSort('purchaseNumber')}>
-                Purchase # <SortIcon field="purchaseNumber" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('purchaseDate')}>
-                Purchase Date <SortIcon field="purchaseDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('companyName')}>
-                Company <SortIcon field="companyName" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('quote')}>
-                Quote <SortIcon field="quote" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('status')}>
-                Status <SortIcon field="status" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('createdBy')}>
-                Created By <SortIcon field="createdBy" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className="w-28">
-                <span className="sr-only">Actions</span>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filtered.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} className="h-28 text-center text-muted-foreground">
-                  No purchase orders match the current filters.
-                </TableCell>
-              </TableRow>
-            ) : (
-              filtered.map(purchase => {
-                const secondaryLabel = purchase.customerPoNumber ?? purchase.paymentConditionName ?? ''
-                const detailHref = `/departments/${departmentId}/orders/${purchase.id}` as Route
-                const isOrderedNotSent = isOrderedNotSentStatus(purchase.status)
-                // Ordered purchases are locked unless the user meets the manager threshold.
-                const canMutatePurchase = !isOrderedNotSent || canManageOrderedPurchases
-                return (
-                  <TableRow
-                    key={purchase.id}
-                    className={`border-border/40 hover:bg-secondary/50 cursor-pointer ${purchase.deleted ? 'opacity-60' : ''}`}
-                    onClick={() => router.push(detailHref)}>
-                    <TableCell className={`${tdClass} text-foreground font-medium`}>
-                      <div className="flex flex-col gap-0.5">
-                        <span className="text-accent underline-offset-2 hover:underline">
-                          {purchase.purchaseNumber ?? '—'}
-                        </span>
-                        {secondaryLabel ? (
-                          <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                            {secondaryLabel}
-                          </span>
-                        ) : null}
-                      </div>
-                    </TableCell>
-                    <TableCell className={tdClass}>{formatDate(purchase.purchaseDate)}</TableCell>
-                    <TableCell className={tdClass}>{purchase.companyName ?? '-'}</TableCell>
-                    <TableCell className={tdClass}>
-                      <div className="flex flex-col gap-0.5">
-                        <Badge
-                          variant="outline"
-                          className="border-border text-muted-foreground font-normal whitespace-nowrap">
-                          {purchase.quoteNumber ?? 'Manual'}
-                        </Badge>
-                        {purchase.paymentConditionName ? (
-                          <span className="text-[11px] text-muted-foreground truncate">
-                            {purchase.paymentConditionName}
-                          </span>
-                        ) : null}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge className="bg-accent/10 text-accent border-0 font-medium">
-                        {purchase.status ?? 'Unknown'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className={tdClass}>
-                      <div className="flex flex-col gap-0.5">
-                        <span className="text-foreground">{purchase.createdByName}</span>
-                        <span className="text-[11px] text-muted-foreground">{formatDate(purchase.createdAt)}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1" onClick={e => e.stopPropagation()}>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                          onClick={() => router.push(detailHref)}>
-                          <ExternalLink className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                          onClick={() =>
-                            router.push(
-                              `/departments/${departmentId}/purchaseOrdersConfirmation?purchaseId=${purchase.id}` as Route,
-                            )
-                          }>
-                          <Link2 className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                          disabled={!canMutatePurchase}
-                          onClick={() => {
-                            setDraftPurchase(null)
-                            setConfirmationCreateFlow(false)
-                            setEditing(purchase)
-                            setDialogOpen(true)
-                          }}>
-                          <Pencil className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                          disabled={!canMutatePurchase}
-                          onClick={() => (isAdmin ? handleHardDelete(purchase.id) : handleSoftDelete(purchase.id))}>
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
-                      </div>
+          {/* Table */}
+          <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent border-border/60">
+                  <TableHead className={thClass} onClick={() => toggleSort('purchaseNumber')}>
+                    Purchase # <SortIcon field="purchaseNumber" sortField={sortField} sortDir={sortDir} />
+                  </TableHead>
+                  <TableHead className={thClass} onClick={() => toggleSort('purchaseDate')}>
+                    Purchase Date <SortIcon field="purchaseDate" sortField={sortField} sortDir={sortDir} />
+                  </TableHead>
+                  <TableHead className={thClass} onClick={() => toggleSort('companyName')}>
+                    Company <SortIcon field="companyName" sortField={sortField} sortDir={sortDir} />
+                  </TableHead>
+                  <TableHead className={thClass} onClick={() => toggleSort('quote')}>
+                    Quote <SortIcon field="quote" sortField={sortField} sortDir={sortDir} />
+                  </TableHead>
+                  <TableHead className={thClass} onClick={() => toggleSort('status')}>
+                    Status <SortIcon field="status" sortField={sortField} sortDir={sortDir} />
+                  </TableHead>
+                  <TableHead className="text-xs whitespace-nowrap">Confirmation</TableHead>
+                  <TableHead className={thClass} onClick={() => toggleSort('createdBy')}>
+                    Created By <SortIcon field="createdBy" sortField={sortField} sortDir={sortDir} />
+                  </TableHead>
+                  <TableHead className="w-28">
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filtered.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={8} className="h-28 text-center text-muted-foreground">
+                      No purchase orders match the current filters.
                     </TableCell>
                   </TableRow>
-                )
-              })
-            )}
-          </TableBody>
-        </Table>
-      </div>
-
+                ) : (
+                  filtered.map(purchase => {
+                    const secondaryLabel = purchase.customerPoNumber ?? purchase.paymentConditionName ?? ''
+                    const detailHref = `/departments/${departmentId}/orders/${purchase.id}` as Route
+                    const isOrderedNotSent = isOrderedNotSentStatus(purchase.status)
+                    // Ordered purchases are locked unless the user meets the manager threshold.
+                    const canMutatePurchase = !isOrderedNotSent || canManageOrderedPurchases
+                    return (
+                      <TableRow
+                        key={purchase.id}
+                        className={`border-border/40 hover:bg-secondary/50 cursor-pointer ${purchase.deleted ? 'opacity-60' : ''}`}
+                        onClick={() => router.push(detailHref)}>
+                        <TableCell className={`${tdClass} text-foreground font-medium`}>
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-accent underline-offset-2 hover:underline">
+                              {purchase.purchaseNumber ?? '—'}
+                            </span>
+                            {secondaryLabel ? (
+                              <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                                {secondaryLabel}
+                              </span>
+                            ) : null}
+                          </div>
+                        </TableCell>
+                        <TableCell className={tdClass}>{formatDate(purchase.purchaseDate)}</TableCell>
+                        <TableCell className={tdClass}>{purchase.companyName ?? '-'}</TableCell>
+                        <TableCell className={tdClass}>
+                          <div className="flex flex-col gap-0.5">
+                            <Badge
+                              variant="outline"
+                              className="border-border text-muted-foreground font-normal whitespace-nowrap">
+                              {purchase.quoteNumber ?? 'Manual'}
+                            </Badge>
+                            {purchase.paymentConditionName ? (
+                              <span className="text-[11px] text-muted-foreground truncate">
+                                {purchase.paymentConditionName}
+                              </span>
+                            ) : null}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge className="bg-accent/10 text-accent border-0 font-medium">
+                            {purchase.status ?? 'Unknown'}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          {purchase.bocNumber ? (
+                            <Badge className="bg-emerald-500/10 text-emerald-700 border-0 font-medium">Confirmed</Badge>
+                          ) : (
+                            <Badge variant="outline" className="border-border text-muted-foreground font-normal">
+                              Not confirmed
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className={tdClass}>
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-foreground">{purchase.createdByName}</span>
+                            <span className="text-[11px] text-muted-foreground">{formatDate(purchase.createdAt)}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1" onClick={e => e.stopPropagation()}>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                              onClick={() => router.push(detailHref)}>
+                              <ExternalLink className="h-3.5 w-3.5" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                              onClick={() =>
+                                router.push(
+                                  `/departments/${departmentId}/purchaseOrdersConfirmation?purchaseId=${purchase.id}` as Route,
+                                )
+                              }>
+                              <Link2 className="h-3.5 w-3.5" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                              disabled={!canMutatePurchase}
+                              onClick={() => {
+                                setDraftPurchase(null)
+                                setConfirmationCreateFlow(false)
+                                setEditing(purchase)
+                                setDialogOpen(true)
+                              }}>
+                              <Pencil className="h-3.5 w-3.5" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                              disabled={!canMutatePurchase}
+                              onClick={() => (isAdmin ? handleHardDelete(purchase.id) : handleSoftDelete(purchase.id))}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </TabsContent>
 
         <TabsContent value="payment-conditions" className="mt-4 space-y-4">
@@ -480,7 +493,9 @@ export function PurchaseTable({
                   <TableHead className="text-xs whitespace-nowrap">Name</TableHead>
                   <TableHead className="text-xs whitespace-nowrap">Created At</TableHead>
                   <TableHead className="text-xs whitespace-nowrap">Created By</TableHead>
-                  <TableHead className="w-24"><span className="sr-only">Actions</span></TableHead>
+                  <TableHead className="w-24">
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -492,7 +507,9 @@ export function PurchaseTable({
                   </TableRow>
                 ) : (
                   filteredPaymentConditions.map(row => (
-                    <TableRow key={row.id} className={`border-border/40 hover:bg-secondary/50 ${row.deleted ? 'opacity-50' : ''}`}>
+                    <TableRow
+                      key={row.id}
+                      className={`border-border/40 hover:bg-secondary/50 ${row.deleted ? 'opacity-50' : ''}`}>
                       <TableCell className="text-sm text-foreground font-medium">{row.name}</TableCell>
                       <TableCell className={tdClass}>{formatDate(row.createdAt)}</TableCell>
                       <TableCell className={tdClass}>{row.createdByName}</TableCell>
@@ -564,6 +581,7 @@ export function PurchaseTable({
         companies={companies}
         quoteSuppliers={quoteSuppliers}
         paymentConditions={paymentConditions}
+        confirmationOnly={confirmationCreateFlow}
         onSave={handleSave}
       />
 

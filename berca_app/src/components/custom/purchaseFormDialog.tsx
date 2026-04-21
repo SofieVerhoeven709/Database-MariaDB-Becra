@@ -144,84 +144,203 @@ export function PurchaseFormDialog({
 
           {!isConfirmationOnly && (
             <>
+              {/* Customer PO number */}
+              <div className="grid gap-1.5">
+                <Label htmlFor="customerPoNumber">PO Number Customer</Label>
+                <Input
+                  id="customerPoNumber"
+                  value={form.customerPoNumber ?? ''}
+                  onChange={e => set('customerPoNumber', e.target.value || null)}
+                  placeholder="Free input"
+                  className="bg-secondary border-border"
+                />
+              </div>
 
-          {/* Customer PO number */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="customerPoNumber">PO Number Customer</Label>
-            <Input
-              id="customerPoNumber"
-              value={form.customerPoNumber ?? ''}
-              onChange={e => set('customerPoNumber', e.target.value || null)}
-              placeholder="Free input"
-              className="bg-secondary border-border"
-            />
-          </div>
+              {/* Purchase date */}
+              <div className="grid gap-1.5">
+                <Label htmlFor="purchaseDate">Purchase Date</Label>
+                <Input
+                  id="purchaseDate"
+                  type="date"
+                  value={form.purchaseDate ? form.purchaseDate.slice(0, 10) : ''}
+                  // Convert the date input back to ISO for storage.
+                  onChange={e =>
+                    set(
+                      'purchaseDate',
+                      e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString(),
+                    )
+                  }
+                  className="bg-secondary border-border"
+                />
+              </div>
+
+              {/* Status */}
+              <div className="grid gap-1.5">
+                <Label>Status</Label>
+                <Select value={form.status} onValueChange={v => set('status', v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    {STATUS_OPTIONS.map(s => (
+                      <SelectItem key={s} value={s}>
+                        {s}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Company (supplier) */}
+              <div className="grid gap-1.5">
+                <Label>Supplier Company</Label>
+                <Select
+                  value={form.companyId || '__none__'}
+                  onValueChange={v => set('companyId', v === '__none__' ? '' : v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select company" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="__none__">Select company</SelectItem>
+                    {companies.map(c => (
+                      <SelectItem key={c.id} value={c.id}>
+                        {c.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Quote (optional) */}
+              <div className="grid gap-1.5">
+                <Label>Quote (optional)</Label>
+                <Select
+                  value={form.quoteSupplierId ?? '__none__'}
+                  onValueChange={v => set('quoteSupplierId', v === '__none__' ? null : v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select quote" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="__none__">Manual purchase (no quote)</SelectItem>
+                    {quoteSuppliers.map(q => (
+                      <SelectItem key={q.id} value={q.id}>
+                        {q.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Payment condition */}
+              <div className="grid gap-1.5">
+                <Label>Payment condition</Label>
+                <Select
+                  value={form.paymentConditionId ?? '__none__'}
+                  onValueChange={v => set('paymentConditionId', v === '__none__' ? null : v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select payment condition" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="__none__">— None —</SelectItem>
+                    {paymentConditions.map(pc => (
+                      <SelectItem key={pc.id} value={pc.id}>
+                        {pc.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Description */}
+              <div className="grid gap-1.5">
+                <Label htmlFor="description">Description</Label>
+                <Input
+                  id="description"
+                  value={form.description ?? ''}
+                  onChange={e => set('description', e.target.value || null)}
+                  placeholder="Detailed description"
+                  className="bg-secondary border-border"
+                />
+              </div>
+
+              {/* Additional info */}
+              <div className="grid gap-1.5">
+                <Label htmlFor="additionalInfo">Additional Info</Label>
+                <Input
+                  id="additionalInfo"
+                  value={form.additionalInfo ?? ''}
+                  onChange={e => set('additionalInfo', e.target.value || null)}
+                  placeholder="Optional extra details"
+                  className="bg-secondary border-border"
+                />
+              </div>
             </>
           )}
-
-          {/* BOC number */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="bocNumber">BOC Number</Label>
-            <div className="flex gap-2">
-              <Input
-                id="bocNumber"
-                value={form.bocNumber ?? ''}
-                onChange={e => set('bocNumber', e.target.value || null)}
-                placeholder="Enter BOC"
-                className="bg-secondary border-border flex-1"
-              />
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="h-10 px-3 border-border text-xs shrink-0"
-                onClick={() => {
-                  set('bocNumber', generateOrderConfirmationNumber())
-                  set('bocCreatedAt', new Date().toISOString())
-                  if (!form.bocStatus) set('bocStatus', 'DRAFT')
-                }}>
-                Generate OC
-              </Button>
-            </div>
-          </div>
-
-          {/* BOC customer */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="bocCustomerName">Customer</Label>
-            <Select
-              value={form.bocCustomerName ?? '__none__'}
-              onValueChange={v => set('bocCustomerName', v === '__none__' ? null : v)}>
-              <SelectTrigger id="bocCustomerName" className="bg-secondary border-border">
-                <SelectValue placeholder="Select customer" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                <SelectItem value="__none__">Select customer</SelectItem>
-                {availableCustomerOptions.map(customer => (
-                  <SelectItem key={customer.id} value={customer.name}>
-                    {customer.name}
-                  </SelectItem>
-                ))}
-                {form.bocCustomerName && !availableCustomerOptions.some(customer => customer.name === form.bocCustomerName) ? (
-                  <SelectItem value={form.bocCustomerName}>{form.bocCustomerName}</SelectItem>
-                ) : null}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* BOC description */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="bocDescription">Short description of BOC</Label>
-            <Input
-              id="bocDescription"
-              value={form.bocDescription ?? ''}
-              onChange={e => set('bocDescription', e.target.value || null)}
-              placeholder="Short confirmation description"
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          {!isConfirmationOnly && (
+          {/*This is the start of only for the Purchase Orders Confirmation */}
+          {isConfirmationOnly && (
             <>
+              {/* BOC number */}
+              <div className="grid gap-1.5">
+                <Label htmlFor="bocNumber">BOC Number</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="bocNumber"
+                    value={form.bocNumber ?? ''}
+                    onChange={e => set('bocNumber', e.target.value || null)}
+                    placeholder="Enter BOC"
+                    className="bg-secondary border-border flex-1"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-10 px-3 border-border text-xs shrink-0"
+                    onClick={() => {
+                      set('bocNumber', generateOrderConfirmationNumber())
+                      set('bocCreatedAt', new Date().toISOString())
+                      if (!form.bocStatus) set('bocStatus', 'DRAFT')
+                    }}>
+                    Generate OC
+                  </Button>
+                </div>
+              </div>
+
+              {/* BOC customer */}
+              <div className="grid gap-1.5">
+                <Label htmlFor="bocCustomerName">Customer</Label>
+                <Select
+                  value={form.bocCustomerName ?? '__none__'}
+                  onValueChange={v => set('bocCustomerName', v === '__none__' ? null : v)}>
+                  <SelectTrigger id="bocCustomerName" className="bg-secondary border-border">
+                    <SelectValue placeholder="Select customer" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="__none__">Select customer</SelectItem>
+                    {availableCustomerOptions.map(customer => (
+                      <SelectItem key={customer.id} value={customer.name}>
+                        {customer.name}
+                      </SelectItem>
+                    ))}
+                    {form.bocCustomerName &&
+                    !availableCustomerOptions.some(customer => customer.name === form.bocCustomerName) ? (
+                      <SelectItem value={form.bocCustomerName}>{form.bocCustomerName}</SelectItem>
+                    ) : null}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* BOC description */}
+              <div className="grid gap-1.5">
+                <Label htmlFor="bocDescription">Short description of BOC</Label>
+                <Input
+                  id="bocDescription"
+                  value={form.bocDescription ?? ''}
+                  onChange={e => set('bocDescription', e.target.value || null)}
+                  placeholder="Short confirmation description"
+                  className="bg-secondary border-border"
+                />
+              </div>
+
               {/* BOC creation date */}
               <div className="grid gap-1.5">
                 <Label htmlFor="bocCreatedAt">Created on date</Label>
@@ -255,129 +374,8 @@ export function PurchaseFormDialog({
               </div>
             </>
           )}
-
-          {!isConfirmationOnly && (
-            <>
-
-          {/* Purchase date */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="purchaseDate">Purchase Date</Label>
-            <Input
-              id="purchaseDate"
-              type="date"
-              value={form.purchaseDate ? form.purchaseDate.slice(0, 10) : ''}
-              // Convert the date input back to ISO for storage.
-              onChange={e =>
-                set('purchaseDate', e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString())
-              }
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          {/* Status */}
-          <div className="grid gap-1.5">
-            <Label>Status</Label>
-            <Select value={form.status} onValueChange={v => set('status', v)}>
-              <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                {STATUS_OPTIONS.map(s => (
-                  <SelectItem key={s} value={s}>
-                    {s}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Company (supplier) */}
-          <div className="grid gap-1.5">
-            <Label>Supplier Company</Label>
-            <Select
-              value={form.companyId || '__none__'}
-              onValueChange={v => set('companyId', v === '__none__' ? '' : v)}>
-              <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select company" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                <SelectItem value="__none__">Select company</SelectItem>
-                {companies.map(c => (
-                  <SelectItem key={c.id} value={c.id}>
-                    {c.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Quote (optional) */}
-          <div className="grid gap-1.5">
-            <Label>Quote (optional)</Label>
-            <Select
-              value={form.quoteSupplierId ?? '__none__'}
-              onValueChange={v => set('quoteSupplierId', v === '__none__' ? null : v)}>
-              <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select quote" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                <SelectItem value="__none__">Manual purchase (no quote)</SelectItem>
-                {quoteSuppliers.map(q => (
-                  <SelectItem key={q.id} value={q.id}>
-                    {q.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Payment condition */}
-          <div className="grid gap-1.5">
-            <Label>Payment condition</Label>
-            <Select
-              value={form.paymentConditionId ?? '__none__'}
-              onValueChange={v => set('paymentConditionId', v === '__none__' ? null : v)}>
-              <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select payment condition" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                <SelectItem value="__none__">— None —</SelectItem>
-                {paymentConditions.map(pc => (
-                  <SelectItem key={pc.id} value={pc.id}>
-                    {pc.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Description */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="description">Description</Label>
-            <Input
-              id="description"
-              value={form.description ?? ''}
-              onChange={e => set('description', e.target.value || null)}
-              placeholder="Detailed description"
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          {/* Additional info */}
-          <div className="grid gap-1.5">
-            <Label htmlFor="additionalInfo">Additional Info</Label>
-            <Input
-              id="additionalInfo"
-              value={form.additionalInfo ?? ''}
-              onChange={e => set('additionalInfo', e.target.value || null)}
-              placeholder="Optional extra details"
-              className="bg-secondary border-border"
-            />
-          </div>
-            </>
-          )}
         </div>
-
+        {/*This is the end of the Purchase Orders Confirmation*/}
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>
             Cancel

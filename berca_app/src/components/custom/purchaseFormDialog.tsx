@@ -19,6 +19,7 @@ interface PurchaseFormDialogProps {
   onOpenChange: (open: boolean) => void
   purchase: MappedPurchase | null
   companies: PurchaseOption[]
+  customerOptions: PurchaseOption[]
   quoteSuppliers: PurchaseOption[]
   paymentConditions: PurchaseOption[]
   confirmationOnly?: boolean
@@ -65,6 +66,7 @@ export function PurchaseFormDialog({
   onOpenChange,
   purchase,
   companies,
+  customerOptions = [],
   quoteSuppliers,
   paymentConditions,
   confirmationOnly = false,
@@ -95,6 +97,7 @@ export function PurchaseFormDialog({
 
   const isEdit = Boolean(purchase?.id)
   const isConfirmationOnly = confirmationOnly
+  const availableCustomerOptions = customerOptions
   const canSubmit = isConfirmationOnly
     ? !!form.bocNumber?.trim() && !!form.bocCustomerName?.trim() && !!form.bocDescription?.trim()
     : !!form.purchaseNumber.trim() && !!form.companyId
@@ -115,20 +118,18 @@ export function PurchaseFormDialog({
         </DialogHeader>
 
         <div className="grid gap-4 py-2">
-          {!isConfirmationOnly && (
-            <>
           {/* Purchase number */}
           <div className="grid gap-1.5">
-            <Label htmlFor="purchaseNumber">Purchase Number</Label>
+            <Label htmlFor="purchaseNumber">{isConfirmationOnly ? 'Becra PO Number' : 'Purchase Number'}</Label>
             <div className="flex gap-2">
               <Input
                 id="purchaseNumber"
                 value={form.purchaseNumber ?? ''}
                 onChange={e => set('purchaseNumber', e.target.value)}
-                placeholder="e.g. POYYDDMMXX"
+                placeholder={isConfirmationOnly ? 'Enter Becra PO number' : 'e.g. POYYDDMMXX'}
                 className="bg-secondary border-border flex-1"
               />
-              {!isEdit && (
+              {!isEdit && !isConfirmationOnly && (
                 <Button
                   type="button"
                   variant="outline"
@@ -140,6 +141,9 @@ export function PurchaseFormDialog({
               )}
             </div>
           </div>
+
+          {!isConfirmationOnly && (
+            <>
 
           {/* Customer PO number */}
           <div className="grid gap-1.5">
@@ -184,13 +188,24 @@ export function PurchaseFormDialog({
           {/* BOC customer */}
           <div className="grid gap-1.5">
             <Label htmlFor="bocCustomerName">Customer</Label>
-            <Input
-              id="bocCustomerName"
-              value={form.bocCustomerName ?? ''}
-              onChange={e => set('bocCustomerName', e.target.value || null)}
-              placeholder="Customer name"
-              className="bg-secondary border-border"
-            />
+            <Select
+              value={form.bocCustomerName ?? '__none__'}
+              onValueChange={v => set('bocCustomerName', v === '__none__' ? null : v)}>
+              <SelectTrigger id="bocCustomerName" className="bg-secondary border-border">
+                <SelectValue placeholder="Select customer" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                <SelectItem value="__none__">Select customer</SelectItem>
+                {availableCustomerOptions.map(customer => (
+                  <SelectItem key={customer.id} value={customer.name}>
+                    {customer.name}
+                  </SelectItem>
+                ))}
+                {form.bocCustomerName && !availableCustomerOptions.some(customer => customer.name === form.bocCustomerName) ? (
+                  <SelectItem value={form.bocCustomerName}>{form.bocCustomerName}</SelectItem>
+                ) : null}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* BOC description */}

@@ -11,12 +11,14 @@ import {updatePurchaseAction} from '@/serverFunctions/purchases'
 interface PurchaseOrdersConfirmationTableProps {
   initialPurchases: MappedPurchase[]
   departmentId: string
+  customerOptions: {id: string; name: string}[]
   focusedPurchaseId?: string
 }
 
 export function PurchaseOrdersConfirmationTable({
   initialPurchases,
   departmentId,
+  customerOptions,
   focusedPurchaseId,
 }: PurchaseOrdersConfirmationTableProps) {
   const router = useRouter()
@@ -70,9 +72,11 @@ export function PurchaseOrdersConfirmationTable({
               <tr
                 key={purchase.id}
                 className={`border-t border-border/70 align-top ${focusedPurchaseId === purchase.id ? 'bg-accent/10' : ''}`}>
-                <td className="px-4 py-3 text-muted-foreground">{purchase.customerPoNumber || '-'}</td>
+                <td className="px-4 py-3 text-muted-foreground">{purchase.purchaseNumber || '-'}</td>
                 <td className="px-4 py-3 text-muted-foreground">{purchase.bocNumber || '-'}</td>
-                <td className="px-4 py-3 text-muted-foreground">{purchase.bocDescription || purchase.description || '-'}</td>
+                <td className="px-4 py-3 text-muted-foreground">
+                  {purchase.bocDescription || purchase.description || '-'}
+                </td>
                 <td className="px-4 py-3">
                   <div className="flex flex-wrap gap-2">
                     <Button asChild size="sm" variant="outline" className="border-border">
@@ -115,6 +119,7 @@ export function PurchaseOrdersConfirmationTable({
         }}
         purchase={editing}
         companies={[]}
+        customerOptions={customerOptions}
         quoteSuppliers={[]}
         paymentConditions={[]}
         confirmationOnly
@@ -123,4 +128,3 @@ export function PurchaseOrdersConfirmationTable({
     </>
   )
 }
-

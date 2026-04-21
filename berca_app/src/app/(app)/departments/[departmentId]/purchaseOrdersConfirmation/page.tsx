@@ -2,6 +2,7 @@ import {getPurchases} from '@/dal/purchases'
 import {mapPurchase} from '@/extra/purchases'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getDepartmentById} from '@/dal/department'
+import {getCustomerCompanies} from '@/dal/companies'
 import {PurchaseOrdersConfirmationTable} from '@/components/custom/purchaseOrdersConfirmationTable'
 
 interface PageProps {
@@ -14,11 +15,16 @@ export default async function PurchaseOrdersConfirmationPage({params, searchPara
   const query = (await searchParams) ?? {}
   const focusedPurchaseId = typeof query.purchaseId === 'string' ? query.purchaseId : undefined
 
-  const [department, purchasesFromDAL] = await Promise.all([getDepartmentById(departmentId), getPurchases()])
+  const [department, purchasesFromDAL, customersFromDAL] = await Promise.all([
+    getDepartmentById(departmentId),
+    getPurchases(),
+    getCustomerCompanies(),
+  ])
 
   if (!department) return <p>Department not found</p>
 
   const purchases = purchasesFromDAL.map(mapPurchase)
+  const customerOptions = customersFromDAL.map(customer => ({id: customer.id, name: customer.name}))
   const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'purchaseOrdersConfirmation')
 
   return (
@@ -42,6 +48,7 @@ export default async function PurchaseOrdersConfirmationPage({params, searchPara
         <PurchaseOrdersConfirmationTable
           initialPurchases={purchases}
           departmentId={departmentId}
+          customerOptions={customerOptions}
           focusedPurchaseId={focusedPurchaseId}
         />
       </div>

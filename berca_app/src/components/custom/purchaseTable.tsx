@@ -57,6 +57,7 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
 interface PurchaseTableProps {
   initialPurchases: MappedPurchase[]
   companies: PurchaseOption[]
+  customerOptions: PurchaseOption[]
   quoteSuppliers: PurchaseOption[]
   paymentConditions: PurchaseOption[]
   paymentConditionRows: MappedPaymentCondition[]
@@ -73,6 +74,7 @@ const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 export function PurchaseTable({
   initialPurchases,
   companies,
+  customerOptions,
   quoteSuppliers,
   paymentConditions,
   paymentConditionRows,
@@ -579,6 +581,7 @@ export function PurchaseTable({
         onOpenChange={setDialogOpen}
         purchase={editing ?? draftPurchase}
         companies={companies}
+        customerOptions={customerOptions}
         quoteSuppliers={quoteSuppliers}
         paymentConditions={paymentConditions}
         confirmationOnly={confirmationCreateFlow}

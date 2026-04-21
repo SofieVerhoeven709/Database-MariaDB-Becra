@@ -3,7 +3,7 @@ import {getPurchases} from '@/dal/purchases'
 import {mapPurchase} from '@/extra/purchases'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
-import {getCompanies} from '@/dal/companies'
+import {getCompanies, getCustomerCompanies} from '@/dal/companies'
 import {getPaymentConditionOptions, getPaymentConditions, getQuoteSuppliers} from '@/dal/quoteSuppliers'
 import {mapPaymentCondition} from '@/extra/quoteSuppliers'
 import {getDepartmentById} from '@/dal/department'
@@ -24,11 +24,12 @@ export default async function PurchaseOrdersPage({params, searchParams}: PagePro
   const prefillPurchaseId = typeof query.prefillPurchaseId === 'string' ? query.prefillPurchaseId : undefined
   const returnToConfirmation = query.returnTo === 'confirmation'
 
-  const [department, purchasesFromDAL, profile, companiesRaw, quoteSuppliersRaw, paymentConditionsRaw, paymentConditionRowsRaw] = await Promise.all([
+  const [department, purchasesFromDAL, profile, companiesRaw, customersRaw, quoteSuppliersRaw, paymentConditionsRaw, paymentConditionRowsRaw] = await Promise.all([
     getDepartmentById(departmentId),
     getPurchases(),
     getSessionProfileFromCookieOrThrow(),
     getCompanies(),
+    getCustomerCompanies(),
     getQuoteSuppliers(),
     getPaymentConditionOptions(),
     getPaymentConditions(),
@@ -52,6 +53,8 @@ export default async function PurchaseOrdersPage({params, searchParams}: PagePro
     .filter(q => !q.deleted)
     .map(q => ({id: q.id, name: `${q.quoteNumber} - ${q.Company?.name ?? 'Unknown supplier'}`}))
     .sort((a, b) => a.name.localeCompare(b.name))
+
+  const customerOptions = customersRaw.map(customer => ({id: customer.id, name: customer.name}))
 
   const paymentConditionOptions = paymentConditionsRaw
     .map(pc => ({id: pc.id, name: pc.name}))
@@ -87,6 +90,7 @@ export default async function PurchaseOrdersPage({params, searchParams}: PagePro
   const purchaseTableProps = {
     initialPurchases: purchases,
     companies: companyOptions,
+    customerOptions,
     quoteSuppliers: quoteSupplierOptions,
     paymentConditions: paymentConditionOptions,
     paymentConditionRows,
@@ -119,7 +123,7 @@ export default async function PurchaseOrdersPage({params, searchParams}: PagePro
           </div>
         </header>
 
-        <PurchaseTable {...(purchaseTableProps as any)} />
+        <PurchaseTable {...purchaseTableProps} />
       </div>
     </main>
   )

@@ -65,6 +65,7 @@ const SEGMENT_LABELS: Record<string, string> = {
   orderQuote: 'Order Quotes',
   materialDemand: 'Material Demand',
   orderRequests: 'Order Requests',
+  purchaseOrdersConfirmation: 'Purchase Orders Confirmation',
   admin: 'Admin',
   audit: 'Audit',
   budget: 'Budget',

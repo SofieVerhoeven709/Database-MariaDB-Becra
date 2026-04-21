@@ -1,9 +1,9 @@
 'use client'
 
-import {useMemo, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
 import type {Route} from 'next'
-import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, ExternalLink, RotateCcw} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, ExternalLink, RotateCcw, Link2} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
@@ -15,6 +15,7 @@ import {PaymentConditionFormDialog} from '@/components/custom/paymentConditionFo
 import {normalizePurchaseStatus} from '@/extra/purchases'
 import type {MappedPurchase} from '@/types/purchase'
 import type {MappedPaymentCondition} from '@/types/quoteSupplier'
+import {generateOrderConfirmationNumber, generatePurchaseNumber} from '@/lib/utils'
 import {
   createPurchaseAction,
   updatePurchaseAction,
@@ -61,6 +62,8 @@ interface PurchaseTableProps {
   currentUserRole: string
   currentUserLevel: number
   departmentId: string
+  prefillPurchase?: MappedPurchase | null
+  returnToConfirmation?: boolean
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -75,6 +78,8 @@ export function PurchaseTable({
   currentUserRole,
   currentUserLevel,
   departmentId,
+  prefillPurchase,
+  returnToConfirmation = false,
 }: PurchaseTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -98,9 +103,12 @@ export function PurchaseTable({
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<MappedPurchase | null>(null)
+  const [draftPurchase, setDraftPurchase] = useState<MappedPurchase | null>(null)
   const [paymentSearch, setPaymentSearch] = useState('')
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false)
   const [editingPaymentCondition, setEditingPaymentCondition] = useState<MappedPaymentCondition | null>(null)
+  const [prefillHandled, setPrefillHandled] = useState(false)
+  const [confirmationCreateFlow, setConfirmationCreateFlow] = useState(false)
   const filteredPaymentConditions = paymentConditionRows
     .filter(row => row.name.toLowerCase().includes(paymentSearch.toLowerCase()))
     .sort((a, b) => a.name.localeCompare(b.name))
@@ -146,6 +154,34 @@ export function PurchaseTable({
       }
     })
 
+  useEffect(() => {
+    if (!prefillPurchase || prefillHandled) return
+
+    // Start a create flow with copied values from the selected source purchase.
+    setDraftPurchase({
+      ...prefillPurchase,
+      id: '',
+      purchaseNumber: generatePurchaseNumber(),
+      purchaseDate: new Date().toISOString(),
+      bocNumber: generateOrderConfirmationNumber(),
+      bocDescription: prefillPurchase.bocDescription ?? prefillPurchase.description ?? null,
+      bocCreatedAt: new Date().toISOString(),
+      bocStatus: 'DRAFT',
+      status: 'DRAFT',
+      createdAt: null,
+      createdBy: '',
+      createdByName: '',
+      deleted: false,
+      deletedAt: null,
+      deletedBy: null,
+    })
+    setEditing(null)
+    setDialogOpen(true)
+    setPrefillHandled(true)
+    setConfirmationCreateFlow(true)
+    router.replace(`/departments/${departmentId}/orders` as Route)
+  }, [prefillPurchase, prefillHandled, router, departmentId])
+
   function toggleSort(field: SortField) {
     if (sortField === field) setSortDir(prev => (prev === 'asc' ? 'desc' : 'asc'))
     else {
@@ -155,6 +191,8 @@ export function PurchaseTable({
   }
 
   async function handleSave(p: MappedPurchase) {
+    const isCreateFlow = !editing
+
     if (editing) {
       await updatePurchaseAction({
         id: p.id,
@@ -192,6 +230,13 @@ export function PurchaseTable({
       })
     }
     setEditing(null)
+    setDraftPurchase(null)
+    if (isCreateFlow && returnToConfirmation && confirmationCreateFlow) {
+      setConfirmationCreateFlow(false)
+      router.push(`/departments/${departmentId}/purchaseOrdersConfirmation` as Route)
+      return
+    }
+    setConfirmationCreateFlow(false)
     router.refresh()
   }
 
@@ -254,6 +299,8 @@ export function PurchaseTable({
           <Button
             onClick={() => {
               setEditing(null)
+              setDraftPurchase(null)
+              setConfirmationCreateFlow(false)
               setDialogOpen(true)
             }}
             disabled={!canCreate}
@@ -363,8 +410,21 @@ export function PurchaseTable({
                           variant="ghost"
                           size="icon"
                           className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          onClick={() =>
+                            router.push(
+                              `/departments/${departmentId}/purchaseOrdersConfirmation?purchaseId=${purchase.id}` as Route,
+                            )
+                          }>
+                          <Link2 className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
                           disabled={!canMutatePurchase}
                           onClick={() => {
+                            setDraftPurchase(null)
+                            setConfirmationCreateFlow(false)
                             setEditing(purchase)
                             setDialogOpen(true)
                           }}>
@@ -500,7 +560,7 @@ export function PurchaseTable({
       <PurchaseFormDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
-        purchase={editing}
+        purchase={editing ?? draftPurchase}
         companies={companies}
         quoteSuppliers={quoteSuppliers}
         paymentConditions={paymentConditions}

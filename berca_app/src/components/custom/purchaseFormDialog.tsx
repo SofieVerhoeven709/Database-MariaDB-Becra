@@ -91,7 +91,7 @@ export function PurchaseFormDialog({
     }
   }
 
-  const isEdit = !!purchase
+  const isEdit = Boolean(purchase?.id)
   const canSubmit = !!form.purchaseNumber.trim() && !!form.companyId
 
   return (
@@ -166,7 +166,7 @@ export function PurchaseFormDialog({
 
           {/* BOC customer */}
           <div className="grid gap-1.5">
-            <Label htmlFor="bocCustomerName">Custumor</Label>
+            <Label htmlFor="bocCustomerName">Customer</Label>
             <Input
               id="bocCustomerName"
               value={form.bocCustomerName ?? ''}
@@ -178,12 +178,12 @@ export function PurchaseFormDialog({
 
           {/* BOC description */}
           <div className="grid gap-1.5">
-            <Label htmlFor="bocDescription">Description of BOC</Label>
+            <Label htmlFor="bocDescription">Short description of BOC</Label>
             <Input
               id="bocDescription"
               value={form.bocDescription ?? ''}
               onChange={e => set('bocDescription', e.target.value || null)}
-              placeholder="Confirmation description"
+              placeholder="Short confirmation description"
               className="bg-secondary border-border"
             />
           </div>

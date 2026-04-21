@@ -385,6 +385,13 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       icon: 'FileSpreadsheet',
       owner: 'purchasing',
     },
+    {
+      id: 'purchaseOrdersConfirmation',
+      name: 'Purchase Orders Confirmation',
+      description: 'Create and manage Becra order confirmations for purchase orders',
+      icon: 'ClipboardCheck',
+      owner: 'purchasing',
+    },
   ],
 
   Warehouse: [
@@ -440,6 +447,13 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       name: 'Sales Reports',
       description: 'Analyze sales performance and pipeline metrics',
       icon: 'TrendingUp',
+      owner: 'sales',
+    },
+    {
+      id: 'purchaseOrdersConfirmation',
+      name: 'Purchase Orders Confirmation',
+      description: 'Create and manage Becra order confirmations for purchase orders',
+      icon: 'ClipboardCheck',
       owner: 'sales',
     },
   ],

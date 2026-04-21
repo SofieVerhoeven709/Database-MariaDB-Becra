@@ -59,7 +59,9 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
   }
 
   const {currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const details: MappedPurchaseDetail[] = detailsRaw.map(d => mapPurchaseDetail(d as Parameters<typeof mapPurchaseDetail>[0]))
+  const details: MappedPurchaseDetail[] = detailsRaw.map(d =>
+    mapPurchaseDetail(d as Parameters<typeof mapPurchaseDetail>[0]),
+  )
 
   const materialOptions = materialsRaw
     // Build human-friendly labels for the line item picker.
@@ -96,6 +98,13 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="h-4 w-4" />
           Back to Purchase Orders
+        </Link>
+
+        <Link
+          href={`/departments/${departmentId}/purchaseOrdersConfirmation?purchaseId=${orderId}` as Route}
+          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <ArrowLeft className="h-4 w-4" />
+          View in Purchase Orders Confirmation
         </Link>
 
         <div className="rounded-xl border border-border/60 bg-card p-6 space-y-5">
@@ -151,13 +160,13 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
-                <Building2 className="h-3 w-3" /> BOC Klant
+                <Building2 className="h-3 w-3" /> BOC Customer
               </span>
               <span className="text-sm text-foreground">{purchaseWithCustomerRefs.bocCustomerName ?? '—'}</span>
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
-                <Calendar className="h-3 w-3" /> BOC Datum
+                <Calendar className="h-3 w-3" /> BOC Date
               </span>
               <span className="text-sm text-foreground">{formatDate(purchaseWithCustomerRefs.bocCreatedAt)}</span>
             </div>
@@ -185,7 +194,9 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border/50">
               {purchaseWithCustomerRefs.bocDescription && (
                 <div className="flex flex-col gap-1">
-                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Description of BOC</span>
+                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                    Description of BOC
+                  </span>
                   <span className="text-sm text-foreground">{purchaseWithCustomerRefs.bocDescription}</span>
                 </div>
               )}

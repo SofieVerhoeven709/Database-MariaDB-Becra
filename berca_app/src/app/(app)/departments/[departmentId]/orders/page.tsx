@@ -11,14 +11,18 @@ import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
+  searchParams?: Promise<{prefillPurchaseId?: string; returnTo?: string}>
 }
 
 function formatShortDate(date: Date) {
   return date.toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
-export default async function PurchaseOrdersPage({params}: PageProps) {
+export default async function PurchaseOrdersPage({params, searchParams}: PageProps) {
   const {departmentId} = await params
+  const query = (await searchParams) ?? {}
+  const prefillPurchaseId = typeof query.prefillPurchaseId === 'string' ? query.prefillPurchaseId : undefined
+  const returnToConfirmation = query.returnTo === 'confirmation'
 
   const [department, purchasesFromDAL, profile, companiesRaw, quoteSuppliersRaw, paymentConditionsRaw, paymentConditionRowsRaw] = await Promise.all([
     getDepartmentById(departmentId),
@@ -35,6 +39,7 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const purchases = purchasesFromDAL.map(mapPurchase)
+  const prefillPurchase = prefillPurchaseId ? purchases.find(p => p.id === prefillPurchaseId) ?? null : null
   const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'orders')
 
   const companyOptions = companiesRaw
@@ -88,6 +93,8 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
     currentUserRole,
     currentUserLevel,
     departmentId,
+    prefillPurchase,
+    returnToConfirmation,
   }
 
   return (

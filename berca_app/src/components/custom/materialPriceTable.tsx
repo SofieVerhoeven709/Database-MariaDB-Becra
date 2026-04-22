@@ -149,7 +149,7 @@ export function MaterialPriceTable({
   function handleExportCsv() {
     if (filtered.length === 0) return
 
-    const headers = ['BE Number', 'Supplier', 'Brand', 'Description', 'Unit Price', 'Unit Qty', 'Created']
+    const headers = ['BE Number', 'Supplier', 'Brand', 'Description', 'Unit Price', 'Unit Qty']
 
     const lines = filtered.map(materialPrice => {
       const base = [
@@ -158,9 +158,9 @@ export function MaterialPriceTable({
         materialPrice.brandName,
         materialPrice.shortDescription,
         materialPrice.unitPrice,
-        materialPrice.createdBy,
+        materialPrice.quantityPrice,
       ]
-      return base.map(v => escapeCsvValue(v ?? "")).join(',')
+      return base.map(v => escapeCsvValue(v ?? '')).join(',')
     })
 
     const csv = [headers.map(escapeCsvValue).join(','), ...lines].join('\n')

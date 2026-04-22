@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {Search, Plus, Pencil, Trash2, ChevronDown, ChevronUp, RotateCcw} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronDown, ChevronUp, RotateCcw, Download} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Badge} from '@/components/ui/badge'
@@ -150,7 +150,57 @@ export function TimeRegistryTable({
           return 0
       }
     })
+  function escapeCsvValue(value: string) {
+    const normalized = value ?? ''
+    if (/[",\n\r]/.test(normalized)) {
+      return `"${normalized.replace(/"/g, '""')}"`
+    }
+    return normalized
+  }
 
+  function handleExportCsv() {
+    if (filtered.length === 0) return
+
+    const headers = [
+      'Work Date',
+      'Work Order',
+      'Activity',
+      'Hour Type',
+      'Start',
+      'End',
+      'On site',
+      'Invoice time',
+      'createdBy',
+      'Employees',
+    ]
+
+    const lines = filtered.map(timeRegistry => {
+      const base = [
+        timeRegistry.workDate,
+        timeRegistry.workOrderNumber,
+        timeRegistry.activityDescription,
+        timeRegistry.startTime,
+        timeRegistry.endTime,
+        timeRegistry.onSite ? 'Yes' : 'No',
+        timeRegistry.invoiceTime ? 'Yes' : 'No',
+        timeRegistry.createdBy,
+        timeRegistry.additionalEmployees.map(e => `${e.employeeFirstName} ${e.employeeLastName}`).join('; '),
+      ]
+      return base.map(v => escapeCsvValue(v ?? '')).join(',')
+    })
+
+    const csv = [headers.map(escapeCsvValue).join(','), ...lines].join('\n')
+    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'})
+    const url = URL.createObjectURL(blob)
+    const anchor = document.createElement('a')
+    const date = new Date().toISOString().slice(0, 10)
+    anchor.href = url
+    anchor.download = `timeRegistry-${date}.csv`
+    document.body.appendChild(anchor)
+    anchor.click()
+    document.body.removeChild(anchor)
+    URL.revokeObjectURL(url)
+  }
   function buildPayload(f: TimeRegistryFormData) {
     // Convert UI form values into API-ready Date objects.
     return {
@@ -246,7 +296,16 @@ export function TimeRegistryTable({
             </SelectContent>
           </Select>
         </div>
-
+        {(currentUserRole === 'Administrator' || (currentUserRole === 'Manager' && currentUserLevel >= 80)) && (
+          <Button
+            variant="outline"
+            onClick={handleExportCsv}
+            disabled={filtered.length === 0}
+            className="flex items-center gap-2">
+            <Download className="h-4 w-4" />
+            Download CSV
+          </Button>
+        )}
         <Button
           onClick={() => {
             setEditingRecord(null)
@@ -324,7 +383,7 @@ export function TimeRegistryTable({
                     </Badge>
                   </TableCell>
                   <TableCell className={tdClass}>
-                    <span className="max-w-[200px] truncate inline-block">{tr.activityDescription ?? '-'}</span>
+                    <span className="max-w-50 truncate inline-block">{tr.activityDescription ?? '-'}</span>
                   </TableCell>
                   <TableCell className={tdClass}>{tr.hourTypeName}</TableCell>
                   <TableCell className={tdClass}>{formatTime(tr.startTime)}</TableCell>

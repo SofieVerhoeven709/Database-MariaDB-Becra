@@ -306,7 +306,7 @@ export function FollowUpStructureTable({
             }}
             className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
             <Plus className="h-4 w-4" />
-            New Entry
+            New Structure
           </Button>
         )}
       </div>
@@ -403,7 +403,7 @@ export function FollowUpStructureTable({
             {filtered.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={colCount} className="h-32 text-center text-muted-foreground">
-                  No follow-up entries found.
+                  No follow-up structures found.
                 </TableCell>
               </TableRow>
             ) : (
@@ -467,7 +467,7 @@ export function FollowUpStructureTable({
                           size="icon"
                           className="h-8 w-8 text-muted-foreground hover:text-accent hover:bg-accent/10">
                           <ExternalLink className="h-3.5 w-3.5" />
-                          <span className="sr-only">View entry</span>
+                          <span className="sr-only">View structure</span>
                         </Button>
                       </Link>
                       {!s.deleted && canEdit && (
@@ -480,7 +480,7 @@ export function FollowUpStructureTable({
                             setDialogOpen(true)
                           }}>
                           <Pencil className="h-3.5 w-3.5" />
-                          <span className="sr-only">Edit entry</span>
+                           <span className="sr-only">Edit structure</span>
                         </Button>
                       )}
                       {!s.deleted && canDelete && (
@@ -493,7 +493,7 @@ export function FollowUpStructureTable({
                             router.refresh()
                           }}>
                           <Trash2 className="h-3.5 w-3.5" />
-                          <span className="sr-only">Delete entry</span>
+                           <span className="sr-only">Delete structure</span>
                         </Button>
                       )}
                       {s.deleted && canDelete && (
@@ -518,7 +518,7 @@ export function FollowUpStructureTable({
                             router.refresh()
                           }}>
                           <Trash2 className="h-3.5 w-3.5" />
-                          <span className="sr-only">Permanently delete entry</span>
+                           <span className="sr-only">Permanently delete structure</span>
                         </Button>
                       )}
                     </div>
@@ -531,7 +531,7 @@ export function FollowUpStructureTable({
       </div>
 
       <div className="text-xs text-muted-foreground">
-        Showing {filtered.length} of {initialStructures.length} entries
+        Showing {filtered.length} of {initialStructures.length} structures
       </div>
 
       <FollowUpStructureFormDialog

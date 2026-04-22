@@ -420,34 +420,34 @@ export function FollowUpDetail({
       </div>
 
       {/* ── Tabs ───────────────────────────────────────────────────────────── */}
-      <Tabs defaultValue="structures">
-        <TabsList className="bg-secondary border border-border/60 flex-wrap h-auto gap-1">
-          <TabsTrigger value="structures">
-            Entries
-            <Badge variant="secondary" className="ml-2 text-xs">
-              {activeStructures.length}
-            </Badge>
-          </TabsTrigger>
-          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
-        </TabsList>
+        <Tabs defaultValue="structures">
+          <TabsList className="bg-secondary border border-border/60 flex-wrap h-auto gap-1">
+            <TabsTrigger value="structures">
+              Structures
+              <Badge variant="secondary" className="ml-2 text-xs">
+                {activeStructures.length}
+              </Badge>
+            </TabsTrigger>
+            {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          </TabsList>
 
         {/* ── Structures tab ───────────────────────────────────────────────── */}
-        <TabsContent value="structures" className="mt-3">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-xs text-muted-foreground">Follow-up log entries linked to this follow-up.</p>
-            {canCreate && (
-              <Button
-                size="sm"
-                variant="outline"
-                className="text-xs h-7 border-border gap-1"
-                onClick={() => {
-                  setEditingStructure(null)
-                  setStructureDialogOpen(true)
-                }}>
-                <Plus className="h-3.5 w-3.5" /> Add Entry
-              </Button>
-            )}
-          </div>
+          <TabsContent value="structures" className="mt-3">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs text-muted-foreground">Follow-up structures linked to this follow-up.</p>
+              {canCreate && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs h-7 border-border gap-1"
+                  onClick={() => {
+                    setEditingStructure(null)
+                    setStructureDialogOpen(true)
+                  }}>
+                  <Plus className="h-3.5 w-3.5" /> Add Structure
+                </Button>
+              )}
+            </div>
 
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
@@ -471,7 +471,7 @@ export function FollowUpDetail({
                 {activeStructures.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={10} className="h-20 text-center text-muted-foreground">
-                      No entries yet.
+                      No structures yet.
                     </TableCell>
                   </TableRow>
                 ) : (

@@ -25,9 +25,9 @@ export function buildInitialVisibilityRows(
     .filter(rl => !ALWAYS_VISIBLE_ROLES.some(r => rl.roleName.toLowerCase().includes(r.toLowerCase())))
     .map(rl => {
       const saved = savedRows.find(v => v.roleLevelId === rl.id)
-      const isDefault = defaultVisibleRoleNameFragments.some(fragment =>
-        rl.roleName.toLowerCase().includes(fragment.toLowerCase()),
-      )
+      const isDefault =
+        defaultVisibleRoleNameFragments.some(fragment => rl.roleName.toLowerCase().includes(fragment.toLowerCase())) ||
+        rl.subRoleName.toLowerCase().includes('manager')
       return {
         roleLevelId: rl.id,
         visible: saved !== undefined ? saved.visible : isDefault,

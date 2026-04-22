@@ -108,7 +108,15 @@ export function InvoiceOutFormDialog({
   projectOptions,
   onSaved,
 }: InvoiceOutFormDialogProps) {
-  const [form, setForm] = useState<FormState>(() => emptyForm(invoice))
+  const [form, setForm] = useState<FormState>(() => {
+    const base = emptyForm(invoice)
+    // If creating, set status to Draft if available
+    if (!invoice && invoiceStatuses && invoiceStatuses.length > 0) {
+      const draft = invoiceStatuses.find(s => s.name.toLowerCase() === 'draft')
+      if (draft) base.invoiceStatusId = draft.id
+    }
+    return base
+  })
   const [saving, setSaving] = useState(false)
   const [numberLoading, setNumberLoading] = useState(false)
   const [numberError, setNumberError] = useState<string | null>(null)
@@ -123,6 +131,11 @@ export function InvoiceOutFormDialog({
   // On open: reset form, fetch next number for create mode
   useEffect(() => {
     const base = emptyForm(invoice)
+    // If creating, set status to Draft if available
+    if (!invoice && invoiceStatuses && invoiceStatuses.length > 0) {
+      const draft = invoiceStatuses.find(s => s.name.toLowerCase() === 'draft')
+      if (draft) base.invoiceStatusId = draft.id
+    }
     setForm(base)
     setSelectedProjectId('')
     setWorkOrders([])

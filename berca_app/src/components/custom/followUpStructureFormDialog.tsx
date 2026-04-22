@@ -230,7 +230,7 @@ export function FollowUpStructureFormDialog({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-border">
         <DialogHeader>
           <DialogTitle className="text-foreground">
-            {isEdit ? 'Edit Follow-up Entry' : 'New Follow-up Entry'}
+            {isEdit ? 'Edit Follow-up Structure' : 'New Follow-up Structure'}
           </DialogTitle>
         </DialogHeader>
 
@@ -318,7 +318,7 @@ export function FollowUpStructureFormDialog({
             onClick={handleSubmit}
             disabled={saving || !isValid}
             className="bg-accent text-accent-foreground hover:bg-accent/80">
-            {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Create Entry'}
+            {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Create Structure'}
           </Button>
         </DialogFooter>
       </DialogContent>

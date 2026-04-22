@@ -1856,3 +1856,135 @@ ADD COLUMN IF NOT EXISTS bocStatus VARCHAR(50) NULL AFTER bocCreatedAt;
 -- Prisma sync: older DBs can miss this Unit column
 ALTER TABLE Unit
 ADD COLUMN IF NOT EXISTS quantityValue DECIMAL(10,3) NULL AFTER physicalQuantity;
+
+
+ALTER TABLE InvoiceIn
+    CHANGE COLUMN IF EXISTS `humanId` `clientInvoiceNumber` VARCHAR(255) NULL,
+    ADD COLUMN IF NOT EXISTS description TEXT NULL,
+    MODIFY COLUMN IF EXISTS poNumber CHAR(36) NULL;
+
+ALTER TABLE InvoiceIn
+    DROP FOREIGN KEY IF EXISTS fk_invoicein_po;
+
+ALTER TABLE InvoiceIn
+    ADD CONSTRAINT fk_invoicein_po
+    FOREIGN KEY (poNumber) REFERENCES Purchase (id) ON DELETE RESTRICT;
+
+ALTER TABLE TimeRegistry
+    ADD COLUMN IF NOT EXISTS approved BOOLEAN NOT NULL DEFAULT 0;
+
+CREATE TABLE
+    IF NOT EXISTS BillOfQuantitiesType (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        createdAt DATETIME NOT NULL,
+        createdBy CHAR(36) NOT NULL,
+        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedAt DATETIME,
+        deletedBy CHAR(36),
+        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+    ) ENGINE = InnoDB;
+
+CREATE TABLE
+    IF NOT EXISTS BillOfQuantitiesStatus (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        createdAt DATETIME NOT NULL,
+        createdBy CHAR(36) NOT NULL,
+        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedAt DATETIME,
+        deletedBy CHAR(36),
+        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+    ) ENGINE = InnoDB;
+
+CREATE TABLE
+    IF NOT EXISTS BillOfQuantitiesSentType (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        createdAt DATETIME NOT NULL,
+        createdBy CHAR(36) NOT NULL,
+        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedAt DATETIME,
+        deletedBy CHAR(36),
+        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+    ) ENGINE = InnoDB;
+
+CREATE TABLE
+    IF NOT EXISTS BillOfQuantities (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        boqNumber VARCHAR(255) NOT NULL,
+        poNumber VARCHAR(255),
+        humanId VARCHAR(255),
+        boqDate DATETIME NOT NULL,
+        createdAt DATETIME NOT NULL,
+        dueDate DATETIME NOT NULL,
+        sentDate DATETIME,
+        deletedAt DATETIME,
+        modifiedAt DATETIME,
+        reminderSent BOOLEAN NOT NULL DEFAULT 0,
+        outstanding BOOLEAN NOT NULL DEFAULT 1,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedBy CHAR(36),
+        createdBy CHAR(36) NOT NULL,
+        modifiedBy CHAR(36),
+        boqTypeId CHAR(36) NOT NULL,
+        targetId CHAR(36) NOT NULL,
+        paymentMethodId CHAR(36) NOT NULL,
+        boqSentTypeId CHAR(36) NOT NULL,
+        boqStatusId CHAR(36) NOT NULL,
+        priceListId CHAR(36),
+        FOREIGN KEY (boqTypeId) REFERENCES BillOfQuantitiesType (id) ON DELETE RESTRICT,
+        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+        FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+        FOREIGN KEY (modifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+        FOREIGN KEY (paymentMethodId) REFERENCES PaymentMethod (id) ON DELETE RESTRICT,
+        FOREIGN KEY (boqSentTypeId) REFERENCES BillOfQuantitiesSentType (id) ON DELETE RESTRICT,
+        FOREIGN KEY (boqStatusId) REFERENCES BillOfQuantitiesStatus (id) ON DELETE RESTRICT,
+        FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
+        UNIQUE (boqNumber)
+    ) ENGINE = InnoDB;
+
+CREATE TABLE
+    IF NOT EXISTS BoqContact (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        contactId CHAR(36) NOT NULL,
+        billOfQuantitiesId CHAR(36) NOT NULL,
+        FOREIGN KEY (contactId) REFERENCES Contact (id) ON DELETE RESTRICT,
+        FOREIGN KEY (billOfQuantitiesId) REFERENCES BillOfQuantities (id) ON DELETE CASCADE
+    ) ENGINE = InnoDB;
+
+CREATE TABLE
+    IF NOT EXISTS WorkOrderBoQ (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        billOfQuantitiesId CHAR(36) NOT NULL,
+        workOrderId CHAR(36) NOT NULL,
+        FOREIGN KEY (billOfQuantitiesId) REFERENCES BillOfQuantities (id) ON DELETE CASCADE,
+        FOREIGN KEY (workOrderId) REFERENCES WorkOrder (id) ON DELETE RESTRICT,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedAt DATETIME,
+        deletedBy CHAR(36),
+        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+    ) ENGINE = InnoDB;
+
+CREATE TABLE 
+    IF NOT EXISTS QuoteSupplierMiscLine (
+        id            CHAR(36) PRIMARY KEY,
+        quoteSupplierId CHAR(36) NOT NULL,
+        description   VARCHAR(255) NOT NULL,
+        unitPrice     DECIMAL(10,2) NOT NULL,
+        FOREIGN KEY (quoteSupplierId) REFERENCES QuoteSupplier(id) ON DELETE RESTRICT
+    ) ENGINE = InnoDB;
+
+CREATE TABLE
+    IF NOT EXISTS VisibilityForDepartment (
+        id           CHAR(36) NOT NULL PRIMARY KEY,
+        visible      BOOLEAN NOT NULL DEFAULT 0,
+        departmentId CHAR(36) NOT NULL,
+        targetId     CHAR(36) NOT NULL,
+        FOREIGN KEY (departmentId) REFERENCES Department (id) ON DELETE RESTRICT,
+        FOREIGN KEY (targetId)     REFERENCES Target (id) ON DELETE RESTRICT
+    ) ENGINE = InnoDB;

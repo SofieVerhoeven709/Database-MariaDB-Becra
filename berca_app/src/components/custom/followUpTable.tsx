@@ -430,9 +430,17 @@ export function FollowUpTable({
                   key={f.id}
                   className={`border-border/40 hover:bg-secondary/50 ${f.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className="text-sm text-foreground font-medium max-w-xs">
-                    <p className="truncate max-w-[220px]" title={f.activityDescription ?? ''}>
-                      {f.activityDescription ?? '-'}
-                    </p>
+                    {f.activityDescription ? (
+                      <Link
+                        href={`/departments/${departmentId}/followUp/${f.id}` as Route}
+                        className="truncate max-w-[220px] block text-accent hover:underline focus:underline outline-none"
+                        title={f.activityDescription}
+                      >
+                        {f.activityDescription}
+                      </Link>
+                    ) : (
+                      <span>-</span>
+                    )}
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline" className="border-border text-muted-foreground font-normal">

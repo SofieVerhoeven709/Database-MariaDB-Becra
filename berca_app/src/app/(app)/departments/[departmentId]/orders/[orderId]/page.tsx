@@ -125,7 +125,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-9 pt-2 border-t border-border/50">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4 pt-2 border-t border-border/50">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <Calendar className="h-3 w-3" /> Purchase Date
@@ -152,6 +152,9 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
               </span>
               <span className="text-sm text-foreground">{purchaseWithCustomerRefs.customerPoNumber ?? '—'}</span>
             </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4 pt-2 border-t border-border/50">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <Hash className="h-3 w-3" /> BOC
@@ -176,6 +179,9 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
               </span>
               <span className="text-sm text-foreground">{purchaseWithCustomerRefs.bocStatus ?? '—'}</span>
             </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4 pt-2 border-t border-border/50">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <CreditCard className="h-3 w-3" /> Payment

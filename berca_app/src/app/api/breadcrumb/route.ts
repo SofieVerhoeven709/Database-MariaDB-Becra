@@ -34,6 +34,14 @@ const entityResolvers: Record<string, EntityResolver> = {
     const item = await prismaClient.workOrder.findUnique({where: {id}, select: {workOrderNumber: true}})
     return item?.workOrderNumber ?? null
   },
+  orders: async id => {
+    const item = await prismaClient.purchase.findUnique({where: {id}, select: {purchaseNumber: true}})
+    return item?.purchaseNumber ?? null
+  },
+  order: async id => {
+    const item = await prismaClient.purchase.findUnique({where: {id}, select: {purchaseNumber: true}})
+    return item?.purchaseNumber ?? null
+  },
   material: async id => {
     const item = await prismaClient.material.findUnique({where: {id}, select: {name: true, beNumber: true}})
     return item ? (item.name ?? item.beNumber) : null

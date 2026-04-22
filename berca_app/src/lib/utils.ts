@@ -88,7 +88,7 @@ export function generateOrderConfirmationNumber() {
     .toString()
     .padStart(2, '0') // two random digits
 
-  return `${year}${day}${month}${random}`
+  return `OC${year}${day}${month}${random}`
 }
 
 export function generateIncomingDeliveryNumber(prefix = 'DEL') {

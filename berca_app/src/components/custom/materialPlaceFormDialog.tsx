@@ -41,13 +41,16 @@ function MaterialNumberPicker({selectedBeNumber, materials, inputStyles, onSelec
 
   const displayValue = isFocused
     ? search
-    : search || (selectedMaterial ? `${selectedMaterial.beNumber} - ${selectedMaterial.name ?? selectedMaterial.shortDescription}` : selectedBeNumber)
+    : search ||
+      (selectedMaterial
+        ? `${selectedMaterial.beNumber} - ${selectedMaterial.name ?? selectedMaterial.shortDescription}`
+        : selectedBeNumber)
 
   return (
     <div className="relative">
       <Input
         className={inputStyles}
-        placeholder="Type materiaalnummer of naam..."
+        placeholder="Type materialnumber or materialname..."
         value={displayValue}
         onChange={e => {
           setSearch(e.target.value)
@@ -72,7 +75,7 @@ function MaterialNumberPicker({selectedBeNumber, materials, inputStyles, onSelec
               setIsOpen(false)
               setIsFocused(false)
             }}>
-            Geen materiaal
+            No material
           </div>
           {filtered.map(m => (
             <div
@@ -87,7 +90,7 @@ function MaterialNumberPicker({selectedBeNumber, materials, inputStyles, onSelec
               {m.beNumber} - {m.name ?? m.shortDescription}
             </div>
           ))}
-          {filtered.length === 0 && <div className="px-2 py-1.5 text-xs text-muted-foreground">Geen materiaal gevonden</div>}
+          {filtered.length === 0 && <div className="px-2 py-1.5 text-xs text-muted-foreground">No material found</div>}
         </div>
       )}
     </div>
@@ -110,7 +113,14 @@ const EMPTY: Partial<MappedMaterialPlace> & {id: string} = {
   quantityInStock: 0,
 }
 
-export function MaterialPlaceFormDialog({open, onOpenChange, item, mode, materials, onSave}: MaterialPlaceFormDialogProps) {
+export function MaterialPlaceFormDialog({
+  open,
+  onOpenChange,
+  item,
+  mode,
+  materials,
+  onSave,
+}: MaterialPlaceFormDialogProps) {
   const resolvedMode: 'create' | 'edit' | 'duplicate' = mode ?? (item ? 'edit' : 'create')
   const isEditing = resolvedMode === 'edit' && item !== null
   const makeForm = (): Partial<MappedMaterialPlace> & {id: string} =>
@@ -153,7 +163,11 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, mode, materia
       <DialogContent className="bg-card border-border max-w-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-foreground">
-            {isEditing ? 'Edit Warehouse Place' : resolvedMode === 'duplicate' ? 'Duplicate Warehouse Place' : 'New Warehouse Place'}
+            {isEditing
+              ? 'Edit Warehouse Place'
+              : resolvedMode === 'duplicate'
+                ? 'Duplicate Warehouse Place'
+                : 'New Warehouse Place'}
           </DialogTitle>
           <DialogDescription>
             {isEditing
@@ -302,4 +316,3 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, mode, materia
     </Dialog>
   )
 }
-

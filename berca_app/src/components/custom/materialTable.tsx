@@ -11,6 +11,7 @@ import {
   ExternalLink,
   Copy,
   RotateCcw,
+  Download,
   /* ChevronLeft,
   ChevronRight, */
 } from 'lucide-react'
@@ -114,6 +115,14 @@ function formatDateTime(value: string | null) {
     hour: '2-digit',
     minute: '2-digit',
   })
+}
+
+function escapeCsvValue(value: string) {
+  const normalized = value ?? ''
+  if (/[",\n\r]/.test(normalized)) {
+    return `"${normalized.replace(/"/g, '""')}"`
+  }
+  return normalized
 }
 
 interface MaterialTableProps {
@@ -296,6 +305,83 @@ export function MaterialTable({
       const bVal = getSortValue(b, sortField)
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
+
+  function handleExportCsv() {
+    if (filtered.length === 0) return
+
+    const headers = [
+      'Number',
+      'Material Name',
+      'Description',
+      'Abbr',
+      'Warehouse',
+      'X',
+      'Y',
+      'Z',
+      'Position',
+      'Brand',
+      'Supplier',
+      'Group A',
+      'Group B',
+      'Group C',
+      'Group D',
+      'Unit',
+      'Parent Parts',
+      'Created By',
+      'Created At',
+      'Status',
+      'Approved',
+      'Long Lead',
+      ...MATERIAL_DOCUMENT_FLAGS.map(flag => flag.label),
+      'Serial Tracked',
+      'Deleted',
+    ]
+
+    const lines = filtered.map(material => {
+      const base = [
+        material.beNumber,
+        material.name ?? '',
+        material.shortDescription,
+        getWarehousePart(material.warehousePlace, 'abbreviation') || '',
+        getWarehousePart(material.warehousePlace, 'place') || '',
+        getWarehousePart(material.warehousePlace, 'shelf') || '',
+        getWarehousePart(material.warehousePlace, 'column') || '',
+        getWarehousePart(material.warehousePlace, 'layer') || '',
+        getWarehousePart(material.warehousePlace, 'layerPlace') || '',
+        material.brandName ?? '',
+        material.supplierCompanyName ?? '',
+        material.materialGroupLabelA || '',
+        material.materialGroupLabelB || '',
+        material.materialGroupLabelC || '',
+        material.materialGroupLabelD || '',
+        `${material.unitName} (${material.unitAbbreviation})`,
+        material.parentBeNumbers.join(' | '),
+        material.createdByName || '',
+        formatDateTime(material.createdAt),
+        material.rejected ? 'Rejected' : 'Active',
+        material.partApproved ? 'Yes' : 'No',
+        material.longLeadTime ? 'Yes' : 'No',
+      ]
+
+      const documentFlags = MATERIAL_DOCUMENT_FLAGS.map(flag => (material[flag.key] ? 'Yes' : 'No'))
+
+      return [...base, ...documentFlags, material.isSerialTracked ? 'Yes' : 'No', material.deleted ? 'Yes' : 'No']
+        .map(value => escapeCsvValue(String(value)))
+        .join(',')
+    })
+
+    const csv = [headers.map(escapeCsvValue).join(','), ...lines].join('\n')
+    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'})
+    const url = URL.createObjectURL(blob)
+    const anchor = document.createElement('a')
+    const date = new Date().toISOString().slice(0, 10)
+    anchor.href = url
+    anchor.download = `materials-${date}.csv`
+    document.body.appendChild(anchor)
+    anchor.click()
+    document.body.removeChild(anchor)
+    URL.revokeObjectURL(url)
+  }
   {
     /*
   // Paginatie berekeningen
@@ -584,6 +670,15 @@ export function MaterialTable({
             ))}
           </SelectContent>
         </Select>
+
+        <Button
+          variant="outline"
+          onClick={handleExportCsv}
+          disabled={filtered.length === 0}
+          className="flex items-center gap-2">
+          <Download className="h-4 w-4" />
+          Download CSV
+        </Button>
 
         <Button
           onClick={() => {

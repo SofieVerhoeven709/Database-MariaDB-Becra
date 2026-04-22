@@ -155,6 +155,15 @@ function normalizeMaterialNumber(value: string | null | undefined, kind: NumberK
   return `${kind === 'IOS' ? '4' : '1'}${tail}`
 }
 
+function escapeXml(value: string) {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
+function sanitizeFileName(value: string) {
+  const normalized = (value || '').trim().replace(/[^a-zA-Z0-9-_]+/g, '-')
+  return normalized.replace(/^-+|-+$/g, '') || 'material'
+}
+
 export function MaterialDetail({
   material,
   materialGroups,
@@ -209,6 +218,67 @@ export function MaterialDetail({
   const selectedSupplierCompany = supplierCompanies.find(company => company.id === form.supplierCompanyId) ?? null
 
   const resolvedWarehousePlace = form.warehousePlace ? (warehousePlaceById.get(form.warehousePlace) ?? null) : null
+
+  function buildMaterialSvg() {
+    const title = material.name ?? material.shortDescription ?? material.beNumber
+    const supplier = selectedSupplierCompany?.name ?? material.supplierCompanyName ?? '-'
+    const warehouse = resolvedWarehousePlace ? formatWarehousePlace(resolvedWarehousePlace) : '-'
+    const group =
+      [
+        material.materialGroupLabelA,
+        material.materialGroupLabelB,
+        material.materialGroupLabelC,
+        material.materialGroupLabelD,
+      ]
+        .filter(Boolean)
+        .join(' / ') || '-'
+
+    const rows: Array<[string, string]> = [
+      ['Number', material.beNumber || '-'],
+      ['Name', material.name ?? '-'],
+      ['Short description', material.shortDescription || '-'],
+      ['Brand', material.brandName ?? '-'],
+      ['Supplier', supplier],
+      ['Warehouse', warehouse],
+      ['Group', group],
+      ['Unit', `${material.unitName} (${material.unitAbbreviation})`],
+      ['Created', `${material.createdByName || '-'} on ${formatDate(material.createdAt)}`],
+    ]
+
+    const startY = 190
+    const lineHeight = 36
+    const rowText = rows
+      .map(([label, value], index) => {
+        const y = startY + index * lineHeight
+        return `<text x="56" y="${y}" font-family="Inter, Arial, sans-serif" font-size="16" fill="#374151">${escapeXml(label)}: <tspan fill="#111827">${escapeXml(value)}</tspan></text>`
+      })
+      .join('')
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Material ${escapeXml(material.beNumber)}</title>
+  <desc id="desc">Material summary export for ${escapeXml(material.beNumber)}.</desc>
+  <rect width="1200" height="720" fill="#f8fafc"/>
+  <rect x="32" y="32" width="1136" height="656" rx="18" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="56" y="92" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="700" fill="#111827">${escapeXml(title)}</text>
+  <text x="56" y="128" font-family="Inter, Arial, sans-serif" font-size="20" fill="#4b5563">${escapeXml(material.beNumber)}</text>
+  <line x1="56" y1="150" x2="1144" y2="150" stroke="#e5e7eb"/>
+  ${rowText}
+</svg>`
+  }
+
+  function handleDownloadSvg() {
+    const svg = buildMaterialSvg()
+    const blob = new Blob([svg], {type: 'image/svg+xml;charset=utf-8'})
+    const url = URL.createObjectURL(blob)
+    const anchor = document.createElement('a')
+    anchor.href = url
+    anchor.download = `${sanitizeFileName(material.beNumber || material.id)}.svg`
+    document.body.appendChild(anchor)
+    anchor.click()
+    document.body.removeChild(anchor)
+    URL.revokeObjectURL(url)
+  }
 
   function formatInventoryStructureLocation(structure: InventoryStructureItem) {
     const warehousePlace = structure.warehousePlaceId

@@ -63,7 +63,7 @@ function MaterialNumberPicker({
     <div className="relative">
       <Input
         className={inputStyles}
-        placeholder="Type materiaalnummer of naam..."
+        placeholder="Type materialnumber or name..."
         value={displayValue}
         disabled={disabled}
         onChange={e => {
@@ -216,7 +216,7 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
           {/* Long Description */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="inv-long" className="text-xs text-muted-foreground">
-              Long Description *
+              Long Description
             </Label>
             <Textarea
               id="inv-long"
@@ -225,7 +225,6 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
               value={form.longDescription ?? ''}
               onChange={e => update('longDescription', e.target.value)}
               placeholder="Detailed description..."
-              required
             />
           </div>
           {/* Place */}
@@ -287,7 +286,7 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
           {/* Information */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="inv-info" className="text-xs text-muted-foreground">
-              Additional Information *
+              Additional Information
             </Label>
             <Textarea
               id="inv-info"
@@ -296,7 +295,6 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
               value={form.information ?? ''}
               onChange={e => update('information', e.target.value)}
               placeholder="Extra notes..."
-              required
             />
           </div>
           {/* Valid + No Valid Date */}
@@ -310,7 +308,7 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="inv-noValidDate" className="text-xs text-muted-foreground">
-                Expiry Date *
+                Expiry Date
               </Label>
               <Input
                 id="inv-noValidDate"
@@ -318,7 +316,6 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
                 className={inputStyles}
                 value={form.noValidDate ?? today}
                 onChange={e => update('noValidDate', e.target.value)}
-                required
               />
             </div>
           </div>

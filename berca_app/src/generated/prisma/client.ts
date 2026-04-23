@@ -589,3 +589,43 @@ export type IncomingDeliveryLine = Prisma.IncomingDeliveryLineModel
  * 
  */
 export type IncomingDeliveryLineAllocation = Prisma.IncomingDeliveryLineAllocationModel
+/**
+ * Model BillOfQuantities
+ * 
+ */
+export type BillOfQuantities = Prisma.BillOfQuantitiesModel
+/**
+ * Model BillOfQuantitiesSentType
+ * 
+ */
+export type BillOfQuantitiesSentType = Prisma.BillOfQuantitiesSentTypeModel
+/**
+ * Model BillOfQuantitiesStatus
+ * 
+ */
+export type BillOfQuantitiesStatus = Prisma.BillOfQuantitiesStatusModel
+/**
+ * Model BillOfQuantitiesType
+ * 
+ */
+export type BillOfQuantitiesType = Prisma.BillOfQuantitiesTypeModel
+/**
+ * Model BoqContact
+ * 
+ */
+export type BoqContact = Prisma.BoqContactModel
+/**
+ * Model QuoteSupplierMiscLine
+ * 
+ */
+export type QuoteSupplierMiscLine = Prisma.QuoteSupplierMiscLineModel
+/**
+ * Model VisibilityForDepartment
+ * 
+ */
+export type VisibilityForDepartment = Prisma.VisibilityForDepartmentModel
+/**
+ * Model WorkOrderBoQ
+ * 
+ */
+export type WorkOrderBoQ = Prisma.WorkOrderBoQModel

@@ -769,7 +769,7 @@ export function MaterialTable({
       </div>
 
       <StickyTableScroll>
-        <Table>
+        <Table className="w-full min-w-max">
           <TableHeader>
             <TableRow className="bg-secondary hover:bg-secondary">
               {columns.map(col => (

@@ -1,6 +1,7 @@
 'use client'
 
 import {ReactNode, useEffect, useRef, useState} from 'react'
+import {createPortal} from 'react-dom'
 
 interface StickyTableScrollProps {
   children: ReactNode
@@ -12,10 +13,15 @@ export function StickyTableScroll({children, className = ''}: StickyTableScrollP
   const tableScrollRef = useRef<HTMLDivElement | null>(null)
   const bottomScrollRef = useRef<HTMLDivElement | null>(null)
 
+  const [mounted, setMounted] = useState(false)
   const [bottomScrollbarWidth, setBottomScrollbarWidth] = useState(0)
   const [tableScrollWidth, setTableScrollWidth] = useState(0)
   const [hasOverflow, setHasOverflow] = useState(false)
   const [isInView, setIsInView] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const tableEl = tableScrollRef.current
@@ -63,7 +69,7 @@ export function StickyTableScroll({children, className = ''}: StickyTableScrollP
       window.removeEventListener('resize', updateSizes)
       resizeObserver.disconnect()
     }
-  }, [])
+  }, [mounted])
 
   useEffect(() => {
     const wrapperEl = wrapperRef.current
@@ -80,7 +86,18 @@ export function StickyTableScroll({children, className = ''}: StickyTableScrollP
     return () => observer.disconnect()
   }, [])
 
-  const showStickyScrollbar = hasOverflow && isInView
+  const showStickyScrollbar = mounted && hasOverflow && isInView
+
+  const stickyScrollbar = showStickyScrollbar ? (
+    <div className="fixed bottom-0 left-0 right-0 z-[9999] border-t border-border bg-background">
+      <div
+        ref={bottomScrollRef}
+        className="mx-auto overflow-x-scroll overflow-y-hidden"
+        style={{width: bottomScrollbarWidth, height: 16}}>
+        <div style={{width: tableScrollWidth, height: 1}} />
+      </div>
+    </div>
+  ) : null
 
   return (
     <>
@@ -90,18 +107,7 @@ export function StickyTableScroll({children, className = ''}: StickyTableScrollP
         </div>
       </div>
 
-      {showStickyScrollbar && (
-        <div className="fixed bottom-0 left-0 z-50 w-full border-t border-border bg-background/95 backdrop-blur">
-          <div className="w-full px-4">
-            <div
-              ref={bottomScrollRef}
-              className="overflow-x-scroll overflow-y-hidden"
-              style={{width: bottomScrollbarWidth, height: 16}}>
-              <div style={{width: tableScrollWidth, height: 1}} />
-            </div>
-          </div>
-        </div>
-      )}
+      {mounted && createPortal(stickyScrollbar, document.body)}
     </>
   )
 }

@@ -112,7 +112,8 @@ export interface MappedInvoiceIn {
   id: string
   invoiceNumber: string
   poNumber: string | null
-  humanId: string | null
+  clientInvoiceNumber: string | null
+  description: string | null
   invoiceDate: string
   createdAt: string
   dueDate: string

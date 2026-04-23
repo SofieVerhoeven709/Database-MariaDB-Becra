@@ -11,6 +11,7 @@ import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {updateInvoiceInAction} from '@/serverFunctions/invoices'
 import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import {Textarea} from '@/components/ui/textarea'
 
 function formatDate(date: string | null) {
   if (!date) return '-'
@@ -47,7 +48,8 @@ interface InvoiceInDetailProps {
 type EditForm = {
   invoiceNumber: string
   poNumber: string
-  humanId: string
+  clientInvoiceNumber: string
+  description: string
   invoiceDate: string
   dueDate: string
   invoiceTypeId: string
@@ -79,7 +81,8 @@ export function InvoiceInDetail({
   const buildForm = (): EditForm => ({
     invoiceNumber: invoice.invoiceNumber,
     poNumber: invoice.poNumber ?? '',
-    humanId: invoice.humanId ?? '',
+    clientInvoiceNumber: invoice.clientInvoiceNumber ?? '',
+    description: invoice.description ?? '',
     invoiceDate: toDateInput(invoice.invoiceDate),
     dueDate: toDateInput(invoice.dueDate),
     invoiceTypeId: invoice.invoiceTypeId,
@@ -113,7 +116,8 @@ export function InvoiceInDetail({
         id: invoice.id,
         invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
-        humanId: form.humanId || null,
+        clientInvoiceNumber: form.clientInvoiceNumber || null,
+        description: form.description || null,
         invoiceDate: new Date(form.invoiceDate),
         dueDate: new Date(form.dueDate),
         invoiceTypeId: form.invoiceTypeId,
@@ -218,12 +222,12 @@ export function InvoiceInDetail({
             <Label className="text-xs text-muted-foreground">Human ID</Label>
             {editing ? (
               <Input
-                value={form.humanId}
-                onChange={e => s('humanId', e.target.value)}
+                value={form.clientInvoiceNumber}
+                onChange={e => s('clientInvoiceNumber', e.target.value)}
                 className="bg-secondary border-border"
               />
             ) : (
-              <p className="text-sm text-muted-foreground">{invoice.humanId ?? '-'}</p>
+              <p className="text-sm text-muted-foreground">{invoice.clientInvoiceNumber ?? '-'}</p>
             )}
           </div>
 
@@ -434,6 +438,19 @@ export function InvoiceInDetail({
                 )}
               </div>
             ))}
+          </div>
+          <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-3">
+            <Label className="text-xs text-muted-foreground">Description</Label>
+            {editing ? (
+              <Textarea
+                value={form.description}
+                onChange={e => s('description', e.target.value)}
+                rows={3}
+                className="bg-secondary border-border resize-none"
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground whitespace-pre-wrap">{invoice.description ?? '-'}</p>
+            )}
           </div>
         </div>
       </div>

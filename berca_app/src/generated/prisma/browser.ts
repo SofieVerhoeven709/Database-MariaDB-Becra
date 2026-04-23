@@ -602,3 +602,8 @@ export type VisibilityForDepartment = Prisma.VisibilityForDepartmentModel
  * 
  */
 export type WorkOrderBoQ = Prisma.WorkOrderBoQModel
+/**
+ * Model ProjectEmployee
+ * 
+ */
+export type ProjectEmployee = Prisma.ProjectEmployeeModel

@@ -1804,10 +1804,6 @@ ALTER TABLE WorkOrderStructure
 ADD CONSTRAINT fk_workOrderStructure_vatMarginId
 FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
--- Remove VAT from InvoiceOut
-ALTER TABLE InvoiceOut
-DROP FOREIGN KEY IF EXISTS InvoiceOut_ibfk_9;
-
 ALTER TABLE InvoiceOut
 DROP COLUMN IF EXISTS vatMarginId;
 
@@ -1972,19 +1968,31 @@ CREATE TABLE
 
 CREATE TABLE 
     IF NOT EXISTS QuoteSupplierMiscLine (
-        id            CHAR(36) PRIMARY KEY,
+        id  CHAR(36) PRIMARY KEY,
         quoteSupplierId CHAR(36) NOT NULL,
-        description   VARCHAR(255) NOT NULL,
-        unitPrice     DECIMAL(10,2) NOT NULL,
+        description VARCHAR(255) NOT NULL,
+        unitPrice DECIMAL(10,2) NOT NULL,
         FOREIGN KEY (quoteSupplierId) REFERENCES QuoteSupplier(id) ON DELETE RESTRICT
     ) ENGINE = InnoDB;
 
 CREATE TABLE
     IF NOT EXISTS VisibilityForDepartment (
-        id           CHAR(36) NOT NULL PRIMARY KEY,
-        visible      BOOLEAN NOT NULL DEFAULT 0,
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        visible BOOLEAN NOT NULL DEFAULT 0,
         departmentId CHAR(36) NOT NULL,
-        targetId     CHAR(36) NOT NULL,
+        targetId CHAR(36) NOT NULL,
         FOREIGN KEY (departmentId) REFERENCES Department (id) ON DELETE RESTRICT,
         FOREIGN KEY (targetId)     REFERENCES Target (id) ON DELETE RESTRICT
+    ) ENGINE = InnoDB;
+
+CREATE TABLE
+    IF NOT EXISTS ProjectEmployee (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        employeeId CHAR(36) NOT NULL,
+        projectId CHAR(36) NOT NULL,
+        additionalInfo VARCHAR(255),
+        manager BOOLEAN NOT NULL DEFAULT 0,
+        supervisor BOOLEAN NOT NULL DEFAULT 0,
+        FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
+        FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT
     ) ENGINE = InnoDB;

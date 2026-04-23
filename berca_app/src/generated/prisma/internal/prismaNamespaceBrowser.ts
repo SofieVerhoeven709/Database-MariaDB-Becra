@@ -165,7 +165,8 @@ export const ModelName = {
   BoqContact: 'BoqContact',
   QuoteSupplierMiscLine: 'QuoteSupplierMiscLine',
   VisibilityForDepartment: 'VisibilityForDepartment',
-  WorkOrderBoQ: 'WorkOrderBoQ'
+  WorkOrderBoQ: 'WorkOrderBoQ',
+  ProjectEmployee: 'ProjectEmployee'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -657,6 +658,7 @@ export const InvoiceInScalarFieldEnum = {
   invoiceNumber: 'invoiceNumber',
   poNumber: 'poNumber',
   clientInvoiceNumber: 'clientInvoiceNumber',
+  description: 'description',
   invoiceDate: 'invoiceDate',
   createdAt: 'createdAt',
   dueDate: 'dueDate',
@@ -674,8 +676,7 @@ export const InvoiceInScalarFieldEnum = {
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
   vatMarginId: 'vatMarginId',
-  companyId: 'companyId',
-  description: 'description'
+  companyId: 'companyId'
 } as const
 
 export type InvoiceInScalarFieldEnum = (typeof InvoiceInScalarFieldEnum)[keyof typeof InvoiceInScalarFieldEnum]
@@ -767,8 +768,7 @@ export const MaterialScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  targetId: 'targetId',
-  bePartDoc: 'bePartDoc'
+  targetId: 'targetId'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -981,6 +981,7 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -1170,18 +1171,17 @@ export type ProjectTypeScalarFieldEnum = (typeof ProjectTypeScalarFieldEnum)[key
 export const PurchaseScalarFieldEnum = {
   id: 'id',
   purchaseNumber: 'purchaseNumber',
-  customerPoNumber: 'customerPoNumber',
-  bocNumber: 'bocNumber',
-  bocCustomerName: 'bocCustomerName',
-  bocDescription: 'bocDescription',
-  bocCreatedAt: 'bocCreatedAt',
-  bocStatus: 'bocStatus',
   purchaseDate: 'purchaseDate',
   companyId: 'companyId',
   quoteSupplierId: 'quoteSupplierId',
   paymentConditionId: 'paymentConditionId',
   status: 'status',
-  poNumberClient: 'poNumberClient',
+  customerPoNumber: 'customerPoNumber',
+  bocCustomerName: 'bocCustomerName',
+  bocDescription: 'bocDescription',
+  bocCreatedAt: 'bocCreatedAt',
+  bocStatus: 'bocStatus',
+  bocNumber: 'bocNumber',
   description: 'description',
   additionalInfo: 'additionalInfo',
   createdAt: 'createdAt',
@@ -1368,14 +1368,14 @@ export const TimeRegistryScalarFieldEnum = {
   invoiceTime: 'invoiceTime',
   onSite: 'onSite',
   stayOver: 'stayOver',
+  approved: 'approved',
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
   vatMarginId: 'vatMarginId',
   hourTypeId: 'hourTypeId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy',
-  approved: 'approved'
+  deletedBy: 'deletedBy'
 } as const
 
 export type TimeRegistryScalarFieldEnum = (typeof TimeRegistryScalarFieldEnum)[keyof typeof TimeRegistryScalarFieldEnum]
@@ -2262,6 +2262,18 @@ export const WorkOrderBoQScalarFieldEnum = {
 export type WorkOrderBoQScalarFieldEnum = (typeof WorkOrderBoQScalarFieldEnum)[keyof typeof WorkOrderBoQScalarFieldEnum]
 
 
+export const ProjectEmployeeScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo',
+  manager: 'manager',
+  supervisor: 'supervisor'
+} as const
+
+export type ProjectEmployeeScalarFieldEnum = (typeof ProjectEmployeeScalarFieldEnum)[keyof typeof ProjectEmployeeScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2616,6 +2628,7 @@ export const InvoiceInOrderByRelevanceFieldEnum = {
   invoiceNumber: 'invoiceNumber',
   poNumber: 'poNumber',
   clientInvoiceNumber: 'clientInvoiceNumber',
+  description: 'description',
   deletedBy: 'deletedBy',
   createdBy: 'createdBy',
   modifiedBy: 'modifiedBy',
@@ -2625,8 +2638,7 @@ export const InvoiceInOrderByRelevanceFieldEnum = {
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
   vatMarginId: 'vatMarginId',
-  companyId: 'companyId',
-  description: 'description'
+  companyId: 'companyId'
 } as const
 
 export type InvoiceInOrderByRelevanceFieldEnum = (typeof InvoiceInOrderByRelevanceFieldEnum)[keyof typeof InvoiceInOrderByRelevanceFieldEnum]
@@ -2689,8 +2701,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   unitId: 'unitId',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy',
-  targetId: 'targetId',
-  bePartDoc: 'bePartDoc'
+  targetId: 'targetId'
 } as const
 
 export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
@@ -2864,6 +2875,7 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -2999,16 +3011,15 @@ export type ProjectTypeOrderByRelevanceFieldEnum = (typeof ProjectTypeOrderByRel
 export const PurchaseOrderByRelevanceFieldEnum = {
   id: 'id',
   purchaseNumber: 'purchaseNumber',
-  customerPoNumber: 'customerPoNumber',
-  bocNumber: 'bocNumber',
-  bocCustomerName: 'bocCustomerName',
-  bocDescription: 'bocDescription',
-  bocStatus: 'bocStatus',
   companyId: 'companyId',
   quoteSupplierId: 'quoteSupplierId',
   paymentConditionId: 'paymentConditionId',
   status: 'status',
-  poNumberClient: 'poNumberClient',
+  customerPoNumber: 'customerPoNumber',
+  bocCustomerName: 'bocCustomerName',
+  bocDescription: 'bocDescription',
+  bocStatus: 'bocStatus',
+  bocNumber: 'bocNumber',
   description: 'description',
   additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
@@ -3822,4 +3833,14 @@ export const WorkOrderBoQOrderByRelevanceFieldEnum = {
 } as const
 
 export type WorkOrderBoQOrderByRelevanceFieldEnum = (typeof WorkOrderBoQOrderByRelevanceFieldEnum)[keyof typeof WorkOrderBoQOrderByRelevanceFieldEnum]
+
+
+export const ProjectEmployeeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo'
+} as const
+
+export type ProjectEmployeeOrderByRelevanceFieldEnum = (typeof ProjectEmployeeOrderByRelevanceFieldEnum)[keyof typeof ProjectEmployeeOrderByRelevanceFieldEnum]
 

@@ -61,8 +61,9 @@ export const invoiceOutIdSchema = invoiceOutSchema.pick({id: true})
 export const invoiceInSchema = z.object({
   id: z.string(),
   invoiceNumber: z.string().min(1).max(255),
-  poNumber: z.string().max(255).nullable().optional(),
-  humanId: z.string().max(255).nullable().optional(),
+  poNumber: z.string().nullable().optional(),
+  clientInvoiceNumber: z.string().max(255).nullable().optional(),
+  description: z.string().nullable().optional(),
   invoiceDate: requiredDateSchema,
   createdAt: requiredDateSchema,
   dueDate: requiredDateSchema,

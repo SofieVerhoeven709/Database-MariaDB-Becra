@@ -756,11 +756,11 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS TimeRegistryEmployee (
-                                           id CHAR(36) NOT NULL PRIMARY KEY,
-    employeeId CHAR(36) NOT NULL,
-    timeRegistryId CHAR(36) NOT NULL,
-    FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
-    FOREIGN KEY (timeRegistryId) REFERENCES TimeRegistry (id) ON DELETE RESTRICT
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        employeeId CHAR(36) NOT NULL,
+        timeRegistryId CHAR(36) NOT NULL,
+        FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
+        FOREIGN KEY (timeRegistryId) REFERENCES TimeRegistry (id) ON DELETE RESTRICT
     ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -977,7 +977,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS InvoiceIn (
-                                id CHAR(36) NOT NULL PRIMARY KEY,
+        id CHAR(36) NOT NULL PRIMARY KEY,
     invoiceNumber VARCHAR(255) NOT NULL,
     poNumber CHAR(36),
     clientInvoiceNumber VARCHAR(255),
@@ -1010,7 +1010,6 @@ CREATE TABLE
     FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
     FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
     FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
-    FOREIGN KEY (poNumber) REFERENCES Purchase (id) ON DELETE RESTRICT,
     UNIQUE (invoiceNumber)
     ) ENGINE = InnoDB;
 
@@ -1758,7 +1757,7 @@ CREATE TABLE
             UNIQUE (purchaseNumber)
       ) ENGINE = InnoDB;
 
-ALTER TABLE InvoiceIn ADD CONSTRAINT fk_invoicein_po FOREIGN KEY (poNumber) REFERENCES PurchaseOrder(id) ON DELETE RESTRICT;
+ALTER TABLE InvoiceIn ADD CONSTRAINT fk_invoicein_po FOREIGN KEY (poNumber) REFERENCES Purchase(id) ON DELETE RESTRICT;
 
 CREATE TABLE
       IF NOT EXISTS PurchaseDetail (
@@ -2322,19 +2321,31 @@ CREATE TABLE
 
 CREATE TABLE 
     IF NOT EXISTS QuoteSupplierMiscLine (
-        id            CHAR(36) PRIMARY KEY,
+        id  CHAR(36) PRIMARY KEY,
         quoteSupplierId CHAR(36) NOT NULL,
-        description   VARCHAR(255) NOT NULL,
-        unitPrice     DECIMAL(10,2) NOT NULL,
+        description VARCHAR(255) NOT NULL,
+        unitPrice DECIMAL(10,2) NOT NULL,
         FOREIGN KEY (quoteSupplierId) REFERENCES QuoteSupplier(id) ON DELETE RESTRICT
     ) ENGINE = InnoDB;
 
 CREATE TABLE
     IF NOT EXISTS VisibilityForDepartment (
-        id           CHAR(36) NOT NULL PRIMARY KEY,
-        visible      BOOLEAN NOT NULL DEFAULT 0,
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        visible BOOLEAN NOT NULL DEFAULT 0,
         departmentId CHAR(36) NOT NULL,
-        targetId     CHAR(36) NOT NULL,
+        targetId CHAR(36) NOT NULL,
         FOREIGN KEY (departmentId) REFERENCES Department (id) ON DELETE RESTRICT,
         FOREIGN KEY (targetId)     REFERENCES Target (id) ON DELETE RESTRICT
+    ) ENGINE = InnoDB;
+
+CREATE TABLE
+    IF NOT EXISTS ProjectEmployee (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        employeeId CHAR(36) NOT NULL,
+        projectId CHAR(36) NOT NULL,
+        additionalInfo VARCHAR(255),
+        manager BOOLEAN NOT NULL DEFAULT 0,
+        supervisor BOOLEAN NOT NULL DEFAULT 0,
+        FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
+        FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT
     ) ENGINE = InnoDB;

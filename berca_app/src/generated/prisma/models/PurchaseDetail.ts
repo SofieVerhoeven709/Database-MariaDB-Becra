@@ -260,7 +260,7 @@ export type PurchaseDetailGroupByOutputType = {
   materialId: string
   materialDemandId: string | null
   quantity: number
-  unitPrice: runtime.Decimal | null
+  unitPrice: runtime.Decimal
   minQuantity: number | null
   lineStatus: string
   additionalInfo: string | null
@@ -302,7 +302,7 @@ export type PurchaseDetailWhereInput = {
   materialId?: Prisma.StringFilter<"PurchaseDetail"> | string
   materialDemandId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   quantity?: Prisma.IntFilter<"PurchaseDetail"> | number
-  unitPrice?: Prisma.DecimalNullableFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
   lineStatus?: Prisma.StringFilter<"PurchaseDetail"> | string
   additionalInfo?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
@@ -328,7 +328,7 @@ export type PurchaseDetailOrderByWithRelationInput = {
   materialId?: Prisma.SortOrder
   materialDemandId?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
   minQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   lineStatus?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -358,7 +358,7 @@ export type PurchaseDetailWhereUniqueInput = Prisma.AtLeast<{
   materialId?: Prisma.StringFilter<"PurchaseDetail"> | string
   materialDemandId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   quantity?: Prisma.IntFilter<"PurchaseDetail"> | number
-  unitPrice?: Prisma.DecimalNullableFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
   lineStatus?: Prisma.StringFilter<"PurchaseDetail"> | string
   additionalInfo?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
@@ -384,7 +384,7 @@ export type PurchaseDetailOrderByWithAggregationInput = {
   materialId?: Prisma.SortOrder
   materialDemandId?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
   minQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
   lineStatus?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -411,7 +411,7 @@ export type PurchaseDetailScalarWhereWithAggregatesInput = {
   materialId?: Prisma.StringWithAggregatesFilter<"PurchaseDetail"> | string
   materialDemandId?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
   quantity?: Prisma.IntWithAggregatesFilter<"PurchaseDetail"> | number
-  unitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalWithAggregatesFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.IntNullableWithAggregatesFilter<"PurchaseDetail"> | number | null
   lineStatus?: Prisma.StringWithAggregatesFilter<"PurchaseDetail"> | string
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
@@ -426,7 +426,7 @@ export type PurchaseDetailScalarWhereWithAggregatesInput = {
 export type PurchaseDetailCreateInput = {
   id: string
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -450,7 +450,7 @@ export type PurchaseDetailUncheckedCreateInput = {
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -466,7 +466,7 @@ export type PurchaseDetailUncheckedCreateInput = {
 export type PurchaseDetailUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -490,7 +490,7 @@ export type PurchaseDetailUncheckedUpdateInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -510,7 +510,7 @@ export type PurchaseDetailCreateManyInput = {
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -525,7 +525,7 @@ export type PurchaseDetailCreateManyInput = {
 export type PurchaseDetailUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -542,7 +542,7 @@ export type PurchaseDetailUncheckedUpdateManyInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -812,6 +812,14 @@ export type PurchaseDetailUncheckedUpdateManyWithoutPurchaseNestedInput = {
   deleteMany?: Prisma.PurchaseDetailScalarWhereInput | Prisma.PurchaseDetailScalarWhereInput[]
 }
 
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type PurchaseDetailCreateNestedManyWithoutMaterialDemandInput = {
   create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutMaterialDemandInput, Prisma.PurchaseDetailUncheckedCreateWithoutMaterialDemandInput> | Prisma.PurchaseDetailCreateWithoutMaterialDemandInput[] | Prisma.PurchaseDetailUncheckedCreateWithoutMaterialDemandInput[]
   connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutMaterialDemandInput | Prisma.PurchaseDetailCreateOrConnectWithoutMaterialDemandInput[]
@@ -915,7 +923,7 @@ export type PurchaseDetailUpdateOneWithoutIncomingDeliveryLineNestedInput = {
 export type PurchaseDetailCreateWithoutEmployeeInput = {
   id: string
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -938,7 +946,7 @@ export type PurchaseDetailUncheckedCreateWithoutEmployeeInput = {
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -963,7 +971,7 @@ export type PurchaseDetailCreateManyEmployeeInputEnvelope = {
 export type PurchaseDetailCreateWithoutEmployee_PurchaseDetail_deletedByToEmployeeInput = {
   id: string
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -986,7 +994,7 @@ export type PurchaseDetailUncheckedCreateWithoutEmployee_PurchaseDetail_deletedB
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1034,7 +1042,7 @@ export type PurchaseDetailScalarWhereInput = {
   materialId?: Prisma.StringFilter<"PurchaseDetail"> | string
   materialDemandId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   quantity?: Prisma.IntFilter<"PurchaseDetail"> | number
-  unitPrice?: Prisma.DecimalNullableFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
   lineStatus?: Prisma.StringFilter<"PurchaseDetail"> | string
   additionalInfo?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
@@ -1065,7 +1073,7 @@ export type PurchaseDetailUpdateManyWithWhereWithoutEmployee_PurchaseDetail_dele
 export type PurchaseDetailCreateWithoutMaterialInput = {
   id: string
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1087,7 +1095,7 @@ export type PurchaseDetailUncheckedCreateWithoutMaterialInput = {
   quoteSupplierLineId?: string | null
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1129,7 +1137,7 @@ export type PurchaseDetailUpdateManyWithWhereWithoutMaterialInput = {
 export type PurchaseDetailCreateWithoutPurchaseInput = {
   id: string
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1151,7 +1159,7 @@ export type PurchaseDetailUncheckedCreateWithoutPurchaseInput = {
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1193,7 +1201,7 @@ export type PurchaseDetailUpdateManyWithWhereWithoutPurchaseInput = {
 export type PurchaseDetailCreateWithoutMaterialDemandInput = {
   id: string
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1215,7 +1223,7 @@ export type PurchaseDetailUncheckedCreateWithoutMaterialDemandInput = {
   quoteSupplierLineId?: string | null
   materialId: string
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1257,7 +1265,7 @@ export type PurchaseDetailUpdateManyWithWhereWithoutMaterialDemandInput = {
 export type PurchaseDetailCreateWithoutQuoteSupplierLineInput = {
   id: string
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1279,7 +1287,7 @@ export type PurchaseDetailUncheckedCreateWithoutQuoteSupplierLineInput = {
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1321,7 +1329,7 @@ export type PurchaseDetailUpdateManyWithWhereWithoutQuoteSupplierLineInput = {
 export type PurchaseDetailCreateWithoutIncomingDeliveryLineInput = {
   id: string
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1344,7 +1352,7 @@ export type PurchaseDetailUncheckedCreateWithoutIncomingDeliveryLineInput = {
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1375,7 +1383,7 @@ export type PurchaseDetailUpdateToOneWithWhereWithoutIncomingDeliveryLineInput =
 export type PurchaseDetailUpdateWithoutIncomingDeliveryLineInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1398,7 +1406,7 @@ export type PurchaseDetailUncheckedUpdateWithoutIncomingDeliveryLineInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1417,7 +1425,7 @@ export type PurchaseDetailCreateManyEmployeeInput = {
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1435,7 +1443,7 @@ export type PurchaseDetailCreateManyEmployee_PurchaseDetail_deletedByToEmployeeI
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1449,7 +1457,7 @@ export type PurchaseDetailCreateManyEmployee_PurchaseDetail_deletedByToEmployeeI
 export type PurchaseDetailUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1472,7 +1480,7 @@ export type PurchaseDetailUncheckedUpdateWithoutEmployeeInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1491,7 +1499,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutEmployeeInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1505,7 +1513,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutEmployeeInput = {
 export type PurchaseDetailUpdateWithoutEmployee_PurchaseDetail_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1528,7 +1536,7 @@ export type PurchaseDetailUncheckedUpdateWithoutEmployee_PurchaseDetail_deletedB
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1547,7 +1555,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutEmployee_PurchaseDetail_dele
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1564,7 +1572,7 @@ export type PurchaseDetailCreateManyMaterialInput = {
   quoteSupplierLineId?: string | null
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1579,7 +1587,7 @@ export type PurchaseDetailCreateManyMaterialInput = {
 export type PurchaseDetailUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1601,7 +1609,7 @@ export type PurchaseDetailUncheckedUpdateWithoutMaterialInput = {
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1620,7 +1628,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutMaterialInput = {
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1638,7 +1646,7 @@ export type PurchaseDetailCreateManyPurchaseInput = {
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1653,7 +1661,7 @@ export type PurchaseDetailCreateManyPurchaseInput = {
 export type PurchaseDetailUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1675,7 +1683,7 @@ export type PurchaseDetailUncheckedUpdateWithoutPurchaseInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1694,7 +1702,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutPurchaseInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1712,7 +1720,7 @@ export type PurchaseDetailCreateManyMaterialDemandInput = {
   quoteSupplierLineId?: string | null
   materialId: string
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1727,7 +1735,7 @@ export type PurchaseDetailCreateManyMaterialDemandInput = {
 export type PurchaseDetailUpdateWithoutMaterialDemandInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1749,7 +1757,7 @@ export type PurchaseDetailUncheckedUpdateWithoutMaterialDemandInput = {
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1768,7 +1776,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutMaterialDemandInput = {
   quoteSupplierLineId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1786,7 +1794,7 @@ export type PurchaseDetailCreateManyQuoteSupplierLineInput = {
   materialId: string
   materialDemandId?: string | null
   quantity: number
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: number | null
   lineStatus?: string
   additionalInfo?: string | null
@@ -1801,7 +1809,7 @@ export type PurchaseDetailCreateManyQuoteSupplierLineInput = {
 export type PurchaseDetailUpdateWithoutQuoteSupplierLineInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1823,7 +1831,7 @@ export type PurchaseDetailUncheckedUpdateWithoutQuoteSupplierLineInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1842,7 +1850,7 @@ export type PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   materialDemandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lineStatus?: Prisma.StringFieldUpdateOperationsInput | string
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1963,7 +1971,7 @@ export type $PurchaseDetailPayload<ExtArgs extends runtime.Types.Extensions.Inte
     materialId: string
     materialDemandId: string | null
     quantity: number
-    unitPrice: runtime.Decimal | null
+    unitPrice: runtime.Decimal
     minQuantity: number | null
     lineStatus: string
     additionalInfo: string | null

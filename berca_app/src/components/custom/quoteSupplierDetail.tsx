@@ -4,7 +4,7 @@ import Link from 'next/link'
 import type {Route} from 'next'
 import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Check, Pencil, Trash2, X} from 'lucide-react'
+import {ArrowLeft, Check, Pencil, Save, Trash2, X} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {Checkbox} from '@/components/ui/checkbox'
@@ -19,10 +19,13 @@ import {
   selectQuoteSupplierLineAction,
   updateQuoteSupplierLineAction,
 } from '@/serverFunctions/quoteSupplierLines'
+import {updateQuoteSupplierAction} from '@/serverFunctions/quoteSuppliers'
+import {buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 
 interface QuoteSupplierDetailProps {
   quote: MappedQuoteSupplierDetail
   departmentId: string
+  currentUserRole: string
   currentUserLevel: number
   materialOptions: Array<{id: string; beNumber: string | null; name: string | null; shortDescription: string | null}>
   materialDemandOptions: Array<{id: string; materialId: string; label: string}>
@@ -48,7 +51,9 @@ function materialLabel(m: {beNumber: string | null; shortDescription: string | n
   return [m.beNumber, m.shortDescription ?? m.name].filter(Boolean).join(' — ') || m.id
 }
 
-function getLifecycleStatus(quote: MappedQuoteSupplierDetail): 'pending' | 'sent' | 'received' | 'approved' | 'rejected' {
+function getLifecycleStatus(
+  quote: MappedQuoteSupplierDetail,
+): 'pending' | 'sent' | 'received' | 'approved' | 'rejected' {
   if (quote.rejected) return 'rejected'
   if (quote.acceptedForPOB) return 'approved'
   if (quote.received) return 'received'
@@ -59,6 +64,7 @@ function getLifecycleStatus(quote: MappedQuoteSupplierDetail): 'pending' | 'sent
 export function QuoteSupplierDetail({
   quote,
   departmentId,
+  currentUserRole,
   currentUserLevel,
   materialOptions,
   materialDemandOptions,
@@ -66,6 +72,11 @@ export function QuoteSupplierDetail({
   defaultMaterialDemandId,
 }: QuoteSupplierDetailProps) {
   const router = useRouter()
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
   // Approved quotes are locked for non-managers.
   const isApprovedLocked = quote.acceptedForPOB && currentUserLevel < 80
   const canEditLines = currentUserLevel >= 40 && !isApprovedLocked
@@ -76,6 +87,21 @@ export function QuoteSupplierDetail({
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [editingLineId, setEditingLineId] = useState<string | null>(null)
+  const [editing, setEditing] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [form, setForm] = useState({
+    id: quote.id,
+    quoteNumber: quote.quoteNumber,
+    quotationNumber: quote.quotationNumber,
+    companyId: quote.companyId,
+    description: quote.description,
+    rejected: quote.rejected,
+    additionalInfo: quote.additionalInfo,
+    acceptedForPOB: quote.acceptedForPOB,
+    validUntil: quote.validUntil,
+    deliveryTimeDays: quote.deliveryTimeDays,
+    paymentConditionId: quote.paymentConditionId,
+  })
 
   const [newMaterialId, setNewMaterialId] = useState(defaultMaterialId ?? '__none__')
   const [newMaterialDemandId, setNewMaterialDemandId] = useState(defaultMaterialDemandId ?? '__none__')
@@ -158,6 +184,29 @@ export function QuoteSupplierDetail({
     }
   }
 
+  async function handleSave() {
+    setSaving(true)
+    try {
+      await updateQuoteSupplierAction({
+        id: quote.id,
+        quoteNumber: quote.quoteNumber,
+        quotationNumber: quote.quotationNumber,
+        companyId: quote.companyId,
+        description: quote.description,
+        rejected: quote.rejected,
+        additionalInfo: quote.additionalInfo,
+        acceptedForPOB: quote.acceptedForPOB,
+        validUntil: quote.validUntil,
+        deliveryTimeDays: quote.deliveryTimeDays,
+        paymentConditionId: quote.paymentConditionId,
+      })
+      setEditing(false)
+      router.refresh()
+    } finally {
+      setSaving(false)
+    }
+  }
+
   async function handleUpdateLine(lineId: string) {
     const quantity = Number.parseInt(editQuantity, 10)
     const unitPrice = Number.parseFloat(editUnitPrice)
@@ -194,6 +243,22 @@ export function QuoteSupplierDetail({
     } finally {
       setSubmitting(false)
     }
+  }
+  function handleCancel() {
+    setForm({
+      id: quote.id,
+      quoteNumber: quote.quoteNumber,
+      quotationNumber: quote.quotationNumber,
+      companyId: quote.companyId,
+      description: quote.description,
+      rejected: quote.rejected,
+      additionalInfo: quote.additionalInfo,
+      acceptedForPOB: quote.acceptedForPOB,
+      validUntil: quote.validUntil,
+      deliveryTimeDays: quote.deliveryTimeDays,
+      paymentConditionId: quote.paymentConditionId,
+    })
+    setEditing(false)
   }
 
   async function handleDeleteLine(lineId: string) {
@@ -244,17 +309,53 @@ export function QuoteSupplierDetail({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {lifecycleStatus === 'rejected' && <Badge className="bg-red-500/15 text-red-700 border border-red-500/30">Rejected</Badge>}
-          {lifecycleStatus === 'approved' && <Badge className="bg-green-500/15 text-green-700 border border-green-500/30">Approved</Badge>}
-          {lifecycleStatus === 'received' && <Badge className="bg-blue-500/15 text-blue-700 border border-blue-500/30">Received</Badge>}
-          {lifecycleStatus === 'sent' && <Badge className="bg-slate-500/15 text-slate-700 border border-slate-500/30">Sent</Badge>}
+          {lifecycleStatus === 'rejected' && (
+            <Badge className="bg-red-500/15 text-red-700 border border-red-500/30">Rejected</Badge>
+          )}
+          {lifecycleStatus === 'approved' && (
+            <Badge className="bg-green-500/15 text-green-700 border border-green-500/30">Approved</Badge>
+          )}
+          {lifecycleStatus === 'received' && (
+            <Badge className="bg-blue-500/15 text-blue-700 border border-blue-500/30">Received</Badge>
+          )}
+          {lifecycleStatus === 'sent' && (
+            <Badge className="bg-slate-500/15 text-slate-700 border border-slate-500/30">Sent</Badge>
+          )}
           {lifecycleStatus === 'pending' && (
             <Badge className="bg-yellow-500/15 text-yellow-700 border border-yellow-500/30">Pending</Badge>
           )}
         </div>
+        <div className="flex items-center gap-2">
+          {editing ? (
+            <>
+              <Button variant="outline" onClick={handleCancel} className="gap-2 border-border">
+                <X className="h-4 w-4" />
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSave}
+                disabled={saving}
+                className="gap-2 bg-accent text-accent-foreground hover:bg-accent/80">
+                <Save className="h-4 w-4" />
+                {saving ? 'Saving…' : 'Save'}
+              </Button>
+            </>
+          ) : (
+            canEdit && (
+              <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
+                <Pencil className="h-4 w-4" />
+                Edit
+              </Button>
+            )
+          )}
+        </div>
       </div>
 
-      {error && <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">{error}</div>}
+      {error && (
+        <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {error}
+        </div>
+      )}
 
       <div className="rounded-xl border border-border/60 bg-card p-4">
         <h2 className="text-sm font-medium text-foreground mb-3">Quote details</h2>
@@ -269,7 +370,9 @@ export function QuoteSupplierDetail({
           </div>
           <div className="text-sm text-muted-foreground">
             <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Delivery time</span>
-            <div className="text-foreground mt-0.5">{quote.deliveryTimeDays !== null ? `${quote.deliveryTimeDays} day(s)` : '—'}</div>
+            <div className="text-foreground mt-0.5">
+              {quote.deliveryTimeDays !== null ? `${quote.deliveryTimeDays} day(s)` : '—'}
+            </div>
           </div>
           <div className="text-sm text-muted-foreground">
             <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Valid until</span>
@@ -345,18 +448,37 @@ export function QuoteSupplierDetail({
 
             <div>
               <Label className="text-xs">Qty</Label>
-              <Input type="number" min={1} value={newQuantity} onChange={e => setNewQuantity(e.target.value)} className="bg-secondary border-border mt-1" />
+              <Input
+                type="number"
+                min={1}
+                value={newQuantity}
+                onChange={e => setNewQuantity(e.target.value)}
+                className="bg-secondary border-border mt-1"
+              />
             </div>
 
             <div>
               <Label className="text-xs">Unit Price</Label>
-              <Input type="number" step="0.01" min={0.01} value={newUnitPrice} onChange={e => setNewUnitPrice(e.target.value)} className="bg-secondary border-border mt-1" />
+              <Input
+                type="number"
+                step="0.01"
+                min={0.01}
+                value={newUnitPrice}
+                onChange={e => setNewUnitPrice(e.target.value)}
+                className="bg-secondary border-border mt-1"
+              />
             </div>
           </div>
           <div className="mt-3 flex items-end justify-between gap-3">
             <div className="w-40">
               <Label className="text-xs">Min Qty (optional)</Label>
-              <Input type="number" min={0} value={newMinQuantity} onChange={e => setNewMinQuantity(e.target.value)} className="bg-secondary border-border mt-1" />
+              <Input
+                type="number"
+                min={0}
+                value={newMinQuantity}
+                onChange={e => setNewMinQuantity(e.target.value)}
+                className="bg-secondary border-border mt-1"
+              />
             </div>
             <div className="flex items-center gap-2 rounded-md border border-border/60 bg-secondary/30 px-3 py-2">
               <Checkbox
@@ -368,7 +490,9 @@ export function QuoteSupplierDetail({
                 Not deliverable
               </Label>
             </div>
-            <Button onClick={handleCreateLine} disabled={submitting}>Add Line</Button>
+            <Button onClick={handleCreateLine} disabled={submitting}>
+              Add Line
+            </Button>
           </div>
         </div>
       )}
@@ -384,7 +508,9 @@ export function QuoteSupplierDetail({
               <TableHead className="text-xs">Unit Price</TableHead>
               <TableHead className="text-xs">Flags</TableHead>
               <TableHead className="text-xs">Selected</TableHead>
-              <TableHead className="w-24"><span className="sr-only">Actions</span></TableHead>
+              <TableHead className="w-24">
+                <span className="sr-only">Actions</span>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -402,27 +528,48 @@ export function QuoteSupplierDetail({
                     <TableCell className="text-sm text-muted-foreground">
                       <div className="flex flex-col">
                         <span className="text-foreground">{line.materialBeNumber ?? '—'}</span>
-                        <span className="text-xs">{line.materialShortDescription ?? line.materialName ?? line.materialId}</span>
+                        <span className="text-xs">
+                          {line.materialShortDescription ?? line.materialName ?? line.materialId}
+                        </span>
                       </div>
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">{line.materialDemandLabel ?? '—'}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {isEditing ? (
-                        <Input type="number" min={1} value={editQuantity} onChange={e => setEditQuantity(e.target.value)} className="h-8 bg-secondary border-border" />
+                        <Input
+                          type="number"
+                          min={1}
+                          value={editQuantity}
+                          onChange={e => setEditQuantity(e.target.value)}
+                          className="h-8 bg-secondary border-border"
+                        />
                       ) : (
                         line.quantity
                       )}
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {isEditing ? (
-                        <Input type="number" min={0} value={editMinQuantity} onChange={e => setEditMinQuantity(e.target.value)} className="h-8 bg-secondary border-border" />
+                        <Input
+                          type="number"
+                          min={0}
+                          value={editMinQuantity}
+                          onChange={e => setEditMinQuantity(e.target.value)}
+                          className="h-8 bg-secondary border-border"
+                        />
                       ) : (
-                        line.minQuantity ?? '—'
+                        (line.minQuantity ?? '—')
                       )}
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {isEditing ? (
-                        <Input type="number" step="0.01" min={0.01} value={editUnitPrice} onChange={e => setEditUnitPrice(e.target.value)} className="h-8 bg-secondary border-border" />
+                        <Input
+                          type="number"
+                          step="0.01"
+                          min={0.01}
+                          value={editUnitPrice}
+                          onChange={e => setEditUnitPrice(e.target.value)}
+                          className="h-8 bg-secondary border-border"
+                        />
                       ) : (
                         formatMoney(line.unitPrice)
                       )}
@@ -430,11 +577,16 @@ export function QuoteSupplierDetail({
                     <TableCell className="text-sm text-muted-foreground">
                       {isEditing ? (
                         <div className="flex items-center gap-2">
-                          <Checkbox checked={editNotDeliverable} onCheckedChange={checked => setEditNotDeliverable(checked === true)} />
+                          <Checkbox
+                            checked={editNotDeliverable}
+                            onCheckedChange={checked => setEditNotDeliverable(checked === true)}
+                          />
                           <span className="text-xs">Not deliverable</span>
                         </div>
                       ) : line.notDeliverable ? (
-                        <Badge variant="destructive" className="text-[10px]">Not deliverable</Badge>
+                        <Badge variant="destructive" className="text-[10px]">
+                          Not deliverable
+                        </Badge>
                       ) : (
                         '—'
                       )}
@@ -453,22 +605,38 @@ export function QuoteSupplierDetail({
                       <div className="flex items-center gap-1">
                         {isEditing ? (
                           <>
-                            <Button size="icon" variant="ghost" className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10" onClick={() => handleUpdateLine(line.id)}>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10"
+                              onClick={() => handleUpdateLine(line.id)}>
                               <Check className="h-3.5 w-3.5" />
                             </Button>
-                            <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:bg-secondary" onClick={cancelEdit}>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7 text-muted-foreground hover:bg-secondary"
+                              onClick={cancelEdit}>
                               <X className="h-3.5 w-3.5" />
                             </Button>
                           </>
                         ) : (
                           canEditLines && (
-                            <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary" onClick={() => startEdit(line)}>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                              onClick={() => startEdit(line)}>
                               <Pencil className="h-3.5 w-3.5" />
                             </Button>
                           )
                         )}
                         {canDeleteLines && (
-                          <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive hover:bg-destructive/10" onClick={() => handleDeleteLine(line.id)}>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                            onClick={() => handleDeleteLine(line.id)}>
                             <Trash2 className="h-3.5 w-3.5" />
                           </Button>
                         )}
@@ -484,4 +652,3 @@ export function QuoteSupplierDetail({
     </div>
   )
 }
-

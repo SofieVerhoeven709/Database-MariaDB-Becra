@@ -11,6 +11,8 @@ import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption} from '@/types/invo
 import {createInvoiceInAction, updateInvoiceInAction} from '@/serverFunctions/invoices'
 // e.g. export async function getNextInvoiceInNumberAction(): Promise<string>
 import {getNextInvoiceInNumberAction} from '@/serverFunctions/invoices'
+import type {MappedDocument} from '@/types/document'
+import {Textarea} from '@/components/ui/textarea'
 
 interface InvoiceInFormDialogProps {
   open: boolean
@@ -28,7 +30,8 @@ interface InvoiceInFormDialogProps {
 type FormState = {
   invoiceNumber: string
   poNumber: string
-  humanId: string
+  clientInvoiceNumber: string
+  description: string
   invoiceDate: string
   dueDate: string
   invoiceTypeId: string
@@ -52,7 +55,8 @@ function emptyForm(inv: MappedInvoiceIn | null): FormState {
     return {
       invoiceNumber: '',
       poNumber: '',
-      humanId: '',
+      clientInvoiceNumber: '',
+      description: '',
       invoiceDate: today,
       dueDate: today,
       invoiceTypeId: '',
@@ -68,7 +72,8 @@ function emptyForm(inv: MappedInvoiceIn | null): FormState {
   return {
     invoiceNumber: inv.invoiceNumber,
     poNumber: inv.poNumber ?? '',
-    humanId: inv.humanId ?? '',
+    clientInvoiceNumber: inv.clientInvoiceNumber ?? '',
+    description: inv.description ?? '',
     invoiceDate: toDateInput(inv.invoiceDate),
     dueDate: toDateInput(inv.dueDate),
     invoiceTypeId: inv.invoiceTypeId,
@@ -133,6 +138,17 @@ export function InvoiceInFormDialog({
       setNumberLoading(false)
     }
   }
+  const textareaField = (key: keyof FormState, label: string, rows = 3) => (
+    <div className="flex flex-col gap-1.5">
+      <Label className="text-xs text-muted-foreground">{label}</Label>
+      <Textarea
+        value={(form[key] as string | null) ?? ''}
+        onChange={e => set(key, (e.target.value || null) as FormState[typeof key])}
+        rows={rows}
+        className="bg-secondary border-border resize-none"
+      />
+    </div>
+  )
 
   const isValid =
     form.invoiceNumber.trim() &&
@@ -152,7 +168,8 @@ export function InvoiceInFormDialog({
       const payload = {
         invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
-        humanId: form.humanId || null,
+        clientInvoiceNumber: form.clientInvoiceNumber || null,
+        description: form.description || null,
         invoiceDate: new Date(form.invoiceDate),
         dueDate: new Date(form.dueDate),
         invoiceTypeId: form.invoiceTypeId,
@@ -222,8 +239,8 @@ export function InvoiceInFormDialog({
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Human ID</Label>
             <Input
-              value={form.humanId}
-              onChange={e => set('humanId', e.target.value)}
+              value={form.clientInvoiceNumber}
+              onChange={e => set('clientInvoiceNumber', e.target.value)}
               className="bg-secondary border-border"
             />
           </div>
@@ -366,6 +383,7 @@ export function InvoiceInFormDialog({
               </div>
             ))}
           </div>
+          <div className="sm:col-span-2">{textareaField('description', 'Description', 3)}</div>
         </div>
 
         <DialogFooter className="pt-2">

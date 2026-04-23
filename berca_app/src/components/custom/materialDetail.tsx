@@ -214,6 +214,17 @@ export function MaterialDetail({
     setForm(f => ({...f, [key]: value}))
   }
 
+  function applyNumberKind(nextKind: NumberKind) {
+    setNumberKind(nextKind)
+    setForm(prev => {
+      const current = normalizeMaterialNumber(prev.beNumber, nextKind)
+      return {
+        ...prev,
+        beNumber: current || (nextKind === 'IOS' ? '4000000' : '1000000'),
+      }
+    })
+  }
+
   const warehousePlaceById = new Map(warehousePlaces.map(place => [place.id, place]))
   const selectedSupplierCompany = supplierCompanies.find(company => company.id === form.supplierCompanyId) ?? null
 
@@ -583,9 +594,7 @@ export function MaterialDetail({
                         checked={numberKind === 'IOS'}
                         onCheckedChange={checked => {
                           const nextKind: NumberKind = checked ? 'IOS' : 'BE'
-                          setNumberKind(nextKind)
-                          const current = normalizeMaterialNumber(form.beNumber, nextKind)
-                          handleField('beNumber', current || (nextKind === 'IOS' ? '4000000' : '1000000'))
+                          applyNumberKind(nextKind)
                         }}
                         aria-label="Number type IOS"
                       />

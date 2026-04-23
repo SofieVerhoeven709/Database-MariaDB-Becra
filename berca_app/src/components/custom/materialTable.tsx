@@ -12,13 +12,12 @@ import {
   Copy,
   RotateCcw,
   Download,
-  /* ChevronLeft,
-  ChevronRight, */
 } from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {Alert} from '@/components/ui/alert'
+import {StickyTableScroll} from '@/components/ui/stickyTableScroll'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
@@ -63,12 +62,6 @@ type SortField =
   | 'beNumber'
   | 'name'
   | 'shortDescription'
-  | 'warehouseAbbreviation'
-  | 'warehousePlace'
-  | 'warehouseShelf'
-  | 'warehouseColumn'
-  | 'warehouseLayer'
-  | 'warehouseLayerPlace'
   | 'brandName'
   | 'supplierCompanyName'
   | 'materialGroupLabelA'
@@ -81,6 +74,12 @@ type SortField =
   | 'rejected'
   | 'partApproved'
   | 'longLeadTime'
+  | 'warehouseAbbreviation'
+  | 'warehousePlace'
+  | 'warehouseShelf'
+  | 'warehouseColumn'
+  | 'warehouseLayer'
+  | 'warehouseLayerPlace'
   | 'hasAtex'
   | 'hasCe'
   | 'hasRohs'
@@ -89,11 +88,13 @@ type SortField =
   | 'has2dCad'
   | 'hasBdoc'
   | 'hasInsp'
+
 type SortDir = 'asc' | 'desc'
 type FilterStatus = 'all' | 'active' | 'deleted'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
 type FilterMaterialGroup = 'all' | string
+type FilterDocs = 'all' | (typeof MATERIAL_DOCUMENT_FLAGS)[number]['key']
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
@@ -146,17 +147,22 @@ export function MaterialTable({
 }: MaterialTableProps) {
   const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
   const materials = initialMaterials
+
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
-  const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
-  const [filterRejected, setFilterRejected] = useState<FilterRejected>('all')
-  const [filterNumberKind, setFilterNumberKind] = useState<FilterNumberKind>('all')
-  const [filterMaterialGroup, setFilterMaterialGroup] = useState<FilterMaterialGroup>('all')
-  {
-    /*const [currentPage, setCurrentPage] = useState(1)
-  const ITEMS_PER_PAGE = 15*/
-  }
+
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>('active')
+  const [filterRejected, setFilterRejected] = useState<FilterRejected>('active')
+  const [filterNumberKind, setFilterNumberKind] = useState<FilterNumberKind>('be')
+
+  const [filterMaterialGroupA, setFilterMaterialGroupA] = useState<FilterMaterialGroup>('all')
+  const [filterMaterialGroupB, setFilterMaterialGroupB] = useState<FilterMaterialGroup>('all')
+  const [filterMaterialGroupC, setFilterMaterialGroupC] = useState<FilterMaterialGroup>('all')
+  const [filterMaterialGroupD, setFilterMaterialGroupD] = useState<FilterMaterialGroup>('all')
+
+  const [filterDocs, setFilterDocs] = useState<FilterDocs>('all')
+
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
   const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
@@ -169,6 +175,17 @@ export function MaterialTable({
   } | null>(null)
 
   const parentPartBeNumbersInUse = useMemo(() => [...new Set(materials.flatMap(m => m.parentBeNumbers))], [materials])
+
+  const documentFilterOptions = useMemo(
+    () =>
+      MATERIAL_DOCUMENT_FLAGS.map(flag => ({
+        value: flag.key,
+        label: flag.label,
+      })),
+    [],
+  )
+
+  const warehousePlaceById = useMemo(() => new Map(warehousePlaces.map(place => [place.id, place])), [warehousePlaces])
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -184,24 +201,9 @@ export function MaterialTable({
     return normalized.startsWith('4') ? 'ios' : 'be'
   }
 
-  const warehousePlaceById = useMemo(() => new Map(warehousePlaces.map(place => [place.id, place])), [warehousePlaces])
-  const materialGroupOptions = useMemo(
-    () =>
-      materialGroups.map(group => {
-        const label = [group.groupA, group.groupB, group.groupC, group.groupD].filter(Boolean).join(' / ')
-        return {id: group.id, label}
-      }),
-    [materialGroups],
-  )
-
   function formatWarehouseCoordinates(place: WarehousePlaceOption): string {
     const parts = [
       place.abbreviation && `Abbr: ${place.abbreviation}`,
-      /* place.place && `Place: ${place.place}`,
-      place.shelf && `Shelf: ${place.shelf}`,
-      place.column && `Column: ${place.column}`,
-      place.layer && `Layer: ${place.layer}`,
-      place.layerPlace && `Layer place: ${place.layerPlace}`, */
       place.place && `Warehouse: ${place.place}`,
       place.shelf && `X: ${place.shelf}`,
       place.column && `Y: ${place.column}`,
@@ -226,6 +228,76 @@ export function MaterialTable({
     const partValue = place[part]
     return typeof partValue === 'string' ? partValue : ''
   }
+
+  function handleGroupAChange(value: string) {
+    setFilterMaterialGroupA(value)
+    setFilterMaterialGroupB('all')
+    setFilterMaterialGroupC('all')
+    setFilterMaterialGroupD('all')
+  }
+
+  function handleGroupBChange(value: string) {
+    setFilterMaterialGroupB(value)
+    setFilterMaterialGroupC('all')
+    setFilterMaterialGroupD('all')
+  }
+
+  function handleGroupCChange(value: string) {
+    setFilterMaterialGroupC(value)
+    setFilterMaterialGroupD('all')
+  }
+
+  const groupAOptions = useMemo(() => {
+    return [...new Set(materialGroups.map(g => g.groupA).filter(Boolean))].map(value => ({
+      value,
+      label: value,
+    }))
+  }, [materialGroups])
+
+  const groupBOptions = useMemo(() => {
+    return [
+      ...new Set(
+        materialGroups
+          .filter(g => filterMaterialGroupA === 'all' || g.groupA === filterMaterialGroupA)
+          .map(g => g.groupB)
+          .filter(Boolean),
+      ),
+    ].map(value => ({
+      value: value as string,
+      label: value as string,
+    }))
+  }, [materialGroups, filterMaterialGroupA])
+
+  const groupCOptions = useMemo(() => {
+    return [
+      ...new Set(
+        materialGroups
+          .filter(g => filterMaterialGroupA === 'all' || g.groupA === filterMaterialGroupA)
+          .filter(g => filterMaterialGroupB === 'all' || g.groupB === filterMaterialGroupB)
+          .map(g => g.groupC)
+          .filter(Boolean),
+      ),
+    ].map(value => ({
+      value: value as string,
+      label: value as string,
+    }))
+  }, [materialGroups, filterMaterialGroupA, filterMaterialGroupB])
+
+  const groupDOptions = useMemo(() => {
+    return [
+      ...new Set(
+        materialGroups
+          .filter(g => filterMaterialGroupA === 'all' || g.groupA === filterMaterialGroupA)
+          .filter(g => filterMaterialGroupB === 'all' || g.groupB === filterMaterialGroupB)
+          .filter(g => filterMaterialGroupC === 'all' || g.groupC === filterMaterialGroupC)
+          .map(g => g.groupD)
+          .filter(Boolean),
+      ),
+    ].map(value => ({
+      value: value as string,
+      label: value as string,
+    }))
+  }, [materialGroups, filterMaterialGroupA, filterMaterialGroupB, filterMaterialGroupC])
 
   function getSortValue(material: MappedMaterial, field: SortField): string {
     switch (field) {
@@ -273,13 +345,24 @@ export function MaterialTable({
       return true
     })
     .filter(m => {
-      if (filterMaterialGroup === 'all') return true
-      return (
-        m.materialGroupIdA === filterMaterialGroup ||
-        m.materialGroupIdB === filterMaterialGroup ||
-        m.materialGroupIdC === filterMaterialGroup ||
-        m.materialGroupIdD === filterMaterialGroup
-      )
+      if (filterDocs === 'all') return true
+      return Boolean(m[filterDocs])
+    })
+    .filter(m => {
+      if (filterMaterialGroupA === 'all') return true
+      return m.materialGroupLabelA === filterMaterialGroupA
+    })
+    .filter(m => {
+      if (filterMaterialGroupB === 'all') return true
+      return m.materialGroupLabelB === filterMaterialGroupB
+    })
+    .filter(m => {
+      if (filterMaterialGroupC === 'all') return true
+      return m.materialGroupLabelC === filterMaterialGroupC
+    })
+    .filter(m => {
+      if (filterMaterialGroupD === 'all') return true
+      return m.materialGroupLabelD === filterMaterialGroupD
     })
     .filter(m => {
       if (!search) return true
@@ -313,12 +396,6 @@ export function MaterialTable({
       'Number',
       'Material Name',
       'Description',
-      'Abbr',
-      'Warehouse',
-      'X',
-      'Y',
-      'Z',
-      'Position',
       'Brand',
       'Supplier',
       'Group A',
@@ -327,14 +404,14 @@ export function MaterialTable({
       'Group D',
       'Unit',
       'Parent Parts',
-      'Created By',
-      'Created At',
       'Status',
       'Approved',
       'Long Lead',
-      ...MATERIAL_DOCUMENT_FLAGS.map(flag => flag.label),
       'Serial Tracked',
-      'Deleted',
+      ...MATERIAL_DOCUMENT_FLAGS.map(flag => flag.label),
+      'Abbr',
+      'Warehouse',
+      'Shelf',
     ]
 
     const lines = filtered.map(material => {
@@ -342,12 +419,6 @@ export function MaterialTable({
         material.beNumber,
         material.name ?? '',
         material.shortDescription,
-        getWarehousePart(material.warehousePlace, 'abbreviation') || '',
-        getWarehousePart(material.warehousePlace, 'place') || '',
-        getWarehousePart(material.warehousePlace, 'shelf') || '',
-        getWarehousePart(material.warehousePlace, 'column') || '',
-        getWarehousePart(material.warehousePlace, 'layer') || '',
-        getWarehousePart(material.warehousePlace, 'layerPlace') || '',
         material.brandName ?? '',
         material.supplierCompanyName ?? '',
         material.materialGroupLabelA || '',
@@ -356,18 +427,21 @@ export function MaterialTable({
         material.materialGroupLabelD || '',
         `${material.unitName} (${material.unitAbbreviation})`,
         material.parentBeNumbers.join(' | '),
-        material.createdByName || '',
-        formatDateTime(material.createdAt),
         material.rejected ? 'Rejected' : 'Active',
         material.partApproved ? 'Yes' : 'No',
         material.longLeadTime ? 'Yes' : 'No',
+        material.isSerialTracked ? 'Yes' : 'No',
       ]
 
       const documentFlags = MATERIAL_DOCUMENT_FLAGS.map(flag => (material[flag.key] ? 'Yes' : 'No'))
 
-      return [...base, ...documentFlags, material.isSerialTracked ? 'Yes' : 'No', material.deleted ? 'Yes' : 'No']
-        .map(value => escapeCsvValue(String(value)))
-        .join(',')
+      const warehouseValues = [
+        getWarehousePart(material.warehousePlace, 'abbreviation') || '',
+        getWarehousePart(material.warehousePlace, 'place') || '',
+        getWarehousePart(material.warehousePlace, 'shelf') || '',
+      ]
+
+      return [...base, ...documentFlags, ...warehouseValues].map(value => escapeCsvValue(String(value))).join(',')
     })
 
     const csv = [headers.map(escapeCsvValue).join(','), ...lines].join('\n')
@@ -382,42 +456,11 @@ export function MaterialTable({
     document.body.removeChild(anchor)
     URL.revokeObjectURL(url)
   }
-  {
-    /*
-  // Paginatie berekeningen
-  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
-  const endIndex = startIndex + ITEMS_PER_PAGE
-  const displayedMaterials = filtered.slice(startIndex, endIndex)
-
-  // Reset naar pagina 1 als er wordt gezocht of gefilterd
-  const handleSearch = (value: string) => {
-    setSearch(value)
-    setCurrentPage(1)
-  }
-
-  const handleFilterStatusChange = (value: FilterStatus) => {
-    setFilterStatus(value)
-    setCurrentPage(1)
-  }
-
-  const handleFilterRejectedChange = (value: FilterRejected) => {
-    setFilterRejected(value)
-    setCurrentPage(1)
-  }
-
-  const handleFilterNumberKindChange = (value: FilterNumberKind) => {
-    setFilterNumberKind(value)
-    setCurrentPage(1)
-  }
-  */
-  }
 
   async function handleSave(form: Partial<MappedMaterial> & {id: string}) {
     setSaving(true)
     setSaveError(null)
     try {
-      // Only send fields that belong to the schema — exclude display-only fields
       const schemaFields = new Set([
         'id',
         'beNumber',
@@ -456,11 +499,6 @@ export function MaterialTable({
         'name',
         'brandOrderNr',
         'longDescription',
-       /*
-       'preferredSupplierCompanyId',
-       'preferredSupplierOrderId',
-       'preferredSupplierShortDescription',
-       */
         'brandName',
         'supplierCompanyId',
         'warehousePlace',
@@ -570,17 +608,6 @@ export function MaterialTable({
     {key: 'beNumber', label: 'Number'},
     {key: 'name', label: 'Material Name'},
     {key: 'shortDescription', label: 'Description'},
-    {key: 'warehouseAbbreviation', label: 'Abbr'},
-    /* {key: 'warehousePlace', label: 'Place'},
-    {key: 'warehouseShelf', label: 'Shelf'},
-    {key: 'warehouseColumn', label: 'Column'},
-    {key: 'warehouseLayer', label: 'Layer'},
-    {key: 'warehouseLayerPlace', label: 'Layer Place'},*/
-    {key: 'warehousePlace', label: 'Warehouse'},
-    {key: 'warehouseShelf', label: 'X'},
-    {key: 'warehouseColumn', label: 'Y'},
-    {key: 'warehouseLayer', label: 'Z'},
-    {key: 'warehouseLayerPlace', label: 'Position'},
     {key: 'brandName', label: 'Brand'},
     {key: 'supplierCompanyName', label: 'Supplier'},
     {key: 'materialGroupLabelA', label: 'Group A'},
@@ -589,21 +616,10 @@ export function MaterialTable({
     {key: 'materialGroupLabelD', label: 'Group D'},
     {key: 'unitName', label: 'Unit'},
     {key: 'parentBeNumbers', label: 'Parent Parts'},
-    {key: 'createdByName', label: 'Created'},
     {key: 'rejected', label: 'Status'},
     {key: 'partApproved', label: 'Approved'},
     {key: 'longLeadTime', label: 'Long Lead'},
   ]
-
-  const renderDocumentFlag = (active: boolean) => {
-    return active ? (
-      <Badge variant="default" className="text-xs bg-blue-500/20 text-blue-700 dark:text-blue-400">
-        Yes
-      </Badge>
-    ) : (
-      <span className="text-xs text-muted-foreground">-</span>
-    )
-  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -611,7 +627,6 @@ export function MaterialTable({
         <Alert title={alert.title} description={alert.description} type={alert.type} onClose={() => setAlert(null)} />
       )}
 
-      {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-50">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -619,14 +634,12 @@ export function MaterialTable({
             className="pl-9 bg-secondary border-border"
             placeholder="Searching for materials..."
             value={search}
-            /*onChange={e => handleSearch(e.target.value)}*/
             onChange={e => setSearch(e.target.value)}
           />
         </div>
 
-        {/* <Select value={filterStatus} onValueChange={v => handleFilterStatusChange(v as FilterStatus)}> */}
         <Select value={filterStatus} onValueChange={v => setFilterStatus(v as FilterStatus)}>
-          <SelectTrigger className="w-36 bg-secondary border-border">
+          <SelectTrigger className="w-30 bg-secondary border-border">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -635,9 +648,9 @@ export function MaterialTable({
             <SelectItem value="deleted">Deleted</SelectItem>
           </SelectContent>
         </Select>
+
         <Select value={filterNumberKind} onValueChange={v => setFilterNumberKind(v as FilterNumberKind)}>
-          {/* <Select value={filterNumberKind} onValueChange={v => handleFilterNumberKindChange(v as FilterNumberKind)}>*/}
-          <SelectTrigger className="w-36 bg-secondary border-border">
+          <SelectTrigger className="w-30 bg-secondary border-border">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -646,9 +659,9 @@ export function MaterialTable({
             <SelectItem value="ios">IOS</SelectItem>
           </SelectContent>
         </Select>
+
         <Select value={filterRejected} onValueChange={v => setFilterRejected(v as FilterRejected)}>
-          {/* <Select value={filterRejected} onValueChange={v => handleFilterRejectedChange(v as FilterRejected)}>*/}
-          <SelectTrigger className="w-36 bg-secondary border-border">
+          <SelectTrigger className="w-30 bg-secondary border-border">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -657,19 +670,82 @@ export function MaterialTable({
             <SelectItem value="rejected">Rejected</SelectItem>
           </SelectContent>
         </Select>
-        <Select value={filterMaterialGroup} onValueChange={setFilterMaterialGroup}>
-          <SelectTrigger className="w-52 bg-secondary border-border">
-            <SelectValue placeholder="Material group" />
+
+        <Select value={filterDocs} onValueChange={v => setFilterDocs(v as FilterDocs)}>
+          <SelectTrigger className="w-36 bg-secondary border-border">
+            <SelectValue placeholder="Document type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All material groups</SelectItem>
-            {materialGroupOptions.map(group => (
-              <SelectItem key={group.id} value={group.id}>
-                {group.label || group.id}
+            <SelectItem value="all">All documents</SelectItem>
+            {documentFilterOptions.map(option => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
+
+        <Select value={filterMaterialGroupA} onValueChange={handleGroupAChange}>
+          <SelectTrigger className="w-30 bg-secondary border-border">
+            <SelectValue placeholder="Choose group A" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All groups</SelectItem>
+            {groupAOptions.map(group => (
+              <SelectItem key={group.value} value={group.value}>
+                {group.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        {filterMaterialGroupA !== 'all' && (
+          <Select value={filterMaterialGroupB} onValueChange={handleGroupBChange}>
+            <SelectTrigger className="w-30 bg-secondary border-border">
+              <SelectValue placeholder="Choose group B" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All groups</SelectItem>
+              {groupBOptions.map(group => (
+                <SelectItem key={group.value} value={group.value}>
+                  {group.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+
+        {filterMaterialGroupA !== 'all' && filterMaterialGroupB !== 'all' && (
+          <Select value={filterMaterialGroupC} onValueChange={handleGroupCChange}>
+            <SelectTrigger className="w-30 bg-secondary border-border">
+              <SelectValue placeholder="Choose group C" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All groups</SelectItem>
+              {groupCOptions.map(group => (
+                <SelectItem key={group.value} value={group.value}>
+                  {group.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+
+        {filterMaterialGroupA !== 'all' && filterMaterialGroupB !== 'all' && filterMaterialGroupC !== 'all' && (
+          <Select value={filterMaterialGroupD} onValueChange={setFilterMaterialGroupD}>
+            <SelectTrigger className="w-30 bg-secondary border-border">
+              <SelectValue placeholder="Choose group D" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All groups</SelectItem>
+              {groupDOptions.map(group => (
+                <SelectItem key={group.value} value={group.value}>
+                  {group.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
 
         <Button
           variant="outline"
@@ -692,8 +768,7 @@ export function MaterialTable({
         </Button>
       </div>
 
-      {/* Table */}
-      <div className="rounded-xl border border-border overflow-hidden">
+      <StickyTableScroll>
         <Table>
           <TableHeader>
             <TableRow className="bg-secondary hover:bg-secondary">
@@ -706,66 +781,79 @@ export function MaterialTable({
                   <SortIcon field={col.key} sortField={sortField} sortDir={sortDir} />
                 </TableHead>
               ))}
-              {MATERIAL_DOCUMENT_FLAGS.map(flag => (
-                <TableHead
-                  key={flag.key}
-                  className="w-24 cursor-pointer select-none text-center text-xs font-semibold text-muted-foreground uppercase tracking-wide"
-                  onClick={() => handleSort(flag.key)}>
-                  {flag.label}
-                  <SortIcon field={flag.key} sortField={sortField} sortDir={sortDir} />
-                </TableHead>
-              ))}
+
               <TableHead className="w-25 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Serial Tracked
               </TableHead>
+
               <TableHead className="w-25 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
+
+              <TableHead
+                className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
+                onClick={() => handleSort('warehouseAbbreviation')}>
+                Abbr
+                <SortIcon field="warehouseAbbreviation" sortField={sortField} sortDir={sortDir} />
+              </TableHead>
+
+              <TableHead
+                className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
+                onClick={() => handleSort('warehousePlace')}>
+                Warehouse
+                <SortIcon field="warehousePlace" sortField={sortField} sortDir={sortDir} />
+              </TableHead>
+
+              <TableHead
+                className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
+                onClick={() => handleSort('warehouseShelf')}>
+                Shelf
+                <SortIcon field="warehouseShelf" sortField={sortField} sortDir={sortDir} />
+              </TableHead>
             </TableRow>
           </TableHeader>
+
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length + MATERIAL_DOCUMENT_FLAGS.length + 2}
-                  className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={columns.length + 5} className="text-center text-muted-foreground py-10">
                   No materials found
                 </TableCell>
               </TableRow>
             ) : (
-              /* displayedMaterials.map(m => ( */
               filtered.map(m => (
                 <TableRow
                   key={m.id}
                   className="hover:bg-secondary/50 transition-colors cursor-pointer"
                   onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
                   <TableCell className="font-mono text-sm font-medium">{m.beNumber}</TableCell>
+
                   <TableCell className="text-sm">
                     {m.name ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
+
                   <TableCell className="text-sm max-w-55 truncate" title={m.shortDescription}>
                     {m.shortDescription}
                   </TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'abbreviation') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'place') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'shelf') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'column') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'layer') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'layerPlace') || '—'}</TableCell>
+
                   <TableCell className="text-sm">
                     {m.brandName ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
+
                   <TableCell className="text-sm">
                     {m.supplierCompanyName ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
+
                   <TableCell className="text-sm">{m.materialGroupLabelA || '—'}</TableCell>
                   <TableCell className="text-sm">{m.materialGroupLabelB || '—'}</TableCell>
                   <TableCell className="text-sm">{m.materialGroupLabelC || '—'}</TableCell>
                   <TableCell className="text-sm">{m.materialGroupLabelD || '—'}</TableCell>
+
                   <TableCell className="text-sm">
                     {m.unitName}
                     <span className="text-muted-foreground text-xs ml-1">({m.unitAbbreviation})</span>
                   </TableCell>
+
                   <TableCell className="text-sm max-w-55">
                     {m.parentBeNumbers.length > 0 ? (
                       <span title={m.parentBeNumbers.join(', ')}>
@@ -776,12 +864,7 @@ export function MaterialTable({
                       <span className="text-muted-foreground">—</span>
                     )}
                   </TableCell>
-                  <TableCell className="text-sm">
-                    <div className="flex flex-col leading-tight">
-                      <span>{m.createdByName || '-'}</span>
-                      <span className="text-xs text-muted-foreground">{formatDateTime(m.createdAt)}</span>
-                    </div>
-                  </TableCell>
+
                   <TableCell>
                     {m.rejected ? (
                       <Badge variant="destructive" className="text-xs">
@@ -793,6 +876,7 @@ export function MaterialTable({
                       </Badge>
                     )}
                   </TableCell>
+
                   <TableCell>
                     {m.partApproved ? (
                       <Badge
@@ -804,6 +888,7 @@ export function MaterialTable({
                       <span className="text-sm text-muted-foreground">No</span>
                     )}
                   </TableCell>
+
                   <TableCell>
                     {m.longLeadTime ? (
                       <Badge variant="secondary" className="text-xs bg-amber-500/15 text-amber-700 dark:text-amber-400">
@@ -813,12 +898,14 @@ export function MaterialTable({
                       <span className="text-sm text-muted-foreground">No</span>
                     )}
                   </TableCell>
-                  {MATERIAL_DOCUMENT_FLAGS.map(flag => (
-                    <TableCell key={flag.key} className="text-sm text-center">
-                      {renderDocumentFlag(Boolean(m[flag.key]))}
-                    </TableCell>
-                  ))}
-                  {/* Serial Tracked Button Column */}
+
+                  {/*   <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{m.createdByName || '-'}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateTime(m.createdAt)}</span>
+                    </div>
+                  </TableCell>*/}
+
                   <TableCell className="text-center">
                     <Button
                       size="sm"
@@ -833,7 +920,7 @@ export function MaterialTable({
                       Serial Tracked
                     </Button>
                   </TableCell>
-                  {/* Actions Column */}
+
                   <TableCell className="text-right" onClick={e => e.stopPropagation()}>
                     <div className="flex justify-end gap-1">
                       <Button
@@ -843,6 +930,7 @@ export function MaterialTable({
                         onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
                         <ExternalLink className="h-3.5 w-3.5" />
                       </Button>
+
                       {m.deleted ? (
                         <>
                           <Button
@@ -875,6 +963,7 @@ export function MaterialTable({
                             }}>
                             <Pencil className="h-3.5 w-3.5" />
                           </Button>
+
                           {m.partApproved ? (
                             <span title="Copy row">
                               <Button
@@ -892,6 +981,7 @@ export function MaterialTable({
                           ) : (
                             <span className="inline-block h-7 w-7 invisible pointer-events-none" aria-hidden="true" />
                           )}
+
                           <Button
                             size="icon"
                             variant="ghost"
@@ -903,64 +993,17 @@ export function MaterialTable({
                       )}
                     </div>
                   </TableCell>
+
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'abbreviation') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'place') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'shelf') || '—'}</TableCell>
                 </TableRow>
               ))
             )}
           </TableBody>
         </Table>
-      </div>
+      </StickyTableScroll>
 
-      {/* Pagination Info & Controls
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-xs text-muted-foreground">
-          Showing {displayedMaterials.length > 0 ? startIndex + 1 : 0}–{Math.min(endIndex, filtered.length)} of{' '}
-          {filtered.length} material{filtered.length !== 1 ? 's' : ''} (Page {currentPage} of {totalPages || 1})
-        </p>
-        {totalPages > 1 && (
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-              className="flex items-center gap-1">
-              <ChevronLeft className="h-4 w-4" />
-              Previous
-            </Button>
-
-            <div className="flex items-center gap-1">
-              {Array.from({length: totalPages}, (_, i) => i + 1)
-                .filter(page => {
-                  // Show first, last, and pages around current
-                  return page === 1 || page === totalPages || Math.abs(page - currentPage) <= 1
-                })
-                .map((page, idx, arr) => (
-                  <div key={page}>
-                    {idx > 0 && arr[idx - 1] !== page - 1 && <span className="px-1 text-muted-foreground">...</span>}
-                    <Button
-                      variant={currentPage === page ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setCurrentPage(page)}
-                      className="h-8 w-8 p-0">
-                      {page}
-                    </Button>
-                  </div>
-                ))}
-            </div>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-              className="flex items-center gap-1">
-              Next
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        )}
-      </div>
-      */}
       <MaterialFormDialog
         open={dialogOpen}
         onOpenChange={open => {

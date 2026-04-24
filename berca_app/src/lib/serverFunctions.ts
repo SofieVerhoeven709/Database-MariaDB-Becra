@@ -231,12 +231,9 @@ async function handleServerFunction<Schema extends ZodType, ReturnType, Auth ext
       error: error.message,
       stack: error.stack,
     })
-    // Return the real error message to the frontend for debugging
     return {
       errors: {
         global: [options.globalErrorMessage ?? 'Something went wrong, please ensure you are logged in and try again'],
-        message: [error.message],
-        stack: process.env.NODE_ENV !== 'production' && error.stack ? [error.stack] : undefined,
       },
       success: false,
       submittedData: generateSubmittedData(unvalidatedData),

@@ -164,6 +164,24 @@ function sanitizeFileName(value: string) {
   return normalized.replace(/^-+|-+$/g, '') || 'material'
 }
 
+function formatMaterialActionErrors(errors: Record<string, string[] | undefined> | undefined): string {
+  const fieldLabels: Record<string, string> = {
+    beNumber: 'Material number',
+    shortDescription: 'Short description',
+    materialGroupIdA: 'Material group',
+    unitId: 'Unit',
+    warehousePlace: 'Warehouse place',
+  }
+
+  const messages = Object.entries(errors ?? {}).flatMap(([field, errs]) => {
+    if (!errs?.length) return []
+    if (field === 'global') return errs
+    return errs.map(error => `${fieldLabels[field] ?? field}: ${error}`)
+  })
+
+  return messages.join(' | ')
+}
+
 export function MaterialDetail({
   material,
   materialGroups,
@@ -359,10 +377,10 @@ export function MaterialDetail({
 
       const result = await updateMaterialAction({success: false}, fd)
       if (result && !result.success) {
-        const msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
-          (errs ?? []).map((e: string) => `${field}: ${e}`),
+        setSaveError(
+          formatMaterialActionErrors(result.errors) ||
+            'Could not save the material. Please check the highlighted fields and try again.',
         )
-        setSaveError(msgs.length ? msgs.join(' | ') : 'Could not save. Please check all required fields.')
         return
       }
 

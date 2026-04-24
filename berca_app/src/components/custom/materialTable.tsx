@@ -97,6 +97,24 @@ type NumberType = 'BE' | 'IOS'
 type FilterMaterialGroup = 'all' | string
 type FilterDocs = 'all' | (typeof MATERIAL_DOCUMENT_FLAGS)[number]['key']
 
+function formatMaterialActionErrors(errors: Record<string, string[] | undefined> | undefined): string {
+  const fieldLabels: Record<string, string> = {
+    beNumber: 'Material number',
+    shortDescription: 'Short description',
+    materialGroupIdA: 'Material group',
+    unitId: 'Unit',
+    warehousePlace: 'Warehouse place',
+  }
+
+  const messages = Object.entries(errors ?? {}).flatMap(([field, errs]) => {
+    if (!errs?.length) return []
+    if (field === 'global') return errs
+    return errs.map(error => `${fieldLabels[field] ?? field}: ${error}`)
+  })
+
+  return messages.join(' | ')
+}
+
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
   return sortDir === 'asc' ? (
@@ -463,7 +481,7 @@ export function MaterialTable({
     URL.revokeObjectURL(url)
   }
 
-  async function handleSave(form: Partial<MappedMaterial> & {id: string}) {
+  async function handleSave(form: Partial<MappedMaterial> & {id: string; numberType?: NumberType}) {
     setSaving(true)
     setSaveError(null)
 
@@ -519,7 +537,7 @@ export function MaterialTable({
 
       const formWithNumberType = {
         ...form,
-        numberType: getNumberType(form.beNumber),
+        numberType: form.numberType ?? getNumberType(form.beNumber),
       }
 
       const fd = new FormData()
@@ -551,10 +569,10 @@ export function MaterialTable({
 
       if (result && !result.success) {
         console.error('Material save failed:', result.errors)
-        const msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
-          (errs ?? []).map(e => `${field}: ${e}`),
+        setSaveError(
+          formatMaterialActionErrors(result.errors) ||
+            'Could not save the material. Please check the highlighted fields and try again.',
         )
-        setSaveError(msgs.length ? msgs.join(' | ') : 'Could not save the material. Please check all required fields.')
         return
       }
 
@@ -787,7 +805,7 @@ export function MaterialTable({
         </Button>
       </div>
 
-      <StickyTableScroll>
+      <StickyTableScroll disabled={dialogOpen}>
         <Table className="w-full min-w-max">
           <TableHeader>
             <TableRow className="bg-secondary hover:bg-secondary">

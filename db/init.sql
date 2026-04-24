@@ -2349,3 +2349,9 @@ CREATE TABLE
         FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
         FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT
     ) ENGINE = InnoDB;
+
+ALTER TABLE InvoiceOut ADD COLUMN IF NOT EXISTS boqId CHAR(36) NULL;
+
+ALTER TABLE InvoiceOut
+    ADD CONSTRAINT fk_invoiceout_boq
+    FOREIGN KEY (boqId) REFERENCES BillOfQuantities (id) ON DELETE RESTRICT;

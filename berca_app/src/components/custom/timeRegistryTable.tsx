@@ -62,6 +62,7 @@ interface TimeRegistryTableProps {
   employees: EmployeeOption[]
   hourTypes: HourTypeOption[]
   workOrders: WorkOrderOption[]
+  allWorkOrders: WorkOrderOption[]
   currentUserRole: string
   currentUserLevel: number
   currentUserId: string
@@ -76,6 +77,7 @@ export function TimeRegistryTable({
   employees,
   hourTypes,
   workOrders,
+  allWorkOrders,
   currentUserRole,
   currentUserLevel,
   currentUserId,
@@ -317,7 +319,7 @@ export function TimeRegistryTable({
             </SelectTrigger>
             <SelectContent className="bg-card border-border">
               <SelectItem value="all">All Work Orders</SelectItem>
-              {workOrders.map(wo => (
+              {allWorkOrders.map(wo => (
                 <SelectItem key={wo.id} value={wo.id}>
                   <div className="flex flex-col">
                     <span className="font-medium">{wo.workOrderNumber ?? wo.id}</span>

@@ -27,6 +27,7 @@ export interface WorkOrderOption {
   id: string
   workOrderNumber: string | null
   description: string | null
+  hoursMaterialClosed: boolean
 }
 
 export type TimeRegistryFormData = {

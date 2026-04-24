@@ -6,9 +6,10 @@ import {createPortal} from 'react-dom'
 interface StickyTableScrollProps {
   children: ReactNode
   className?: string
+  disabled?: boolean
 }
 
-export function StickyTableScroll({children, className = ''}: StickyTableScrollProps) {
+export function StickyTableScroll({children, className = '', disabled = false}: StickyTableScrollProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const tableScrollRef = useRef<HTMLDivElement | null>(null)
   const bottomScrollRef = useRef<HTMLDivElement | null>(null)
@@ -106,8 +107,8 @@ export function StickyTableScroll({children, className = ''}: StickyTableScrollP
     <div
       className="fixed bottom-0 left-0 right-0 z-[9999] border-t border-border bg-background"
       style={{
-        opacity: mounted && hasOverflow && isInView ? 1 : 0,
-        pointerEvents: mounted && hasOverflow && isInView ? 'auto' : 'none',
+        opacity: mounted && hasOverflow && isInView && !disabled ? 1 : 0,
+        pointerEvents: mounted && hasOverflow && isInView && !disabled ? 'auto' : 'none',
       }}>
       <div
         ref={bottomScrollRef}

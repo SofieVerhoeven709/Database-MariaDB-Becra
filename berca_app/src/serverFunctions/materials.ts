@@ -72,6 +72,25 @@ function isWarehousePlaceForeignKeyError(error: unknown): boolean {
   return /warehousePlaceId/i.test(error.message)
 }
 
+function isMaterialBeNumberUniqueConstraintError(error: unknown): boolean {
+  if (!(error instanceof Prisma.PrismaClientKnownRequestError)) return false
+  if (error.code !== 'P2002') return false
+  const target = error.meta?.target
+  return Array.isArray(target) && target.includes('beNumber')
+}
+
+function duplicateMaterialNumberError(beNumber: string | undefined) {
+  const numberType = beNumber?.startsWith('4') ? 'IOS' : 'BE'
+  return {
+    success: false,
+    errors: {
+      beNumber: [
+        `This ${numberType} number already exists. Please enter a different number or leave the field empty to generate the next available ${numberType} number.`,
+      ],
+    },
+  }
+}
+
 export const createMaterialAction = protectedFormAction({
   schema: createMaterialSchema,
   functionName: 'Create material',
@@ -118,6 +137,9 @@ export const createMaterialAction = protectedFormAction({
 
       material = await createMaterial(createPayload)
     } catch (error) {
+      if (isMaterialBeNumberUniqueConstraintError(error)) {
+        return duplicateMaterialNumberError(beNumber)
+      }
       if (isWarehousePlaceForeignKeyError(error)) {
         return {
           success: false,
@@ -176,6 +198,9 @@ export const updateMaterialAction = protectedFormAction({
 
       updated = await updateMaterial(id, updatePayload)
     } catch (error) {
+      if (isMaterialBeNumberUniqueConstraintError(error)) {
+        return duplicateMaterialNumberError(rest.beNumber)
+      }
       if (isWarehousePlaceForeignKeyError(error)) {
         return {
           success: false,
@@ -261,17 +286,26 @@ export async function createMaterialForPlaceAction(unvalidatedData: z.infer<type
   }
 
   const target = await createTargetForType('Company', profile.id)
-  const material = await createMaterial({
-    id: data.id,
-    beNumber: data.beNumber,
-    shortDescription: data.shortDescription,
-    name: data.name || null,
-    materialGroupIdA: defaultMaterialGroup.id,
-    unitId: defaultUnit.id,
-    createdBy: profile.id,
-    targetId: target.id,
-    isSerialTracked: false,
-  })
+  let material
+  try {
+    material = await createMaterial({
+      id: data.id,
+      beNumber: data.beNumber,
+      shortDescription: data.shortDescription,
+      name: data.name || null,
+      materialGroupIdA: defaultMaterialGroup.id,
+      unitId: defaultUnit.id,
+      createdBy: profile.id,
+      targetId: target.id,
+      isSerialTracked: false,
+    })
+  } catch (error) {
+    if (isMaterialBeNumberUniqueConstraintError(error)) {
+      const numberType = data.beNumber.startsWith('4') ? 'IOS' : 'BE'
+      throw new Error(`This ${numberType} number already exists. Please enter a different number.`)
+    }
+    throw error
+  }
 
   try {
     await ensureMaterialDemandForMaterial(material.id)

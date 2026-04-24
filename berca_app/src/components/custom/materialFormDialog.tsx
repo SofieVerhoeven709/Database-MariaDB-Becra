@@ -66,7 +66,7 @@ interface MaterialFormDialogProps {
   warehousePlaces: WarehousePlaceOption[]
   parentPartOptions?: ParentPartOption[]
   parentPartBeNumbersInUse?: string[]
-  onSave: (material: Partial<MappedMaterial> & {id: string}) => void
+  onSave: (material: Partial<MappedMaterial> & {id: string; numberType?: NumberKind}) => void
   saving?: boolean
   saveError?: string | null
 }
@@ -219,7 +219,7 @@ export function MaterialFormDialog({
       const current = normalizeMaterialNumber(prev.beNumber, nextKind)
       return {
         ...prev,
-        beNumber: current || (nextKind === 'IOS' ? '4000000' : '1000000'),
+        beNumber: current,
       }
     })
   }
@@ -381,6 +381,7 @@ export function MaterialFormDialog({
             onSave({
               ...form,
               beNumber: normalizeMaterialNumber(form.beNumber, numberKind),
+              numberType: numberKind,
               isParentPart: isParentPartEnabled,
             })
           }}

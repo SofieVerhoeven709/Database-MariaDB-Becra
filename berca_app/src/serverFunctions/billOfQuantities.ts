@@ -4,7 +4,7 @@ import {prismaClient} from '@/dal/prismaClient'
 import {createBoqSchema, updateBoqSchema, boqIdSchema} from '@/schemas/billOfQuantitySchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
-import {generateBoqNumber} from '@/lib/utils'
+import {generateBoqNumber, generateInvoiceOutNumber} from '@/lib/utils'
 
 export async function getActiveWorkOrdersForProjectAction(projectId: string) {
   return prismaClient.workOrder.findMany({
@@ -140,6 +140,15 @@ export const createBoqAction = protectedServerFunction({
       }
     }
 
+    const boqStatus = await prismaClient.billOfQuantitiesStatus.findUnique({
+      where: {id: data.boqStatusId},
+      select: {name: true},
+    })
+    if (boqStatus?.name.toLowerCase() === 'approved') {
+      await createInvoiceFromApprovedBoq(id, profile.id)
+      revalidatePath('/invoicesOut')
+    }
+
     logger.info(`BoQ created: ${id} (${boqNumber}) with ${workOrderIds.length} work order(s)`)
     revalidatePath('/boq')
   },
@@ -160,6 +169,15 @@ export const updateBoqAction = protectedServerFunction({
         modifiedAt: new Date(),
       },
     })
+    const boqStatus = await prismaClient.billOfQuantitiesStatus.findUnique({
+      where: {id: data.boqStatusId},
+      select: {name: true},
+    })
+    if (boqStatus?.name.toLowerCase() === 'approved') {
+      await createInvoiceFromApprovedBoq(id, profile.id)
+      revalidatePath('/invoicesOut')
+    }
+
     logger.info(`BoQ updated: ${id}`)
     revalidatePath('/boq')
   },
@@ -306,4 +324,125 @@ export async function updateTrainingVatMarginAction({
     data: {vatMarginId},
   })
   revalidatePath('/boq')
+}
+
+async function createInvoiceFromApprovedBoq(boqId: string, profileId: string) {
+  const boq = await prismaClient.billOfQuantities.findUniqueOrThrow({
+    where: {id: boqId},
+    include: {
+      BillOfQuantitiesType: {select: {name: true}},
+      BillOfQuantitiesSentType: {select: {name: true}},
+      WorkOrderBoQ: {where: {deleted: false}, select: {workOrderId: true}},
+      BoqContact: {select: {contactId: true}},
+    },
+  })
+
+  // Check if an invoice already exists for this BoQ to avoid duplicates
+  const existingInvoice = await prismaClient.invoiceOut.findFirst({
+    where: {boqId, deleted: false},
+  })
+  if (existingInvoice) return
+
+  const [allInvoiceStatuses, allInvoiceTypes, allInvoiceSentTypes] = await Promise.all([
+    prismaClient.invoiceStatus.findMany({select: {id: true, name: true}}),
+    prismaClient.invoiceType.findMany({select: {id: true, name: true}}),
+    prismaClient.invoiceSentType.findMany({select: {id: true, name: true}}),
+  ])
+
+  const draftStatus =
+    allInvoiceStatuses.find(s => s.name.toLowerCase() === 'draft') ??
+    (() => {
+      throw new Error('No draft invoice status found')
+    })()
+
+  const invoiceType =
+    allInvoiceTypes.find(t => t.name.toLowerCase() === boq.BillOfQuantitiesType.name.toLowerCase()) ??
+    (() => {
+      throw new Error(`No invoice type matching "${boq.BillOfQuantitiesType.name}" found`)
+    })()
+
+  const invoiceSentType =
+    allInvoiceSentTypes.find(t => t.name.toLowerCase() === boq.BillOfQuantitiesSentType.name.toLowerCase()) ??
+    (() => {
+      throw new Error(`No invoice sent type matching "${boq.BillOfQuantitiesSentType.name}" found`)
+    })()
+
+  const target = await createTargetForType('InvoiceOut', profileId)
+  const id = crypto.randomUUID()
+  const now = new Date()
+  const year = now.getFullYear()
+
+  let attempts = 0
+  while (attempts < 5) {
+    try {
+      const last = await prismaClient.invoiceOut.findFirst({
+        where: {invoiceNumber: {startsWith: String(year)}},
+        orderBy: {invoiceNumber: 'desc'},
+        select: {invoiceNumber: true},
+      })
+      const lastSeq = last ? parseInt(last.invoiceNumber.slice(4)) - 100 : 0
+      const invoiceNumber = generateInvoiceOutNumber(year, lastSeq + 1)
+
+      await prismaClient.invoiceOut.create({
+        data: {
+          id,
+          invoiceNumber,
+          boqId: boq.id,
+          poNumber: boq.poNumber,
+          humanId: boq.humanId,
+          invoiceDate: boq.boqDate,
+          dueDate: boq.dueDate,
+          sentDate: boq.sentDate,
+          paymentMethodId: boq.paymentMethodId,
+          priceListId: boq.priceListId,
+          invoiceTypeId: invoiceType.id,
+          invoiceSentTypeId: invoiceSentType.id,
+          invoiceStatusId: draftStatus.id,
+          reminderSent: false,
+          outstanding: true,
+          deleted: false,
+          targetId: target.id,
+          createdBy: profileId,
+          createdAt: now,
+        },
+      })
+      break
+    } catch (err: unknown) {
+      const prismaErr = err as {code?: string}
+      if (prismaErr.code === 'P2002') {
+        attempts++
+        continue
+      }
+      throw err
+    }
+  }
+
+  if (attempts >= 5) throw new Error('Failed to generate a unique invoice number after 5 attempts')
+
+  // Copy work order links
+  const workOrderIds = boq.WorkOrderBoQ.map(r => r.workOrderId)
+  if (workOrderIds.length > 0) {
+    const available = await prismaClient.workOrder.findMany({
+      where: {id: {in: workOrderIds}, deleted: false, WorkOrderInvoice: {none: {deleted: false}}},
+      select: {id: true},
+    })
+    const availableIds = available.map(r => r.id)
+    if (availableIds.length > 0) {
+      await prismaClient.workOrderInvoice.createMany({
+        data: availableIds.map(workOrderId => ({id: crypto.randomUUID(), invoiceOutId: id, workOrderId})),
+      })
+      await prismaClient.workOrder.updateMany({
+        where: {id: {in: availableIds}},
+        data: {hoursMaterialClosed: true},
+      })
+    }
+  }
+
+  // Copy contacts
+  if (boq.BoqContact.length > 0) {
+    await prismaClient.invoiceOutContact.createMany({
+      data: boq.BoqContact.map(c => ({id: crypto.randomUUID(), invoiceOutId: id, contactId: c.contactId})),
+      skipDuplicates: true,
+    })
+  }
 }

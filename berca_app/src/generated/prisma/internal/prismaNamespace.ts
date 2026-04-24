@@ -88,11 +88,11 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.19.2
+ * Prisma Client JS version: 6.19.3
  * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.19.2",
+  client: "6.19.3",
   engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
 }
 
@@ -8885,7 +8885,8 @@ export const InvoiceOutScalarFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  priceListId: 'priceListId'
+  priceListId: 'priceListId',
+  boqId: 'boqId'
 } as const
 
 export type InvoiceOutScalarFieldEnum = (typeof InvoiceOutScalarFieldEnum)[keyof typeof InvoiceOutScalarFieldEnum]
@@ -10836,7 +10837,8 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  priceListId: 'priceListId'
+  priceListId: 'priceListId',
+  boqId: 'boqId'
 } as const
 
 export type InvoiceOutOrderByRelevanceFieldEnum = (typeof InvoiceOutOrderByRelevanceFieldEnum)[keyof typeof InvoiceOutOrderByRelevanceFieldEnum]

@@ -958,6 +958,7 @@ model InvoiceOut {
   invoiceSentTypeId                        String              @db.Char(36)
   invoiceStatusId                          String              @db.Char(36)
   priceListId                              String?             @db.Char(36)
+  boqId                                    String?             @db.Char(36)
   InvoiceType                              InvoiceType         @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
   Employee                                 Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_2")
   Target                                   Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_3")
@@ -967,6 +968,7 @@ model InvoiceOut {
   InvoiceSentType                          InvoiceSentType     @relation(fields: [invoiceSentTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_7")
   InvoiceStatus                            InvoiceStatus       @relation(fields: [invoiceStatusId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_8")
   PriceList                                PriceList?          @relation(fields: [priceListId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOut_ibfk_9")
+  BillOfQuantities                         BillOfQuantities?   @relation(fields: [boqId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_invoiceout_boq")
   InvoiceOutContact                        InvoiceOutContact[]
   WorkOrderInvoice                         WorkOrderInvoice[]
 
@@ -979,6 +981,7 @@ model InvoiceOut {
   @@index([modifiedBy], map: "modifiedBy")
   @@index([paymentMethodId], map: "paymentMethodId")
   @@index([priceListId], map: "priceListId")
+  @@index([boqId], map: "fk_invoiceout_boq")
 }
 
 model InvoiceType {
@@ -2965,6 +2968,7 @@ model BillOfQuantities {
   BillOfQuantitiesStatus                         BillOfQuantitiesStatus   @relation(fields: [boqStatusId], references: [id], onUpdate: Restrict, map: "BillOfQuantities_ibfk_8")
   PriceList                                      PriceList?               @relation(fields: [priceListId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "BillOfQuantities_ibfk_9")
   BoqContact                                     BoqContact[]
+  InvoiceOut                                     InvoiceOut[]
   WorkOrderBoQ                                   WorkOrderBoQ[]
 
   @@index([boqSentTypeId], map: "boqSentTypeId")

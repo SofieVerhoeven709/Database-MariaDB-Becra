@@ -716,7 +716,8 @@ export const InvoiceOutScalarFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  priceListId: 'priceListId'
+  priceListId: 'priceListId',
+  boqId: 'boqId'
 } as const
 
 export type InvoiceOutScalarFieldEnum = (typeof InvoiceOutScalarFieldEnum)[keyof typeof InvoiceOutScalarFieldEnum]
@@ -2667,7 +2668,8 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  priceListId: 'priceListId'
+  priceListId: 'priceListId',
+  boqId: 'boqId'
 } as const
 
 export type InvoiceOutOrderByRelevanceFieldEnum = (typeof InvoiceOutOrderByRelevanceFieldEnum)[keyof typeof InvoiceOutOrderByRelevanceFieldEnum]

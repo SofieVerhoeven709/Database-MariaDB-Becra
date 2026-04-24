@@ -328,6 +328,7 @@ export type BillOfQuantitiesWhereInput = {
   BillOfQuantitiesStatus?: Prisma.XOR<Prisma.BillOfQuantitiesStatusScalarRelationFilter, Prisma.BillOfQuantitiesStatusWhereInput>
   PriceList?: Prisma.XOR<Prisma.PriceListNullableScalarRelationFilter, Prisma.PriceListWhereInput> | null
   BoqContact?: Prisma.BoqContactListRelationFilter
+  InvoiceOut?: Prisma.InvoiceOutListRelationFilter
   WorkOrderBoQ?: Prisma.WorkOrderBoQListRelationFilter
 }
 
@@ -364,6 +365,7 @@ export type BillOfQuantitiesOrderByWithRelationInput = {
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusOrderByWithRelationInput
   PriceList?: Prisma.PriceListOrderByWithRelationInput
   BoqContact?: Prisma.BoqContactOrderByRelationAggregateInput
+  InvoiceOut?: Prisma.InvoiceOutOrderByRelationAggregateInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQOrderByRelationAggregateInput
   _relevance?: Prisma.BillOfQuantitiesOrderByRelevanceInput
 }
@@ -404,6 +406,7 @@ export type BillOfQuantitiesWhereUniqueInput = Prisma.AtLeast<{
   BillOfQuantitiesStatus?: Prisma.XOR<Prisma.BillOfQuantitiesStatusScalarRelationFilter, Prisma.BillOfQuantitiesStatusWhereInput>
   PriceList?: Prisma.XOR<Prisma.PriceListNullableScalarRelationFilter, Prisma.PriceListWhereInput> | null
   BoqContact?: Prisma.BoqContactListRelationFilter
+  InvoiceOut?: Prisma.InvoiceOutListRelationFilter
   WorkOrderBoQ?: Prisma.WorkOrderBoQListRelationFilter
 }, "id" | "boqNumber">
 
@@ -487,6 +490,7 @@ export type BillOfQuantitiesCreateInput = {
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -514,6 +518,7 @@ export type BillOfQuantitiesUncheckedCreateInput = {
   boqStatusId: string
   priceListId?: string | null
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -541,6 +546,7 @@ export type BillOfQuantitiesUpdateInput = {
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -568,6 +574,7 @@ export type BillOfQuantitiesUncheckedUpdateInput = {
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -645,6 +652,11 @@ export type BillOfQuantitiesListRelationFilter = {
 
 export type BillOfQuantitiesOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type BillOfQuantitiesNullableScalarRelationFilter = {
+  is?: Prisma.BillOfQuantitiesWhereInput | null
+  isNot?: Prisma.BillOfQuantitiesWhereInput | null
 }
 
 export type BillOfQuantitiesOrderByRelevanceInput = {
@@ -857,6 +869,22 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutEmployee_BillOfQuantities_
   update?: Prisma.BillOfQuantitiesUpdateWithWhereUniqueWithoutEmployee_BillOfQuantities_modifiedByToEmployeeInput | Prisma.BillOfQuantitiesUpdateWithWhereUniqueWithoutEmployee_BillOfQuantities_modifiedByToEmployeeInput[]
   updateMany?: Prisma.BillOfQuantitiesUpdateManyWithWhereWithoutEmployee_BillOfQuantities_modifiedByToEmployeeInput | Prisma.BillOfQuantitiesUpdateManyWithWhereWithoutEmployee_BillOfQuantities_modifiedByToEmployeeInput[]
   deleteMany?: Prisma.BillOfQuantitiesScalarWhereInput | Prisma.BillOfQuantitiesScalarWhereInput[]
+}
+
+export type BillOfQuantitiesCreateNestedOneWithoutInvoiceOutInput = {
+  create?: Prisma.XOR<Prisma.BillOfQuantitiesCreateWithoutInvoiceOutInput, Prisma.BillOfQuantitiesUncheckedCreateWithoutInvoiceOutInput>
+  connectOrCreate?: Prisma.BillOfQuantitiesCreateOrConnectWithoutInvoiceOutInput
+  connect?: Prisma.BillOfQuantitiesWhereUniqueInput
+}
+
+export type BillOfQuantitiesUpdateOneWithoutInvoiceOutNestedInput = {
+  create?: Prisma.XOR<Prisma.BillOfQuantitiesCreateWithoutInvoiceOutInput, Prisma.BillOfQuantitiesUncheckedCreateWithoutInvoiceOutInput>
+  connectOrCreate?: Prisma.BillOfQuantitiesCreateOrConnectWithoutInvoiceOutInput
+  upsert?: Prisma.BillOfQuantitiesUpsertWithoutInvoiceOutInput
+  disconnect?: Prisma.BillOfQuantitiesWhereInput | boolean
+  delete?: Prisma.BillOfQuantitiesWhereInput | boolean
+  connect?: Prisma.BillOfQuantitiesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BillOfQuantitiesUpdateToOneWithWhereWithoutInvoiceOutInput, Prisma.BillOfQuantitiesUpdateWithoutInvoiceOutInput>, Prisma.BillOfQuantitiesUncheckedUpdateWithoutInvoiceOutInput>
 }
 
 export type BillOfQuantitiesCreateNestedManyWithoutTargetInput = {
@@ -1162,6 +1190,7 @@ export type BillOfQuantitiesCreateWithoutEmployee_BillOfQuantities_createdByToEm
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1188,6 +1217,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutEmployee_BillOfQuantities_crea
   boqStatusId: string
   priceListId?: string | null
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1224,6 +1254,7 @@ export type BillOfQuantitiesCreateWithoutEmployee_BillOfQuantities_deletedByToEm
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1250,6 +1281,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutEmployee_BillOfQuantities_dele
   boqStatusId: string
   priceListId?: string | null
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1286,6 +1318,7 @@ export type BillOfQuantitiesCreateWithoutEmployee_BillOfQuantities_modifiedByToE
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1312,6 +1345,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutEmployee_BillOfQuantities_modi
   boqStatusId: string
   priceListId?: string | null
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1401,6 +1435,130 @@ export type BillOfQuantitiesUpdateManyWithWhereWithoutEmployee_BillOfQuantities_
   data: Prisma.XOR<Prisma.BillOfQuantitiesUpdateManyMutationInput, Prisma.BillOfQuantitiesUncheckedUpdateManyWithoutEmployee_BillOfQuantities_modifiedByToEmployeeInput>
 }
 
+export type BillOfQuantitiesCreateWithoutInvoiceOutInput = {
+  id: string
+  boqNumber: string
+  poNumber?: string | null
+  humanId?: string | null
+  boqDate: Date | string
+  createdAt: Date | string
+  dueDate: Date | string
+  sentDate?: Date | string | null
+  deletedAt?: Date | string | null
+  modifiedAt?: Date | string | null
+  reminderSent?: boolean
+  outstanding?: boolean
+  deleted?: boolean
+  BillOfQuantitiesType: Prisma.BillOfQuantitiesTypeCreateNestedOneWithoutBillOfQuantitiesInput
+  Employee_BillOfQuantities_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutBillOfQuantities_BillOfQuantities_createdByToEmployeeInput
+  Target: Prisma.TargetCreateNestedOneWithoutBillOfQuantitiesInput
+  Employee_BillOfQuantities_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutBillOfQuantities_BillOfQuantities_deletedByToEmployeeInput
+  Employee_BillOfQuantities_modifiedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutBillOfQuantities_BillOfQuantities_modifiedByToEmployeeInput
+  PaymentMethod: Prisma.PaymentMethodCreateNestedOneWithoutBillOfQuantitiesInput
+  BillOfQuantitiesSentType: Prisma.BillOfQuantitiesSentTypeCreateNestedOneWithoutBillOfQuantitiesInput
+  BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
+  PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
+  BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
+}
+
+export type BillOfQuantitiesUncheckedCreateWithoutInvoiceOutInput = {
+  id: string
+  boqNumber: string
+  poNumber?: string | null
+  humanId?: string | null
+  boqDate: Date | string
+  createdAt: Date | string
+  dueDate: Date | string
+  sentDate?: Date | string | null
+  deletedAt?: Date | string | null
+  modifiedAt?: Date | string | null
+  reminderSent?: boolean
+  outstanding?: boolean
+  deleted?: boolean
+  deletedBy?: string | null
+  createdBy: string
+  modifiedBy?: string | null
+  boqTypeId: string
+  targetId: string
+  paymentMethodId: string
+  boqSentTypeId: string
+  boqStatusId: string
+  priceListId?: string | null
+  BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+}
+
+export type BillOfQuantitiesCreateOrConnectWithoutInvoiceOutInput = {
+  where: Prisma.BillOfQuantitiesWhereUniqueInput
+  create: Prisma.XOR<Prisma.BillOfQuantitiesCreateWithoutInvoiceOutInput, Prisma.BillOfQuantitiesUncheckedCreateWithoutInvoiceOutInput>
+}
+
+export type BillOfQuantitiesUpsertWithoutInvoiceOutInput = {
+  update: Prisma.XOR<Prisma.BillOfQuantitiesUpdateWithoutInvoiceOutInput, Prisma.BillOfQuantitiesUncheckedUpdateWithoutInvoiceOutInput>
+  create: Prisma.XOR<Prisma.BillOfQuantitiesCreateWithoutInvoiceOutInput, Prisma.BillOfQuantitiesUncheckedCreateWithoutInvoiceOutInput>
+  where?: Prisma.BillOfQuantitiesWhereInput
+}
+
+export type BillOfQuantitiesUpdateToOneWithWhereWithoutInvoiceOutInput = {
+  where?: Prisma.BillOfQuantitiesWhereInput
+  data: Prisma.XOR<Prisma.BillOfQuantitiesUpdateWithoutInvoiceOutInput, Prisma.BillOfQuantitiesUncheckedUpdateWithoutInvoiceOutInput>
+}
+
+export type BillOfQuantitiesUpdateWithoutInvoiceOutInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  modifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  BillOfQuantitiesType?: Prisma.BillOfQuantitiesTypeUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
+  Employee_BillOfQuantities_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutBillOfQuantities_BillOfQuantities_createdByToEmployeeNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
+  Employee_BillOfQuantities_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutBillOfQuantities_BillOfQuantities_deletedByToEmployeeNestedInput
+  Employee_BillOfQuantities_modifiedByToEmployee?: Prisma.EmployeeUpdateOneWithoutBillOfQuantities_BillOfQuantities_modifiedByToEmployeeNestedInput
+  PaymentMethod?: Prisma.PaymentMethodUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
+  BillOfQuantitiesSentType?: Prisma.BillOfQuantitiesSentTypeUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
+  BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
+  PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
+  BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
+}
+
+export type BillOfQuantitiesUncheckedUpdateWithoutInvoiceOutInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  modifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  outstanding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  modifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boqTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethodId?: Prisma.StringFieldUpdateOperationsInput | string
+  boqSentTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
+  priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+}
+
 export type BillOfQuantitiesCreateWithoutTargetInput = {
   id: string
   boqNumber: string
@@ -1424,6 +1582,7 @@ export type BillOfQuantitiesCreateWithoutTargetInput = {
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1450,6 +1609,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutTargetInput = {
   boqStatusId: string
   priceListId?: string | null
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1502,6 +1662,7 @@ export type BillOfQuantitiesCreateWithoutPaymentMethodInput = {
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1528,6 +1689,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutPaymentMethodInput = {
   boqStatusId: string
   priceListId?: string | null
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1580,6 +1742,7 @@ export type BillOfQuantitiesCreateWithoutPriceListInput = {
   BillOfQuantitiesSentType: Prisma.BillOfQuantitiesSentTypeCreateNestedOneWithoutBillOfQuantitiesInput
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1606,6 +1769,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutPriceListInput = {
   boqSentTypeId: string
   boqStatusId: string
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1658,6 +1822,7 @@ export type BillOfQuantitiesCreateWithoutBillOfQuantitiesSentTypeInput = {
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1684,6 +1849,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutBillOfQuantitiesSentTypeInput 
   boqStatusId: string
   priceListId?: string | null
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1736,6 +1902,7 @@ export type BillOfQuantitiesCreateWithoutBillOfQuantitiesStatusInput = {
   BillOfQuantitiesSentType: Prisma.BillOfQuantitiesSentTypeCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1762,6 +1929,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutBillOfQuantitiesStatusInput = 
   boqSentTypeId: string
   priceListId?: string | null
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1814,6 +1982,7 @@ export type BillOfQuantitiesCreateWithoutBillOfQuantitiesTypeInput = {
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1840,6 +2009,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutBillOfQuantitiesTypeInput = {
   boqStatusId: string
   priceListId?: string | null
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1892,6 +2062,7 @@ export type BillOfQuantitiesCreateWithoutBoqContactInput = {
   BillOfQuantitiesSentType: Prisma.BillOfQuantitiesSentTypeCreateNestedOneWithoutBillOfQuantitiesInput
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1918,6 +2089,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutBoqContactInput = {
   boqSentTypeId: string
   boqStatusId: string
   priceListId?: string | null
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
@@ -1960,6 +2132,7 @@ export type BillOfQuantitiesUpdateWithoutBoqContactInput = {
   BillOfQuantitiesSentType?: Prisma.BillOfQuantitiesSentTypeUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -1986,6 +2159,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutBoqContactInput = {
   boqSentTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2013,6 +2187,7 @@ export type BillOfQuantitiesCreateWithoutWorkOrderBoQInput = {
   BillOfQuantitiesStatus: Prisma.BillOfQuantitiesStatusCreateNestedOneWithoutBillOfQuantitiesInput
   PriceList?: Prisma.PriceListCreateNestedOneWithoutBillOfQuantitiesInput
   BoqContact?: Prisma.BoqContactCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
 export type BillOfQuantitiesUncheckedCreateWithoutWorkOrderBoQInput = {
@@ -2039,6 +2214,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutWorkOrderBoQInput = {
   boqStatusId: string
   priceListId?: string | null
   BoqContact?: Prisma.BoqContactUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutBillOfQuantitiesInput
 }
 
 export type BillOfQuantitiesCreateOrConnectWithoutWorkOrderBoQInput = {
@@ -2081,6 +2257,7 @@ export type BillOfQuantitiesUpdateWithoutWorkOrderBoQInput = {
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
 export type BillOfQuantitiesUncheckedUpdateWithoutWorkOrderBoQInput = {
@@ -2107,6 +2284,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutWorkOrderBoQInput = {
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
 export type BillOfQuantitiesCreateManyEmployee_BillOfQuantities_createdByToEmployeeInput = {
@@ -2204,6 +2382,7 @@ export type BillOfQuantitiesUpdateWithoutEmployee_BillOfQuantities_createdByToEm
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2230,6 +2409,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutEmployee_BillOfQuantities_crea
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2280,6 +2460,7 @@ export type BillOfQuantitiesUpdateWithoutEmployee_BillOfQuantities_deletedByToEm
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2306,6 +2487,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutEmployee_BillOfQuantities_dele
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2356,6 +2538,7 @@ export type BillOfQuantitiesUpdateWithoutEmployee_BillOfQuantities_modifiedByToE
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2382,6 +2565,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutEmployee_BillOfQuantities_modi
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2456,6 +2640,7 @@ export type BillOfQuantitiesUpdateWithoutTargetInput = {
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2482,6 +2667,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutTargetInput = {
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2556,6 +2742,7 @@ export type BillOfQuantitiesUpdateWithoutPaymentMethodInput = {
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2582,6 +2769,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutPaymentMethodInput = {
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2656,6 +2844,7 @@ export type BillOfQuantitiesUpdateWithoutPriceListInput = {
   BillOfQuantitiesSentType?: Prisma.BillOfQuantitiesSentTypeUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2682,6 +2871,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutPriceListInput = {
   boqSentTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2756,6 +2946,7 @@ export type BillOfQuantitiesUpdateWithoutBillOfQuantitiesSentTypeInput = {
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2782,6 +2973,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutBillOfQuantitiesSentTypeInput 
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2856,6 +3048,7 @@ export type BillOfQuantitiesUpdateWithoutBillOfQuantitiesStatusInput = {
   BillOfQuantitiesSentType?: Prisma.BillOfQuantitiesSentTypeUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2882,6 +3075,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutBillOfQuantitiesStatusInput = 
   boqSentTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2956,6 +3150,7 @@ export type BillOfQuantitiesUpdateWithoutBillOfQuantitiesTypeInput = {
   BillOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusUpdateOneRequiredWithoutBillOfQuantitiesNestedInput
   PriceList?: Prisma.PriceListUpdateOneWithoutBillOfQuantitiesNestedInput
   BoqContact?: Prisma.BoqContactUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -2982,6 +3177,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutBillOfQuantitiesTypeInput = {
   boqStatusId?: Prisma.StringFieldUpdateOperationsInput | string
   priceListId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   BoqContact?: Prisma.BoqContactUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
   WorkOrderBoQ?: Prisma.WorkOrderBoQUncheckedUpdateManyWithoutBillOfQuantitiesNestedInput
 }
 
@@ -3016,11 +3212,13 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutBillOfQuantitiesTypeInput 
 
 export type BillOfQuantitiesCountOutputType = {
   BoqContact: number
+  InvoiceOut: number
   WorkOrderBoQ: number
 }
 
 export type BillOfQuantitiesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   BoqContact?: boolean | BillOfQuantitiesCountOutputTypeCountBoqContactArgs
+  InvoiceOut?: boolean | BillOfQuantitiesCountOutputTypeCountInvoiceOutArgs
   WorkOrderBoQ?: boolean | BillOfQuantitiesCountOutputTypeCountWorkOrderBoQArgs
 }
 
@@ -3039,6 +3237,13 @@ export type BillOfQuantitiesCountOutputTypeDefaultArgs<ExtArgs extends runtime.T
  */
 export type BillOfQuantitiesCountOutputTypeCountBoqContactArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.BoqContactWhereInput
+}
+
+/**
+ * BillOfQuantitiesCountOutputType without action
+ */
+export type BillOfQuantitiesCountOutputTypeCountInvoiceOutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvoiceOutWhereInput
 }
 
 /**
@@ -3082,6 +3287,7 @@ export type BillOfQuantitiesSelect<ExtArgs extends runtime.Types.Extensions.Inte
   BillOfQuantitiesStatus?: boolean | Prisma.BillOfQuantitiesStatusDefaultArgs<ExtArgs>
   PriceList?: boolean | Prisma.BillOfQuantities$PriceListArgs<ExtArgs>
   BoqContact?: boolean | Prisma.BillOfQuantities$BoqContactArgs<ExtArgs>
+  InvoiceOut?: boolean | Prisma.BillOfQuantities$InvoiceOutArgs<ExtArgs>
   WorkOrderBoQ?: boolean | Prisma.BillOfQuantities$WorkOrderBoQArgs<ExtArgs>
   _count?: boolean | Prisma.BillOfQuantitiesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["billOfQuantities"]>
@@ -3125,6 +3331,7 @@ export type BillOfQuantitiesInclude<ExtArgs extends runtime.Types.Extensions.Int
   BillOfQuantitiesStatus?: boolean | Prisma.BillOfQuantitiesStatusDefaultArgs<ExtArgs>
   PriceList?: boolean | Prisma.BillOfQuantities$PriceListArgs<ExtArgs>
   BoqContact?: boolean | Prisma.BillOfQuantities$BoqContactArgs<ExtArgs>
+  InvoiceOut?: boolean | Prisma.BillOfQuantities$InvoiceOutArgs<ExtArgs>
   WorkOrderBoQ?: boolean | Prisma.BillOfQuantities$WorkOrderBoQArgs<ExtArgs>
   _count?: boolean | Prisma.BillOfQuantitiesCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -3142,6 +3349,7 @@ export type $BillOfQuantitiesPayload<ExtArgs extends runtime.Types.Extensions.In
     BillOfQuantitiesStatus: Prisma.$BillOfQuantitiesStatusPayload<ExtArgs>
     PriceList: Prisma.$PriceListPayload<ExtArgs> | null
     BoqContact: Prisma.$BoqContactPayload<ExtArgs>[]
+    InvoiceOut: Prisma.$InvoiceOutPayload<ExtArgs>[]
     WorkOrderBoQ: Prisma.$WorkOrderBoQPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -3517,6 +3725,7 @@ export interface Prisma__BillOfQuantitiesClient<T, Null = never, ExtArgs extends
   BillOfQuantitiesStatus<T extends Prisma.BillOfQuantitiesStatusDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillOfQuantitiesStatusDefaultArgs<ExtArgs>>): Prisma.Prisma__BillOfQuantitiesStatusClient<runtime.Types.Result.GetResult<Prisma.$BillOfQuantitiesStatusPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   PriceList<T extends Prisma.BillOfQuantities$PriceListArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillOfQuantities$PriceListArgs<ExtArgs>>): Prisma.Prisma__PriceListClient<runtime.Types.Result.GetResult<Prisma.$PriceListPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   BoqContact<T extends Prisma.BillOfQuantities$BoqContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillOfQuantities$BoqContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BoqContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  InvoiceOut<T extends Prisma.BillOfQuantities$InvoiceOutArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillOfQuantities$InvoiceOutArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceOutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   WorkOrderBoQ<T extends Prisma.BillOfQuantities$WorkOrderBoQArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BillOfQuantities$WorkOrderBoQArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkOrderBoQPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3990,6 +4199,30 @@ export type BillOfQuantities$BoqContactArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.BoqContactScalarFieldEnum | Prisma.BoqContactScalarFieldEnum[]
+}
+
+/**
+ * BillOfQuantities.InvoiceOut
+ */
+export type BillOfQuantities$InvoiceOutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvoiceOut
+   */
+  select?: Prisma.InvoiceOutSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InvoiceOut
+   */
+  omit?: Prisma.InvoiceOutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvoiceOutInclude<ExtArgs> | null
+  where?: Prisma.InvoiceOutWhereInput
+  orderBy?: Prisma.InvoiceOutOrderByWithRelationInput | Prisma.InvoiceOutOrderByWithRelationInput[]
+  cursor?: Prisma.InvoiceOutWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvoiceOutScalarFieldEnum | Prisma.InvoiceOutScalarFieldEnum[]
 }
 
 /**

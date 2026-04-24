@@ -26,6 +26,7 @@ export const invoiceOutSchema = z.object({
   invoiceStatusId: z.string(),
   // Optional price list applied to billing line calculations.
   priceListId: z.string().nullable().optional(), // ← new
+  boqId: z.string().nullable().optional(),
 })
 
 export const createInvoiceOutSchema = invoiceOutSchema

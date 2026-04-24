@@ -63,6 +63,7 @@ export function WorkOrderDetail({
     canAdd: currentUserLevel >= 20 && !workOrder.hoursMaterialClosed,
     canDelete,
     isAdmin,
+    canApprove: currentUserLevel >= 80,
   }
 
   function handleCancel() {

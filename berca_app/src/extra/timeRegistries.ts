@@ -12,6 +12,7 @@ type TimeRegistryWithRelations = {
   endBreak: Date | null
   createdAt: Date
   invoiceTime: boolean
+  approved: boolean
   onSite: boolean
   createdBy: string
   workOrderId: string
@@ -44,6 +45,7 @@ export function mapTimeRegistry(tr: TimeRegistryWithRelations): MappedTimeRegist
     endBreak: tr.endBreak?.toISOString() ?? null,
     createdAt: tr.createdAt.toISOString(),
     invoiceTime: tr.invoiceTime,
+    approved: tr.approved,
     onSite: tr.onSite,
     createdBy: tr.createdBy,
     workOrderId: tr.workOrderId,

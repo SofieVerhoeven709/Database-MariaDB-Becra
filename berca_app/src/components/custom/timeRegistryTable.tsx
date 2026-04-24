@@ -30,6 +30,7 @@ type SortField =
   | 'endTime'
   | 'onSite'
   | 'invoiceTime'
+  | 'approved'
   | 'createdBy'
   | 'createdAt'
 
@@ -81,6 +82,7 @@ export function TimeRegistryTable({
 }: TimeRegistryTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canApprove = currentUserLevel >= 80
 
   const [search, setSearch] = useState('')
   const [filterWorkOrder, setFilterWorkOrder] = useState<string>('all')
@@ -182,6 +184,8 @@ export function TimeRegistryTable({
           return cmpBool(a.onSite, b.onSite)
         case 'invoiceTime':
           return cmpBool(a.invoiceTime, b.invoiceTime)
+        case 'approved':
+          return cmpBool(a.approved, b.approved)
         case 'createdBy':
           return cmpStr(`${a.employeeFirstName} ${a.employeeLastName}`, `${b.employeeFirstName} ${b.employeeLastName}`)
         case 'createdAt':
@@ -210,6 +214,7 @@ export function TimeRegistryTable({
       'End',
       'On site',
       'Invoice time',
+      'Approved',
       'createdBy',
       'Employees',
     ]
@@ -223,6 +228,7 @@ export function TimeRegistryTable({
         timeRegistry.endTime,
         timeRegistry.onSite ? 'Yes' : 'No',
         timeRegistry.invoiceTime ? 'Yes' : 'No',
+        timeRegistry.approved ? 'Yes' : 'No',
         timeRegistry.createdBy,
         timeRegistry.additionalEmployees.map(e => `${e.employeeFirstName} ${e.employeeLastName}`).join('; '),
       ]
@@ -253,6 +259,7 @@ export function TimeRegistryTable({
       startBreak: combineDateAndTime(f.workDate, f.startBreak),
       endBreak: combineDateAndTime(f.workDate, f.endBreak),
       invoiceTime: f.invoiceTime,
+      approved: f.approved,
       onSite: f.onSite,
       stayOver: f.stayOver,
       hourTypeId: f.hourTypeId,
@@ -399,6 +406,9 @@ export function TimeRegistryTable({
               <TableHead className={thClass} onClick={() => toggleSort('invoiceTime')}>
                 Invoice Time <SortIcon field="invoiceTime" sortField={sortField} sortDir={sortDir} />
               </TableHead>
+              <TableHead className={thClass} onClick={() => toggleSort('approved')}>
+                Approved <SortIcon field="approved" sortField={sortField} sortDir={sortDir} />
+              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('createdBy')}>
                 Created By <SortIcon field="createdBy" sortField={sortField} sortDir={sortDir} />
               </TableHead>
@@ -453,6 +463,15 @@ export function TimeRegistryTable({
                   </TableCell>
                   <TableCell>
                     {tr.invoiceTime ? (
+                      <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                    ) : (
+                      <Badge variant="secondary" className="text-muted-foreground font-medium">
+                        No
+                      </Badge>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {tr.approved ? (
                       <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
                     ) : (
                       <Badge variant="secondary" className="text-muted-foreground font-medium">
@@ -578,6 +597,7 @@ export function TimeRegistryTable({
           setDialogOpen(open)
         }}
         timeRegistry={editingRecord}
+        canApprove={canApprove}
         employees={employees}
         hourTypes={hourTypes}
         workOrders={workOrders}

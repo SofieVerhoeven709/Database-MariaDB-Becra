@@ -349,16 +349,14 @@ export function TimeRegistryTable({
             ))}
           </SelectContent>
         </Select>
-        {(currentUserRole === 'Administrator' || (currentUserRole === 'Manager' && currentUserLevel >= 80)) && (
-          <Button
-            variant="outline"
-            onClick={handleExportCsv}
-            disabled={filtered.length === 0}
-            className="flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            Download CSV
-          </Button>
-        )}
+        <Button
+          variant="outline"
+          onClick={handleExportCsv}
+          disabled={filtered.length === 0}
+          className="flex items-center gap-2">
+          <Download className="h-4 w-4" />
+          Download CSV
+        </Button>
         <Button
           onClick={() => {
             setEditingRecord(null)

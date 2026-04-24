@@ -152,7 +152,7 @@ export const updateMaterialAction = protectedFormAction({
   functionName: 'Update material',
   globalErrorMessage: 'Could not update the material, please try again.',
   serverFn: async ({data, logger}) => {
-    const {id, ...rest} = data
+    const {id, numberType, ...rest} = data
     const {supplierCompanyId, ...restData} = rest
 
     const warehousePlaceId = await resolveValidWarehousePlaceId(rest.warehousePlace ?? null)

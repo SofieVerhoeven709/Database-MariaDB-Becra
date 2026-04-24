@@ -93,6 +93,7 @@ type SortDir = 'asc' | 'desc'
 type FilterStatus = 'all' | 'active' | 'deleted'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
+type NumberType = 'BE' | 'IOS'
 type FilterMaterialGroup = 'all' | string
 type FilterDocs = 'all' | (typeof MATERIAL_DOCUMENT_FLAGS)[number]['key']
 
@@ -196,9 +197,14 @@ export function MaterialTable({
     }
   }
 
-  function getNumberKind(beNumber: string): FilterNumberKind {
+  function getNumberKind(beNumber?: string | null): FilterNumberKind {
     const normalized = (beNumber ?? '').trim()
     return normalized.startsWith('4') ? 'ios' : 'be'
+  }
+
+  function getNumberType(beNumber?: string | null): NumberType {
+    const normalized = (beNumber ?? '').trim()
+    return normalized.startsWith('4') ? 'IOS' : 'BE'
   }
 
   function formatWarehouseCoordinates(place: WarehousePlaceOption): string {
@@ -460,9 +466,11 @@ export function MaterialTable({
   async function handleSave(form: Partial<MappedMaterial> & {id: string}) {
     setSaving(true)
     setSaveError(null)
+
     try {
       const schemaFields = new Set([
         'id',
+        'numberType',
         'beNumber',
         'name',
         'brandOrderNr',
@@ -509,20 +517,30 @@ export function MaterialTable({
         'materialGroupIdD',
       ])
 
+      const formWithNumberType = {
+        ...form,
+        numberType: getNumberType(form.beNumber),
+      }
+
       const fd = new FormData()
-      Object.entries(form).forEach(([k, v]) => {
+
+      Object.entries(formWithNumberType).forEach(([k, v]) => {
         if (!schemaFields.has(k)) return
+
         if (Array.isArray(v)) {
           v.forEach(item => {
             if (item) fd.append(k, String(item))
           })
           return
         }
+
         if (v === undefined) return
+
         if (v === null || v === '') {
           if (nullableSchemaFields.has(k)) fd.append(k, '')
           return
         }
+
         fd.append(k, String(v))
       })
 
@@ -591,6 +609,7 @@ export function MaterialTable({
     }
 
     if (!beNumber) return
+
     try {
       const res = await fetch(`/api/serialTracked/byBeNumber/${encodeURIComponent(beNumber)}`)
       const data = await res.json()
@@ -898,13 +917,6 @@ export function MaterialTable({
                       <span className="text-sm text-muted-foreground">No</span>
                     )}
                   </TableCell>
-
-                  {/*   <TableCell className="text-sm">
-                    <div className="flex flex-col leading-tight">
-                      <span>{m.createdByName || '-'}</span>
-                      <span className="text-xs text-muted-foreground">{formatDateTime(m.createdAt)}</span>
-                    </div>
-                  </TableCell>*/}
 
                   <TableCell className="text-center">
                     <Button

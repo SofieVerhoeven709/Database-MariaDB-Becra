@@ -238,7 +238,7 @@ export function MaterialDetail({
       const current = normalizeMaterialNumber(prev.beNumber, nextKind)
       return {
         ...prev,
-        beNumber: current || (nextKind === 'IOS' ? '4000000' : '1000000'),
+        beNumber: current,
       }
     })
   }

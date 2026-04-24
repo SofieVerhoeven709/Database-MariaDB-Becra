@@ -61,7 +61,7 @@ const boqInclude = {
             },
           },
           TimeRegistry: {
-            where: {deleted: false},
+            where: {deleted: false, approved: true},
             select: {
               id: true,
               invoiceTime: true,

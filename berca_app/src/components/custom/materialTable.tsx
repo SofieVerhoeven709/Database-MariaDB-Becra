@@ -708,6 +708,7 @@ export function MaterialTable({
           </SelectContent>
         </Select>
 
+        {/*Documents filter*/}
         <Select value={filterDocs} onValueChange={v => setFilterDocs(v as FilterDocs)}>
           <SelectTrigger className="w-36 bg-secondary border-border">
             <SelectValue placeholder="Document type" />
@@ -722,12 +723,13 @@ export function MaterialTable({
           </SelectContent>
         </Select>
 
+        {/*Filter Button Material group A*/}
         <Select value={filterMaterialGroupA} onValueChange={handleGroupAChange}>
           <SelectTrigger className="w-30 bg-secondary border-border">
             <SelectValue placeholder="Choose group A" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All groups</SelectItem>
+            <SelectItem value="all">All groups A</SelectItem>
             {groupAOptions.map(group => (
               <SelectItem key={group.value} value={group.value}>
                 {group.label}
@@ -735,14 +737,14 @@ export function MaterialTable({
             ))}
           </SelectContent>
         </Select>
-
+        {/*Filter Button Material group B*/}
         {filterMaterialGroupA !== 'all' && (
           <Select value={filterMaterialGroupB} onValueChange={handleGroupBChange}>
             <SelectTrigger className="w-30 bg-secondary border-border">
               <SelectValue placeholder="Choose group B" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All groups</SelectItem>
+              <SelectItem value="all">All groups B</SelectItem>
               {groupBOptions.map(group => (
                 <SelectItem key={group.value} value={group.value}>
                   {group.label}
@@ -751,14 +753,14 @@ export function MaterialTable({
             </SelectContent>
           </Select>
         )}
-
+        {/*Filter Button Material group C*/}
         {filterMaterialGroupA !== 'all' && filterMaterialGroupB !== 'all' && (
           <Select value={filterMaterialGroupC} onValueChange={handleGroupCChange}>
             <SelectTrigger className="w-30 bg-secondary border-border">
               <SelectValue placeholder="Choose group C" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All groups</SelectItem>
+              <SelectItem value="all">All groups C</SelectItem>
               {groupCOptions.map(group => (
                 <SelectItem key={group.value} value={group.value}>
                   {group.label}
@@ -767,14 +769,14 @@ export function MaterialTable({
             </SelectContent>
           </Select>
         )}
-
+        {/*Filter Button Material group D*/}
         {filterMaterialGroupA !== 'all' && filterMaterialGroupB !== 'all' && filterMaterialGroupC !== 'all' && (
           <Select value={filterMaterialGroupD} onValueChange={setFilterMaterialGroupD}>
             <SelectTrigger className="w-30 bg-secondary border-border">
               <SelectValue placeholder="Choose group D" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All groups</SelectItem>
+              <SelectItem value="all">All groups D</SelectItem>
               {groupDOptions.map(group => (
                 <SelectItem key={group.value} value={group.value}>
                   {group.label}
@@ -784,6 +786,7 @@ export function MaterialTable({
           </Select>
         )}
 
+        {/* Download CSV button*/}
         <Button
           variant="outline"
           onClick={handleExportCsv}
@@ -937,6 +940,7 @@ export function MaterialTable({
                   </TableCell>
 
                   <TableCell className="text-center">
+                    {/*Serial Tracked Button only clickable when material is Serial Tracked otherwise it's not */}
                     <Button
                       size="sm"
                       variant="outline"
@@ -993,7 +997,7 @@ export function MaterialTable({
                             }}>
                             <Pencil className="h-3.5 w-3.5" />
                           </Button>
-
+                          {/* Copy button only visible when material is approved otherwise it's not visible */}
                           {m.partApproved ? (
                             <span title="Copy row">
                               <Button

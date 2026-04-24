@@ -339,6 +339,7 @@ export function MaterialDetail({
         rawBeNumber === existingBeNumber ? material.beNumber : normalizeMaterialNumber(rawBeNumber, numberKind)
 
       fd.append('id', material.id)
+      fd.append('numberType', numberKind)
       fd.append('beNumber', beNumber)
       if (form.name) fd.append('name', form.name)
       fd.append('brandOrderNr', form.brandOrderNr ?? '')

@@ -171,6 +171,9 @@ export function MaterialFormDialog({
         : {...DEFAULT_DOCUMENT_FLAGS, ...material}
       : {...EMPTY_MATERIAL, id: crypto.randomUUID()}
 
+  const getInitialNumberKind = (nextForm: MaterialFormState): NumberKind =>
+    resolvedMode === 'duplicate' && material ? detectNumberKind(material.beNumber) : detectNumberKind(nextForm.beNumber)
+
   const [form, setForm] = useState<MaterialFormState>(makeForm)
   const [isParentPartEnabled, setIsParentPartEnabled] = useState(form.isParentPart ?? false)
   const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
@@ -178,7 +181,7 @@ export function MaterialFormDialog({
   const [supplierSearch, setSupplierSearch] = useState('')
   const [isSupplierDropdownOpen, setIsSupplierDropdownOpen] = useState(false)
   const [isSerialTracked, setIsSerialTracked] = useState(form.isSerialTracked ?? false)
-  const [numberKind, setNumberKind] = useState<NumberKind>(detectNumberKind(form.beNumber))
+  const [numberKind, setNumberKind] = useState<NumberKind>(getInitialNumberKind(form))
 
   // Sync form state when the dialogue opens or switches between materials.
   // The lint rule warns against sync setState in effects, but this is intentional:
@@ -195,7 +198,7 @@ export function MaterialFormDialog({
       setSupplierSearch(selectedSupplier ? formatSupplierLabel(selectedSupplier) : '')
       setIsSupplierDropdownOpen(false)
       setIsSerialTracked(nextForm.isSerialTracked ?? false)
-      setNumberKind(detectNumberKind(nextForm.beNumber))
+      setNumberKind(getInitialNumberKind(nextForm))
     }
   }, [open, material?.id, resolvedMode, supplierCompanies])
 

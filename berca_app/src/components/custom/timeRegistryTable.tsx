@@ -84,6 +84,7 @@ export function TimeRegistryTable({
 
   const [search, setSearch] = useState('')
   const [filterWorkOrder, setFilterWorkOrder] = useState<string>('all')
+  const [filterEmployee, setFilterEmployee] = useState<string>('all')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
   const [sortField, setSortField] = useState<SortField>('workDate')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
@@ -104,12 +105,51 @@ export function TimeRegistryTable({
     const emp = employees.find(e => e.id === id)
     return emp ? `${emp.firstName} ${emp.lastName}` : '-'
   }
+  function getWorkedHours(tr: MappedTimeRegistry) {
+    if (!tr.startTime || !tr.endTime) return 0
 
+    const start = new Date(tr.startTime).getTime()
+    const end = new Date(tr.endTime).getTime()
+
+    if (Number.isNaN(start) || Number.isNaN(end) || end <= start) return 0
+
+    let breakMs = 0
+
+    if (tr.startBreak && tr.endBreak) {
+      const breakStart = new Date(tr.startBreak).getTime()
+      const breakEnd = new Date(tr.endBreak).getTime()
+
+      if (!Number.isNaN(breakStart) && !Number.isNaN(breakEnd) && breakEnd > breakStart) {
+        breakMs = breakEnd - breakStart
+      }
+    }
+
+    return (end - start - breakMs) / (1000 * 60 * 60)
+  }
+  function getEmployeeDayTotalHours(employeeId: string, workDate: string | null | undefined) {
+    if (!workDate) return 0
+
+    return initialTimeRegistries
+      .filter(tr => {
+        if (tr.deleted) return false
+        if (tr.workDate !== workDate) return false
+
+        return tr.createdBy === employeeId || tr.additionalEmployees.some(e => e.id === employeeId)
+      })
+      .reduce((total, tr) => total + getWorkedHours(tr), 0)
+  }
   const filtered = initialTimeRegistries
     .filter(tr => {
       if (filterDeleted === 'not-deleted' && tr.deleted) return false
       if (filterDeleted === 'deleted' && !tr.deleted) return false
       if (filterWorkOrder !== 'all' && tr.workOrderId !== filterWorkOrder) return false
+      if (
+        filterEmployee !== 'all' &&
+        tr.createdBy !== filterEmployee &&
+        !tr.additionalEmployees.some(e => e.id === filterEmployee)
+      ) {
+        return false
+      }
       if (!search) return true
       const q = search.toLowerCase()
       return (
@@ -247,8 +287,7 @@ export function TimeRegistryTable({
     router.refresh()
   }
 
-  const totalCols = filterDeleted !== 'not-deleted' ? 13 : 11
-
+  const totalCols = filterDeleted !== 'not-deleted' ? 14 : 12
   return (
     <div className="flex flex-col gap-6">
       {/* Toolbar */}
@@ -296,6 +335,20 @@ export function TimeRegistryTable({
             </SelectContent>
           </Select>
         </div>
+        {/* Employee filter */}
+        <Select value={filterEmployee} onValueChange={setFilterEmployee}>
+          <SelectTrigger className="w-[200px] bg-secondary border-border">
+            <SelectValue placeholder="All Employees" />
+          </SelectTrigger>
+          <SelectContent className="bg-card border-border">
+            <SelectItem value="all">All Employees</SelectItem>
+            {employees.map(employee => (
+              <SelectItem key={employee.id} value={employee.id}>
+                {employee.firstName} {employee.lastName}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         {(currentUserRole === 'Administrator' || (currentUserRole === 'Manager' && currentUserLevel >= 80)) && (
           <Button
             variant="outline"
@@ -350,6 +403,7 @@ export function TimeRegistryTable({
                 Created By <SortIcon field="createdBy" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className={thClass}>Employees</TableHead>
+              <TableHead className={thClass}>Day Total</TableHead>
               {filterDeleted !== 'not-deleted' && (
                 <>
                   <TableHead className={thClass}>Deleted</TableHead>
@@ -428,6 +482,23 @@ export function TimeRegistryTable({
                         </>
                       )}
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    {(() => {
+                      const totalHours = getEmployeeDayTotalHours(tr.createdBy, tr.workDate)
+                      const isFullDay = totalHours === 8
+
+                      return (
+                        <Badge
+                          className={
+                            isFullDay
+                              ? 'border-0 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                              : 'border-0 bg-red-500/15 text-red-700 dark:text-red-300'
+                          }>
+                          {totalHours.toFixed(2)}h
+                        </Badge>
+                      )
+                    })()}
                   </TableCell>
                   {filterDeleted !== 'not-deleted' && (
                     <>

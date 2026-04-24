@@ -35,21 +35,26 @@ async function generateBeNumber() {
     select: {beNumber: true},
   })
 
-  const START_NUMBER = 1000000
-
   const numericBeNumbers = materials
-    .map(({beNumber}) => (beNumber ?? '').trim()) // Ensure beNumber is always a string
-    .filter(beNumber => /^\d+$/.test(beNumber))
+    .map(({beNumber}) => (beNumber ?? '').trim())
+    .filter(beNumber => /^1\d{6}$/.test(beNumber))
     .map(Number)
 
-  if (numericBeNumbers.length === 0) {
-    return String(START_NUMBER)
-  }
-
-  const maxBeNumber = Math.max(...numericBeNumbers)
-  return String(Math.max(maxBeNumber + 1, START_NUMBER))
+  return numericBeNumbers.length === 0 ? '1000000' : String(Math.max(...numericBeNumbers) + 1)
 }
 
+async function generateIosNumber() {
+  const materials = await prismaClient.material.findMany({
+    select: {beNumber: true},
+  })
+
+  const numericIosNumbers = materials
+    .map(({beNumber}) => (beNumber ?? '').trim())
+    .filter(beNumber => /^4\d{6}$/.test(beNumber))
+    .map(Number)
+
+  return numericIosNumbers.length === 0 ? '4000000' : String(Math.max(...numericIosNumbers) + 1)
+}
 async function resolveValidWarehousePlaceId(warehousePlaceId: string | null | undefined) {
   if (!warehousePlaceId) return null
 
@@ -73,8 +78,12 @@ export const createMaterialAction = protectedFormAction({
   globalErrorMessage: 'Could not create the material, please try again.',
   serverFn: async ({data, profile, logger}) => {
     const target = await createTargetForType('Company', profile.id)
-    const {brandOrderNr, supplierCompanyId, ...restData} = data
+    const {brandOrderNr, supplierCompanyId, numberType, ...restData} = data
     let beNumber = data.beNumber?.trim()
+
+    if (!beNumber) {
+      beNumber = numberType === 'IOS' ? await generateIosNumber() : await generateBeNumber()
+    }
 
     const warehousePlaceId = await resolveValidWarehousePlaceId(data.warehousePlace ?? null)
     if (data.warehousePlace && !warehousePlaceId) {
@@ -143,7 +152,7 @@ export const updateMaterialAction = protectedFormAction({
   functionName: 'Update material',
   globalErrorMessage: 'Could not update the material, please try again.',
   serverFn: async ({data, logger}) => {
-    const {id, ...rest} = data
+    const {id, numberType, ...rest} = data
     const {supplierCompanyId, ...restData} = rest
 
     const warehousePlaceId = await resolveValidWarehousePlaceId(rest.warehousePlace ?? null)

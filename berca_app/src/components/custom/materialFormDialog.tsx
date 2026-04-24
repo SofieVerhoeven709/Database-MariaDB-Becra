@@ -212,10 +212,24 @@ export function MaterialFormDialog({
   function updateFlag<K extends keyof MaterialDocumentFlags>(field: K, value: boolean) {
     setForm(prev => ({...prev, [field]: value}))
   }
+
+  function applyNumberKind(nextKind: NumberKind) {
+    setNumberKind(nextKind)
+    setForm(prev => {
+      const current = normalizeMaterialNumber(prev.beNumber, nextKind)
+      return {
+        ...prev,
+        beNumber: current || (nextKind === 'IOS' ? '4000000' : '1000000'),
+      }
+    })
+  }
+
   function toggleParentBeNumber(beNumber: string) {
-    const current = form.parentBeNumbers ?? []
-    const next = current.includes(beNumber) ? current.filter(item => item !== beNumber) : [...current, beNumber]
-    update('parentBeNumbers', next)
+    setForm(prev => {
+      const current = prev.parentBeNumbers ?? []
+      const next = current.includes(beNumber) ? current.filter(item => item !== beNumber) : [...current, beNumber]
+      return {...prev, parentBeNumbers: next}
+    })
   }
 
   function setParentPartsEnabled(enabled: boolean) {
@@ -386,9 +400,7 @@ export function MaterialFormDialog({
                 checked={numberKind === 'IOS'}
                 onCheckedChange={checked => {
                   const nextKind: NumberKind = checked ? 'IOS' : 'BE'
-                  setNumberKind(nextKind)
-                  const current = normalizeMaterialNumber(form.beNumber, nextKind)
-                  update('beNumber', current || (nextKind === 'IOS' ? '4000000' : '1000000'))
+                  applyNumberKind(nextKind)
                 }}
                 aria-label="Toggle number type (BE/IOS)"
               />

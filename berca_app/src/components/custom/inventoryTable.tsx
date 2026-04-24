@@ -106,7 +106,7 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
     <div className="flex flex-col gap-4">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px]">
+        <div className="relative flex-1 min-w-50">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             className="pl-9 bg-secondary border-border"
@@ -152,7 +152,7 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Min/Max
               </TableHead>
-              <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <TableHead className="w-25 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
             </TableRow>
@@ -173,7 +173,7 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
                     <TableCell className="text-sm">
                       {item.materialName ?? <span className="text-muted-foreground">-</span>}
                     </TableCell>
-                    <TableCell className="text-sm max-w-[200px] truncate" title={item.shortDescription}>
+                    <TableCell className="text-sm max-w-50 truncate" title={item.shortDescription}>
                       {item.shortDescription}
                     </TableCell>
                     <TableCell className="text-sm">{item.place}</TableCell>

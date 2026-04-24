@@ -409,8 +409,12 @@ export function SerialTrackedTable({
               <TableHead className="whitespace-nowrap text-xs">Last Inspection</TableHead>
               <TableHead className="whitespace-nowrap text-xs">Inspection Interval</TableHead>
               <TableHead className="whitespace-nowrap text-xs">Next Inspection</TableHead>
-              {showInspectionStatusColumn && <TableHead className="whitespace-nowrap text-xs">Inspection Status</TableHead>}
-              {showInspectionItemsColumn && <TableHead className="whitespace-nowrap text-xs">Inspection Items</TableHead>}
+              {showInspectionStatusColumn && (
+                <TableHead className="whitespace-nowrap text-xs">Inspection Status</TableHead>
+              )}
+              {showInspectionItemsColumn && (
+                <TableHead className="whitespace-nowrap text-xs">Inspection Items</TableHead>
+              )}
               <Th field="rejected" label="Rejected" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdBy" label="Created By" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
 
@@ -481,7 +485,7 @@ export function SerialTrackedTable({
                           return <Badge variant="destructive">Overdue</Badge>
                         }
                         if (status === 'upcoming') {
-                          return <Badge variant="secondary">Inspection soon</Badge>
+                          return <Badge variant="warning">Inspection soon</Badge>
                         }
                         return <span className="text-sm text-muted-foreground">-</span>
                       })()}

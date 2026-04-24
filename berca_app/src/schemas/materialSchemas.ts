@@ -13,8 +13,8 @@ const booleanFromString = z.preprocess(
 const beNumberSchema = z
   .string()
   .trim()
-  .refine(val => val === '' || /^(1\d{6}|4\d{6})$/.test(val), {
-    message: 'Nummer moet in de 1000000-reeks (BE) of 4000000-reeks (IOS) liggen',
+  .regex(/^\d{7}$/, {
+    message: 'Nummer moet uit exact 7 cijfers bestaan',
   })
 
 const brandOrderNrSchema = z.preprocess(
@@ -57,6 +57,7 @@ const documentFlagSchema = z
 
 const materialSchemaBase = z.object({
   id: z.string().uuid(),
+  numberType: z.enum(['BE', 'IOS']).default('BE'),
   beNumber: z.preprocess(
     val => (typeof val === 'string' && val.trim() === '' ? undefined : val),
     beNumberSchema.optional(),
@@ -144,9 +145,52 @@ function withLongLeadTimeValidation<T extends z.ZodTypeAny>(schema: T) {
 
 export const materialSchema = withLongLeadTimeValidation(materialSchemaBase)
 
-export const createMaterialSchema = withLongLeadTimeValidation(materialSchemaBase)
+export const createMaterialSchema = withLongLeadTimeValidation(materialSchemaBase).superRefine((data, ctx) => {
+  const value = data.beNumber?.trim()
 
-export const updateMaterialSchema = withLongLeadTimeValidation(materialSchemaBase.partial().required({id: true}))
+  if (!value) return
+
+  if (data.numberType === 'BE' && !/^1\d{6}$/.test(value)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['beNumber'],
+      message: 'BE number has to be in the 1000000 range.',
+    })
+  }
+
+  if (data.numberType === 'IOS' && !/^4\d{6}$/.test(value)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['beNumber'],
+      message: 'IOS number has to be in the 4000000 range.',
+    })
+  }
+})
+
+export const updateMaterialSchema = withLongLeadTimeValidation(
+  materialSchemaBase.partial().required({id: true}),
+).superRefine((data, ctx) => {
+  const value = data.beNumber?.trim()
+
+  if (!value || !data.numberType) return
+
+  if (data.numberType === 'BE' && !/^1\d{6}$/.test(value)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['beNumber'],
+      message: 'BE number has to be in the 1000000 range.',
+    })
+  }
+
+  if (data.numberType === 'IOS' && !/^4\d{6}$/.test(value)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['beNumber'],
+      message: 'IOS number has to be in the 4000000 range.',
+    })
+  }
+})
+
 export const deleteMaterialSchema = z.object({
   id: z.string().uuid(),
 })

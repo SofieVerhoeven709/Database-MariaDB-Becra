@@ -11,7 +11,9 @@ import {Checkbox} from '@/components/ui/checkbox'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
+import {Switch} from '@/components/ui/switch'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {Textarea} from '@/components/ui/textarea'
 import type {MappedQuoteSupplierDetail} from '@/types/quoteSupplier'
 import {
   createQuoteSupplierLineAction,
@@ -20,7 +22,8 @@ import {
   updateQuoteSupplierLineAction,
 } from '@/serverFunctions/quoteSupplierLines'
 import {updateQuoteSupplierAction} from '@/serverFunctions/quoteSuppliers'
-import {buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
+
+// ── Prop types ───────────────────────────────────────────────────────────────
 
 interface QuoteSupplierDetailProps {
   quote: MappedQuoteSupplierDetail
@@ -29,9 +32,13 @@ interface QuoteSupplierDetailProps {
   currentUserLevel: number
   materialOptions: Array<{id: string; beNumber: string | null; name: string | null; shortDescription: string | null}>
   materialDemandOptions: Array<{id: string; materialId: string; label: string}>
+  companyOptions: Array<{id: string; name: string}>
+  paymentConditionOptions: Array<{id: string; name: string}>
   defaultMaterialId?: string
   defaultMaterialDemandId?: string
 }
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
 function formatDate(iso: string | null) {
   if (!iso) return '—'
@@ -61,6 +68,8 @@ function getLifecycleStatus(
   return 'pending'
 }
 
+// ── Component ─────────────────────────────────────────────────────────────────
+
 export function QuoteSupplierDetail({
   quote,
   departmentId,
@@ -68,29 +77,27 @@ export function QuoteSupplierDetail({
   currentUserLevel,
   materialOptions,
   materialDemandOptions,
+  companyOptions,
+  paymentConditionOptions,
   defaultMaterialId,
   defaultMaterialDemandId,
 }: QuoteSupplierDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canEdit = currentUserLevel >= 40
-  const canCreate = currentUserLevel >= 60
-  const canDelete = currentUserLevel >= 80
-  const canManageVisibility = currentUserLevel >= 80
-  // Approved quotes are locked for non-managers.
+  const canEditNumber = currentUserLevel >= 80
   const isApprovedLocked = quote.acceptedForPOB && currentUserLevel < 80
   const canEditLines = currentUserLevel >= 40 && !isApprovedLocked
   const canCreateLines = currentUserLevel >= 60 && !quote.sent && !isApprovedLocked
   const canDeleteLines = currentUserLevel >= 80 && !isApprovedLocked
   const lifecycleStatus = getLifecycleStatus(quote)
 
-  const [error, setError] = useState<string | null>(null)
-  const [submitting, setSubmitting] = useState(false)
-  const [editingLineId, setEditingLineId] = useState<string | null>(null)
+  // ── Header edit state ────────────────────────────────────────────────────
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
+
   const [form, setForm] = useState({
-    id: quote.id,
     quoteNumber: quote.quoteNumber,
     quotationNumber: quote.quotationNumber,
     companyId: quote.companyId,
@@ -98,11 +105,68 @@ export function QuoteSupplierDetail({
     rejected: quote.rejected,
     additionalInfo: quote.additionalInfo,
     acceptedForPOB: quote.acceptedForPOB,
-    validUntil: quote.validUntil,
+    validUntil: quote.validUntil ? quote.validUntil.slice(0, 10) : '',
     deliveryTimeDays: quote.deliveryTimeDays,
     paymentConditionId: quote.paymentConditionId,
   })
 
+  function handleCancel() {
+    setForm({
+      quoteNumber: quote.quoteNumber,
+      quotationNumber: quote.quotationNumber,
+      companyId: quote.companyId,
+      description: quote.description,
+      rejected: quote.rejected,
+      additionalInfo: quote.additionalInfo,
+      acceptedForPOB: quote.acceptedForPOB,
+      validUntil: quote.validUntil ? quote.validUntil.slice(0, 10) : '',
+      deliveryTimeDays: quote.deliveryTimeDays,
+      paymentConditionId: quote.paymentConditionId,
+    })
+    setSaveError(null)
+    setEditing(false)
+  }
+
+  async function handleSave() {
+    if (!form.quoteNumber.trim()) {
+      setSaveError('Quote number is required.')
+      return
+    }
+    if (!form.companyId) {
+      setSaveError('Supplier is required.')
+      return
+    }
+    setSaving(true)
+    setSaveError(null)
+    try {
+      await updateQuoteSupplierAction({
+        id: quote.id,
+        quoteNumber: form.quoteNumber.trim(),
+        quotationNumber: form.quotationNumber || null,
+        companyId: form.companyId,
+        description: form.description || null,
+        rejected: form.rejected ?? false,
+        additionalInfo: form.additionalInfo || null,
+        acceptedForPOB: form.acceptedForPOB ?? false,
+        validUntil: form.validUntil || null,
+        deliveryTimeDays: form.deliveryTimeDays,
+        paymentConditionId: form.paymentConditionId || null,
+      })
+      setEditing(false)
+      router.refresh()
+    } catch (e) {
+      setSaveError(e instanceof Error ? e.message : 'Could not save quote.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  // ── Line error / submitting state ────────────────────────────────────────
+  const [error, setError] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false)
+  const [editingLineId, setEditingLineId] = useState<string | null>(null)
+
+  // ── New line state ───────────────────────────────────────────────────────
   const [newMaterialId, setNewMaterialId] = useState(defaultMaterialId ?? '__none__')
   const [newMaterialDemandId, setNewMaterialDemandId] = useState(defaultMaterialDemandId ?? '__none__')
   const [newQuantity, setNewQuantity] = useState('1')
@@ -110,6 +174,7 @@ export function QuoteSupplierDetail({
   const [newMinQuantity, setNewMinQuantity] = useState('')
   const [newNotDeliverable, setNewNotDeliverable] = useState(false)
 
+  // ── Inline edit line state ───────────────────────────────────────────────
   const [editQuantity, setEditQuantity] = useState('1')
   const [editUnitPrice, setEditUnitPrice] = useState('')
   const [editMinQuantity, setEditMinQuantity] = useState('')
@@ -117,8 +182,7 @@ export function QuoteSupplierDetail({
 
   const demandOptionsForSelectedMaterial = useMemo(() => {
     if (!newMaterialId || newMaterialId === '__none__') return materialDemandOptions
-    // Keep the demand picker scoped to the chosen material.
-    return materialDemandOptions.filter(option => option.materialId === newMaterialId)
+    return materialDemandOptions.filter(o => o.materialId === newMaterialId)
   }, [materialDemandOptions, newMaterialId])
 
   function startEdit(line: MappedQuoteSupplierDetail['lines'][number]) {
@@ -170,7 +234,6 @@ export function QuoteSupplierDetail({
         minQuantity,
         notDeliverable: newNotDeliverable,
       })
-
       setError(null)
       setNewQuantity('1')
       setNewUnitPrice('')
@@ -181,29 +244,6 @@ export function QuoteSupplierDetail({
       setError(e instanceof Error ? e.message : 'Could not create quote line.')
     } finally {
       setSubmitting(false)
-    }
-  }
-
-  async function handleSave() {
-    setSaving(true)
-    try {
-      await updateQuoteSupplierAction({
-        id: quote.id,
-        quoteNumber: quote.quoteNumber,
-        quotationNumber: quote.quotationNumber,
-        companyId: quote.companyId,
-        description: quote.description,
-        rejected: quote.rejected,
-        additionalInfo: quote.additionalInfo,
-        acceptedForPOB: quote.acceptedForPOB,
-        validUntil: quote.validUntil,
-        deliveryTimeDays: quote.deliveryTimeDays,
-        paymentConditionId: quote.paymentConditionId,
-      })
-      setEditing(false)
-      router.refresh()
-    } finally {
-      setSaving(false)
     }
   }
 
@@ -234,7 +274,6 @@ export function QuoteSupplierDetail({
         minQuantity,
         notDeliverable: editNotDeliverable,
       })
-
       setError(null)
       cancelEdit()
       router.refresh()
@@ -243,22 +282,6 @@ export function QuoteSupplierDetail({
     } finally {
       setSubmitting(false)
     }
-  }
-  function handleCancel() {
-    setForm({
-      id: quote.id,
-      quoteNumber: quote.quoteNumber,
-      quotationNumber: quote.quotationNumber,
-      companyId: quote.companyId,
-      description: quote.description,
-      rejected: quote.rejected,
-      additionalInfo: quote.additionalInfo,
-      acceptedForPOB: quote.acceptedForPOB,
-      validUntil: quote.validUntil,
-      deliveryTimeDays: quote.deliveryTimeDays,
-      paymentConditionId: quote.paymentConditionId,
-    })
-    setEditing(false)
   }
 
   async function handleDeleteLine(lineId: string) {
@@ -277,12 +300,7 @@ export function QuoteSupplierDetail({
   async function toggleSelected(lineId: string, selected: boolean, materialDemandId: string | null) {
     try {
       setSubmitting(true)
-      await selectQuoteSupplierLineAction({
-        id: lineId,
-        selected,
-        // Provide a demand id fallback when the line did not store one yet.
-        materialDemandId: materialDemandId ?? undefined,
-      })
+      await selectQuoteSupplierLineAction({id: lineId, selected, materialDemandId: materialDemandId ?? undefined})
       setError(null)
       router.refresh()
     } catch (e) {
@@ -294,7 +312,8 @@ export function QuoteSupplierDetail({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
+      {/* ── Page header ── */}
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-3">
           <Link href={`/departments/${departmentId}/orderQuote` as Route}>
             <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
@@ -308,6 +327,8 @@ export function QuoteSupplierDetail({
             </p>
           </div>
         </div>
+
+        {/* Lifecycle badge */}
         <div className="flex items-center gap-2">
           {lifecycleStatus === 'rejected' && (
             <Badge className="bg-red-500/15 text-red-700 border border-red-500/30">Rejected</Badge>
@@ -325,12 +346,13 @@ export function QuoteSupplierDetail({
             <Badge className="bg-yellow-500/15 text-yellow-700 border border-yellow-500/30">Pending</Badge>
           )}
         </div>
+
+        {/* Edit / Save / Cancel */}
         <div className="flex items-center gap-2">
           {editing ? (
             <>
-              <Button variant="outline" onClick={handleCancel} className="gap-2 border-border">
-                <X className="h-4 w-4" />
-                Cancel
+              <Button variant="outline" onClick={handleCancel} className="gap-2 border-border" disabled={saving}>
+                <X className="h-4 w-4" /> Cancel
               </Button>
               <Button
                 onClick={handleSave}
@@ -341,15 +363,21 @@ export function QuoteSupplierDetail({
               </Button>
             </>
           ) : (
-            canEdit && (
+            canEdit &&
+            !isApprovedLocked && (
               <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-                <Pencil className="h-4 w-4" />
-                Edit
+                <Pencil className="h-4 w-4" /> Edit
               </Button>
             )
           )}
         </div>
       </div>
+
+      {saveError && (
+        <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {saveError}
+        </div>
+      )}
 
       {error && (
         <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
@@ -357,35 +385,186 @@ export function QuoteSupplierDetail({
         </div>
       )}
 
+      {/* ── Quote details card ── */}
       <div className="rounded-xl border border-border/60 bg-card p-4">
-        <h2 className="text-sm font-medium text-foreground mb-3">Quote details</h2>
-        <div className="grid gap-3 md:grid-cols-2">
-          <div className="text-sm text-muted-foreground">
-            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Quotation number</span>
-            <div className="text-foreground mt-0.5">{quote.quotationNumber ?? '—'}</div>
+        <h2 className="text-sm font-medium text-foreground mb-4">Quote details</h2>
+        <div className="grid gap-4 md:grid-cols-2">
+          {/* Quote number */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs uppercase tracking-wide text-muted-foreground/80">Quote Number</Label>
+            {editing ? (
+              canEditNumber ? (
+                <Input
+                  value={form.quoteNumber}
+                  onChange={e => setForm(f => ({...f, quoteNumber: e.target.value}))}
+                  placeholder="e.g. Q1000000"
+                  className="bg-secondary border-border"
+                />
+              ) : (
+                <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                  {form.quoteNumber}
+                </div>
+              )
+            ) : (
+              <div className="text-sm text-foreground mt-0.5">{quote.quoteNumber}</div>
+            )}
           </div>
-          <div className="text-sm text-muted-foreground">
-            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Payment condition</span>
-            <div className="text-foreground mt-0.5">{quote.paymentConditionName ?? '—'}</div>
+
+          {/* Quotation number */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs uppercase tracking-wide text-muted-foreground/80">Quotation Number</Label>
+            {editing ? (
+              <Input
+                value={form.quotationNumber ?? ''}
+                onChange={e => setForm(f => ({...f, quotationNumber: e.target.value || null}))}
+                placeholder="Supplier reference"
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <div className="text-sm text-foreground mt-0.5">{quote.quotationNumber ?? '—'}</div>
+            )}
           </div>
-          <div className="text-sm text-muted-foreground">
-            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Delivery time</span>
-            <div className="text-foreground mt-0.5">
-              {quote.deliveryTimeDays !== null ? `${quote.deliveryTimeDays} day(s)` : '—'}
+
+          {/* Supplier */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs uppercase tracking-wide text-muted-foreground/80">Supplier</Label>
+            {editing ? (
+              <Select
+                value={form.companyId || '__none__'}
+                onValueChange={v => setForm(f => ({...f, companyId: v === '__none__' ? '' : v}))}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="Select supplier" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="__none__">— Select supplier —</SelectItem>
+                  {companyOptions.map(c => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <div className="text-sm text-foreground mt-0.5">{quote.companyName}</div>
+            )}
+          </div>
+
+          {/* Payment condition */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs uppercase tracking-wide text-muted-foreground/80">Payment Condition</Label>
+            {editing ? (
+              <Select
+                value={form.paymentConditionId ?? '__none__'}
+                onValueChange={v => setForm(f => ({...f, paymentConditionId: v === '__none__' ? null : v}))}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="No payment condition" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="__none__">— No payment condition —</SelectItem>
+                  {paymentConditionOptions.map(pc => (
+                    <SelectItem key={pc.id} value={pc.id}>
+                      {pc.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <div className="text-sm text-foreground mt-0.5">{quote.paymentConditionName ?? '—'}</div>
+            )}
+          </div>
+
+          {/* Valid until */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs uppercase tracking-wide text-muted-foreground/80">Valid Until</Label>
+            {editing ? (
+              <Input
+                type="date"
+                value={form.validUntil}
+                onChange={e => setForm(f => ({...f, validUntil: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <div className="text-sm text-foreground mt-0.5">{formatDate(quote.validUntil)}</div>
+            )}
+          </div>
+
+          {/* Delivery time */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs uppercase tracking-wide text-muted-foreground/80">Delivery Time (days)</Label>
+            {editing ? (
+              <Input
+                type="number"
+                min={0}
+                value={form.deliveryTimeDays ?? ''}
+                onChange={e => setForm(f => ({...f, deliveryTimeDays: e.target.value ? Number(e.target.value) : null}))}
+                placeholder="e.g. 14"
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <div className="text-sm text-foreground mt-0.5">
+                {quote.deliveryTimeDays !== null ? `${quote.deliveryTimeDays} day(s)` : '—'}
+              </div>
+            )}
+          </div>
+
+          {/* Additional info */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs uppercase tracking-wide text-muted-foreground/80">Additional Info</Label>
+            {editing ? (
+              <Input
+                value={form.additionalInfo ?? ''}
+                onChange={e => setForm(f => ({...f, additionalInfo: e.target.value || null}))}
+                placeholder="Extra notes"
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <div className="text-sm text-foreground mt-0.5 whitespace-pre-wrap">{quote.additionalInfo ?? '—'}</div>
+            )}
+          </div>
+
+          {/* Description — full width textarea */}
+          <div className="md:col-span-2 flex flex-col gap-1.5">
+            <Label className="text-xs uppercase tracking-wide text-muted-foreground/80">Description</Label>
+            {editing ? (
+              <Textarea
+                value={form.description ?? ''}
+                onChange={e => setForm(f => ({...f, description: e.target.value || null}))}
+                placeholder="Detailed description…"
+                className="bg-secondary border-border resize-none"
+                rows={3}
+              />
+            ) : (
+              <div className="text-sm text-foreground mt-0.5 whitespace-pre-wrap">{quote.description ?? '—'}</div>
+            )}
+          </div>
+
+          {/* Rejected / Accepted for PO switches — edit mode only, matching the form dialog layout */}
+          {editing && (
+            <div className="md:col-span-2 flex flex-wrap items-center gap-6 pt-1">
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="rejected"
+                  checked={form.rejected ?? false}
+                  onCheckedChange={checked => setForm(f => ({...f, rejected: checked}))}
+                />
+                <Label htmlFor="rejected" className="text-sm font-normal cursor-pointer">
+                  Rejected
+                </Label>
+              </div>
+              {currentUserLevel >= 80 && (
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id="acceptedForPOB"
+                    checked={form.acceptedForPOB ?? false}
+                    onCheckedChange={checked => setForm(f => ({...f, acceptedForPOB: checked}))}
+                  />
+                  <Label htmlFor="acceptedForPOB" className="text-sm font-normal cursor-pointer">
+                    Accepted for PO
+                  </Label>
+                </div>
+              )}
             </div>
-          </div>
-          <div className="text-sm text-muted-foreground">
-            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Valid until</span>
-            <div className="text-foreground mt-0.5">{formatDate(quote.validUntil)}</div>
-          </div>
-          <div className="md:col-span-2 text-sm text-muted-foreground">
-            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Description</span>
-            <div className="text-foreground mt-0.5 whitespace-pre-wrap">{quote.description ?? '—'}</div>
-          </div>
-          <div className="md:col-span-2 text-sm text-muted-foreground">
-            <span className="text-xs uppercase tracking-wide text-muted-foreground/80">Additional info</span>
-            <div className="text-foreground mt-0.5 whitespace-pre-wrap">{quote.additionalInfo ?? '—'}</div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -401,6 +580,7 @@ export function QuoteSupplierDetail({
         </div>
       )}
 
+      {/* ── Add line form ── */}
       {canCreateLines && (
         <div className="rounded-xl border border-border/60 bg-card p-4">
           <h2 className="text-sm font-medium text-foreground mb-3">Add quote line</h2>
@@ -411,18 +591,17 @@ export function QuoteSupplierDetail({
                 value={newMaterialId}
                 onValueChange={value => {
                   setNewMaterialId(value)
-                  const firstDemandForMaterial = materialDemandOptions.find(option => option.materialId === value)
-                  // Keep the demand field in sync when the material changes.
-                  if (firstDemandForMaterial) setNewMaterialDemandId(firstDemandForMaterial.id)
+                  const first = materialDemandOptions.find(o => o.materialId === value)
+                  if (first) setNewMaterialDemandId(first.id)
                 }}>
                 <SelectTrigger className="bg-secondary border-border mt-1">
                   <SelectValue placeholder="Select material" />
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border">
                   <SelectItem value="__none__">— Select material —</SelectItem>
-                  {materialOptions.map(option => (
-                    <SelectItem key={option.id} value={option.id}>
-                      {materialLabel(option)}
+                  {materialOptions.map(o => (
+                    <SelectItem key={o.id} value={o.id}>
+                      {materialLabel(o)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -437,9 +616,9 @@ export function QuoteSupplierDetail({
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border">
                   <SelectItem value="__none__">— None —</SelectItem>
-                  {demandOptionsForSelectedMaterial.map(option => (
-                    <SelectItem key={option.id} value={option.id}>
-                      {option.label}
+                  {demandOptionsForSelectedMaterial.map(o => (
+                    <SelectItem key={o.id} value={o.id}>
+                      {o.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -469,6 +648,7 @@ export function QuoteSupplierDetail({
               />
             </div>
           </div>
+
           <div className="mt-3 flex items-end justify-between gap-3">
             <div className="w-40">
               <Label className="text-xs">Min Qty (optional)</Label>
@@ -497,6 +677,7 @@ export function QuoteSupplierDetail({
         </div>
       )}
 
+      {/* ── Lines table ── */}
       <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
         <Table>
           <TableHeader>
@@ -534,6 +715,7 @@ export function QuoteSupplierDetail({
                       </div>
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">{line.materialDemandLabel ?? '—'}</TableCell>
+
                     <TableCell className="text-sm text-muted-foreground">
                       {isEditing ? (
                         <Input
@@ -547,6 +729,7 @@ export function QuoteSupplierDetail({
                         line.quantity
                       )}
                     </TableCell>
+
                     <TableCell className="text-sm text-muted-foreground">
                       {isEditing ? (
                         <Input
@@ -560,6 +743,7 @@ export function QuoteSupplierDetail({
                         (line.minQuantity ?? '—')
                       )}
                     </TableCell>
+
                     <TableCell className="text-sm text-muted-foreground">
                       {isEditing ? (
                         <Input
@@ -574,6 +758,7 @@ export function QuoteSupplierDetail({
                         formatMoney(line.unitPrice)
                       )}
                     </TableCell>
+
                     <TableCell className="text-sm text-muted-foreground">
                       {isEditing ? (
                         <div className="flex items-center gap-2">
@@ -591,6 +776,7 @@ export function QuoteSupplierDetail({
                         '—'
                       )}
                     </TableCell>
+
                     <TableCell>
                       <Button
                         size="sm"
@@ -601,6 +787,7 @@ export function QuoteSupplierDetail({
                         {line.selected ? 'Selected' : 'Select'}
                       </Button>
                     </TableCell>
+
                     <TableCell>
                       <div className="flex items-center gap-1">
                         {isEditing ? (
@@ -609,6 +796,7 @@ export function QuoteSupplierDetail({
                               size="icon"
                               variant="ghost"
                               className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10"
+                              disabled={submitting}
                               onClick={() => handleUpdateLine(line.id)}>
                               <Check className="h-3.5 w-3.5" />
                             </Button>
@@ -636,6 +824,7 @@ export function QuoteSupplierDetail({
                             size="icon"
                             variant="ghost"
                             className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                            disabled={submitting}
                             onClick={() => handleDeleteLine(line.id)}>
                             <Trash2 className="h-3.5 w-3.5" />
                           </Button>

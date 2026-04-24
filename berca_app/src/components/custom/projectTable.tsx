@@ -95,6 +95,7 @@ export function ProjectTable({
   const canCreate = currentUserLevel >= 60
   const canDelete = currentUserLevel >= 80
   const canManageVisibility = currentUserLevel >= 80
+  const canEditNumber = currentUserLevel >= 80
 
   const projects = initialProjects
 
@@ -517,6 +518,7 @@ export function ProjectTable({
         projects={projects}
         projectTypes={projectTypes}
         companies={companies}
+        canEditNumber={canEditNumber}
         onSave={handleSave}
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}

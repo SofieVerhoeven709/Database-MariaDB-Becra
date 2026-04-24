@@ -27,6 +27,7 @@ interface ProjectFormDialogProps {
   projects: MappedProject[]
   projectTypes: Option[]
   companies: Option[]
+  canEditNumber: boolean
   onSave: (project: MappedProject, visibilityRows: VisibilityRow[]) => Promise<void>
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
@@ -75,12 +76,14 @@ export function ProjectFormDialog({
   projectTypes,
   companies,
   onSave,
+  canEditNumber,
   roleLevelOptions,
   defaultVisibleRoleNames,
   canManageVisibility,
 }: ProjectFormDialogProps) {
   const [form, setForm] = useState<MappedProject>(emptyProject())
   const [saving, setSaving] = useState(false)
+  const [numberError, setNumberError] = useState<string | null>(null)
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(project?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
@@ -116,6 +119,7 @@ export function ProjectFormDialog({
 
   const isEdit = !!project
   const parentOptions = projects.filter(p => p.id !== form.id && !p.deleted)
+  const numberEditable = !isEdit || canEditNumber
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -136,12 +140,34 @@ export function ProjectFormDialog({
               {/* Project Number — always read-only, auto-generated */}
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">
-                  Project Number *
-                  <span className="ml-1.5 text-muted-foreground/60">{isEdit ? '(locked)' : '(auto-generated)'}</span>
+                  Project Number *{!numberEditable && <span className="ml-1.5 text-muted-foreground/60">(locked)</span>}
                 </Label>
-                <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
-                  {form.projectNumber}
-                </div>
+                {numberEditable ? (
+                  <div className="flex flex-col gap-1">
+                    <div className="flex gap-2">
+                      <Input
+                        value={form.projectNumber}
+                        onChange={e => set('projectNumber', e.target.value)}
+                        className={`bg-secondary border-border flex-1 ${numberError ? 'border-destructive' : ''}`}
+                      />
+                      {!isEdit && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="h-10 px-3 border-border text-xs shrink-0"
+                          onClick={() => set('projectNumber', generateProjectNumber())}>
+                          Regenerate
+                        </Button>
+                      )}
+                    </div>
+                    {numberError && <p className="text-xs text-destructive">{numberError}</p>}
+                  </div>
+                ) : (
+                  <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                    {form.projectNumber}
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col gap-1.5">

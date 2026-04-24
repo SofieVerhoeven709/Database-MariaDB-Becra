@@ -2,11 +2,12 @@ import {notFound} from 'next/navigation'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
-import {getQuoteSupplierById} from '@/dal/quoteSuppliers'
+import {getPaymentConditionOptions, getQuoteSupplierById} from '@/dal/quoteSuppliers'
 import {mapQuoteSupplierDetail} from '@/extra/quoteSuppliers'
 import {QuoteSupplierDetail} from '@/components/custom/quoteSupplierDetail'
 import {getMaterialsForSupplierCompany} from '@/dal/materials'
 import {getMaterialDemands} from '@/dal/materialDemands'
+import {getSupplierCompanies} from '@/dal/companies'
 
 interface PageProps {
   params: Promise<{departmentId: string; quoteSupplierId: string}>
@@ -17,11 +18,13 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
   const {departmentId, quoteSupplierId} = await params
   const {materialId, materialDemandId} = (await searchParams) ?? {}
 
-  const [department, quoteRaw, demandsRaw, profile] = await Promise.all([
+  const [department, quoteRaw, demandsRaw, profile, companiesRaw, paymentConditionsRaw] = await Promise.all([
     getDepartmentById(departmentId),
     getQuoteSupplierById(quoteSupplierId),
     getMaterialDemands(),
     getSessionProfileFromCookieOrThrow(),
+    getSupplierCompanies(),
+    getPaymentConditionOptions(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -58,6 +61,12 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
       ? materialDemandId
       : undefined
 
+  const companyOptions = companiesRaw.map(c => ({id: c.id, name: c.name})).sort((a, b) => a.name.localeCompare(b.name))
+
+  const paymentConditionOptions = paymentConditionsRaw
+    .map(pc => ({id: pc.id, name: pc.name}))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-7xl">
@@ -66,6 +75,8 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
           departmentId={departmentId}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          companyOptions={companyOptions}
+          paymentConditionOptions={paymentConditionOptions}
           materialOptions={materialOptions}
           materialDemandOptions={materialDemandOptions}
           defaultMaterialId={safeDefaultMaterialId}

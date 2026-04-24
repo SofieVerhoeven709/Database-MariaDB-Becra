@@ -176,6 +176,7 @@ export function ProjectDetail({
   const canDelete = currentUserLevel >= 80
   const canManageWorkOrders = currentUserLevel >= 80
   const canManageVisibility = currentUserLevel >= 80
+  const canEditNumber = currentUserLevel >= 80
 
   // Single-project option used by the work-order dialog.
   const workOrderProjectOptions = [{id: project.id, name: `${project.projectNumber} — ${project.projectName}`}]
@@ -238,6 +239,24 @@ export function ProjectDetail({
       setSaving(false)
     }
   }
+
+  const buildForm = () => ({
+    // Seed form state from the current detail payload.
+    projectNumber: project.projectNumber,
+    projectName: project.projectName,
+    description: project.description ?? '',
+    extraInfo: project.extraInfo ?? '',
+    companyId: project.companyId,
+    projectTypeId: project.projectTypeId,
+    startDate: toInputDate(project.startDate),
+    endDate: toInputDate(project.endDate),
+    engineeringStartDate: toInputDate(project.engineeringStartDate),
+    closingDate: toInputDate(project.closingDate),
+    isMainProject: project.isMainProject,
+    isIntern: project.isIntern,
+    isOpen: project.isOpen,
+    isClosed: project.isClosed,
+  })
 
   async function handleInlineContactSave() {
     if (!inlineContact.contactId) return
@@ -322,6 +341,8 @@ export function ProjectDetail({
     setNestedContactDialog(false)
     router.refresh()
   }
+  const s = <K extends keyof ReturnType<typeof buildForm>>(key: K, v: ReturnType<typeof buildForm>[K]) =>
+    setForm(f => ({...f, [key]: v}))
 
   async function handleDialogMaterialSave() {
     setDialogMaterialForm(emptyMaterial())
@@ -524,9 +545,22 @@ export function ProjectDetail({
       <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Project Number</Label>
+            <Label className="text-xs text-muted-foreground">
+              Project Number
+              {!canEditNumber && editing && <span className="ml-1.5 text-muted-foreground/60">(locked)</span>}
+            </Label>
             {editing ? (
-              <Input value={form.projectNumber} readOnly className="bg-secondary border-border" />
+              canEditNumber ? (
+                <Input
+                  value={form.projectNumber}
+                  onChange={e => s('projectNumber', e.target.value)}
+                  className="bg-secondary border-border"
+                />
+              ) : (
+                <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                  {form.projectNumber}
+                </div>
+              )
             ) : (
               <p className="text-sm text-foreground font-medium">{project.projectNumber}</p>
             )}

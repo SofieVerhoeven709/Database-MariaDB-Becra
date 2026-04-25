@@ -219,10 +219,9 @@ export function MaterialFormDialog({
   function applyNumberKind(nextKind: NumberKind) {
     setNumberKind(nextKind)
     setForm(prev => {
-      const current = normalizeMaterialNumber(prev.beNumber, nextKind)
       return {
         ...prev,
-        beNumber: current,
+        beNumber: '',
       }
     })
   }
@@ -383,7 +382,7 @@ export function MaterialFormDialog({
             e.preventDefault()
             onSave({
               ...form,
-              beNumber: normalizeMaterialNumber(form.beNumber, numberKind),
+              beNumber: numberKind === 'IOS' ? '' : normalizeMaterialNumber(form.beNumber, numberKind),
               numberType: numberKind,
               isParentPart: isParentPartEnabled,
             })
@@ -426,7 +425,8 @@ export function MaterialFormDialog({
               className={inputStyles}
               value={form.beNumber ?? ''}
               onChange={e => update('beNumber', e.target.value)}
-              placeholder={numberKind === 'IOS' ? 'e.g. 4000000' : 'e.g. 1000000'}
+              placeholder={numberKind === 'IOS' ? 'Automatically generated' : 'e.g. 1002000'}
+              disabled={numberKind === 'IOS'}
             />
           </div>
           <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">

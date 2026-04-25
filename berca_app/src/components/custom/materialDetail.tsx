@@ -235,10 +235,9 @@ export function MaterialDetail({
   function applyNumberKind(nextKind: NumberKind) {
     setNumberKind(nextKind)
     setForm(prev => {
-      const current = normalizeMaterialNumber(prev.beNumber, nextKind)
       return {
         ...prev,
-        beNumber: current || (nextKind === 'IOS' ? '4000000' : '1000000'),
+        beNumber: '',
       }
     })
   }
@@ -336,7 +335,11 @@ export function MaterialDetail({
       const rawBeNumber = (form.beNumber ?? '').trim()
       const existingBeNumber = (material.beNumber ?? '').trim()
       const beNumber =
-        rawBeNumber === existingBeNumber ? material.beNumber : normalizeMaterialNumber(rawBeNumber, numberKind)
+        numberKind === 'IOS' || (detectNumberKind(material.beNumber) === 'IOS' && numberKind === 'BE')
+          ? ''
+          : rawBeNumber === existingBeNumber
+            ? material.beNumber
+            : normalizeMaterialNumber(rawBeNumber, numberKind)
 
       fd.append('id', material.id)
       fd.append('numberType', numberKind)
@@ -626,7 +629,8 @@ export function MaterialDetail({
                   <Input
                     value={form.beNumber}
                     onChange={e => handleField('beNumber', e.target.value)}
-                    placeholder={numberKind === 'IOS' ? 'e.g. 4000000' : 'e.g. 1000000'}
+                    placeholder={numberKind === 'IOS' ? 'Automatically generated' : 'e.g. 1002000'}
+                    disabled={numberKind === 'IOS' || (detectNumberKind(material.beNumber) === 'IOS' && numberKind === 'BE')}
                   />
                 </div>
               ) : (

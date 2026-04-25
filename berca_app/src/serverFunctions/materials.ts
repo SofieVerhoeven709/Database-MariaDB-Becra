@@ -19,6 +19,7 @@ const REVALIDATE_WAREHOUSE_PLACE = '/departments/[departmentId]/place'
 const REVALIDATE_MATERIAL_PLACE = '/departments/[departmentId]/materialPlace'
 const REVALIDATE_MATERIAL_DEMAND = '/departments/purchasing/materialDemand'
 const REVALIDATE_INVENTORY_PLACE = '/departments/[departmentId]/inventoryPlace'
+const AUTO_GENERATED_BE_NUMBER_START = 1002000
 
 const createMaterialForPlaceSchema = z.object({
   id: z.string().uuid(),
@@ -39,8 +40,11 @@ async function generateBeNumber() {
     .map(({beNumber}) => (beNumber ?? '').trim())
     .filter(beNumber => /^1\d{6}$/.test(beNumber))
     .map(Number)
+    .filter(beNumber => beNumber >= AUTO_GENERATED_BE_NUMBER_START)
 
-  return numericBeNumbers.length === 0 ? '1000000' : String(Math.max(...numericBeNumbers) + 1)
+  return numericBeNumbers.length === 0
+    ? String(AUTO_GENERATED_BE_NUMBER_START)
+    : String(Math.max(...numericBeNumbers) + 1)
 }
 
 async function generateIosNumber() {
@@ -91,6 +95,35 @@ function duplicateMaterialNumberError(beNumber: string | undefined) {
   }
 }
 
+function detectNumberType(beNumber: string | null | undefined): 'BE' | 'IOS' {
+  return beNumber?.trim().startsWith('4') ? 'IOS' : 'BE'
+}
+
+function isReservedManualBeNumber(beNumber: string | undefined | null) {
+  const value = beNumber?.trim()
+  return !!value && /^1\d{6}$/.test(value) && Number(value) > AUTO_GENERATED_BE_NUMBER_START
+}
+
+function reservedManualBeNumberError() {
+  return {
+    success: false,
+    errors: {
+      beNumber: [
+        `BE numbers above ${AUTO_GENERATED_BE_NUMBER_START} are reserved for automatic generation. Leave the field empty to generate the next available BE number, or enter a manual BE number of ${AUTO_GENERATED_BE_NUMBER_START} or lower.`,
+      ],
+    },
+  }
+}
+
+function manualIosNumberError() {
+  return {
+    success: false,
+    errors: {
+      beNumber: ['IOS numbers are generated automatically. Leave the number field empty to generate the next IOS number.'],
+    },
+  }
+}
+
 export const createMaterialAction = protectedFormAction({
   schema: createMaterialSchema,
   functionName: 'Create material',
@@ -99,6 +132,14 @@ export const createMaterialAction = protectedFormAction({
     const target = await createTargetForType('Company', profile.id)
     const {brandOrderNr, supplierCompanyId, numberType, ...restData} = data
     let beNumber = data.beNumber?.trim()
+
+    if (numberType === 'IOS' && beNumber) {
+      return manualIosNumberError()
+    }
+
+    if (isReservedManualBeNumber(beNumber)) {
+      return reservedManualBeNumberError()
+    }
 
     if (!beNumber) {
       beNumber = numberType === 'IOS' ? await generateIosNumber() : await generateBeNumber()
@@ -176,6 +217,34 @@ export const updateMaterialAction = protectedFormAction({
   serverFn: async ({data, logger}) => {
     const {id, numberType, ...rest} = data
     const {supplierCompanyId, ...restData} = rest
+    const existingMaterial = await prismaClient.material.findUnique({
+      where: {id},
+      select: {beNumber: true},
+    })
+    const existingBeNumber = existingMaterial?.beNumber?.trim()
+    const existingNumberType = detectNumberType(existingBeNumber)
+    const submittedBeNumber = rest.beNumber?.trim()
+    let resolvedBeNumber = submittedBeNumber
+
+    if (numberType === 'IOS') {
+      if (existingNumberType === 'IOS' && (!submittedBeNumber || submittedBeNumber === existingBeNumber)) {
+        resolvedBeNumber = existingBeNumber
+      } else if (!submittedBeNumber || existingNumberType === 'BE') {
+        resolvedBeNumber = await generateIosNumber()
+      } else {
+        return manualIosNumberError()
+      }
+    }
+
+    if (numberType === 'BE' && existingNumberType === 'IOS') {
+      resolvedBeNumber = await generateBeNumber()
+    }
+
+    if (isReservedManualBeNumber(resolvedBeNumber)) {
+      if (existingBeNumber !== resolvedBeNumber) {
+        return reservedManualBeNumberError()
+      }
+    }
 
     const warehousePlaceId = await resolveValidWarehousePlaceId(rest.warehousePlace ?? null)
     if (rest.warehousePlace && !warehousePlaceId) {
@@ -189,6 +258,7 @@ export const updateMaterialAction = protectedFormAction({
     try {
       const updatePayload = {
         ...restData,
+        beNumber: resolvedBeNumber,
         brandOrderNr: rest.brandOrderNr ?? null,
         supplierCompanyId: supplierCompanyId ?? null,
         warehousePlace: warehousePlaceId,
@@ -267,6 +337,16 @@ export async function createMaterialForPlaceAction(unvalidatedData: z.infer<type
   const logger = await getLogger()
   const profile = await getSessionProfileFromCookieOrThrow()
   const data = createMaterialForPlaceSchema.parse(unvalidatedData)
+
+  if (detectNumberType(data.beNumber) === 'IOS') {
+    throw new Error('IOS numbers are generated automatically. Create the IOS material from the material form and leave the number field empty.')
+  }
+
+  if (isReservedManualBeNumber(data.beNumber)) {
+    throw new Error(
+      `BE numbers above ${AUTO_GENERATED_BE_NUMBER_START} are reserved for automatic generation. Enter a manual BE number of ${AUTO_GENERATED_BE_NUMBER_START} or lower.`,
+    )
+  }
 
   const [defaultUnit, defaultMaterialGroup] = await Promise.all([
     prismaClient.unit.findFirst({

@@ -14,7 +14,7 @@ const beNumberSchema = z
   .string()
   .trim()
   .regex(/^\d{7}$/, {
-    message: 'Nummer moet uit exact 7 cijfers bestaan',
+    message: 'Material number must contain exactly 7 digits.',
   })
 
 const brandOrderNrSchema = z.preprocess(
@@ -172,23 +172,35 @@ export const updateMaterialSchema = withLongLeadTimeValidation(
 ).superRefine((data, ctx) => {
   const value = data.beNumber?.trim()
 
-  if (!value || !data.numberType) return
+  if (!value) return
 
-  if (data.numberType === 'BE' && !/^1\d{6}$/.test(value)) {
+  if (/^[14]\d{6}$/.test(value)) return
+
+  if (/^1/.test(value)) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ['beNumber'],
       message: 'BE number has to be in the 1000000 range.',
     })
+
+    return
   }
 
-  if (data.numberType === 'IOS' && !/^4\d{6}$/.test(value)) {
+  if (/^4/.test(value)) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ['beNumber'],
       message: 'IOS number has to be in the 4000000 range.',
     })
+
+    return
   }
+
+  ctx.addIssue({
+    code: z.ZodIssueCode.custom,
+    path: ['beNumber'],
+    message: 'Material number has to be in the 1000000 (BE) or 4000000 (IOS) range.',
+  })
 })
 
 export const deleteMaterialSchema = z.object({

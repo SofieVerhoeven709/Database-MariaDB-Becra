@@ -589,3 +589,8 @@ export type IncomingDeliveryLine = Prisma.IncomingDeliveryLineModel
  * 
  */
 export type IncomingDeliveryLineAllocation = Prisma.IncomingDeliveryLineAllocationModel
+/**
+ * Model ScheduleMeeting
+ * 
+ */
+export type ScheduleMeeting = Prisma.ScheduleMeetingModel

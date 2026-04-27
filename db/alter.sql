@@ -1856,3 +1856,25 @@ ADD COLUMN IF NOT EXISTS bocStatus VARCHAR(50) NULL AFTER bocCreatedAt;
 -- Prisma sync: older DBs can miss this Unit column
 ALTER TABLE Unit
 ADD COLUMN IF NOT EXISTS quantityValue DECIMAL(10,3) NULL AFTER physicalQuantity;
+
+--HR Schedule meetings
+    CREATE TABLE IF NOT EXISTS ScheduleMeeting (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      employeeId CHAR(36) NOT NULL,
+      conversationType VARCHAR(100) NOT NULL,
+      startAt DATETIME(0) NOT NULL,
+      endAt DATETIME(0) NOT NULL,
+      place VARCHAR(255) NULL,
+      status VARCHAR(20) NOT NULL DEFAULT 'planned',
+      notes TEXT NULL,
+      completedAt DATETIME(0) NULL,
+      createdAt DATETIME(0) NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      updatedAt DATETIME(0) NULL,
+      deleted BOOLEAN NOT NULL DEFAULT false,
+      deletedAt DATETIME(0) NULL,
+      deletedBy CHAR(36) NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
+    ) ENGINE = InnoDB;

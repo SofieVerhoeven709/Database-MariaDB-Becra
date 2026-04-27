@@ -225,12 +225,14 @@ export const updateMaterialAction = protectedFormAction({
     const existingNumberType = detectNumberType(existingBeNumber)
     const submittedBeNumber = rest.beNumber?.trim()
     let resolvedBeNumber = submittedBeNumber
+    let generatedNumber = false
 
     if (numberType === 'IOS') {
       if (existingNumberType === 'IOS' && (!submittedBeNumber || submittedBeNumber === existingBeNumber)) {
         resolvedBeNumber = existingBeNumber
       } else if (!submittedBeNumber || existingNumberType === 'BE') {
         resolvedBeNumber = await generateIosNumber()
+        generatedNumber = true
       } else {
         return manualIosNumberError()
       }
@@ -238,9 +240,10 @@ export const updateMaterialAction = protectedFormAction({
 
     if (numberType === 'BE' && existingNumberType === 'IOS') {
       resolvedBeNumber = await generateBeNumber()
+      generatedNumber = true
     }
 
-    if (isReservedManualBeNumber(resolvedBeNumber)) {
+    if (!generatedNumber && isReservedManualBeNumber(resolvedBeNumber)) {
       if (existingBeNumber !== resolvedBeNumber) {
         return reservedManualBeNumberError()
       }
@@ -269,7 +272,7 @@ export const updateMaterialAction = protectedFormAction({
       updated = await updateMaterial(id, updatePayload)
     } catch (error) {
       if (isMaterialBeNumberUniqueConstraintError(error)) {
-        return duplicateMaterialNumberError(rest.beNumber)
+        return duplicateMaterialNumberError(resolvedBeNumber)
       }
       if (isWarehousePlaceForeignKeyError(error)) {
         return {

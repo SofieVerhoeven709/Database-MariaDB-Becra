@@ -498,7 +498,8 @@ export const ModelName = {
   QuoteSupplierLine: 'QuoteSupplierLine',
   IncomingDelivery: 'IncomingDelivery',
   IncomingDeliveryLine: 'IncomingDeliveryLine',
-  IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation'
+  IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation',
+  ScheduleMeeting: 'ScheduleMeeting'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -514,7 +515,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -7712,6 +7713,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ScheduleMeeting: {
+      payload: Prisma.$ScheduleMeetingPayload<ExtArgs>
+      fields: Prisma.ScheduleMeetingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ScheduleMeetingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ScheduleMeetingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        findFirst: {
+          args: Prisma.ScheduleMeetingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ScheduleMeetingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        findMany: {
+          args: Prisma.ScheduleMeetingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>[]
+        }
+        create: {
+          args: Prisma.ScheduleMeetingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        createMany: {
+          args: Prisma.ScheduleMeetingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ScheduleMeetingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        update: {
+          args: Prisma.ScheduleMeetingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        deleteMany: {
+          args: Prisma.ScheduleMeetingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ScheduleMeetingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ScheduleMeetingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        aggregate: {
+          args: Prisma.ScheduleMeetingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateScheduleMeeting>
+        }
+        groupBy: {
+          args: Prisma.ScheduleMeetingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScheduleMeetingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ScheduleMeetingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScheduleMeetingCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -9718,6 +9785,27 @@ export const IncomingDeliveryLineAllocationScalarFieldEnum = {
 export type IncomingDeliveryLineAllocationScalarFieldEnum = (typeof IncomingDeliveryLineAllocationScalarFieldEnum)[keyof typeof IncomingDeliveryLineAllocationScalarFieldEnum]
 
 
+export const ScheduleMeetingScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingScalarFieldEnum = (typeof ScheduleMeetingScalarFieldEnum)[keyof typeof ScheduleMeetingScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -11192,6 +11280,20 @@ export const IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = {
 export type IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = (typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum]
 
 
+export const ScheduleMeetingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingOrderByRelevanceFieldEnum = (typeof ScheduleMeetingOrderByRelevanceFieldEnum)[keyof typeof ScheduleMeetingOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -11442,6 +11544,7 @@ export type GlobalOmitConfig = {
   incomingDelivery?: Prisma.IncomingDeliveryOmit
   incomingDeliveryLine?: Prisma.IncomingDeliveryLineOmit
   incomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationOmit
+  scheduleMeeting?: Prisma.ScheduleMeetingOmit
 }
 
 /* Types for Logging */

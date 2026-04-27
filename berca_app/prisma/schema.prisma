@@ -515,6 +515,9 @@ model Employee {
   RoleLevel_RoleLevel_createdByToEmployee                                           RoleLevel[]                      @relation("RoleLevel_createdByToEmployee")
   RoleLevel_RoleLevel_deletedByToEmployee                                           RoleLevel[]                      @relation("RoleLevel_deletedByToEmployee")
   RoleLevelEmployee                                                                 RoleLevelEmployee[]
+  ScheduleMeeting_ScheduleMeeting_deletedByToEmployee                               ScheduleMeeting[]                @relation("ScheduleMeeting_deletedByToEmployee")
+  ScheduleMeeting_ScheduleMeeting_createdByToEmployee                               ScheduleMeeting[]                @relation("ScheduleMeeting_createdByToEmployee")
+  ScheduleMeeting_ScheduleMeeting_employeeIdToEmployee                              ScheduleMeeting[]                @relation("ScheduleMeeting_employeeIdToEmployee")
   Session                                                                           Session[]
   Status                                                                            Status[]
   Status_Status_deletedByToEmployee                                                 Status[]                         @relation("Status_deletedByToEmployee")
@@ -2905,6 +2908,31 @@ model IncomingDeliveryLineAllocation {
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
   @@index([materialDemandSourceId], map: "materialDemandSourceId")
+}
+
+model ScheduleMeeting {
+  id                                            String    @id @db.Char(36)
+  employeeId                                    String    @db.Char(36)
+  conversationType                              String    @db.VarChar(100)
+  startAt                                       DateTime  @db.DateTime(0)
+  endAt                                         DateTime  @db.DateTime(0)
+  place                                         String?   @db.VarChar(255)
+  status                                        String    @default("planned") @db.VarChar(20)
+  notes                                         String?   @db.Text
+  completedAt                                   DateTime? @db.DateTime(0)
+  createdAt                                     DateTime  @db.DateTime(0)
+  createdBy                                     String    @db.Char(36)
+  updatedAt                                     DateTime? @db.DateTime(0)
+  deleted                                       Boolean   @default(false)
+  deletedAt                                     DateTime? @db.DateTime(0)
+  deletedBy                                     String?   @db.Char(36)
+  Employee_ScheduleMeeting_deletedByToEmployee  Employee? @relation("ScheduleMeeting_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "ScheduleMeeting_ibfk_1")
+  Employee_ScheduleMeeting_createdByToEmployee  Employee  @relation("ScheduleMeeting_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_2")
+  Employee_ScheduleMeeting_employeeIdToEmployee Employee  @relation("ScheduleMeeting_employeeIdToEmployee", fields: [employeeId], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_3")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([employeeId], map: "employeeId")
 }
 
 enum MaterialSerialTrack_inspectionIntervalUnit {

@@ -157,7 +157,8 @@ export const ModelName = {
   QuoteSupplierLine: 'QuoteSupplierLine',
   IncomingDelivery: 'IncomingDelivery',
   IncomingDeliveryLine: 'IncomingDeliveryLine',
-  IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation'
+  IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation',
+  ScheduleMeeting: 'ScheduleMeeting'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2143,6 +2144,27 @@ export const IncomingDeliveryLineAllocationScalarFieldEnum = {
 export type IncomingDeliveryLineAllocationScalarFieldEnum = (typeof IncomingDeliveryLineAllocationScalarFieldEnum)[keyof typeof IncomingDeliveryLineAllocationScalarFieldEnum]
 
 
+export const ScheduleMeetingScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingScalarFieldEnum = (typeof ScheduleMeetingScalarFieldEnum)[keyof typeof ScheduleMeetingScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3615,4 +3637,18 @@ export const IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = {
 } as const
 
 export type IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = (typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum]
+
+
+export const ScheduleMeetingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingOrderByRelevanceFieldEnum = (typeof ScheduleMeetingOrderByRelevanceFieldEnum)[keyof typeof ScheduleMeetingOrderByRelevanceFieldEnum]
 

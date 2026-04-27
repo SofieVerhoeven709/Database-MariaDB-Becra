@@ -15,6 +15,12 @@ import type {MappedFollowUp} from '@/types/followUp'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import type {TargetOptions, TargetTypeName} from '@/types/followUpTargetOptions'
 import {TARGET_TYPE_NAMES} from '@/types/followUpTargetOptions'
+import {
+  buildInitialVisibilityDepartmentRows,
+  VisibilityDepartmentRow,
+  VisibilityForDepartmentTab,
+} from '@/components/custom/visibilityForDepartmentTab'
+import {DepartmentOption} from '@/types/department'
 
 interface SelectOption {
   id: string
@@ -33,6 +39,8 @@ interface FollowUpFormDialogProps {
   ) => Promise<void>
   isAdmin: boolean
   roleLevelOptions: RoleLevelOption[]
+  departmentOptions: DepartmentOption[]
+  departmentName: string
   defaultVisibleRoleNames: string[]
   statusOptions: SelectOption[]
   urgencyTypeOptions: SelectOption[]
@@ -73,6 +81,7 @@ const emptyFollowUp = (): MappedFollowUp => ({
   followUpTargetTargetId: null,
   targetId: '',
   visibilityForRoles: [],
+  visibilityForDepartments: [],
   deleted: false,
   deletedAt: null,
   deletedBy: null,
@@ -86,6 +95,8 @@ export function FollowUpFormDialog({
   onSave,
   isAdmin,
   roleLevelOptions,
+  departmentOptions,
+  departmentName,
   defaultVisibleRoleNames,
   statusOptions,
   urgencyTypeOptions,
@@ -98,6 +109,9 @@ export function FollowUpFormDialog({
   const [saving, setSaving] = useState(false)
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(followUp?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
+  )
+  const [visibilityDepartmentRows, setVisibilityDepartmentRows] = useState<VisibilityDepartmentRow[]>(() =>
+    buildInitialVisibilityDepartmentRows(followUp?.visibilityForDepartments ?? [], departmentOptions, [departmentName]),
   )
 
   // Target selection is only available on create.
@@ -155,8 +169,7 @@ export function FollowUpFormDialog({
     form.urgencyTypeId !== '' &&
     form.followUpTypeId !== '' &&
     form.ownedBy !== '' &&
-    form.executedBy !== '' &&
-    (isEdit || (targetTypeName !== '' && targetEntityId !== ''))
+    form.executedBy !== ''
 
   // ─── Field helpers ─────────────────────────────────────────────────────────
 
@@ -233,6 +246,7 @@ export function FollowUpFormDialog({
             <TabsTrigger value="assignment">Assignment</TabsTrigger>
             <TabsTrigger value="flags">Flags</TabsTrigger>
             {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+            {canManageVisibility && <TabsTrigger value="department">Department</TabsTrigger>}
           </TabsList>
 
           {/* ── Details ──────────────────────────────────────────────────── */}
@@ -271,7 +285,7 @@ export function FollowUpFormDialog({
             <TabsContent value="target">
               <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
-                  <Label className="text-xs text-muted-foreground">Target Type *</Label>
+                  <Label className="text-xs text-muted-foreground">Target Type</Label>
                   <Select
                     value={targetTypeName || 'none'}
                     onValueChange={v => setTargetTypeName(v === 'none' ? '' : (v as TargetTypeName))}>
@@ -290,7 +304,7 @@ export function FollowUpFormDialog({
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <Label className="text-xs text-muted-foreground">{targetTypeName || 'Target'} *</Label>
+                  <Label className="text-xs text-muted-foreground">{targetTypeName || 'Target'}</Label>
                   <Select
                     value={targetEntityId || 'none'}
                     onValueChange={v => setTargetEntityId(v === 'none' ? '' : v)}
@@ -343,6 +357,18 @@ export function FollowUpFormDialog({
                   roleLevelOptions={roleLevelOptions}
                   value={visibilityRows}
                   onChange={setVisibilityRows}
+                />
+              </div>
+            </TabsContent>
+          )}
+
+          {canManageVisibility && (
+            <TabsContent value="department">
+              <div className="py-3">
+                <VisibilityForDepartmentTab
+                  departmentOptions={departmentOptions}
+                  value={visibilityDepartmentRows}
+                  onChange={setVisibilityDepartmentRows}
                 />
               </div>
             </TabsContent>

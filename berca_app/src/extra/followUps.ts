@@ -1,6 +1,7 @@
 import type {Prisma} from '@/generated/prisma/client'
 import type {MappedFollowUp, FollowUpDetailData, MappedFollowUpStructureSummary} from '@/types/followUp'
 import {mapVisibility} from '@/extra/visibilityForRole'
+import {mapDepartmentVisibility} from '@/extra/visibilityForDepartment'
 
 // ─── Prisma payload types ─────────────────────────────────────────────────────
 
@@ -30,6 +31,9 @@ export type FollowUpListPayload = Prisma.FollowUpGetPayload<{
         id: true
         VisibilityForRole: {
           include: {RoleLevel: {include: {Role: true; SubRole: true}}}
+        }
+        VisibilityForDepartment: {
+          include: {Department: true}
         }
       }
     }
@@ -61,6 +65,9 @@ export type FollowUpDetailPayload = Prisma.FollowUpGetPayload<{
       include: {
         VisibilityForRole: {
           include: {RoleLevel: {include: {Role: true; SubRole: true}}}
+        }
+        VisibilityForDepartment: {
+          include: {Department: true}
         }
       }
     }
@@ -135,6 +142,7 @@ export function mapFollowUp(f: FollowUpListPayload): MappedFollowUp {
     deletedAt: f.deletedAt?.toISOString() ?? null,
     deletedBy: f.deletedBy,
     deletedByName: deletedBy ? `${deletedBy.firstName} ${deletedBy.lastName}` : null,
+    visibilityForDepartments: f.Target.VisibilityForDepartment.map(mapDepartmentVisibility),
   }
 }
 

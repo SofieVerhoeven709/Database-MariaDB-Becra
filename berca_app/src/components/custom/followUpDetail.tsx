@@ -28,6 +28,12 @@ import type {MappedFollowUpStructure} from '@/types/followUpStructure'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import Link from 'next/link'
 import type {Route} from 'next'
+import {
+  buildInitialVisibilityDepartmentRows,
+  VisibilityDepartmentRow,
+  VisibilityForDepartmentTab,
+} from '@/components/custom/visibilityForDepartmentTab'
+import {DepartmentOption} from '@/types/department'
 
 interface SelectOption {
   id: string
@@ -46,6 +52,8 @@ interface FollowUpDetailProps {
   employeeOptions: SelectOption[]
   contactOptions: SelectOption[]
   departmentId: string
+  departmentOptions: DepartmentOption[]
+  defaultVisibleDepartmentNames: string[]
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -82,6 +90,8 @@ export function FollowUpDetail({
   employeeOptions,
   contactOptions,
   departmentId,
+  departmentOptions,
+  defaultVisibleDepartmentNames,
 }: FollowUpDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -96,6 +106,14 @@ export function FollowUpDetail({
   // ─── Structure dialog ──────────────────────────────────────────────────────
   const [structureDialogOpen, setStructureDialogOpen] = useState(false)
   const [editingStructure, setEditingStructure] = useState<MappedFollowUpStructure | null>(null)
+
+  const [visibilityDepartmentRows, setVisibilityDepartmentRows] = useState<VisibilityDepartmentRow[]>(() =>
+    buildInitialVisibilityDepartmentRows(
+      followUp.visibilityForDepartments,
+      departmentOptions,
+      defaultVisibleDepartmentNames,
+    ),
+  )
 
   // ─── Edit form ─────────────────────────────────────────────────────────────
   const buildForm = () => ({
@@ -132,6 +150,13 @@ export function FollowUpDetail({
     setVisibilityRows(
       buildInitialVisibilityRows(followUp.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
     )
+    setVisibilityDepartmentRows(
+      buildInitialVisibilityDepartmentRows(
+        followUp.visibilityForDepartments,
+        departmentOptions,
+        defaultVisibleDepartmentNames,
+      ),
+    )
     setEditing(false)
   }
 
@@ -158,6 +183,7 @@ export function FollowUpDetail({
         urgencyTypeId: form.urgencyTypeId,
         followUpTypeId: form.followUpTypeId,
         visibilityForRoles: visibilityRows,
+        visibilityForDepartments: visibilityDepartmentRows,
       })
       setEditing(false)
       router.refresh()
@@ -420,34 +446,35 @@ export function FollowUpDetail({
       </div>
 
       {/* ── Tabs ───────────────────────────────────────────────────────────── */}
-        <Tabs defaultValue="structures">
-          <TabsList className="bg-secondary border border-border/60 flex-wrap h-auto gap-1">
-            <TabsTrigger value="structures">
-              Structures
-              <Badge variant="secondary" className="ml-2 text-xs">
-                {activeStructures.length}
-              </Badge>
-            </TabsTrigger>
-            {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
-          </TabsList>
+      <Tabs defaultValue="structures">
+        <TabsList className="bg-secondary border border-border/60 flex-wrap h-auto gap-1">
+          <TabsTrigger value="structures">
+            Structures
+            <Badge variant="secondary" className="ml-2 text-xs">
+              {activeStructures.length}
+            </Badge>
+          </TabsTrigger>
+          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {canManageVisibility && <TabsTrigger value="department">Department</TabsTrigger>}
+        </TabsList>
 
         {/* ── Structures tab ───────────────────────────────────────────────── */}
-          <TabsContent value="structures" className="mt-3">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs text-muted-foreground">Follow-up structures linked to this follow-up.</p>
-              {canCreate && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="text-xs h-7 border-border gap-1"
-                  onClick={() => {
-                    setEditingStructure(null)
-                    setStructureDialogOpen(true)
-                  }}>
-                  <Plus className="h-3.5 w-3.5" /> Add Structure
-                </Button>
-              )}
-            </div>
+        <TabsContent value="structures" className="mt-3">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-xs text-muted-foreground">Follow-up structures linked to this follow-up.</p>
+            {canCreate && (
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-xs h-7 border-border gap-1"
+                onClick={() => {
+                  setEditingStructure(null)
+                  setStructureDialogOpen(true)
+                }}>
+                <Plus className="h-3.5 w-3.5" /> Add Structure
+              </Button>
+            )}
+          </div>
 
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
@@ -588,6 +615,36 @@ export function FollowUpDetail({
                           <p className="text-xs text-muted-foreground">
                             {rl.subRoleName} — level {rl.subRoleLevel}
                           </p>
+                        </div>
+                        <YesNoBadge value={visible} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+          </TabsContent>
+        )}
+        {canManageVisibility && (
+          <TabsContent value="department" className="mt-3">
+            {editing ? (
+              <VisibilityForDepartmentTab
+                departmentOptions={departmentOptions}
+                value={visibilityDepartmentRows}
+                onChange={setVisibilityDepartmentRows}
+              />
+            ) : (
+              <div className="flex flex-col gap-3">
+                <p className="text-xs text-muted-foreground">Click Edit to change visibility settings.</p>
+                <div className="flex flex-wrap gap-3">
+                  {departmentOptions.map(rl => {
+                    const visible = visibilityDepartmentRows.find(r => r.departmentId === rl.id)?.visible ?? false
+                    return (
+                      <div
+                        key={rl.id}
+                        className="flex flex-col items-start gap-2 rounded-lg border border-border bg-secondary px-4 py-2.5 w-60">
+                        <div>
+                          <p className="text-sm text-foreground">{rl.name}</p>
                         </div>
                         <YesNoBadge value={visible} />
                       </div>

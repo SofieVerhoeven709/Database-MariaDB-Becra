@@ -141,7 +141,7 @@ type BoqRaw = {
   id: string
   boqNumber: string
   poNumber: string | null
-  humanId: string | null
+  clientReference: string | null
   boqDate: Date
   createdAt: Date
   dueDate: Date
@@ -452,7 +452,7 @@ export function mapBoq(r: BoqRaw): MappedBoq {
     id: r.id,
     boqNumber: r.boqNumber,
     poNumber: r.poNumber,
-    humanId: r.humanId,
+    clientReference: r.clientReference,
     boqDate: r.boqDate.toISOString(),
     createdAt: r.createdAt.toISOString(),
     dueDate: r.dueDate.toISOString(),

@@ -141,6 +141,7 @@ const invoiceInInclude = {
   InvoiceStatus: {select: {id: true, name: true}},
   VatMargin: {select: {id: true, vat: true}},
   Company: {select: {id: true, name: true}},
+  Purchase: {select: {id: true, description: true, purchaseNumber: true}},
 } as const
 
 // ─── InvoiceOut ────────────────────────────────────────────────────────────────

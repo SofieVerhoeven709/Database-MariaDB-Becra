@@ -28,7 +28,7 @@ export type BillOfQuantitiesMinAggregateOutputType = {
   id: string | null
   boqNumber: string | null
   poNumber: string | null
-  humanId: string | null
+  clientReference: string | null
   boqDate: Date | null
   createdAt: Date | null
   dueDate: Date | null
@@ -53,7 +53,7 @@ export type BillOfQuantitiesMaxAggregateOutputType = {
   id: string | null
   boqNumber: string | null
   poNumber: string | null
-  humanId: string | null
+  clientReference: string | null
   boqDate: Date | null
   createdAt: Date | null
   dueDate: Date | null
@@ -78,7 +78,7 @@ export type BillOfQuantitiesCountAggregateOutputType = {
   id: number
   boqNumber: number
   poNumber: number
-  humanId: number
+  clientReference: number
   boqDate: number
   createdAt: number
   dueDate: number
@@ -105,7 +105,7 @@ export type BillOfQuantitiesMinAggregateInputType = {
   id?: true
   boqNumber?: true
   poNumber?: true
-  humanId?: true
+  clientReference?: true
   boqDate?: true
   createdAt?: true
   dueDate?: true
@@ -130,7 +130,7 @@ export type BillOfQuantitiesMaxAggregateInputType = {
   id?: true
   boqNumber?: true
   poNumber?: true
-  humanId?: true
+  clientReference?: true
   boqDate?: true
   createdAt?: true
   dueDate?: true
@@ -155,7 +155,7 @@ export type BillOfQuantitiesCountAggregateInputType = {
   id?: true
   boqNumber?: true
   poNumber?: true
-  humanId?: true
+  clientReference?: true
   boqDate?: true
   createdAt?: true
   dueDate?: true
@@ -253,7 +253,7 @@ export type BillOfQuantitiesGroupByOutputType = {
   id: string
   boqNumber: string
   poNumber: string | null
-  humanId: string | null
+  clientReference: string | null
   boqDate: Date
   createdAt: Date
   dueDate: Date
@@ -299,7 +299,7 @@ export type BillOfQuantitiesWhereInput = {
   id?: Prisma.StringFilter<"BillOfQuantities"> | string
   boqNumber?: Prisma.StringFilter<"BillOfQuantities"> | string
   poNumber?: Prisma.StringNullableFilter<"BillOfQuantities"> | string | null
-  humanId?: Prisma.StringNullableFilter<"BillOfQuantities"> | string | null
+  clientReference?: Prisma.StringNullableFilter<"BillOfQuantities"> | string | null
   boqDate?: Prisma.DateTimeFilter<"BillOfQuantities"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"BillOfQuantities"> | Date | string
   dueDate?: Prisma.DateTimeFilter<"BillOfQuantities"> | Date | string
@@ -336,7 +336,7 @@ export type BillOfQuantitiesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   boqNumber?: Prisma.SortOrder
   poNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  humanId?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientReference?: Prisma.SortOrderInput | Prisma.SortOrder
   boqDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -377,7 +377,7 @@ export type BillOfQuantitiesWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.BillOfQuantitiesWhereInput[]
   NOT?: Prisma.BillOfQuantitiesWhereInput | Prisma.BillOfQuantitiesWhereInput[]
   poNumber?: Prisma.StringNullableFilter<"BillOfQuantities"> | string | null
-  humanId?: Prisma.StringNullableFilter<"BillOfQuantities"> | string | null
+  clientReference?: Prisma.StringNullableFilter<"BillOfQuantities"> | string | null
   boqDate?: Prisma.DateTimeFilter<"BillOfQuantities"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"BillOfQuantities"> | Date | string
   dueDate?: Prisma.DateTimeFilter<"BillOfQuantities"> | Date | string
@@ -414,7 +414,7 @@ export type BillOfQuantitiesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   boqNumber?: Prisma.SortOrder
   poNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  humanId?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientReference?: Prisma.SortOrderInput | Prisma.SortOrder
   boqDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -445,7 +445,7 @@ export type BillOfQuantitiesScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"BillOfQuantities"> | string
   boqNumber?: Prisma.StringWithAggregatesFilter<"BillOfQuantities"> | string
   poNumber?: Prisma.StringNullableWithAggregatesFilter<"BillOfQuantities"> | string | null
-  humanId?: Prisma.StringNullableWithAggregatesFilter<"BillOfQuantities"> | string | null
+  clientReference?: Prisma.StringNullableWithAggregatesFilter<"BillOfQuantities"> | string | null
   boqDate?: Prisma.DateTimeWithAggregatesFilter<"BillOfQuantities"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BillOfQuantities"> | Date | string
   dueDate?: Prisma.DateTimeWithAggregatesFilter<"BillOfQuantities"> | Date | string
@@ -470,7 +470,7 @@ export type BillOfQuantitiesCreateInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -498,7 +498,7 @@ export type BillOfQuantitiesUncheckedCreateInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -526,7 +526,7 @@ export type BillOfQuantitiesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -554,7 +554,7 @@ export type BillOfQuantitiesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -582,7 +582,7 @@ export type BillOfQuantitiesCreateManyInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -607,7 +607,7 @@ export type BillOfQuantitiesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -623,7 +623,7 @@ export type BillOfQuantitiesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -669,7 +669,7 @@ export type BillOfQuantitiesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   boqNumber?: Prisma.SortOrder
   poNumber?: Prisma.SortOrder
-  humanId?: Prisma.SortOrder
+  clientReference?: Prisma.SortOrder
   boqDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -694,7 +694,7 @@ export type BillOfQuantitiesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   boqNumber?: Prisma.SortOrder
   poNumber?: Prisma.SortOrder
-  humanId?: Prisma.SortOrder
+  clientReference?: Prisma.SortOrder
   boqDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -719,7 +719,7 @@ export type BillOfQuantitiesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   boqNumber?: Prisma.SortOrder
   poNumber?: Prisma.SortOrder
-  humanId?: Prisma.SortOrder
+  clientReference?: Prisma.SortOrder
   boqDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -1171,7 +1171,7 @@ export type BillOfQuantitiesCreateWithoutEmployee_BillOfQuantities_createdByToEm
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1198,7 +1198,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutEmployee_BillOfQuantities_crea
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1235,7 +1235,7 @@ export type BillOfQuantitiesCreateWithoutEmployee_BillOfQuantities_deletedByToEm
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1262,7 +1262,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutEmployee_BillOfQuantities_dele
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1299,7 +1299,7 @@ export type BillOfQuantitiesCreateWithoutEmployee_BillOfQuantities_modifiedByToE
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1326,7 +1326,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutEmployee_BillOfQuantities_modi
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1382,7 +1382,7 @@ export type BillOfQuantitiesScalarWhereInput = {
   id?: Prisma.StringFilter<"BillOfQuantities"> | string
   boqNumber?: Prisma.StringFilter<"BillOfQuantities"> | string
   poNumber?: Prisma.StringNullableFilter<"BillOfQuantities"> | string | null
-  humanId?: Prisma.StringNullableFilter<"BillOfQuantities"> | string | null
+  clientReference?: Prisma.StringNullableFilter<"BillOfQuantities"> | string | null
   boqDate?: Prisma.DateTimeFilter<"BillOfQuantities"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"BillOfQuantities"> | Date | string
   dueDate?: Prisma.DateTimeFilter<"BillOfQuantities"> | Date | string
@@ -1439,7 +1439,7 @@ export type BillOfQuantitiesCreateWithoutInvoiceOutInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1466,7 +1466,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutInvoiceOutInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1509,7 +1509,7 @@ export type BillOfQuantitiesUpdateWithoutInvoiceOutInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1536,7 +1536,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutInvoiceOutInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1563,7 +1563,7 @@ export type BillOfQuantitiesCreateWithoutTargetInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1590,7 +1590,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutTargetInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1643,7 +1643,7 @@ export type BillOfQuantitiesCreateWithoutPaymentMethodInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1670,7 +1670,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutPaymentMethodInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1723,7 +1723,7 @@ export type BillOfQuantitiesCreateWithoutPriceListInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1750,7 +1750,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutPriceListInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1803,7 +1803,7 @@ export type BillOfQuantitiesCreateWithoutBillOfQuantitiesSentTypeInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1830,7 +1830,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutBillOfQuantitiesSentTypeInput 
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1883,7 +1883,7 @@ export type BillOfQuantitiesCreateWithoutBillOfQuantitiesStatusInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1910,7 +1910,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutBillOfQuantitiesStatusInput = 
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1963,7 +1963,7 @@ export type BillOfQuantitiesCreateWithoutBillOfQuantitiesTypeInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -1990,7 +1990,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutBillOfQuantitiesTypeInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2043,7 +2043,7 @@ export type BillOfQuantitiesCreateWithoutBoqContactInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2070,7 +2070,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutBoqContactInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2113,7 +2113,7 @@ export type BillOfQuantitiesUpdateWithoutBoqContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2140,7 +2140,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutBoqContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2167,7 +2167,7 @@ export type BillOfQuantitiesCreateWithoutWorkOrderBoQInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2194,7 +2194,7 @@ export type BillOfQuantitiesUncheckedCreateWithoutWorkOrderBoQInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2237,7 +2237,7 @@ export type BillOfQuantitiesUpdateWithoutWorkOrderBoQInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2264,7 +2264,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutWorkOrderBoQInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2291,7 +2291,7 @@ export type BillOfQuantitiesCreateManyEmployee_BillOfQuantities_createdByToEmplo
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2315,7 +2315,7 @@ export type BillOfQuantitiesCreateManyEmployee_BillOfQuantities_deletedByToEmplo
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2339,7 +2339,7 @@ export type BillOfQuantitiesCreateManyEmployee_BillOfQuantities_modifiedByToEmpl
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2363,7 +2363,7 @@ export type BillOfQuantitiesUpdateWithoutEmployee_BillOfQuantities_createdByToEm
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2390,7 +2390,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutEmployee_BillOfQuantities_crea
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2417,7 +2417,7 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutEmployee_BillOfQuantities_
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2441,7 +2441,7 @@ export type BillOfQuantitiesUpdateWithoutEmployee_BillOfQuantities_deletedByToEm
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2468,7 +2468,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutEmployee_BillOfQuantities_dele
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2495,7 +2495,7 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutEmployee_BillOfQuantities_
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2519,7 +2519,7 @@ export type BillOfQuantitiesUpdateWithoutEmployee_BillOfQuantities_modifiedByToE
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2546,7 +2546,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutEmployee_BillOfQuantities_modi
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2573,7 +2573,7 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutEmployee_BillOfQuantities_
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2597,7 +2597,7 @@ export type BillOfQuantitiesCreateManyTargetInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2621,7 +2621,7 @@ export type BillOfQuantitiesUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2648,7 +2648,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2675,7 +2675,7 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2699,7 +2699,7 @@ export type BillOfQuantitiesCreateManyPaymentMethodInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2723,7 +2723,7 @@ export type BillOfQuantitiesUpdateWithoutPaymentMethodInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2750,7 +2750,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutPaymentMethodInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2777,7 +2777,7 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutPaymentMethodInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2801,7 +2801,7 @@ export type BillOfQuantitiesCreateManyPriceListInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2825,7 +2825,7 @@ export type BillOfQuantitiesUpdateWithoutPriceListInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2852,7 +2852,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutPriceListInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2879,7 +2879,7 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutPriceListInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2903,7 +2903,7 @@ export type BillOfQuantitiesCreateManyBillOfQuantitiesSentTypeInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -2927,7 +2927,7 @@ export type BillOfQuantitiesUpdateWithoutBillOfQuantitiesSentTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2954,7 +2954,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutBillOfQuantitiesSentTypeInput 
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2981,7 +2981,7 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutBillOfQuantitiesSentTypeIn
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3005,7 +3005,7 @@ export type BillOfQuantitiesCreateManyBillOfQuantitiesStatusInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -3029,7 +3029,7 @@ export type BillOfQuantitiesUpdateWithoutBillOfQuantitiesStatusInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3056,7 +3056,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutBillOfQuantitiesStatusInput = 
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3083,7 +3083,7 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutBillOfQuantitiesStatusInpu
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3107,7 +3107,7 @@ export type BillOfQuantitiesCreateManyBillOfQuantitiesTypeInput = {
   id: string
   boqNumber: string
   poNumber?: string | null
-  humanId?: string | null
+  clientReference?: string | null
   boqDate: Date | string
   createdAt: Date | string
   dueDate: Date | string
@@ -3131,7 +3131,7 @@ export type BillOfQuantitiesUpdateWithoutBillOfQuantitiesTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3158,7 +3158,7 @@ export type BillOfQuantitiesUncheckedUpdateWithoutBillOfQuantitiesTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3185,7 +3185,7 @@ export type BillOfQuantitiesUncheckedUpdateManyWithoutBillOfQuantitiesTypeInput 
   id?: Prisma.StringFieldUpdateOperationsInput | string
   boqNumber?: Prisma.StringFieldUpdateOperationsInput | string
   poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  humanId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   boqDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3258,7 +3258,7 @@ export type BillOfQuantitiesSelect<ExtArgs extends runtime.Types.Extensions.Inte
   id?: boolean
   boqNumber?: boolean
   poNumber?: boolean
-  humanId?: boolean
+  clientReference?: boolean
   boqDate?: boolean
   createdAt?: boolean
   dueDate?: boolean
@@ -3298,7 +3298,7 @@ export type BillOfQuantitiesSelectScalar = {
   id?: boolean
   boqNumber?: boolean
   poNumber?: boolean
-  humanId?: boolean
+  clientReference?: boolean
   boqDate?: boolean
   createdAt?: boolean
   dueDate?: boolean
@@ -3319,7 +3319,7 @@ export type BillOfQuantitiesSelectScalar = {
   priceListId?: boolean
 }
 
-export type BillOfQuantitiesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "boqNumber" | "poNumber" | "humanId" | "boqDate" | "createdAt" | "dueDate" | "sentDate" | "deletedAt" | "modifiedAt" | "reminderSent" | "outstanding" | "deleted" | "deletedBy" | "createdBy" | "modifiedBy" | "boqTypeId" | "targetId" | "paymentMethodId" | "boqSentTypeId" | "boqStatusId" | "priceListId", ExtArgs["result"]["billOfQuantities"]>
+export type BillOfQuantitiesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "boqNumber" | "poNumber" | "clientReference" | "boqDate" | "createdAt" | "dueDate" | "sentDate" | "deletedAt" | "modifiedAt" | "reminderSent" | "outstanding" | "deleted" | "deletedBy" | "createdBy" | "modifiedBy" | "boqTypeId" | "targetId" | "paymentMethodId" | "boqSentTypeId" | "boqStatusId" | "priceListId", ExtArgs["result"]["billOfQuantities"]>
 export type BillOfQuantitiesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   BillOfQuantitiesType?: boolean | Prisma.BillOfQuantitiesTypeDefaultArgs<ExtArgs>
   Employee_BillOfQuantities_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -3356,7 +3356,7 @@ export type $BillOfQuantitiesPayload<ExtArgs extends runtime.Types.Extensions.In
     id: string
     boqNumber: string
     poNumber: string | null
-    humanId: string | null
+    clientReference: string | null
     boqDate: Date
     createdAt: Date
     dueDate: Date
@@ -3759,7 +3759,7 @@ export interface BillOfQuantitiesFieldRefs {
   readonly id: Prisma.FieldRef<"BillOfQuantities", 'String'>
   readonly boqNumber: Prisma.FieldRef<"BillOfQuantities", 'String'>
   readonly poNumber: Prisma.FieldRef<"BillOfQuantities", 'String'>
-  readonly humanId: Prisma.FieldRef<"BillOfQuantities", 'String'>
+  readonly clientReference: Prisma.FieldRef<"BillOfQuantities", 'String'>
   readonly boqDate: Prisma.FieldRef<"BillOfQuantities", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"BillOfQuantities", 'DateTime'>
   readonly dueDate: Prisma.FieldRef<"BillOfQuantities", 'DateTime'>

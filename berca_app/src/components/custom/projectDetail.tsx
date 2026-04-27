@@ -60,6 +60,7 @@ interface ProjectDetailProps {
   employees: Option[]
   contacts: Option[]
   currentUserRole: string
+  currentUserId: string
   currentUserLevel: number
   projectBoms: MappedProjectBOM[]
   functionOptions: Option[]
@@ -82,7 +83,7 @@ function toInputDate(date: Date | null) {
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 const thClass = 'whitespace-nowrap text-xs'
 
-const PERM = {contacts: 60, boms: 60, materials: 80, workOrders: 80, delete: 80, employees: 80} as const
+const PERM = {contacts: 60, boms: 60, materials: 80, workOrders: 80, delete: 80} as const
 
 const emptyContact = () => ({contactId: '', description: ''})
 const emptyMaterial = () => ({becraCode: '', shortDescription: '', brandName: '', transactionType: ''})
@@ -98,6 +99,7 @@ export function ProjectDetail({
   contacts,
   currentUserRole,
   currentUserLevel,
+  currentUserId,
   projectBoms,
   functionOptions,
   departmentExternOptions,
@@ -166,6 +168,10 @@ export function ProjectDetail({
   const [savingEdit, setSavingEdit] = useState(false)
   const [savingDelete, setSavingDelete] = useState(false)
 
+  // Employees already assigned — derive from project relation
+  const assignedEmployeeIds = new Set(project.ProjectEmployee.map((pe: any) => pe.employeeId))
+  const unassignedEmployees = employees.filter(e => !assignedEmployeeIds.has(e.id))
+
   const can = (level: number) => currentUserLevel >= level
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canEdit = currentUserLevel >= 40
@@ -173,15 +179,20 @@ export function ProjectDetail({
   const canManageWorkOrders = currentUserLevel >= 80
   const canManageEmployees = currentUserLevel >= 80
   const canEditNumber = currentUserLevel >= 80
-  const isProjectManager = currentUserRole === 'Project Manager'
-  const isProjectSupervisor = currentUserRole === 'Supervisor'
+
+  const currentEmployee = project.ProjectEmployee.find(pe => pe.employeeId === currentUserId) ?? null
+  let isProjectManager = false
+  let isProjectSupervisor = false
+
+  if (currentEmployee) {
+    isProjectManager = currentEmployee.manager
+    isProjectSupervisor = currentEmployee.supervisor
+  }
+  const projectManager = project.ProjectEmployee.find(pe => pe.manager)?.Employee
+  const projectSupervisor = project.ProjectEmployee.find(pe => pe.supervisor)?.Employee
 
   const workOrderProjectOptions = [{id: project.id, name: `${project.projectNumber} — ${project.projectName}`}]
   const projectScopedBoms: MappedProjectBOM[] = projectBoms.filter(b => b.projectId === project.id)
-
-  // Employees already assigned — derive from project relation
-  const assignedEmployeeIds = new Set(project.ProjectEmployee.map((pe: any) => pe.employeeId))
-  const unassignedEmployees = employees.filter(e => !assignedEmployeeIds.has(e.id))
 
   function handleCancel() {
     setForm({
@@ -563,7 +574,7 @@ export function ProjectDetail({
               </Button>
             </>
           ) : (
-            canEdit && (
+            (canEdit || isProjectManager || isProjectSupervisor) && (
               <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
                 <Pencil className="h-4 w-4" />
                 Edit
@@ -734,6 +745,18 @@ export function ProjectDetail({
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created At</Label>
             <p className="text-sm text-muted-foreground">{formatDate(project.createdAt)}</p>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Project Manager</Label>
+            <p className="text-sm text-muted-foreground">
+              {projectManager?.firstName} {projectManager?.lastName}
+            </p>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Project Supervisor</Label>
+            <p className="text-sm text-muted-foreground">
+              {projectSupervisor?.firstName} {projectSupervisor?.lastName}
+            </p>
           </div>
           <div className="sm:col-span-2 lg:col-span-3 grid grid-cols-2 sm:grid-cols-4 gap-4">
             {(
@@ -1505,22 +1528,20 @@ export function ProjectDetail({
 
         {/* ── Employees ── */}
         <TabsContent value="employees" className="mt-3">
-          {canManageEmployees ||
-            isProjectManager ||
-            (isProjectSupervisor && (
-              <div className="flex items-center gap-2 mb-3">
-                <Button
-                  size="sm"
-                  className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
-                  onClick={() => {
-                    setEmployeeAssignForm(emptyEmployeeAssign())
-                    setEmployeeDialogOpen(true)
-                  }}>
-                  <Plus className="h-3 w-3" />
-                  Assign Employee
-                </Button>
-              </div>
-            ))}
+          {(canManageEmployees || isProjectManager || isProjectSupervisor) && (
+            <div className="flex items-center gap-2 mb-3">
+              <Button
+                size="sm"
+                className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
+                onClick={() => {
+                  setEmployeeAssignForm(emptyEmployeeAssign())
+                  setEmployeeDialogOpen(true)
+                }}>
+                <Plus className="h-3 w-3" />
+                Assign Employee
+              </Button>
+            </div>
+          )}
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -1569,31 +1590,29 @@ export function ProjectDetail({
                         )}
                       </TableCell>
                       <TableCell>
-                        {canManageEmployees ||
-                          isProjectManager ||
-                          (isProjectSupervisor && (
-                            <div className="flex items-center gap-1">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10"
-                                onClick={() => openEditEmployee(pe)}>
-                                <Pencil className="h-3.5 w-3.5" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                                onClick={() =>
-                                  setDeleteEmployeeTarget({
-                                    id: pe.id,
-                                    name: `${pe.Employee.firstName} ${pe.Employee.lastName}`,
-                                  })
-                                }>
-                                <Trash2 className="h-3.5 w-3.5" />
-                              </Button>
-                            </div>
-                          ))}
+                        {(canManageEmployees || isProjectManager || isProjectSupervisor) && (
+                          <div className="flex items-center gap-1">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10"
+                              onClick={() => openEditEmployee(pe)}>
+                              <Pencil className="h-3.5 w-3.5" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                              onClick={() =>
+                                setDeleteEmployeeTarget({
+                                  id: pe.id,
+                                  name: `${pe.Employee.firstName} ${pe.Employee.lastName}`,
+                                })
+                              }>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          </div>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))

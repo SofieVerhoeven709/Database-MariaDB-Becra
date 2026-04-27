@@ -7,7 +7,7 @@ import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
-import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption, InvoicePurchaseLookup} from '@/types/invoice'
 import {createInvoiceInAction, updateInvoiceInAction} from '@/serverFunctions/invoices'
 // e.g. export async function getNextInvoiceInNumberAction(): Promise<string>
 import {getNextInvoiceInNumberAction} from '@/serverFunctions/invoices'
@@ -24,6 +24,7 @@ interface InvoiceInFormDialogProps {
   invoiceStatuses: InvoiceLookup[]
   vatMargins: VatMarginOption[]
   companyOptions: InvoiceLookup[]
+  purchaseOptions: InvoicePurchaseLookup[]
   onSaved: () => void
 }
 
@@ -98,6 +99,7 @@ export function InvoiceInFormDialog({
   vatMargins,
   companyOptions,
   onSaved,
+  purchaseOptions,
 }: InvoiceInFormDialogProps) {
   const [form, setForm] = useState<FormState>(() => emptyForm(invoice))
   const [saving, setSaving] = useState(false)
@@ -193,6 +195,10 @@ export function InvoiceInFormDialog({
     }
   }
 
+  const filteredPurchaseOptions = form.companyId
+    ? purchaseOptions.filter(p => p.companyId === form.companyId)
+    : purchaseOptions
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-border">
@@ -237,7 +243,7 @@ export function InvoiceInFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Human ID</Label>
+            <Label className="text-xs text-muted-foreground">Client Invoice Number</Label>
             <Input
               value={form.clientInvoiceNumber}
               onChange={e => set('clientInvoiceNumber', e.target.value)}
@@ -247,16 +253,42 @@ export function InvoiceInFormDialog({
 
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">PO Number</Label>
-            <Input
+            <Select
               value={form.poNumber}
-              onChange={e => set('poNumber', e.target.value)}
-              className="bg-secondary border-border"
-            />
+              onValueChange={v => {
+                set('poNumber', v)
+
+                const selectedPO = purchaseOptions.find(p => p.id === v)
+                if (selectedPO) {
+                  set('companyId', selectedPO.companyId)
+                }
+              }}>
+              <SelectTrigger className="bg-secondary border-border">
+                <SelectValue placeholder="Select purchase…" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                {filteredPurchaseOptions.map(c => (
+                  <SelectItem key={c.id} value={c.id}>
+                    {c.purchaseNumber} - {c.description}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Company *</Label>
-            <Select value={form.companyId} onValueChange={v => set('companyId', v)}>
+            <Select
+              value={form.companyId}
+              onValueChange={v => {
+                set('companyId', v)
+
+                const poStillValid = purchaseOptions.find(p => p.id === form.poNumber && p.companyId === v)
+
+                if (!poStillValid) {
+                  set('poNumber', '')
+                }
+              }}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select company…" />
               </SelectTrigger>

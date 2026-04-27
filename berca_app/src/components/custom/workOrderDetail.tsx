@@ -57,6 +57,10 @@ export function WorkOrderDetail({
 
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80 || currentUserRole === 'Project'
+  const canEdit = currentUserLevel >= 40
+  const canManageWorkOrders = currentUserLevel >= 80
+  const canManageEmployees = currentUserLevel >= 80
+  const canEditNumber = currentUserLevel >= 80
 
   // Pass role-derived permissions down to nested tabs.
   const permissions = {
@@ -102,6 +106,15 @@ export function WorkOrderDetail({
     }
   }
 
+  const currentEmployee = workOrder.Project.ProjectEmployee.find(pe => pe.employeeId === currentUserId) ?? null
+  let isProjectManager = false
+  let isProjectSupervisor = false
+
+  if (currentEmployee) {
+    isProjectManager = currentEmployee.manager
+    isProjectSupervisor = currentEmployee.supervisor
+  }
+
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
@@ -137,10 +150,12 @@ export function WorkOrderDetail({
               </Button>
             </>
           ) : (
-            <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-              <Pencil className="h-4 w-4" />
-              Edit
-            </Button>
+            (canEdit || isProjectManager || isProjectSupervisor) && (
+              <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
+                <Pencil className="h-4 w-4" />
+                Edit
+              </Button>
+            )
           )}
         </div>
       </div>

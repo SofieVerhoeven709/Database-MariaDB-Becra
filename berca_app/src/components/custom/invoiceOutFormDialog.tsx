@@ -46,7 +46,7 @@ interface InvoiceOutFormDialogProps {
 type FormState = {
   invoiceNumber: string
   poNumber: string
-  humanId: string
+  clientReference: string
   invoiceDate: string
   dueDate: string
   sentDate: string
@@ -69,7 +69,7 @@ function emptyForm(inv: MappedInvoiceOut | null): FormState {
     return {
       invoiceNumber: '',
       poNumber: '',
-      humanId: '',
+      clientReference: '',
       invoiceDate: today,
       dueDate: today,
       sentDate: '',
@@ -84,7 +84,7 @@ function emptyForm(inv: MappedInvoiceOut | null): FormState {
   return {
     invoiceNumber: inv.invoiceNumber,
     poNumber: inv.poNumber ?? '',
-    humanId: inv.humanId ?? '',
+    clientReference: inv.clientReference ?? '',
     invoiceDate: toDateInput(inv.invoiceDate),
     dueDate: toDateInput(inv.dueDate),
     sentDate: toDateInput(inv.sentDate),
@@ -201,7 +201,7 @@ export function InvoiceOutFormDialog({
       const payload = {
         invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
-        humanId: form.humanId || null,
+        clientReference: form.clientReference || null,
         invoiceDate: new Date(form.invoiceDate),
         dueDate: new Date(form.dueDate),
         sentDate: form.sentDate ? new Date(form.sentDate) : null,
@@ -351,10 +351,10 @@ export function InvoiceOutFormDialog({
           )}
 
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Human ID</Label>
+            <Label className="text-xs text-muted-foreground">Client Reference</Label>
             <Input
-              value={form.humanId}
-              onChange={e => set('humanId', e.target.value)}
+              value={form.clientReference}
+              onChange={e => set('clientReference', e.target.value)}
               className="bg-secondary border-border"
             />
           </div>

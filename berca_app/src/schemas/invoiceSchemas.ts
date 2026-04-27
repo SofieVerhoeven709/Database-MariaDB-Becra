@@ -6,7 +6,7 @@ export const invoiceOutSchema = z.object({
   id: z.string(),
   invoiceNumber: z.string().min(1).max(255),
   poNumber: z.string().max(255).nullable().optional(),
-  humanId: z.string().max(255).nullable().optional(),
+  clientReference: z.string().max(255).nullable().optional(),
   invoiceDate: requiredDateSchema,
   createdAt: requiredDateSchema,
   dueDate: requiredDateSchema,

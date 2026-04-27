@@ -493,7 +493,7 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             invoiceNumber VARCHAR(255) NOT NULL,
             poNumber VARCHAR(255),
-            humanId VARCHAR(255),
+            clientReference VARCHAR(255),
             invoiceDate DATETIME NOT NULL,
             createdAt DATETIME NOT NULL,
             dueDate DATETIME NOT NULL,
@@ -531,7 +531,7 @@ CREATE TABLE IF NOT EXISTS InvoiceIn (
       id CHAR(36) NOT NULL PRIMARY KEY,
       invoiceNumber VARCHAR(255) NOT NULL,
       poNumber VARCHAR(255),
-      humanId VARCHAR(255),
+      clientInvoiceNumber VARCHAR(255),
       invoiceDate DATETIME NOT NULL,
       createdAt DATETIME NOT NULL,
       dueDate DATETIME NOT NULL,
@@ -1913,7 +1913,7 @@ CREATE TABLE
         id CHAR(36) NOT NULL PRIMARY KEY,
         boqNumber VARCHAR(255) NOT NULL,
         poNumber VARCHAR(255),
-        humanId VARCHAR(255),
+        clientReference VARCHAR(255),
         boqDate DATETIME NOT NULL,
         createdAt DATETIME NOT NULL,
         dueDate DATETIME NOT NULL,
@@ -2005,3 +2005,5 @@ ALTER TABLE InvoiceOut
 ALTER TABLE InvoiceOut
     ADD CONSTRAINT fk_invoiceout_boq
     FOREIGN KEY (boqId) REFERENCES BillOfQuantities (id) ON DELETE RESTRICT;
+
+ALTER TABLE InvoiceOut CHANGE COLUMN IF EXISTS `humanId` `clientReference` VARCHAR(255) NULL;

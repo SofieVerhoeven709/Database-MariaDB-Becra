@@ -10,7 +10,7 @@ import {Switch} from '@/components/ui/switch'
 import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {updateInvoiceInAction} from '@/serverFunctions/invoices'
-import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption, InvoicePurchaseLookup} from '@/types/invoice'
 import {Textarea} from '@/components/ui/textarea'
 
 function formatDate(date: string | null) {
@@ -41,6 +41,7 @@ interface InvoiceInDetailProps {
   invoiceStatuses: InvoiceLookup[]
   vatMargins: VatMarginOption[]
   companyOptions: InvoiceLookup[]
+  purchaseOptions: InvoicePurchaseLookup[]
   currentUserLevel: number
   currentUserRole: string
 }
@@ -72,6 +73,7 @@ export function InvoiceInDetail({
   companyOptions,
   currentUserLevel,
   currentUserRole,
+  purchaseOptions,
 }: InvoiceInDetailProps) {
   const router = useRouter()
   const canEdit = currentUserLevel >= 40
@@ -142,6 +144,10 @@ export function InvoiceInDetail({
     setNumberError(null)
     setEditing(false)
   }
+
+  const filteredPurchaseOptions = form.companyId
+    ? purchaseOptions.filter(p => p.companyId === form.companyId)
+    : purchaseOptions
 
   return (
     <div className="flex flex-col gap-6">
@@ -219,7 +225,7 @@ export function InvoiceInDetail({
 
           {/* Human ID */}
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Human ID</Label>
+            <Label className="text-xs text-muted-foreground">Client Invoice Number</Label>
             {editing ? (
               <Input
                 value={form.clientInvoiceNumber}
@@ -235,11 +241,27 @@ export function InvoiceInDetail({
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">PO Number</Label>
             {editing ? (
-              <Input
+              <Select
                 value={form.poNumber}
-                onChange={e => s('poNumber', e.target.value)}
-                className="bg-secondary border-border"
-              />
+                onValueChange={v => {
+                  s('poNumber', v)
+
+                  const selectedPO = purchaseOptions.find(p => p.id === v)
+                  if (selectedPO) {
+                    s('companyId', selectedPO.companyId)
+                  }
+                }}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="Select purchase…" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {filteredPurchaseOptions.map(c => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.purchaseNumber} - {c.description}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             ) : (
               <p className="text-sm text-muted-foreground">{invoice.poNumber ?? '-'}</p>
             )}
@@ -249,9 +271,19 @@ export function InvoiceInDetail({
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Company</Label>
             {editing ? (
-              <Select value={form.companyId} onValueChange={v => s('companyId', v)}>
+              <Select
+                value={form.companyId}
+                onValueChange={v => {
+                  s('companyId', v)
+
+                  const poStillValid = purchaseOptions.find(p => p.id === form.poNumber && p.companyId === v)
+
+                  if (!poStillValid) {
+                    s('poNumber', '')
+                  }
+                }}>
                 <SelectTrigger className="bg-secondary border-border">
-                  <SelectValue />
+                  <SelectValue placeholder="Select company…" />
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border">
                   {companyOptions.map(c => (

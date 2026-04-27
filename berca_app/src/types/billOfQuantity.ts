@@ -65,7 +65,7 @@ export interface MappedBoq {
   id: string
   boqNumber: string
   poNumber: string | null
-  humanId: string | null
+  clientReference: string | null
   boqDate: string
   createdAt: string
   dueDate: string

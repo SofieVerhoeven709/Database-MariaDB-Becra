@@ -163,7 +163,7 @@ type InvoiceOutRaw = {
   id: string
   invoiceNumber: string
   poNumber: string | null
-  humanId: string | null
+  clientReference: string | null
   invoiceDate: Date
   createdAt: Date
   dueDate: Date
@@ -484,7 +484,7 @@ export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
     id: r.id,
     invoiceNumber: r.invoiceNumber,
     poNumber: r.poNumber,
-    humanId: r.humanId,
+    clientReference: r.clientReference,
     invoiceDate: r.invoiceDate.toISOString(),
     createdAt: r.createdAt.toISOString(),
     dueDate: r.dueDate.toISOString(),

@@ -10,7 +10,7 @@ import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
-import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption, InvoicePurchaseLookup} from '@/types/invoice'
 import {softDeleteInvoiceInAction, hardDeleteInvoiceInAction, undeleteInvoiceInAction} from '@/serverFunctions/invoices'
 import {InvoiceInFormDialog} from '@/components/custom/invoiceInFormDialog'
 
@@ -68,6 +68,7 @@ interface InvoiceInTableProps {
   invoiceStatuses: InvoiceLookup[]
   vatMargins: VatMarginOption[]
   companyOptions: InvoiceLookup[]
+  purchaseOptions: InvoicePurchaseLookup[]
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -104,6 +105,7 @@ export function InvoiceInTable({
   invoiceStatuses,
   vatMargins,
   companyOptions,
+  purchaseOptions,
 }: InvoiceInTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -399,6 +401,7 @@ export function InvoiceInTable({
         invoiceStatuses={invoiceStatuses}
         vatMargins={vatMargins}
         companyOptions={companyOptions}
+        purchaseOptions={purchaseOptions}
         onSaved={() => {
           setDialogOpen(false)
           router.refresh()

@@ -41,7 +41,7 @@ interface BoqFormDialogProps {
 type FormState = {
   boqNumber: string
   poNumber: string
-  humanId: string
+  clientReference: string
   boqDate: string
   dueDate: string
   sentDate: string
@@ -64,7 +64,7 @@ function emptyForm(boq: MappedBoq | null): FormState {
     return {
       boqNumber: '',
       poNumber: '',
-      humanId: '',
+      clientReference: '',
       boqDate: today,
       dueDate: today,
       sentDate: '',
@@ -79,7 +79,7 @@ function emptyForm(boq: MappedBoq | null): FormState {
   return {
     boqNumber: boq.boqNumber,
     poNumber: boq.poNumber ?? '',
-    humanId: boq.humanId ?? '',
+    clientReference: boq.clientReference ?? '',
     boqDate: toDateInput(boq.boqDate),
     dueDate: toDateInput(boq.dueDate),
     sentDate: toDateInput(boq.sentDate),
@@ -192,7 +192,7 @@ export function BoqFormDialog({
       const payload = {
         boqNumber: form.boqNumber.trim(),
         poNumber: form.poNumber || null,
-        humanId: form.humanId || null,
+        clientReference: form.clientReference || null,
         boqDate: new Date(form.boqDate),
         dueDate: new Date(form.dueDate),
         sentDate: form.sentDate ? new Date(form.sentDate) : null,
@@ -341,10 +341,10 @@ export function BoqFormDialog({
           )}
 
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Human ID</Label>
+            <Label className="text-xs text-muted-foreground">Client Reference</Label>
             <Input
-              value={form.humanId}
-              onChange={e => set('humanId', e.target.value)}
+              value={form.clientReference}
+              onChange={e => set('clientReference', e.target.value)}
               className="bg-secondary border-border"
             />
           </div>

@@ -4,6 +4,13 @@ export interface InvoiceLookup {
   name: string
 }
 
+export interface InvoicePurchaseLookup {
+  id: string
+  purchaseNumber: string
+  description: string | null
+  companyId: string
+}
+
 export interface VatMarginOption {
   id: string
   vat: number
@@ -62,7 +69,7 @@ export interface MappedInvoiceOut {
   id: string
   invoiceNumber: string
   poNumber: string | null
-  humanId: string | null
+  clientReference: string | null
   invoiceDate: string
   createdAt: string
   dueDate: string

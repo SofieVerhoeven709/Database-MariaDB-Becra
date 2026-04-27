@@ -6,7 +6,7 @@ export const boqSchema = z.object({
   id: z.string(),
   boqNumber: z.string().min(1).max(255),
   poNumber: z.string().max(255).nullable().optional(),
-  humanId: z.string().max(255).nullable().optional(),
+  clientReference: z.string().max(255).nullable().optional(),
   boqDate: requiredDateSchema,
   createdAt: requiredDateSchema,
   dueDate: requiredDateSchema,

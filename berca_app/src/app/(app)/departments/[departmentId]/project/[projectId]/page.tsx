@@ -77,6 +77,7 @@ export default async function ProjectDetailPage({params}: PageProps) {
           employees={employeeOptions}
           contacts={contactOptions}
           currentUserRole={currentUserRole}
+          currentUserId={profile.id}
           currentUserLevel={currentUserLevel}
           projectBoms={projectBomOptions}
           functionOptions={functionOptions}

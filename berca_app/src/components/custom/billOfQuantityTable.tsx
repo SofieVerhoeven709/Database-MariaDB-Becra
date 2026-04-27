@@ -17,7 +17,7 @@ import type {ProjectOption} from '@/components/custom/billOfQuantityFormDialog'
 
 type SortField =
   | 'boqNumber'
-  | 'humanId'
+  | 'clientReference'
   | 'boqDate'
   | 'dueDate'
   | 'sentDate'
@@ -132,7 +132,7 @@ export function BoqTable({
       const q = search.toLowerCase()
       return (
         boq.boqNumber.toLowerCase().includes(q) ||
-        (boq.humanId?.toLowerCase().includes(q) ?? false) ||
+        (boq.clientReference?.toLowerCase().includes(q) ?? false) ||
         (boq.poNumber?.toLowerCase().includes(q) ?? false) ||
         boq.boqStatusName.toLowerCase().includes(q) ||
         boq.paymentMethodName.toLowerCase().includes(q)
@@ -145,8 +145,8 @@ export function BoqTable({
       switch (sortField) {
         case 'boqNumber':
           return s(a.boqNumber, b.boqNumber)
-        case 'humanId':
-          return s(a.humanId, b.humanId)
+        case 'clientReference':
+          return s(a.clientReference, b.clientReference)
         case 'boqDate':
           return s(a.boqDate, b.boqDate)
         case 'dueDate':
@@ -231,7 +231,13 @@ export function BoqTable({
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
               <Th field="boqNumber" label="BoQ #" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
-              <Th field="humanId" label="Human ID" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th
+                field="clientReference"
+                label="Client Reference"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
               <Th field="boqDate" label="BoQ Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="dueDate" label="Due Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="sentDate" label="Sent Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
@@ -272,7 +278,7 @@ export function BoqTable({
                       {boq.boqNumber}
                     </Link>
                   </TableCell>
-                  <TableCell className={tdClass}>{boq.humanId ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{boq.clientReference ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{formatDate(boq.boqDate)}</TableCell>
                   <TableCell className={tdClass}>{formatDate(boq.dueDate)}</TableCell>
                   <TableCell className={tdClass}>{formatDate(boq.sentDate)}</TableCell>

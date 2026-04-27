@@ -75,6 +75,13 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       owner: 'accounting',
     },
     {
+      id: 'billOfQuantity',
+      name: 'Bill of Quantity',
+      description: 'Create and manage bills of quantity',
+      icon: 'FileUp',
+      owner: 'accounting',
+    },
+    {
       id: 'reports',
       name: 'Reports',
       description: 'Generate financial and accounting reports',

@@ -10,13 +10,14 @@ import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
-import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption, InvoicePurchaseLookup} from '@/types/invoice'
 import {softDeleteInvoiceInAction, hardDeleteInvoiceInAction, undeleteInvoiceInAction} from '@/serverFunctions/invoices'
 import {InvoiceInFormDialog} from '@/components/custom/invoiceInFormDialog'
 
 type SortField =
   | 'invoiceNumber'
-  | 'humanId'
+  | 'clientInvoiceNumber'
+  | 'description'
   | 'invoiceDate'
   | 'dueDate'
   | 'invoiceStatus'
@@ -67,6 +68,7 @@ interface InvoiceInTableProps {
   invoiceStatuses: InvoiceLookup[]
   vatMargins: VatMarginOption[]
   companyOptions: InvoiceLookup[]
+  purchaseOptions: InvoicePurchaseLookup[]
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -103,6 +105,7 @@ export function InvoiceInTable({
   invoiceStatuses,
   vatMargins,
   companyOptions,
+  purchaseOptions,
 }: InvoiceInTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -135,7 +138,7 @@ export function InvoiceInTable({
       const q = search.toLowerCase()
       return (
         inv.invoiceNumber.toLowerCase().includes(q) ||
-        (inv.humanId?.toLowerCase().includes(q) ?? false) ||
+        (inv.clientInvoiceNumber?.toLowerCase().includes(q) ?? false) ||
         (inv.poNumber?.toLowerCase().includes(q) ?? false) ||
         inv.companyName.toLowerCase().includes(q) ||
         inv.invoiceStatusName.toLowerCase().includes(q)
@@ -148,8 +151,8 @@ export function InvoiceInTable({
       switch (sortField) {
         case 'invoiceNumber':
           return s(a.invoiceNumber, b.invoiceNumber)
-        case 'humanId':
-          return s(a.humanId, b.humanId)
+        case 'clientInvoiceNumber':
+          return s(a.clientInvoiceNumber, b.clientInvoiceNumber)
         case 'invoiceDate':
           return s(a.invoiceDate, b.invoiceDate)
         case 'dueDate':
@@ -236,7 +239,14 @@ export function InvoiceInTable({
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
               <Th field="invoiceNumber" label="Invoice #" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
-              <Th field="humanId" label="Human ID" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th
+                field="clientInvoiceNumber"
+                label="Client Invoice #"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
+              <Th field="description" label="Description" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="company" label="Company" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th
                 field="invoiceDate"
@@ -284,7 +294,8 @@ export function InvoiceInTable({
                       {inv.invoiceNumber}
                     </Link>
                   </TableCell>
-                  <TableCell className={tdClass}>{inv.humanId ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{inv.clientInvoiceNumber ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{inv.description ?? '-'}</TableCell>
                   <TableCell className={`${tdClass} text-foreground`}>{inv.companyName}</TableCell>
                   <TableCell className={tdClass}>{formatDate(inv.invoiceDate)}</TableCell>
                   <TableCell className={tdClass}>{formatDate(inv.dueDate)}</TableCell>
@@ -370,8 +381,8 @@ export function InvoiceInTable({
                     </div>
                   </TableCell>
                 </TableRow>
-              )))
-            }
+              ))
+            )}
           </TableBody>
         </Table>
       </div>
@@ -390,6 +401,7 @@ export function InvoiceInTable({
         invoiceStatuses={invoiceStatuses}
         vatMargins={vatMargins}
         companyOptions={companyOptions}
+        purchaseOptions={purchaseOptions}
         onSaved={() => {
           setDialogOpen(false)
           router.refresh()

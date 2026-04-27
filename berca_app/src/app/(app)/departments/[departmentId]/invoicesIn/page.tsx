@@ -16,6 +16,7 @@ import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Badge} from '@/components/ui/badge'
+import {getPurchases} from '@/dal/purchases'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -35,6 +36,7 @@ export default async function InvoicesInPage({params}: PageProps) {
     countries,
     companiesRaw,
     profile,
+    purchases,
   ] = await Promise.all([
     getDepartmentById(departmentId),
     getInvoicesIn(),
@@ -46,6 +48,7 @@ export default async function InvoicesInPage({params}: PageProps) {
     getCountries(),
     getCompanies(),
     getSessionProfileFromCookieOrThrow(),
+    getPurchases(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -72,6 +75,9 @@ export default async function InvoicesInPage({params}: PageProps) {
     deletedByName: v.deletedByName,
     deleted: v.deleted,
   }))
+  const purchaseOptions = purchases
+    .filter(c => !c.deleted)
+    .map(c => ({id: c.id, purchaseNumber: c.purchaseNumber, description: c.description, companyId: c.companyId}))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -109,6 +115,7 @@ export default async function InvoicesInPage({params}: PageProps) {
               invoiceStatuses={invoiceStatuses}
               vatMargins={vatMargins}
               companyOptions={companyOptions}
+              purchaseOptions={purchaseOptions}
             />
           </TabsContent>
 

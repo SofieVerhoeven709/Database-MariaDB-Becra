@@ -1,13 +1,15 @@
 import {DashboardNavbar} from '@/components/custom/dashboardNavbar'
 import {getSessionFromCookie} from '@/lib/sessionUtils'
 import {getRolelevelById} from '@/dal/roleLevel'
+import {redirect} from 'next/navigation'
+import {Route} from 'next'
 
 export default async function DashboardLayout({children}: {children: React.ReactNode}) {
   const session = await getSessionFromCookie()
   const employee = session?.Employee
 
   if (!employee) {
-    return <div>Please log in</div>
+    redirect('../' as Route)
   }
 
   const roleLevel = employee.RoleLevelEmployee.reduce<(typeof employee.RoleLevelEmployee)[0] | null>(

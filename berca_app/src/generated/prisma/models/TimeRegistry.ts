@@ -38,6 +38,7 @@ export type TimeRegistryMinAggregateOutputType = {
   invoiceTime: boolean | null
   onSite: boolean | null
   stayOver: boolean | null
+  approved: boolean | null
   createdBy: string | null
   workOrderId: string | null
   vatMarginId: string | null
@@ -61,6 +62,7 @@ export type TimeRegistryMaxAggregateOutputType = {
   invoiceTime: boolean | null
   onSite: boolean | null
   stayOver: boolean | null
+  approved: boolean | null
   createdBy: string | null
   workOrderId: string | null
   vatMarginId: string | null
@@ -84,6 +86,7 @@ export type TimeRegistryCountAggregateOutputType = {
   invoiceTime: number
   onSite: number
   stayOver: number
+  approved: number
   createdBy: number
   workOrderId: number
   vatMarginId: number
@@ -109,6 +112,7 @@ export type TimeRegistryMinAggregateInputType = {
   invoiceTime?: true
   onSite?: true
   stayOver?: true
+  approved?: true
   createdBy?: true
   workOrderId?: true
   vatMarginId?: true
@@ -132,6 +136,7 @@ export type TimeRegistryMaxAggregateInputType = {
   invoiceTime?: true
   onSite?: true
   stayOver?: true
+  approved?: true
   createdBy?: true
   workOrderId?: true
   vatMarginId?: true
@@ -155,6 +160,7 @@ export type TimeRegistryCountAggregateInputType = {
   invoiceTime?: true
   onSite?: true
   stayOver?: true
+  approved?: true
   createdBy?: true
   workOrderId?: true
   vatMarginId?: true
@@ -251,6 +257,7 @@ export type TimeRegistryGroupByOutputType = {
   invoiceTime: boolean
   onSite: boolean
   stayOver: boolean
+  approved: boolean
   createdBy: string
   workOrderId: string
   vatMarginId: string | null
@@ -295,6 +302,7 @@ export type TimeRegistryWhereInput = {
   invoiceTime?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   onSite?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   stayOver?: Prisma.BoolFilter<"TimeRegistry"> | boolean
+  approved?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   createdBy?: Prisma.StringFilter<"TimeRegistry"> | string
   workOrderId?: Prisma.StringFilter<"TimeRegistry"> | string
   vatMarginId?: Prisma.StringNullableFilter<"TimeRegistry"> | string | null
@@ -324,6 +332,7 @@ export type TimeRegistryOrderByWithRelationInput = {
   invoiceTime?: Prisma.SortOrder
   onSite?: Prisma.SortOrder
   stayOver?: Prisma.SortOrder
+  approved?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   workOrderId?: Prisma.SortOrder
   vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -357,6 +366,7 @@ export type TimeRegistryWhereUniqueInput = Prisma.AtLeast<{
   invoiceTime?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   onSite?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   stayOver?: Prisma.BoolFilter<"TimeRegistry"> | boolean
+  approved?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   createdBy?: Prisma.StringFilter<"TimeRegistry"> | string
   workOrderId?: Prisma.StringFilter<"TimeRegistry"> | string
   vatMarginId?: Prisma.StringNullableFilter<"TimeRegistry"> | string | null
@@ -386,6 +396,7 @@ export type TimeRegistryOrderByWithAggregationInput = {
   invoiceTime?: Prisma.SortOrder
   onSite?: Prisma.SortOrder
   stayOver?: Prisma.SortOrder
+  approved?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   workOrderId?: Prisma.SortOrder
   vatMarginId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -415,6 +426,7 @@ export type TimeRegistryScalarWhereWithAggregatesInput = {
   invoiceTime?: Prisma.BoolWithAggregatesFilter<"TimeRegistry"> | boolean
   onSite?: Prisma.BoolWithAggregatesFilter<"TimeRegistry"> | boolean
   stayOver?: Prisma.BoolWithAggregatesFilter<"TimeRegistry"> | boolean
+  approved?: Prisma.BoolWithAggregatesFilter<"TimeRegistry"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"TimeRegistry"> | string
   workOrderId?: Prisma.StringWithAggregatesFilter<"TimeRegistry"> | string
   vatMarginId?: Prisma.StringNullableWithAggregatesFilter<"TimeRegistry"> | string | null
@@ -438,6 +450,7 @@ export type TimeRegistryCreateInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -462,6 +475,7 @@ export type TimeRegistryUncheckedCreateInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   workOrderId: string
   vatMarginId?: string | null
@@ -486,6 +500,7 @@ export type TimeRegistryUpdateInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -510,6 +525,7 @@ export type TimeRegistryUncheckedUpdateInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -534,6 +550,7 @@ export type TimeRegistryCreateManyInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   workOrderId: string
   vatMarginId?: string | null
@@ -557,6 +574,7 @@ export type TimeRegistryUpdateManyMutationInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -575,6 +593,7 @@ export type TimeRegistryUncheckedUpdateManyInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -614,6 +633,7 @@ export type TimeRegistryCountOrderByAggregateInput = {
   invoiceTime?: Prisma.SortOrder
   onSite?: Prisma.SortOrder
   stayOver?: Prisma.SortOrder
+  approved?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   workOrderId?: Prisma.SortOrder
   vatMarginId?: Prisma.SortOrder
@@ -637,6 +657,7 @@ export type TimeRegistryMaxOrderByAggregateInput = {
   invoiceTime?: Prisma.SortOrder
   onSite?: Prisma.SortOrder
   stayOver?: Prisma.SortOrder
+  approved?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   workOrderId?: Prisma.SortOrder
   vatMarginId?: Prisma.SortOrder
@@ -660,6 +681,7 @@ export type TimeRegistryMinOrderByAggregateInput = {
   invoiceTime?: Prisma.SortOrder
   onSite?: Prisma.SortOrder
   stayOver?: Prisma.SortOrder
+  approved?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   workOrderId?: Prisma.SortOrder
   vatMarginId?: Prisma.SortOrder
@@ -912,6 +934,7 @@ export type TimeRegistryCreateWithoutEmployeeInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   HourType: Prisma.HourTypeCreateNestedOneWithoutTimeRegistryInput
@@ -935,6 +958,7 @@ export type TimeRegistryUncheckedCreateWithoutEmployeeInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   workOrderId: string
   vatMarginId?: string | null
   hourTypeId: string
@@ -968,6 +992,7 @@ export type TimeRegistryCreateWithoutEmployee_TimeRegistry_deletedByToEmployeeIn
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -991,6 +1016,7 @@ export type TimeRegistryUncheckedCreateWithoutEmployee_TimeRegistry_deletedByToE
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   workOrderId: string
   vatMarginId?: string | null
@@ -1043,6 +1069,7 @@ export type TimeRegistryScalarWhereInput = {
   invoiceTime?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   onSite?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   stayOver?: Prisma.BoolFilter<"TimeRegistry"> | boolean
+  approved?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   createdBy?: Prisma.StringFilter<"TimeRegistry"> | string
   workOrderId?: Prisma.StringFilter<"TimeRegistry"> | string
   vatMarginId?: Prisma.StringNullableFilter<"TimeRegistry"> | string | null
@@ -1082,6 +1109,7 @@ export type TimeRegistryCreateWithoutHourTypeInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -1105,6 +1133,7 @@ export type TimeRegistryUncheckedCreateWithoutHourTypeInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   workOrderId: string
   vatMarginId?: string | null
@@ -1154,6 +1183,7 @@ export type TimeRegistryCreateWithoutTimeRegistryEmployeeInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -1177,6 +1207,7 @@ export type TimeRegistryUncheckedCreateWithoutTimeRegistryEmployeeInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   workOrderId: string
   vatMarginId?: string | null
@@ -1216,6 +1247,7 @@ export type TimeRegistryUpdateWithoutTimeRegistryEmployeeInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1239,6 +1271,7 @@ export type TimeRegistryUncheckedUpdateWithoutTimeRegistryEmployeeInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1262,6 +1295,7 @@ export type TimeRegistryCreateWithoutWorkOrderInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -1285,6 +1319,7 @@ export type TimeRegistryUncheckedCreateWithoutWorkOrderInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   vatMarginId?: string | null
   hourTypeId: string
@@ -1334,6 +1369,7 @@ export type TimeRegistryCreateWithoutVatMarginInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -1357,6 +1393,7 @@ export type TimeRegistryUncheckedCreateWithoutVatMarginInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   workOrderId: string
   hourTypeId: string
@@ -1406,6 +1443,7 @@ export type TimeRegistryCreateManyEmployeeInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   workOrderId: string
   vatMarginId?: string | null
   hourTypeId: string
@@ -1428,6 +1466,7 @@ export type TimeRegistryCreateManyEmployee_TimeRegistry_deletedByToEmployeeInput
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   workOrderId: string
   vatMarginId?: string | null
@@ -1450,6 +1489,7 @@ export type TimeRegistryUpdateWithoutEmployeeInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   HourType?: Prisma.HourTypeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1473,6 +1513,7 @@ export type TimeRegistryUncheckedUpdateWithoutEmployeeInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1496,6 +1537,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutEmployeeInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1518,6 +1560,7 @@ export type TimeRegistryUpdateWithoutEmployee_TimeRegistry_deletedByToEmployeeIn
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1541,6 +1584,7 @@ export type TimeRegistryUncheckedUpdateWithoutEmployee_TimeRegistry_deletedByToE
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1564,6 +1608,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutEmployee_TimeRegistry_deletedB
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1586,6 +1631,7 @@ export type TimeRegistryCreateManyHourTypeInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   workOrderId: string
   vatMarginId?: string | null
@@ -1608,6 +1654,7 @@ export type TimeRegistryUpdateWithoutHourTypeInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1631,6 +1678,7 @@ export type TimeRegistryUncheckedUpdateWithoutHourTypeInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1654,6 +1702,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutHourTypeInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1676,6 +1725,7 @@ export type TimeRegistryCreateManyWorkOrderInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   vatMarginId?: string | null
   hourTypeId: string
@@ -1698,6 +1748,7 @@ export type TimeRegistryUpdateWithoutWorkOrderInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1721,6 +1772,7 @@ export type TimeRegistryUncheckedUpdateWithoutWorkOrderInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1744,6 +1796,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutWorkOrderInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   vatMarginId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1766,6 +1819,7 @@ export type TimeRegistryCreateManyVatMarginInput = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy: string
   workOrderId: string
   hourTypeId: string
@@ -1788,6 +1842,7 @@ export type TimeRegistryUpdateWithoutVatMarginInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1811,6 +1866,7 @@ export type TimeRegistryUncheckedUpdateWithoutVatMarginInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1834,6 +1890,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutVatMarginInput = {
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1887,6 +1944,7 @@ export type TimeRegistrySelect<ExtArgs extends runtime.Types.Extensions.Internal
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy?: boolean
   workOrderId?: boolean
   vatMarginId?: boolean
@@ -1919,6 +1977,7 @@ export type TimeRegistrySelectScalar = {
   invoiceTime?: boolean
   onSite?: boolean
   stayOver?: boolean
+  approved?: boolean
   createdBy?: boolean
   workOrderId?: boolean
   vatMarginId?: boolean
@@ -1928,7 +1987,7 @@ export type TimeRegistrySelectScalar = {
   deletedBy?: boolean
 }
 
-export type TimeRegistryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activityDescription" | "additionalInfo" | "invoiceInfo" | "startTime" | "endTime" | "workDate" | "startBreak" | "endBreak" | "createdAt" | "invoiceTime" | "onSite" | "stayOver" | "createdBy" | "workOrderId" | "vatMarginId" | "hourTypeId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["timeRegistry"]>
+export type TimeRegistryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activityDescription" | "additionalInfo" | "invoiceInfo" | "startTime" | "endTime" | "workDate" | "startBreak" | "endBreak" | "createdAt" | "invoiceTime" | "onSite" | "stayOver" | "approved" | "createdBy" | "workOrderId" | "vatMarginId" | "hourTypeId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["timeRegistry"]>
 export type TimeRegistryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   HourType?: boolean | Prisma.HourTypeDefaultArgs<ExtArgs>
@@ -1963,6 +2022,7 @@ export type $TimeRegistryPayload<ExtArgs extends runtime.Types.Extensions.Intern
     invoiceTime: boolean
     onSite: boolean
     stayOver: boolean
+    approved: boolean
     createdBy: string
     workOrderId: string
     vatMarginId: string | null
@@ -2358,6 +2418,7 @@ export interface TimeRegistryFieldRefs {
   readonly invoiceTime: Prisma.FieldRef<"TimeRegistry", 'Boolean'>
   readonly onSite: Prisma.FieldRef<"TimeRegistry", 'Boolean'>
   readonly stayOver: Prisma.FieldRef<"TimeRegistry", 'Boolean'>
+  readonly approved: Prisma.FieldRef<"TimeRegistry", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"TimeRegistry", 'String'>
   readonly workOrderId: Prisma.FieldRef<"TimeRegistry", 'String'>
   readonly vatMarginId: Prisma.FieldRef<"TimeRegistry", 'String'>

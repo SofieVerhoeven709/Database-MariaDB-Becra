@@ -21,8 +21,8 @@ export default async function TimeRegistriesPage({params}: PageProps) {
     getEmployees(),
     prismaClient.hourType.findMany({where: {deleted: false}, orderBy: {name: 'asc'}}),
     prismaClient.workOrder.findMany({
-      where: {deleted: false, hoursMaterialClosed: false},
-      select: {id: true, workOrderNumber: true, description: true},
+      where: {deleted: false},
+      select: {id: true, workOrderNumber: true, description: true, hoursMaterialClosed: true},
       orderBy: {workOrderNumber: 'asc'},
     }),
     getSessionProfileFromCookieOrThrow(),
@@ -32,15 +32,30 @@ export default async function TimeRegistriesPage({params}: PageProps) {
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
-  const timeRegistries = timeRegistriesFromDAL.map(mapTimeRegistry)
+  const timeRegistries = timeRegistriesFromDAL
+    .map(mapTimeRegistry)
+    .filter(tr =>
+      currentUserLevel >= 80
+        ? true
+        : tr.createdBy === profile.id || tr.additionalEmployees.some(e => e.employeeId === profile.id),
+    )
   const employees = employeesFromDAL.map(mapEmployee)
 
   const employeeOptions = employees.map(e => ({id: e.id, firstName: e.firstName, lastName: e.lastName}))
   const hourTypeOptions = hourTypes.map(ht => ({id: ht.id, name: ht.name}))
-  const workOrderOptions = workOrders.map(wo => ({
+
+  const openWorkOrders = workOrders.filter(wo => !wo.hoursMaterialClosed)
+  const workOrderOptions = openWorkOrders.map(wo => ({
     id: wo.id,
     workOrderNumber: wo.workOrderNumber,
     description: wo.description,
+    hoursMaterialClosed: wo.hoursMaterialClosed,
+  }))
+  const allWorkOrderOptions = workOrders.map(wo => ({
+    id: wo.id,
+    workOrderNumber: wo.workOrderNumber,
+    description: wo.description,
+    hoursMaterialClosed: wo.hoursMaterialClosed,
   }))
 
   return (
@@ -56,6 +71,7 @@ export default async function TimeRegistriesPage({params}: PageProps) {
           employees={employeeOptions}
           hourTypes={hourTypeOptions}
           workOrders={workOrderOptions}
+          allWorkOrders={allWorkOrderOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           currentUserId={profile.id}

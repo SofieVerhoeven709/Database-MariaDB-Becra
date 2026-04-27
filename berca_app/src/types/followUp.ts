@@ -1,4 +1,5 @@
 import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
+import {MappedVisibilityForDepartment} from '@/types/visibilityForDepartment'
 
 // ─── FollowUp target (what the follow-up is about) ───────────────────────────
 
@@ -61,6 +62,7 @@ export interface MappedFollowUp {
   // Visibility
   targetId: string // FollowUp's own Target for visibility
   visibilityForRoles: MappedVisibilityForRole[]
+  visibilityForDepartments: MappedVisibilityForDepartment[]
   // Soft delete
   deleted: boolean
   deletedAt: string | null

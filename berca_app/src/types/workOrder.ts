@@ -47,6 +47,7 @@ export interface PermissionProps {
   canAdd: boolean
   canDelete: boolean
   isAdmin: boolean
+  canApprove: boolean
 }
 
 // Row types used by detail tabs.

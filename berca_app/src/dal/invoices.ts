@@ -64,7 +64,7 @@ const invoiceOutInclude = {
             },
           },
           TimeRegistry: {
-            where: {deleted: false},
+            where: {deleted: false, approved: true},
             select: {
               id: true,
               invoiceTime: true,
@@ -141,6 +141,7 @@ const invoiceInInclude = {
   InvoiceStatus: {select: {id: true, name: true}},
   VatMargin: {select: {id: true, vat: true}},
   Company: {select: {id: true, name: true}},
+  Purchase: {select: {id: true, description: true, purchaseNumber: true}},
 } as const
 
 // ─── InvoiceOut ────────────────────────────────────────────────────────────────
@@ -265,9 +266,7 @@ export async function getAllVatMargins() {
   })
 
   const countryIds = [...new Set(rows.map(r => r.countryId).filter((id): id is string => !!id))]
-  const employeeIds = [
-    ...new Set(rows.flatMap(r => [r.createdBy, r.deletedBy]).filter((id): id is string => !!id)),
-  ]
+  const employeeIds = [...new Set(rows.flatMap(r => [r.createdBy, r.deletedBy]).filter((id): id is string => !!id))]
 
   const [countries, employees] = await Promise.all([
     countryIds.length
@@ -289,7 +288,7 @@ export async function getAllVatMargins() {
 
   return rows.map(r => ({
     ...r,
-    countryName: r.countryId ? countryById.get(r.countryId)?.name ?? null : null,
+    countryName: r.countryId ? (countryById.get(r.countryId)?.name ?? null) : null,
     createdByName: employeeById.get(r.createdBy)
       ? `${employeeById.get(r.createdBy)!.firstName} ${employeeById.get(r.createdBy)!.lastName}`
       : r.createdBy,

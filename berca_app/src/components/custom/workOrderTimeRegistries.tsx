@@ -39,6 +39,7 @@ type InlineForm = {
   startTime: string
   endTime: string
   invoiceTime: boolean
+  approved: boolean
   onSite: boolean
   hourTypeId: string
   employeeIds: string[]
@@ -51,6 +52,7 @@ const emptyInlineForm = (): InlineForm => ({
   startTime: '',
   endTime: '',
   invoiceTime: false,
+  approved: false,
   onSite: false,
   hourTypeId: '',
   employeeIds: [],
@@ -149,6 +151,7 @@ export function WorkOrderTimeRegistries({
       startBreak: null,
       endBreak: null,
       invoiceTime: f.invoiceTime,
+      approved: f.approved,
       onSite: f.onSite,
       hourTypeId: f.hourTypeId,
       workOrderId,
@@ -169,6 +172,7 @@ export function WorkOrderTimeRegistries({
       startBreak: combineDateAndTime(f.workDate, f.startBreak),
       endBreak: combineDateAndTime(f.workDate, f.endBreak),
       invoiceTime: f.invoiceTime,
+      approved: f.approved,
       onSite: f.onSite,
       hourTypeId: f.hourTypeId,
       workOrderId,
@@ -191,6 +195,7 @@ export function WorkOrderTimeRegistries({
       endBreak: tr.endBreak?.toISOString?.() ?? (tr.endBreak ? String(tr.endBreak) : null),
       createdAt: tr.createdAt?.toISOString?.() ?? String(tr.createdAt),
       invoiceTime: tr.invoiceTime,
+      approved: tr.approved,
       onSite: tr.onSite,
       createdBy: tr.createdBy,
       workOrderId: tr.workOrderId,
@@ -300,6 +305,7 @@ export function WorkOrderTimeRegistries({
               <TableHead className={thClass}>On Site</TableHead>
               <TableHead className={thClass}>Invoice Time</TableHead>
               <TableHead className={thClass}>Stay Over</TableHead>
+              <TableHead className={thClass}>Approved</TableHead>
               <TableHead className={thClass}>Created By</TableHead>
               <TableHead className={thClass}>Employees</TableHead>
               <TableHead className="w-10" />
@@ -372,6 +378,14 @@ export function WorkOrderTimeRegistries({
                     onCheckedChange={v => setInlineForm(f => ({...f, stayOver: v}))}
                   />
                 </TableCell>
+                {permissions.canApprove && (
+                  <TableCell>
+                    <Switch
+                      checked={inlineForm.approved}
+                      onCheckedChange={v => setInlineForm(f => ({...f, approved: v}))}
+                    />
+                  </TableCell>
+                )}
                 <TableCell colSpan={1}>
                   <CompactEmployeeMultiSelect
                     value={inlineForm.employeeIds}
@@ -548,6 +562,7 @@ export function WorkOrderTimeRegistries({
           setDialogOpen(open)
         }}
         timeRegistry={editingRecord ? rowToMapped(editingRecord) : null}
+        canApprove={permissions.canApprove}
         employees={employees}
         hourTypes={hourTypes}
         fixedWorkOrderId={workOrderId}

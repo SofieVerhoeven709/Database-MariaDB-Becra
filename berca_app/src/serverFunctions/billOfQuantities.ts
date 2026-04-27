@@ -389,7 +389,7 @@ async function createInvoiceFromApprovedBoq(boqId: string, profileId: string) {
           invoiceNumber,
           boqId: boq.id,
           poNumber: boq.poNumber,
-          humanId: boq.humanId,
+          clientReference: boq.clientReference,
           invoiceDate: boq.boqDate,
           dueDate: boq.dueDate,
           sentDate: boq.sentDate,

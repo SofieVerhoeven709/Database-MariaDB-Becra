@@ -34,6 +34,7 @@ interface FollowUpFormDialogProps {
   onSave: (
     followUp: MappedFollowUp,
     visibilityRows: VisibilityRow[],
+    visibilityDepartmentRows: VisibilityDepartmentRow[],
     targetTypeName?: TargetTypeName,
     targetEntityId?: string,
   ) => Promise<void>
@@ -123,7 +124,9 @@ export function FollowUpFormDialog({
   useEffect(() => {
     const next = followUp ?? emptyFollowUp()
     setForm(next)
-    setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
+    setVisibilityDepartmentRows(
+      buildInitialVisibilityDepartmentRows(next.visibilityForDepartments ?? [], departmentOptions, [departmentName]),
+    )
     if (!followUp) {
       setTargetTypeName('')
       setTargetEntityId('')
@@ -155,6 +158,7 @@ export function FollowUpFormDialog({
       await onSave(
         trimmedForm,
         visibilityRows,
+        visibilityDepartmentRows,
         isEdit ? undefined : (targetTypeName as TargetTypeName) || undefined,
         isEdit ? undefined : targetEntityId || undefined,
       )

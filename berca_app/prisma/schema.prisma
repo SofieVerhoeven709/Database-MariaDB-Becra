@@ -3111,7 +3111,7 @@ model ScheduleMeeting {
   deleted                                       Boolean   @default(false)
   deletedAt                                     DateTime? @db.DateTime(0)
   deletedBy                                     String?   @db.Char(36)
-  Employee_ScheduleMeeting_deletedByToEmployee  Employee? @relation("ScheduleMeeting_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "ScheduleMeeting_ibfk_1")
+  Employee_ScheduleMeeting_deletedByToEmployee  Employee? @relation("ScheduleMeeting_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_1")
   Employee_ScheduleMeeting_createdByToEmployee  Employee  @relation("ScheduleMeeting_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_2")
   Employee_ScheduleMeeting_employeeIdToEmployee Employee  @relation("ScheduleMeeting_employeeIdToEmployee", fields: [employeeId], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_3")
 

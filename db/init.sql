@@ -137,6 +137,39 @@ CREATE TABLE
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
+
+CREATE TABLE
+IF NOT EXISTS ScheduleMeeting (
+  id CHAR(36) NOT NULL PRIMARY KEY,
+  employeeId CHAR(36) NOT NULL,
+  conversationType VARCHAR(100) NOT NULL,
+  startAt DATETIME NOT NULL,
+  endAt DATETIME NOT NULL,
+  place VARCHAR(255) NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'planned',
+  notes TEXT NULL,
+  completedAt DATETIME NULL,
+  createdAt DATETIME NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  updatedAt DATETIME NULL,
+  deleted BOOLEAN NOT NULL DEFAULT false,
+  deletedAt DATETIME NULL,
+  deletedBy CHAR(36) NULL,
+
+  INDEX employeeId (employeeId),
+  INDEX createdBy (createdBy),
+  INDEX deletedBy (deletedBy),
+
+CONSTRAINT ScheduleMeeting_ibfk_1
+  FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL,
+CONSTRAINT ScheduleMeeting_ibfk_2
+  FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT,
+CONSTRAINT ScheduleMeeting_ibfk_3
+  FOREIGN KEY (employeeId) REFERENCES Employee(id) ON DELETE RESTRICT
+
+) ENGINE = InnoDB;
+
+
 CREATE TABLE
       IF NOT EXISTS MaterialGroup (
             id CHAR(36) NOT NULL PRIMARY KEY,

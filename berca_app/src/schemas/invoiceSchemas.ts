@@ -6,7 +6,7 @@ export const invoiceOutSchema = z.object({
   id: z.string(),
   invoiceNumber: z.string().min(1).max(255),
   poNumber: z.string().max(255).nullable().optional(),
-  humanId: z.string().max(255).nullable().optional(),
+  clientReference: z.string().max(255).nullable().optional(),
   invoiceDate: requiredDateSchema,
   createdAt: requiredDateSchema,
   dueDate: requiredDateSchema,
@@ -26,6 +26,7 @@ export const invoiceOutSchema = z.object({
   invoiceStatusId: z.string(),
   // Optional price list applied to billing line calculations.
   priceListId: z.string().nullable().optional(), // ← new
+  boqId: z.string().nullable().optional(),
 })
 
 export const createInvoiceOutSchema = invoiceOutSchema
@@ -61,8 +62,9 @@ export const invoiceOutIdSchema = invoiceOutSchema.pick({id: true})
 export const invoiceInSchema = z.object({
   id: z.string(),
   invoiceNumber: z.string().min(1).max(255),
-  poNumber: z.string().max(255).nullable().optional(),
-  humanId: z.string().max(255).nullable().optional(),
+  poNumber: z.string().nullable().optional(),
+  clientInvoiceNumber: z.string().max(255).nullable().optional(),
+  description: z.string().nullable().optional(),
   invoiceDate: requiredDateSchema,
   createdAt: requiredDateSchema,
   dueDate: requiredDateSchema,

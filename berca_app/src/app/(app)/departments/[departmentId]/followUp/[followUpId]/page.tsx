@@ -16,34 +16,49 @@ interface PageProps {
 export default async function FollowUpDetailPage({params}: PageProps) {
   const {departmentId, followUpId} = await params
 
-  const [department, followUpFromDAL, roleLevels, profile, statuses, urgencyTypes, followUpTypes, employees, contacts] =
-    await Promise.all([
-      getDepartmentById(departmentId),
-      getFollowUpDetail(followUpId).catch(() => null),
-      getAllRoleLevels(),
-      getSessionProfileFromCookieOrThrow(),
-      prismaClient.status.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-      prismaClient.urgencyType.findMany({
-        where: {deleted: false},
-        orderBy: {name: 'asc'},
-        select: {id: true, name: true},
-      }),
-      prismaClient.followUpType.findMany({
-        where: {deleted: false},
-        orderBy: {name: 'asc'},
-        select: {id: true, name: true},
-      }),
-      prismaClient.employee.findMany({
-        where: {deleted: false},
-        orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
-        select: {id: true, firstName: true, lastName: true},
-      }),
-      prismaClient.contact.findMany({
-        where: {deleted: false},
-        orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
-        select: {id: true, firstName: true, lastName: true},
-      }),
-    ])
+  const [
+    department,
+    followUpFromDAL,
+    roleLevels,
+    profile,
+    statuses,
+    urgencyTypes,
+    followUpTypes,
+    employees,
+    contacts,
+    departments,
+  ] = await Promise.all([
+    getDepartmentById(departmentId),
+    getFollowUpDetail(followUpId).catch(() => null),
+    getAllRoleLevels(),
+    getSessionProfileFromCookieOrThrow(),
+    prismaClient.status.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+    prismaClient.urgencyType.findMany({
+      where: {deleted: false},
+      orderBy: {name: 'asc'},
+      select: {id: true, name: true},
+    }),
+    prismaClient.followUpType.findMany({
+      where: {deleted: false},
+      orderBy: {name: 'asc'},
+      select: {id: true, name: true},
+    }),
+    prismaClient.employee.findMany({
+      where: {deleted: false},
+      orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
+      select: {id: true, firstName: true, lastName: true},
+    }),
+    prismaClient.contact.findMany({
+      where: {deleted: false},
+      orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
+      select: {id: true, firstName: true, lastName: true},
+    }),
+    prismaClient.department.findMany({
+      where: {deleted: false},
+      orderBy: {name: 'asc'},
+      select: {id: true, name: true},
+    }),
+  ])
 
   if (!department) return <p>Department not found</p>
   if (!followUpFromDAL) notFound()
@@ -70,6 +85,8 @@ export default async function FollowUpDetailPage({params}: PageProps) {
           employeeOptions={employeeOptions}
           contactOptions={contactOptions}
           departmentId={departmentId}
+          departmentOptions={departments}
+          defaultVisibleDepartmentNames={[department.name]}
         />
       </div>
     </main>

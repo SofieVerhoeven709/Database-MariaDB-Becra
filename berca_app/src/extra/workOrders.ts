@@ -8,6 +8,7 @@ import type {
   WorkOrderStructure,
   Material,
   Training,
+  ProjectEmployee,
 } from '@/generated/prisma/client'
 import type {MappedWorkOrder} from '@/types/workOrder'
 
@@ -49,7 +50,13 @@ export function mapWorkOrder(wo: WorkOrderWithRelations): MappedWorkOrder {
 // Matches the include shape from getWorkOrderById for the detail tabs.
 export type WorkOrderDetailData = WorkOrder & {
   Employee: Pick<Employee, 'firstName' | 'lastName'>
-  Project: Pick<Project, 'projectNumber' | 'projectName'>
+  Project: Pick<Project, 'projectNumber' | 'projectName'> & {
+    ProjectEmployee: {
+      employeeId: string
+      manager: boolean
+      supervisor: boolean
+    }[]
+  }
   TimeRegistry: (TimeRegistry & {
     Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
     HourType: Pick<HourType, 'id' | 'name'>

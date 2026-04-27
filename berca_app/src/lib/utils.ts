@@ -134,6 +134,10 @@ export function generateInvoiceOutNumber(year: number, sequence: number): string
   return `${year}${String(sequence + 100).padStart(4, '0')}`
 }
 
+export function generateBoqNumber(year: number, sequence: number): string {
+  return `${year}${String(sequence + 100).padStart(4, '0')}`
+}
+
 export function generateDocumentNumber() {
   const now = new Date()
 

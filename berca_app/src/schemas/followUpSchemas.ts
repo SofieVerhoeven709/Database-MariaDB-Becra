@@ -1,6 +1,7 @@
 import {z} from 'zod/v4'
 import {dateSchema} from '@/schemas/schemaHelpers'
 import {visibilityInputSchema} from '@/schemas/visibilityForRoleSchemas'
+import {visibilityInputDepartmentSchema} from '@/schemas/visibilityForDepartmentSchemas'
 
 // ─── Base ─────────────────────────────────────────────────────────────────────
 
@@ -46,6 +47,7 @@ export const createFollowUpSchema = followUpSchema
   .extend({
     // Visibility is stored on the follow-up's target.
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
+    visibilityForDepartments: z.array(visibilityInputDepartmentSchema).default([]),
     // Optional: link this follow-up to a target at creation time
     followUpTargetId: z.string().nullable().optional(),
   })
@@ -64,6 +66,7 @@ export const updateFollowUpSchema = followUpSchema
   .extend({
     // Visibility updates also target the follow-up's target row.
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
+    visibilityForDepartments: z.array(visibilityInputDepartmentSchema).default([]),
   })
 
 // ─── ID only ──────────────────────────────────────────────────────────────────

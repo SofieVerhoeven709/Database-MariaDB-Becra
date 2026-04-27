@@ -11,6 +11,7 @@ export interface MappedTimeRegistry {
   endBreak: string | null
   createdAt: string
   invoiceTime: boolean
+  approved: boolean
   onSite: boolean
   createdBy: string
   workOrderId: string

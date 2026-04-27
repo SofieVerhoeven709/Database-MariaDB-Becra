@@ -21,7 +21,7 @@ import type {ProjectOption} from '@/components/custom/invoiceOutFormDialog'
 
 type SortField =
   | 'invoiceNumber'
-  | 'humanId'
+  | 'clientReference'
   | 'invoiceDate'
   | 'dueDate'
   | 'sentDate'
@@ -147,7 +147,7 @@ export function InvoiceOutTable({
       const q = search.toLowerCase()
       return (
         inv.invoiceNumber.toLowerCase().includes(q) ||
-        (inv.humanId?.toLowerCase().includes(q) ?? false) ||
+        (inv.clientReference?.toLowerCase().includes(q) ?? false) ||
         (inv.poNumber?.toLowerCase().includes(q) ?? false) ||
         inv.invoiceStatusName.toLowerCase().includes(q) ||
         inv.paymentMethodName.toLowerCase().includes(q)
@@ -160,8 +160,8 @@ export function InvoiceOutTable({
       switch (sortField) {
         case 'invoiceNumber':
           return s(a.invoiceNumber, b.invoiceNumber)
-        case 'humanId':
-          return s(a.humanId, b.humanId)
+        case 'clientReference':
+          return s(a.clientReference, b.clientReference)
         case 'invoiceDate':
           return s(a.invoiceDate, b.invoiceDate)
         case 'dueDate':
@@ -246,7 +246,13 @@ export function InvoiceOutTable({
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
               <Th field="invoiceNumber" label="Invoice #" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
-              <Th field="humanId" label="Human ID" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th
+                field="clientReference"
+                label="Client Reference"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
               <Th
                 field="invoiceDate"
                 label="Invoice Date"
@@ -293,7 +299,7 @@ export function InvoiceOutTable({
                       {inv.invoiceNumber}
                     </Link>
                   </TableCell>
-                  <TableCell className={tdClass}>{inv.humanId ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{inv.clientReference ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{formatDate(inv.invoiceDate)}</TableCell>
                   <TableCell className={tdClass}>{formatDate(inv.dueDate)}</TableCell>
                   <TableCell className={tdClass}>{formatDate(inv.sentDate)}</TableCell>

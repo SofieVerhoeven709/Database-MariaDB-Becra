@@ -5,7 +5,13 @@ const timeRegistryInclude = {
   // Shared include bundle so list/detail queries return the same relations.
   Employee: true,
   HourType: true,
-  WorkOrder: {select: {workOrderNumber: true}},
+  WorkOrder: {
+    select: {
+      workOrderNumber: true,
+      projectId: true,
+      Project: {select: {id: true, projectNumber: true, projectName: true}},
+    },
+  },
   TimeRegistryEmployee: {
     include: {Employee: true},
   },

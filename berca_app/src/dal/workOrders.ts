@@ -20,7 +20,19 @@ export async function getWorkOrderById(id: string) {
     include: {
       // Include related rows used by detail tabs.
       Employee: {select: {id: true, firstName: true, lastName: true}},
-      Project: {select: {projectNumber: true, projectName: true}},
+      Project: {
+        select: {
+          projectNumber: true,
+          projectName: true,
+          ProjectEmployee: {
+            select: {
+              employeeId: true,
+              manager: true,
+              supervisor: true,
+            },
+          },
+        },
+      },
       TimeRegistry: {
         // Pull hour types and extra employees for the time registry tab.
         include: {

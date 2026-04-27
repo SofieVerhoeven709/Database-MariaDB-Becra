@@ -1,4 +1,11 @@
-import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
+export interface MappedProjectEmployee {
+  id: string
+  employeeId: string
+  employeeName: string
+  additionalInfo: string | null
+  manager: boolean
+  supervisor: boolean
+}
 
 export interface MappedProject {
   id: string
@@ -25,5 +32,5 @@ export interface MappedProject {
   deletedAt: string | null
   deletedBy: string | null
   targetId: string
-  visibilityForRoles: MappedVisibilityForRole[]
+  projectEmployees: MappedProjectEmployee[]
 }

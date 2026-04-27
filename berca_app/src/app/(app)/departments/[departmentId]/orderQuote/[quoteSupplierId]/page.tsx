@@ -2,11 +2,12 @@ import {notFound} from 'next/navigation'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
-import {getQuoteSupplierById} from '@/dal/quoteSuppliers'
+import {getPaymentConditionOptions, getQuoteSupplierById} from '@/dal/quoteSuppliers'
 import {mapQuoteSupplierDetail} from '@/extra/quoteSuppliers'
 import {QuoteSupplierDetail} from '@/components/custom/quoteSupplierDetail'
 import {getMaterialsForSupplierCompany} from '@/dal/materials'
 import {getMaterialDemands} from '@/dal/materialDemands'
+import {getSupplierCompanies} from '@/dal/companies'
 
 interface PageProps {
   params: Promise<{departmentId: string; quoteSupplierId: string}>
@@ -17,11 +18,13 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
   const {departmentId, quoteSupplierId} = await params
   const {materialId, materialDemandId} = (await searchParams) ?? {}
 
-  const [department, quoteRaw, demandsRaw, profile] = await Promise.all([
+  const [department, quoteRaw, demandsRaw, profile, companiesRaw, paymentConditionsRaw] = await Promise.all([
     getDepartmentById(departmentId),
     getQuoteSupplierById(quoteSupplierId),
     getMaterialDemands(),
     getSessionProfileFromCookieOrThrow(),
+    getSupplierCompanies(),
+    getPaymentConditionOptions(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -30,7 +33,7 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
   const materialsRaw = await getMaterialsForSupplierCompany(quoteRaw.companyId)
 
   const quote = mapQuoteSupplierDetail(quoteRaw)
-  const {currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   // Limit selectable materials to the supplier linked to this quote.
   const materialOptions = materialsRaw.map(material => ({
@@ -46,9 +49,9 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
   const materialDemandOptions = demandsRaw
     .filter(demand => allowedMaterialIds.has(demand.materialId))
     .map(demand => ({
-    id: demand.id,
-    materialId: demand.materialId,
-    label: `${demand.Material.beNumber ?? '—'} — ${demand.Material.shortDescription ?? demand.Material.name ?? demand.id}`,
+      id: demand.id,
+      materialId: demand.materialId,
+      label: `${demand.Material.beNumber ?? '—'} — ${demand.Material.shortDescription ?? demand.Material.name ?? demand.id}`,
     }))
 
   // Guard against invalid defaults passed through query params.
@@ -58,13 +61,22 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
       ? materialDemandId
       : undefined
 
+  const companyOptions = companiesRaw.map(c => ({id: c.id, name: c.name})).sort((a, b) => a.name.localeCompare(b.name))
+
+  const paymentConditionOptions = paymentConditionsRaw
+    .map(pc => ({id: pc.id, name: pc.name}))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-7xl">
         <QuoteSupplierDetail
           quote={quote}
           departmentId={departmentId}
+          currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          companyOptions={companyOptions}
+          paymentConditionOptions={paymentConditionOptions}
           materialOptions={materialOptions}
           materialDemandOptions={materialDemandOptions}
           defaultMaterialId={safeDefaultMaterialId}
@@ -74,4 +86,3 @@ export default async function QuoteSupplierDetailPage({params, searchParams}: Pa
     </main>
   )
 }
-

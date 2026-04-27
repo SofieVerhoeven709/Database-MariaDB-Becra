@@ -2,22 +2,12 @@ import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 import {projectBOMInclude} from './projectBoms'
 
-// Shared include bundle for list views.
 const projectInclude = {
   Company: true,
   ProjectType: true,
-  Target: {
+  ProjectEmployee: {
     include: {
-      VisibilityForRole: {
-        include: {
-          RoleLevel: {
-            include: {
-              Role: true,
-              SubRole: true,
-            },
-          },
-        },
-      },
+      Employee: true,
     },
   },
 } as const
@@ -36,7 +26,11 @@ export async function getProjectById(id: string) {
       ProjectType: true,
       Employee: true,
       Project: true,
-      // Include subprojects and related metadata for the detail view.
+      ProjectEmployee: {
+        include: {
+          Employee: true,
+        },
+      },
       other_Project: {
         include: {
           Company: true,
@@ -61,15 +55,6 @@ export async function getProjectById(id: string) {
         include: {
           Company: true,
           Employee: true,
-        },
-      },
-      Target: {
-        include: {
-          VisibilityForRole: {
-            include: {
-              RoleLevel: {include: {Role: true, SubRole: true}},
-            },
-          },
         },
       },
     },

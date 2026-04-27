@@ -1,14 +1,11 @@
 import {z} from 'zod/v4'
-import {visibilityInputSchema} from '@/schemas/visibilityForRoleSchemas'
 
 const dateSchema = z.preprocess(
-  // Treat empty values as null for optional dates.
   val => (val === '' || val === null || val === undefined ? null : new Date(val as string)),
   z.date().nullable(),
 )
 
 const requiredDateSchema = z.preprocess(
-  // Coerce strings into Date instances for required timestamps.
   val => (typeof val === 'string' || val instanceof Date ? new Date(val) : val),
   z.date(),
 )
@@ -37,9 +34,25 @@ export const projectSchema = z.object({
   deletedBy: z.string().nullable().optional(),
 })
 
-export const upsertProjectSchema = projectSchema.extend({
-  // Visibility rows are managed separately from the project record.
-  visibilityForRoles: z.array(visibilityInputSchema).default([]),
-})
+export const upsertProjectSchema = projectSchema
 
 export const updateProjectSchema = projectSchema.pick({id: true})
+
+export const createProjectEmployeeSchema = z.object({
+  projectId: z.string(),
+  employeeId: z.string(),
+  additionalInfo: z.string().nullable().optional(),
+  manager: z.boolean().default(false),
+  supervisor: z.boolean().default(false),
+})
+
+export const updateProjectEmployeeSchema = z.object({
+  id: z.string(),
+  additionalInfo: z.string().nullable().optional(),
+  manager: z.boolean(),
+  supervisor: z.boolean(),
+})
+
+export const deleteProjectEmployeeSchema = z.object({
+  id: z.string(),
+})

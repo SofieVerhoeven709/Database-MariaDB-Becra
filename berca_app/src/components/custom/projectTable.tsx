@@ -9,8 +9,6 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
 import type {MappedProject} from '@/types/project'
-import type {RoleLevelOption} from '@/types/roleLevel'
-import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {
   createProjectAction,
   hardDeleteProjectAction,
@@ -70,8 +68,6 @@ interface ProjectTableProps {
   currentUserRole: string
   currentUserLevel: number
   employees: Option[]
-  roleLevelOptions: RoleLevelOption[]
-  defaultVisibleRoleNames: string[]
   departmentId: string
 }
 
@@ -82,19 +78,12 @@ export function ProjectTable({
   currentUserRole,
   currentUserLevel,
   employees,
-  roleLevelOptions,
-  defaultVisibleRoleNames,
   departmentId,
 }: ProjectTableProps) {
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  // Level thresholds:
-  //   >= 40  can edit project fields
-  //   >= 60  can create new projects
-  //   >= 80  can delete + manage visibility
   const canEdit = currentUserLevel >= 40
   const canCreate = currentUserLevel >= 60
   const canDelete = currentUserLevel >= 80
-  const canManageVisibility = currentUserLevel >= 80
   const canEditNumber = currentUserLevel >= 80
 
   const projects = initialProjects
@@ -109,7 +98,6 @@ export function ProjectTable({
 
   const router = useRouter()
 
-  // Resolve employee IDs to display names for table columns.
   const getEmployeeName = (id: string | null) => {
     if (!id) return '-'
     const emp = employees.find(e => e.id === id)
@@ -122,7 +110,6 @@ export function ProjectTable({
     return p ? p.projectNumber : '-'
   }
 
-  // Apply open/deleted filters and search terms before sorting.
   const filtered = projects
     .filter(p => {
       if (filterOpen === 'open' && !p.isOpen) return false
@@ -195,7 +182,7 @@ export function ProjectTable({
     setDialogOpen(true)
   }
 
-  async function handleSave(p: MappedProject, visibilityRows: VisibilityRow[]) {
+  async function handleSave(p: MappedProject) {
     const payload = {
       ...p,
       startDate: p.startDate ? new Date(p.startDate) : null,
@@ -204,10 +191,9 @@ export function ProjectTable({
       engineeringStartDate: p.engineeringStartDate ? new Date(p.engineeringStartDate) : null,
       createdAt: new Date(p.createdAt),
       deletedAt: p.deletedAt ? new Date(p.deletedAt) : null,
-      // Strip view-only fields before sending to the server.
       companyName: undefined,
       projectTypeName: undefined,
-      visibilityForRoles: visibilityRows,
+      projectEmployees: undefined,
     }
 
     if (editingProject) {
@@ -241,7 +227,6 @@ export function ProjectTable({
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Search + filters + create */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center flex-1">
           <div className="relative max-w-sm flex-1">
@@ -287,7 +272,6 @@ export function ProjectTable({
         )}
       </div>
 
-      {/* Table */}
       <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
         <Table>
           <TableHeader>
@@ -520,9 +504,6 @@ export function ProjectTable({
         companies={companies}
         canEditNumber={canEditNumber}
         onSave={handleSave}
-        roleLevelOptions={roleLevelOptions}
-        defaultVisibleRoleNames={defaultVisibleRoleNames}
-        canManageVisibility={canManageVisibility}
       />
     </div>
   )

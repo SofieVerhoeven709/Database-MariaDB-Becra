@@ -14,7 +14,12 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog'
-import {updateProjectAction} from '@/serverFunctions/projects'
+import {
+  createProjectEmployeeAction,
+  deleteProjectEmployeeAction,
+  updateProjectAction,
+  updateProjectEmployeeAction,
+} from '@/serverFunctions/projects'
 import {
   createProjectContactAction,
   updateProjectContactAction,
@@ -35,12 +40,8 @@ import {
 import {createContactAndReturnIdAction} from '@/serverFunctions/contacts'
 import type {Route} from 'next'
 import type {ProjectDetailData} from '@/extra/projectDetails'
-import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
-import type {RoleLevelOption} from '@/types/roleLevel'
 import type {MappedContact} from '@/types/contact'
 import type {MappedProjectBOM} from '@/types/projectBom'
-import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
-import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {ContactFormDialog} from '@/components/custom/contactFormDialog'
 import {WorkOrderFormDialog} from '@/components/custom/workOrderFormDialog'
 import {ProjectBOMFormDialog} from '@/components/custom/projectBomFormDialog'
@@ -51,24 +52,16 @@ interface Option {
   id: string
   name: string
 }
-interface EmployeeOption {
-  id: string
-  firstName: string
-  lastName: string
-}
 
 interface ProjectDetailProps {
   project: ProjectDetailData
   projectTypes: Option[]
   companies: Option[]
-  employees: EmployeeOption[]
+  employees: Option[]
   contacts: Option[]
   currentUserRole: string
   currentUserLevel: number
   projectBoms: MappedProjectBOM[]
-  roleLevelOptions: RoleLevelOption[]
-  defaultVisibleRoleNames: string[]
-  visibilityForRoles: MappedVisibilityForRole[]
   functionOptions: Option[]
   departmentExternOptions: Option[]
   titleOptions: Option[]
@@ -89,24 +82,23 @@ function toInputDate(date: Date | null) {
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 const thClass = 'whitespace-nowrap text-xs'
 
-const PERM = {contacts: 20, boms: 60, materials: 80, workOrders: 80, delete: 80} as const
+const PERM = {contacts: 60, boms: 60, materials: 80, workOrders: 80, delete: 80, employees: 80} as const
 
 const emptyContact = () => ({contactId: '', description: ''})
 const emptyMaterial = () => ({becraCode: '', shortDescription: '', brandName: '', transactionType: ''})
 const emptyContactEdit = () => ({id: '', description: '', extraInfo: '', isValid: true})
+const emptyEmployeeAssign = () => ({employeeId: '', additionalInfo: '', manager: false, supervisor: false})
+const emptyEmployeeEdit = () => ({id: '', additionalInfo: '', manager: false, supervisor: false})
 
 export function ProjectDetail({
   project,
   projectTypes,
   companies,
-  employees: _employees,
+  employees,
   contacts,
   currentUserRole,
   currentUserLevel,
   projectBoms,
-  roleLevelOptions,
-  defaultVisibleRoleNames,
-  visibilityForRoles: initialVisibilityForRoles,
   functionOptions,
   departmentExternOptions,
   titleOptions,
@@ -124,6 +116,16 @@ export function ProjectDetail({
   const [workOrderDialogOpen, setWorkOrderDialogOpen] = useState(false)
   const [bomDialogOpen, setBomDialogOpen] = useState(false)
   const [editBom, setEditBom] = useState<MappedProjectBOM | null>(null)
+
+  // Employee assignment state
+  const [employeeDialogOpen, setEmployeeDialogOpen] = useState(false)
+  const [employeeAssignForm, setEmployeeAssignForm] = useState(emptyEmployeeAssign())
+  const [savingEmployee, setSavingEmployee] = useState(false)
+  const [editEmployeeDialog, setEditEmployeeDialog] = useState(false)
+  const [editEmployeeForm, setEditEmployeeForm] = useState(emptyEmployeeEdit())
+  const [savingEmployeeEdit, setSavingEmployeeEdit] = useState(false)
+  const [deleteEmployeeTarget, setDeleteEmployeeTarget] = useState<{id: string; name: string} | null>(null)
+  const [savingEmployeeDelete, setSavingEmployeeDelete] = useState(false)
 
   const [form, setForm] = useState({
     projectNumber: project.projectNumber,
@@ -164,28 +166,24 @@ export function ProjectDetail({
   const [savingEdit, setSavingEdit] = useState(false)
   const [savingDelete, setSavingDelete] = useState(false)
 
-  // Seed visibility rows for the current project (used in the Visibility tab).
-  const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
-    buildInitialVisibilityRows(initialVisibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
-  )
-
-  // Permission helpers for conditional UI/actions.
   const can = (level: number) => currentUserLevel >= level
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canEdit = currentUserLevel >= 40
   const canDelete = currentUserLevel >= 80
   const canManageWorkOrders = currentUserLevel >= 80
-  const canManageVisibility = currentUserLevel >= 80
+  const canManageEmployees = currentUserLevel >= 80
   const canEditNumber = currentUserLevel >= 80
+  const isProjectManager = currentUserRole === 'Project Manager'
+  const isProjectSupervisor = currentUserRole === 'Supervisor'
 
-  // Single-project option used by the work-order dialog.
   const workOrderProjectOptions = [{id: project.id, name: `${project.projectNumber} — ${project.projectName}`}]
-
-  // All BOMs scoped to this project (for parent BOM selector inside the dialog)
   const projectScopedBoms: MappedProjectBOM[] = projectBoms.filter(b => b.projectId === project.id)
 
+  // Employees already assigned — derive from project relation
+  const assignedEmployeeIds = new Set(project.ProjectEmployee.map((pe: any) => pe.employeeId))
+  const unassignedEmployees = employees.filter(e => !assignedEmployeeIds.has(e.id))
+
   function handleCancel() {
-    // Reset form state and visibility rows back to the original project values.
     setForm({
       projectNumber: project.projectNumber,
       projectName: project.projectName,
@@ -202,7 +200,6 @@ export function ProjectDetail({
       isOpen: project.isOpen,
       isClosed: project.isClosed,
     })
-    setVisibilityRows(buildInitialVisibilityRows(initialVisibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
     setEditing(false)
   }
 
@@ -231,7 +228,6 @@ export function ProjectDetail({
         deleted: project.deleted,
         deletedAt: project.deletedAt,
         deletedBy: project.deletedBy,
-        visibilityForRoles: visibilityRows,
       })
       setEditing(false)
       router.refresh()
@@ -240,23 +236,62 @@ export function ProjectDetail({
     }
   }
 
-  const buildForm = () => ({
-    // Seed form state from the current detail payload.
-    projectNumber: project.projectNumber,
-    projectName: project.projectName,
-    description: project.description ?? '',
-    extraInfo: project.extraInfo ?? '',
-    companyId: project.companyId,
-    projectTypeId: project.projectTypeId,
-    startDate: toInputDate(project.startDate),
-    endDate: toInputDate(project.endDate),
-    engineeringStartDate: toInputDate(project.engineeringStartDate),
-    closingDate: toInputDate(project.closingDate),
-    isMainProject: project.isMainProject,
-    isIntern: project.isIntern,
-    isOpen: project.isOpen,
-    isClosed: project.isClosed,
-  })
+  async function handleAssignEmployee() {
+    if (!employeeAssignForm.employeeId) return
+    setSavingEmployee(true)
+    try {
+      await createProjectEmployeeAction({
+        projectId: project.id,
+        employeeId: employeeAssignForm.employeeId,
+        additionalInfo: employeeAssignForm.additionalInfo || null,
+        manager: employeeAssignForm.manager,
+        supervisor: employeeAssignForm.supervisor,
+      })
+      setEmployeeAssignForm(emptyEmployeeAssign())
+      setEmployeeDialogOpen(false)
+      router.refresh()
+    } finally {
+      setSavingEmployee(false)
+    }
+  }
+
+  function openEditEmployee(pe: any) {
+    setEditEmployeeForm({
+      id: pe.id,
+      additionalInfo: pe.additionalInfo ?? '',
+      manager: pe.manager,
+      supervisor: pe.supervisor,
+    })
+    setEditEmployeeDialog(true)
+  }
+
+  async function handleSaveEmployeeEdit() {
+    setSavingEmployeeEdit(true)
+    try {
+      await updateProjectEmployeeAction({
+        id: editEmployeeForm.id,
+        additionalInfo: editEmployeeForm.additionalInfo || null,
+        manager: editEmployeeForm.manager,
+        supervisor: editEmployeeForm.supervisor,
+      })
+      setEditEmployeeDialog(false)
+      router.refresh()
+    } finally {
+      setSavingEmployeeEdit(false)
+    }
+  }
+
+  async function handleDeleteEmployee() {
+    if (!deleteEmployeeTarget) return
+    setSavingEmployeeDelete(true)
+    try {
+      await deleteProjectEmployeeAction({id: deleteEmployeeTarget.id})
+      setDeleteEmployeeTarget(null)
+      router.refresh()
+    } finally {
+      setSavingEmployeeDelete(false)
+    }
+  }
 
   async function handleInlineContactSave() {
     if (!inlineContact.contactId) return
@@ -297,7 +332,7 @@ export function ProjectDetail({
 
   async function handleNestedContactSave(
     contact: MappedContact,
-    nestedVisibilityRows: VisibilityRow[],
+    nestedVisibilityRows: any[],
     initialCompanyId?: string,
     initialRoleWithCompany?: string,
   ) {
@@ -341,8 +376,6 @@ export function ProjectDetail({
     setNestedContactDialog(false)
     router.refresh()
   }
-  const s = <K extends keyof ReturnType<typeof buildForm>>(key: K, v: ReturnType<typeof buildForm>[K]) =>
-    setForm(f => ({...f, [key]: v}))
 
   async function handleDialogMaterialSave() {
     setDialogMaterialForm(emptyMaterial())
@@ -493,7 +526,6 @@ export function ProjectDetail({
     )
   }
 
-  // BOMs scoped to this project from the ProjectBOM relation on the project itself
   const bomsOnProject: MappedProjectBOM[] = project.ProjectBOM.map(b => mapProjectBOM(b as any)) ?? []
 
   return (
@@ -553,7 +585,7 @@ export function ProjectDetail({
               canEditNumber ? (
                 <Input
                   value={form.projectNumber}
-                  onChange={e => s('projectNumber', e.target.value)}
+                  onChange={e => setForm(f => ({...f, projectNumber: e.target.value}))}
                   className="bg-secondary border-border"
                 />
               ) : (
@@ -790,7 +822,12 @@ export function ProjectDetail({
               {project.other_Project.length}
             </Badge>
           </TabsTrigger>
-          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          <TabsTrigger value="employees">
+            Employees
+            <Badge variant="secondary" className="ml-2 text-xs">
+              {project.ProjectEmployee.length}
+            </Badge>
+          </TabsTrigger>
         </TabsList>
 
         {/* ── Contacts ── */}
@@ -1466,47 +1503,236 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Visibility ── */}
-        {canManageVisibility && (
-          <TabsContent value="visibility" className="mt-3">
-            {editing ? (
-              <VisibilityForRoleTab
-                roleLevelOptions={roleLevelOptions}
-                value={visibilityRows}
-                onChange={setVisibilityRows}
-              />
-            ) : (
-              <div className="flex flex-col gap-3">
-                <p className="text-xs text-muted-foreground">Click Edit to change visibility settings.</p>
-                <div className="flex flex-wrap gap-3">
-                  {roleLevelOptions.map(rl => {
-                    const visible = visibilityRows.find(r => r.roleLevelId === rl.id)?.visible ?? false
-                    return (
-                      <div
-                        key={rl.id}
-                        className="flex flex-col items-start gap-2 rounded-lg border border-border bg-secondary px-4 py-2.5 w-60">
-                        <div>
-                          <p className="text-sm text-foreground">{rl.roleName}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {rl.subRoleName} — level {rl.subRoleLevel}
-                          </p>
-                        </div>
-                        {visible ? (
-                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Visible</Badge>
+        {/* ── Employees ── */}
+        <TabsContent value="employees" className="mt-3">
+          {canManageEmployees ||
+            isProjectManager ||
+            (isProjectSupervisor && (
+              <div className="flex items-center gap-2 mb-3">
+                <Button
+                  size="sm"
+                  className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
+                  onClick={() => {
+                    setEmployeeAssignForm(emptyEmployeeAssign())
+                    setEmployeeDialogOpen(true)
+                  }}>
+                  <Plus className="h-3 w-3" />
+                  Assign Employee
+                </Button>
+              </div>
+            ))}
+          <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent border-border/60">
+                  <TableHead className={thClass}>Employee</TableHead>
+                  <TableHead className={thClass}>Additional Info</TableHead>
+                  <TableHead className={thClass}>Manager</TableHead>
+                  <TableHead className={thClass}>Supervisor</TableHead>
+                  <TableHead className="w-24">
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {project.ProjectEmployee.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
+                      No employees assigned.
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  project.ProjectEmployee.map((pe: any) => (
+                    <TableRow key={pe.id} className="border-border/40 hover:bg-secondary/50">
+                      <TableCell className={`${tdClass} text-foreground font-medium`}>
+                        {pe.Employee.firstName} {pe.Employee.lastName}
+                      </TableCell>
+                      <TableCell className={tdClass}>
+                        <span className="max-w-[200px] truncate inline-block">{pe.additionalInfo ?? '-'}</span>
+                      </TableCell>
+                      <TableCell>
+                        {pe.manager ? (
+                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
                         ) : (
                           <Badge variant="secondary" className="text-muted-foreground font-medium">
-                            Hidden
+                            No
                           </Badge>
                         )}
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
-          </TabsContent>
-        )}
+                      </TableCell>
+                      <TableCell>
+                        {pe.supervisor ? (
+                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                        ) : (
+                          <Badge variant="secondary" className="text-muted-foreground font-medium">
+                            No
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {canManageEmployees ||
+                          isProjectManager ||
+                          (isProjectSupervisor && (
+                            <div className="flex items-center gap-1">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10"
+                                onClick={() => openEditEmployee(pe)}>
+                                <Pencil className="h-3.5 w-3.5" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                onClick={() =>
+                                  setDeleteEmployeeTarget({
+                                    id: pe.id,
+                                    name: `${pe.Employee.firstName} ${pe.Employee.lastName}`,
+                                  })
+                                }>
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </Button>
+                            </div>
+                          ))}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
       </Tabs>
+
+      {/* ── Assign Employee Dialog ── */}
+      <Dialog open={employeeDialogOpen} onOpenChange={setEmployeeDialogOpen}>
+        <DialogContent className="bg-card border-border max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">Assign Employee</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 py-2">
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Employee</Label>
+              <Select
+                value={employeeAssignForm.employeeId}
+                onValueChange={v => setEmployeeAssignForm(f => ({...f, employeeId: v}))}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="Select employee" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {unassignedEmployees.map(e => (
+                    <SelectItem key={e.id} value={e.id}>
+                      {e.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Additional Info</Label>
+              <Input
+                value={employeeAssignForm.additionalInfo}
+                onChange={e => setEmployeeAssignForm(f => ({...f, additionalInfo: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <Label className="text-xs text-muted-foreground">Manager</Label>
+                <Switch
+                  checked={employeeAssignForm.manager}
+                  onCheckedChange={v => setEmployeeAssignForm(f => ({...f, manager: v}))}
+                />
+              </div>
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <Label className="text-xs text-muted-foreground">Supervisor</Label>
+                <Switch
+                  checked={employeeAssignForm.supervisor}
+                  onCheckedChange={v => setEmployeeAssignForm(f => ({...f, supervisor: v}))}
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEmployeeDialogOpen(false)} className="border-border">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleAssignEmployee}
+              disabled={!employeeAssignForm.employeeId || savingEmployee}
+              className="bg-accent text-accent-foreground hover:bg-accent/80">
+              {savingEmployee ? 'Assigning…' : 'Assign'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Edit Employee Dialog ── */}
+      <Dialog open={editEmployeeDialog} onOpenChange={setEditEmployeeDialog}>
+        <DialogContent className="bg-card border-border max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">Edit Employee Assignment</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 py-2">
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Additional Info</Label>
+              <Input
+                value={editEmployeeForm.additionalInfo}
+                onChange={e => setEditEmployeeForm(f => ({...f, additionalInfo: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <Label className="text-xs text-muted-foreground">Manager</Label>
+                <Switch
+                  checked={editEmployeeForm.manager}
+                  onCheckedChange={v => setEditEmployeeForm(f => ({...f, manager: v}))}
+                />
+              </div>
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <Label className="text-xs text-muted-foreground">Supervisor</Label>
+                <Switch
+                  checked={editEmployeeForm.supervisor}
+                  onCheckedChange={v => setEditEmployeeForm(f => ({...f, supervisor: v}))}
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditEmployeeDialog(false)} className="border-border">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSaveEmployeeEdit}
+              disabled={savingEmployeeEdit}
+              className="bg-accent text-accent-foreground hover:bg-accent/80">
+              {savingEmployeeEdit ? 'Saving…' : 'Save'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Remove Employee Confirm ── */}
+      <Dialog open={!!deleteEmployeeTarget} onOpenChange={open => !open && setDeleteEmployeeTarget(null)}>
+        <DialogContent className="bg-card border-border max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">Remove Employee</DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground">Remove {deleteEmployeeTarget?.name} from this project?</p>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteEmployeeTarget(null)} className="border-border">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleDeleteEmployee}
+              disabled={savingEmployeeDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              {savingEmployeeDelete ? 'Removing…' : 'Remove'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* ── Contact Dialog ── */}
       <Dialog open={dialogContact} onOpenChange={setDialogContact}>
@@ -1579,14 +1805,14 @@ export function ProjectDetail({
         contact={null}
         onSave={handleNestedContactSave}
         isAdmin={isAdmin}
-        roleLevelOptions={roleLevelOptions}
-        defaultVisibleRoleNames={defaultVisibleRoleNames}
+        roleLevelOptions={[]}
+        defaultVisibleRoleNames={[]}
         functionOptions={functionOptions}
         departmentExternOptions={departmentExternOptions}
         titleOptions={titleOptions}
         companyOptions={companies}
         countryOptions={countryOptions}
-        canManageVisibility={canManageVisibility}
+        canManageVisibility={false}
       />
 
       <WorkOrderFormDialog
@@ -1596,7 +1822,6 @@ export function ProjectDetail({
         projectOptions={workOrderProjectOptions}
       />
 
-      {/* ── Project BOM Dialog ── */}
       <ProjectBOMFormDialog
         open={bomDialogOpen}
         onOpenChange={open => {

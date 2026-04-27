@@ -7,9 +7,6 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {ProjectDetail} from '@/components/custom/projectDetail'
 import {notFound} from 'next/navigation'
 import {getCompanies} from '@/dal/companies'
-import {getAllRoleLevels} from '@/dal/roleLevel'
-import {mapRoleLevelOptions} from '@/types/roleLevel'
-import {mapVisibility} from '@/extra/visibilityForRole'
 import {getFunctions} from '@/dal/functions'
 import {getDepartmentExterns} from '@/dal/departmentExterns'
 import {getTitles} from '@/dal/titles'
@@ -33,7 +30,6 @@ export default async function ProjectDetailPage({params}: PageProps) {
     employeesFromDAL,
     contactsFromDAL,
     projectBomsFromDAL,
-    roleLevels,
     profile,
     functions,
     departmentExterns,
@@ -47,7 +43,6 @@ export default async function ProjectDetailPage({params}: PageProps) {
     getEmployees(),
     getContacts(),
     getProjectBOMs(),
-    getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
     getFunctions(),
     getDepartmentExterns(),
@@ -61,14 +56,11 @@ export default async function ProjectDetailPage({params}: PageProps) {
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const employees = employeesFromDAL.map(mapEmployee)
-  const employeeOptions = employees.map(e => ({id: e.id, firstName: e.firstName, lastName: e.lastName}))
+  const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
   const contactOptions = contactsFromDAL.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
   const projectTypeOptions = projectTypes.map(t => ({id: t.id, name: t.name}))
   const companyOptions = companies.filter(c => !c.deleted).map(c => ({id: c.id, name: c.name}))
   const projectBomOptions = projectBomsFromDAL.map(mapProjectBOM)
-  const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-  const defaultVisibleRoleNames = [department.name]
-  const visibilityForRoles = project.Target.VisibilityForRole.map(mapVisibility)
   const functionOptions = (functions ?? []).map(f => ({id: f.id, name: f.name ?? ''})).filter(f => f.name)
   const departmentExternOptions = (departmentExterns ?? [])
     .map(d => ({id: d.id, name: d.name ?? ''}))
@@ -87,9 +79,6 @@ export default async function ProjectDetailPage({params}: PageProps) {
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           projectBoms={projectBomOptions}
-          roleLevelOptions={roleLevelOptions}
-          defaultVisibleRoleNames={defaultVisibleRoleNames}
-          visibilityForRoles={visibilityForRoles}
           functionOptions={functionOptions}
           departmentExternOptions={departmentExternOptions}
           titleOptions={titleOptions}

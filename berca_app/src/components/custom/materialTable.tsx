@@ -89,7 +89,7 @@ type SortField =
   | 'hasBdoc'
   | 'hasInsp'
 
-type SortDir = 'asc' | 'desc'
+type SortDir = 'desc' | 'asc'
 type FilterStatus = 'all' | 'active' | 'deleted'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'

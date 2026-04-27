@@ -32,7 +32,7 @@ export default async function ProjectsPage({params}: PageProps) {
 
   const allProjects = projectsFromDAL.map(mapProject)
   const projects =
-    isAdmin || (currentUserLevel >= 60 && currentUserRole === 'Project Role') || currentUserRole === 'Mangement Role'
+    isAdmin || (currentUserLevel >= 60 && currentUserRole === 'Project Role') || currentUserRole === 'Management Role'
       ? allProjects
       : allProjects.filter(p => p.projectEmployees.some(pe => pe.employeeId === currentEmployeeId))
 

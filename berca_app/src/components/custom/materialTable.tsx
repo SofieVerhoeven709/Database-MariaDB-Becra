@@ -89,7 +89,7 @@ type SortField =
   | 'hasBdoc'
   | 'hasInsp'
 
-type SortDir = 'asc' | 'desc'
+type SortDir = 'desc' | 'asc'
 type FilterStatus = 'all' | 'active' | 'deleted'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
@@ -208,10 +208,10 @@ export function MaterialTable({
 
   function handleSort(field: SortField) {
     if (sortField === field) {
-      setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))
+      setSortDir(d => (d === 'desc' ? 'asc' : 'desc'))
     } else {
       setSortField(field)
-      setSortDir('asc')
+      setSortDir('desc')
     }
   }
 
@@ -410,7 +410,7 @@ export function MaterialTable({
     .sort((a, b) => {
       const aVal = getSortValue(a, sortField)
       const bVal = getSortValue(b, sortField)
-      return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
+      return sortDir === 'desc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
 
   function handleExportCsv() {

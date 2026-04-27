@@ -66,7 +66,7 @@ interface MaterialFormDialogProps {
   warehousePlaces: WarehousePlaceOption[]
   parentPartOptions?: ParentPartOption[]
   parentPartBeNumbersInUse?: string[]
-  onSave: (material: Partial<MappedMaterial> & {id: string}) => void
+  onSave: (material: Partial<MappedMaterial> & {id: string; numberType?: NumberKind}) => void
   saving?: boolean
   saveError?: string | null
 }
@@ -171,6 +171,9 @@ export function MaterialFormDialog({
         : {...DEFAULT_DOCUMENT_FLAGS, ...material}
       : {...EMPTY_MATERIAL, id: crypto.randomUUID()}
 
+  const getInitialNumberKind = (nextForm: MaterialFormState): NumberKind =>
+    resolvedMode === 'duplicate' && material ? detectNumberKind(material.beNumber) : detectNumberKind(nextForm.beNumber)
+
   const [form, setForm] = useState<MaterialFormState>(makeForm)
   const [isParentPartEnabled, setIsParentPartEnabled] = useState(form.isParentPart ?? false)
   const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
@@ -178,7 +181,7 @@ export function MaterialFormDialog({
   const [supplierSearch, setSupplierSearch] = useState('')
   const [isSupplierDropdownOpen, setIsSupplierDropdownOpen] = useState(false)
   const [isSerialTracked, setIsSerialTracked] = useState(form.isSerialTracked ?? false)
-  const [numberKind, setNumberKind] = useState<NumberKind>(detectNumberKind(form.beNumber))
+  const [numberKind, setNumberKind] = useState<NumberKind>(getInitialNumberKind(form))
 
   // Sync form state when the dialogue opens or switches between materials.
   // The lint rule warns against sync setState in effects, but this is intentional:
@@ -195,7 +198,7 @@ export function MaterialFormDialog({
       setSupplierSearch(selectedSupplier ? formatSupplierLabel(selectedSupplier) : '')
       setIsSupplierDropdownOpen(false)
       setIsSerialTracked(nextForm.isSerialTracked ?? false)
-      setNumberKind(detectNumberKind(nextForm.beNumber))
+      setNumberKind(getInitialNumberKind(nextForm))
     }
   }, [open, material?.id, resolvedMode, supplierCompanies])
 
@@ -216,10 +219,9 @@ export function MaterialFormDialog({
   function applyNumberKind(nextKind: NumberKind) {
     setNumberKind(nextKind)
     setForm(prev => {
-      const current = normalizeMaterialNumber(prev.beNumber, nextKind)
       return {
         ...prev,
-        beNumber: current || (nextKind === 'IOS' ? '4000000' : '1000000'),
+        beNumber: '',
       }
     })
   }
@@ -380,7 +382,8 @@ export function MaterialFormDialog({
             e.preventDefault()
             onSave({
               ...form,
-              beNumber: normalizeMaterialNumber(form.beNumber, numberKind),
+              beNumber: numberKind === 'IOS' ? '' : normalizeMaterialNumber(form.beNumber, numberKind),
+              numberType: numberKind,
               isParentPart: isParentPartEnabled,
             })
           }}
@@ -422,7 +425,8 @@ export function MaterialFormDialog({
               className={inputStyles}
               value={form.beNumber ?? ''}
               onChange={e => update('beNumber', e.target.value)}
-              placeholder={numberKind === 'IOS' ? 'e.g. 4000000' : 'e.g. 1000000'}
+              placeholder={numberKind === 'IOS' ? 'Automatically generated' : 'e.g. 1002000'}
+              disabled={numberKind === 'IOS'}
             />
           </div>
           <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">

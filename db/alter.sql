@@ -2007,3 +2007,24 @@ ALTER TABLE InvoiceOut
     FOREIGN KEY (boqId) REFERENCES BillOfQuantities (id) ON DELETE RESTRICT;
 
 ALTER TABLE InvoiceOut CHANGE COLUMN IF EXISTS `humanId` `clientReference` VARCHAR(255) NULL;
+--HR Schedule meetings
+    CREATE TABLE IF NOT EXISTS ScheduleMeeting (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      employeeId CHAR(36) NOT NULL,
+      conversationType VARCHAR(100) NOT NULL,
+      startAt DATETIME(0) NOT NULL,
+      endAt DATETIME(0) NOT NULL,
+      place VARCHAR(255) NULL,
+      status VARCHAR(20) NOT NULL DEFAULT 'planned',
+      notes TEXT NULL,
+      completedAt DATETIME(0) NULL,
+      createdAt DATETIME(0) NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      updatedAt DATETIME(0) NULL,
+      deleted BOOLEAN NOT NULL DEFAULT false,
+      deletedAt DATETIME(0) NULL,
+      deletedBy CHAR(36) NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
+    ) ENGINE = InnoDB;

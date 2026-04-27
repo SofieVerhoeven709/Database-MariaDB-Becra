@@ -89,13 +89,31 @@ type SortField =
   | 'hasBdoc'
   | 'hasInsp'
 
-type SortDir = 'asc' | 'desc'
+type SortDir = 'desc' | 'asc'
 type FilterStatus = 'all' | 'active' | 'deleted'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
 type NumberType = 'BE' | 'IOS'
 type FilterMaterialGroup = 'all' | string
 type FilterDocs = 'all' | (typeof MATERIAL_DOCUMENT_FLAGS)[number]['key']
+
+function formatMaterialActionErrors(errors: Record<string, string[] | undefined> | undefined): string {
+  const fieldLabels: Record<string, string> = {
+    beNumber: 'Material number',
+    shortDescription: 'Short description',
+    materialGroupIdA: 'Material group',
+    unitId: 'Unit',
+    warehousePlace: 'Warehouse place',
+  }
+
+  const messages = Object.entries(errors ?? {}).flatMap(([field, errs]) => {
+    if (!errs?.length) return []
+    if (field === 'global') return errs
+    return errs.map(error => `${fieldLabels[field] ?? field}: ${error}`)
+  })
+
+  return messages.join(' | ')
+}
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
@@ -190,10 +208,10 @@ export function MaterialTable({
 
   function handleSort(field: SortField) {
     if (sortField === field) {
-      setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))
+      setSortDir(d => (d === 'desc' ? 'asc' : 'desc'))
     } else {
       setSortField(field)
-      setSortDir('asc')
+      setSortDir('desc')
     }
   }
 
@@ -392,7 +410,7 @@ export function MaterialTable({
     .sort((a, b) => {
       const aVal = getSortValue(a, sortField)
       const bVal = getSortValue(b, sortField)
-      return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
+      return sortDir === 'desc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
 
   function handleExportCsv() {
@@ -463,7 +481,7 @@ export function MaterialTable({
     URL.revokeObjectURL(url)
   }
 
-  async function handleSave(form: Partial<MappedMaterial> & {id: string}) {
+  async function handleSave(form: Partial<MappedMaterial> & {id: string; numberType?: NumberType}) {
     setSaving(true)
     setSaveError(null)
 
@@ -519,7 +537,7 @@ export function MaterialTable({
 
       const formWithNumberType = {
         ...form,
-        numberType: getNumberType(form.beNumber),
+        numberType: form.numberType ?? getNumberType(form.beNumber),
       }
 
       const fd = new FormData()
@@ -551,10 +569,10 @@ export function MaterialTable({
 
       if (result && !result.success) {
         console.error('Material save failed:', result.errors)
-        const msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
-          (errs ?? []).map(e => `${field}: ${e}`),
+        setSaveError(
+          formatMaterialActionErrors(result.errors) ||
+            'Could not save the material. Please check the highlighted fields and try again.',
         )
-        setSaveError(msgs.length ? msgs.join(' | ') : 'Could not save the material. Please check all required fields.')
         return
       }
 
@@ -690,6 +708,7 @@ export function MaterialTable({
           </SelectContent>
         </Select>
 
+        {/*Documents filter*/}
         <Select value={filterDocs} onValueChange={v => setFilterDocs(v as FilterDocs)}>
           <SelectTrigger className="w-36 bg-secondary border-border">
             <SelectValue placeholder="Document type" />
@@ -704,12 +723,13 @@ export function MaterialTable({
           </SelectContent>
         </Select>
 
+        {/*Filter Button Material group A*/}
         <Select value={filterMaterialGroupA} onValueChange={handleGroupAChange}>
           <SelectTrigger className="w-30 bg-secondary border-border">
             <SelectValue placeholder="Choose group A" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All groups</SelectItem>
+            <SelectItem value="all">All groups A</SelectItem>
             {groupAOptions.map(group => (
               <SelectItem key={group.value} value={group.value}>
                 {group.label}
@@ -717,14 +737,14 @@ export function MaterialTable({
             ))}
           </SelectContent>
         </Select>
-
+        {/*Filter Button Material group B*/}
         {filterMaterialGroupA !== 'all' && (
           <Select value={filterMaterialGroupB} onValueChange={handleGroupBChange}>
             <SelectTrigger className="w-30 bg-secondary border-border">
               <SelectValue placeholder="Choose group B" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All groups</SelectItem>
+              <SelectItem value="all">All groups B</SelectItem>
               {groupBOptions.map(group => (
                 <SelectItem key={group.value} value={group.value}>
                   {group.label}
@@ -733,14 +753,14 @@ export function MaterialTable({
             </SelectContent>
           </Select>
         )}
-
+        {/*Filter Button Material group C*/}
         {filterMaterialGroupA !== 'all' && filterMaterialGroupB !== 'all' && (
           <Select value={filterMaterialGroupC} onValueChange={handleGroupCChange}>
             <SelectTrigger className="w-30 bg-secondary border-border">
               <SelectValue placeholder="Choose group C" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All groups</SelectItem>
+              <SelectItem value="all">All groups C</SelectItem>
               {groupCOptions.map(group => (
                 <SelectItem key={group.value} value={group.value}>
                   {group.label}
@@ -749,14 +769,14 @@ export function MaterialTable({
             </SelectContent>
           </Select>
         )}
-
+        {/*Filter Button Material group D*/}
         {filterMaterialGroupA !== 'all' && filterMaterialGroupB !== 'all' && filterMaterialGroupC !== 'all' && (
           <Select value={filterMaterialGroupD} onValueChange={setFilterMaterialGroupD}>
             <SelectTrigger className="w-30 bg-secondary border-border">
               <SelectValue placeholder="Choose group D" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All groups</SelectItem>
+              <SelectItem value="all">All groups D</SelectItem>
               {groupDOptions.map(group => (
                 <SelectItem key={group.value} value={group.value}>
                   {group.label}
@@ -766,6 +786,7 @@ export function MaterialTable({
           </Select>
         )}
 
+        {/* Download CSV button*/}
         <Button
           variant="outline"
           onClick={handleExportCsv}
@@ -787,7 +808,7 @@ export function MaterialTable({
         </Button>
       </div>
 
-      <StickyTableScroll>
+      <StickyTableScroll disabled={dialogOpen}>
         <Table className="w-full min-w-max">
           <TableHeader>
             <TableRow className="bg-secondary hover:bg-secondary">
@@ -919,6 +940,7 @@ export function MaterialTable({
                   </TableCell>
 
                   <TableCell className="text-center">
+                    {/*Serial Tracked Button only clickable when material is Serial Tracked otherwise it's not */}
                     <Button
                       size="sm"
                       variant="outline"
@@ -975,7 +997,7 @@ export function MaterialTable({
                             }}>
                             <Pencil className="h-3.5 w-3.5" />
                           </Button>
-
+                          {/* Copy button only visible when material is approved otherwise it's not visible */}
                           {m.partApproved ? (
                             <span title="Copy row">
                               <Button

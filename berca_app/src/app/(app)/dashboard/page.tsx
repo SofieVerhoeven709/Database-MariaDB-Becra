@@ -1,11 +1,14 @@
 import {redirect} from 'next/navigation'
 import {DepartmentGrid} from '@/components/custom/departmentGrid'
+import {DashboardHrMeetingPopup} from '@/components/custom/dashboardHrMeetingPopup'
 import {DashboardInspectionPopup} from '@/components/custom/dashboardInspectionPopup'
 import {getSessionFromCookie} from '@/lib/sessionUtils'
 import {getSerialTracked} from '@/dal/materialSerialTracked'
 import {mapMaterialSerialTracked} from '@/extra/serialTracked'
 import {AppSettings} from '@/constants'
 import {prismaClient} from '@/dal/prismaClient'
+import {getEvaluationWarningDays} from '@/lib/hrScheduleMeetings'
+import {getUpcomingHrEvaluationMeetingsForEmployee} from '@/dal/hrEvaluationMeetings'
 
 export default async function DashboardPage() {
   const session = await getSessionFromCookie()
@@ -34,6 +37,7 @@ export default async function DashboardPage() {
   })
 
   let maintenanceHref: string | null = null
+  let scheduleHref: string | null = null
 
   if (departmentTargetType) {
     const visibleDepartmentTargets = await prismaClient.visibilityForRole.findMany({
@@ -53,19 +57,27 @@ export default async function DashboardPage() {
     const targetIds = visibleDepartmentTargets.map(v => v.targetId)
 
     if (targetIds.length > 0) {
-      const firstDepartment = await prismaClient.department.findFirst({
+      const visibleDepartments = await prismaClient.department.findMany({
         where: {
           targetId: {in: targetIds},
         },
         select: {
           id: true,
+          name: true,
         },
         orderBy: [{number: 'asc'}, {name: 'asc'}],
       })
 
+      const firstDepartment = visibleDepartments[0]
+      const hrDepartment =
+        visibleDepartments.find(department => department.name.toLowerCase().includes('hr')) ??
+        visibleDepartments.find(department => department.name.toLowerCase().includes('human'))
+
       if (firstDepartment) {
         maintenanceHref = `/departments/${firstDepartment.id}/maintenance`
       }
+
+      scheduleHref = hrDepartment ? `/departments/${hrDepartment.id}/schedule` : null
     }
   }
 
@@ -85,6 +97,12 @@ export default async function DashboardPage() {
 
     return diffDays >= 0 && diffDays <= inspectionWarningDays ? count + 1 : count
   }, 0)
+  const scheduleHrefForPopup = typeof scheduleHref === 'string' ? scheduleHref : null
+  const upcomingHrMeetings = await getUpcomingHrEvaluationMeetingsForEmployee(
+    employee.id,
+    today,
+    getEvaluationWarningDays(),
+  )
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -100,6 +118,10 @@ export default async function DashboardPage() {
             inspectionWarningDays={inspectionWarningDays}
             maintenanceHref={maintenanceHref}
           />
+        )}
+
+        {upcomingHrMeetings.length > 0 && (
+          <DashboardHrMeetingPopup meetings={upcomingHrMeetings} scheduleHref={scheduleHrefForPopup} />
         )}
 
         <DepartmentGrid roleContextInput={roleContextInput} />

@@ -6,9 +6,10 @@ import {createPortal} from 'react-dom'
 interface StickyTableScrollProps {
   children: ReactNode
   className?: string
+  disabled?: boolean
 }
 
-export function StickyTableScroll({children, className = ''}: StickyTableScrollProps) {
+export function StickyTableScroll({children, className = '', disabled = false}: StickyTableScrollProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const tableScrollRef = useRef<HTMLDivElement | null>(null)
   const bottomScrollRef = useRef<HTMLDivElement | null>(null)
@@ -24,12 +25,13 @@ export function StickyTableScroll({children, className = ''}: StickyTableScrollP
   }, [])
 
   useEffect(() => {
-    const tableEl = tableScrollRef.current
-    const bottomEl = bottomScrollRef.current
-    if (!tableEl || !bottomEl) return
+    const wrapperEl = wrapperRef.current
+    if (!wrapperEl || !mounted) return
 
-    let syncingFromTable = false
-    let syncingFromBottom = false
+    const tableEl = wrapperEl.querySelector<HTMLDivElement>('[data-slot="table-container"]')
+    if (!tableEl) return
+
+    tableScrollRef.current = tableEl
 
     const updateSizes = () => {
       const clientWidth = tableEl.clientWidth
@@ -39,6 +41,27 @@ export function StickyTableScroll({children, className = ''}: StickyTableScrollP
       setTableScrollWidth(scrollWidth)
       setHasOverflow(scrollWidth > clientWidth + 1)
     }
+
+    updateSizes()
+
+    window.addEventListener('resize', updateSizes)
+
+    const resizeObserver = new ResizeObserver(updateSizes)
+    resizeObserver.observe(tableEl)
+
+    return () => {
+      window.removeEventListener('resize', updateSizes)
+      resizeObserver.disconnect()
+    }
+  }, [mounted])
+
+  useEffect(() => {
+    const tableEl = tableScrollRef.current
+    const bottomEl = bottomScrollRef.current
+    if (!tableEl || !bottomEl || !mounted) return
+
+    let syncingFromTable = false
+    let syncingFromBottom = false
 
     const handleTableScroll = () => {
       if (syncingFromBottom) return
@@ -54,22 +77,16 @@ export function StickyTableScroll({children, className = ''}: StickyTableScrollP
       syncingFromBottom = false
     }
 
-    updateSizes()
+    bottomEl.scrollLeft = tableEl.scrollLeft
 
     tableEl.addEventListener('scroll', handleTableScroll)
     bottomEl.addEventListener('scroll', handleBottomScroll)
-    window.addEventListener('resize', updateSizes)
-
-    const resizeObserver = new ResizeObserver(updateSizes)
-    resizeObserver.observe(tableEl)
 
     return () => {
       tableEl.removeEventListener('scroll', handleTableScroll)
       bottomEl.removeEventListener('scroll', handleBottomScroll)
-      window.removeEventListener('resize', updateSizes)
-      resizeObserver.disconnect()
     }
-  }, [mounted])
+  }, [mounted, hasOverflow, tableScrollWidth])
 
   useEffect(() => {
     const wrapperEl = wrapperRef.current
@@ -86,10 +103,13 @@ export function StickyTableScroll({children, className = ''}: StickyTableScrollP
     return () => observer.disconnect()
   }, [])
 
-  const showStickyScrollbar = mounted && hasOverflow && isInView
-
-  const stickyScrollbar = showStickyScrollbar ? (
-    <div className="fixed bottom-0 left-0 right-0 z-[9999] border-t border-border bg-background">
+  const stickyScrollbar = (
+    <div
+      className="fixed bottom-0 left-0 right-0 z-[9999] border-t border-border bg-background"
+      style={{
+        opacity: mounted && hasOverflow && isInView && !disabled ? 1 : 0,
+        pointerEvents: mounted && hasOverflow && isInView && !disabled ? 'auto' : 'none',
+      }}>
       <div
         ref={bottomScrollRef}
         className="mx-auto overflow-x-scroll overflow-y-hidden"
@@ -97,17 +117,14 @@ export function StickyTableScroll({children, className = ''}: StickyTableScrollP
         <div style={{width: tableScrollWidth, height: 1}} />
       </div>
     </div>
-  ) : null
+  )
 
   return (
     <>
       <div ref={wrapperRef} className={`rounded-xl border border-border ${className}`}>
-        <div ref={tableScrollRef} className="overflow-x-auto">
-          {children}
-        </div>
+        {children}
       </div>
-
-      {mounted && createPortal(stickyScrollbar, document.body)}
+      {mounted ? createPortal(stickyScrollbar, document.body) : null}
     </>
   )
 }

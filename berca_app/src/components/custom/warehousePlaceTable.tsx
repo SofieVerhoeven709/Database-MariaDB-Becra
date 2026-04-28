@@ -195,7 +195,7 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 2} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={columns.length + 1} className="text-center text-muted-foreground py-10">
                   No warehouse places found
                 </TableCell>
               </TableRow>

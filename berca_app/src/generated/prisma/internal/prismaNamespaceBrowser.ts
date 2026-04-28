@@ -387,6 +387,7 @@ export const RecruitmentVacancyScalarFieldEnum = {
   otherPublication: 'otherPublication',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'

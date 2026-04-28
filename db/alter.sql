@@ -2108,3 +2108,9 @@ CONSTRAINT RecruitmentVacancy_ibfk_2
 
 ALTER TABLE RecruitmentVacancy
     CHANGE COLUMN IF EXISTS publishReqruitmentAgencies publishRecruitmentAgencies BOOLEAN NOT NULL DEFAULT 0;
+
+ALTER TABLE RecruitmentVacancy
+    ADD COLUMN IF NOT EXISTS updatedAt DATETIME NULL AFTER createdBy;
+
+ALTER TABLE RecruitmentVacancy
+    MODIFY COLUMN createdBy CHAR(36) NOT NULL;

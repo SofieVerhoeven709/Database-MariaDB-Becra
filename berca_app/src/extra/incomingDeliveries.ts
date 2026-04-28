@@ -9,7 +9,7 @@ import type {
 
 type IncomingDeliveryWithRelations = Prisma.IncomingDeliveryGetPayload<{
   include: {
-    Purchase: {select: {id: true; purchaseNumber: true}}
+    Purchase: {select: {id: true; purchaseNumber: true; description: true}}
     Employee_IncomingDelivery_createdByToEmployee: {select: {id: true; firstName: true; lastName: true}}
     IncomingDeliveryLine: {
       select: {
@@ -36,6 +36,7 @@ export function mapIncomingDelivery(row: IncomingDeliveryWithRelations): MappedI
     incomingDeliveryNumber: row.incomingDeliveryNumber,
     purchaseId: row.purchaseId,
     purchaseNumber: row.Purchase?.purchaseNumber ?? null,
+    purchaseDescription: row.Purchase?.description ?? null,
     status: row.status,
     deliveryDate: row.deliveryDate.toISOString(),
     receivedAt: row.receivedAt?.toISOString() ?? null,
@@ -146,7 +147,7 @@ export function mapIncomingDeliveryOption(row: {
   purchaseNumber: any
   purchaseDescription: any
 }): IncomingDeliveryOption {
-  return {id: row.id, name: row.purchaseNumber}
+  return {id: row.id, name: row.purchaseNumber, description: row.purchaseDescription}
 }
 
 export function mapMaterialDemandSourceOption(row: {

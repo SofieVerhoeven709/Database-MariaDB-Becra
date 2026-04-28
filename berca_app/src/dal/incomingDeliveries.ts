@@ -5,7 +5,7 @@ export async function getIncomingDeliveries() {
   return prismaClient.incomingDelivery.findMany({
     orderBy: [{deliveryDate: 'desc'}, {incomingDeliveryNumber: 'desc'}],
     include: {
-      Purchase: {select: {id: true, purchaseNumber: true}},
+      Purchase: {select: {id: true, purchaseNumber: true, description: true}},
       Employee_IncomingDelivery_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       IncomingDeliveryLine: {
         // Exclude deleted lines when computing totals/flags.

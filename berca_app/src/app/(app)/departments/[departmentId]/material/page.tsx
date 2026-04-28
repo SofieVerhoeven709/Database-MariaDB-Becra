@@ -27,6 +27,7 @@ function getParentBeNumbers(material: unknown): string[] {
 }
 
 type MaterialRow = Awaited<ReturnType<typeof getMaterials>>[number]
+type MaterialRowView = MappedMaterial & {warehousePlace: string | null}
 type MaterialDocumentFlags = {
   hasAtex: boolean
   hasCE: boolean
@@ -54,12 +55,19 @@ export default async function MaterialPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
 
   const groupById = new Map(groups.map(g => [g.id, g]))
+  const warehousePlaceByBeNumber = new Map(
+    warehousePlaces
+      .filter(place => typeof place.beNumber === 'string' && place.beNumber.trim().length > 0)
+      .map(place => [place.beNumber as string, place.id]),
+  )
 
-  const mappedMaterials: MappedMaterial[] = materials.map((m: MaterialRow) => {
+  const mappedMaterials: MaterialRowView[] = materials.map((m: MaterialRow) => {
     const materialWithDocuments = m as MaterialRow & MaterialDocumentFlags
     const createdByName = [m.Employee?.firstName, m.Employee?.lastName].filter(Boolean).join(' ').trim()
 
     const selectedSupplier = m.MaterialSupplier.find(s => s.isPreferred) ?? m.MaterialSupplier[0] ?? null
+    const supplierCompanyIds = m.MaterialSupplier.map(s => s.companyId)
+    const supplierCompanyNames = m.MaterialSupplier.map(s => s.Company.name)
 
     const mapped = {
       id: m.id,
@@ -70,9 +78,12 @@ export default async function MaterialPage({params}: PageProps) {
       longDescription: m.longDescription ?? null,
       supplierCompanyId: selectedSupplier?.companyId ?? m.preferredSupplierCompanyId ?? null,
       supplierCompanyName: selectedSupplier?.Company.name ?? m.PreferredSupplierCompany?.name ?? null,
+      supplierCompanyIds,
+      supplierCompanyNames,
       parentBeNumbers: getParentBeNumbers(m),
       brandName: m.brandName ?? null,
-      warehousePlace: m.warehousePlaceId ?? null,
+      inventoryPlace: null,
+      warehousePlace: warehousePlaceByBeNumber.get(m.beNumber ?? '') ?? null,
       partApproved: (m as any).partApproved ?? false,
       longLeadTime: m.longLeadTime ?? false,
       leadTimeValue: m.MaterialLeadTime?.leadTimeValue ?? null,
@@ -116,7 +127,7 @@ export default async function MaterialPage({params}: PageProps) {
       serialTrackedId: m.MaterialSerialTrack[0]?.id ?? null,
       isParentPart: false,
     }
-    return mapped as MappedMaterial
+    return mapped as MaterialRowView
   })
 
   const mappedGroups = groups.map(g => ({

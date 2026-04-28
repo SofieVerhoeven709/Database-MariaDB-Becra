@@ -28,7 +28,7 @@ export async function getWarehousePlaceById(id: string): Promise<WarehousePlaceW
 export async function createWarehousePlace(data: {
   id: string
   abbreviation: string
-  beNumber?: string
+  beNumber?: string | null
   serialTrackedId?: string
   place?: string
   shelf?: string
@@ -47,7 +47,7 @@ export async function updateWarehousePlace(
   id: string,
   data: {
     abbreviation?: string
-    beNumber?: string
+    beNumber?: string | null
     serialTrackedId?: string
     place?: string
     shelf?: string

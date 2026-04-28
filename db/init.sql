@@ -1916,6 +1916,7 @@ CREATE TABLE
             closed BOOLEAN NOT NULL DEFAULT 0,
             materialClosed BOOLEAN NOT NULL DEFAULT 0,
             readyForPurchase BOOLEAN NOT NULL DEFAULT 0,
+            canCopy BOOLEAN NOT NULL DEFAULT 0;
             deleted BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             projectId CHAR(36) NOT NULL,

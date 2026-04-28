@@ -38,6 +38,7 @@ function emptyForm(defaultProjectBomNumber: string) {
     closed: false,
     materialClosed: false,
     readyForPurchase: false,
+    canCopy: false,
   }
 }
 
@@ -66,6 +67,7 @@ export function ProjectBOMFormDialog({
   const [closed, setClosed] = useState(false)
   const [materialClosed, setMaterialClosed] = useState(false)
   const [readyForPurchase, setReadyForPurchase] = useState(false)
+  const [canCopy, setCanCopy] = useState(false)
 
   // ─── Project search (create mode only) ───────────────────────────────────────
   const [projectQuery, setProjectQuery] = useState('')
@@ -90,6 +92,7 @@ export function ProjectBOMFormDialog({
       setClosed(bom.closed)
       setMaterialClosed(bom.materialClosed)
       setReadyForPurchase(bom.readyForPurchase)
+      setCanCopy(bom.canCopy)
       setParentBomId(bom.projectBomId ?? 'none')
     } else {
       setDescription('')
@@ -102,6 +105,7 @@ export function ProjectBOMFormDialog({
       setClosed(false)
       setMaterialClosed(false)
       setReadyForPurchase(false)
+      setCanCopy(false)
       setParentBomId('none')
       setProjectQuery('')
       setProjectResults([])
@@ -144,6 +148,7 @@ export function ProjectBOMFormDialog({
         closed,
         materialClosed,
         readyForPurchase,
+        canCopy,
       }
 
       if (isEdit) {
@@ -348,6 +353,7 @@ export function ProjectBOMFormDialog({
                 {label: 'Closed', value: closed, onChange: setClosed},
                 {label: 'Material Closed', value: materialClosed, onChange: setMaterialClosed},
                 {label: 'Ready for Purchase', value: readyForPurchase, onChange: setReadyForPurchase},
+                {label: 'Can Copy', value: canCopy, onChange: setCanCopy},
               ] as {label: string; value: boolean; onChange: (v: boolean) => void}[]
             ).map(({label, value, onChange}) => (
               <div
@@ -369,6 +375,88 @@ export function ProjectBOMFormDialog({
             disabled={saving}
             className="bg-accent text-accent-foreground hover:bg-accent/80">
             {saving ? (isEdit ? 'Saving…' : 'Creating…') : isEdit ? 'Save Changes' : 'Create'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+interface CopyProjectBOMDialogProps {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  sourceBOM: MappedProjectBOM
+  onCopy: (projectBomNumber: string, shortDescription: string) => Promise<void>
+}
+
+export function CopyProjectBOMDialog({open, onOpenChange, sourceBOM, onCopy}: CopyProjectBOMDialogProps) {
+  const [projectBomNumber, setProjectBomNumber] = useState('')
+  const [shortDescription, setShortDescription] = useState('')
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    if (!open) return
+    setProjectBomNumber(generateBomNumber())
+    setShortDescription(sourceBOM.shortDescription ? `Copy of ${sourceBOM.shortDescription}` : '')
+  }, [open, sourceBOM.id, sourceBOM.shortDescription])
+
+  async function handleCopy() {
+    setSaving(true)
+    try {
+      await onCopy(projectBomNumber.trim(), shortDescription.trim())
+      onOpenChange(false)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-md bg-card border-border">
+        <DialogHeader>
+          <DialogTitle className="text-foreground">Copy Project BOM</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-4 py-2">
+          <p className="text-xs text-muted-foreground">
+            Copying <span className="font-medium text-foreground">{sourceBOM.projectBomNumber}</span>. A new BOM will
+            be created with the same project, parent, settings and structures.
+          </p>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">BOM Number *</Label>
+            <div className="flex gap-2">
+              <Input
+                value={projectBomNumber}
+                onChange={e => setProjectBomNumber(e.target.value)}
+                className="bg-secondary border-border flex-1"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-10 px-3 border-border text-xs shrink-0"
+                onClick={() => setProjectBomNumber(generateBomNumber())}>
+                Regenerate
+              </Button>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Short Description *</Label>
+            <Input
+              value={shortDescription}
+              onChange={e => setShortDescription(e.target.value)}
+              className="bg-secondary border-border"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)} className="border-border">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleCopy}
+            disabled={saving || !projectBomNumber.trim() || !shortDescription.trim()}
+            className="bg-accent text-accent-foreground hover:bg-accent/80">
+            {saving ? 'Copying…' : 'Copy BOM'}
           </Button>
         </DialogFooter>
       </DialogContent>

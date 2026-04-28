@@ -4,7 +4,7 @@ import {useState} from 'react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {Search, Plus, Pencil, Trash2, ChevronDown, ChevronUp, ExternalLink, RotateCcw} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronDown, ChevronUp, ExternalLink, RotateCcw, Copy} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -15,8 +15,9 @@ import {
   softDeleteProjectBOMAction,
   hardDeleteProjectBOMAction,
   undeleteProjectBOMAction,
+  copyProjectBOMAction,
 } from '@/serverFunctions/projectBoms'
-import {ProjectBOMFormDialog} from '@/components/custom/projectBomFormDialog'
+import {ProjectBOMFormDialog, CopyProjectBOMDialog} from '@/components/custom/projectBomFormDialog'
 
 type SortField =
   | 'description'
@@ -29,6 +30,7 @@ type SortField =
   | 'createdAt'
   | 'createdBy'
   | 'parentBom'
+  | 'canCopy'
 
 type SortDir = 'asc' | 'desc'
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
@@ -158,6 +160,7 @@ export function ProjectBOMTable({
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingBOM, setEditingBOM] = useState<MappedProjectBOM | null>(null)
+  const [copyingBOM, setCopyingBOM] = useState<MappedProjectBOM | null>(null)
 
   // Build a lookup: bomId -> BOM (for parent name display)
   const bomById = Object.fromEntries(initialBOMs.map(b => [b.id, b]))
@@ -211,6 +214,8 @@ export function ProjectBOMTable({
           return s(a.createdByName, b.createdByName)
         case 'parentBom':
           return s(parentA, parentB)
+        case 'canCopy':
+          return dir * (Number(a.canCopy) - Number(b.canCopy))
         default:
           return 0
       }
@@ -293,6 +298,7 @@ export function ProjectBOMTable({
               <Th field="startDate" label="Start Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="endDate" label="End Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <TableHead className="whitespace-nowrap text-xs">Status</TableHead>
+              <Th field="canCopy" label="Can Copy" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdAt" label="Created At" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdBy" label="Created By" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               {showDeletedCols && (
@@ -309,7 +315,7 @@ export function ProjectBOMTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={showDeletedCols ? 13 : 11} className="h-32 text-center text-muted-foreground">
+                <TableCell colSpan={showDeletedCols ? 14 : 12} className="h-32 text-center text-muted-foreground">
                   No BOMs found.
                 </TableCell>
               </TableRow>
@@ -362,6 +368,15 @@ export function ProjectBOMTable({
                     <TableCell>
                       <BOMStatusBadges bom={bom} />
                     </TableCell>
+                    <TableCell>
+                      {bom.canCopy ? (
+                        <Badge className="bg-accent/15 text-accent border-0 text-xs">Yes</Badge>
+                      ) : (
+                        <Badge variant="secondary" className="text-xs text-muted-foreground/60">
+                          No
+                        </Badge>
+                      )}
+                    </TableCell>
                     <TableCell className={tdClass}>{formatDate(bom.createdAt)}</TableCell>
                     <TableCell className={tdClass}>{bom.createdByName}</TableCell>
                     {showDeletedCols && (
@@ -392,6 +407,16 @@ export function ProjectBOMTable({
                               setDialogOpen(true)
                             }}>
                             <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                        )}
+                        {!bom.deleted && bom.canCopy && canCreate && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:text-accent hover:bg-accent/10"
+                            title="Copy"
+                            onClick={() => setCopyingBOM(bom)}>
+                            <Copy className="h-3.5 w-3.5" />
                           </Button>
                         )}
                         {!bom.deleted && canDelete && (
@@ -452,6 +477,20 @@ export function ProjectBOMTable({
         allBOMs={initialBOMs}
         canEditNumber={canEditNumber}
       />
+      {copyingBOM && (
+        <CopyProjectBOMDialog
+          open={!!copyingBOM}
+          onOpenChange={open => {
+            if (!open) setCopyingBOM(null)
+          }}
+          sourceBOM={copyingBOM}
+          onCopy={async (projectBomNumber, shortDescription) => {
+            await copyProjectBOMAction({sourceId: copyingBOM.id, projectBomNumber, shortDescription})
+            setCopyingBOM(null)
+            router.refresh()
+          }}
+        />
+      )}
     </div>
   )
 }

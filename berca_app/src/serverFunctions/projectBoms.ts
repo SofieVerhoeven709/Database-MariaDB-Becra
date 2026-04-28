@@ -5,6 +5,7 @@ import {
   createProjectBOMSchema,
   updateProjectBOMSchema,
   projectBOMIdSchema,
+  copyProjectBOMSchema,
   createProjectBOMStructureSchema,
   updateProjectBOMStructureSchema,
   projectBOMStructureIdSchema,
@@ -15,6 +16,7 @@ import type {ProjectOption} from '@/types/projectBom'
 import {createTargetForType} from '@/dal/targets'
 import {createPurchaseBOMAction, createPurchaseBOMStructureAction} from '@/serverFunctions/purchaseBoms'
 import {ensureMaterialDemandForMaterial} from '@/dal/materialDemands'
+import {Prisma} from '@/generated/prisma/client'
 
 async function assertProjectBOMNotQuoteApproved(projectBOMId: string) {
   const purchase = await prismaClient.purchaseBOM.findFirst({
@@ -41,6 +43,25 @@ async function assertProjectBOMStructureNotQuoteApproved(projectBOMStructureId: 
   }
 }
 
+async function setProjectBOMCanCopy(id: string, canCopy: boolean) {
+  try {
+    await prismaClient.$executeRaw(Prisma.sql`UPDATE ProjectBOM SET canCopy = ${canCopy} WHERE id = ${id}`)
+  } catch {
+    // Older local databases may not have the column yet; normal Prisma CRUD should keep working.
+  }
+}
+
+async function getProjectBOMCanCopy(id: string) {
+  try {
+    const rows = await prismaClient.$queryRaw<Array<{canCopy: boolean | number | bigint}>>(
+      Prisma.sql`SELECT canCopy FROM ProjectBOM WHERE id = ${id} LIMIT 1`,
+    )
+    return Boolean(rows[0]?.canCopy)
+  } catch {
+    return false
+  }
+}
+
 // ─── ProjectBOM CRUD ───────────────────────────────────────────────────────────
 
 export const createProjectBOMAction = protectedServerFunction({
@@ -49,16 +70,18 @@ export const createProjectBOMAction = protectedServerFunction({
   serverFn: async ({data, logger, profile}) => {
     const id = crypto.randomUUID()
     const target = await createTargetForType('ProjectBom', profile.id)
+    const {canCopy, ...projectBOMData} = data
     logger.info(`Creating project BOM for project ${data.projectId}, createdBy: ${profile.id}`)
     await prismaClient.projectBOM.create({
       data: {
-        ...data,
+        ...projectBOMData,
         id,
         createdBy: profile.id,
         createdAt: new Date(),
         targetId: target.id,
       },
     })
+    await setProjectBOMCanCopy(id, canCopy)
     logger.info(`Project BOM created: ${id}`)
     revalidatePath('/projectBOMs')
   },
@@ -69,8 +92,10 @@ export const updateProjectBOMAction = protectedServerFunction({
   functionName: 'Update project BOM action',
   serverFn: async ({data: {id, ...data}, logger}) => {
     const wasReadyForPurchase = data.readyForPurchase
+    const {canCopy, ...projectBOMData} = data
 
-    await prismaClient.projectBOM.update({where: {id}, data})
+    await prismaClient.projectBOM.update({where: {id}, data: projectBOMData})
+    await setProjectBOMCanCopy(id, canCopy)
     logger.info(`Project BOM updated: ${id}`)
 
     if (wasReadyForPurchase) {
@@ -113,34 +138,34 @@ export const updateProjectBOMAction = protectedServerFunction({
       let payload
       if (bom) {
         payload = {
-          projectId: data.projectId,
+          projectId: projectBOMData.projectId,
           projectBOMId: id,
-          description: data.description,
-          shortDescription: data.shortDescription,
+          description: projectBOMData.description,
+          shortDescription: projectBOMData.shortDescription,
           purchaseBomId: bom.purchaseBomId,
-          purchaseBomNumber: data.projectBomNumber,
-          additionalInfo: data.additionalInfo,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          closed: data.closed,
-          materialClosed: data.materialClosed,
+          purchaseBomNumber: projectBOMData.projectBomNumber,
+          additionalInfo: projectBOMData.additionalInfo,
+          startDate: projectBOMData.startDate,
+          endDate: projectBOMData.endDate,
+          closed: projectBOMData.closed,
+          materialClosed: projectBOMData.materialClosed,
           approvedForQuote: false,
           purchased: false,
         }
       } else {
         payload = {
-          projectId: data.projectId,
+          projectId: projectBOMData.projectId,
           projectBOMId: id,
-          description: data.description,
-          shortDescription: data.shortDescription,
-          purchaseBomNumber: data.projectBomNumber,
-          additionalInfo: data.additionalInfo,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          closed: data.closed,
+          description: projectBOMData.description,
+          shortDescription: projectBOMData.shortDescription,
+          purchaseBomNumber: projectBOMData.projectBomNumber,
+          additionalInfo: projectBOMData.additionalInfo,
+          startDate: projectBOMData.startDate,
+          endDate: projectBOMData.endDate,
+          closed: projectBOMData.closed,
           approvedForQuote: false,
           purchased: false,
-          materialClosed: data.materialClosed,
+          materialClosed: projectBOMData.materialClosed,
         }
       }
 
@@ -172,6 +197,92 @@ export const updateProjectBOMAction = protectedServerFunction({
 
     revalidatePath('/projectBOMs')
     revalidatePath('/purchaseBOMs')
+  },
+})
+
+export const copyProjectBOMAction = protectedServerFunction({
+  schema: copyProjectBOMSchema,
+  functionName: 'Copy project BOM action',
+  serverFn: async ({data: {sourceId, projectBomNumber, shortDescription}, profile, logger}) => {
+    const source = await prismaClient.projectBOM.findUniqueOrThrow({
+      where: {id: sourceId},
+      include: {
+        ProjectBOMStructure: {
+          where: {deleted: false},
+          include: {BOMExecution: true},
+          orderBy: {createdAt: 'asc'},
+        },
+      },
+    })
+
+    const canCopy = await getProjectBOMCanCopy(sourceId)
+    if (!canCopy) throw new Error('This project BOM is not marked as copyable.')
+
+    const id = crypto.randomUUID()
+    const target = await createTargetForType('ProjectBom', profile.id)
+
+    await prismaClient.projectBOM.create({
+      data: {
+        id,
+        projectId: source.projectId,
+        projectBomId: source.projectBomId,
+        projectBomNumber,
+        description: source.description,
+        shortDescription,
+        additionalInfo: source.additionalInfo,
+        startDate: source.startDate,
+        endDate: source.endDate,
+        closed: source.closed,
+        materialClosed: source.materialClosed,
+        readyForPurchase: source.readyForPurchase,
+        createdBy: profile.id,
+        createdAt: new Date(),
+        targetId: target.id,
+      },
+    })
+    await setProjectBOMCanCopy(id, canCopy)
+
+    for (const structure of source.ProjectBOMStructure) {
+      const structureId = crypto.randomUUID()
+      await prismaClient.projectBOMStructure.create({
+        data: {
+          id: structureId,
+          projectBOMId: id,
+          materialId: structure.materialId,
+          shortDescription: structure.shortDescription,
+          additionalInfo: structure.additionalInfo,
+          description: structure.description,
+          tag: structure.tag,
+          readyForPurchase: structure.readyForPurchase,
+          readyForPurchaseDate: structure.readyForPurchaseDate,
+          createdBy: profile.id,
+          createdAt: new Date(),
+          BOMExecution: structure.BOMExecution
+            ? {
+                create: {
+                  id: crypto.randomUUID(),
+                  requiredQuantity: structure.BOMExecution.requiredQuantity,
+                  stockReservedQuantity: structure.BOMExecution.stockReservedQuantity,
+                  issuedQuantity: structure.BOMExecution.issuedQuantity,
+                  purchaseOrderedQuantity: structure.BOMExecution.purchaseOrderedQuantity,
+                  purchaseReceivedQuantity: structure.BOMExecution.purchaseReceivedQuantity,
+                  completedDate: structure.BOMExecution.completedDate,
+                  notDeliverable: structure.BOMExecution.notDeliverable,
+                  notCorrect: structure.BOMExecution.notCorrect,
+                  notCorrectReason: structure.BOMExecution.notCorrectReason,
+                  createdBy: profile.id,
+                  createdAt: new Date(),
+                },
+              }
+            : undefined,
+        },
+      })
+
+      await ensureMaterialDemandForMaterial(structure.materialId)
+    }
+
+    logger.info(`Project BOM copied from ${sourceId} to ${id}`)
+    revalidatePath('/projectBOMs')
   },
 })
 

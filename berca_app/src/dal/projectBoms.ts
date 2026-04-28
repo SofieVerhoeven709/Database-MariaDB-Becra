@@ -1,5 +1,6 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
+import {Prisma} from '@/generated/prisma/client'
 
 // ─── Shared include ────────────────────────────────────────────────────────────
 export const projectBOMInclude = {
@@ -46,18 +47,34 @@ export const projectBOMInclude = {
 
 // ─── Queries ───────────────────────────────────────────────────────────────────
 export async function getProjectBOMs(projectId?: string) {
-  return prismaClient.projectBOM.findMany({
+  const boms = await prismaClient.projectBOM.findMany({
     where: projectId ? {projectId} : undefined,
     include: projectBOMInclude,
     orderBy: {createdAt: 'desc'},
   })
+  return withCanCopy(boms)
 }
 
 export async function getProjectBOMById(id: string) {
-  return prismaClient.projectBOM.findUniqueOrThrow({
+  const bom = await prismaClient.projectBOM.findUniqueOrThrow({
     where: {id},
     include: projectBOMInclude,
   })
+  const [mapped] = await withCanCopy([bom])
+  return mapped
+}
+
+async function withCanCopy<T extends {id: string}>(boms: T[]): Promise<(T & {canCopy: boolean})[]> {
+  if (boms.length === 0) return []
+  try {
+    const rows = await prismaClient.$queryRaw<Array<{id: string; canCopy: boolean | number | bigint}>>(
+      Prisma.sql`SELECT id, canCopy FROM ProjectBOM WHERE id IN (${Prisma.join(boms.map(bom => bom.id))})`,
+    )
+    const byId = new Map(rows.map(row => [row.id, Boolean(row.canCopy)]))
+    return boms.map(bom => ({...bom, canCopy: byId.get(bom.id) ?? false}))
+  } catch {
+    return boms.map(bom => ({...bom, canCopy: false}))
+  }
 }
 
 export async function getMaterialOptions() {

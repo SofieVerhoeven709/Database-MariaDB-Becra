@@ -2039,7 +2039,7 @@ CONSTRAINT ScheduleMeeting_ibfk_3
   FOREIGN KEY (employeeId) REFERENCES Employee(id) ON DELETE RESTRICT
 
 ) ENGINE = InnoDB;
-ALTER TABLE ProjectBOM ADD COLUMN canCopy BOOLEAN NOT NULL DEFAULT 0;
+ALTER TABLE ProjectBOM ADD COLUMN IF NOT EXISTS canCopy BOOLEAN NOT NULL DEFAULT 0;
 
 -- HR Recruitment
 
@@ -2053,12 +2053,12 @@ IF NOT EXISTS RecruitmentApplicant (
   contactType VARCHAR(50) NOT NULL,
   description TEXT NULL,
   cvPath VARCHAR(500) NULL,
-  potential BOOLEAN NOT NULL DEFAULT false,
-  retained BOOLEAN NOT NULL DEFAULT false,
+  potential BOOLEAN NOT NULL DEFAULT 0,
+  retained BOOLEAN NOT NULL DEFAULT 0,
   createdAt DATETIME NOT NULL,
   createdBy CHAR(36) NOT NULL,
   updatedAt DATETIME NULL,
-  deleted BOOLEAN NOT NULL DEFAULT false,
+  deleted BOOLEAN NOT NULL DEFAULT 0,
   deletedAt DATETIME NULL,
   deletedBy CHAR(36) NULL,
 
@@ -2082,12 +2082,12 @@ IF NOT EXISTS RecruitmentVacancy (
   workRegime VARCHAR(50) NOT NULL,
   salaryMin DECIMAL(10,2) NULL,
   salaryMax DECIMAL(10,2) NULL,
-  publishWebsite BOOLEAN NOT NULL DEFAULT false,
-  publishVdab BOOLEAN NOT NULL DEFAULT false,
-  publishOther BOOLEAN NOT NULL DEFAULT false,
-  publishLinkedIn BOOLEAN NOT NULL DEFAULT false,
-  publishTempAgencies BOOLEAN NOT NULL DEFAULT false,
-  publishRecruitmentAgencies BOOLEAN NOT NULL DEFAULT false,
+  publishWebsite BOOLEAN NOT NULL DEFAULT 0,
+  publishVdab BOOLEAN NOT NULL DEFAULT 0,
+  publishOther BOOLEAN NOT NULL DEFAULT 0,
+  publishLinkedIn BOOLEAN NOT NULL DEFAULT 0,
+  publishTempAgencies BOOLEAN NOT NULL DEFAULT 0,
+  publishRecruitmentAgencies BOOLEAN NOT NULL DEFAULT 0,
   otherPublication VARCHAR(255) NULL,
   createdAt DATETIME NOT NULL,
   createdBy CHAR(36) NOT NULL,
@@ -2105,12 +2105,3 @@ CONSTRAINT RecruitmentVacancy_ibfk_2
   FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL
 
 ) ENGINE = InnoDB;
-
-ALTER TABLE RecruitmentVacancy
-    CHANGE COLUMN IF EXISTS publishReqruitmentAgencies publishRecruitmentAgencies BOOLEAN NOT NULL DEFAULT 0;
-
-ALTER TABLE RecruitmentVacancy
-    ADD COLUMN IF NOT EXISTS updatedAt DATETIME NULL AFTER createdBy;
-
-ALTER TABLE RecruitmentVacancy
-    MODIFY COLUMN createdBy CHAR(36) NOT NULL;

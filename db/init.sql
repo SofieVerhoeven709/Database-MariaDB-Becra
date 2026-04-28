@@ -1,5 +1,5 @@
 CREATE DATABASE BecraBV;
-USE BecraBVs;
+USE BecraBV;
 
 CREATE TABLE
       IF NOT EXISTS Role (

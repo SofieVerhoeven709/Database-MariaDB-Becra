@@ -397,6 +397,8 @@ export const ModelName = {
   Contact: 'Contact',
   DeliveryNoteSupplier: 'DeliveryNoteSupplier',
   Department: 'Department',
+  RecruitmentApplicant: 'RecruitmentApplicant',
+  RecruitmentVacancy: 'RecruitmentVacancy',
   DocumentPlace: 'DocumentPlace',
   DocumentStructure: 'DocumentStructure',
   EmergencyContact: 'EmergencyContact',
@@ -499,16 +501,16 @@ export const ModelName = {
   IncomingDelivery: 'IncomingDelivery',
   IncomingDeliveryLine: 'IncomingDeliveryLine',
   IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation',
+  ScheduleMeeting: 'ScheduleMeeting',
   BillOfQuantities: 'BillOfQuantities',
   BillOfQuantitiesSentType: 'BillOfQuantitiesSentType',
   BillOfQuantitiesStatus: 'BillOfQuantitiesStatus',
   BillOfQuantitiesType: 'BillOfQuantitiesType',
   BoqContact: 'BoqContact',
+  ProjectEmployee: 'ProjectEmployee',
   QuoteSupplierMiscLine: 'QuoteSupplierMiscLine',
   VisibilityForDepartment: 'VisibilityForDepartment',
-  WorkOrderBoQ: 'WorkOrderBoQ',
-  ProjectEmployee: 'ProjectEmployee',
-  ScheduleMeeting: 'ScheduleMeeting'
+  WorkOrderBoQ: 'WorkOrderBoQ'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -524,7 +526,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ" | "projectEmployee" | "scheduleMeeting"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "recruitmentApplicant" | "recruitmentVacancy" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -987,6 +989,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.DepartmentCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.DepartmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    RecruitmentApplicant: {
+      payload: Prisma.$RecruitmentApplicantPayload<ExtArgs>
+      fields: Prisma.RecruitmentApplicantFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RecruitmentApplicantFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RecruitmentApplicantFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        findFirst: {
+          args: Prisma.RecruitmentApplicantFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RecruitmentApplicantFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        findMany: {
+          args: Prisma.RecruitmentApplicantFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>[]
+        }
+        create: {
+          args: Prisma.RecruitmentApplicantCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        createMany: {
+          args: Prisma.RecruitmentApplicantCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.RecruitmentApplicantDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        update: {
+          args: Prisma.RecruitmentApplicantUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        deleteMany: {
+          args: Prisma.RecruitmentApplicantDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RecruitmentApplicantUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.RecruitmentApplicantUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        aggregate: {
+          args: Prisma.RecruitmentApplicantAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRecruitmentApplicant>
+        }
+        groupBy: {
+          args: Prisma.RecruitmentApplicantGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecruitmentApplicantGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RecruitmentApplicantCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecruitmentApplicantCountAggregateOutputType> | number
+        }
+      }
+    }
+    RecruitmentVacancy: {
+      payload: Prisma.$RecruitmentVacancyPayload<ExtArgs>
+      fields: Prisma.RecruitmentVacancyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RecruitmentVacancyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RecruitmentVacancyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        findFirst: {
+          args: Prisma.RecruitmentVacancyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RecruitmentVacancyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        findMany: {
+          args: Prisma.RecruitmentVacancyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>[]
+        }
+        create: {
+          args: Prisma.RecruitmentVacancyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        createMany: {
+          args: Prisma.RecruitmentVacancyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.RecruitmentVacancyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        update: {
+          args: Prisma.RecruitmentVacancyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        deleteMany: {
+          args: Prisma.RecruitmentVacancyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RecruitmentVacancyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.RecruitmentVacancyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        aggregate: {
+          args: Prisma.RecruitmentVacancyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRecruitmentVacancy>
+        }
+        groupBy: {
+          args: Prisma.RecruitmentVacancyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecruitmentVacancyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RecruitmentVacancyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecruitmentVacancyCountAggregateOutputType> | number
         }
       }
     }
@@ -7722,6 +7856,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ScheduleMeeting: {
+      payload: Prisma.$ScheduleMeetingPayload<ExtArgs>
+      fields: Prisma.ScheduleMeetingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ScheduleMeetingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ScheduleMeetingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        findFirst: {
+          args: Prisma.ScheduleMeetingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ScheduleMeetingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        findMany: {
+          args: Prisma.ScheduleMeetingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>[]
+        }
+        create: {
+          args: Prisma.ScheduleMeetingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        createMany: {
+          args: Prisma.ScheduleMeetingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ScheduleMeetingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        update: {
+          args: Prisma.ScheduleMeetingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        deleteMany: {
+          args: Prisma.ScheduleMeetingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ScheduleMeetingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ScheduleMeetingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        aggregate: {
+          args: Prisma.ScheduleMeetingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateScheduleMeeting>
+        }
+        groupBy: {
+          args: Prisma.ScheduleMeetingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScheduleMeetingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ScheduleMeetingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScheduleMeetingCountAggregateOutputType> | number
+        }
+      }
+    }
     BillOfQuantities: {
       payload: Prisma.$BillOfQuantitiesPayload<ExtArgs>
       fields: Prisma.BillOfQuantitiesFieldRefs
@@ -8052,6 +8252,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProjectEmployee: {
+      payload: Prisma.$ProjectEmployeePayload<ExtArgs>
+      fields: Prisma.ProjectEmployeeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectEmployeeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectEmployeeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectEmployeeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectEmployeeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        findMany: {
+          args: Prisma.ProjectEmployeeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>[]
+        }
+        create: {
+          args: Prisma.ProjectEmployeeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        createMany: {
+          args: Prisma.ProjectEmployeeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ProjectEmployeeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        update: {
+          args: Prisma.ProjectEmployeeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectEmployeeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectEmployeeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ProjectEmployeeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectEmployeeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectEmployee>
+        }
+        groupBy: {
+          args: Prisma.ProjectEmployeeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectEmployeeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectEmployeeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectEmployeeCountAggregateOutputType> | number
+        }
+      }
+    }
     QuoteSupplierMiscLine: {
       payload: Prisma.$QuoteSupplierMiscLinePayload<ExtArgs>
       fields: Prisma.QuoteSupplierMiscLineFieldRefs
@@ -8247,138 +8513,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WorkOrderBoQCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WorkOrderBoQCountAggregateOutputType> | number
-        }
-      }
-    }
-    ProjectEmployee: {
-      payload: Prisma.$ProjectEmployeePayload<ExtArgs>
-      fields: Prisma.ProjectEmployeeFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ProjectEmployeeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ProjectEmployeeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        findFirst: {
-          args: Prisma.ProjectEmployeeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ProjectEmployeeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        findMany: {
-          args: Prisma.ProjectEmployeeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>[]
-        }
-        create: {
-          args: Prisma.ProjectEmployeeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        createMany: {
-          args: Prisma.ProjectEmployeeCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.ProjectEmployeeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        update: {
-          args: Prisma.ProjectEmployeeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        deleteMany: {
-          args: Prisma.ProjectEmployeeDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ProjectEmployeeUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.ProjectEmployeeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        aggregate: {
-          args: Prisma.ProjectEmployeeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectEmployee>
-        }
-        groupBy: {
-          args: Prisma.ProjectEmployeeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProjectEmployeeGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ProjectEmployeeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProjectEmployeeCountAggregateOutputType> | number
-        }
-      }
-    }
-    ScheduleMeeting: {
-      payload: Prisma.$ScheduleMeetingPayload<ExtArgs>
-      fields: Prisma.ScheduleMeetingFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ScheduleMeetingFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ScheduleMeetingFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
-        }
-        findFirst: {
-          args: Prisma.ScheduleMeetingFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ScheduleMeetingFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
-        }
-        findMany: {
-          args: Prisma.ScheduleMeetingFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>[]
-        }
-        create: {
-          args: Prisma.ScheduleMeetingCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
-        }
-        createMany: {
-          args: Prisma.ScheduleMeetingCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.ScheduleMeetingDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
-        }
-        update: {
-          args: Prisma.ScheduleMeetingUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
-        }
-        deleteMany: {
-          args: Prisma.ScheduleMeetingDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ScheduleMeetingUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.ScheduleMeetingUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
-        }
-        aggregate: {
-          args: Prisma.ScheduleMeetingAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateScheduleMeeting>
-        }
-        groupBy: {
-          args: Prisma.ScheduleMeetingGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ScheduleMeetingGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ScheduleMeetingCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ScheduleMeetingCountAggregateOutputType> | number
         }
       }
     }
@@ -8578,6 +8712,53 @@ export const DepartmentScalarFieldEnum = {
 } as const
 
 export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
+export const RecruitmentApplicantScalarFieldEnum = {
+  id: 'id',
+  candidateName: 'candidateName',
+  profile: 'profile',
+  contactDate: 'contactDate',
+  interviewDate: 'interviewDate',
+  contactType: 'contactType',
+  description: 'description',
+  cvPath: 'cvPath',
+  potential: 'potential',
+  retained: 'retained',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentApplicantScalarFieldEnum = (typeof RecruitmentApplicantScalarFieldEnum)[keyof typeof RecruitmentApplicantScalarFieldEnum]
+
+
+export const RecruitmentVacancyScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  department: 'department',
+  contractType: 'contractType',
+  workRegime: 'workRegime',
+  salaryMin: 'salaryMin',
+  salaryMax: 'salaryMax',
+  publishWebsite: 'publishWebsite',
+  publishVdab: 'publishVdab',
+  publishOther: 'publishOther',
+  publishLinkedIn: 'publishLinkedIn',
+  publishTempAgencies: 'publishTempAgencies',
+  publishRecruitmentAgencies: 'publishRecruitmentAgencies',
+  otherPublication: 'otherPublication',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentVacancyScalarFieldEnum = (typeof RecruitmentVacancyScalarFieldEnum)[keyof typeof RecruitmentVacancyScalarFieldEnum]
 
 
 export const DocumentPlaceScalarFieldEnum = {
@@ -10163,6 +10344,7 @@ export const ProjectBOMScalarFieldEnum = {
   closed: 'closed',
   materialClosed: 'materialClosed',
   readyForPurchase: 'readyForPurchase',
+  canCopy: 'canCopy',
   deleted: 'deleted',
   createdBy: 'createdBy',
   projectId: 'projectId',
@@ -10392,6 +10574,27 @@ export const IncomingDeliveryLineAllocationScalarFieldEnum = {
 export type IncomingDeliveryLineAllocationScalarFieldEnum = (typeof IncomingDeliveryLineAllocationScalarFieldEnum)[keyof typeof IncomingDeliveryLineAllocationScalarFieldEnum]
 
 
+export const ScheduleMeetingScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingScalarFieldEnum = (typeof ScheduleMeetingScalarFieldEnum)[keyof typeof ScheduleMeetingScalarFieldEnum]
+
+
 export const BillOfQuantitiesScalarFieldEnum = {
   id: 'id',
   boqNumber: 'boqNumber',
@@ -10468,6 +10671,18 @@ export const BoqContactScalarFieldEnum = {
 export type BoqContactScalarFieldEnum = (typeof BoqContactScalarFieldEnum)[keyof typeof BoqContactScalarFieldEnum]
 
 
+export const ProjectEmployeeScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo',
+  manager: 'manager',
+  supervisor: 'supervisor'
+} as const
+
+export type ProjectEmployeeScalarFieldEnum = (typeof ProjectEmployeeScalarFieldEnum)[keyof typeof ProjectEmployeeScalarFieldEnum]
+
+
 export const QuoteSupplierMiscLineScalarFieldEnum = {
   id: 'id',
   quoteSupplierId: 'quoteSupplierId',
@@ -10498,39 +10713,6 @@ export const WorkOrderBoQScalarFieldEnum = {
 } as const
 
 export type WorkOrderBoQScalarFieldEnum = (typeof WorkOrderBoQScalarFieldEnum)[keyof typeof WorkOrderBoQScalarFieldEnum]
-
-
-export const ProjectEmployeeScalarFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  projectId: 'projectId',
-  additionalInfo: 'additionalInfo',
-  manager: 'manager',
-  supervisor: 'supervisor'
-} as const
-
-export type ProjectEmployeeScalarFieldEnum = (typeof ProjectEmployeeScalarFieldEnum)[keyof typeof ProjectEmployeeScalarFieldEnum]
-
-
-export const ScheduleMeetingScalarFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  conversationType: 'conversationType',
-  startAt: 'startAt',
-  endAt: 'endAt',
-  place: 'place',
-  status: 'status',
-  notes: 'notes',
-  completedAt: 'completedAt',
-  createdAt: 'createdAt',
-  createdBy: 'createdBy',
-  updatedAt: 'updatedAt',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type ScheduleMeetingScalarFieldEnum = (typeof ScheduleMeetingScalarFieldEnum)[keyof typeof ScheduleMeetingScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -10659,6 +10841,35 @@ export const DepartmentOrderByRelevanceFieldEnum = {
 } as const
 
 export type DepartmentOrderByRelevanceFieldEnum = (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum]
+
+
+export const RecruitmentApplicantOrderByRelevanceFieldEnum = {
+  id: 'id',
+  candidateName: 'candidateName',
+  profile: 'profile',
+  contactType: 'contactType',
+  description: 'description',
+  cvPath: 'cvPath',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentApplicantOrderByRelevanceFieldEnum = (typeof RecruitmentApplicantOrderByRelevanceFieldEnum)[keyof typeof RecruitmentApplicantOrderByRelevanceFieldEnum]
+
+
+export const RecruitmentVacancyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  department: 'department',
+  contractType: 'contractType',
+  workRegime: 'workRegime',
+  otherPublication: 'otherPublication',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentVacancyOrderByRelevanceFieldEnum = (typeof RecruitmentVacancyOrderByRelevanceFieldEnum)[keyof typeof RecruitmentVacancyOrderByRelevanceFieldEnum]
 
 
 export const DocumentPlaceOrderByRelevanceFieldEnum = {
@@ -12010,6 +12221,20 @@ export const IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = {
 export type IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = (typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum]
 
 
+export const ScheduleMeetingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingOrderByRelevanceFieldEnum = (typeof ScheduleMeetingOrderByRelevanceFieldEnum)[keyof typeof ScheduleMeetingOrderByRelevanceFieldEnum]
+
+
 export const BillOfQuantitiesOrderByRelevanceFieldEnum = {
   id: 'id',
   boqNumber: 'boqNumber',
@@ -12068,6 +12293,16 @@ export const BoqContactOrderByRelevanceFieldEnum = {
 export type BoqContactOrderByRelevanceFieldEnum = (typeof BoqContactOrderByRelevanceFieldEnum)[keyof typeof BoqContactOrderByRelevanceFieldEnum]
 
 
+export const ProjectEmployeeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo'
+} as const
+
+export type ProjectEmployeeOrderByRelevanceFieldEnum = (typeof ProjectEmployeeOrderByRelevanceFieldEnum)[keyof typeof ProjectEmployeeOrderByRelevanceFieldEnum]
+
+
 export const QuoteSupplierMiscLineOrderByRelevanceFieldEnum = {
   id: 'id',
   quoteSupplierId: 'quoteSupplierId',
@@ -12094,30 +12329,6 @@ export const WorkOrderBoQOrderByRelevanceFieldEnum = {
 } as const
 
 export type WorkOrderBoQOrderByRelevanceFieldEnum = (typeof WorkOrderBoQOrderByRelevanceFieldEnum)[keyof typeof WorkOrderBoQOrderByRelevanceFieldEnum]
-
-
-export const ProjectEmployeeOrderByRelevanceFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  projectId: 'projectId',
-  additionalInfo: 'additionalInfo'
-} as const
-
-export type ProjectEmployeeOrderByRelevanceFieldEnum = (typeof ProjectEmployeeOrderByRelevanceFieldEnum)[keyof typeof ProjectEmployeeOrderByRelevanceFieldEnum]
-
-
-export const ScheduleMeetingOrderByRelevanceFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  conversationType: 'conversationType',
-  place: 'place',
-  status: 'status',
-  notes: 'notes',
-  createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
-} as const
-
-export type ScheduleMeetingOrderByRelevanceFieldEnum = (typeof ScheduleMeetingOrderByRelevanceFieldEnum)[keyof typeof ScheduleMeetingOrderByRelevanceFieldEnum]
 
 
 
@@ -12268,6 +12479,8 @@ export type GlobalOmitConfig = {
   contact?: Prisma.ContactOmit
   deliveryNoteSupplier?: Prisma.DeliveryNoteSupplierOmit
   department?: Prisma.DepartmentOmit
+  recruitmentApplicant?: Prisma.RecruitmentApplicantOmit
+  recruitmentVacancy?: Prisma.RecruitmentVacancyOmit
   documentPlace?: Prisma.DocumentPlaceOmit
   documentStructure?: Prisma.DocumentStructureOmit
   emergencyContact?: Prisma.EmergencyContactOmit
@@ -12370,16 +12583,16 @@ export type GlobalOmitConfig = {
   incomingDelivery?: Prisma.IncomingDeliveryOmit
   incomingDeliveryLine?: Prisma.IncomingDeliveryLineOmit
   incomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationOmit
+  scheduleMeeting?: Prisma.ScheduleMeetingOmit
   billOfQuantities?: Prisma.BillOfQuantitiesOmit
   billOfQuantitiesSentType?: Prisma.BillOfQuantitiesSentTypeOmit
   billOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusOmit
   billOfQuantitiesType?: Prisma.BillOfQuantitiesTypeOmit
   boqContact?: Prisma.BoqContactOmit
+  projectEmployee?: Prisma.ProjectEmployeeOmit
   quoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineOmit
   visibilityForDepartment?: Prisma.VisibilityForDepartmentOmit
   workOrderBoQ?: Prisma.WorkOrderBoQOmit
-  projectEmployee?: Prisma.ProjectEmployeeOmit
-  scheduleMeeting?: Prisma.ScheduleMeetingOmit
 }
 
 /* Types for Logging */

@@ -56,6 +56,8 @@ export const ModelName = {
   Contact: 'Contact',
   DeliveryNoteSupplier: 'DeliveryNoteSupplier',
   Department: 'Department',
+  RecruitmentApplicant: 'RecruitmentApplicant',
+  RecruitmentVacancy: 'RecruitmentVacancy',
   DocumentPlace: 'DocumentPlace',
   DocumentStructure: 'DocumentStructure',
   EmergencyContact: 'EmergencyContact',
@@ -158,16 +160,16 @@ export const ModelName = {
   IncomingDelivery: 'IncomingDelivery',
   IncomingDeliveryLine: 'IncomingDeliveryLine',
   IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation',
+  ScheduleMeeting: 'ScheduleMeeting',
   BillOfQuantities: 'BillOfQuantities',
   BillOfQuantitiesSentType: 'BillOfQuantitiesSentType',
   BillOfQuantitiesStatus: 'BillOfQuantitiesStatus',
   BillOfQuantitiesType: 'BillOfQuantitiesType',
   BoqContact: 'BoqContact',
+  ProjectEmployee: 'ProjectEmployee',
   QuoteSupplierMiscLine: 'QuoteSupplierMiscLine',
   VisibilityForDepartment: 'VisibilityForDepartment',
-  WorkOrderBoQ: 'WorkOrderBoQ',
-  ProjectEmployee: 'ProjectEmployee',
-  ScheduleMeeting: 'ScheduleMeeting'
+  WorkOrderBoQ: 'WorkOrderBoQ'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -343,6 +345,53 @@ export const DepartmentScalarFieldEnum = {
 } as const
 
 export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
+export const RecruitmentApplicantScalarFieldEnum = {
+  id: 'id',
+  candidateName: 'candidateName',
+  profile: 'profile',
+  contactDate: 'contactDate',
+  interviewDate: 'interviewDate',
+  contactType: 'contactType',
+  description: 'description',
+  cvPath: 'cvPath',
+  potential: 'potential',
+  retained: 'retained',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentApplicantScalarFieldEnum = (typeof RecruitmentApplicantScalarFieldEnum)[keyof typeof RecruitmentApplicantScalarFieldEnum]
+
+
+export const RecruitmentVacancyScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  department: 'department',
+  contractType: 'contractType',
+  workRegime: 'workRegime',
+  salaryMin: 'salaryMin',
+  salaryMax: 'salaryMax',
+  publishWebsite: 'publishWebsite',
+  publishVdab: 'publishVdab',
+  publishOther: 'publishOther',
+  publishLinkedIn: 'publishLinkedIn',
+  publishTempAgencies: 'publishTempAgencies',
+  publishRecruitmentAgencies: 'publishRecruitmentAgencies',
+  otherPublication: 'otherPublication',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentVacancyScalarFieldEnum = (typeof RecruitmentVacancyScalarFieldEnum)[keyof typeof RecruitmentVacancyScalarFieldEnum]
 
 
 export const DocumentPlaceScalarFieldEnum = {
@@ -1928,6 +1977,7 @@ export const ProjectBOMScalarFieldEnum = {
   closed: 'closed',
   materialClosed: 'materialClosed',
   readyForPurchase: 'readyForPurchase',
+  canCopy: 'canCopy',
   deleted: 'deleted',
   createdBy: 'createdBy',
   projectId: 'projectId',
@@ -2157,6 +2207,27 @@ export const IncomingDeliveryLineAllocationScalarFieldEnum = {
 export type IncomingDeliveryLineAllocationScalarFieldEnum = (typeof IncomingDeliveryLineAllocationScalarFieldEnum)[keyof typeof IncomingDeliveryLineAllocationScalarFieldEnum]
 
 
+export const ScheduleMeetingScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingScalarFieldEnum = (typeof ScheduleMeetingScalarFieldEnum)[keyof typeof ScheduleMeetingScalarFieldEnum]
+
+
 export const BillOfQuantitiesScalarFieldEnum = {
   id: 'id',
   boqNumber: 'boqNumber',
@@ -2233,6 +2304,18 @@ export const BoqContactScalarFieldEnum = {
 export type BoqContactScalarFieldEnum = (typeof BoqContactScalarFieldEnum)[keyof typeof BoqContactScalarFieldEnum]
 
 
+export const ProjectEmployeeScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo',
+  manager: 'manager',
+  supervisor: 'supervisor'
+} as const
+
+export type ProjectEmployeeScalarFieldEnum = (typeof ProjectEmployeeScalarFieldEnum)[keyof typeof ProjectEmployeeScalarFieldEnum]
+
+
 export const QuoteSupplierMiscLineScalarFieldEnum = {
   id: 'id',
   quoteSupplierId: 'quoteSupplierId',
@@ -2263,39 +2346,6 @@ export const WorkOrderBoQScalarFieldEnum = {
 } as const
 
 export type WorkOrderBoQScalarFieldEnum = (typeof WorkOrderBoQScalarFieldEnum)[keyof typeof WorkOrderBoQScalarFieldEnum]
-
-
-export const ProjectEmployeeScalarFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  projectId: 'projectId',
-  additionalInfo: 'additionalInfo',
-  manager: 'manager',
-  supervisor: 'supervisor'
-} as const
-
-export type ProjectEmployeeScalarFieldEnum = (typeof ProjectEmployeeScalarFieldEnum)[keyof typeof ProjectEmployeeScalarFieldEnum]
-
-
-export const ScheduleMeetingScalarFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  conversationType: 'conversationType',
-  startAt: 'startAt',
-  endAt: 'endAt',
-  place: 'place',
-  status: 'status',
-  notes: 'notes',
-  completedAt: 'completedAt',
-  createdAt: 'createdAt',
-  createdBy: 'createdBy',
-  updatedAt: 'updatedAt',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type ScheduleMeetingScalarFieldEnum = (typeof ScheduleMeetingScalarFieldEnum)[keyof typeof ScheduleMeetingScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2424,6 +2474,35 @@ export const DepartmentOrderByRelevanceFieldEnum = {
 } as const
 
 export type DepartmentOrderByRelevanceFieldEnum = (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum]
+
+
+export const RecruitmentApplicantOrderByRelevanceFieldEnum = {
+  id: 'id',
+  candidateName: 'candidateName',
+  profile: 'profile',
+  contactType: 'contactType',
+  description: 'description',
+  cvPath: 'cvPath',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentApplicantOrderByRelevanceFieldEnum = (typeof RecruitmentApplicantOrderByRelevanceFieldEnum)[keyof typeof RecruitmentApplicantOrderByRelevanceFieldEnum]
+
+
+export const RecruitmentVacancyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  department: 'department',
+  contractType: 'contractType',
+  workRegime: 'workRegime',
+  otherPublication: 'otherPublication',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentVacancyOrderByRelevanceFieldEnum = (typeof RecruitmentVacancyOrderByRelevanceFieldEnum)[keyof typeof RecruitmentVacancyOrderByRelevanceFieldEnum]
 
 
 export const DocumentPlaceOrderByRelevanceFieldEnum = {
@@ -3775,6 +3854,20 @@ export const IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = {
 export type IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = (typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum]
 
 
+export const ScheduleMeetingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingOrderByRelevanceFieldEnum = (typeof ScheduleMeetingOrderByRelevanceFieldEnum)[keyof typeof ScheduleMeetingOrderByRelevanceFieldEnum]
+
+
 export const BillOfQuantitiesOrderByRelevanceFieldEnum = {
   id: 'id',
   boqNumber: 'boqNumber',
@@ -3833,6 +3926,16 @@ export const BoqContactOrderByRelevanceFieldEnum = {
 export type BoqContactOrderByRelevanceFieldEnum = (typeof BoqContactOrderByRelevanceFieldEnum)[keyof typeof BoqContactOrderByRelevanceFieldEnum]
 
 
+export const ProjectEmployeeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo'
+} as const
+
+export type ProjectEmployeeOrderByRelevanceFieldEnum = (typeof ProjectEmployeeOrderByRelevanceFieldEnum)[keyof typeof ProjectEmployeeOrderByRelevanceFieldEnum]
+
+
 export const QuoteSupplierMiscLineOrderByRelevanceFieldEnum = {
   id: 'id',
   quoteSupplierId: 'quoteSupplierId',
@@ -3859,28 +3962,4 @@ export const WorkOrderBoQOrderByRelevanceFieldEnum = {
 } as const
 
 export type WorkOrderBoQOrderByRelevanceFieldEnum = (typeof WorkOrderBoQOrderByRelevanceFieldEnum)[keyof typeof WorkOrderBoQOrderByRelevanceFieldEnum]
-
-
-export const ProjectEmployeeOrderByRelevanceFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  projectId: 'projectId',
-  additionalInfo: 'additionalInfo'
-} as const
-
-export type ProjectEmployeeOrderByRelevanceFieldEnum = (typeof ProjectEmployeeOrderByRelevanceFieldEnum)[keyof typeof ProjectEmployeeOrderByRelevanceFieldEnum]
-
-
-export const ScheduleMeetingOrderByRelevanceFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  conversationType: 'conversationType',
-  place: 'place',
-  status: 'status',
-  notes: 'notes',
-  createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
-} as const
-
-export type ScheduleMeetingOrderByRelevanceFieldEnum = (typeof ScheduleMeetingOrderByRelevanceFieldEnum)[keyof typeof ScheduleMeetingOrderByRelevanceFieldEnum]
 

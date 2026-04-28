@@ -80,6 +80,16 @@ export type DeliveryNoteSupplier = Prisma.DeliveryNoteSupplierModel
  */
 export type Department = Prisma.DepartmentModel
 /**
+ * Model RecruitmentApplicant
+ * 
+ */
+export type RecruitmentApplicant = Prisma.RecruitmentApplicantModel
+/**
+ * Model RecruitmentVacancy
+ * 
+ */
+export type RecruitmentVacancy = Prisma.RecruitmentVacancyModel
+/**
  * Model DocumentPlace
  * 
  */
@@ -590,6 +600,11 @@ export type IncomingDeliveryLine = Prisma.IncomingDeliveryLineModel
  */
 export type IncomingDeliveryLineAllocation = Prisma.IncomingDeliveryLineAllocationModel
 /**
+ * Model ScheduleMeeting
+ * 
+ */
+export type ScheduleMeeting = Prisma.ScheduleMeetingModel
+/**
  * Model BillOfQuantities
  * 
  */
@@ -615,6 +630,11 @@ export type BillOfQuantitiesType = Prisma.BillOfQuantitiesTypeModel
  */
 export type BoqContact = Prisma.BoqContactModel
 /**
+ * Model ProjectEmployee
+ * 
+ */
+export type ProjectEmployee = Prisma.ProjectEmployeeModel
+/**
  * Model QuoteSupplierMiscLine
  * 
  */
@@ -629,13 +649,3 @@ export type VisibilityForDepartment = Prisma.VisibilityForDepartmentModel
  * 
  */
 export type WorkOrderBoQ = Prisma.WorkOrderBoQModel
-/**
- * Model ProjectEmployee
- * 
- */
-export type ProjectEmployee = Prisma.ProjectEmployeeModel
-/**
- * Model ScheduleMeeting
- * 
- */
-export type ScheduleMeeting = Prisma.ScheduleMeetingModel

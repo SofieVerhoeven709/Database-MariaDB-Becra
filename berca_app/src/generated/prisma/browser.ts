@@ -607,3 +607,8 @@ export type WorkOrderBoQ = Prisma.WorkOrderBoQModel
  * 
  */
 export type ProjectEmployee = Prisma.ProjectEmployeeModel
+/**
+ * Model ScheduleMeeting
+ * 
+ */
+export type ScheduleMeeting = Prisma.ScheduleMeetingModel

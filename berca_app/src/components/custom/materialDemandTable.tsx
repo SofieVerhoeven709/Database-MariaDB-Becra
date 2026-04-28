@@ -18,9 +18,12 @@ import {
   createMaterialDemandAction,
   updateMaterialDemandAction,
   removeMaterialDemandSourceAction,
+  assignMaterialDemandSourceAction,
+  createManualDemandSourceAction,
 } from '@/serverFunctions/materialDemands'
 import {createInventoryOrderAction} from '@/serverFunctions/inventoryOrders'
 import {selectQuoteSupplierLineAction} from '@/serverFunctions/quoteSupplierLines'
+import {DEMAND_PERMISSION_LEVELS} from '@/constants'
 
 type SortField = 'material' | 'totalRequiredQty' | 'reservedQty' | 'sourceCount' | 'quoteLineCount' | 'createdAt'
 type SortDir = 'asc' | 'desc'
@@ -178,6 +181,25 @@ export function MaterialDemandTable({
   const canCreate = isAdmin || currentUserLevel >= 80
   const canEdit = currentUserLevel >= 40
   const canDeleteSource = isAdmin || currentUserLevel >= 80
+  const canAssign = isAdmin || currentUserLevel >= DEMAND_PERMISSION_LEVELS.assign
+  const canAddSource = isAdmin || currentUserLevel >= DEMAND_PERMISSION_LEVELS.addSource
+
+  const [assignDialog, setAssignDialog] = useState<{
+    entry: MappedMaterialDemand
+    sourceId: string
+    currentReservedQty: number
+    requiredQty: number
+    sourceLabel: string
+  } | null>(null)
+  const [assignQty, setAssignQty] = useState('0')
+  const [assignLoading, setAssignLoading] = useState(false)
+
+  const [addSourceDialog, setAddSourceDialog] = useState<{
+    entry: MappedMaterialDemand
+  } | null>(null)
+  const [newSourceLabel, setNewSourceLabel] = useState('')
+  const [newSourceQty, setNewSourceQty] = useState('1')
+  const [addSourceLoading, setAddSourceLoading] = useState(false)
 
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('material')
@@ -389,9 +411,13 @@ export function MaterialDemandTable({
   }
 
   function openMakeQuoteDialog(entry: MappedMaterialDemand) {
-    const hasBlockingQuote = entry.quoteOptions.some(option => !option.deleted && !(option.sent && option.acceptedForPOB))
+    const hasBlockingQuote = entry.quoteOptions.some(
+      option => !option.deleted && !(option.sent && option.acceptedForPOB),
+    )
     if (hasBlockingQuote) {
-      setActionError('A quote already exists for this demand. Create another quote from the existing quote detail if needed.')
+      setActionError(
+        'A quote already exists for this demand. Create another quote from the existing quote detail if needed.',
+      )
       return
     }
 
@@ -661,7 +687,9 @@ export function MaterialDemandTable({
                 const isSourcesExpanded = expandedSourceDemandIds.has(entry.id)
                 const hasManualDemandWithoutSources = entry.totalRequiredQty > 0 && entry.sourceCount === 0
                 // Block new quotes when a non-accepted quote already exists.
-                const hasBlockingQuote = entry.quoteOptions.some(option => !option.deleted && !(option.sent && option.acceptedForPOB))
+                const hasBlockingQuote = entry.quoteOptions.some(
+                  option => !option.deleted && !(option.sent && option.acceptedForPOB),
+                )
                 const quoteState = getQuoteState(entry)
                 const quoteOptions = [...entry.quoteOptions].sort((a, b) => compareQuoteOptions(a, b, rankingPolicy))
                 const visibleQuoteOptions = showEligibleOnly
@@ -687,7 +715,8 @@ export function MaterialDemandTable({
                               {entry.materialShortDescription ?? entry.materialName ?? entry.materialId}
                             </span>
                             <span className="text-[11px] text-muted-foreground">
-                              Stock {entry.stockQuantity} / Min {entry.hasMinimumStock ? entry.minimumStockQuantity : '—'}
+                              Stock {entry.stockQuantity} / Min{' '}
+                              {entry.hasMinimumStock ? entry.minimumStockQuantity : '—'}
                             </span>
                           </div>
                         </Link>
@@ -712,20 +741,46 @@ export function MaterialDemandTable({
                           <Input
                             type="number"
                             min={0}
+                            max={entry.isSerialTracked ? entry.totalRequiredQty : undefined}
                             value={editReservedQty}
                             onChange={e => setEditReservedQty(e.target.value)}
                             className="h-8 bg-secondary border-border"
                           />
                         ) : (
-                          <Badge variant="outline" className="text-xs border-border">
-                            {entry.reservedQty}
-                          </Badge>
+                          (() => {
+                            const isOver = entry.reservedQty > entry.totalRequiredQty
+                            const isMet =
+                              !isOver && entry.reservedQty >= entry.totalRequiredQty && entry.totalRequiredQty > 0
+                            return (
+                              <div className="flex items-center gap-1.5 flex-wrap">
+                                <Badge
+                                  variant="outline"
+                                  className={`text-xs ${
+                                    isOver
+                                      ? 'border-amber-500/60 bg-amber-500/10 text-amber-700'
+                                      : isMet
+                                        ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-700'
+                                        : 'border-border'
+                                  }`}>
+                                  {entry.reservedQty}
+                                </Badge>
+                                {isOver && (
+                                  <Badge className="text-[10px] border border-amber-500/40 bg-amber-500/10 text-amber-700">
+                                    +{entry.reservedQty - entry.totalRequiredQty} surplus
+                                  </Badge>
+                                )}
+                                {entry.isSerialTracked && (
+                                  <span className="text-[10px] text-muted-foreground leading-none">serial</span>
+                                )}
+                              </div>
+                            )
+                          })()
                         )}
                       </TableCell>
                       <TableCell className={tdClass}>
                         <div className="flex items-center gap-2">
                           <span>{entry.sourceCount}</span>
-                          {entry.sourceCount > 0 && (
+                          {(entry.sourceCount > 0 || canAddSource) && (
                             <Button
                               size="sm"
                               variant="outline"
@@ -771,10 +826,7 @@ export function MaterialDemandTable({
                               size="sm"
                               variant="outline"
                               className="h-7 px-2 text-[11px] border-amber-500/60 text-amber-700 hover:bg-amber-500/10"
-                              disabled={
-                                entry.existingLowStockRequestCount > 0 ||
-                                hasManualDemandWithoutSources
-                              }
+                              disabled={entry.existingLowStockRequestCount > 0 || hasManualDemandWithoutSources}
                               onClick={() => handleLowStockRequest(entry)}>
                               {entry.existingLowStockRequestCount > 0
                                 ? 'Request exists'
@@ -833,6 +885,20 @@ export function MaterialDemandTable({
                                   <TableHead className="text-xs w-24">
                                     <span className="sr-only">Actions</span>
                                   </TableHead>
+                                  <TableHead className="text-xs w-36">
+                                    {canAddSource && (
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          setNewSourceLabel('')
+                                          setNewSourceQty('1')
+                                          setAddSourceDialog({entry})
+                                        }}
+                                        className="inline-flex h-6 items-center rounded-md border border-accent bg-accent/10 px-2 text-xs text-accent hover:bg-accent/20 font-medium">
+                                        + Add source
+                                      </button>
+                                    )}
+                                  </TableHead>
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
@@ -845,31 +911,94 @@ export function MaterialDemandTable({
                                 ) : (
                                   entry.sources.map(source => {
                                     const isRemoving = sourceActionLoadingId === source.id
+                                    const isOver = source.reservedQty > source.requiredQty
                                     return (
                                       <TableRow key={source.id} className="border-border/30">
-                                        <TableCell className="text-xs text-muted-foreground">{source.sourceTypeName}</TableCell>
-                                        <TableCell className="text-xs text-muted-foreground">{source.sourceReferenceLabel}</TableCell>
-                                        <TableCell className="text-xs text-muted-foreground">{source.requiredQty}</TableCell>
-                                        <TableCell className="text-xs text-muted-foreground">{source.reservedQty}</TableCell>
-                                        <TableCell className="text-xs text-muted-foreground">{formatDate(source.createdAt)}</TableCell>
-                                        <TableCell>
-                                          {canDeleteSource && (
-                                            <Button
-                                              size="icon"
-                                              variant="ghost"
-                                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                                              disabled={isRemoving}
-                                              onClick={() =>
-                                                setRemoveSourceDialog({
-                                                  entryId: entry.id,
-                                                  sourceId: source.id,
-                                                  sourceLabel: source.sourceReferenceLabel,
-                                                  sourceCount: entry.sourceCount,
-                                                })
-                                              }>
-                                              <Trash2 className="h-3.5 w-3.5" />
-                                            </Button>
+                                        <TableCell className="text-xs text-muted-foreground">
+                                          {source.isManual ? (
+                                            <Badge
+                                              variant="outline"
+                                              className="text-[10px] border-violet-500/40 text-violet-700">
+                                              Manual
+                                            </Badge>
+                                          ) : (
+                                            source.sourceTypeName
                                           )}
+                                        </TableCell>
+                                        <TableCell className="text-xs text-muted-foreground">
+                                          {source.manualLabel ?? source.sourceReferenceLabel}
+                                        </TableCell>
+                                        <TableCell className="text-xs text-muted-foreground">
+                                          {source.requiredQty}
+                                        </TableCell>
+                                        <TableCell className="text-xs">
+                                          <div className="flex items-center gap-1.5">
+                                            <Badge
+                                              variant="outline"
+                                              className={`text-[10px] ${
+                                                source.fulfilled
+                                                  ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-700'
+                                                  : isOver
+                                                    ? 'border-amber-500/60 bg-amber-500/10 text-amber-700'
+                                                    : source.reservedQty > 0
+                                                      ? 'border-blue-500/40 bg-blue-500/10 text-blue-700'
+                                                      : 'border-border'
+                                              }`}>
+                                              {source.reservedQty}
+                                            </Badge>
+                                            {isOver && !source.fulfilled && (
+                                              <Badge className="text-[10px] border border-amber-500/40 bg-amber-500/10 text-amber-700">
+                                                +{source.reservedQty - source.requiredQty} over
+                                              </Badge>
+                                            )}
+                                            {source.fulfilled && (
+                                              <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">
+                                                Fulfilled
+                                              </Badge>
+                                            )}
+                                          </div>
+                                        </TableCell>
+                                        <TableCell className="text-xs text-muted-foreground">
+                                          {formatDate(source.createdAt)}
+                                        </TableCell>
+                                        <TableCell>
+                                          <div className="flex items-center gap-1">
+                                            {canAssign && !source.fulfilled && (
+                                              <Button
+                                                size="sm"
+                                                variant="outline"
+                                                className="h-7 px-2 text-xs"
+                                                onClick={() => {
+                                                  setAssignDialog({
+                                                    entry,
+                                                    sourceId: source.id,
+                                                    currentReservedQty: source.reservedQty,
+                                                    requiredQty: source.requiredQty,
+                                                    sourceLabel: source.manualLabel ?? source.sourceReferenceLabel,
+                                                  })
+                                                  setAssignQty(String(source.reservedQty))
+                                                }}>
+                                                Assign
+                                              </Button>
+                                            )}
+                                            {canDeleteSource && (
+                                              <Button
+                                                size="icon"
+                                                variant="ghost"
+                                                className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                                disabled={isRemoving}
+                                                onClick={() =>
+                                                  setRemoveSourceDialog({
+                                                    entryId: entry.id,
+                                                    sourceId: source.id,
+                                                    sourceLabel: source.manualLabel ?? source.sourceReferenceLabel,
+                                                    sourceCount: entry.sourceCount,
+                                                  })
+                                                }>
+                                                <Trash2 className="h-3.5 w-3.5" />
+                                              </Button>
+                                            )}
+                                          </div>
                                         </TableCell>
                                       </TableRow>
                                     )
@@ -1046,7 +1175,8 @@ export function MaterialDemandTable({
                 <strong>Current stock:</strong> {lowStockRequestDialog?.entry.stockQuantity}
               </p>
               <p>
-                <strong>Minimum required:</strong> {lowStockRequestDialog?.entry.hasMinimumStock ? lowStockRequestDialog?.entry.minimumStockQuantity : '—'}
+                <strong>Minimum required:</strong>{' '}
+                {lowStockRequestDialog?.entry.hasMinimumStock ? lowStockRequestDialog?.entry.minimumStockQuantity : '—'}
               </p>
               <p>
                 <strong>Suggested:</strong> {lowStockRequestDialog?.entry.suggestedRequestQty}
@@ -1127,18 +1257,154 @@ export function MaterialDemandTable({
           <DialogHeader>
             <DialogTitle>Remove source line</DialogTitle>
             <DialogDescription>
-              Remove source <strong>{removeSourceDialog?.sourceLabel ?? '—'}</strong>? This will decrease required quantity.
+              Remove source <strong>{removeSourceDialog?.sourceLabel ?? '—'}</strong>? This will decrease required
+              quantity.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setRemoveSourceDialog(null)}>
               Cancel
             </Button>
-            <Button
-              variant="destructive"
-              disabled={sourceActionLoadingId !== null}
-              onClick={handleRemoveSource}>
+            <Button variant="destructive" disabled={sourceActionLoadingId !== null} onClick={handleRemoveSource}>
               {sourceActionLoadingId ? 'Removing…' : 'Remove source'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Assign dialog */}
+      <Dialog open={!!assignDialog} onOpenChange={open => !open && setAssignDialog(null)}>
+        <DialogContent className="bg-card border-border">
+          <DialogHeader>
+            <DialogTitle>Assign to source</DialogTitle>
+            <DialogDescription>
+              Set reserved quantity for <strong>{assignDialog?.sourceLabel}</strong>. Required:{' '}
+              {assignDialog?.requiredQty} · Current: {assignDialog?.currentReservedQty}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="rounded-md bg-secondary/50 p-3 text-xs text-muted-foreground space-y-1">
+              <p>
+                Setting a reserved quantity will immediately deduct that amount from inventory stock. Reducing it will
+                add the difference back.
+              </p>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Reserved quantity</Label>
+              <Input
+                type="number"
+                min={0}
+                max={assignDialog?.entry.isSerialTracked ? assignDialog.requiredQty : undefined}
+                value={assignQty}
+                onChange={e => setAssignQty(e.target.value)}
+                className="bg-secondary border-border"
+              />
+              {assignDialog?.entry.isSerialTracked && (
+                <p className="text-[11px] text-muted-foreground">
+                  Serial-tracked — cannot exceed required qty ({assignDialog.requiredQty}).
+                </p>
+              )}
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setAssignDialog(null)} disabled={assignLoading}>
+              Cancel
+            </Button>
+            <Button
+              disabled={assignLoading}
+              onClick={async () => {
+                if (!assignDialog) return
+                setAssignLoading(true)
+                try {
+                  const result = await assignMaterialDemandSourceAction({
+                    materialDemandId: assignDialog.entry.id,
+                    sourceId: assignDialog.sourceId,
+                    reservedQty: Number.parseInt(assignQty, 10) || 0,
+                  })
+                  const error = extractActionError(result)
+                  if (error) {
+                    setActionError(error)
+                    return
+                  }
+                  setActionError(null)
+                  setAssignDialog(null)
+                  router.refresh()
+                } catch (err) {
+                  setActionError(err instanceof Error ? err.message : 'Could not assign source.')
+                } finally {
+                  setAssignLoading(false)
+                }
+              }}>
+              {assignLoading ? 'Saving…' : 'Confirm'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Add manual source dialog */}
+      <Dialog open={!!addSourceDialog} onOpenChange={open => !open && setAddSourceDialog(null)}>
+        <DialogContent className="bg-card border-border">
+          <DialogHeader>
+            <DialogTitle>Add manual source</DialogTitle>
+            <DialogDescription>
+              Add a free-form source to{' '}
+              <strong>{addSourceDialog?.entry.materialBeNumber ?? addSourceDialog?.entry.materialId}</strong>. This will
+              increase the total required quantity.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-1.5">
+              <Label className="text-xs">Label</Label>
+              <Input
+                value={newSourceLabel}
+                onChange={e => setNewSourceLabel(e.target.value)}
+                placeholder="e.g. Reserved for project X"
+                className="bg-secondary border-border"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Required quantity</Label>
+              <Input
+                type="number"
+                min={1}
+                value={newSourceQty}
+                onChange={e => setNewSourceQty(e.target.value)}
+                className="bg-secondary border-border"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setAddSourceDialog(null)} disabled={addSourceLoading}>
+              Cancel
+            </Button>
+            <Button
+              disabled={addSourceLoading || !newSourceLabel.trim()}
+              onClick={async () => {
+                if (!addSourceDialog) return
+                setAddSourceLoading(true)
+                try {
+                  const result = await createManualDemandSourceAction({
+                    materialDemandId: addSourceDialog.entry.id,
+                    label: newSourceLabel.trim(),
+                    requiredQty: Number.parseInt(newSourceQty, 10) || 1,
+                  })
+                  const error = extractActionError(result)
+                  if (error) {
+                    setActionError(error)
+                    return
+                  }
+                  setActionError(null)
+                  setNewSourceLabel('')
+                  setNewSourceQty('1')
+                  setAddSourceDialog(null)
+                  router.refresh()
+                } catch (err) {
+                  setActionError(err instanceof Error ? err.message : 'Could not create source.')
+                } finally {
+                  setAddSourceLoading(false)
+                }
+              }}>
+              {addSourceLoading ? 'Creating…' : 'Add source'}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1146,4 +1412,3 @@ export function MaterialDemandTable({
     </div>
   )
 }
-

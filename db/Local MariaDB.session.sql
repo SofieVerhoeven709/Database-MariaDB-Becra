@@ -2079,6 +2079,7 @@ CREATE TABLE
         sourceReferenceId CHAR(36),
         requiredQty INT NOT NULL,
         reservedQty INT DEFAULT 0,
+        description VARCHAR(255),
         fulfilled BOOLEAN NOT NULL DEFAULT 0,
         fulfilledAt DATETIME,
         fulfilledBy CHAR(36),

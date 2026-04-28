@@ -2039,3 +2039,5 @@ CONSTRAINT ScheduleMeeting_ibfk_3
   FOREIGN KEY (employeeId) REFERENCES Employee(id) ON DELETE RESTRICT
 
 ) ENGINE = InnoDB;
+
+ALTER TABLE MaterialDemandSource ADD COLUMN IF NOT EXISTS description VARCHAR(255);

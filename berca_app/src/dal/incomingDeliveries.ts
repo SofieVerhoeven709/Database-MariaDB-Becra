@@ -10,7 +10,14 @@ export async function getIncomingDeliveries() {
       IncomingDeliveryLine: {
         // Exclude deleted lines when computing totals/flags.
         where: {deleted: false},
-        select: {id: true, orderedQty: true, acceptedQty: true, backorderQty: true, notCorrect: true, notCorrectReason: true},
+        select: {
+          id: true,
+          orderedQty: true,
+          acceptedQty: true,
+          backorderQty: true,
+          notCorrect: true,
+          notCorrectReason: true,
+        },
       },
     },
   })
@@ -74,7 +81,7 @@ export async function getIncomingDeliveryPurchaseOptions() {
 export async function getIncomingDeliveryMaterialOptions() {
   return prismaClient.material.findMany({
     where: {deleted: false},
-    select: {id: true, beNumber: true, name: true, shortDescription: true},
+    select: {id: true, beNumber: true, name: true, shortDescription: true, warehousePlaceId: true},
     orderBy: {beNumber: 'asc'},
   })
 }
@@ -117,4 +124,3 @@ export async function getMaterialDemandSourceOptions() {
     },
   })
 }
-

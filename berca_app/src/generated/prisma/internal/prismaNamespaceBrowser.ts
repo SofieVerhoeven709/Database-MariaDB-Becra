@@ -166,7 +166,8 @@ export const ModelName = {
   QuoteSupplierMiscLine: 'QuoteSupplierMiscLine',
   VisibilityForDepartment: 'VisibilityForDepartment',
   WorkOrderBoQ: 'WorkOrderBoQ',
-  ProjectEmployee: 'ProjectEmployee'
+  ProjectEmployee: 'ProjectEmployee',
+  ScheduleMeeting: 'ScheduleMeeting'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2052,7 +2053,8 @@ export const MaterialDemandSourceScalarFieldEnum = {
   fulfilledAt: 'fulfilledAt',
   fulfilledBy: 'fulfilledBy',
   createdAt: 'createdAt',
-  createdBy: 'createdBy'
+  createdBy: 'createdBy',
+  description: 'description'
 } as const
 
 export type MaterialDemandSourceScalarFieldEnum = (typeof MaterialDemandSourceScalarFieldEnum)[keyof typeof MaterialDemandSourceScalarFieldEnum]
@@ -2273,6 +2275,27 @@ export const ProjectEmployeeScalarFieldEnum = {
 } as const
 
 export type ProjectEmployeeScalarFieldEnum = (typeof ProjectEmployeeScalarFieldEnum)[keyof typeof ProjectEmployeeScalarFieldEnum]
+
+
+export const ScheduleMeetingScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingScalarFieldEnum = (typeof ScheduleMeetingScalarFieldEnum)[keyof typeof ScheduleMeetingScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -3676,7 +3699,8 @@ export const MaterialDemandSourceOrderByRelevanceFieldEnum = {
   sourceTypeId: 'sourceTypeId',
   sourceReferenceId: 'sourceReferenceId',
   fulfilledBy: 'fulfilledBy',
-  createdBy: 'createdBy'
+  createdBy: 'createdBy',
+  description: 'description'
 } as const
 
 export type MaterialDemandSourceOrderByRelevanceFieldEnum = (typeof MaterialDemandSourceOrderByRelevanceFieldEnum)[keyof typeof MaterialDemandSourceOrderByRelevanceFieldEnum]
@@ -3845,4 +3869,18 @@ export const ProjectEmployeeOrderByRelevanceFieldEnum = {
 } as const
 
 export type ProjectEmployeeOrderByRelevanceFieldEnum = (typeof ProjectEmployeeOrderByRelevanceFieldEnum)[keyof typeof ProjectEmployeeOrderByRelevanceFieldEnum]
+
+
+export const ScheduleMeetingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingOrderByRelevanceFieldEnum = (typeof ScheduleMeetingOrderByRelevanceFieldEnum)[keyof typeof ScheduleMeetingOrderByRelevanceFieldEnum]
 

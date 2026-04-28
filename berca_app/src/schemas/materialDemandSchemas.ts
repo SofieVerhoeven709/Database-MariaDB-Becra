@@ -25,3 +25,14 @@ export const removeMaterialDemandSourceSchema = z.object({
   sourceId: z.string(),
 })
 
+export const assignMaterialDemandSourceSchema = z.object({
+  materialDemandId: z.string(),
+  sourceId: z.string(),
+  reservedQty: z.coerce.number().int().min(0),
+})
+
+export const createManualDemandSourceActionSchema = z.object({
+  materialDemandId: z.string(),
+  label: z.string().min(1).max(255),
+  requiredQty: z.coerce.number().int().min(1),
+})

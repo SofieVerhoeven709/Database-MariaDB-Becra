@@ -1262,10 +1262,6 @@ export type MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialUpdateToOneWithWhereWithoutInventoryOrderInput, Prisma.MaterialUpdateWithoutInventoryOrderInput>, Prisma.MaterialUncheckedUpdateWithoutInventoryOrderInput>
 }
 
-export type NullableBoolFieldUpdateOperationsInput = {
-  set?: boolean | null
-}
-
 export type MaterialCreateNestedOneWithoutMaterialSupplierInput = {
   create?: Prisma.XOR<Prisma.MaterialCreateWithoutMaterialSupplierInput, Prisma.MaterialUncheckedCreateWithoutMaterialSupplierInput>
   connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutMaterialSupplierInput

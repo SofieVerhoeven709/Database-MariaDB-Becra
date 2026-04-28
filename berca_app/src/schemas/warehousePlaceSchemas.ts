@@ -3,7 +3,7 @@ import {z} from 'zod/v4'
 export const warehousePlaceSchema = z.object({
   id: z.string().uuid(),
   abbreviation: z.string().max(255),
-  beNumber: z.string().max(255).optional(),
+  beNumber: z.string().max(255).nullable().optional(),
   serialTrackedId: z.string().optional(),
   place: z.string().max(255).optional(),
   shelf: z.string().max(255).optional(),

@@ -59,17 +59,6 @@ async function generateIosNumber() {
 
   return numericIosNumbers.length === 0 ? '4000000' : String(Math.max(...numericIosNumbers) + 1)
 }
-async function resolveValidWarehousePlaceId(warehousePlaceId: string | null | undefined) {
-  if (!warehousePlaceId) return null
-
-  const place = await prismaClient.warehousePlace.findUnique({
-    where: {id: warehousePlaceId},
-    select: {id: true},
-  })
-
-  return place ? warehousePlaceId : null
-}
-
 function isWarehousePlaceForeignKeyError(error: unknown): boolean {
   if (!(error instanceof Prisma.PrismaClientKnownRequestError)) return false
   if (error.code !== 'P2003') return false
@@ -130,7 +119,7 @@ export const createMaterialAction = protectedFormAction({
   globalErrorMessage: 'Could not create the material, please try again.',
   serverFn: async ({data, profile, logger}) => {
     const target = await createTargetForType('Company', profile.id)
-    const {brandOrderNr, supplierCompanyId, numberType, ...restData} = data
+    const {brandOrderNr, supplierCompanyId, supplierCompanyIds, numberType, warehousePlace: _warehousePlace, ...restData} = data
     let beNumber = data.beNumber?.trim()
 
     if (numberType === 'IOS' && beNumber) {
@@ -145,14 +134,6 @@ export const createMaterialAction = protectedFormAction({
       beNumber = numberType === 'IOS' ? await generateIosNumber() : await generateBeNumber()
     }
 
-    const warehousePlaceId = await resolveValidWarehousePlaceId(data.warehousePlace ?? null)
-    if (data.warehousePlace && !warehousePlaceId) {
-      return {
-        success: false,
-        errors: {warehousePlace: ['Selected warehouse place does not exist anymore. Please select a valid one.']},
-      }
-    }
-
     if (!beNumber) {
       beNumber = await generateBeNumber()
     }
@@ -165,7 +146,7 @@ export const createMaterialAction = protectedFormAction({
         beNumber,
         brandOrderNr: brandOrderNr ?? null,
         supplierCompanyId: supplierCompanyId ?? null,
-        warehousePlace: warehousePlaceId,
+        supplierCompanyIds,
         leadTimeValue: data.longLeadTime ? (data.leadTimeValue ?? null) : null,
         leadTimeUnit: data.longLeadTime ? (data.leadTimeUnit ?? null) : null,
         materialGroupIdA: data.materialGroupIdA,
@@ -216,7 +197,7 @@ export const updateMaterialAction = protectedFormAction({
   globalErrorMessage: 'Could not update the material, please try again.',
   serverFn: async ({data, logger}) => {
     const {id, numberType, ...rest} = data
-    const {supplierCompanyId, ...restData} = rest
+    const {supplierCompanyId, supplierCompanyIds, warehousePlace: _warehousePlace, ...restData} = rest
     const existingMaterial = await prismaClient.material.findUnique({
       where: {id},
       select: {beNumber: true},
@@ -249,14 +230,6 @@ export const updateMaterialAction = protectedFormAction({
       }
     }
 
-    const warehousePlaceId = await resolveValidWarehousePlaceId(rest.warehousePlace ?? null)
-    if (rest.warehousePlace && !warehousePlaceId) {
-      return {
-        success: false,
-        errors: {warehousePlace: ['Selected warehouse place does not exist anymore. Please select a valid one.']},
-      }
-    }
-
     let updated
     try {
       const updatePayload = {
@@ -264,7 +237,7 @@ export const updateMaterialAction = protectedFormAction({
         beNumber: resolvedBeNumber,
         brandOrderNr: rest.brandOrderNr ?? null,
         supplierCompanyId: supplierCompanyId ?? null,
-        warehousePlace: warehousePlaceId,
+        supplierCompanyIds,
         leadTimeValue: rest.longLeadTime ? (rest.leadTimeValue ?? null) : null,
         leadTimeUnit: rest.longLeadTime ? (rest.leadTimeUnit ?? null) : null,
       } as Parameters<typeof updateMaterial>[1]

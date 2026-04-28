@@ -61,6 +61,7 @@ type ProjectBOMRaw = {
   closed: boolean
   materialClosed: boolean
   readyForPurchase: boolean
+  canCopy: boolean
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
@@ -139,6 +140,7 @@ export function mapProjectBOM(r: ProjectBOMRaw): MappedProjectBOM {
     closed: r.closed,
     materialClosed: r.materialClosed,
     readyForPurchase: r.readyForPurchase,
+    canCopy: r.canCopy,
     deleted: r.deleted,
     deletedAt: r.deletedAt?.toISOString() ?? null,
     deletedBy: r.deletedBy,

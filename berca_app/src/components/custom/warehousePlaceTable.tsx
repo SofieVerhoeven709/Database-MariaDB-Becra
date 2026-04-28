@@ -11,17 +11,12 @@ import {
   updateWarehousePlaceAction,
   deleteWarehousePlaceAction,
 } from '@/serverFunctions/warehousePlaces'
-import {useRouter} from 'next/navigation'
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 /* type SortField = 'abbreviation' | 'beNumber' | 'place' | 'quantityInStock'*/
-type SortField =
-  | 'abbreviation'
-  | 'beNumber'
-  | 'place'
-  | 'xCoordinate'
-  | 'yCoordinate'
-  | 'zCoordinate'
-  | 'quantityInStock'
+type SortField = 'abbreviation' | 'beNumber' | 'place' | 'xCoordinate' | 'yCoordinate' | 'zCoordinate'
+/* | 'quantityInStock' */
 type SortDir = 'asc' | 'desc'
+type FilterStatus = 'all' | 'active' | 'deleted'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
@@ -38,14 +33,16 @@ interface WarehousePlaceTableProps {
 }
 
 export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTableProps) {
-  const router = useRouter()
-  const items = initialItems
+  const [items, setItems] = useState(initialItems)
   const [search, setSearch] = useState('')
+
   const [sortField, setSortField] = useState<SortField>('abbreviation')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
+
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
+
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<MappedWarehousePlace | null>(null)
-
   function handleSort(field: SortField) {
     if (sortField === field) {
       setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))
@@ -70,6 +67,11 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
         (i.information ?? '').toLowerCase().includes(q)
       )
     })
+    .filter(m => {
+      if (filterStatus === 'active') return !m.deleted
+      if (filterStatus === 'deleted') return m.deleted
+      return true
+    })
     /*.sort((a, b) => {
       const aVal = String(a[sortField] ?? '')
       const bVal = String(b[sortField] ?? '')
@@ -79,11 +81,11 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
       const sortValue = (item: MappedWarehousePlace) => {
         switch (sortField) {
           case 'xCoordinate':
-            return String(item.place ?? '')
-          case 'yCoordinate':
             return String(item.shelf ?? '')
-          case 'zCoordinate':
+          case 'yCoordinate':
             return String(item.column ?? '')
+          case 'zCoordinate':
+            return String(item.layer ?? '')
           default:
             return String(item[sortField] ?? '')
         }
@@ -95,11 +97,31 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
     })
 
   async function handleSave(form: Partial<MappedWarehousePlace> & {id: string}) {
+    const savedItem: MappedWarehousePlace = {
+      id: form.id,
+      abbreviation: form.abbreviation ?? '',
+      beNumber: form.beNumber || null,
+      serialTrackedId: form.serialTrackedId ?? null,
+      place: form.place || null,
+      shelf: form.shelf || null,
+      column: form.column || null,
+      layer: form.layer || null,
+      layerPlace: form.layerPlace || null,
+      information: form.information || null,
+      quantityInStock: form.quantityInStock ?? 0,
+      createdAt: editingItem?.createdAt ?? new Date().toISOString(),
+      createdBy: editingItem?.createdBy ?? '',
+      createdByName: editingItem?.createdByName ?? '',
+      deleted: false,
+      deletedAt: null,
+      deletedBy: null,
+    }
+
     if (editingItem) {
       await updateWarehousePlaceAction({
         id: form.id,
         abbreviation: form.abbreviation || undefined,
-        beNumber: form.beNumber || undefined,
+        beNumber: form.beNumber || null,
         place: form.place || undefined,
         shelf: form.shelf || undefined,
         column: form.column || undefined,
@@ -108,6 +130,7 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
         information: form.information || undefined,
         quantityInStock: form.quantityInStock ?? 0,
       })
+      setItems(prev => prev.map(item => (item.id === form.id ? savedItem : item)))
     } else {
       await createWarehousePlaceAction({
         id: form.id,
@@ -121,16 +144,16 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
         information: form.information || undefined,
         quantityInStock: form.quantityInStock ?? 0,
       })
+      setItems(prev => [savedItem, ...prev])
     }
     setDialogOpen(false)
     setEditingItem(null)
-    router.refresh()
   }
 
   async function handleDelete(id: string) {
     if (!confirm('Are you sure you want to delete this warehouse place?')) return
     await deleteWarehousePlaceAction({id})
-    router.refresh()
+    setItems(prev => prev.filter(item => item.id !== id))
   }
 
   const columns: {key: SortField; label: string}[] = [
@@ -143,7 +166,7 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
     {key: 'xCoordinate', label: 'X'},
     {key: 'yCoordinate', label: 'Y'},
     {key: 'zCoordinate', label: 'Z'},
-    {key: 'quantityInStock', label: 'Qty In Stock'},
+    /* {key: 'quantityInStock', label: 'Qty In Stock'}, */
   ]
 
   return (
@@ -159,6 +182,16 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
             onChange={e => setSearch(e.target.value)}
           />
         </div>
+        <Select value={filterStatus} onValueChange={v => setFilterStatus(v as FilterStatus)}>
+          <SelectTrigger className="w-30 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="active">Not deleted</SelectItem>
+            <SelectItem value="deleted">Deleted</SelectItem>
+          </SelectContent>
+        </Select>
         <Button
           onClick={() => {
             setEditingItem(null)
@@ -218,7 +251,6 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
                   <TableCell className="text-sm">
                     {item.layer ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
-                  <TableCell className="text-sm font-semibold">{item.quantityInStock}</TableCell>
                   <TableCell className="text-sm text-muted-foreground max-w-50 truncate" title={item.information ?? ''}>
                     {item.information ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>

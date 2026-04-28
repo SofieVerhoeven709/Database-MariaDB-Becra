@@ -24,8 +24,12 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
   const groupById = new Map(groups.map((g: any) => [g.id, g]))
 
   const selectedSupplier = material.MaterialSupplier.find((s: any) => s.isPreferred) ?? material.MaterialSupplier[0] ?? null
+  const supplierCompanyIds = material.MaterialSupplier.map((s: any) => s.companyId)
+  const supplierCompanyNames = material.MaterialSupplier.map((s: any) => s.Company?.name).filter(Boolean)
 
   const createdByName = [material.Employee?.firstName, material.Employee?.lastName].filter(Boolean).join(' ').trim()
+  const assignedWarehousePlace =
+    warehousePlaces.find(place => place.beNumber && place.beNumber === material.beNumber)?.id ?? null
 
   const mappedMaterial = {
     id: material.id,
@@ -36,8 +40,10 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     longDescription: material.longDescription ?? null,
     supplierCompanyId: selectedSupplier?.companyId ?? material.preferredSupplierCompanyId ?? null,
     supplierCompanyName: selectedSupplier?.Company?.name ?? material.PreferredSupplierCompany?.name ?? null,
+    supplierCompanyIds,
+    supplierCompanyNames,
     brandName: material.brandName ?? null,
-    warehousePlace: material.warehousePlaceId ?? null,
+    warehousePlace: assignedWarehousePlace,
     rejected: material.rejected ?? false,
     partApproved: (material as any).partApproved ?? false,
     longLeadTime: material.longLeadTime ?? false,

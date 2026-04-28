@@ -1,15 +1,19 @@
 'use client'
 import {useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, AlertTriangle} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, AlertTriangle, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
-import {InventoryFormDialog} from '@/components/custom/inventoryFormDialog'
+import {InventoryManagementFormDialog} from './inventoryManagementFormDialog'
 import type {MappedInventory} from '@/types/inventory'
-import {createInventoryAction, updateInventoryAction, deleteInventoryAction} from '@/serverFunctions/inventory'
-import {useRouter} from 'next/navigation'
+import {
+  createInventoryAction,
+  updateInventoryAction,
+  deleteInventoryAction,
+  restoreInventoryAction,
+} from '../../serverFunctions/inventoryManagement'
 interface MaterialOption {
   id: string
   beNumber: string
@@ -19,6 +23,15 @@ interface MaterialOption {
 type SortField = 'beNumber' | 'shortDescription' | 'place' | 'quantityInStock' | 'materialName' | 'valid'
 type SortDir = 'asc' | 'desc'
 type FilterValid = 'all' | 'valid' | 'invalid'
+type FilterDeleted = 'all' | 'deleted' | 'not-deleted'
+
+function getActionErrorMessage(result: {errors?: Record<string, string[] | undefined>}): string {
+  return Object.values(result.errors ?? {})
+    .flat()
+    .filter(Boolean)
+    .join('\n')
+}
+
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
   return sortDir === 'asc' ? (
@@ -31,13 +44,13 @@ interface InventoryTableProps {
   initialItems: MappedInventory[]
   materials: MaterialOption[]
 }
-export function InventoryTable({initialItems, materials}: InventoryTableProps) {
-  const router = useRouter()
-  const [items] = useState(initialItems)
+export function InventoryManagementTable({initialItems, materials}: InventoryTableProps) {
+  const [items, setItems] = useState(initialItems)
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterValid, setFilterValid] = useState<FilterValid>('all')
+  const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('all')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<MappedInventory | null>(null)
   function handleSort(field: SortField) {
@@ -48,10 +61,16 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
       setSortDir('asc')
     }
   }
+
   const filtered = items
     .filter(i => {
       if (filterValid === 'valid') return i.valid
       if (filterValid === 'invalid') return !i.valid
+      return true
+    })
+    .filter(i => {
+      if (filterDeleted === 'not-deleted') return !i.deleted
+      if (filterDeleted === 'deleted') return i.deleted
       return true
     })
     .filter(i => {
@@ -75,14 +94,47 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
       Object.entries(form).forEach(([k, v]) => {
         if (v !== null && v !== undefined) fd.append(k, String(v))
       })
+      const material = materials.find(m => m.id === form.materialId)
+      const savedItem: MappedInventory = {
+        id: form.id,
+        materialId: form.materialId ?? '',
+        beNumber: form.beNumber ?? material?.beNumber ?? '',
+        place: form.place ?? editingItem?.place ?? 'Unassigned',
+        shortDescription: form.shortDescription ?? material?.shortDescription ?? '',
+        longDescription: form.longDescription ?? '',
+        serialNumber: form.serialNumber ?? null,
+        quantityInStock: form.quantityInStock ?? 0,
+        minQuantityInStock: form.minQuantityInStock ?? 0,
+        maxQuantityInStock: form.maxQuantityInStock ?? 0,
+        information: form.information ?? '',
+        valid: form.valid ?? true,
+        noValidDate: form.noValidDate ?? new Date().toISOString(),
+        createdAt: editingItem?.createdAt ?? new Date().toISOString(),
+        createdBy: editingItem?.createdBy ?? '',
+        createdByName: editingItem?.createdByName ?? '',
+        materialName: material?.name ?? editingItem?.materialName ?? null,
+        materialDescription: material?.shortDescription ?? editingItem?.materialDescription ?? '',
+        deleted: false,
+        deletedAt: null,
+        deletedBy: null,
+      }
       if (editingItem) {
-        await updateInventoryAction({success: false}, fd)
+        const result = await updateInventoryAction({success: false}, fd)
+        if (!result.success) {
+          alert(getActionErrorMessage(result) || 'Could not update the inventory item.')
+          return
+        }
+        setItems(prev => prev.map(item => (item.id === form.id ? savedItem : item)))
       } else {
-        await createInventoryAction({success: false}, fd)
+        const result = await createInventoryAction({success: false}, fd)
+        if (!result.success) {
+          alert(getActionErrorMessage(result) || 'Could not create the inventory item.')
+          return
+        }
+        setItems(prev => [{...savedItem, id: result.data?.id ?? savedItem.id}, ...prev])
       }
       setDialogOpen(false)
       setEditingItem(null)
-      router.refresh()
     } catch (_e) {
       // handled by server actions
     }
@@ -92,7 +144,19 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
     const fd = new FormData()
     fd.append('id', id)
     await deleteInventoryAction({success: false}, fd)
-    router.refresh()
+    setItems(prev => prev.filter(item => item.id !== id))
+  }
+  async function handleRestore(id: string) {
+    const fd = new FormData()
+    fd.append('id', id)
+    const result = await restoreInventoryAction({success: false}, fd)
+    if (!result.success) {
+      alert(getActionErrorMessage(result) || 'Could not restore the inventory item.')
+      return
+    }
+    setItems(prev =>
+      prev.map(item => (item.id === id ? {...item, deleted: false, deletedAt: null, deletedBy: null} : item)),
+    )
   }
   const columns: {key: SortField; label: string}[] = [
     {key: 'beNumber', label: 'Material Number (BE/IOS)'},
@@ -114,7 +178,17 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
-        </div>
+        </div>{' '}
+        <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
+          <SelectTrigger className="w-36 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All records</SelectItem>
+            <SelectItem value="deleted">Deleted</SelectItem>
+            <SelectItem value="not-deleted">Not deleted</SelectItem>
+          </SelectContent>
+        </Select>
         <Select value={filterValid} onValueChange={v => setFilterValid(v as FilterValid)}>
           <SelectTrigger className="w-36 bg-secondary border-border">
             <SelectValue />
@@ -199,23 +273,36 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-7 w-7"
-                          onClick={() => {
-                            setEditingItem(item)
-                            setDialogOpen(true)
-                          }}>
-                          <Pencil className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-7 w-7 text-destructive hover:text-destructive"
-                          onClick={() => handleDelete(item.id)}>
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
+                        {item.deleted ? (
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-muted-foreground hover:text-foreground"
+                            title="Restore"
+                            onClick={() => handleRestore(item.id)}>
+                            <RotateCcw className="h-3.5 w-3.5" />
+                          </Button>
+                        ) : (
+                          <>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7"
+                              onClick={() => {
+                                setEditingItem(item)
+                                setDialogOpen(true)
+                              }}>
+                              <Pencil className="h-3.5 w-3.5" />
+                            </Button>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7 text-destructive hover:text-destructive"
+                              onClick={() => handleDelete(item.id)}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          </>
+                        )}
                       </div>
                     </TableCell>
                   </TableRow>
@@ -228,7 +315,7 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
       <p className="text-xs text-muted-foreground">
         Showing {filtered.length} of {items.length} item{items.length !== 1 ? 's' : ''}
       </p>
-      <InventoryFormDialog
+      <InventoryManagementFormDialog
         open={dialogOpen}
         onOpenChange={open => {
           setDialogOpen(open)

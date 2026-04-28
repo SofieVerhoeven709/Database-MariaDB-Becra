@@ -5,7 +5,7 @@ export interface MappedInventory {
   place: string
   shortDescription: string
   longDescription: string
-  serialNumber: string
+  serialNumber: string | null
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number

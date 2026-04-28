@@ -975,7 +975,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS InvoiceOut (
-                                 id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     invoiceNumber VARCHAR(255) NOT NULL,
     poNumber VARCHAR(255),
     clientReference VARCHAR(255),
@@ -1929,6 +1929,7 @@ CREATE TABLE
         closed BOOLEAN NOT NULL DEFAULT 0,
         materialClosed BOOLEAN NOT NULL DEFAULT 0,
         readyForPurchase BOOLEAN NOT NULL DEFAULT 0,
+        canCopy BOOLEAN NOT NULL DEFAULT 0,
         deleted BOOLEAN NOT NULL DEFAULT 0,
         createdBy CHAR(36) NOT NULL,
         projectId CHAR(36) NOT NULL,
@@ -2430,19 +2431,48 @@ ALTER TABLE InvoiceOut ADD COLUMN IF NOT EXISTS boqId CHAR(36) NULL;
 ALTER TABLE InvoiceOut
     ADD CONSTRAINT fk_invoiceout_boq
     FOREIGN KEY (boqId) REFERENCES BillOfQuantities (id) ON DELETE RESTRICT;
-    IF NOT EXISTS IncomingDeliveryLineAllocation (
-        id CHAR(36) NOT NULL PRIMARY KEY,
-        incomingDeliveryLineId CHAR(36) NOT NULL,
-        materialDemandSourceId CHAR(36) NOT NULL,
-        allocatedQty INT NOT NULL,
-        createdAt DATETIME NOT NULL,
-        createdBy CHAR(36) NOT NULL,
-        deleted BOOLEAN NOT NULL DEFAULT 0,
-        deletedAt DATETIME,
-        deletedBy CHAR(36),
-        FOREIGN KEY (incomingDeliveryLineId) REFERENCES IncomingDeliveryLine (id) ON DELETE CASCADE,
-        FOREIGN KEY (materialDemandSourceId) REFERENCES MaterialDemandSource (id) ON DELETE RESTRICT,
-        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-        UNIQUE (incomingDeliveryLineId, materialDemandSourceId)
-    ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS RecruitmentApplicant (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    candidateName VARCHAR(255),
+    profile TEXT,
+    contactDate DATETIME,
+    interviewDate DATETIME,
+    contactType VARCHAR(50),
+    description TEXT,
+    cvPath VARCHAR(100),
+    potential BOOLEAN NOT NULL DEFAULT 0,
+    retained BOOLEAN NOT NULL,
+    createdAt DATETIME NOT NULL,
+    createdBy CHAR(36),
+    deleted BOOLEAN DEFAULT 0,
+    deletedAt DATETIME,
+    deletedBy CHAR(36),
+    FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT,
+    FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS RecruitmentVacancy (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    title VARCHAR(255),
+    description TEXT,
+    department VARCHAR(100),
+    contractType VARCHAR(50),
+    workRegime VARCHAR(50),
+    salaryMin DECIMAL(10,2),
+    salaryMax DECIMAL(10,2),
+    publishWebsite BOOLEAN DEFAULT 0,
+    publishVdab BOOLEAN DEFAULT 0,
+    publishOther BOOLEAN DEFAULT 0,
+    publishLinkedIn BOOLEAN DEFAULT 0,
+    publishTempAgencies BOOLEAN DEFAULT 0,
+    publishRecruitmentAgencies BOOLEAN DEFAULT 0,
+    otherPublication VARCHAR(255),
+    createdAt DATETIME NOT NULL,
+    createdBy CHAR(36),
+    deleted BOOLEAN DEFAULT 0,
+    deletedAt DATETIME,
+    deletedBy CHAR(36),
+    FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT,
+    FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL
+);

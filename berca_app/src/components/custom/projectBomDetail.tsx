@@ -67,6 +67,7 @@ export function ProjectBOMDetail({
   const [editClosed, setEditClosed] = useState(bom.closed)
   const [editMaterialClosed, setEditMaterialClosed] = useState(bom.materialClosed)
   const [editReadyForPurchase, setEditReadyForPurchase] = useState(bom.readyForPurchase)
+  const [editCanCopy, setEditCanCopy] = useState(bom.canCopy)
 
   const parentBomOptions = allBOMs.filter(b => b.id !== bom.id)
   const parentBom = allBOMs.find(b => b.id === bom.projectBomId) ?? null
@@ -87,6 +88,7 @@ export function ProjectBOMDetail({
         closed: editClosed,
         materialClosed: editMaterialClosed,
         readyForPurchase: editReadyForPurchase,
+        canCopy: editCanCopy,
       })
       setEditing(false)
       router.refresh()
@@ -106,6 +108,7 @@ export function ProjectBOMDetail({
     setEditClosed(bom.closed)
     setEditMaterialClosed(bom.materialClosed)
     setEditReadyForPurchase(bom.readyForPurchase)
+    setEditCanCopy(bom.canCopy)
     setEditing(false)
   }
 
@@ -356,6 +359,7 @@ export function ProjectBOMDetail({
                   onChange: setEditReadyForPurchase,
                   current: bom.readyForPurchase,
                 },
+                {label: 'Can Copy', value: editCanCopy, onChange: setEditCanCopy, current: bom.canCopy},
               ] as {label: string; value: boolean; onChange: (v: boolean) => void; current: boolean}[]
             ).map(({label, value, onChange, current}) => (
               <div

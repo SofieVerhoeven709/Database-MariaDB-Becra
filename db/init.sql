@@ -169,6 +169,69 @@ CONSTRAINT ScheduleMeeting_ibfk_3
 
 ) ENGINE = InnoDB;
 
+CREATE TABLE
+IF NOT EXISTS RecruitmentApplicant (
+  id CHAR(36) NOT NULL PRIMARY KEY,
+  candidateName VARCHAR(255) NOT NULL,
+  profile TEXT NULL,
+  contactDate DATETIME NULL,
+  interviewDate DATETIME NULL,
+  contactType VARCHAR(50) NOT NULL,
+  description TEXT NULL,
+  cvPath VARCHAR(500) NULL,
+  potential BOOLEAN NOT NULL DEFAULT false,
+  retained BOOLEAN NOT NULL DEFAULT false,
+  createdAt DATETIME NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  updatedAt DATETIME NULL,
+  deleted BOOLEAN NOT NULL DEFAULT false,
+  deletedAt DATETIME NULL,
+  deletedBy CHAR(36) NULL,
+
+  INDEX createdBy (createdBy),
+  INDEX deletedBy (deletedBy),
+
+CONSTRAINT RecruitmentApplicant_ibfk_1
+  FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT,
+CONSTRAINT RecruitmentApplicant_ibfk_2
+  FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL
+
+) ENGINE = InnoDB;
+
+CREATE TABLE
+IF NOT EXISTS RecruitmentVacancy (
+  id CHAR(36) NOT NULL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  description TEXT NULL,
+  department VARCHAR(100) NOT NULL,
+  contractType VARCHAR(50) NOT NULL,
+  workRegime VARCHAR(50) NOT NULL,
+  salaryMin DECIMAL(10,2) NULL,
+  salaryMax DECIMAL(10,2) NULL,
+  publishWebsite BOOLEAN NOT NULL DEFAULT false,
+  publishVdab BOOLEAN NOT NULL DEFAULT false,
+  publishOther BOOLEAN NOT NULL DEFAULT false,
+  publishLinkedIn BOOLEAN NOT NULL DEFAULT false,
+  publishTempAgencies BOOLEAN NOT NULL DEFAULT false,
+  publishRecruitmentAgencies BOOLEAN NOT NULL DEFAULT false,
+  otherPublication VARCHAR(255) NULL,
+  createdAt DATETIME NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  updatedAt DATETIME NULL,
+  deleted BOOLEAN NOT NULL DEFAULT false,
+  deletedAt DATETIME NULL,
+  deletedBy CHAR(36) NULL,
+
+  INDEX createdBy (createdBy),
+  INDEX deletedBy (deletedBy),
+
+CONSTRAINT RecruitmentVacancy_ibfk_1
+  FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT,
+CONSTRAINT RecruitmentVacancy_ibfk_2
+  FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL
+
+) ENGINE = InnoDB;
+
 
 CREATE TABLE
       IF NOT EXISTS MaterialGroup (
@@ -1916,6 +1979,7 @@ CREATE TABLE
             closed BOOLEAN NOT NULL DEFAULT 0,
             materialClosed BOOLEAN NOT NULL DEFAULT 0,
             readyForPurchase BOOLEAN NOT NULL DEFAULT 0,
+            canCopy BOOLEAN NOT NULL DEFAULT 0;
             deleted BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             projectId CHAR(36) NOT NULL,
@@ -2388,3 +2452,52 @@ ALTER TABLE InvoiceOut ADD COLUMN IF NOT EXISTS boqId CHAR(36) NULL;
 ALTER TABLE InvoiceOut
     ADD CONSTRAINT fk_invoiceout_boq
     FOREIGN KEY (boqId) REFERENCES BillOfQuantities (id) ON DELETE RESTRICT;
+    
+CREATE TABLE 
+IF NOT EXISTS RecruitmentApplicant
+{
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        candidateName VARCHAR(255),
+        profile TEXT,
+        contactDate DATETIME,
+        interviewDate DATETIME,
+        contactType VARCHAR(50),
+        description TEXT,
+        cvPath VARCHAR(100),
+        potential BOOLEAN NOT NULL DEFAULT 0,
+        retained BOOLEAN NOT NULL,
+        createdAt DATETIME NOT NULL,
+        createdBy CHAR(36),
+        deleted BOOLEAN DEFAULT 0,
+        deletedAt DATETIME,
+        deletedBy CHAR(36),
+        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE SET RESTRICT,
+        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+}
+
+CREATE TABLE
+ IF NOT EXISTS RecruitmentVacancy
+{
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        title VARCHAR(255),
+        description TEXT,
+        department VARCHAR(100),
+        contractType VARCHAR(50),
+        workRegime VARCHAR(50),
+        salaryMin DECIMAL(10,2),
+        salaryMax DECIMAL(10,2),
+        publishWebsite BOOLEAN DEFAULT 0,
+        publishVdab BOOLEAN DEFAULT 0,
+        publishOther BOOLEAN DEFAULT 0,
+        publishLinkedIn BOOLEAN DEFAULT 0,
+        publishTempAgencies BOOLEAN DEFAULT 0,
+        publishReqruitmentAgencies BOOLEAN DEFAULT 0,
+        otherPublication VARCHAR(255),
+        createdAt DATETIME NOT NULL,
+        createdBy CHAR(36),
+        deleted BOOLEAN DEFAULT 0,
+        deletedAt DATETIME,
+        deletedBy CHAR(36),
+        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE SET RESTRICT,
+        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+}

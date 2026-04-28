@@ -16,6 +16,7 @@ export const projectBOMSchema = z.object({
   closed: z.boolean().default(false),
   materialClosed: z.boolean().default(false),
   readyForPurchase: z.boolean().default(false),
+  canCopy: z.boolean().default(false),
   deleted: z.boolean().default(false),
   deletedAt: z.date().nullable().optional(),
   deletedBy: z.string().nullable().optional(),
@@ -43,9 +44,16 @@ export const updateProjectBOMSchema = projectBOMSchema.pick({
   closed: true,
   materialClosed: true,
   readyForPurchase: true,
+  canCopy: true,
 })
 
 export const projectBOMIdSchema = projectBOMSchema.pick({id: true})
+
+export const copyProjectBOMSchema = z.object({
+  sourceId: z.string(),
+  projectBomNumber: z.string().min(1).max(255),
+  shortDescription: z.string().min(1).max(255),
+})
 
 // ─── ProjectBOMStructure ───────────────────────────────────────────────────────
 export const projectBOMStructureSchema = z.object({

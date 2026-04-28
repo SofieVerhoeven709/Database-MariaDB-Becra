@@ -2041,3 +2041,70 @@ CONSTRAINT ScheduleMeeting_ibfk_3
 ) ENGINE = InnoDB;
 
 ALTER TABLE MaterialDemandSource ADD COLUMN IF NOT EXISTS description VARCHAR(255);
+
+ALTER TABLE ProjectBOM ADD COLUMN canCopy BOOLEAN NOT NULL DEFAULT 0;
+
+-- HR Recruitment
+
+CREATE TABLE
+IF NOT EXISTS RecruitmentApplicant (
+  id CHAR(36) NOT NULL PRIMARY KEY,
+  candidateName VARCHAR(255) NOT NULL,
+  profile TEXT NULL,
+  contactDate DATETIME NULL,
+  interviewDate DATETIME NULL,
+  contactType VARCHAR(50) NOT NULL,
+  description TEXT NULL,
+  cvPath VARCHAR(500) NULL,
+  potential BOOLEAN NOT NULL DEFAULT false,
+  retained BOOLEAN NOT NULL DEFAULT false,
+  createdAt DATETIME NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  updatedAt DATETIME NULL,
+  deleted BOOLEAN NOT NULL DEFAULT false,
+  deletedAt DATETIME NULL,
+  deletedBy CHAR(36) NULL,
+
+  INDEX createdBy (createdBy),
+  INDEX deletedBy (deletedBy),
+
+CONSTRAINT RecruitmentApplicant_ibfk_1
+  FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT,
+CONSTRAINT RecruitmentApplicant_ibfk_2
+  FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL
+
+) ENGINE = InnoDB;
+
+CREATE TABLE
+IF NOT EXISTS RecruitmentVacancy (
+  id CHAR(36) NOT NULL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  description TEXT NULL,
+  department VARCHAR(100) NOT NULL,
+  contractType VARCHAR(50) NOT NULL,
+  workRegime VARCHAR(50) NOT NULL,
+  salaryMin DECIMAL(10,2) NULL,
+  salaryMax DECIMAL(10,2) NULL,
+  publishWebsite BOOLEAN NOT NULL DEFAULT false,
+  publishVdab BOOLEAN NOT NULL DEFAULT false,
+  publishOther BOOLEAN NOT NULL DEFAULT false,
+  publishLinkedIn BOOLEAN NOT NULL DEFAULT false,
+  publishTempAgencies BOOLEAN NOT NULL DEFAULT false,
+  publishRecruitmentAgencies BOOLEAN NOT NULL DEFAULT false,
+  otherPublication VARCHAR(255) NULL,
+  createdAt DATETIME NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  updatedAt DATETIME NULL,
+  deleted BOOLEAN NOT NULL DEFAULT false,
+  deletedAt DATETIME NULL,
+  deletedBy CHAR(36) NULL,
+
+  INDEX createdBy (createdBy),
+  INDEX deletedBy (deletedBy),
+
+CONSTRAINT RecruitmentVacancy_ibfk_1
+  FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT,
+CONSTRAINT RecruitmentVacancy_ibfk_2
+  FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL
+
+) ENGINE = InnoDB;

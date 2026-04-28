@@ -211,7 +211,7 @@ export function mapMaterialDemand(
     createdAt: row.createdAt.toISOString(),
     sourceCount: sources.length,
     sources,
-    quoteLineCount: row.QuoteSupplierLine.length,
+    quoteLineCount: quoteOptions.length, // Only count visible/eligible quotes
     selectedQuoteLineIds: quoteOptions.filter(option => option.selected).map(option => option.id),
     bestQuoteLineId: bestOption?.id ?? null,
     quoteOptions,

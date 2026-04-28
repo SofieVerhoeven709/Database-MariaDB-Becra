@@ -33,19 +33,9 @@ export type ProjectDetailData = Prisma.ProjectGetPayload<{
         ProjectType: true
       }
     }
-    Target: {
+    ProjectEmployee: {
       include: {
-        // Include role visibility for the Visibility tab.
-        VisibilityForRole: {
-          include: {
-            RoleLevel: {
-              include: {
-                Role: true
-                SubRole: true
-              }
-            }
-          }
-        }
+        Employee: true
       }
     }
   }

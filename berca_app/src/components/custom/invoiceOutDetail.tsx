@@ -84,7 +84,7 @@ interface InvoiceOutDetailProps {
 type EditForm = {
   invoiceNumber: string
   poNumber: string
-  humanId: string
+  clientReference: string
   invoiceDate: string
   dueDate: string
   sentDate: string
@@ -124,7 +124,7 @@ export function InvoiceOutDetail({
   const buildForm = (): EditForm => ({
     invoiceNumber: invoice.invoiceNumber,
     poNumber: invoice.poNumber ?? '',
-    humanId: invoice.humanId ?? '',
+    clientReference: invoice.clientReference ?? '',
     invoiceDate: toDateInput(invoice.invoiceDate),
     dueDate: toDateInput(invoice.dueDate),
     sentDate: toDateInput(invoice.sentDate),
@@ -220,7 +220,7 @@ export function InvoiceOutDetail({
         id: invoice.id,
         invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
-        humanId: form.humanId || null,
+        clientReference: form.clientReference || null,
         invoiceDate: new Date(form.invoiceDate),
         dueDate: new Date(form.dueDate),
         sentDate: form.sentDate ? new Date(form.sentDate) : null,
@@ -402,7 +402,7 @@ export function InvoiceOutDetail({
           <div>
             <h1 className="text-lg font-semibold text-foreground">{invoice.invoiceNumber}</h1>
             <p className="text-sm text-muted-foreground">
-              {invoice.humanId ? `#${invoice.humanId} · ` : ''}
+              {invoice.clientReference ? `#${invoice.clientReference} · ` : ''}
               {invoice.invoiceTypeName} · {invoice.invoiceStatusName}
             </p>
           </div>
@@ -460,15 +460,15 @@ export function InvoiceOutDetail({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Human ID</Label>
+            <Label className="text-xs text-muted-foreground">Client Reference</Label>
             {editing ? (
               <Input
-                value={form.humanId}
-                onChange={e => s('humanId', e.target.value)}
+                value={form.clientReference}
+                onChange={e => s('clientReference', e.target.value)}
                 className="bg-secondary border-border"
               />
             ) : (
-              <p className="text-sm text-muted-foreground">{invoice.humanId ?? '-'}</p>
+              <p className="text-sm text-muted-foreground">{invoice.clientReference ?? '-'}</p>
             )}
           </div>
 

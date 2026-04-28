@@ -26,6 +26,7 @@ export default async function FollowUpsPage({params}: PageProps) {
     followUpTypes,
     employees,
     targetOptions,
+    departments,
   ] = await Promise.all([
     getDepartmentById(departmentId),
     getFollowUps(),
@@ -48,6 +49,11 @@ export default async function FollowUpsPage({params}: PageProps) {
       select: {id: true, firstName: true, lastName: true},
     }),
     getFollowUpTargetOptions(prismaClient),
+    prismaClient.department.findMany({
+      where: {deleted: false},
+      orderBy: {name: 'asc'},
+      select: {id: true, name: true},
+    }),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -90,6 +96,7 @@ export default async function FollowUpsPage({params}: PageProps) {
           followUpTypeOptions={followUpTypes}
           employeeOptions={employeeOptions}
           targetOptions={targetOptions}
+          departmentOptions={departments}
         />
       </div>
     </main>

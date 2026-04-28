@@ -22,6 +22,7 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
+import {VisibilityDepartmentRow} from '@/components/custom/visibilityForDepartmentTab'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -116,6 +117,7 @@ interface FollowUpTableProps {
   followUpTypeOptions: SelectOption[]
   employeeOptions: SelectOption[]
   targetOptions: TargetOptions
+  departmentOptions: SelectOption[]
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -132,6 +134,7 @@ export function FollowUpTable({
   followUpTypeOptions,
   employeeOptions,
   targetOptions,
+  departmentOptions,
 }: FollowUpTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -148,6 +151,9 @@ export function FollowUpTable({
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingFollowUp, setEditingFollowUp] = useState<MappedFollowUp | null>(null)
+  const [filterDepartment, setFilterDepartment] = useState<string>('all')
+
+  const departmentName = departmentOptions.find(d => d.id === departmentId)?.name ?? 'Unknown'
 
   function toggleSort(field: SortField) {
     if (sortField === field) setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))
@@ -166,6 +172,10 @@ export function FollowUpTable({
       if (filterDeleted === 'deleted' && !f.deleted) return false
       if (filterType !== 'all' && f.followUpTypeId !== filterType) return false
       if (filterStatus !== 'all' && f.statusId !== filterStatus) return false
+      if (filterDepartment !== 'all') {
+        const deptRow = f.visibilityForDepartments.find(d => d.departmentName === filterDepartment)
+        if (deptRow !== undefined && !deptRow.visible) return false
+      }
       if (!search) return true
       const q = search.toLowerCase()
       return (
@@ -230,6 +240,7 @@ export function FollowUpTable({
   async function handleSave(
     f: MappedFollowUp,
     visibilityRows: VisibilityRow[],
+    visibilityDepartmentRows: VisibilityDepartmentRow[],
     _targetTypeName?: TargetTypeName,
     targetEntityId?: string,
   ) {
@@ -254,13 +265,19 @@ export function FollowUpTable({
 
     if (editingFollowUp) {
       // Updates keep the existing target link.
-      await updateFollowUpAction({id: f.id, ...core, visibilityForRoles: visibilityRows})
+      await updateFollowUpAction({
+        id: f.id,
+        ...core,
+        visibilityForRoles: visibilityRows,
+        visibilityForDepartments: visibilityDepartmentRows,
+      })
     } else {
       // Creates can attach an initial target link.
       await createFollowUpAction({
         ...core,
         visibilityForRoles: visibilityRows,
         followUpTargetId: targetEntityId,
+        visibilityForDepartments: visibilityDepartmentRows,
       })
     }
     setDialogOpen(false)
@@ -305,6 +322,19 @@ export function FollowUpTable({
             <SelectContent className="bg-card border-border">
               <SelectItem value="all">All Statuses</SelectItem>
               {statusOptions.map(o => (
+                <SelectItem key={o.id} value={o.id}>
+                  {o.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={filterDepartment} onValueChange={setFilterDepartment}>
+            <SelectTrigger className="w-[170px] bg-secondary border-border">
+              <SelectValue placeholder="All departments" />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-border">
+              <SelectItem value="all">All Departments</SelectItem>
+              {departmentOptions.map(o => (
                 <SelectItem key={o.id} value={o.id}>
                   {o.name}
                 </SelectItem>
@@ -430,9 +460,16 @@ export function FollowUpTable({
                   key={f.id}
                   className={`border-border/40 hover:bg-secondary/50 ${f.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className="text-sm text-foreground font-medium max-w-xs">
-                    <p className="truncate max-w-[220px]" title={f.activityDescription ?? ''}>
-                      {f.activityDescription ?? '-'}
-                    </p>
+                    {f.activityDescription ? (
+                      <Link
+                        href={`/departments/${departmentId}/followUp/${f.id}` as Route}
+                        className="truncate max-w-[220px] block text-accent hover:underline focus:underline outline-none"
+                        title={f.activityDescription}>
+                        {f.activityDescription}
+                      </Link>
+                    ) : (
+                      <span>-</span>
+                    )}
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline" className="border-border text-muted-foreground font-normal">
@@ -570,6 +607,8 @@ export function FollowUpTable({
         employeeOptions={employeeOptions}
         targetOptions={targetOptions}
         canManageVisibility={canManageVisibility}
+        departmentOptions={departmentOptions}
+        departmentName={departmentName}
       />
     </div>
   )

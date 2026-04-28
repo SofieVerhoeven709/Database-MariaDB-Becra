@@ -1,27 +1,12 @@
-import type {
-  Project,
-  Company,
-  ProjectType,
-  Target,
-  VisibilityForRole,
-  RoleLevel,
-  Role,
-  SubRole,
-} from '@/generated/prisma/client'
+import type {Project, Company, ProjectType, ProjectEmployee, Employee} from '@/generated/prisma/client'
 import type {MappedProject} from '@/types/project'
-import {mapVisibility} from '@/extra/visibilityForRole'
 
 type ProjectWithRelations = Project & {
   Company: Company
   ProjectType: ProjectType
-  Target: Target & {
-    VisibilityForRole: (VisibilityForRole & {
-      RoleLevel: RoleLevel & {
-        Role: Role
-        SubRole: SubRole
-      }
-    })[]
-  }
+  ProjectEmployee: (ProjectEmployee & {
+    Employee: Employee
+  })[]
 }
 
 export function mapProject(p: ProjectWithRelations): MappedProject {
@@ -31,7 +16,6 @@ export function mapProject(p: ProjectWithRelations): MappedProject {
     projectName: p.projectName,
     description: p.description,
     extraInfo: p.extraInfo,
-    // Normalize dates to ISO strings for the client.
     startDate: p.startDate?.toISOString() ?? null,
     endDate: p.endDate?.toISOString() ?? null,
     closingDate: p.closingDate?.toISOString() ?? null,
@@ -50,8 +34,14 @@ export function mapProject(p: ProjectWithRelations): MappedProject {
     deleted: p.deleted,
     deletedAt: p.deletedAt?.toISOString() ?? null,
     deletedBy: p.deletedBy,
-    targetId: p.Target.id,
-    // Map role visibility from the target relation for UI controls.
-    visibilityForRoles: p.Target.VisibilityForRole.map(mapVisibility),
+    targetId: p.targetId,
+    projectEmployees: p.ProjectEmployee.map(pe => ({
+      id: pe.id,
+      employeeId: pe.employeeId,
+      employeeName: `${pe.Employee.firstName} ${pe.Employee.lastName}`,
+      additionalInfo: pe.additionalInfo,
+      manager: pe.manager,
+      supervisor: pe.supervisor,
+    })),
   }
 }

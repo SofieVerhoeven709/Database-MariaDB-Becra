@@ -27,6 +27,7 @@ export interface WorkOrderOption {
   id: string
   workOrderNumber: string | null
   description: string | null
+  hoursMaterialClosed: boolean
 }
 
 export type TimeRegistryFormData = {
@@ -39,6 +40,7 @@ export type TimeRegistryFormData = {
   startBreak: string
   endBreak: string
   invoiceTime: boolean
+  approved: boolean
   onSite: boolean
   hourTypeId: string
   workOrderId: string
@@ -56,6 +58,7 @@ const emptyForm = (defaultWorkOrderId = '', currentUserId = ''): TimeRegistryFor
   startBreak: '',
   endBreak: '',
   invoiceTime: false,
+  approved: false,
   onSite: false,
   hourTypeId: '',
   workOrderId: defaultWorkOrderId,
@@ -132,6 +135,7 @@ function EmployeeMultiSelect({
 // ─── Props ────────────────────────────────────────────────────────────────────
 interface TimeRegistryFormDialogProps {
   open: boolean
+  canApprove: boolean
   onOpenChange: (open: boolean) => void
   /** Pass a record to edit; null to create */
   timeRegistry: MappedTimeRegistry | null
@@ -151,6 +155,7 @@ export function TimeRegistryFormDialog({
   onOpenChange,
   timeRegistry,
   employees,
+  canApprove,
   hourTypes,
   workOrders,
   fixedWorkOrderId,
@@ -176,6 +181,7 @@ export function TimeRegistryFormDialog({
         startBreak: toInputTime(timeRegistry.startBreak),
         endBreak: toInputTime(timeRegistry.endBreak),
         invoiceTime: timeRegistry.invoiceTime,
+        approved: timeRegistry.approved,
         onSite: timeRegistry.onSite,
         hourTypeId: timeRegistry.hourTypeId,
         workOrderId: timeRegistry.workOrderId,
@@ -343,6 +349,10 @@ export function TimeRegistryFormDialog({
             <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2 ">
               <Label className="text-xs text-muted-foreground">Stay Over</Label>
               <Switch checked={form.stayOver} onCheckedChange={v => patch('stayOver', v)} />
+            </div>
+            <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+              <Label className="text-xs text-muted-foreground">Approved</Label>
+              {canApprove && <Switch checked={form.approved} onCheckedChange={v => patch('approved', v)} />}
             </div>
           </div>
 

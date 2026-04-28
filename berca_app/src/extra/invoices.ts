@@ -163,7 +163,7 @@ type InvoiceOutRaw = {
   id: string
   invoiceNumber: string
   poNumber: string | null
-  humanId: string | null
+  clientReference: string | null
   invoiceDate: Date
   createdAt: Date
   dueDate: Date
@@ -307,7 +307,7 @@ function mapWorkOrderWithLines(
     const lineVatAmount = unitPrice ? group.vatAmount : null
     const lineTotalInclVat = lineTotalFinal !== null ? lineTotalFinal + (lineVatAmount ?? 0) : null
     const vatMarginId = group.vatMarginIds.size === 1 ? Array.from(group.vatMarginIds)[0] : null
-    const vatRate = vatMarginId ? vatRateById.get(vatMarginId) ?? null : null
+    const vatRate = vatMarginId ? (vatRateById.get(vatMarginId) ?? null) : null
     lines.push({
       workOrderId: wo.id,
       type: 'hours',
@@ -328,16 +328,14 @@ function mapWorkOrderWithLines(
     })
   }
 
-  const sortedStayOverGroups = Array.from(stayOverByType.entries()).sort((a, b) =>
-    a[1].label.localeCompare(b[1].label),
-  )
+  const sortedStayOverGroups = Array.from(stayOverByType.entries()).sort((a, b) => a[1].label.localeCompare(b[1].label))
   for (const [hourTypeId, group] of sortedStayOverGroups) {
     const unitPrice = stayOverPrice ? applyMargin(stayOverPrice.basePrice, costMargin) : null
     const lineTotalFinal = unitPrice ? unitPrice * group.count : null
     const lineVatAmount = unitPrice ? group.vatAmount : null
     const lineTotalInclVat = lineTotalFinal !== null ? lineTotalFinal + (lineVatAmount ?? 0) : null
     const vatMarginId = group.vatMarginIds.size === 1 ? Array.from(group.vatMarginIds)[0] : null
-    const vatRate = vatMarginId ? vatRateById.get(vatMarginId) ?? null : null
+    const vatRate = vatMarginId ? (vatRateById.get(vatMarginId) ?? null) : null
     lines.push({
       workOrderId: wo.id,
       type: 'stay_over',
@@ -486,7 +484,7 @@ export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
     id: r.id,
     invoiceNumber: r.invoiceNumber,
     poNumber: r.poNumber,
-    humanId: r.humanId,
+    clientReference: r.clientReference,
     invoiceDate: r.invoiceDate.toISOString(),
     createdAt: r.createdAt.toISOString(),
     dueDate: r.dueDate.toISOString(),
@@ -535,7 +533,8 @@ type InvoiceInRaw = {
   id: string
   invoiceNumber: string
   poNumber: string | null
-  humanId: string | null
+  clientInvoiceNumber: string | null
+  description: string | null
   invoiceDate: Date
   createdAt: Date
   dueDate: Date
@@ -568,7 +567,8 @@ export function mapInvoiceIn(r: InvoiceInRaw): MappedInvoiceIn {
     id: r.id,
     invoiceNumber: r.invoiceNumber,
     poNumber: r.poNumber,
-    humanId: r.humanId,
+    clientInvoiceNumber: r.clientInvoiceNumber,
+    description: r.description,
     invoiceDate: r.invoiceDate.toISOString(),
     createdAt: r.createdAt.toISOString(),
     dueDate: r.dueDate.toISOString(),

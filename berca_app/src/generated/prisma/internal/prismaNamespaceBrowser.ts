@@ -158,7 +158,15 @@ export const ModelName = {
   IncomingDelivery: 'IncomingDelivery',
   IncomingDeliveryLine: 'IncomingDeliveryLine',
   IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation',
-  ScheduleMeeting: 'ScheduleMeeting'
+  BillOfQuantities: 'BillOfQuantities',
+  BillOfQuantitiesSentType: 'BillOfQuantitiesSentType',
+  BillOfQuantitiesStatus: 'BillOfQuantitiesStatus',
+  BillOfQuantitiesType: 'BillOfQuantitiesType',
+  BoqContact: 'BoqContact',
+  QuoteSupplierMiscLine: 'QuoteSupplierMiscLine',
+  VisibilityForDepartment: 'VisibilityForDepartment',
+  WorkOrderBoQ: 'WorkOrderBoQ',
+  ProjectEmployee: 'ProjectEmployee'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -649,7 +657,8 @@ export const InvoiceInScalarFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
   poNumber: 'poNumber',
-  humanId: 'humanId',
+  clientInvoiceNumber: 'clientInvoiceNumber',
+  description: 'description',
   invoiceDate: 'invoiceDate',
   createdAt: 'createdAt',
   dueDate: 'dueDate',
@@ -689,7 +698,7 @@ export const InvoiceOutScalarFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
   poNumber: 'poNumber',
-  humanId: 'humanId',
+  clientReference: 'clientReference',
   invoiceDate: 'invoiceDate',
   createdAt: 'createdAt',
   dueDate: 'dueDate',
@@ -707,7 +716,8 @@ export const InvoiceOutScalarFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  priceListId: 'priceListId'
+  priceListId: 'priceListId',
+  boqId: 'boqId'
 } as const
 
 export type InvoiceOutScalarFieldEnum = (typeof InvoiceOutScalarFieldEnum)[keyof typeof InvoiceOutScalarFieldEnum]
@@ -1359,6 +1369,7 @@ export const TimeRegistryScalarFieldEnum = {
   invoiceTime: 'invoiceTime',
   onSite: 'onSite',
   stayOver: 'stayOver',
+  approved: 'approved',
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
   vatMarginId: 'vatMarginId',
@@ -2145,25 +2156,124 @@ export const IncomingDeliveryLineAllocationScalarFieldEnum = {
 export type IncomingDeliveryLineAllocationScalarFieldEnum = (typeof IncomingDeliveryLineAllocationScalarFieldEnum)[keyof typeof IncomingDeliveryLineAllocationScalarFieldEnum]
 
 
-export const ScheduleMeetingScalarFieldEnum = {
+export const BillOfQuantitiesScalarFieldEnum = {
   id: 'id',
-  employeeId: 'employeeId',
-  conversationType: 'conversationType',
-  startAt: 'startAt',
-  endAt: 'endAt',
-  place: 'place',
-  status: 'status',
-  notes: 'notes',
-  completedAt: 'completedAt',
+  boqNumber: 'boqNumber',
+  poNumber: 'poNumber',
+  clientReference: 'clientReference',
+  boqDate: 'boqDate',
+  createdAt: 'createdAt',
+  dueDate: 'dueDate',
+  sentDate: 'sentDate',
+  deletedAt: 'deletedAt',
+  modifiedAt: 'modifiedAt',
+  reminderSent: 'reminderSent',
+  outstanding: 'outstanding',
+  deleted: 'deleted',
+  deletedBy: 'deletedBy',
+  createdBy: 'createdBy',
+  modifiedBy: 'modifiedBy',
+  boqTypeId: 'boqTypeId',
+  targetId: 'targetId',
+  paymentMethodId: 'paymentMethodId',
+  boqSentTypeId: 'boqSentTypeId',
+  boqStatusId: 'boqStatusId',
+  priceListId: 'priceListId'
+} as const
+
+export type BillOfQuantitiesScalarFieldEnum = (typeof BillOfQuantitiesScalarFieldEnum)[keyof typeof BillOfQuantitiesScalarFieldEnum]
+
+
+export const BillOfQuantitiesSentTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
-  updatedAt: 'updatedAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
 } as const
 
-export type ScheduleMeetingScalarFieldEnum = (typeof ScheduleMeetingScalarFieldEnum)[keyof typeof ScheduleMeetingScalarFieldEnum]
+export type BillOfQuantitiesSentTypeScalarFieldEnum = (typeof BillOfQuantitiesSentTypeScalarFieldEnum)[keyof typeof BillOfQuantitiesSentTypeScalarFieldEnum]
+
+
+export const BillOfQuantitiesStatusScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type BillOfQuantitiesStatusScalarFieldEnum = (typeof BillOfQuantitiesStatusScalarFieldEnum)[keyof typeof BillOfQuantitiesStatusScalarFieldEnum]
+
+
+export const BillOfQuantitiesTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type BillOfQuantitiesTypeScalarFieldEnum = (typeof BillOfQuantitiesTypeScalarFieldEnum)[keyof typeof BillOfQuantitiesTypeScalarFieldEnum]
+
+
+export const BoqContactScalarFieldEnum = {
+  id: 'id',
+  contactId: 'contactId',
+  billOfQuantitiesId: 'billOfQuantitiesId'
+} as const
+
+export type BoqContactScalarFieldEnum = (typeof BoqContactScalarFieldEnum)[keyof typeof BoqContactScalarFieldEnum]
+
+
+export const QuoteSupplierMiscLineScalarFieldEnum = {
+  id: 'id',
+  quoteSupplierId: 'quoteSupplierId',
+  description: 'description',
+  unitPrice: 'unitPrice'
+} as const
+
+export type QuoteSupplierMiscLineScalarFieldEnum = (typeof QuoteSupplierMiscLineScalarFieldEnum)[keyof typeof QuoteSupplierMiscLineScalarFieldEnum]
+
+
+export const VisibilityForDepartmentScalarFieldEnum = {
+  id: 'id',
+  visible: 'visible',
+  departmentId: 'departmentId',
+  targetId: 'targetId'
+} as const
+
+export type VisibilityForDepartmentScalarFieldEnum = (typeof VisibilityForDepartmentScalarFieldEnum)[keyof typeof VisibilityForDepartmentScalarFieldEnum]
+
+
+export const WorkOrderBoQScalarFieldEnum = {
+  id: 'id',
+  billOfQuantitiesId: 'billOfQuantitiesId',
+  workOrderId: 'workOrderId',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type WorkOrderBoQScalarFieldEnum = (typeof WorkOrderBoQScalarFieldEnum)[keyof typeof WorkOrderBoQScalarFieldEnum]
+
+
+export const ProjectEmployeeScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo',
+  manager: 'manager',
+  supervisor: 'supervisor'
+} as const
+
+export type ProjectEmployeeScalarFieldEnum = (typeof ProjectEmployeeScalarFieldEnum)[keyof typeof ProjectEmployeeScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2519,7 +2629,8 @@ export const InvoiceInOrderByRelevanceFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
   poNumber: 'poNumber',
-  humanId: 'humanId',
+  clientInvoiceNumber: 'clientInvoiceNumber',
+  description: 'description',
   deletedBy: 'deletedBy',
   createdBy: 'createdBy',
   modifiedBy: 'modifiedBy',
@@ -2549,7 +2660,7 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
   poNumber: 'poNumber',
-  humanId: 'humanId',
+  clientReference: 'clientReference',
   deletedBy: 'deletedBy',
   createdBy: 'createdBy',
   modifiedBy: 'modifiedBy',
@@ -2558,7 +2669,8 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  priceListId: 'priceListId'
+  priceListId: 'priceListId',
+  boqId: 'boqId'
 } as const
 
 export type InvoiceOutOrderByRelevanceFieldEnum = (typeof InvoiceOutOrderByRelevanceFieldEnum)[keyof typeof InvoiceOutOrderByRelevanceFieldEnum]
@@ -3640,16 +3752,98 @@ export const IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = {
 export type IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = (typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum]
 
 
-export const ScheduleMeetingOrderByRelevanceFieldEnum = {
+export const BillOfQuantitiesOrderByRelevanceFieldEnum = {
   id: 'id',
-  employeeId: 'employeeId',
-  conversationType: 'conversationType',
-  place: 'place',
-  status: 'status',
-  notes: 'notes',
+  boqNumber: 'boqNumber',
+  poNumber: 'poNumber',
+  clientReference: 'clientReference',
+  deletedBy: 'deletedBy',
+  createdBy: 'createdBy',
+  modifiedBy: 'modifiedBy',
+  boqTypeId: 'boqTypeId',
+  targetId: 'targetId',
+  paymentMethodId: 'paymentMethodId',
+  boqSentTypeId: 'boqSentTypeId',
+  boqStatusId: 'boqStatusId',
+  priceListId: 'priceListId'
+} as const
+
+export type BillOfQuantitiesOrderByRelevanceFieldEnum = (typeof BillOfQuantitiesOrderByRelevanceFieldEnum)[keyof typeof BillOfQuantitiesOrderByRelevanceFieldEnum]
+
+
+export const BillOfQuantitiesSentTypeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
 } as const
 
-export type ScheduleMeetingOrderByRelevanceFieldEnum = (typeof ScheduleMeetingOrderByRelevanceFieldEnum)[keyof typeof ScheduleMeetingOrderByRelevanceFieldEnum]
+export type BillOfQuantitiesSentTypeOrderByRelevanceFieldEnum = (typeof BillOfQuantitiesSentTypeOrderByRelevanceFieldEnum)[keyof typeof BillOfQuantitiesSentTypeOrderByRelevanceFieldEnum]
+
+
+export const BillOfQuantitiesStatusOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type BillOfQuantitiesStatusOrderByRelevanceFieldEnum = (typeof BillOfQuantitiesStatusOrderByRelevanceFieldEnum)[keyof typeof BillOfQuantitiesStatusOrderByRelevanceFieldEnum]
+
+
+export const BillOfQuantitiesTypeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type BillOfQuantitiesTypeOrderByRelevanceFieldEnum = (typeof BillOfQuantitiesTypeOrderByRelevanceFieldEnum)[keyof typeof BillOfQuantitiesTypeOrderByRelevanceFieldEnum]
+
+
+export const BoqContactOrderByRelevanceFieldEnum = {
+  id: 'id',
+  contactId: 'contactId',
+  billOfQuantitiesId: 'billOfQuantitiesId'
+} as const
+
+export type BoqContactOrderByRelevanceFieldEnum = (typeof BoqContactOrderByRelevanceFieldEnum)[keyof typeof BoqContactOrderByRelevanceFieldEnum]
+
+
+export const QuoteSupplierMiscLineOrderByRelevanceFieldEnum = {
+  id: 'id',
+  quoteSupplierId: 'quoteSupplierId',
+  description: 'description'
+} as const
+
+export type QuoteSupplierMiscLineOrderByRelevanceFieldEnum = (typeof QuoteSupplierMiscLineOrderByRelevanceFieldEnum)[keyof typeof QuoteSupplierMiscLineOrderByRelevanceFieldEnum]
+
+
+export const VisibilityForDepartmentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  departmentId: 'departmentId',
+  targetId: 'targetId'
+} as const
+
+export type VisibilityForDepartmentOrderByRelevanceFieldEnum = (typeof VisibilityForDepartmentOrderByRelevanceFieldEnum)[keyof typeof VisibilityForDepartmentOrderByRelevanceFieldEnum]
+
+
+export const WorkOrderBoQOrderByRelevanceFieldEnum = {
+  id: 'id',
+  billOfQuantitiesId: 'billOfQuantitiesId',
+  workOrderId: 'workOrderId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type WorkOrderBoQOrderByRelevanceFieldEnum = (typeof WorkOrderBoQOrderByRelevanceFieldEnum)[keyof typeof WorkOrderBoQOrderByRelevanceFieldEnum]
+
+
+export const ProjectEmployeeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo'
+} as const
+
+export type ProjectEmployeeOrderByRelevanceFieldEnum = (typeof ProjectEmployeeOrderByRelevanceFieldEnum)[keyof typeof ProjectEmployeeOrderByRelevanceFieldEnum]
 

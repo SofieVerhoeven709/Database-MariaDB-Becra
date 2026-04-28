@@ -395,6 +395,7 @@ export type QuoteSupplierWhereInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   QuoteSupplierLine?: Prisma.QuoteSupplierLineListRelationFilter
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineListRelationFilter
 }
 
 export type QuoteSupplierOrderByWithRelationInput = {
@@ -435,6 +436,7 @@ export type QuoteSupplierOrderByWithRelationInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineOrderByRelationAggregateInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineOrderByRelationAggregateInput
   _relevance?: Prisma.QuoteSupplierOrderByRelevanceInput
 }
 
@@ -479,6 +481,7 @@ export type QuoteSupplierWhereUniqueInput = Prisma.AtLeast<{
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   QuoteSupplierLine?: Prisma.QuoteSupplierLineListRelationFilter
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineListRelationFilter
 }, "id">
 
 export type QuoteSupplierOrderByWithAggregationInput = {
@@ -576,6 +579,7 @@ export type QuoteSupplierCreateInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateInput = {
@@ -607,6 +611,7 @@ export type QuoteSupplierUncheckedCreateInput = {
   deletedBy?: string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUpdateInput = {
@@ -638,6 +643,7 @@ export type QuoteSupplierUpdateInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateInput = {
@@ -669,6 +675,7 @@ export type QuoteSupplierUncheckedUpdateInput = {
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierCreateManyInput = {
@@ -1278,6 +1285,20 @@ export type QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteSupplierUpdateToOneWithWhereWithoutQuoteSupplierLineInput, Prisma.QuoteSupplierUpdateWithoutQuoteSupplierLineInput>, Prisma.QuoteSupplierUncheckedUpdateWithoutQuoteSupplierLineInput>
 }
 
+export type QuoteSupplierCreateNestedOneWithoutQuoteSupplierMiscLineInput = {
+  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutQuoteSupplierMiscLineInput, Prisma.QuoteSupplierUncheckedCreateWithoutQuoteSupplierMiscLineInput>
+  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutQuoteSupplierMiscLineInput
+  connect?: Prisma.QuoteSupplierWhereUniqueInput
+}
+
+export type QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierMiscLineNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutQuoteSupplierMiscLineInput, Prisma.QuoteSupplierUncheckedCreateWithoutQuoteSupplierMiscLineInput>
+  connectOrCreate?: Prisma.QuoteSupplierCreateOrConnectWithoutQuoteSupplierMiscLineInput
+  upsert?: Prisma.QuoteSupplierUpsertWithoutQuoteSupplierMiscLineInput
+  connect?: Prisma.QuoteSupplierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteSupplierUpdateToOneWithWhereWithoutQuoteSupplierMiscLineInput, Prisma.QuoteSupplierUpdateWithoutQuoteSupplierMiscLineInput>, Prisma.QuoteSupplierUncheckedUpdateWithoutQuoteSupplierMiscLineInput>
+}
+
 export type QuoteSupplierCreateWithoutCompanyInput = {
   id: string
   quoteNumber: string
@@ -1306,6 +1327,7 @@ export type QuoteSupplierCreateWithoutCompanyInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutCompanyInput = {
@@ -1336,6 +1358,7 @@ export type QuoteSupplierUncheckedCreateWithoutCompanyInput = {
   deletedBy?: string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutCompanyInput = {
@@ -1424,6 +1447,7 @@ export type QuoteSupplierCreateWithoutDocumentStructureInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutDocumentStructureInput = {
@@ -1454,6 +1478,7 @@ export type QuoteSupplierUncheckedCreateWithoutDocumentStructureInput = {
   deletedBy?: string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutDocumentStructureInput = {
@@ -1510,6 +1535,7 @@ export type QuoteSupplierCreateWithoutEmployeeInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutEmployeeInput = {
@@ -1540,6 +1566,7 @@ export type QuoteSupplierUncheckedCreateWithoutEmployeeInput = {
   deletedBy?: string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutEmployeeInput = {
@@ -1580,6 +1607,7 @@ export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_deletedByToEmployee
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_deletedByToEmployeeInput = {
@@ -1610,6 +1638,7 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_deletedByT
   deletedAt?: Date | string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_deletedByToEmployeeInput = {
@@ -1650,6 +1679,7 @@ export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_rejectedByToEmploye
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
@@ -1680,6 +1710,7 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_rejectedBy
   deletedBy?: string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
@@ -1720,6 +1751,7 @@ export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_approvedByToEmploye
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
@@ -1750,6 +1782,7 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_approvedBy
   deletedBy?: string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
@@ -1790,6 +1823,7 @@ export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInp
   Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput = {
@@ -1820,6 +1854,7 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_sentByToEm
   deletedBy?: string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_sentByToEmployeeInput = {
@@ -1860,6 +1895,7 @@ export type QuoteSupplierCreateWithoutEmployee_QuoteSupplier_receivedByToEmploye
   Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
@@ -1890,6 +1926,7 @@ export type QuoteSupplierUncheckedCreateWithoutEmployee_QuoteSupplier_receivedBy
   deletedBy?: string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
@@ -2026,6 +2063,7 @@ export type QuoteSupplierCreateWithoutPurchaseInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutPurchaseInput = {
@@ -2056,6 +2094,7 @@ export type QuoteSupplierUncheckedCreateWithoutPurchaseInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutPurchaseInput = {
@@ -2102,6 +2141,7 @@ export type QuoteSupplierUpdateWithoutPurchaseInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutPurchaseInput = {
@@ -2132,6 +2172,7 @@ export type QuoteSupplierUncheckedUpdateWithoutPurchaseInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierCreateWithoutPaymentConditionInput = {
@@ -2162,6 +2203,7 @@ export type QuoteSupplierCreateWithoutPaymentConditionInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutPaymentConditionInput = {
@@ -2192,6 +2234,7 @@ export type QuoteSupplierUncheckedCreateWithoutPaymentConditionInput = {
   deletedBy?: string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutPaymentConditionInput = {
@@ -2248,6 +2291,7 @@ export type QuoteSupplierCreateWithoutQuoteSupplierLineInput = {
   Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierUncheckedCreateWithoutQuoteSupplierLineInput = {
@@ -2278,6 +2322,7 @@ export type QuoteSupplierUncheckedCreateWithoutQuoteSupplierLineInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
 }
 
 export type QuoteSupplierCreateOrConnectWithoutQuoteSupplierLineInput = {
@@ -2324,6 +2369,7 @@ export type QuoteSupplierUpdateWithoutQuoteSupplierLineInput = {
   Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutQuoteSupplierLineInput = {
@@ -2354,6 +2400,147 @@ export type QuoteSupplierUncheckedUpdateWithoutQuoteSupplierLineInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+}
+
+export type QuoteSupplierCreateWithoutQuoteSupplierMiscLineInput = {
+  id: string
+  quoteNumber: string
+  quotationNumber?: string | null
+  description?: string | null
+  rejected?: boolean
+  rejectedAt?: Date | string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  additionalInfo?: string | null
+  validUntil?: Date | string | null
+  deliveryTimeDays?: number | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutQuoteSupplierInput
+  Company: Prisma.CompanyCreateNestedOneWithoutQuoteSupplierInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutQuoteSupplierInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplierInput
+  Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeInput
+  PaymentCondition?: Prisma.PaymentConditionCreateNestedOneWithoutQuoteSupplierInput
+  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeInput
+  Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineCreateNestedManyWithoutQuoteSupplierInput
+}
+
+export type QuoteSupplierUncheckedCreateWithoutQuoteSupplierMiscLineInput = {
+  id: string
+  quoteNumber: string
+  quotationNumber?: string | null
+  description?: string | null
+  companyId: string
+  rejected?: boolean
+  rejectedAt?: Date | string | null
+  rejectedBy?: string | null
+  acceptedForPOB?: boolean
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  sent?: boolean
+  sentAt?: Date | string | null
+  sentBy?: string | null
+  received?: boolean
+  receivedAt?: Date | string | null
+  receivedBy?: string | null
+  additionalInfo?: string | null
+  documentId?: string | null
+  validUntil?: Date | string | null
+  deliveryTimeDays?: number | null
+  createdBy: string
+  paymentConditionId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutQuoteSupplierInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedCreateNestedManyWithoutQuoteSupplierInput
+}
+
+export type QuoteSupplierCreateOrConnectWithoutQuoteSupplierMiscLineInput = {
+  where: Prisma.QuoteSupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutQuoteSupplierMiscLineInput, Prisma.QuoteSupplierUncheckedCreateWithoutQuoteSupplierMiscLineInput>
+}
+
+export type QuoteSupplierUpsertWithoutQuoteSupplierMiscLineInput = {
+  update: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutQuoteSupplierMiscLineInput, Prisma.QuoteSupplierUncheckedUpdateWithoutQuoteSupplierMiscLineInput>
+  create: Prisma.XOR<Prisma.QuoteSupplierCreateWithoutQuoteSupplierMiscLineInput, Prisma.QuoteSupplierUncheckedCreateWithoutQuoteSupplierMiscLineInput>
+  where?: Prisma.QuoteSupplierWhereInput
+}
+
+export type QuoteSupplierUpdateToOneWithWhereWithoutQuoteSupplierMiscLineInput = {
+  where?: Prisma.QuoteSupplierWhereInput
+  data: Prisma.XOR<Prisma.QuoteSupplierUpdateWithoutQuoteSupplierMiscLineInput, Prisma.QuoteSupplierUncheckedUpdateWithoutQuoteSupplierMiscLineInput>
+}
+
+export type QuoteSupplierUpdateWithoutQuoteSupplierMiscLineInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Purchase?: Prisma.PurchaseUpdateManyWithoutQuoteSupplierNestedInput
+  Company?: Prisma.CompanyUpdateOneRequiredWithoutQuoteSupplierNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutQuoteSupplierNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQuoteSupplierNestedInput
+  Employee_QuoteSupplier_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_deletedByToEmployeeNestedInput
+  PaymentCondition?: Prisma.PaymentConditionUpdateOneWithoutQuoteSupplierNestedInput
+  Employee_QuoteSupplier_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_rejectedByToEmployeeNestedInput
+  Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
+  Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
+  Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+}
+
+export type QuoteSupplierUncheckedUpdateWithoutQuoteSupplierMiscLineInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quotationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedForPOB?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  received?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryTimeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentConditionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierCreateManyCompanyInput = {
@@ -2412,6 +2599,7 @@ export type QuoteSupplierUpdateWithoutCompanyInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutCompanyInput = {
@@ -2442,6 +2630,7 @@ export type QuoteSupplierUncheckedUpdateWithoutCompanyInput = {
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateManyWithoutCompanyInput = {
@@ -2528,6 +2717,7 @@ export type QuoteSupplierUpdateWithoutDocumentStructureInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutDocumentStructureInput = {
@@ -2558,6 +2748,7 @@ export type QuoteSupplierUncheckedUpdateWithoutDocumentStructureInput = {
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateManyWithoutDocumentStructureInput = {
@@ -2784,6 +2975,7 @@ export type QuoteSupplierUpdateWithoutEmployeeInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutEmployeeInput = {
@@ -2814,6 +3006,7 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployeeInput = {
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateManyWithoutEmployeeInput = {
@@ -2872,6 +3065,7 @@ export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_deletedByToEmployee
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_deletedByToEmployeeInput = {
@@ -2902,6 +3096,7 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_deletedByT
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_deletedByToEmployeeInput = {
@@ -2960,6 +3155,7 @@ export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_rejectedByToEmploye
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
@@ -2990,6 +3186,7 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_rejectedBy
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_rejectedByToEmployeeInput = {
@@ -3048,6 +3245,7 @@ export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_approvedByToEmploye
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
@@ -3078,6 +3276,7 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_approvedBy
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_approvedByToEmployeeInput = {
@@ -3136,6 +3335,7 @@ export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_sentByToEmployeeInp
   Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_sentByToEmployeeInput = {
@@ -3166,6 +3366,7 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_sentByToEm
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_sentByToEmployeeInput = {
@@ -3224,6 +3425,7 @@ export type QuoteSupplierUpdateWithoutEmployee_QuoteSupplier_receivedByToEmploye
   Employee_QuoteSupplier_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_approvedByToEmployeeNestedInput
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
@@ -3254,6 +3456,7 @@ export type QuoteSupplierUncheckedUpdateWithoutEmployee_QuoteSupplier_receivedBy
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateManyWithoutEmployee_QuoteSupplier_receivedByToEmployeeInput = {
@@ -3340,6 +3543,7 @@ export type QuoteSupplierUpdateWithoutPaymentConditionInput = {
   Employee_QuoteSupplier_sentByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_sentByToEmployeeNestedInput
   Employee_QuoteSupplier_receivedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQuoteSupplier_QuoteSupplier_receivedByToEmployeeNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateWithoutPaymentConditionInput = {
@@ -3370,6 +3574,7 @@ export type QuoteSupplierUncheckedUpdateWithoutPaymentConditionInput = {
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutQuoteSupplierNestedInput
   QuoteSupplierLine?: Prisma.QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
+  QuoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineUncheckedUpdateManyWithoutQuoteSupplierNestedInput
 }
 
 export type QuoteSupplierUncheckedUpdateManyWithoutPaymentConditionInput = {
@@ -3408,11 +3613,13 @@ export type QuoteSupplierUncheckedUpdateManyWithoutPaymentConditionInput = {
 export type QuoteSupplierCountOutputType = {
   Purchase: number
   QuoteSupplierLine: number
+  QuoteSupplierMiscLine: number
 }
 
 export type QuoteSupplierCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Purchase?: boolean | QuoteSupplierCountOutputTypeCountPurchaseArgs
   QuoteSupplierLine?: boolean | QuoteSupplierCountOutputTypeCountQuoteSupplierLineArgs
+  QuoteSupplierMiscLine?: boolean | QuoteSupplierCountOutputTypeCountQuoteSupplierMiscLineArgs
 }
 
 /**
@@ -3437,6 +3644,13 @@ export type QuoteSupplierCountOutputTypeCountPurchaseArgs<ExtArgs extends runtim
  */
 export type QuoteSupplierCountOutputTypeCountQuoteSupplierLineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.QuoteSupplierLineWhereInput
+}
+
+/**
+ * QuoteSupplierCountOutputType without action
+ */
+export type QuoteSupplierCountOutputTypeCountQuoteSupplierMiscLineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteSupplierMiscLineWhereInput
 }
 
 
@@ -3478,6 +3692,7 @@ export type QuoteSupplierSelect<ExtArgs extends runtime.Types.Extensions.Interna
   Employee_QuoteSupplier_sentByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_sentByToEmployeeArgs<ExtArgs>
   Employee_QuoteSupplier_receivedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs>
   QuoteSupplierLine?: boolean | Prisma.QuoteSupplier$QuoteSupplierLineArgs<ExtArgs>
+  QuoteSupplierMiscLine?: boolean | Prisma.QuoteSupplier$QuoteSupplierMiscLineArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteSupplierCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["quoteSupplier"]>
 
@@ -3525,6 +3740,7 @@ export type QuoteSupplierInclude<ExtArgs extends runtime.Types.Extensions.Intern
   Employee_QuoteSupplier_sentByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_sentByToEmployeeArgs<ExtArgs>
   Employee_QuoteSupplier_receivedByToEmployee?: boolean | Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs>
   QuoteSupplierLine?: boolean | Prisma.QuoteSupplier$QuoteSupplierLineArgs<ExtArgs>
+  QuoteSupplierMiscLine?: boolean | Prisma.QuoteSupplier$QuoteSupplierMiscLineArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteSupplierCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -3542,6 +3758,7 @@ export type $QuoteSupplierPayload<ExtArgs extends runtime.Types.Extensions.Inter
     Employee_QuoteSupplier_sentByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Employee_QuoteSupplier_receivedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     QuoteSupplierLine: Prisma.$QuoteSupplierLinePayload<ExtArgs>[]
+    QuoteSupplierMiscLine: Prisma.$QuoteSupplierMiscLinePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3921,6 +4138,7 @@ export interface Prisma__QuoteSupplierClient<T, Null = never, ExtArgs extends ru
   Employee_QuoteSupplier_sentByToEmployee<T extends Prisma.QuoteSupplier$Employee_QuoteSupplier_sentByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$Employee_QuoteSupplier_sentByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_QuoteSupplier_receivedByToEmployee<T extends Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$Employee_QuoteSupplier_receivedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   QuoteSupplierLine<T extends Prisma.QuoteSupplier$QuoteSupplierLineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$QuoteSupplierLineArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteSupplierLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  QuoteSupplierMiscLine<T extends Prisma.QuoteSupplier$QuoteSupplierMiscLineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteSupplier$QuoteSupplierMiscLineArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteSupplierMiscLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4497,6 +4715,30 @@ export type QuoteSupplier$QuoteSupplierLineArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   distinct?: Prisma.QuoteSupplierLineScalarFieldEnum | Prisma.QuoteSupplierLineScalarFieldEnum[]
+}
+
+/**
+ * QuoteSupplier.QuoteSupplierMiscLine
+ */
+export type QuoteSupplier$QuoteSupplierMiscLineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the QuoteSupplierMiscLine
+   */
+  select?: Prisma.QuoteSupplierMiscLineSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the QuoteSupplierMiscLine
+   */
+  omit?: Prisma.QuoteSupplierMiscLineOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuoteSupplierMiscLineInclude<ExtArgs> | null
+  where?: Prisma.QuoteSupplierMiscLineWhereInput
+  orderBy?: Prisma.QuoteSupplierMiscLineOrderByWithRelationInput | Prisma.QuoteSupplierMiscLineOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteSupplierMiscLineWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuoteSupplierMiscLineScalarFieldEnum | Prisma.QuoteSupplierMiscLineScalarFieldEnum[]
 }
 
 /**

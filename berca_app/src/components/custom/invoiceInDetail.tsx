@@ -10,7 +10,8 @@ import {Switch} from '@/components/ui/switch'
 import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {updateInvoiceInAction} from '@/serverFunctions/invoices'
-import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption, InvoicePurchaseLookup} from '@/types/invoice'
+import {Textarea} from '@/components/ui/textarea'
 
 function formatDate(date: string | null) {
   if (!date) return '-'
@@ -40,6 +41,7 @@ interface InvoiceInDetailProps {
   invoiceStatuses: InvoiceLookup[]
   vatMargins: VatMarginOption[]
   companyOptions: InvoiceLookup[]
+  purchaseOptions: InvoicePurchaseLookup[]
   currentUserLevel: number
   currentUserRole: string
 }
@@ -47,7 +49,8 @@ interface InvoiceInDetailProps {
 type EditForm = {
   invoiceNumber: string
   poNumber: string
-  humanId: string
+  clientInvoiceNumber: string
+  description: string
   invoiceDate: string
   dueDate: string
   invoiceTypeId: string
@@ -70,6 +73,7 @@ export function InvoiceInDetail({
   companyOptions,
   currentUserLevel,
   currentUserRole,
+  purchaseOptions,
 }: InvoiceInDetailProps) {
   const router = useRouter()
   const canEdit = currentUserLevel >= 40
@@ -79,7 +83,8 @@ export function InvoiceInDetail({
   const buildForm = (): EditForm => ({
     invoiceNumber: invoice.invoiceNumber,
     poNumber: invoice.poNumber ?? '',
-    humanId: invoice.humanId ?? '',
+    clientInvoiceNumber: invoice.clientInvoiceNumber ?? '',
+    description: invoice.description ?? '',
     invoiceDate: toDateInput(invoice.invoiceDate),
     dueDate: toDateInput(invoice.dueDate),
     invoiceTypeId: invoice.invoiceTypeId,
@@ -113,7 +118,8 @@ export function InvoiceInDetail({
         id: invoice.id,
         invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
-        humanId: form.humanId || null,
+        clientInvoiceNumber: form.clientInvoiceNumber || null,
+        description: form.description || null,
         invoiceDate: new Date(form.invoiceDate),
         dueDate: new Date(form.dueDate),
         invoiceTypeId: form.invoiceTypeId,
@@ -138,6 +144,10 @@ export function InvoiceInDetail({
     setNumberError(null)
     setEditing(false)
   }
+
+  const filteredPurchaseOptions = form.companyId
+    ? purchaseOptions.filter(p => p.companyId === form.companyId)
+    : purchaseOptions
 
   return (
     <div className="flex flex-col gap-6">
@@ -215,15 +225,15 @@ export function InvoiceInDetail({
 
           {/* Human ID */}
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Human ID</Label>
+            <Label className="text-xs text-muted-foreground">Client Invoice Number</Label>
             {editing ? (
               <Input
-                value={form.humanId}
-                onChange={e => s('humanId', e.target.value)}
+                value={form.clientInvoiceNumber}
+                onChange={e => s('clientInvoiceNumber', e.target.value)}
                 className="bg-secondary border-border"
               />
             ) : (
-              <p className="text-sm text-muted-foreground">{invoice.humanId ?? '-'}</p>
+              <p className="text-sm text-muted-foreground">{invoice.clientInvoiceNumber ?? '-'}</p>
             )}
           </div>
 
@@ -231,11 +241,27 @@ export function InvoiceInDetail({
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">PO Number</Label>
             {editing ? (
-              <Input
+              <Select
                 value={form.poNumber}
-                onChange={e => s('poNumber', e.target.value)}
-                className="bg-secondary border-border"
-              />
+                onValueChange={v => {
+                  s('poNumber', v)
+
+                  const selectedPO = purchaseOptions.find(p => p.id === v)
+                  if (selectedPO) {
+                    s('companyId', selectedPO.companyId)
+                  }
+                }}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="Select purchase…" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {filteredPurchaseOptions.map(c => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.purchaseNumber} - {c.description}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             ) : (
               <p className="text-sm text-muted-foreground">{invoice.poNumber ?? '-'}</p>
             )}
@@ -245,9 +271,19 @@ export function InvoiceInDetail({
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Company</Label>
             {editing ? (
-              <Select value={form.companyId} onValueChange={v => s('companyId', v)}>
+              <Select
+                value={form.companyId}
+                onValueChange={v => {
+                  s('companyId', v)
+
+                  const poStillValid = purchaseOptions.find(p => p.id === form.poNumber && p.companyId === v)
+
+                  if (!poStillValid) {
+                    s('poNumber', '')
+                  }
+                }}>
                 <SelectTrigger className="bg-secondary border-border">
-                  <SelectValue />
+                  <SelectValue placeholder="Select company…" />
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border">
                   {companyOptions.map(c => (
@@ -434,6 +470,19 @@ export function InvoiceInDetail({
                 )}
               </div>
             ))}
+          </div>
+          <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-3">
+            <Label className="text-xs text-muted-foreground">Description</Label>
+            {editing ? (
+              <Textarea
+                value={form.description}
+                onChange={e => s('description', e.target.value)}
+                rows={3}
+                className="bg-secondary border-border resize-none"
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground whitespace-pre-wrap">{invoice.description ?? '-'}</p>
+            )}
           </div>
         </div>
       </div>

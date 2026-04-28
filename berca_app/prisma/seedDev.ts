@@ -142,6 +142,7 @@ const ALL_TARGET_TYPES = [
   'Material',
   'ProjectBom',
   'PurchaseBom',
+  'BillOfQuantities',
 ]
 
 const URGENCY_TYPES = ['Low', 'Medium', 'High', 'Critical']
@@ -164,12 +165,15 @@ const FOLLOW_UP_TYPES = [
 const VAT_MARGINS = [0, 6, 12, 21]
 
 const INVOICE_STATUSES = ['Draft', 'Sent', 'Received', 'Overdue', 'Paid', 'Cancelled', 'Disputed']
+const BOQ_STATUSES = ['Draft', 'Sent', 'Received', 'Overdue', 'Paid', 'Cancelled', 'Disputed', 'Approved']
 
 const INVOICE_SENT_TYPES = ['Email', 'Post', 'Hand Delivery', 'Portal', 'Fax']
+const BOQ_SENT_TYPES = ['Email', 'Post', 'Hand Delivery', 'Portal', 'Fax']
 
 const PAYMENT_METHODS = ['Bank Transfer', 'Cash', 'Credit Card', 'Debit Card', 'Direct Debit', 'Cheque']
 
 const INVOICE_TYPES = ['Standard', 'Credit Note', 'Proforma', 'Recurring', 'Intercompany']
+const BOQ_TYPES = ['Standard', 'Credit Note', 'Proforma', 'Recurring', 'Intercompany']
 const DEFAULT_PAYMENT_CONDITIONS = [
   '14 days',
   '30 days invoice date',
@@ -546,7 +550,41 @@ export const seedDev = async (prisma: PrismaClient) => {
     }
   }
 
-  console.log('Invoice types seeded')
+  // 18. Upsert BOQStatuses
+  for (const name of BOQ_STATUSES) {
+    const existing = await prisma.billOfQuantitiesStatus.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.billOfQuantitiesStatus.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('BOQ statuses seeded')
+
+  // 19. Upsert BOQSentTypes
+  for (const name of BOQ_SENT_TYPES) {
+    const existing = await prisma.billOfQuantitiesSentType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.billOfQuantitiesSentType.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('BOQ sent types seeded')
+
+  // 21. Upsert BOQTypes
+  for (const name of BOQ_TYPES) {
+    const existing = await prisma.billOfQuantitiesType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.billOfQuantitiesType.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('BOQ types seeded')
 
   // 22. Upsert default payment conditions
   for (const name of DEFAULT_PAYMENT_CONDITIONS) {

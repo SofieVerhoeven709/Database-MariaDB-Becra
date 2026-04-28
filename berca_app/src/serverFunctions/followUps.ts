@@ -5,13 +5,18 @@ import {createFollowUpSchema, updateFollowUpSchema, followUpIdSchema} from '@/sc
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
 import {upsertVisibilityRows} from '@/serverFunctions/visibilityForRoles'
+import {upsertVisibilityDepartmentRows} from '@/serverFunctions/visibilityForDepartment'
 
 // ─── Create ───────────────────────────────────────────────────────────────────
 
 export const createFollowUpAction = protectedServerFunction({
   schema: createFollowUpSchema,
   functionName: 'Create follow-up action',
-  serverFn: async ({data: {visibilityForRoles, followUpTargetId, documentId, ...data}, logger, profile}) => {
+  serverFn: async ({
+    data: {visibilityForRoles, visibilityForDepartments, followUpTargetId, documentId, ...data},
+    logger,
+    profile,
+  }) => {
     logger.info(`Creating follow-up, createdBy: ${profile.id}`)
 
     // Create a target row for visibility scoping and future links.
@@ -46,6 +51,9 @@ export const createFollowUpAction = protectedServerFunction({
     if (visibilityForRoles.length > 0) {
       await upsertVisibilityRows(target.id, visibilityForRoles)
     }
+    if (visibilityForDepartments.length > 0) {
+      await upsertVisibilityDepartmentRows(target.id, visibilityForDepartments)
+    }
 
     logger.info(`Follow-up created: ${followUpId}${followUpTargetId ? ` linked to target ${followUpTargetId}` : ''}`)
     // Refresh the follow-up list view.
@@ -58,7 +66,7 @@ export const createFollowUpAction = protectedServerFunction({
 export const updateFollowUpAction = protectedServerFunction({
   schema: updateFollowUpSchema,
   functionName: 'Update follow-up action',
-  serverFn: async ({data: {id, visibilityForRoles, documentId, ...data}, logger}) => {
+  serverFn: async ({data: {id, visibilityForRoles, visibilityForDepartments, documentId, ...data}, logger}) => {
     // Read the follow-up target id so visibility can be updated in sync.
     const {targetId} = await prismaClient.followUp.findUniqueOrThrow({
       where: {id},
@@ -69,6 +77,7 @@ export const updateFollowUpAction = protectedServerFunction({
       prismaClient.followUp.update({where: {id}, data}),
       // Keep role visibility in sync with the follow-up target.
       upsertVisibilityRows(targetId, visibilityForRoles),
+      upsertVisibilityDepartmentRows(targetId, visibilityForDepartments),
     ])
 
     logger.info(`Follow-up updated: ${id} with ${visibilityForRoles.length} visibility row(s)`)

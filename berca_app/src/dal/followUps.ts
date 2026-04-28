@@ -25,6 +25,10 @@ const visibilityInclude = {
   },
 } as const
 
+const visibilityDeparmentInclude = {
+  include: {Department: true},
+} as const
+
 const listInclude = {
   // Shared include bundle for list views.
   Employee_FollowUp_createdByToEmployee: employeeSelect,
@@ -39,6 +43,7 @@ const listInclude = {
     select: {
       id: true,
       VisibilityForRole: visibilityInclude,
+      VisibilityForDepartment: visibilityDeparmentInclude,
     },
   },
 } as const
@@ -55,6 +60,9 @@ const detailInclude = {
   Target: {
     include: {
       VisibilityForRole: visibilityInclude,
+      VisibilityForDepartment: {
+        include: {Department: true},
+      },
     },
   },
   // Include latest structure entries for the detail tab.

@@ -7,9 +7,9 @@ export type InventoryWithRelations = Inventory & {
   Employee: Pick<Employee, 'id'> & {firstName: string; lastName: string}
 }
 
-export async function getInventory(): Promise<InventoryWithRelations[]> {
+export async function getInventory(options: {includeDeleted?: boolean} = {}): Promise<InventoryWithRelations[]> {
   return prismaClient.inventory.findMany({
-    where: {deleted: false},
+    where: options.includeDeleted ? undefined : {deleted: false},
     include: {
       Material_Inventory_materialIdToMaterial: {
         select: {id: true, name: true, shortDescription: true, beNumber: true, unitId: true},
@@ -61,7 +61,7 @@ export async function updateInventory(
     place?: string
     shortDescription?: string
     longDescription?: string
-    serieNumber?: string
+    serialNumber?: string
     quantityInStock?: number
     minQuantityInStock?: number
     maxQuantityInStock?: number
@@ -77,5 +77,12 @@ export async function softDeleteInventory(id: string, deletedBy: string) {
   return prismaClient.inventory.update({
     where: {id},
     data: {deleted: true, deletedAt: new Date(), deletedBy},
+  })
+}
+
+export async function restoreInventory(id: string) {
+  return prismaClient.inventory.update({
+    where: {id},
+    data: {deleted: false, deletedAt: null, deletedBy: null},
   })
 }

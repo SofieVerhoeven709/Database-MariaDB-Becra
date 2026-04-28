@@ -61,6 +61,7 @@ export interface MappedProjectBOM {
   closed: boolean
   materialClosed: boolean
   readyForPurchase: boolean
+  canCopy: boolean
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null

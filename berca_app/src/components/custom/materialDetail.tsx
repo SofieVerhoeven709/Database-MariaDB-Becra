@@ -56,6 +56,8 @@ interface MappedMaterialDetail {
   longDescription: string | null
   supplierCompanyId: string | null
   supplierCompanyName: string | null
+  supplierCompanyIds: string[]
+  supplierCompanyNames: string[]
   brandName: string | null
   warehousePlace: string | null
   rejected: boolean | null
@@ -139,6 +141,10 @@ function formatWarehousePlace(place: WarehousePlaceOption) {
     .join(' - ')
 }
 
+function formatSupplierLabel(company: SupplierCompanyOption): string {
+  return `${company.name} (${company.number})`
+}
+
 type NumberKind = 'BE' | 'IOS'
 
 function detectNumberKind(value: string | null | undefined): NumberKind {
@@ -195,6 +201,14 @@ export function MaterialDetail({
   const [saving, setSaving] = useState(false)
   const [restoring, setRestoring] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
+  const initialSupplierCompanyIds =
+    material.supplierCompanyIds.length > 0
+      ? material.supplierCompanyIds
+      : material.supplierCompanyId
+        ? [material.supplierCompanyId]
+        : []
+  const [supplierSearch, setSupplierSearch] = useState('')
+  const [isSupplierDropdownOpen, setIsSupplierDropdownOpen] = useState(false)
 
   const [form, setForm] = useState({
     beNumber: material.beNumber,
@@ -203,6 +217,7 @@ export function MaterialDetail({
     shortDescription: material.shortDescription,
     longDescription: material.longDescription ?? '',
     supplierCompanyId: material.supplierCompanyId ?? '',
+    supplierCompanyIds: initialSupplierCompanyIds,
     brandName: material.brandName ?? '',
     warehousePlace: material.warehousePlace ?? '',
     rejected: material.rejected ?? false,
@@ -243,10 +258,40 @@ export function MaterialDetail({
   }
 
   const warehousePlaceById = new Map(warehousePlaces.map(place => [place.id, place]))
-  const selectedSupplierCompany = supplierCompanies.find(company => company.id === form.supplierCompanyId) ?? null
+  const selectedSupplierCompanyIds = form.supplierCompanyIds.length
+    ? form.supplierCompanyIds
+    : form.supplierCompanyId
+      ? [form.supplierCompanyId]
+      : []
+  const selectedSupplierCompanies = selectedSupplierCompanyIds
+    .map(id => supplierCompanies.find(company => company.id === id))
+    .filter((company): company is SupplierCompanyOption => Boolean(company))
+  const filteredSupplierCompanies = supplierCompanies.filter(company => {
+    if (selectedSupplierCompanyIds.includes(company.id)) return false
+    if (!supplierSearch) return true
+    const q = supplierSearch.toLowerCase()
+    return (
+      company.name.toLowerCase().includes(q) ||
+      company.number.toLowerCase().includes(q) ||
+      formatSupplierLabel(company).toLowerCase().includes(q)
+    )
+  })
 
   const resolvedWarehousePlace = form.warehousePlace ? (warehousePlaceById.get(form.warehousePlace) ?? null) : null
 
+  function addSupplierCompany(company: SupplierCompanyOption) {
+    const nextIds = Array.from(new Set([...selectedSupplierCompanyIds, company.id]))
+    handleField('supplierCompanyIds', nextIds)
+    handleField('supplierCompanyId', nextIds[0] ?? '')
+    setSupplierSearch('')
+    setIsSupplierDropdownOpen(false)
+  }
+
+  function removeSupplierCompany(companyId: string) {
+    const nextIds = selectedSupplierCompanyIds.filter(id => id !== companyId)
+    handleField('supplierCompanyIds', nextIds)
+    handleField('supplierCompanyId', nextIds[0] ?? '')
+  }
 
   function formatInventoryStructureLocation(structure: InventoryStructureItem) {
     const warehousePlace = structure.warehousePlaceId
@@ -288,13 +333,14 @@ export function MaterialDetail({
       fd.append('brandOrderNr', form.brandOrderNr ?? '')
       fd.append('shortDescription', form.shortDescription)
       if (form.longDescription) fd.append('longDescription', form.longDescription)
-      if (form.supplierCompanyId) {
-        fd.append('supplierCompanyId', form.supplierCompanyId)
+      const preferredSupplierCompanyId = selectedSupplierCompanyIds[0] ?? ''
+      if (preferredSupplierCompanyId) {
+        fd.append('supplierCompanyId', preferredSupplierCompanyId)
       } else {
         fd.append('supplierCompanyId', '')
       }
+      selectedSupplierCompanyIds.forEach(companyId => fd.append('supplierCompanyIds', companyId))
       if (form.brandName) fd.append('brandName', form.brandName)
-      if (form.warehousePlace) fd.append('warehousePlace', form.warehousePlace)
       fd.append('rejected', String(form.rejected))
       fd.append('partApproved', String(form.partApproved))
       fd.append('longLeadTime', String(form.longLeadTime))
@@ -489,6 +535,10 @@ export function MaterialDetail({
                 onClick={() => {
                   setEditing(false)
                   setSaveError(null)
+                  handleField('supplierCompanyIds', initialSupplierCompanyIds)
+                  handleField('supplierCompanyId', initialSupplierCompanyIds[0] ?? '')
+                  setSupplierSearch('')
+                  setIsSupplierDropdownOpen(false)
                 }}
                 disabled={saving}>
                 <X className="h-3.5 w-3.5 mr-1" />
@@ -650,39 +700,82 @@ export function MaterialDetail({
             </div>
 
             <div className="flex flex-col gap-1.5 md:col-span-2">
-              <Label className="text-xs text-muted-foreground">Supplier</Label>
+              <Label className="text-xs text-muted-foreground">Suppliers</Label>
               {editing ? (
                 <div className="space-y-2">
-                  <Select
-                    value={form.supplierCompanyId || undefined}
-                    onValueChange={v => handleField('supplierCompanyId', v)}>
-                    <SelectTrigger className="bg-secondary border-border">
-                      <SelectValue placeholder="Select supplier" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {supplierCompanies.map(company => (
-                        <SelectItem key={company.id} value={company.id}>
-                          {company.name} ({company.number})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div className="relative">
+                    <Input
+                      className={inputStyles}
+                      placeholder="Search suppliers to add"
+                      value={supplierSearch}
+                      onFocus={() => setIsSupplierDropdownOpen(true)}
+                      onBlur={() => setTimeout(() => setIsSupplierDropdownOpen(false), 120)}
+                      onChange={e => {
+                        const next = e.target.value
+                        setSupplierSearch(next)
+                        setIsSupplierDropdownOpen(true)
+
+                      }}
+                    />
+
+                    {isSupplierDropdownOpen && filteredSupplierCompanies.length > 0 && (
+                      <div className="absolute z-20 mt-1 max-h-52 w-full overflow-y-auto rounded-md border border-border bg-card shadow-sm">
+                        {filteredSupplierCompanies.map(company => (
+                          <button
+                            key={company.id}
+                            type="button"
+                            className="w-full px-3 py-2 text-left text-sm hover:bg-secondary"
+                            onMouseDown={e => {
+                              e.preventDefault()
+                              addSupplierCompany(company)
+                            }}>
+                            {formatSupplierLabel(company)}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {supplierCompanies.length === 0 ? (
+                    <p className="text-xs text-muted-foreground">No suppliers available. Add suppliers first.</p>
+                  ) : isSupplierDropdownOpen && supplierSearch.trim().length > 0 && filteredSupplierCompanies.length === 0 ? (
+                    <p className="text-xs text-muted-foreground">No suppliers match your search.</p>
+                  ) : null}
 
                   <div className="rounded-md border border-border bg-secondary/20 overflow-hidden">
                     <Table>
                       <TableBody>
-                        <TableRow>
-                          <TableCell className="w-28 text-xs text-muted-foreground">Name</TableCell>
-                          <TableCell className="text-sm">{selectedSupplierCompany?.name ?? '-'}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="w-28 text-xs text-muted-foreground">Number</TableCell>
-                          <TableCell className="text-sm">{selectedSupplierCompany?.number ?? '-'}</TableCell>
-                        </TableRow>
+                        {selectedSupplierCompanies.length > 0 ? (
+                          selectedSupplierCompanies.map((company, index) => (
+                            <TableRow key={company.id}>
+                              <TableCell className="w-28 text-xs text-muted-foreground">
+                                {index === 0 ? 'Preferred' : 'Supplier'}
+                              </TableCell>
+                              <TableCell className="text-sm">
+                                <div className="flex items-center justify-between gap-3">
+                                  <span>{formatSupplierLabel(company)}</span>
+                                  <Button
+                                    type="button"
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => removeSupplierCompany(company.id)}>
+                                    Remove
+                                  </Button>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell className="text-sm text-muted-foreground">No suppliers selected.</TableCell>
+                          </TableRow>
+                        )}
                       </TableBody>
                     </Table>
                   </div>
                 </div>
+              ) : material.supplierCompanyNames.length > 0 ? (
+                <p className="text-sm">{material.supplierCompanyNames.join(', ')}</p>
               ) : material.supplierCompanyName ? (
                 <p className="text-sm">{material.supplierCompanyName}</p>
               ) : (
@@ -813,40 +906,7 @@ export function MaterialDetail({
             <div className="flex flex-col gap-1.5">
               {/*<Label className="text-xs text-muted-foreground">Warehouse Place</Label>*/}
               <Label className="text-xs text-muted-foreground">Warehouse Coordinates</Label>
-              {editing ? (
-                <div className="space-y-2">
-                  <Select
-                    value={form.warehousePlace || '__none__'}
-                    onValueChange={value => handleField('warehousePlace', value === '__none__' ? '' : value)}>
-                    <SelectTrigger className="bg-secondary border-border">
-                      <SelectValue placeholder="Select warehouse place" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__none__">None</SelectItem>
-                      {warehousePlaces.map(place => (
-                        <SelectItem key={place.id} value={place.id}>
-                          {place.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {resolvedWarehousePlace && (
-                    <div className="text-xs text-muted-foreground space-y-0.5">
-                      <p>Abbr: {resolvedWarehousePlace.abbreviation ?? '-'}</p>
-                      {/*<p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
-                      <p>Shelf: {resolvedWarehousePlace.shelf ?? '-'}</p>
-                      <p>Column: {resolvedWarehousePlace.column ?? '-'}</p>
-                      <p>Layer: {resolvedWarehousePlace.layer ?? '-'}</p>
-                      <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>*/}
-                      <p>Warehouse: {resolvedWarehousePlace.place ?? '-'}</p>
-                      <p>X: {resolvedWarehousePlace.shelf ?? '-'}</p>
-                      <p>Y: {resolvedWarehousePlace.column ?? '-'}</p>
-                      <p>Z: {resolvedWarehousePlace.layer ?? '-'}</p>
-                      <p>Position: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
-                    </div>
-                  )}
-                </div>
-              ) : resolvedWarehousePlace ? (
+              {resolvedWarehousePlace ? (
                 <div className="text-sm space-y-0.5">
                   <p>Abbr: {resolvedWarehousePlace.abbreviation ?? '-'}</p>
                   {/*<p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
@@ -859,6 +919,11 @@ export function MaterialDetail({
                   <p>Y: {resolvedWarehousePlace.column ?? '-'}</p>
                   <p>Z: {resolvedWarehousePlace.layer ?? '-'}</p>
                   <p>Position: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
+                  {editing && (
+                    <p className="text-xs text-muted-foreground pt-1">
+                      Change this in Warehouse inventory places.
+                    </p>
+                  )}
                 </div>
               ) : (
                 <p className="text-sm text-muted-foreground">—</p>

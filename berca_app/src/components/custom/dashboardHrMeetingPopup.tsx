@@ -7,7 +7,7 @@ import {CalendarClock, MapPin, Timer, UserRound, X} from 'lucide-react'
 import type {HrEvaluationMeeting} from '@/types/hrEvaluationMeeting'
 
 const HR_POPUP_SESSION_KEY = 'dashboard-hr-meeting-popup-seen'
-const ENABLE_SESSION_GATING = true
+const ENABLE_SESSION_GATING = false
 
 interface DashboardHrMeetingPopupProps {
   meetings: HrEvaluationMeeting[]

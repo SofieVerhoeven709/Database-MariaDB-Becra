@@ -177,7 +177,7 @@ export function HrScheduleMeetingTable({meetings, employees, departmentId}: HrSc
               <TableHead>
                 <span className="inline-flex items-center gap-2">
                   <UserRound className="h-4 w-4" />
-                  Wie?
+                  Who?
                 </span>
               </TableHead>
               <TableHead>
@@ -186,7 +186,7 @@ export function HrScheduleMeetingTable({meetings, employees, departmentId}: HrSc
                   Type of meeting
                 </span>
               </TableHead>
-              <TableHead>Datum</TableHead>
+              <TableHead>Date</TableHead>
               <TableHead>
                 <span className="inline-flex items-center gap-2">
                   <Timer className="h-4 w-4" />

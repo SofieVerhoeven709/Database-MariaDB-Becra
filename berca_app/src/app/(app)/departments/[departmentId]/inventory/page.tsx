@@ -1,15 +1,38 @@
 import {getInventory} from '@/dal/inventory'
 import {getMaterials} from '@/dal/materials'
-import {InventoryTable} from '@/components/custom/inventoryTable'
+import {getWarehousePlaces} from '@/dal/warehousePlace'
+import {InventoryManagementTable} from '../../../../../components/custom/inventoryManagementTable'
+
+function formatInventoryPlaceLocation(place: {
+  abbreviation: string | null
+  place: string | null
+  shelf: string | null
+  column: string | null
+  layer: string | null
+  layerPlace: string | null
+}) {
+  const location = [place.place, place.shelf, place.column, place.layer, place.layerPlace].filter(Boolean).join(' - ')
+  return location || place.abbreviation || 'Unassigned'
+}
 
 export default async function InventoryPage() {
-  const [inventory, materials] = await Promise.all([getInventory(), getMaterials()])
+  const [inventory, materials, warehousePlaces] = await Promise.all([
+    getInventory({includeDeleted: true}),
+    getMaterials(),
+    getWarehousePlaces(),
+  ])
+
+  const locationByBeNumber = new Map(
+    warehousePlaces
+      .filter(place => typeof place.beNumber === 'string' && place.beNumber.trim().length > 0)
+      .map(place => [place.beNumber as string, formatInventoryPlaceLocation(place)]),
+  )
 
   const mappedItems = inventory.map(i => ({
     id: i.id,
     materialId: i.materialId,
     beNumber: i.beNumber,
-    place: i.place,
+    place: locationByBeNumber.get(i.beNumber) ?? 'Unassigned',
     shortDescription: i.shortDescription,
     longDescription: i.longDescription,
     serialNumber: i.serialNumber,
@@ -44,7 +67,7 @@ export default async function InventoryPage() {
           Monitor and control warehouse stock levels, locations, and validity.
         </p>
       </div>
-      <InventoryTable initialItems={mappedItems} materials={mappedMaterials} />
+      <InventoryManagementTable initialItems={mappedItems} materials={mappedMaterials} />
     </div>
   )
 }

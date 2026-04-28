@@ -31,6 +31,15 @@ const parentBeNumbersSchema = z.preprocess(
   z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number can only contain numbers')).default([]),
 )
 
+const supplierCompanyIdsSchema = z.preprocess(
+  val => {
+    if (Array.isArray(val)) return val
+    if (val == null || val === '') return []
+    return [val]
+  },
+  z.array(z.string().uuid()).default([]),
+)
+
 const nullableUuidSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
   z.string().uuid().nullable().optional(),
@@ -67,6 +76,7 @@ const materialSchemaBase = z.object({
   shortDescription: z.string().min(1).max(255),
   longDescription: z.string().nullable().optional(),
   supplierCompanyId: nullableUuidSchema,
+  supplierCompanyIds: supplierCompanyIdsSchema,
   parentBeNumbers: parentBeNumbersSchema,
   brandName: z.string().max(255).nullable().optional(),
   warehousePlace: nullableUuidSchema,

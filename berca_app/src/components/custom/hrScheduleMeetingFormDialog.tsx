@@ -156,7 +156,7 @@ export function HrScheduleMeetingFormDialog({
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label>Endtime *</Label>
+              <Label>Endtime</Label>
               <Input
                 type="time"
                 value={form.endTime}

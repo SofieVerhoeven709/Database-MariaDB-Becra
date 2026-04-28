@@ -1929,6 +1929,7 @@ CREATE TABLE
         closed BOOLEAN NOT NULL DEFAULT 0,
         materialClosed BOOLEAN NOT NULL DEFAULT 0,
         readyForPurchase BOOLEAN NOT NULL DEFAULT 0,
+        canCopy BOOLEAN NOT NULL DEFAULT 0,
         deleted BOOLEAN NOT NULL DEFAULT 0,
         createdBy CHAR(36) NOT NULL,
         projectId CHAR(36) NOT NULL,
@@ -2429,19 +2430,3 @@ ALTER TABLE InvoiceOut ADD COLUMN IF NOT EXISTS boqId CHAR(36) NULL;
 ALTER TABLE InvoiceOut
     ADD CONSTRAINT fk_invoiceout_boq
     FOREIGN KEY (boqId) REFERENCES BillOfQuantities (id) ON DELETE RESTRICT;
-    IF NOT EXISTS IncomingDeliveryLineAllocation (
-        id CHAR(36) NOT NULL PRIMARY KEY,
-        incomingDeliveryLineId CHAR(36) NOT NULL,
-        materialDemandSourceId CHAR(36) NOT NULL,
-        allocatedQty INT NOT NULL,
-        createdAt DATETIME NOT NULL,
-        createdBy CHAR(36) NOT NULL,
-        deleted BOOLEAN NOT NULL DEFAULT 0,
-        deletedAt DATETIME,
-        deletedBy CHAR(36),
-        FOREIGN KEY (incomingDeliveryLineId) REFERENCES IncomingDeliveryLine (id) ON DELETE CASCADE,
-        FOREIGN KEY (materialDemandSourceId) REFERENCES MaterialDemandSource (id) ON DELETE RESTRICT,
-        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-        UNIQUE (incomingDeliveryLineId, materialDemandSourceId)
-    ) ENGINE = InnoDB;

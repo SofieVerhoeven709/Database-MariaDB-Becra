@@ -8727,6 +8727,7 @@ export const RecruitmentApplicantScalarFieldEnum = {
   retained: 'retained',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -8752,6 +8753,7 @@ export const RecruitmentVacancyScalarFieldEnum = {
   publishRecruitmentAgencies: 'publishRecruitmentAgencies',
   otherPublication: 'otherPublication',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',

@@ -36,6 +36,8 @@ interface ParentPartOption {
   shortDescription: string
 }
 
+type MaterialDialogMaterial = MappedMaterial & {warehousePlace?: string | null}
+
 type MaterialDocumentFlags = {
   hasAtex: boolean
   hasCe: boolean
@@ -51,6 +53,7 @@ type MaterialDocumentFlags = {
 type MaterialFormState = Partial<MappedMaterial> &
   MaterialDocumentFlags & {
     id: string
+    warehousePlace: string | null
     isSerialTracked: boolean
     isParentPart: boolean
   }
@@ -58,7 +61,7 @@ type MaterialFormState = Partial<MappedMaterial> &
 interface MaterialFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  material: MappedMaterial | null
+  material: MaterialDialogMaterial | null
   mode?: 'create' | 'edit' | 'duplicate'
   materialGroups: MaterialGroup[]
   units: Unit[]
@@ -93,6 +96,16 @@ function formatSupplierLabel(company: SupplierCompanyOption): string {
   return `${company.name} (${company.number})`
 }
 
+function formatWarehousePlace(place: WarehousePlaceOption) {
+  return [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+    .filter(Boolean)
+    .join(' - ')
+}
+
+function getMaterialWarehousePlace(material: MaterialDialogMaterial): string | null {
+  return material.warehousePlace ?? null
+}
+
 const DOCUMENT_FLAGS: Array<{key: keyof MaterialDocumentFlags; label: string}> = [
   {key: 'hasAtex', label: 'Atex'},
   {key: 'hasCe', label: 'CE'},
@@ -117,7 +130,6 @@ const DEFAULT_DOCUMENT_FLAGS: MaterialDocumentFlags = {
   hasInsp: false,
 }
 
-
 const EMPTY_MATERIAL: MaterialFormState = {
   id: '',
   beNumber: '',
@@ -127,6 +139,8 @@ const EMPTY_MATERIAL: MaterialFormState = {
   longDescription: null,
   supplierCompanyId: null,
   supplierCompanyName: null,
+  supplierCompanyIds: [],
+  supplierCompanyNames: [],
   parentBeNumbers: [],
   brandName: null,
   warehousePlace: null,
@@ -167,8 +181,14 @@ export function MaterialFormDialog({
   const makeForm = (): MaterialFormState =>
     material
       ? resolvedMode === 'duplicate'
-        ? {...DEFAULT_DOCUMENT_FLAGS, ...material, id: crypto.randomUUID(), beNumber: ''}
-        : {...DEFAULT_DOCUMENT_FLAGS, ...material}
+        ? {
+            ...DEFAULT_DOCUMENT_FLAGS,
+            ...material,
+            id: crypto.randomUUID(),
+            beNumber: '',
+            warehousePlace: getMaterialWarehousePlace(material),
+          }
+        : {...DEFAULT_DOCUMENT_FLAGS, ...material, warehousePlace: getMaterialWarehousePlace(material)}
       : {...EMPTY_MATERIAL, id: crypto.randomUUID()}
 
   const getInitialNumberKind = (nextForm: MaterialFormState): NumberKind =>
@@ -194,8 +214,7 @@ export function MaterialFormDialog({
       setIsParentPartEnabled(nextForm.isParentPart ?? false)
       setHasParentParts((nextForm.parentBeNumbers ?? []).length > 0)
       setParentPartSearch('')
-      const selectedSupplier = supplierCompanies.find(company => company.id === nextForm.supplierCompanyId)
-      setSupplierSearch(selectedSupplier ? formatSupplierLabel(selectedSupplier) : '')
+      setSupplierSearch('')
       setIsSupplierDropdownOpen(false)
       setIsSerialTracked(nextForm.isSerialTracked ?? false)
       setNumberKind(getInitialNumberKind(nextForm))
@@ -250,7 +269,17 @@ export function MaterialFormDialog({
       return option.beNumber.toLowerCase().includes(q) || option.shortDescription.toLowerCase().includes(q)
     })
 
+  const selectedSupplierCompanyIds = form.supplierCompanyIds?.length
+    ? form.supplierCompanyIds
+    : form.supplierCompanyId
+      ? [form.supplierCompanyId]
+      : []
+  const selectedSupplierCompanies = selectedSupplierCompanyIds
+    .map(id => supplierCompanies.find(company => company.id === id))
+    .filter((company): company is SupplierCompanyOption => Boolean(company))
+
   const filteredSupplierCompanies = supplierCompanies.filter(company => {
+    if (selectedSupplierCompanyIds.includes(company.id)) return false
     if (!supplierSearch) return true
     const q = supplierSearch.toLowerCase()
     return (
@@ -260,9 +289,26 @@ export function MaterialFormDialog({
     )
   })
 
+  function addSupplierCompany(company: SupplierCompanyOption) {
+    const nextIds = Array.from(new Set([...selectedSupplierCompanyIds, company.id]))
+    update('supplierCompanyIds', nextIds)
+    update('supplierCompanyId', nextIds[0] ?? null)
+    setSupplierSearch('')
+    setIsSupplierDropdownOpen(false)
+  }
+
+  function removeSupplierCompany(companyId: string) {
+    const nextIds = selectedSupplierCompanyIds.filter(id => id !== companyId)
+    update('supplierCompanyIds', nextIds)
+    update('supplierCompanyId', nextIds[0] ?? null)
+  }
+
   const selectedGroupA = materialGroups.find(g => g.id === form.materialGroupIdA) ?? null
   const selectedGroupB = materialGroups.find(g => g.id === form.materialGroupIdB) ?? null
   const selectedGroupC = materialGroups.find(g => g.id === form.materialGroupIdC) ?? null
+  const resolvedWarehousePlace = form.warehousePlace
+    ? (warehousePlaces.find(place => place.id === form.warehousePlace) ?? null)
+    : null
 
   const buildUniqueGroupOptions = (
     predicate: (group: MaterialGroup) => boolean,
@@ -382,6 +428,8 @@ export function MaterialFormDialog({
             e.preventDefault()
             onSave({
               ...form,
+              supplierCompanyId: selectedSupplierCompanyIds[0] ?? null,
+              supplierCompanyIds: selectedSupplierCompanyIds,
               beNumber: numberKind === 'IOS' ? '' : normalizeMaterialNumber(form.beNumber, numberKind),
               numberType: numberKind,
               isParentPart: isParentPartEnabled,
@@ -621,25 +669,19 @@ export function MaterialFormDialog({
             </div>
           </div>
 
-          {/* Supplier Company */}
+          {/* Supplier Companies */}
           <div className="flex flex-col gap-2">
-            <Label className="text-xs text-muted-foreground">Supplier Company</Label>
+            <Label className="text-xs text-muted-foreground">Supplier Companies</Label>
             <div className="relative">
               <Input
                 className={inputStyles}
-                placeholder="Search suppliers by name or number"
+                placeholder="Search suppliers to add"
                 value={supplierSearch}
                 onFocus={() => setIsSupplierDropdownOpen(true)}
                 onBlur={() => setTimeout(() => setIsSupplierDropdownOpen(false), 120)}
                 onChange={e => {
-                  const next = e.target.value
-                  setSupplierSearch(next)
+                  setSupplierSearch(e.target.value)
                   setIsSupplierDropdownOpen(true)
-
-                  const selectedSupplier = supplierCompanies.find(company => company.id === form.supplierCompanyId)
-                  if (selectedSupplier && next !== formatSupplierLabel(selectedSupplier)) {
-                    update('supplierCompanyId', null)
-                  }
                 }}
               />
 
@@ -652,9 +694,7 @@ export function MaterialFormDialog({
                       className="w-full px-3 py-2 text-left text-sm hover:bg-secondary"
                       onMouseDown={e => {
                         e.preventDefault()
-                        update('supplierCompanyId', company.id)
-                        setSupplierSearch(formatSupplierLabel(company))
-                        setIsSupplierDropdownOpen(false)
+                        addSupplierCompany(company)
                       }}>
                       {formatSupplierLabel(company)}
                     </button>
@@ -667,26 +707,40 @@ export function MaterialFormDialog({
             ) : isSupplierDropdownOpen && supplierSearch.trim().length > 0 && filteredSupplierCompanies.length === 0 ? (
               <p className="text-xs text-muted-foreground">No suppliers match your search.</p>
             ) : null}
+            {selectedSupplierCompanies.length > 0 ? (
+              <div className="rounded-md border border-border bg-secondary/20 overflow-hidden">
+                {selectedSupplierCompanies.map((company, index) => (
+                  <div
+                    key={company.id}
+                    className="flex items-center justify-between gap-3 border-b border-border px-3 py-2 last:border-b-0">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm">{formatSupplierLabel(company)}</p>
+                      {index === 0 && <p className="text-xs text-muted-foreground">Preferred supplier</p>}
+                    </div>
+                    <Button type="button" size="sm" variant="ghost" onClick={() => removeSupplierCompany(company.id)}>
+                      Remove
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-xs text-muted-foreground">No suppliers selected.</p>
+            )}
           </div>
 
           {/*Row 6: WarehousePlace */}
           <div className="flex flex-col gap-2">
             <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
-            <Select
-              value={form.warehousePlace ?? '__none__'}
-              onValueChange={value => update('warehousePlace', value === '__none__' ? null : value)}>
-              <SelectTrigger className={inputStyles}>
-                <SelectValue placeholder="Select warehouse place..." />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="__none__">None</SelectItem>
-                {warehousePlaces.map(place => (
-                  <SelectItem key={place.id} value={place.id}>
-                    {place.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="rounded-md border border-border bg-secondary/40 px-3 py-2 text-sm">
+              {resolvedWarehousePlace ? (
+                <div className="space-y-0.5">
+                  <p>{formatWarehousePlace(resolvedWarehousePlace) || resolvedWarehousePlace.label}</p>
+                  <p className="text-xs text-muted-foreground">Change this in Warehouse inventory places.</p>
+                </div>
+              ) : (
+                <p className="text-muted-foreground">—</p>
+              )}
+            </div>
           </div>
 
           {/* Parent Parts Button */}

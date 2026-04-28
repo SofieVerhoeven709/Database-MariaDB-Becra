@@ -58,6 +58,8 @@ interface ParentPartOption {
   shortDescription: string
 }
 
+type MaterialWithWarehousePlace = MappedMaterial & {warehousePlace: string | null}
+
 type SortField =
   | 'beNumber'
   | 'name'
@@ -145,8 +147,12 @@ function escapeCsvValue(value: string) {
   return normalized
 }
 
+function getMaterialWarehousePlace(material: MaterialWithWarehousePlace): string | null {
+  return material.warehousePlace
+}
+
 interface MaterialTableProps {
-  initialMaterials: MappedMaterial[]
+  initialMaterials: MaterialWithWarehousePlace[]
   materialGroups: MaterialGroup[]
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
@@ -183,7 +189,7 @@ export function MaterialTable({
   const [filterDocs, setFilterDocs] = useState<FilterDocs>('all')
 
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
+  const [editingMaterial, setEditingMaterial] = useState<MaterialWithWarehousePlace | null>(null)
   const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
@@ -323,20 +329,20 @@ export function MaterialTable({
     }))
   }, [materialGroups, filterMaterialGroupA, filterMaterialGroupB, filterMaterialGroupC])
 
-  function getSortValue(material: MappedMaterial, field: SortField): string {
+  function getSortValue(material: MaterialWithWarehousePlace, field: SortField): string {
     switch (field) {
       case 'warehouseAbbreviation':
-        return getWarehousePart(material.warehousePlace, 'abbreviation')
+        return getWarehousePart(getMaterialWarehousePlace(material), 'abbreviation')
       case 'warehousePlace':
-        return getWarehousePart(material.warehousePlace, 'place')
+        return getWarehousePart(getMaterialWarehousePlace(material), 'place')
       case 'warehouseShelf':
-        return getWarehousePart(material.warehousePlace, 'shelf')
+        return getWarehousePart(getMaterialWarehousePlace(material), 'shelf')
       case 'warehouseColumn':
-        return getWarehousePart(material.warehousePlace, 'column')
+        return getWarehousePart(getMaterialWarehousePlace(material), 'column')
       case 'warehouseLayer':
-        return getWarehousePart(material.warehousePlace, 'layer')
+        return getWarehousePart(getMaterialWarehousePlace(material), 'layer')
       case 'warehouseLayerPlace':
-        return getWarehousePart(material.warehousePlace, 'layerPlace')
+        return getWarehousePart(getMaterialWarehousePlace(material), 'layerPlace')
       case 'hasAtex':
       case 'hasCe':
       case 'hasRohs':
@@ -395,7 +401,7 @@ export function MaterialTable({
         m.beNumber.toLowerCase().includes(q) ||
         (m.name ?? '').toLowerCase().includes(q) ||
         m.shortDescription.toLowerCase().includes(q) ||
-        resolveMaterialPlace(m.warehousePlace).toLowerCase().includes(q) ||
+        resolveMaterialPlace(getMaterialWarehousePlace(m)).toLowerCase().includes(q) ||
         (m.brandName ?? '').toLowerCase().includes(q) ||
         m.materialGroupLabel.toLowerCase().includes(q) ||
         m.materialGroupLabelA.toLowerCase().includes(q) ||
@@ -404,7 +410,8 @@ export function MaterialTable({
         m.materialGroupLabelD.toLowerCase().includes(q) ||
         m.unitName.toLowerCase().includes(q) ||
         m.parentBeNumbers.some(parent => parent.toLowerCase().includes(q)) ||
-        (m.supplierCompanyName ?? '').toLowerCase().includes(q)
+        (m.supplierCompanyName ?? '').toLowerCase().includes(q) ||
+        m.supplierCompanyNames.some(supplier => supplier.toLowerCase().includes(q))
       )
     })
     .sort((a, b) => {
@@ -433,9 +440,6 @@ export function MaterialTable({
       'Long Lead',
       'Serial Tracked',
       ...MATERIAL_DOCUMENT_FLAGS.map(flag => flag.label),
-      'Abbr',
-      'Warehouse',
-      'Shelf',
     ]
 
     const lines = filtered.map(material => {
@@ -444,7 +448,9 @@ export function MaterialTable({
         material.name ?? '',
         material.shortDescription,
         material.brandName ?? '',
-        material.supplierCompanyName ?? '',
+        material.supplierCompanyNames.length > 0
+          ? material.supplierCompanyNames.join(' | ')
+          : (material.supplierCompanyName ?? ''),
         material.materialGroupLabelA || '',
         material.materialGroupLabelB || '',
         material.materialGroupLabelC || '',
@@ -460,9 +466,9 @@ export function MaterialTable({
       const documentFlags = MATERIAL_DOCUMENT_FLAGS.map(flag => (material[flag.key] ? 'Yes' : 'No'))
 
       const warehouseValues = [
-        getWarehousePart(material.warehousePlace, 'abbreviation') || '',
-        getWarehousePart(material.warehousePlace, 'place') || '',
-        getWarehousePart(material.warehousePlace, 'shelf') || '',
+        getWarehousePart(getMaterialWarehousePlace(material), 'abbreviation') || '',
+        getWarehousePart(getMaterialWarehousePlace(material), 'place') || '',
+        getWarehousePart(getMaterialWarehousePlace(material), 'shelf') || '',
       ]
 
       return [...base, ...documentFlags, ...warehouseValues].map(value => escapeCsvValue(String(value))).join(',')
@@ -495,9 +501,9 @@ export function MaterialTable({
         'shortDescription',
         'longDescription',
         'supplierCompanyId',
+        'supplierCompanyIds',
         'parentBeNumbers',
         'brandName',
-        'warehousePlace',
         'rejected',
         'partApproved',
         'longLeadTime',
@@ -527,7 +533,7 @@ export function MaterialTable({
         'longDescription',
         'brandName',
         'supplierCompanyId',
-        'warehousePlace',
+        'supplierCompanyIds',
         'leadTimeValue',
         'leadTimeUnit',
         'materialGroupIdB',
@@ -830,33 +836,32 @@ export function MaterialTable({
                 Actions
               </TableHead>
 
-              <TableHead
+              {/*<TableHead
                 className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
                 onClick={() => handleSort('warehouseAbbreviation')}>
                 Abbr
                 <SortIcon field="warehouseAbbreviation" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-
-              <TableHead
+              </TableHead>*/}
+              {/*<TableHead
                 className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
                 onClick={() => handleSort('warehousePlace')}>
                 Warehouse
                 <SortIcon field="warehousePlace" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
+              </TableHead>*/}
 
-              <TableHead
+              {/* <TableHead
                 className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
                 onClick={() => handleSort('warehouseShelf')}>
                 Shelf
                 <SortIcon field="warehouseShelf" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
+              </TableHead>*/}
             </TableRow>
           </TableHeader>
 
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 5} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={columns.length + 2} className="text-center text-muted-foreground py-10">
                   No materials found
                 </TableCell>
               </TableRow>
@@ -881,7 +886,11 @@ export function MaterialTable({
                   </TableCell>
 
                   <TableCell className="text-sm">
-                    {m.supplierCompanyName ?? <span className="text-muted-foreground">—</span>}
+                    {m.supplierCompanyNames.length > 0 ? (
+                      <span title={m.supplierCompanyNames.join(', ')}>{m.supplierCompanyNames.join(', ')}</span>
+                    ) : (
+                      (m.supplierCompanyName ?? <span className="text-muted-foreground">—</span>)
+                    )}
                   </TableCell>
 
                   <TableCell className="text-sm">{m.materialGroupLabelA || '—'}</TableCell>
@@ -1027,10 +1036,16 @@ export function MaterialTable({
                       )}
                     </div>
                   </TableCell>
-
-                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'abbreviation') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'place') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'shelf') || '—'}</TableCell>
+                  {/*
+                  <TableCell className="text-sm">
+                    {getWarehousePart(getMaterialWarehousePlace(m), 'abbreviation') || '—'}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {getWarehousePart(getMaterialWarehousePlace(m), 'place') || '—'}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {getWarehousePart(getMaterialWarehousePlace(m), 'shelf') || '—'}
+                  </TableCell>*/}
                 </TableRow>
               ))
             )}

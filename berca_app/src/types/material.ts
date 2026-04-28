@@ -7,9 +7,11 @@ export interface MappedMaterial {
   longDescription: string | null
   supplierCompanyId: string | null
   supplierCompanyName: string | null
+  supplierCompanyIds: string[]
+  supplierCompanyNames: string[]
   parentBeNumbers: string[]
   brandName: string | null
-  warehousePlace: string | null
+  inventoryPlace: string | null
   rejected: boolean | null
   partApproved: boolean
   longLeadTime: boolean

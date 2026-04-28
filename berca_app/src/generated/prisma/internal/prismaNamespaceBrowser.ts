@@ -1916,6 +1916,7 @@ export const ProjectBOMScalarFieldEnum = {
   closed: 'closed',
   materialClosed: 'materialClosed',
   readyForPurchase: 'readyForPurchase',
+  canCopy: 'canCopy',
   deleted: 'deleted',
   createdBy: 'createdBy',
   projectId: 'projectId',

@@ -346,6 +346,7 @@ export async function createMaterial(data: {
   shortDescription: string
   longDescription?: string | null
   supplierCompanyId?: string | null
+  supplierCompanyIds?: string[]
   parentBeNumbers?: string[]
   brandName?: string | null
   warehousePlace?: string | null
@@ -375,6 +376,7 @@ export async function createMaterial(data: {
 }) {
   const {
     supplierCompanyId,
+    supplierCompanyIds,
     parentBeNumbers = [],
     warehousePlace,
     leadTimeValue,
@@ -395,6 +397,8 @@ export async function createMaterial(data: {
   let uniqueParentBeNumbers = Array.from(new Set(parentBeNumbers)).filter(
     parentBeNumber => parentBeNumber !== data.beNumber,
   )
+  const uniqueSupplierCompanyIds = Array.from(new Set([...(supplierCompanyIds ?? []), supplierCompanyId].filter(Boolean)))
+  const preferredSupplierCompanyId = supplierCompanyId ?? uniqueSupplierCompanyIds[0] ?? null
 
   if (isParentPart === false) {
     uniqueParentBeNumbers = []
@@ -417,17 +421,17 @@ export async function createMaterial(data: {
           hasBdoc,
           hasInsp,
         }),
-        preferredSupplierCompanyId: supplierCompanyId ?? null,
+        preferredSupplierCompanyId,
         warehousePlaceId: warehousePlace ?? null,
         isSerialTracked: data.isSerialTracked ?? false,
         MaterialSupplier:
-          supplierCompanyId
+          uniqueSupplierCompanyIds.length > 0
             ? {
-                create: {
+                create: uniqueSupplierCompanyIds.map(companyId => ({
                   id: randomUUID(),
-                  companyId: supplierCompanyId,
-                  isPreferred: true,
-                },
+                  companyId,
+                  isPreferred: companyId === preferredSupplierCompanyId,
+                })),
               }
             : undefined,
         MaterialStructure_MaterialStructure_materialIdToMaterial:
@@ -509,6 +513,7 @@ export async function updateMaterial(
     shortDescription?: string
     longDescription?: string | null
     supplierCompanyId?: string | null
+    supplierCompanyIds?: string[]
     parentBeNumbers?: string[]
     brandName?: string | null
     warehousePlace?: string | null
@@ -537,6 +542,7 @@ export async function updateMaterial(
 ) {
   const {
     supplierCompanyId,
+    supplierCompanyIds,
     parentBeNumbers,
     warehousePlace,
     leadTimeValue,
@@ -555,6 +561,14 @@ export async function updateMaterial(
   } = data
 
   let uniqueParentBeNumbers = parentBeNumbers ? Array.from(new Set(parentBeNumbers)) : undefined
+  const uniqueSupplierCompanyIds =
+    supplierCompanyIds === undefined
+      ? undefined
+      : Array.from(new Set([...supplierCompanyIds, supplierCompanyId].filter(Boolean)))
+  const preferredSupplierCompanyId =
+    supplierCompanyId === undefined
+      ? uniqueSupplierCompanyIds?.[0]
+      : (supplierCompanyId ?? uniqueSupplierCompanyIds?.[0] ?? null)
 
   if (isParentPart === false) {
     uniqueParentBeNumbers = []
@@ -597,20 +611,20 @@ export async function updateMaterial(
           hasBdoc,
           hasInsp,
         }),
-        preferredSupplierCompanyId: supplierCompanyId,
+        preferredSupplierCompanyId,
         warehousePlaceId: warehousePlace !== undefined ? warehousePlace : undefined,
         MaterialSupplier:
-          supplierCompanyId === undefined
+          uniqueSupplierCompanyIds === undefined && supplierCompanyId === undefined
             ? undefined
             : {
                 deleteMany: {},
-                create: supplierCompanyId
-                  ? {
+                create: (uniqueSupplierCompanyIds ?? [])
+                  .filter((companyId): companyId is string => Boolean(companyId))
+                  .map(companyId => ({
                       id: randomUUID(),
-                      companyId: supplierCompanyId,
-                      isPreferred: true,
-                    }
-                  : undefined,
+                      companyId,
+                      isPreferred: companyId === preferredSupplierCompanyId,
+                    })),
               },
         MaterialStructure_MaterialStructure_materialIdToMaterial:
           uniqueParentBeNumbers === undefined

@@ -96,7 +96,7 @@ function MaterialNumberPicker({
             </div>
           ))}
           {filtered.length === 0 && (
-            <div className="px-2 py-1.5 text-xs text-muted-foreground">Geen materiaal gevonden</div>
+            <div className="px-2 py-1.5 text-xs text-muted-foreground">No materials found.</div>
           )}
         </div>
       )}
@@ -110,7 +110,7 @@ const EMPTY: Partial<MappedInventory> & {id: string} = {
   id: '',
   materialId: '',
   beNumber: '',
-  place: '',
+  place: 'Unassigned',
   shortDescription: '',
   longDescription: '',
   serialNumber: '',
@@ -121,7 +121,7 @@ const EMPTY: Partial<MappedInventory> & {id: string} = {
   valid: true,
   noValidDate: today,
 }
-export function InventoryFormDialog({open, onOpenChange, item, materials, onSave}: InventoryFormDialogProps) {
+export function InventoryManagementFormDialog({open, onOpenChange, item, materials, onSave}: InventoryFormDialogProps) {
   const isEditing = item !== null
   const makeForm = (): Partial<MappedInventory> & {id: string} =>
     item ? {...item, noValidDate: item.noValidDate?.split('T')[0] ?? today} : {...EMPTY, id: crypto.randomUUID()}
@@ -187,7 +187,7 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="inv-serie" className="text-xs text-muted-foreground">
-                Serial Number *
+                Serial Number
               </Label>
               <Input
                 id="inv-serie"
@@ -195,7 +195,6 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
                 value={form.serialNumber ?? ''}
                 onChange={e => update('serialNumber', e.target.value)}
                 placeholder="SN-0001"
-                required
               />
             </div>
           </div>
@@ -229,17 +228,11 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
           </div>
           {/* Place */}
           <div className="flex flex-col gap-2">
-            <Label htmlFor="inv-place" className="text-xs text-muted-foreground">
-              Storage Place *
-            </Label>
-            <Input
-              id="inv-place"
-              className={inputStyles}
-              value={form.place ?? ''}
-              onChange={e => update('place', e.target.value)}
-              placeholder="e.g. Shelf A3"
-              required
-            />
+            <Label className="text-xs text-muted-foreground">Storage Place</Label>
+            <div className="flex min-h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground">
+              {form.place || 'Unassigned'}
+            </div>
+            <p className="text-xs text-muted-foreground">Change this in Warehouse inventory places.</p>
           </div>
           {/* Quantities */}
           <div className="grid grid-cols-3 gap-4">

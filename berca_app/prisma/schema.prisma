@@ -2594,6 +2594,7 @@ model ProjectBOM {
   closed                                  Boolean               @default(false)
   materialClosed                          Boolean               @default(false)
   readyForPurchase                        Boolean               @default(false)
+  canCopy                                 Boolean               @default(false)
   deleted                                 Boolean               @default(false)
   createdBy                               String                @db.Char(36)
   projectId                               String                @db.Char(36)

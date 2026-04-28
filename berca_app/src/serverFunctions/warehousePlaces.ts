@@ -10,6 +10,8 @@ import {
 } from '@/schemas/warehousePlaceSchemas'
 
 const REVALIDATE = '/departments/[departmentId]/place'
+const REVALIDATE_MATERIAL = '/departments/engineering/material'
+const REVALIDATE_INVENTORY = '/departments/warehouse/inventory'
 
 export const createWarehousePlaceAction = protectedServerFunction({
   schema: createWarehousePlaceSchema,
@@ -24,6 +26,8 @@ export const createWarehousePlaceAction = protectedServerFunction({
     })
     logger.info(`WarehousePlace created: ${item.id}`)
     revalidatePath(REVALIDATE, 'page')
+    revalidatePath(REVALIDATE_MATERIAL)
+    revalidatePath(REVALIDATE_INVENTORY)
   },
 })
 
@@ -38,6 +42,8 @@ export const updateWarehousePlaceAction = protectedServerFunction({
     })
     logger.info(`WarehousePlace updated: ${item.id}`)
     revalidatePath(REVALIDATE, 'page')
+    revalidatePath(REVALIDATE_MATERIAL)
+    revalidatePath(REVALIDATE_INVENTORY)
   },
 })
 
@@ -48,5 +54,7 @@ export const deleteWarehousePlaceAction = protectedServerFunction({
     await softDeleteWarehousePlace(data.id, profile.id)
     logger.info(`WarehousePlace soft-deleted: ${data.id}`)
     revalidatePath(REVALIDATE, 'page')
+    revalidatePath(REVALIDATE_MATERIAL)
+    revalidatePath(REVALIDATE_INVENTORY)
   },
 })

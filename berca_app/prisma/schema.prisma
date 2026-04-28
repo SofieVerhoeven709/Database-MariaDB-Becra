@@ -2939,6 +2939,31 @@ model IncomingDeliveryLineAllocation {
   @@index([materialDemandSourceId], map: "materialDemandSourceId")
 }
 
+model ScheduleMeeting {
+  id                                            String    @id @db.Char(36)
+  employeeId                                    String    @db.Char(36)
+  conversationType                              String    @db.VarChar(100)
+  startAt                                       DateTime  @db.DateTime(0)
+  endAt                                         DateTime  @db.DateTime(0)
+  place                                         String?   @db.VarChar(255)
+  status                                        String    @default("planned") @db.VarChar(20)
+  notes                                         String?   @db.Text
+  completedAt                                   DateTime? @db.DateTime(0)
+  createdAt                                     DateTime  @db.DateTime(0)
+  createdBy                                     String    @db.Char(36)
+  updatedAt                                     DateTime? @db.DateTime(0)
+  deleted                                       Boolean   @default(false)
+  deletedAt                                     DateTime? @db.DateTime(0)
+  deletedBy                                     String?   @db.Char(36)
+  Employee_ScheduleMeeting_deletedByToEmployee  Employee? @relation("ScheduleMeeting_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_1")
+  Employee_ScheduleMeeting_createdByToEmployee  Employee  @relation("ScheduleMeeting_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_2")
+  Employee_ScheduleMeeting_employeeIdToEmployee Employee  @relation("ScheduleMeeting_employeeIdToEmployee", fields: [employeeId], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_3")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([employeeId], map: "employeeId")
+}
+
 model BillOfQuantities {
   id                                             String                   @id @db.Char(36)
   boqNumber                                      String                   @unique(map: "boqNumber") @db.VarChar(255)
@@ -3045,6 +3070,20 @@ model BoqContact {
   @@index([contactId], map: "contactId")
 }
 
+model ProjectEmployee {
+  id             String   @id @db.Char(36)
+  employeeId     String   @db.Char(36)
+  projectId      String   @db.Char(36)
+  additionalInfo String?  @db.VarChar(255)
+  manager        Boolean  @default(false)
+  supervisor     Boolean  @default(false)
+  Employee       Employee @relation(fields: [employeeId], references: [id], onUpdate: Restrict, map: "ProjectEmployee_ibfk_1")
+  Project        Project  @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "ProjectEmployee_ibfk_2")
+
+  @@index([employeeId], map: "employeeId")
+  @@index([projectId], map: "projectId")
+}
+
 model QuoteSupplierMiscLine {
   id              String        @id @db.Char(36)
   quoteSupplierId String        @db.Char(36)
@@ -3081,44 +3120,6 @@ model WorkOrderBoQ {
   @@index([billOfQuantitiesId], map: "billOfQuantitiesId")
   @@index([deletedBy], map: "deletedBy")
   @@index([workOrderId], map: "workOrderId")
-}
-
-model ProjectEmployee {
-  id             String   @id @db.Char(36)
-  employeeId     String   @db.Char(36)
-  projectId      String   @db.Char(36)
-  additionalInfo String?  @db.VarChar(255)
-  manager        Boolean  @default(false)
-  supervisor     Boolean  @default(false)
-  Employee       Employee @relation(fields: [employeeId], references: [id], onUpdate: Restrict, map: "ProjectEmployee_ibfk_1")
-  Project        Project  @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "ProjectEmployee_ibfk_2")
-
-  @@index([employeeId], map: "employeeId")
-  @@index([projectId], map: "projectId")
-}
-model ScheduleMeeting {
-  id                                            String    @id @db.Char(36)
-  employeeId                                    String    @db.Char(36)
-  conversationType                              String    @db.VarChar(100)
-  startAt                                       DateTime  @db.DateTime(0)
-  endAt                                         DateTime  @db.DateTime(0)
-  place                                         String?   @db.VarChar(255)
-  status                                        String    @default("planned") @db.VarChar(20)
-  notes                                         String?   @db.Text
-  completedAt                                   DateTime? @db.DateTime(0)
-  createdAt                                     DateTime  @db.DateTime(0)
-  createdBy                                     String    @db.Char(36)
-  updatedAt                                     DateTime? @db.DateTime(0)
-  deleted                                       Boolean   @default(false)
-  deletedAt                                     DateTime? @db.DateTime(0)
-  deletedBy                                     String?   @db.Char(36)
-  Employee_ScheduleMeeting_deletedByToEmployee  Employee? @relation("ScheduleMeeting_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_1")
-  Employee_ScheduleMeeting_createdByToEmployee  Employee  @relation("ScheduleMeeting_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_2")
-  Employee_ScheduleMeeting_employeeIdToEmployee Employee  @relation("ScheduleMeeting_employeeIdToEmployee", fields: [employeeId], references: [id], onUpdate: Restrict, map: "ScheduleMeeting_ibfk_3")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "deletedBy")
-  @@index([employeeId], map: "employeeId")
 }
 
 enum MaterialSerialTrack_inspectionIntervalUnit {

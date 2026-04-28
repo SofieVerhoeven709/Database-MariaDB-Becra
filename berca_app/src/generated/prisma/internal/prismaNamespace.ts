@@ -499,15 +499,16 @@ export const ModelName = {
   IncomingDelivery: 'IncomingDelivery',
   IncomingDeliveryLine: 'IncomingDeliveryLine',
   IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation',
+  ScheduleMeeting: 'ScheduleMeeting',
   BillOfQuantities: 'BillOfQuantities',
   BillOfQuantitiesSentType: 'BillOfQuantitiesSentType',
   BillOfQuantitiesStatus: 'BillOfQuantitiesStatus',
   BillOfQuantitiesType: 'BillOfQuantitiesType',
   BoqContact: 'BoqContact',
+  ProjectEmployee: 'ProjectEmployee',
   QuoteSupplierMiscLine: 'QuoteSupplierMiscLine',
   VisibilityForDepartment: 'VisibilityForDepartment',
-  WorkOrderBoQ: 'WorkOrderBoQ',
-  ProjectEmployee: 'ProjectEmployee'
+  WorkOrderBoQ: 'WorkOrderBoQ'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -523,7 +524,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ" | "projectEmployee"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -7721,6 +7722,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ScheduleMeeting: {
+      payload: Prisma.$ScheduleMeetingPayload<ExtArgs>
+      fields: Prisma.ScheduleMeetingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ScheduleMeetingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ScheduleMeetingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        findFirst: {
+          args: Prisma.ScheduleMeetingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ScheduleMeetingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        findMany: {
+          args: Prisma.ScheduleMeetingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>[]
+        }
+        create: {
+          args: Prisma.ScheduleMeetingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        createMany: {
+          args: Prisma.ScheduleMeetingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ScheduleMeetingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        update: {
+          args: Prisma.ScheduleMeetingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        deleteMany: {
+          args: Prisma.ScheduleMeetingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ScheduleMeetingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ScheduleMeetingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduleMeetingPayload>
+        }
+        aggregate: {
+          args: Prisma.ScheduleMeetingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateScheduleMeeting>
+        }
+        groupBy: {
+          args: Prisma.ScheduleMeetingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScheduleMeetingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ScheduleMeetingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScheduleMeetingCountAggregateOutputType> | number
+        }
+      }
+    }
     BillOfQuantities: {
       payload: Prisma.$BillOfQuantitiesPayload<ExtArgs>
       fields: Prisma.BillOfQuantitiesFieldRefs
@@ -8051,6 +8118,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProjectEmployee: {
+      payload: Prisma.$ProjectEmployeePayload<ExtArgs>
+      fields: Prisma.ProjectEmployeeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectEmployeeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectEmployeeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectEmployeeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectEmployeeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        findMany: {
+          args: Prisma.ProjectEmployeeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>[]
+        }
+        create: {
+          args: Prisma.ProjectEmployeeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        createMany: {
+          args: Prisma.ProjectEmployeeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ProjectEmployeeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        update: {
+          args: Prisma.ProjectEmployeeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectEmployeeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectEmployeeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ProjectEmployeeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectEmployeeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectEmployee>
+        }
+        groupBy: {
+          args: Prisma.ProjectEmployeeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectEmployeeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectEmployeeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectEmployeeCountAggregateOutputType> | number
+        }
+      }
+    }
     QuoteSupplierMiscLine: {
       payload: Prisma.$QuoteSupplierMiscLinePayload<ExtArgs>
       fields: Prisma.QuoteSupplierMiscLineFieldRefs
@@ -8246,72 +8379,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WorkOrderBoQCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WorkOrderBoQCountAggregateOutputType> | number
-        }
-      }
-    }
-    ProjectEmployee: {
-      payload: Prisma.$ProjectEmployeePayload<ExtArgs>
-      fields: Prisma.ProjectEmployeeFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ProjectEmployeeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ProjectEmployeeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        findFirst: {
-          args: Prisma.ProjectEmployeeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ProjectEmployeeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        findMany: {
-          args: Prisma.ProjectEmployeeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>[]
-        }
-        create: {
-          args: Prisma.ProjectEmployeeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        createMany: {
-          args: Prisma.ProjectEmployeeCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.ProjectEmployeeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        update: {
-          args: Prisma.ProjectEmployeeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        deleteMany: {
-          args: Prisma.ProjectEmployeeDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ProjectEmployeeUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.ProjectEmployeeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeePayload>
-        }
-        aggregate: {
-          args: Prisma.ProjectEmployeeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectEmployee>
-        }
-        groupBy: {
-          args: Prisma.ProjectEmployeeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProjectEmployeeGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ProjectEmployeeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProjectEmployeeCountAggregateOutputType> | number
         }
       }
     }
@@ -10325,6 +10392,27 @@ export const IncomingDeliveryLineAllocationScalarFieldEnum = {
 export type IncomingDeliveryLineAllocationScalarFieldEnum = (typeof IncomingDeliveryLineAllocationScalarFieldEnum)[keyof typeof IncomingDeliveryLineAllocationScalarFieldEnum]
 
 
+export const ScheduleMeetingScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingScalarFieldEnum = (typeof ScheduleMeetingScalarFieldEnum)[keyof typeof ScheduleMeetingScalarFieldEnum]
+
+
 export const BillOfQuantitiesScalarFieldEnum = {
   id: 'id',
   boqNumber: 'boqNumber',
@@ -10401,6 +10489,18 @@ export const BoqContactScalarFieldEnum = {
 export type BoqContactScalarFieldEnum = (typeof BoqContactScalarFieldEnum)[keyof typeof BoqContactScalarFieldEnum]
 
 
+export const ProjectEmployeeScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo',
+  manager: 'manager',
+  supervisor: 'supervisor'
+} as const
+
+export type ProjectEmployeeScalarFieldEnum = (typeof ProjectEmployeeScalarFieldEnum)[keyof typeof ProjectEmployeeScalarFieldEnum]
+
+
 export const QuoteSupplierMiscLineScalarFieldEnum = {
   id: 'id',
   quoteSupplierId: 'quoteSupplierId',
@@ -10431,18 +10531,6 @@ export const WorkOrderBoQScalarFieldEnum = {
 } as const
 
 export type WorkOrderBoQScalarFieldEnum = (typeof WorkOrderBoQScalarFieldEnum)[keyof typeof WorkOrderBoQScalarFieldEnum]
-
-
-export const ProjectEmployeeScalarFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  projectId: 'projectId',
-  additionalInfo: 'additionalInfo',
-  manager: 'manager',
-  supervisor: 'supervisor'
-} as const
-
-export type ProjectEmployeeScalarFieldEnum = (typeof ProjectEmployeeScalarFieldEnum)[keyof typeof ProjectEmployeeScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -11921,6 +12009,20 @@ export const IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = {
 export type IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum = (typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum)[keyof typeof IncomingDeliveryLineAllocationOrderByRelevanceFieldEnum]
 
 
+export const ScheduleMeetingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  conversationType: 'conversationType',
+  place: 'place',
+  status: 'status',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ScheduleMeetingOrderByRelevanceFieldEnum = (typeof ScheduleMeetingOrderByRelevanceFieldEnum)[keyof typeof ScheduleMeetingOrderByRelevanceFieldEnum]
+
+
 export const BillOfQuantitiesOrderByRelevanceFieldEnum = {
   id: 'id',
   boqNumber: 'boqNumber',
@@ -11979,6 +12081,16 @@ export const BoqContactOrderByRelevanceFieldEnum = {
 export type BoqContactOrderByRelevanceFieldEnum = (typeof BoqContactOrderByRelevanceFieldEnum)[keyof typeof BoqContactOrderByRelevanceFieldEnum]
 
 
+export const ProjectEmployeeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo'
+} as const
+
+export type ProjectEmployeeOrderByRelevanceFieldEnum = (typeof ProjectEmployeeOrderByRelevanceFieldEnum)[keyof typeof ProjectEmployeeOrderByRelevanceFieldEnum]
+
+
 export const QuoteSupplierMiscLineOrderByRelevanceFieldEnum = {
   id: 'id',
   quoteSupplierId: 'quoteSupplierId',
@@ -12005,16 +12117,6 @@ export const WorkOrderBoQOrderByRelevanceFieldEnum = {
 } as const
 
 export type WorkOrderBoQOrderByRelevanceFieldEnum = (typeof WorkOrderBoQOrderByRelevanceFieldEnum)[keyof typeof WorkOrderBoQOrderByRelevanceFieldEnum]
-
-
-export const ProjectEmployeeOrderByRelevanceFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  projectId: 'projectId',
-  additionalInfo: 'additionalInfo'
-} as const
-
-export type ProjectEmployeeOrderByRelevanceFieldEnum = (typeof ProjectEmployeeOrderByRelevanceFieldEnum)[keyof typeof ProjectEmployeeOrderByRelevanceFieldEnum]
 
 
 
@@ -12267,15 +12369,16 @@ export type GlobalOmitConfig = {
   incomingDelivery?: Prisma.IncomingDeliveryOmit
   incomingDeliveryLine?: Prisma.IncomingDeliveryLineOmit
   incomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationOmit
+  scheduleMeeting?: Prisma.ScheduleMeetingOmit
   billOfQuantities?: Prisma.BillOfQuantitiesOmit
   billOfQuantitiesSentType?: Prisma.BillOfQuantitiesSentTypeOmit
   billOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusOmit
   billOfQuantitiesType?: Prisma.BillOfQuantitiesTypeOmit
   boqContact?: Prisma.BoqContactOmit
+  projectEmployee?: Prisma.ProjectEmployeeOmit
   quoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineOmit
   visibilityForDepartment?: Prisma.VisibilityForDepartmentOmit
   workOrderBoQ?: Prisma.WorkOrderBoQOmit
-  projectEmployee?: Prisma.ProjectEmployeeOmit
 }
 
 /* Types for Logging */

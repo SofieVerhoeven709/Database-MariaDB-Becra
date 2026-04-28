@@ -360,6 +360,7 @@ export const RecruitmentApplicantScalarFieldEnum = {
   retained: 'retained',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'

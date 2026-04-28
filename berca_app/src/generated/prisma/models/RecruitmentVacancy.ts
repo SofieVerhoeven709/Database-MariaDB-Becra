@@ -275,19 +275,19 @@ export type RecruitmentVacancyGroupByArgs<ExtArgs extends runtime.Types.Extensio
 
 export type RecruitmentVacancyGroupByOutputType = {
   id: string
-  title: string | null
+  title: string
   description: string | null
-  department: string | null
-  contractType: string | null
-  workRegime: string | null
+  department: string
+  contractType: string
+  workRegime: string
   salaryMin: runtime.Decimal | null
   salaryMax: runtime.Decimal | null
-  publishWebsite: boolean | null
-  publishVdab: boolean | null
-  publishOther: boolean | null
-  publishLinkedIn: boolean | null
-  publishTempAgencies: boolean | null
-  publishRecruitmentAgencies: boolean | null
+  publishWebsite: boolean
+  publishVdab: boolean
+  publishOther: boolean
+  publishLinkedIn: boolean
+  publishTempAgencies: boolean
+  publishRecruitmentAgencies: boolean
   otherPublication: string | null
   createdAt: Date
   createdBy: string | null
@@ -321,19 +321,19 @@ export type RecruitmentVacancyWhereInput = {
   OR?: Prisma.RecruitmentVacancyWhereInput[]
   NOT?: Prisma.RecruitmentVacancyWhereInput | Prisma.RecruitmentVacancyWhereInput[]
   id?: Prisma.StringFilter<"RecruitmentVacancy"> | string
-  title?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
+  title?: Prisma.StringFilter<"RecruitmentVacancy"> | string
   description?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
-  department?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
-  contractType?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
-  workRegime?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
+  department?: Prisma.StringFilter<"RecruitmentVacancy"> | string
+  contractType?: Prisma.StringFilter<"RecruitmentVacancy"> | string
+  workRegime?: Prisma.StringFilter<"RecruitmentVacancy"> | string
   salaryMin?: Prisma.DecimalNullableFilter<"RecruitmentVacancy"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.DecimalNullableFilter<"RecruitmentVacancy"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishVdab?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishOther?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishLinkedIn?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishTempAgencies?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishRecruitmentAgencies?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
+  publishWebsite?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishVdab?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishOther?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishLinkedIn?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishTempAgencies?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
   otherPublication?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RecruitmentVacancy"> | Date | string
   createdBy?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
@@ -346,19 +346,19 @@ export type RecruitmentVacancyWhereInput = {
 
 export type RecruitmentVacancyOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrderInput | Prisma.SortOrder
+  title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  department?: Prisma.SortOrderInput | Prisma.SortOrder
-  contractType?: Prisma.SortOrderInput | Prisma.SortOrder
-  workRegime?: Prisma.SortOrderInput | Prisma.SortOrder
+  department?: Prisma.SortOrder
+  contractType?: Prisma.SortOrder
+  workRegime?: Prisma.SortOrder
   salaryMin?: Prisma.SortOrderInput | Prisma.SortOrder
   salaryMax?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishWebsite?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishVdab?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishOther?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishLinkedIn?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishTempAgencies?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishRecruitmentAgencies?: Prisma.SortOrderInput | Prisma.SortOrder
+  publishWebsite?: Prisma.SortOrder
+  publishVdab?: Prisma.SortOrder
+  publishOther?: Prisma.SortOrder
+  publishLinkedIn?: Prisma.SortOrder
+  publishTempAgencies?: Prisma.SortOrder
+  publishRecruitmentAgencies?: Prisma.SortOrder
   otherPublication?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -375,19 +375,19 @@ export type RecruitmentVacancyWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.RecruitmentVacancyWhereInput | Prisma.RecruitmentVacancyWhereInput[]
   OR?: Prisma.RecruitmentVacancyWhereInput[]
   NOT?: Prisma.RecruitmentVacancyWhereInput | Prisma.RecruitmentVacancyWhereInput[]
-  title?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
+  title?: Prisma.StringFilter<"RecruitmentVacancy"> | string
   description?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
-  department?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
-  contractType?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
-  workRegime?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
+  department?: Prisma.StringFilter<"RecruitmentVacancy"> | string
+  contractType?: Prisma.StringFilter<"RecruitmentVacancy"> | string
+  workRegime?: Prisma.StringFilter<"RecruitmentVacancy"> | string
   salaryMin?: Prisma.DecimalNullableFilter<"RecruitmentVacancy"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.DecimalNullableFilter<"RecruitmentVacancy"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishVdab?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishOther?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishLinkedIn?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishTempAgencies?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishRecruitmentAgencies?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
+  publishWebsite?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishVdab?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishOther?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishLinkedIn?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishTempAgencies?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
   otherPublication?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RecruitmentVacancy"> | Date | string
   createdBy?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
@@ -400,19 +400,19 @@ export type RecruitmentVacancyWhereUniqueInput = Prisma.AtLeast<{
 
 export type RecruitmentVacancyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrderInput | Prisma.SortOrder
+  title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  department?: Prisma.SortOrderInput | Prisma.SortOrder
-  contractType?: Prisma.SortOrderInput | Prisma.SortOrder
-  workRegime?: Prisma.SortOrderInput | Prisma.SortOrder
+  department?: Prisma.SortOrder
+  contractType?: Prisma.SortOrder
+  workRegime?: Prisma.SortOrder
   salaryMin?: Prisma.SortOrderInput | Prisma.SortOrder
   salaryMax?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishWebsite?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishVdab?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishOther?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishLinkedIn?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishTempAgencies?: Prisma.SortOrderInput | Prisma.SortOrder
-  publishRecruitmentAgencies?: Prisma.SortOrderInput | Prisma.SortOrder
+  publishWebsite?: Prisma.SortOrder
+  publishVdab?: Prisma.SortOrder
+  publishOther?: Prisma.SortOrder
+  publishLinkedIn?: Prisma.SortOrder
+  publishTempAgencies?: Prisma.SortOrder
+  publishRecruitmentAgencies?: Prisma.SortOrder
   otherPublication?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -431,19 +431,19 @@ export type RecruitmentVacancyScalarWhereWithAggregatesInput = {
   OR?: Prisma.RecruitmentVacancyScalarWhereWithAggregatesInput[]
   NOT?: Prisma.RecruitmentVacancyScalarWhereWithAggregatesInput | Prisma.RecruitmentVacancyScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"RecruitmentVacancy"> | string
-  title?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentVacancy"> | string | null
+  title?: Prisma.StringWithAggregatesFilter<"RecruitmentVacancy"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentVacancy"> | string | null
-  department?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentVacancy"> | string | null
-  contractType?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentVacancy"> | string | null
-  workRegime?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentVacancy"> | string | null
+  department?: Prisma.StringWithAggregatesFilter<"RecruitmentVacancy"> | string
+  contractType?: Prisma.StringWithAggregatesFilter<"RecruitmentVacancy"> | string
+  workRegime?: Prisma.StringWithAggregatesFilter<"RecruitmentVacancy"> | string
   salaryMin?: Prisma.DecimalNullableWithAggregatesFilter<"RecruitmentVacancy"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.DecimalNullableWithAggregatesFilter<"RecruitmentVacancy"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.BoolNullableWithAggregatesFilter<"RecruitmentVacancy"> | boolean | null
-  publishVdab?: Prisma.BoolNullableWithAggregatesFilter<"RecruitmentVacancy"> | boolean | null
-  publishOther?: Prisma.BoolNullableWithAggregatesFilter<"RecruitmentVacancy"> | boolean | null
-  publishLinkedIn?: Prisma.BoolNullableWithAggregatesFilter<"RecruitmentVacancy"> | boolean | null
-  publishTempAgencies?: Prisma.BoolNullableWithAggregatesFilter<"RecruitmentVacancy"> | boolean | null
-  publishRecruitmentAgencies?: Prisma.BoolNullableWithAggregatesFilter<"RecruitmentVacancy"> | boolean | null
+  publishWebsite?: Prisma.BoolWithAggregatesFilter<"RecruitmentVacancy"> | boolean
+  publishVdab?: Prisma.BoolWithAggregatesFilter<"RecruitmentVacancy"> | boolean
+  publishOther?: Prisma.BoolWithAggregatesFilter<"RecruitmentVacancy"> | boolean
+  publishLinkedIn?: Prisma.BoolWithAggregatesFilter<"RecruitmentVacancy"> | boolean
+  publishTempAgencies?: Prisma.BoolWithAggregatesFilter<"RecruitmentVacancy"> | boolean
+  publishRecruitmentAgencies?: Prisma.BoolWithAggregatesFilter<"RecruitmentVacancy"> | boolean
   otherPublication?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentVacancy"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RecruitmentVacancy"> | Date | string
   createdBy?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentVacancy"> | string | null
@@ -454,19 +454,19 @@ export type RecruitmentVacancyScalarWhereWithAggregatesInput = {
 
 export type RecruitmentVacancyCreateInput = {
   id: string
-  title?: string | null
+  title: string
   description?: string | null
-  department?: string | null
-  contractType?: string | null
-  workRegime?: string | null
+  department: string
+  contractType: string
+  workRegime: string
   salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: boolean | null
-  publishVdab?: boolean | null
-  publishOther?: boolean | null
-  publishLinkedIn?: boolean | null
-  publishTempAgencies?: boolean | null
-  publishRecruitmentAgencies?: boolean | null
+  publishWebsite?: boolean
+  publishVdab?: boolean
+  publishOther?: boolean
+  publishLinkedIn?: boolean
+  publishTempAgencies?: boolean
+  publishRecruitmentAgencies?: boolean
   otherPublication?: string | null
   createdAt: Date | string
   deleted?: boolean | null
@@ -477,19 +477,19 @@ export type RecruitmentVacancyCreateInput = {
 
 export type RecruitmentVacancyUncheckedCreateInput = {
   id: string
-  title?: string | null
+  title: string
   description?: string | null
-  department?: string | null
-  contractType?: string | null
-  workRegime?: string | null
+  department: string
+  contractType: string
+  workRegime: string
   salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: boolean | null
-  publishVdab?: boolean | null
-  publishOther?: boolean | null
-  publishLinkedIn?: boolean | null
-  publishTempAgencies?: boolean | null
-  publishRecruitmentAgencies?: boolean | null
+  publishWebsite?: boolean
+  publishVdab?: boolean
+  publishOther?: boolean
+  publishLinkedIn?: boolean
+  publishTempAgencies?: boolean
+  publishRecruitmentAgencies?: boolean
   otherPublication?: string | null
   createdAt: Date | string
   createdBy?: string | null
@@ -500,19 +500,19 @@ export type RecruitmentVacancyUncheckedCreateInput = {
 
 export type RecruitmentVacancyUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contractType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  contractType?: Prisma.StringFieldUpdateOperationsInput | string
+  workRegime?: Prisma.StringFieldUpdateOperationsInput | string
   salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishVdab?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishOther?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishLinkedIn?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishTempAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishRecruitmentAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  publishWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishVdab?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishOther?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishLinkedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishTempAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otherPublication?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -523,19 +523,19 @@ export type RecruitmentVacancyUpdateInput = {
 
 export type RecruitmentVacancyUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contractType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  contractType?: Prisma.StringFieldUpdateOperationsInput | string
+  workRegime?: Prisma.StringFieldUpdateOperationsInput | string
   salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishVdab?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishOther?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishLinkedIn?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishTempAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishRecruitmentAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  publishWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishVdab?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishOther?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishLinkedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishTempAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otherPublication?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -546,19 +546,19 @@ export type RecruitmentVacancyUncheckedUpdateInput = {
 
 export type RecruitmentVacancyCreateManyInput = {
   id: string
-  title?: string | null
+  title: string
   description?: string | null
-  department?: string | null
-  contractType?: string | null
-  workRegime?: string | null
+  department: string
+  contractType: string
+  workRegime: string
   salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: boolean | null
-  publishVdab?: boolean | null
-  publishOther?: boolean | null
-  publishLinkedIn?: boolean | null
-  publishTempAgencies?: boolean | null
-  publishRecruitmentAgencies?: boolean | null
+  publishWebsite?: boolean
+  publishVdab?: boolean
+  publishOther?: boolean
+  publishLinkedIn?: boolean
+  publishTempAgencies?: boolean
+  publishRecruitmentAgencies?: boolean
   otherPublication?: string | null
   createdAt: Date | string
   createdBy?: string | null
@@ -569,19 +569,19 @@ export type RecruitmentVacancyCreateManyInput = {
 
 export type RecruitmentVacancyUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contractType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  contractType?: Prisma.StringFieldUpdateOperationsInput | string
+  workRegime?: Prisma.StringFieldUpdateOperationsInput | string
   salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishVdab?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishOther?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishLinkedIn?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishTempAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishRecruitmentAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  publishWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishVdab?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishOther?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishLinkedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishTempAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otherPublication?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -590,19 +590,19 @@ export type RecruitmentVacancyUpdateManyMutationInput = {
 
 export type RecruitmentVacancyUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contractType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  contractType?: Prisma.StringFieldUpdateOperationsInput | string
+  workRegime?: Prisma.StringFieldUpdateOperationsInput | string
   salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishVdab?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishOther?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishLinkedIn?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishTempAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishRecruitmentAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  publishWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishVdab?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishOther?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishLinkedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishTempAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otherPublication?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -800,19 +800,19 @@ export type RecruitmentVacancyUncheckedUpdateManyWithoutEmployee_RecruitmentVaca
 
 export type RecruitmentVacancyCreateWithoutEmployee_RecruitmentVacancy_createdByToEmployeeInput = {
   id: string
-  title?: string | null
+  title: string
   description?: string | null
-  department?: string | null
-  contractType?: string | null
-  workRegime?: string | null
+  department: string
+  contractType: string
+  workRegime: string
   salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: boolean | null
-  publishVdab?: boolean | null
-  publishOther?: boolean | null
-  publishLinkedIn?: boolean | null
-  publishTempAgencies?: boolean | null
-  publishRecruitmentAgencies?: boolean | null
+  publishWebsite?: boolean
+  publishVdab?: boolean
+  publishOther?: boolean
+  publishLinkedIn?: boolean
+  publishTempAgencies?: boolean
+  publishRecruitmentAgencies?: boolean
   otherPublication?: string | null
   createdAt: Date | string
   deleted?: boolean | null
@@ -822,19 +822,19 @@ export type RecruitmentVacancyCreateWithoutEmployee_RecruitmentVacancy_createdBy
 
 export type RecruitmentVacancyUncheckedCreateWithoutEmployee_RecruitmentVacancy_createdByToEmployeeInput = {
   id: string
-  title?: string | null
+  title: string
   description?: string | null
-  department?: string | null
-  contractType?: string | null
-  workRegime?: string | null
+  department: string
+  contractType: string
+  workRegime: string
   salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: boolean | null
-  publishVdab?: boolean | null
-  publishOther?: boolean | null
-  publishLinkedIn?: boolean | null
-  publishTempAgencies?: boolean | null
-  publishRecruitmentAgencies?: boolean | null
+  publishWebsite?: boolean
+  publishVdab?: boolean
+  publishOther?: boolean
+  publishLinkedIn?: boolean
+  publishTempAgencies?: boolean
+  publishRecruitmentAgencies?: boolean
   otherPublication?: string | null
   createdAt: Date | string
   deleted?: boolean | null
@@ -854,19 +854,19 @@ export type RecruitmentVacancyCreateManyEmployee_RecruitmentVacancy_createdByToE
 
 export type RecruitmentVacancyCreateWithoutEmployee_RecruitmentVacancy_deletedByToEmployeeInput = {
   id: string
-  title?: string | null
+  title: string
   description?: string | null
-  department?: string | null
-  contractType?: string | null
-  workRegime?: string | null
+  department: string
+  contractType: string
+  workRegime: string
   salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: boolean | null
-  publishVdab?: boolean | null
-  publishOther?: boolean | null
-  publishLinkedIn?: boolean | null
-  publishTempAgencies?: boolean | null
-  publishRecruitmentAgencies?: boolean | null
+  publishWebsite?: boolean
+  publishVdab?: boolean
+  publishOther?: boolean
+  publishLinkedIn?: boolean
+  publishTempAgencies?: boolean
+  publishRecruitmentAgencies?: boolean
   otherPublication?: string | null
   createdAt: Date | string
   deleted?: boolean | null
@@ -876,19 +876,19 @@ export type RecruitmentVacancyCreateWithoutEmployee_RecruitmentVacancy_deletedBy
 
 export type RecruitmentVacancyUncheckedCreateWithoutEmployee_RecruitmentVacancy_deletedByToEmployeeInput = {
   id: string
-  title?: string | null
+  title: string
   description?: string | null
-  department?: string | null
-  contractType?: string | null
-  workRegime?: string | null
+  department: string
+  contractType: string
+  workRegime: string
   salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: boolean | null
-  publishVdab?: boolean | null
-  publishOther?: boolean | null
-  publishLinkedIn?: boolean | null
-  publishTempAgencies?: boolean | null
-  publishRecruitmentAgencies?: boolean | null
+  publishWebsite?: boolean
+  publishVdab?: boolean
+  publishOther?: boolean
+  publishLinkedIn?: boolean
+  publishTempAgencies?: boolean
+  publishRecruitmentAgencies?: boolean
   otherPublication?: string | null
   createdAt: Date | string
   createdBy?: string | null
@@ -927,19 +927,19 @@ export type RecruitmentVacancyScalarWhereInput = {
   OR?: Prisma.RecruitmentVacancyScalarWhereInput[]
   NOT?: Prisma.RecruitmentVacancyScalarWhereInput | Prisma.RecruitmentVacancyScalarWhereInput[]
   id?: Prisma.StringFilter<"RecruitmentVacancy"> | string
-  title?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
+  title?: Prisma.StringFilter<"RecruitmentVacancy"> | string
   description?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
-  department?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
-  contractType?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
-  workRegime?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
+  department?: Prisma.StringFilter<"RecruitmentVacancy"> | string
+  contractType?: Prisma.StringFilter<"RecruitmentVacancy"> | string
+  workRegime?: Prisma.StringFilter<"RecruitmentVacancy"> | string
   salaryMin?: Prisma.DecimalNullableFilter<"RecruitmentVacancy"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.DecimalNullableFilter<"RecruitmentVacancy"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishVdab?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishOther?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishLinkedIn?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishTempAgencies?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
-  publishRecruitmentAgencies?: Prisma.BoolNullableFilter<"RecruitmentVacancy"> | boolean | null
+  publishWebsite?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishVdab?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishOther?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishLinkedIn?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishTempAgencies?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFilter<"RecruitmentVacancy"> | boolean
   otherPublication?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RecruitmentVacancy"> | Date | string
   createdBy?: Prisma.StringNullableFilter<"RecruitmentVacancy"> | string | null
@@ -966,19 +966,19 @@ export type RecruitmentVacancyUpdateManyWithWhereWithoutEmployee_RecruitmentVaca
 
 export type RecruitmentVacancyCreateManyEmployee_RecruitmentVacancy_createdByToEmployeeInput = {
   id: string
-  title?: string | null
+  title: string
   description?: string | null
-  department?: string | null
-  contractType?: string | null
-  workRegime?: string | null
+  department: string
+  contractType: string
+  workRegime: string
   salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: boolean | null
-  publishVdab?: boolean | null
-  publishOther?: boolean | null
-  publishLinkedIn?: boolean | null
-  publishTempAgencies?: boolean | null
-  publishRecruitmentAgencies?: boolean | null
+  publishWebsite?: boolean
+  publishVdab?: boolean
+  publishOther?: boolean
+  publishLinkedIn?: boolean
+  publishTempAgencies?: boolean
+  publishRecruitmentAgencies?: boolean
   otherPublication?: string | null
   createdAt: Date | string
   deleted?: boolean | null
@@ -988,19 +988,19 @@ export type RecruitmentVacancyCreateManyEmployee_RecruitmentVacancy_createdByToE
 
 export type RecruitmentVacancyCreateManyEmployee_RecruitmentVacancy_deletedByToEmployeeInput = {
   id: string
-  title?: string | null
+  title: string
   description?: string | null
-  department?: string | null
-  contractType?: string | null
-  workRegime?: string | null
+  department: string
+  contractType: string
+  workRegime: string
   salaryMin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: boolean | null
-  publishVdab?: boolean | null
-  publishOther?: boolean | null
-  publishLinkedIn?: boolean | null
-  publishTempAgencies?: boolean | null
-  publishRecruitmentAgencies?: boolean | null
+  publishWebsite?: boolean
+  publishVdab?: boolean
+  publishOther?: boolean
+  publishLinkedIn?: boolean
+  publishTempAgencies?: boolean
+  publishRecruitmentAgencies?: boolean
   otherPublication?: string | null
   createdAt: Date | string
   createdBy?: string | null
@@ -1010,19 +1010,19 @@ export type RecruitmentVacancyCreateManyEmployee_RecruitmentVacancy_deletedByToE
 
 export type RecruitmentVacancyUpdateWithoutEmployee_RecruitmentVacancy_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contractType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  contractType?: Prisma.StringFieldUpdateOperationsInput | string
+  workRegime?: Prisma.StringFieldUpdateOperationsInput | string
   salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishVdab?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishOther?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishLinkedIn?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishTempAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishRecruitmentAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  publishWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishVdab?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishOther?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishLinkedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishTempAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otherPublication?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1032,19 +1032,19 @@ export type RecruitmentVacancyUpdateWithoutEmployee_RecruitmentVacancy_createdBy
 
 export type RecruitmentVacancyUncheckedUpdateWithoutEmployee_RecruitmentVacancy_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contractType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  contractType?: Prisma.StringFieldUpdateOperationsInput | string
+  workRegime?: Prisma.StringFieldUpdateOperationsInput | string
   salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishVdab?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishOther?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishLinkedIn?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishTempAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishRecruitmentAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  publishWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishVdab?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishOther?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishLinkedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishTempAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otherPublication?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1054,19 +1054,19 @@ export type RecruitmentVacancyUncheckedUpdateWithoutEmployee_RecruitmentVacancy_
 
 export type RecruitmentVacancyUncheckedUpdateManyWithoutEmployee_RecruitmentVacancy_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contractType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  contractType?: Prisma.StringFieldUpdateOperationsInput | string
+  workRegime?: Prisma.StringFieldUpdateOperationsInput | string
   salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishVdab?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishOther?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishLinkedIn?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishTempAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishRecruitmentAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  publishWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishVdab?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishOther?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishLinkedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishTempAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otherPublication?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1076,19 +1076,19 @@ export type RecruitmentVacancyUncheckedUpdateManyWithoutEmployee_RecruitmentVaca
 
 export type RecruitmentVacancyUpdateWithoutEmployee_RecruitmentVacancy_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contractType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  contractType?: Prisma.StringFieldUpdateOperationsInput | string
+  workRegime?: Prisma.StringFieldUpdateOperationsInput | string
   salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishVdab?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishOther?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishLinkedIn?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishTempAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishRecruitmentAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  publishWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishVdab?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishOther?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishLinkedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishTempAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otherPublication?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1098,19 +1098,19 @@ export type RecruitmentVacancyUpdateWithoutEmployee_RecruitmentVacancy_deletedBy
 
 export type RecruitmentVacancyUncheckedUpdateWithoutEmployee_RecruitmentVacancy_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contractType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  contractType?: Prisma.StringFieldUpdateOperationsInput | string
+  workRegime?: Prisma.StringFieldUpdateOperationsInput | string
   salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishVdab?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishOther?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishLinkedIn?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishTempAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishRecruitmentAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  publishWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishVdab?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishOther?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishLinkedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishTempAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otherPublication?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1120,19 +1120,19 @@ export type RecruitmentVacancyUncheckedUpdateWithoutEmployee_RecruitmentVacancy_
 
 export type RecruitmentVacancyUncheckedUpdateManyWithoutEmployee_RecruitmentVacancy_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contractType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  contractType?: Prisma.StringFieldUpdateOperationsInput | string
+  workRegime?: Prisma.StringFieldUpdateOperationsInput | string
   salaryMin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   salaryMax?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  publishWebsite?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishVdab?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishOther?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishLinkedIn?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishTempAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  publishRecruitmentAgencies?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  publishWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishVdab?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishOther?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishLinkedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishTempAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishRecruitmentAgencies?: Prisma.BoolFieldUpdateOperationsInput | boolean
   otherPublication?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1206,19 +1206,19 @@ export type $RecruitmentVacancyPayload<ExtArgs extends runtime.Types.Extensions.
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    title: string | null
+    title: string
     description: string | null
-    department: string | null
-    contractType: string | null
-    workRegime: string | null
+    department: string
+    contractType: string
+    workRegime: string
     salaryMin: runtime.Decimal | null
     salaryMax: runtime.Decimal | null
-    publishWebsite: boolean | null
-    publishVdab: boolean | null
-    publishOther: boolean | null
-    publishLinkedIn: boolean | null
-    publishTempAgencies: boolean | null
-    publishRecruitmentAgencies: boolean | null
+    publishWebsite: boolean
+    publishVdab: boolean
+    publishOther: boolean
+    publishLinkedIn: boolean
+    publishTempAgencies: boolean
+    publishRecruitmentAgencies: boolean
     otherPublication: string | null
     createdAt: Date
     createdBy: string | null

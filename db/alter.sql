@@ -2105,3 +2105,6 @@ CONSTRAINT RecruitmentVacancy_ibfk_2
   FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL
 
 ) ENGINE = InnoDB;
+
+ALTER TABLE RecruitmentVacancy
+    CHANGE COLUMN IF EXISTS publishReqruitmentAgencies publishRecruitmentAgencies BOOLEAN NOT NULL DEFAULT 0;

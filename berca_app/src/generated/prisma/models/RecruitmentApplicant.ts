@@ -37,6 +37,7 @@ export type RecruitmentApplicantMinAggregateOutputType = {
   retained: boolean | null
   createdAt: Date | null
   createdBy: string | null
+  updatedAt: Date | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
@@ -55,6 +56,7 @@ export type RecruitmentApplicantMaxAggregateOutputType = {
   retained: boolean | null
   createdAt: Date | null
   createdBy: string | null
+  updatedAt: Date | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
@@ -73,6 +75,7 @@ export type RecruitmentApplicantCountAggregateOutputType = {
   retained: number
   createdAt: number
   createdBy: number
+  updatedAt: number
   deleted: number
   deletedAt: number
   deletedBy: number
@@ -93,6 +96,7 @@ export type RecruitmentApplicantMinAggregateInputType = {
   retained?: true
   createdAt?: true
   createdBy?: true
+  updatedAt?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
@@ -111,6 +115,7 @@ export type RecruitmentApplicantMaxAggregateInputType = {
   retained?: true
   createdAt?: true
   createdBy?: true
+  updatedAt?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
@@ -129,6 +134,7 @@ export type RecruitmentApplicantCountAggregateInputType = {
   retained?: true
   createdAt?: true
   createdBy?: true
+  updatedAt?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
@@ -209,17 +215,18 @@ export type RecruitmentApplicantGroupByArgs<ExtArgs extends runtime.Types.Extens
 
 export type RecruitmentApplicantGroupByOutputType = {
   id: string
-  candidateName: string | null
+  candidateName: string
   profile: string | null
   contactDate: Date | null
   interviewDate: Date | null
-  contactType: string | null
+  contactType: string
   description: string | null
   cvPath: string | null
   potential: boolean
   retained: boolean
   createdAt: Date
-  createdBy: string | null
+  createdBy: string
+  updatedAt: Date | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
@@ -248,37 +255,39 @@ export type RecruitmentApplicantWhereInput = {
   OR?: Prisma.RecruitmentApplicantWhereInput[]
   NOT?: Prisma.RecruitmentApplicantWhereInput | Prisma.RecruitmentApplicantWhereInput[]
   id?: Prisma.StringFilter<"RecruitmentApplicant"> | string
-  candidateName?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
+  candidateName?: Prisma.StringFilter<"RecruitmentApplicant"> | string
   profile?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
   contactDate?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
   interviewDate?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
-  contactType?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
+  contactType?: Prisma.StringFilter<"RecruitmentApplicant"> | string
   description?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
   cvPath?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
   potential?: Prisma.BoolFilter<"RecruitmentApplicant"> | boolean
   retained?: Prisma.BoolFilter<"RecruitmentApplicant"> | boolean
   createdAt?: Prisma.DateTimeFilter<"RecruitmentApplicant"> | Date | string
-  createdBy?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
+  createdBy?: Prisma.StringFilter<"RecruitmentApplicant"> | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
   deleted?: Prisma.BoolNullableFilter<"RecruitmentApplicant"> | boolean | null
   deletedAt?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
-  Employee_RecruitmentApplicant_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_RecruitmentApplicant_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_RecruitmentApplicant_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type RecruitmentApplicantOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  candidateName?: Prisma.SortOrderInput | Prisma.SortOrder
+  candidateName?: Prisma.SortOrder
   profile?: Prisma.SortOrderInput | Prisma.SortOrder
   contactDate?: Prisma.SortOrderInput | Prisma.SortOrder
   interviewDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  contactType?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactType?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   cvPath?: Prisma.SortOrderInput | Prisma.SortOrder
   potential?: Prisma.SortOrder
   retained?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -292,37 +301,39 @@ export type RecruitmentApplicantWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.RecruitmentApplicantWhereInput | Prisma.RecruitmentApplicantWhereInput[]
   OR?: Prisma.RecruitmentApplicantWhereInput[]
   NOT?: Prisma.RecruitmentApplicantWhereInput | Prisma.RecruitmentApplicantWhereInput[]
-  candidateName?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
+  candidateName?: Prisma.StringFilter<"RecruitmentApplicant"> | string
   profile?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
   contactDate?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
   interviewDate?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
-  contactType?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
+  contactType?: Prisma.StringFilter<"RecruitmentApplicant"> | string
   description?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
   cvPath?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
   potential?: Prisma.BoolFilter<"RecruitmentApplicant"> | boolean
   retained?: Prisma.BoolFilter<"RecruitmentApplicant"> | boolean
   createdAt?: Prisma.DateTimeFilter<"RecruitmentApplicant"> | Date | string
-  createdBy?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
+  createdBy?: Prisma.StringFilter<"RecruitmentApplicant"> | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
   deleted?: Prisma.BoolNullableFilter<"RecruitmentApplicant"> | boolean | null
   deletedAt?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
-  Employee_RecruitmentApplicant_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_RecruitmentApplicant_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_RecruitmentApplicant_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type RecruitmentApplicantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  candidateName?: Prisma.SortOrderInput | Prisma.SortOrder
+  candidateName?: Prisma.SortOrder
   profile?: Prisma.SortOrderInput | Prisma.SortOrder
   contactDate?: Prisma.SortOrderInput | Prisma.SortOrder
   interviewDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  contactType?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactType?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   cvPath?: Prisma.SortOrderInput | Prisma.SortOrder
   potential?: Prisma.SortOrder
   retained?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -336,17 +347,18 @@ export type RecruitmentApplicantScalarWhereWithAggregatesInput = {
   OR?: Prisma.RecruitmentApplicantScalarWhereWithAggregatesInput[]
   NOT?: Prisma.RecruitmentApplicantScalarWhereWithAggregatesInput | Prisma.RecruitmentApplicantScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"RecruitmentApplicant"> | string
-  candidateName?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentApplicant"> | string | null
+  candidateName?: Prisma.StringWithAggregatesFilter<"RecruitmentApplicant"> | string
   profile?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentApplicant"> | string | null
   contactDate?: Prisma.DateTimeNullableWithAggregatesFilter<"RecruitmentApplicant"> | Date | string | null
   interviewDate?: Prisma.DateTimeNullableWithAggregatesFilter<"RecruitmentApplicant"> | Date | string | null
-  contactType?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentApplicant"> | string | null
+  contactType?: Prisma.StringWithAggregatesFilter<"RecruitmentApplicant"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentApplicant"> | string | null
   cvPath?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentApplicant"> | string | null
   potential?: Prisma.BoolWithAggregatesFilter<"RecruitmentApplicant"> | boolean
   retained?: Prisma.BoolWithAggregatesFilter<"RecruitmentApplicant"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RecruitmentApplicant"> | Date | string
-  createdBy?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentApplicant"> | string | null
+  createdBy?: Prisma.StringWithAggregatesFilter<"RecruitmentApplicant"> | string
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"RecruitmentApplicant"> | Date | string | null
   deleted?: Prisma.BoolNullableWithAggregatesFilter<"RecruitmentApplicant"> | boolean | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"RecruitmentApplicant"> | Date | string | null
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"RecruitmentApplicant"> | string | null
@@ -354,35 +366,37 @@ export type RecruitmentApplicantScalarWhereWithAggregatesInput = {
 
 export type RecruitmentApplicantCreateInput = {
   id: string
-  candidateName?: string | null
+  candidateName: string
   profile?: string | null
   contactDate?: Date | string | null
   interviewDate?: Date | string | null
-  contactType?: string | null
+  contactType: string
   description?: string | null
   cvPath?: string | null
   potential?: boolean
-  retained: boolean
+  retained?: boolean
   createdAt: Date | string
+  updatedAt?: Date | string | null
   deleted?: boolean | null
   deletedAt?: Date | string | null
-  Employee_RecruitmentApplicant_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRecruitmentApplicant_RecruitmentApplicant_createdByToEmployeeInput
+  Employee_RecruitmentApplicant_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRecruitmentApplicant_RecruitmentApplicant_createdByToEmployeeInput
   Employee_RecruitmentApplicant_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRecruitmentApplicant_RecruitmentApplicant_deletedByToEmployeeInput
 }
 
 export type RecruitmentApplicantUncheckedCreateInput = {
   id: string
-  candidateName?: string | null
+  candidateName: string
   profile?: string | null
   contactDate?: Date | string | null
   interviewDate?: Date | string | null
-  contactType?: string | null
+  contactType: string
   description?: string | null
   cvPath?: string | null
   potential?: boolean
-  retained: boolean
+  retained?: boolean
   createdAt: Date | string
-  createdBy?: string | null
+  createdBy: string
+  updatedAt?: Date | string | null
   deleted?: boolean | null
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -390,35 +404,37 @@ export type RecruitmentApplicantUncheckedCreateInput = {
 
 export type RecruitmentApplicantUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  candidateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  candidateName?: Prisma.StringFieldUpdateOperationsInput | string
   profile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  contactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   potential?: Prisma.BoolFieldUpdateOperationsInput | boolean
   retained?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_RecruitmentApplicant_createdByToEmployee?: Prisma.EmployeeUpdateOneWithoutRecruitmentApplicant_RecruitmentApplicant_createdByToEmployeeNestedInput
+  Employee_RecruitmentApplicant_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutRecruitmentApplicant_RecruitmentApplicant_createdByToEmployeeNestedInput
   Employee_RecruitmentApplicant_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutRecruitmentApplicant_RecruitmentApplicant_deletedByToEmployeeNestedInput
 }
 
 export type RecruitmentApplicantUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  candidateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  candidateName?: Prisma.StringFieldUpdateOperationsInput | string
   profile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  contactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   potential?: Prisma.BoolFieldUpdateOperationsInput | boolean
   retained?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -426,17 +442,18 @@ export type RecruitmentApplicantUncheckedUpdateInput = {
 
 export type RecruitmentApplicantCreateManyInput = {
   id: string
-  candidateName?: string | null
+  candidateName: string
   profile?: string | null
   contactDate?: Date | string | null
   interviewDate?: Date | string | null
-  contactType?: string | null
+  contactType: string
   description?: string | null
   cvPath?: string | null
   potential?: boolean
-  retained: boolean
+  retained?: boolean
   createdAt: Date | string
-  createdBy?: string | null
+  createdBy: string
+  updatedAt?: Date | string | null
   deleted?: boolean | null
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -444,33 +461,35 @@ export type RecruitmentApplicantCreateManyInput = {
 
 export type RecruitmentApplicantUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  candidateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  candidateName?: Prisma.StringFieldUpdateOperationsInput | string
   profile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  contactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   potential?: Prisma.BoolFieldUpdateOperationsInput | boolean
   retained?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type RecruitmentApplicantUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  candidateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  candidateName?: Prisma.StringFieldUpdateOperationsInput | string
   profile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  contactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   potential?: Prisma.BoolFieldUpdateOperationsInput | boolean
   retained?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -495,6 +514,7 @@ export type RecruitmentApplicantCountOrderByAggregateInput = {
   retained?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
@@ -513,6 +533,7 @@ export type RecruitmentApplicantMaxOrderByAggregateInput = {
   retained?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
@@ -531,6 +552,7 @@ export type RecruitmentApplicantMinOrderByAggregateInput = {
   retained?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
@@ -636,16 +658,17 @@ export type RecruitmentApplicantUncheckedUpdateManyWithoutEmployee_RecruitmentAp
 
 export type RecruitmentApplicantCreateWithoutEmployee_RecruitmentApplicant_createdByToEmployeeInput = {
   id: string
-  candidateName?: string | null
+  candidateName: string
   profile?: string | null
   contactDate?: Date | string | null
   interviewDate?: Date | string | null
-  contactType?: string | null
+  contactType: string
   description?: string | null
   cvPath?: string | null
   potential?: boolean
-  retained: boolean
+  retained?: boolean
   createdAt: Date | string
+  updatedAt?: Date | string | null
   deleted?: boolean | null
   deletedAt?: Date | string | null
   Employee_RecruitmentApplicant_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRecruitmentApplicant_RecruitmentApplicant_deletedByToEmployeeInput
@@ -653,16 +676,17 @@ export type RecruitmentApplicantCreateWithoutEmployee_RecruitmentApplicant_creat
 
 export type RecruitmentApplicantUncheckedCreateWithoutEmployee_RecruitmentApplicant_createdByToEmployeeInput = {
   id: string
-  candidateName?: string | null
+  candidateName: string
   profile?: string | null
   contactDate?: Date | string | null
   interviewDate?: Date | string | null
-  contactType?: string | null
+  contactType: string
   description?: string | null
   cvPath?: string | null
   potential?: boolean
-  retained: boolean
+  retained?: boolean
   createdAt: Date | string
+  updatedAt?: Date | string | null
   deleted?: boolean | null
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -680,34 +704,36 @@ export type RecruitmentApplicantCreateManyEmployee_RecruitmentApplicant_createdB
 
 export type RecruitmentApplicantCreateWithoutEmployee_RecruitmentApplicant_deletedByToEmployeeInput = {
   id: string
-  candidateName?: string | null
+  candidateName: string
   profile?: string | null
   contactDate?: Date | string | null
   interviewDate?: Date | string | null
-  contactType?: string | null
+  contactType: string
   description?: string | null
   cvPath?: string | null
   potential?: boolean
-  retained: boolean
+  retained?: boolean
   createdAt: Date | string
+  updatedAt?: Date | string | null
   deleted?: boolean | null
   deletedAt?: Date | string | null
-  Employee_RecruitmentApplicant_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRecruitmentApplicant_RecruitmentApplicant_createdByToEmployeeInput
+  Employee_RecruitmentApplicant_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRecruitmentApplicant_RecruitmentApplicant_createdByToEmployeeInput
 }
 
 export type RecruitmentApplicantUncheckedCreateWithoutEmployee_RecruitmentApplicant_deletedByToEmployeeInput = {
   id: string
-  candidateName?: string | null
+  candidateName: string
   profile?: string | null
   contactDate?: Date | string | null
   interviewDate?: Date | string | null
-  contactType?: string | null
+  contactType: string
   description?: string | null
   cvPath?: string | null
   potential?: boolean
-  retained: boolean
+  retained?: boolean
   createdAt: Date | string
-  createdBy?: string | null
+  createdBy: string
+  updatedAt?: Date | string | null
   deleted?: boolean | null
   deletedAt?: Date | string | null
 }
@@ -743,17 +769,18 @@ export type RecruitmentApplicantScalarWhereInput = {
   OR?: Prisma.RecruitmentApplicantScalarWhereInput[]
   NOT?: Prisma.RecruitmentApplicantScalarWhereInput | Prisma.RecruitmentApplicantScalarWhereInput[]
   id?: Prisma.StringFilter<"RecruitmentApplicant"> | string
-  candidateName?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
+  candidateName?: Prisma.StringFilter<"RecruitmentApplicant"> | string
   profile?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
   contactDate?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
   interviewDate?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
-  contactType?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
+  contactType?: Prisma.StringFilter<"RecruitmentApplicant"> | string
   description?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
   cvPath?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
   potential?: Prisma.BoolFilter<"RecruitmentApplicant"> | boolean
   retained?: Prisma.BoolFilter<"RecruitmentApplicant"> | boolean
   createdAt?: Prisma.DateTimeFilter<"RecruitmentApplicant"> | Date | string
-  createdBy?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
+  createdBy?: Prisma.StringFilter<"RecruitmentApplicant"> | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
   deleted?: Prisma.BoolNullableFilter<"RecruitmentApplicant"> | boolean | null
   deletedAt?: Prisma.DateTimeNullableFilter<"RecruitmentApplicant"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"RecruitmentApplicant"> | string | null
@@ -777,16 +804,17 @@ export type RecruitmentApplicantUpdateManyWithWhereWithoutEmployee_RecruitmentAp
 
 export type RecruitmentApplicantCreateManyEmployee_RecruitmentApplicant_createdByToEmployeeInput = {
   id: string
-  candidateName?: string | null
+  candidateName: string
   profile?: string | null
   contactDate?: Date | string | null
   interviewDate?: Date | string | null
-  contactType?: string | null
+  contactType: string
   description?: string | null
   cvPath?: string | null
   potential?: boolean
-  retained: boolean
+  retained?: boolean
   createdAt: Date | string
+  updatedAt?: Date | string | null
   deleted?: boolean | null
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -794,33 +822,35 @@ export type RecruitmentApplicantCreateManyEmployee_RecruitmentApplicant_createdB
 
 export type RecruitmentApplicantCreateManyEmployee_RecruitmentApplicant_deletedByToEmployeeInput = {
   id: string
-  candidateName?: string | null
+  candidateName: string
   profile?: string | null
   contactDate?: Date | string | null
   interviewDate?: Date | string | null
-  contactType?: string | null
+  contactType: string
   description?: string | null
   cvPath?: string | null
   potential?: boolean
-  retained: boolean
+  retained?: boolean
   createdAt: Date | string
-  createdBy?: string | null
+  createdBy: string
+  updatedAt?: Date | string | null
   deleted?: boolean | null
   deletedAt?: Date | string | null
 }
 
 export type RecruitmentApplicantUpdateWithoutEmployee_RecruitmentApplicant_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  candidateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  candidateName?: Prisma.StringFieldUpdateOperationsInput | string
   profile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  contactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   potential?: Prisma.BoolFieldUpdateOperationsInput | boolean
   retained?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_RecruitmentApplicant_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutRecruitmentApplicant_RecruitmentApplicant_deletedByToEmployeeNestedInput
@@ -828,16 +858,17 @@ export type RecruitmentApplicantUpdateWithoutEmployee_RecruitmentApplicant_creat
 
 export type RecruitmentApplicantUncheckedUpdateWithoutEmployee_RecruitmentApplicant_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  candidateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  candidateName?: Prisma.StringFieldUpdateOperationsInput | string
   profile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  contactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   potential?: Prisma.BoolFieldUpdateOperationsInput | boolean
   retained?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -845,16 +876,17 @@ export type RecruitmentApplicantUncheckedUpdateWithoutEmployee_RecruitmentApplic
 
 export type RecruitmentApplicantUncheckedUpdateManyWithoutEmployee_RecruitmentApplicant_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  candidateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  candidateName?: Prisma.StringFieldUpdateOperationsInput | string
   profile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  contactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   potential?: Prisma.BoolFieldUpdateOperationsInput | boolean
   retained?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -862,51 +894,54 @@ export type RecruitmentApplicantUncheckedUpdateManyWithoutEmployee_RecruitmentAp
 
 export type RecruitmentApplicantUpdateWithoutEmployee_RecruitmentApplicant_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  candidateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  candidateName?: Prisma.StringFieldUpdateOperationsInput | string
   profile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  contactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   potential?: Prisma.BoolFieldUpdateOperationsInput | boolean
   retained?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_RecruitmentApplicant_createdByToEmployee?: Prisma.EmployeeUpdateOneWithoutRecruitmentApplicant_RecruitmentApplicant_createdByToEmployeeNestedInput
+  Employee_RecruitmentApplicant_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutRecruitmentApplicant_RecruitmentApplicant_createdByToEmployeeNestedInput
 }
 
 export type RecruitmentApplicantUncheckedUpdateWithoutEmployee_RecruitmentApplicant_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  candidateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  candidateName?: Prisma.StringFieldUpdateOperationsInput | string
   profile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  contactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   potential?: Prisma.BoolFieldUpdateOperationsInput | boolean
   retained?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type RecruitmentApplicantUncheckedUpdateManyWithoutEmployee_RecruitmentApplicant_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  candidateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  candidateName?: Prisma.StringFieldUpdateOperationsInput | string
   profile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   interviewDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  contactType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactType?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cvPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   potential?: Prisma.BoolFieldUpdateOperationsInput | boolean
   retained?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -926,10 +961,11 @@ export type RecruitmentApplicantSelect<ExtArgs extends runtime.Types.Extensions.
   retained?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  updatedAt?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  Employee_RecruitmentApplicant_createdByToEmployee?: boolean | Prisma.RecruitmentApplicant$Employee_RecruitmentApplicant_createdByToEmployeeArgs<ExtArgs>
+  Employee_RecruitmentApplicant_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_RecruitmentApplicant_deletedByToEmployee?: boolean | Prisma.RecruitmentApplicant$Employee_RecruitmentApplicant_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["recruitmentApplicant"]>
 
@@ -948,36 +984,38 @@ export type RecruitmentApplicantSelectScalar = {
   retained?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  updatedAt?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
 }
 
-export type RecruitmentApplicantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "candidateName" | "profile" | "contactDate" | "interviewDate" | "contactType" | "description" | "cvPath" | "potential" | "retained" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["recruitmentApplicant"]>
+export type RecruitmentApplicantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "candidateName" | "profile" | "contactDate" | "interviewDate" | "contactType" | "description" | "cvPath" | "potential" | "retained" | "createdAt" | "createdBy" | "updatedAt" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["recruitmentApplicant"]>
 export type RecruitmentApplicantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Employee_RecruitmentApplicant_createdByToEmployee?: boolean | Prisma.RecruitmentApplicant$Employee_RecruitmentApplicant_createdByToEmployeeArgs<ExtArgs>
+  Employee_RecruitmentApplicant_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_RecruitmentApplicant_deletedByToEmployee?: boolean | Prisma.RecruitmentApplicant$Employee_RecruitmentApplicant_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $RecruitmentApplicantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RecruitmentApplicant"
   objects: {
-    Employee_RecruitmentApplicant_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    Employee_RecruitmentApplicant_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_RecruitmentApplicant_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    candidateName: string | null
+    candidateName: string
     profile: string | null
     contactDate: Date | null
     interviewDate: Date | null
-    contactType: string | null
+    contactType: string
     description: string | null
     cvPath: string | null
     potential: boolean
     retained: boolean
     createdAt: Date
-    createdBy: string | null
+    createdBy: string
+    updatedAt: Date | null
     deleted: boolean | null
     deletedAt: Date | null
     deletedBy: string | null
@@ -1321,7 +1359,7 @@ readonly fields: RecruitmentApplicantFieldRefs;
  */
 export interface Prisma__RecruitmentApplicantClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Employee_RecruitmentApplicant_createdByToEmployee<T extends Prisma.RecruitmentApplicant$Employee_RecruitmentApplicant_createdByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RecruitmentApplicant$Employee_RecruitmentApplicant_createdByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee_RecruitmentApplicant_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_RecruitmentApplicant_deletedByToEmployee<T extends Prisma.RecruitmentApplicant$Employee_RecruitmentApplicant_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RecruitmentApplicant$Employee_RecruitmentApplicant_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1364,6 +1402,7 @@ export interface RecruitmentApplicantFieldRefs {
   readonly retained: Prisma.FieldRef<"RecruitmentApplicant", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"RecruitmentApplicant", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"RecruitmentApplicant", 'String'>
+  readonly updatedAt: Prisma.FieldRef<"RecruitmentApplicant", 'DateTime'>
   readonly deleted: Prisma.FieldRef<"RecruitmentApplicant", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"RecruitmentApplicant", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"RecruitmentApplicant", 'String'>
@@ -1707,25 +1746,6 @@ export type RecruitmentApplicantDeleteManyArgs<ExtArgs extends runtime.Types.Ext
    * Limit how many RecruitmentApplicants to delete.
    */
   limit?: number
-}
-
-/**
- * RecruitmentApplicant.Employee_RecruitmentApplicant_createdByToEmployee
- */
-export type RecruitmentApplicant$Employee_RecruitmentApplicant_createdByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Employee
-   */
-  select?: Prisma.EmployeeSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Employee
-   */
-  omit?: Prisma.EmployeeOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmployeeInclude<ExtArgs> | null
-  where?: Prisma.EmployeeWhereInput
 }
 
 /**

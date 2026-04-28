@@ -25,7 +25,13 @@ export default async function IncomingDeliveriesPage({params}: PageProps) {
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const entries = deliveriesRaw.map(mapIncomingDelivery)
   // Convert purchase records into dropdown options.
-  const purchaseOptions = purchaseOptionsRaw.map(option => mapIncomingDeliveryOption({id: option.id, purchaseNumber: option.purchaseNumber}))
+  const purchaseOptions = purchaseOptionsRaw.map(option =>
+    mapIncomingDeliveryOption({
+      id: option.id,
+      purchaseNumber: option.purchaseNumber,
+      purchaseDescription: option.description,
+    }),
+  )
   const action = DEPARTMENT_ACTIONS[department.name]?.find(item => item.id === 'incomingDeliveries')
 
   return (
@@ -51,4 +57,3 @@ export default async function IncomingDeliveriesPage({params}: PageProps) {
     </main>
   )
 }
-

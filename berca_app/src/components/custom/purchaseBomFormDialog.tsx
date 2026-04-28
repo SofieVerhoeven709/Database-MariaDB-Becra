@@ -9,10 +9,12 @@ import {Label} from '@/components/ui/label'
 import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedPurchaseBOM, ProjectOption} from '@/types/purchaseBom'
+import type {MappedWorkOrder} from '@/types/workOrder'
 import {
   updatePurchaseBOMAction,
   searchPurchasesAction,
   hasOpenWorkOrderForProjectAction,
+  getOpenWorkOrdersForProjectAction,
 } from '@/serverFunctions/purchaseBoms'
 import {generateBomNumber} from '@/lib/utils'
 
@@ -30,22 +32,6 @@ interface PurchaseBOMFormDialogProps {
   allBOMs?: MappedPurchaseBOM[]
   canEditNumber: boolean
   onSaved?: () => void
-}
-
-function emptyForm(defaultPurchaseBomNumber: string) {
-  return {
-    projectId: '',
-    description: '',
-    shortDescription: '',
-    purchaseBomId: '',
-    purchaseBomNumber: defaultPurchaseBomNumber,
-    additionalInfo: '',
-    startDate: new Date().toISOString().slice(0, 10),
-    endDate: '',
-    closed: false,
-    materialClosed: false,
-    readyForPurchase: false,
-  }
 }
 
 export function PurchaseBOMFormDialog({
@@ -83,6 +69,10 @@ export function PurchaseBOMFormDialog({
 
   // ─── Parent BOM selector ──────────────────────────────────────────────────────
   const [parentBomId, setParentBomId] = useState<string>('none')
+
+  // ─── Work order selection ─────────────────────────────────────────────────────
+  const [workOrders, setWorkOrders] = useState<MappedWorkOrder[]>([])
+  const [selectedWorkOrderId, setSelectedWorkOrderId] = useState<string>('')
 
   // Populate form when dialog opens or bom changes
   useEffect(() => {
@@ -129,6 +119,19 @@ export function PurchaseBOMFormDialog({
       .finally(() => setPurchaseSearching(false))
   }, [purchaseQuery, open, isEdit])
 
+  // Fetch open work orders when approving for quote (edit mode only)
+  useEffect(() => {
+    if (!open || !isEdit || !bom?.projectId || !approvedForQuote) {
+      setWorkOrders([])
+      setSelectedWorkOrderId('')
+      return
+    }
+    getOpenWorkOrdersForProjectAction(bom.projectId).then(orders => {
+      setWorkOrders(orders)
+      if (orders.length === 1) setSelectedWorkOrderId(orders[0].id)
+    })
+  }, [open, isEdit, bom?.projectId, approvedForQuote])
+
   // Parent BOM options: exclude self
   const parentBomOptions = allBOMs.filter(b => !bom || b.id !== bom.id)
 
@@ -163,6 +166,7 @@ export function PurchaseBOMFormDialog({
         materialClosed: purchased ? true : materialClosed,
         purchased,
         approvedForQuote,
+        workOrderId: approvedForQuote ? selectedWorkOrderId : undefined,
       }
 
       if (isEdit) {
@@ -400,9 +404,36 @@ export function PurchaseBOMFormDialog({
 
             {/* Approved for Quote — edit mode only */}
             {isEdit && (
-              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
-                <Label className="text-xs text-muted-foreground">Approved for Quote</Label>
-                <Switch checked={approvedForQuote} onCheckedChange={setApprovedForQuote} />
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                  <Label className="text-xs text-muted-foreground">Approved for Quote</Label>
+                  <Switch checked={approvedForQuote} onCheckedChange={setApprovedForQuote} />
+                </div>
+                {/* Work Order selection — only when approving for quote and >1 open work order */}
+                {approvedForQuote && workOrders.length > 1 && (
+                  <div className="flex flex-col gap-1.5">
+                    <Label className="text-xs text-muted-foreground">Work Order</Label>
+                    <Select value={selectedWorkOrderId} onValueChange={setSelectedWorkOrderId}>
+                      <SelectTrigger className="bg-secondary border-border">
+                        <SelectValue placeholder="Select work order" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-card border-border">
+                        {workOrders.map(wo => (
+                          <SelectItem key={wo.id} value={wo.id}>
+                            <div className="flex flex-col">
+                              <span className="font-medium">{wo.workOrderNumber ?? wo.id}</span>
+                              {wo.description && (
+                                <span className="text-xs text-muted-foreground truncate max-w-75">
+                                  {wo.description}
+                                </span>
+                              )}
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
               </div>
             )}
           </div>

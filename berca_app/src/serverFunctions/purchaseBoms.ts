@@ -13,8 +13,14 @@ import {protectedServerFunction} from '@/lib/serverFunctions'
 import {searchProjects} from '@/dal/purchaseBoms'
 import type {ProjectOption} from '@/types/purchaseBom'
 import {createTargetForType} from '@/dal/targets'
-import {ensureMaterialDemandForMaterial, createMaterialDemandSourcesForProjectBOMStructures, validateMaterialDemandSourceAllocation} from '@/dal/materialDemands'
+import {
+  ensureMaterialDemandForMaterial,
+  createMaterialDemandSourcesForProjectBOMStructures,
+  validateMaterialDemandSourceAllocation,
+} from '@/dal/materialDemands'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {getWorkOrdersByProjectId} from '@/dal/workOrders'
+import {MappedWorkOrder} from '@/types/workOrder'
 
 const OPEN_WORK_ORDER_ERROR =
   'No open work order with material closed = false was found for this project. Please ask a manager to open a new work order and retry approval.'
@@ -218,7 +224,9 @@ export const updatePurchaseBOMAction = protectedServerFunction({
             }
           }
         } catch (err) {
-          logger.error(`Failed to create MaterialDemandSource entries: ${err instanceof Error ? err.message : String(err)}`)
+          logger.error(
+            `Failed to create MaterialDemandSource entries: ${err instanceof Error ? err.message : String(err)}`,
+          )
           // Don't fail the whole approval, but log the issue
         }
       }
@@ -306,7 +314,89 @@ export const createPurchaseBOMStructureAction = protectedServerFunction({
 export const updatePurchaseBOMStructureAction = protectedServerFunction({
   schema: updatePurchaseBOMStructureSchema,
   functionName: 'Update purchase BOM structure action',
-  serverFn: async ({data: {id, purchased, approvedForQuote, notCorrect, notCorrectReason, ...data}, logger, profile}) => {
+  serverFn: async ({
+    data: {id, purchased, approvedForQuote, notCorrect, notCorrectReason, workOrderId, ...data},
+    logger,
+    profile,
+  }) => {
+    // If approving for quote, check for open work order for the related project
+    let selectedWorkOrder = null
+    if (approvedForQuote === true) {
+      // Fetch ProjectBOMStructure to get ProjectBOMId, then ProjectBOM to get projectId
+      const projectBomStructure = await prismaClient.projectBOMStructure.findUnique({
+        where: {id: data.projectBOMStructureId},
+        select: {
+          projectBOMId: true,
+          id: true,
+          tag: true,
+          materialId: true,
+          shortDescription: true,
+          description: true,
+          additionalInfo: true,
+        },
+      })
+      if (!projectBomStructure || !projectBomStructure.projectBOMId) {
+        throw new Error('Project BOM Structure or Project BOM not found.')
+      }
+      const projectBom = await prismaClient.projectBOM.findUnique({
+        where: {id: projectBomStructure.projectBOMId},
+        select: {projectId: true},
+      })
+      if (!projectBom || !projectBom.projectId) {
+        throw new Error('Project BOM or Project not found.')
+      }
+      // Fetch all open work orders for the project
+      const openWorkOrders = await prismaClient.workOrder.findMany({
+        where: {
+          projectId: projectBom.projectId,
+          deleted: false,
+          completed: false,
+          hoursMaterialClosed: false,
+        },
+        orderBy: {createdAt: 'asc'},
+        select: {id: true},
+      })
+      if (!openWorkOrders || openWorkOrders.length === 0) {
+        throw new Error(OPEN_WORK_ORDER_ERROR)
+      }
+      // Use provided workOrderId if present and valid, else fallback to oldest
+      if (workOrderId && openWorkOrders.some(wo => wo.id === workOrderId)) {
+        selectedWorkOrder = openWorkOrders.find(wo => wo.id === workOrderId)
+      } else {
+        selectedWorkOrder = openWorkOrders[0]
+      }
+
+      // Ensure a work order structure exists for this structure in the selected work order
+      const clientNumber = `PBOMS:${id}`
+      const existingWOStructure = await prismaClient.workOrderStructure.findFirst({
+        where: {
+          workOrderId: selectedWorkOrder?.id,
+          clientNumber,
+          deleted: false,
+        },
+      })
+      if (!existingWOStructure) {
+        const target = await createTargetForType('WorkOrderStructure', profile.id)
+        await prismaClient.workOrderStructure.create({
+          data: {
+            id: crypto.randomUUID(),
+            clientNumber,
+            workOrderId: selectedWorkOrder!.id,
+            materialId: projectBomStructure.materialId,
+            tag: projectBomStructure.tag?.slice(0, 100) ?? null,
+            quantity: data.stockReservedQuantity ?? null,
+            shortDescription: projectBomStructure.shortDescription?.slice(0, 100) ?? null,
+            longDescription: projectBomStructure.description ?? null,
+            additionalInfo: projectBomStructure.additionalInfo ?? null,
+            createdAt: new Date(),
+            createdBy: profile.id,
+            targetId: target.id,
+          },
+        })
+        logger.info(`Created work order structure for PBOMStructure ${id} in WorkOrder ${selectedWorkOrder?.id}`)
+      }
+    }
+
     // Update execution fields on BOMExecution
     await prismaClient.bOMExecution.update({
       where: {projectBOMStructureId: data.projectBOMStructureId},
@@ -315,9 +405,7 @@ export const updatePurchaseBOMStructureAction = protectedServerFunction({
         issuedQuantity: data.issuedQuantity,
         notDeliverable: data.notDeliverable,
         ...(notCorrect !== undefined ? {notCorrect} : {}),
-        ...(notCorrect !== undefined
-          ? {notCorrectReason: notCorrect ? (notCorrectReason?.trim() || null) : null}
-          : {}),
+        ...(notCorrect !== undefined ? {notCorrectReason: notCorrect ? notCorrectReason?.trim() || null : null} : {}),
       },
     })
 
@@ -493,4 +581,36 @@ export async function hasOpenWorkOrderForProjectAction(projectId: string): Promi
   await getSessionProfileFromCookieOrThrow()
   const openWorkOrder = await findOpenWorkOrderForProject(projectId)
   return Boolean(openWorkOrder)
+}
+
+export async function getOpenWorkOrdersForProjectAction(projectId: string): Promise<MappedWorkOrder[]> {
+  const orders = await getWorkOrdersByProjectId(projectId)
+  return orders
+    .filter((wo: any) => !wo.deleted && !wo.completed && !wo.hoursMaterialClosed)
+    .map((wo: any) => ({
+      id: wo.id,
+      workOrderNumber: wo.workOrderNumber ?? '',
+      description: wo.description ?? '',
+      additionalInfo: wo.additionalInfo ?? '',
+      startDate: wo.startDate ?? null,
+      endDate: wo.endDate ?? null,
+      createdAt: wo.createdAt ?? null,
+      createdBy: wo.createdBy ?? '',
+      deleted: wo.deleted ?? false,
+      deletedAt: wo.deletedAt ?? null,
+      deletedBy: wo.deletedBy ?? '',
+      completed: wo.completed ?? false,
+      completedDate: wo.completedDate ?? null,
+      completedBy: wo.completedBy ?? '',
+      hoursMaterialClosed: wo.hoursMaterialClosed ?? false,
+      hoursMaterialClosedDate: wo.hoursMaterialClosedDate ?? null,
+      hoursMaterialClosedBy: wo.hoursMaterialClosedBy ?? '',
+      projectId: wo.projectId ?? '',
+      employeeId: wo.employeeId ?? '',
+      invoiceSent: wo.invoiceSent ?? false,
+      createdByName: wo.createdByName ?? '',
+      deletedByName: wo.deletedByName ?? '',
+      projectNumber: wo.projectNumber ?? '',
+      projectName: wo.projectName ?? '',
+    }))
 }

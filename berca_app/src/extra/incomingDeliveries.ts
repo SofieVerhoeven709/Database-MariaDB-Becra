@@ -11,7 +11,16 @@ type IncomingDeliveryWithRelations = Prisma.IncomingDeliveryGetPayload<{
   include: {
     Purchase: {select: {id: true; purchaseNumber: true}}
     Employee_IncomingDelivery_createdByToEmployee: {select: {id: true; firstName: true; lastName: true}}
-    IncomingDeliveryLine: {select: {id: true; orderedQty: true; acceptedQty: true; backorderQty: true; notCorrect: true; notCorrectReason: true}}
+    IncomingDeliveryLine: {
+      select: {
+        id: true
+        orderedQty: true
+        acceptedQty: true
+        backorderQty: true
+        notCorrect: true
+        notCorrectReason: true
+      }
+    }
   }
 }>
 
@@ -70,7 +79,9 @@ type IncomingDeliveryLineWithRelations = Prisma.IncomingDeliveryLineGetPayload<{
             }
           }
         }
-        Employee_IncomingDeliveryLineAllocation_createdByToEmployee: {select: {id: true; firstName: true; lastName: true}}
+        Employee_IncomingDeliveryLineAllocation_createdByToEmployee: {
+          select: {id: true; firstName: true; lastName: true}
+        }
       }
     }
   }
@@ -83,7 +94,9 @@ export function mapIncomingDeliveryLine(line: IncomingDeliveryLineWithRelations)
     purchaseDetailId: line.purchaseDetailId,
     materialId: line.materialId,
     // Prefer BE number with a readable name/description.
-    materialLabel: [line.Material.beNumber, line.Material.shortDescription ?? line.Material.name].filter(Boolean).join(' - '),
+    materialLabel: [line.Material.beNumber, line.Material.shortDescription ?? line.Material.name]
+      .filter(Boolean)
+      .join(' - '),
     orderedQty: line.orderedQty,
     deliveredQty: line.deliveredQty,
     acceptedQty: line.acceptedQty,
@@ -129,8 +142,9 @@ export function mapIncomingDeliveryLineAllocation(
 }
 
 export function mapIncomingDeliveryOption(row: {
-  id: string
-  purchaseNumber: string
+  id: any
+  purchaseNumber: any
+  purchaseDescription: any
 }): IncomingDeliveryOption {
   return {id: row.id, name: row.purchaseNumber}
 }
@@ -143,7 +157,10 @@ export function mapMaterialDemandSourceOption(row: {
   fulfilledAt: Date | string | null
   fulfilledBy: string | null
   MaterialDemandSourceType: {name: string}
-  MaterialDemand: {materialId: string; Material: {beNumber: string | null; shortDescription: string | null; name: string | null}}
+  MaterialDemand: {
+    materialId: string
+    Material: {beNumber: string | null; shortDescription: string | null; name: string | null}
+  }
 }): MaterialDemandSourceOption {
   const material = row.MaterialDemand.Material
   return {
@@ -157,4 +174,3 @@ export function mapMaterialDemandSourceOption(row: {
     label: `${row.MaterialDemandSourceType.name} - ${material.beNumber ?? '—'} - ${material.shortDescription ?? material.name ?? row.id}`,
   }
 }
-

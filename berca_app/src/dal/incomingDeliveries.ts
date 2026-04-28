@@ -73,7 +73,7 @@ export async function getIncomingDeliveryById(id: string) {
 export async function getIncomingDeliveryPurchaseOptions() {
   return prismaClient.purchase.findMany({
     where: {deleted: false},
-    select: {id: true, purchaseNumber: true, status: true},
+    select: {id: true, purchaseNumber: true, status: true, description: true},
     orderBy: {purchaseDate: 'desc'},
   })
 }

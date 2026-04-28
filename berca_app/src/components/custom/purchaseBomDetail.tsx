@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
@@ -20,8 +20,10 @@ import {
   hardDeletePurchaseBOMStructureAction,
   restorePurchaseBOMStructureAction,
   hasOpenWorkOrderForProjectAction,
+  getOpenWorkOrdersForProjectAction,
 } from '@/serverFunctions/purchaseBoms'
 import {PurchaseBOMStructureFormDialog} from '@/components/custom/purchaseBomStructureFormDialog'
+import type {MappedWorkOrder} from '@/types/workOrder'
 
 function formatDate(date: string | null) {
   if (!date) return '—'
@@ -68,9 +70,24 @@ export function PurchaseBOMDetail({
   const [editMaterialClosed, setEditMaterialClosed] = useState(bom.materialClosed)
   const [editPurchased, setEditPurchased] = useState(bom.purchased ?? false)
   const [editApprovedForQuote, setEditApprovedForQuote] = useState(bom.approvedForQuote ?? false)
+  const [workOrders, setWorkOrders] = useState<MappedWorkOrder[]>([])
+  const [selectedWorkOrderId, setSelectedWorkOrderId] = useState<string>('')
 
   const parentBomOptions = allBOMs.filter(b => b.id !== bom.id)
   const parentBom = allBOMs.find(b => b.id === bom.purchaseBomId) ?? null
+
+  // Fetch open work orders when editing and approving for quote
+  useEffect(() => {
+    if (!editing || !editApprovedForQuote || !bom.projectId) {
+      setWorkOrders([])
+      setSelectedWorkOrderId('')
+      return
+    }
+    getOpenWorkOrdersForProjectAction(bom.projectId).then(orders => {
+      setWorkOrders(orders)
+      if (orders.length === 1) setSelectedWorkOrderId(orders[0].id)
+    })
+  }, [editing, editApprovedForQuote, bom.projectId])
 
   async function handleSave() {
     setSaving(true)
@@ -95,11 +112,10 @@ export function PurchaseBOMDetail({
         startDate: new Date(editStartDate),
         endDate: editEndDate ? new Date(editEndDate) : null,
         closed: editClosed,
-        // purchased=true forces materialClosed on the server, but we mirror it in
-        // the payload too so the UI reflects the correct value immediately on refresh
         materialClosed: editPurchased ? true : editMaterialClosed,
         purchased: editPurchased,
         approvedForQuote: editApprovedForQuote,
+        workOrderId: editApprovedForQuote ? selectedWorkOrderId : undefined,
       })
       setEditing(false)
       router.refresh()
@@ -408,6 +424,30 @@ export function PurchaseBOMDetail({
               )}
             </div>
 
+            {/* Work Order selection — only when editing, approved for quote, and >1 open work order */}
+            {editing && editApprovedForQuote && workOrders.length > 1 && (
+              <div className="flex flex-col gap-1.5 max-w-xs">
+                <Label className="text-xs text-muted-foreground">Work Order</Label>
+                <Select value={selectedWorkOrderId} onValueChange={setSelectedWorkOrderId}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select work order" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    {workOrders.map(wo => (
+                      <SelectItem key={wo.id} value={wo.id}>
+                        <div className="flex flex-col">
+                          <span className="font-medium">{wo.workOrderNumber ?? wo.id}</span>
+                          {wo.description && (
+                            <span className="text-xs text-muted-foreground truncate max-w-75">{wo.description}</span>
+                          )}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
             {/* Purchased */}
             <div className="flex flex-col gap-1 rounded-lg border border-border bg-secondary px-3 py-2 max-w-xs">
               <div className="flex items-center justify-between">
@@ -550,7 +590,9 @@ export function PurchaseBOMDetail({
                             </Badge>
                           )}
                         </TableCell>
-                        <TableCell className="text-sm text-muted-foreground max-w-64 truncate" title={s.notCorrectReason ?? undefined}>
+                        <TableCell
+                          className="text-sm text-muted-foreground max-w-64 truncate"
+                          title={s.notCorrectReason ?? undefined}>
                           {s.notCorrectReason ?? '—'}
                         </TableCell>
                         <TableCell className={tdClass}>{formatDate(s.readyForPurchaseDate)}</TableCell>
@@ -716,6 +758,7 @@ export function PurchaseBOMDetail({
         onOpenChange={setStructureDialogOpen}
         structure={editingStructure}
         purchaseBOMId={bom.id}
+        projectId={bom.projectId}
         materialOptions={materialOptions}
       />
     </div>

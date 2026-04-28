@@ -96,7 +96,8 @@ export function IncomingDeliveryTable({
     })
     .sort((a, b) => {
       const dir = sortDir === 'asc' ? 1 : -1
-      const cmpStr = (x: string | null | undefined, y: string | null | undefined) => dir * (x ?? '').localeCompare(y ?? '')
+      const cmpStr = (x: string | null | undefined, y: string | null | undefined) =>
+        dir * (x ?? '').localeCompare(y ?? '')
 
       // Comparator switches on the active column.
       switch (sortField) {
@@ -112,6 +113,10 @@ export function IncomingDeliveryTable({
           return 0
       }
     })
+
+  const usedPurchaseIds = new Set(initialEntries.map(entry => entry.purchaseId).filter(Boolean))
+
+  const filteredPurchaseOptions = purchaseOptions.filter(option => !usedPurchaseIds.has(option.id))
 
   function toggleSort(field: SortField) {
     if (sortField === field) setSortDir(prev => (prev === 'asc' ? 'desc' : 'asc'))
@@ -247,7 +252,9 @@ export function IncomingDeliveryTable({
               <TableHead className="text-xs whitespace-nowrap">Created</TableHead>
               <TableHead className="text-xs whitespace-nowrap">Received At</TableHead>
               <TableHead className="text-xs whitespace-nowrap">Deleted</TableHead>
-              {filterDeleted !== 'not-deleted' && <TableHead className="text-xs whitespace-nowrap">Deleted At</TableHead>}
+              {filterDeleted !== 'not-deleted' && (
+                <TableHead className="text-xs whitespace-nowrap">Deleted At</TableHead>
+              )}
               <TableHead className="w-24">
                 <span className="sr-only">Actions</span>
               </TableHead>
@@ -256,7 +263,9 @@ export function IncomingDeliveryTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={filterDeleted !== 'not-deleted' ? 10 : 9} className="h-24 text-center text-muted-foreground">
+                <TableCell
+                  colSpan={filterDeleted !== 'not-deleted' ? 10 : 9}
+                  className="h-24 text-center text-muted-foreground">
                   No incoming deliveries found.
                 </TableCell>
               </TableRow>
@@ -264,16 +273,26 @@ export function IncomingDeliveryTable({
               filtered.map(entry => {
                 const detailHref = `/departments/${departmentId}/incomingDeliveries/${entry.id}` as Route
                 return (
-                  <TableRow key={entry.id} className={`border-border/40 hover:bg-secondary/50 cursor-pointer ${entry.deleted ? 'opacity-60' : ''}`} onClick={() => router.push(detailHref)}>
-                    <TableCell className={`${tdClass} text-foreground font-medium`}>{entry.incomingDeliveryNumber}</TableCell>
+                  <TableRow
+                    key={entry.id}
+                    className={`border-border/40 hover:bg-secondary/50 cursor-pointer ${entry.deleted ? 'opacity-60' : ''}`}
+                    onClick={() => router.push(detailHref)}>
+                    <TableCell className={`${tdClass} text-foreground font-medium`}>
+                      {entry.incomingDeliveryNumber}
+                    </TableCell>
                     <TableCell className={tdClass}>{formatDate(entry.deliveryDate)}</TableCell>
-                    <TableCell className={tdClass}>{entry.purchaseNumber ?? 'Manual'}</TableCell>
+                    <TableCell className={tdClass}>
+                      {entry.purchaseNumber ?? 'Manual'}
+                      {entry.purchaseDescription ? ` - ${entry.purchaseDescription}` : ''}
+                    </TableCell>
                     <TableCell className={tdClass}>
                       <div className="flex items-center gap-2">
                         <Badge variant={entry.isFullyDelivered ? 'default' : 'outline'} className="text-[11px]">
                           {entry.isFullyDelivered ? 'FULL' : 'PARTIAL'}
                         </Badge>
-                        <span>{entry.acceptedQtyTotal}/{entry.orderedQtyTotal}</span>
+                        <span>
+                          {entry.acceptedQtyTotal}/{entry.orderedQtyTotal}
+                        </span>
                       </div>
                     </TableCell>
                     <TableCell className={tdClass}>{entry.status}</TableCell>
@@ -282,7 +301,9 @@ export function IncomingDeliveryTable({
                     <TableCell>
                       {entry.deleted ? <Badge variant="destructive">Yes</Badge> : <Badge variant="outline">No</Badge>}
                     </TableCell>
-                    {filterDeleted !== 'not-deleted' && <TableCell className={tdClass}>{formatDate(entry.deletedAt)}</TableCell>}
+                    {filterDeleted !== 'not-deleted' && (
+                      <TableCell className={tdClass}>{formatDate(entry.deletedAt)}</TableCell>
+                    )}
                     <TableCell>
                       <div className="flex items-center gap-1" onClick={e => e.stopPropagation()}>
                         <Button
@@ -349,10 +370,9 @@ export function IncomingDeliveryTable({
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         entry={editing}
-        purchaseOptions={purchaseOptions}
+        purchaseOptions={filteredPurchaseOptions}
         onSave={handleSave}
       />
     </div>
   )
 }
-

@@ -81,11 +81,11 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
       const sortValue = (item: MappedWarehousePlace) => {
         switch (sortField) {
           case 'xCoordinate':
-            return String(item.place ?? '')
-          case 'yCoordinate':
             return String(item.shelf ?? '')
-          case 'zCoordinate':
+          case 'yCoordinate':
             return String(item.column ?? '')
+          case 'zCoordinate':
+            return String(item.layer ?? '')
           default:
             return String(item[sortField] ?? '')
         }
@@ -228,7 +228,7 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 1} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={columns.length + 2} className="text-center text-muted-foreground py-10">
                   No warehouse places found
                 </TableCell>
               </TableRow>
@@ -251,7 +251,6 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
                   <TableCell className="text-sm">
                     {item.layer ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
-                  <TableCell className="text-sm font-semibold">{item.quantityInStock}</TableCell>
                   <TableCell className="text-sm text-muted-foreground max-w-50 truncate" title={item.information ?? ''}>
                     {item.information ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>

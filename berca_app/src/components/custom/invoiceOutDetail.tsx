@@ -75,7 +75,7 @@ interface InvoiceOutDetailProps {
   invoiceSentTypes: InvoiceLookup[]
   invoiceStatuses: InvoiceLookup[]
   contactOptions: InvoiceLookup[]
-  priceListOptions: PriceListOption[] // ← new
+  priceListOptions: PriceListOption[]
   currentUserLevel: number
   currentUserRole: string
   departmentId: string

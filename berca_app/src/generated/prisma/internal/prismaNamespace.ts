@@ -397,6 +397,8 @@ export const ModelName = {
   Contact: 'Contact',
   DeliveryNoteSupplier: 'DeliveryNoteSupplier',
   Department: 'Department',
+  RecruitmentApplicant: 'RecruitmentApplicant',
+  RecruitmentVacancy: 'RecruitmentVacancy',
   DocumentPlace: 'DocumentPlace',
   DocumentStructure: 'DocumentStructure',
   EmergencyContact: 'EmergencyContact',
@@ -524,7 +526,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "recruitmentApplicant" | "recruitmentVacancy" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -987,6 +989,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.DepartmentCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.DepartmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    RecruitmentApplicant: {
+      payload: Prisma.$RecruitmentApplicantPayload<ExtArgs>
+      fields: Prisma.RecruitmentApplicantFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RecruitmentApplicantFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RecruitmentApplicantFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        findFirst: {
+          args: Prisma.RecruitmentApplicantFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RecruitmentApplicantFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        findMany: {
+          args: Prisma.RecruitmentApplicantFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>[]
+        }
+        create: {
+          args: Prisma.RecruitmentApplicantCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        createMany: {
+          args: Prisma.RecruitmentApplicantCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.RecruitmentApplicantDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        update: {
+          args: Prisma.RecruitmentApplicantUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        deleteMany: {
+          args: Prisma.RecruitmentApplicantDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RecruitmentApplicantUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.RecruitmentApplicantUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentApplicantPayload>
+        }
+        aggregate: {
+          args: Prisma.RecruitmentApplicantAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRecruitmentApplicant>
+        }
+        groupBy: {
+          args: Prisma.RecruitmentApplicantGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecruitmentApplicantGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RecruitmentApplicantCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecruitmentApplicantCountAggregateOutputType> | number
+        }
+      }
+    }
+    RecruitmentVacancy: {
+      payload: Prisma.$RecruitmentVacancyPayload<ExtArgs>
+      fields: Prisma.RecruitmentVacancyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RecruitmentVacancyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RecruitmentVacancyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        findFirst: {
+          args: Prisma.RecruitmentVacancyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RecruitmentVacancyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        findMany: {
+          args: Prisma.RecruitmentVacancyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>[]
+        }
+        create: {
+          args: Prisma.RecruitmentVacancyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        createMany: {
+          args: Prisma.RecruitmentVacancyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.RecruitmentVacancyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        update: {
+          args: Prisma.RecruitmentVacancyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        deleteMany: {
+          args: Prisma.RecruitmentVacancyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RecruitmentVacancyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.RecruitmentVacancyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RecruitmentVacancyPayload>
+        }
+        aggregate: {
+          args: Prisma.RecruitmentVacancyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRecruitmentVacancy>
+        }
+        groupBy: {
+          args: Prisma.RecruitmentVacancyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecruitmentVacancyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RecruitmentVacancyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RecruitmentVacancyCountAggregateOutputType> | number
         }
       }
     }
@@ -8580,6 +8714,53 @@ export const DepartmentScalarFieldEnum = {
 export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
 
 
+export const RecruitmentApplicantScalarFieldEnum = {
+  id: 'id',
+  candidateName: 'candidateName',
+  profile: 'profile',
+  contactDate: 'contactDate',
+  interviewDate: 'interviewDate',
+  contactType: 'contactType',
+  description: 'description',
+  cvPath: 'cvPath',
+  potential: 'potential',
+  retained: 'retained',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentApplicantScalarFieldEnum = (typeof RecruitmentApplicantScalarFieldEnum)[keyof typeof RecruitmentApplicantScalarFieldEnum]
+
+
+export const RecruitmentVacancyScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  department: 'department',
+  contractType: 'contractType',
+  workRegime: 'workRegime',
+  salaryMin: 'salaryMin',
+  salaryMax: 'salaryMax',
+  publishWebsite: 'publishWebsite',
+  publishVdab: 'publishVdab',
+  publishOther: 'publishOther',
+  publishLinkedIn: 'publishLinkedIn',
+  publishTempAgencies: 'publishTempAgencies',
+  publishRecruitmentAgencies: 'publishRecruitmentAgencies',
+  otherPublication: 'otherPublication',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentVacancyScalarFieldEnum = (typeof RecruitmentVacancyScalarFieldEnum)[keyof typeof RecruitmentVacancyScalarFieldEnum]
+
+
 export const DocumentPlaceScalarFieldEnum = {
   id: 'id',
   headFolder: 'headFolder',
@@ -10661,6 +10842,35 @@ export const DepartmentOrderByRelevanceFieldEnum = {
 export type DepartmentOrderByRelevanceFieldEnum = (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum]
 
 
+export const RecruitmentApplicantOrderByRelevanceFieldEnum = {
+  id: 'id',
+  candidateName: 'candidateName',
+  profile: 'profile',
+  contactType: 'contactType',
+  description: 'description',
+  cvPath: 'cvPath',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentApplicantOrderByRelevanceFieldEnum = (typeof RecruitmentApplicantOrderByRelevanceFieldEnum)[keyof typeof RecruitmentApplicantOrderByRelevanceFieldEnum]
+
+
+export const RecruitmentVacancyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  department: 'department',
+  contractType: 'contractType',
+  workRegime: 'workRegime',
+  otherPublication: 'otherPublication',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentVacancyOrderByRelevanceFieldEnum = (typeof RecruitmentVacancyOrderByRelevanceFieldEnum)[keyof typeof RecruitmentVacancyOrderByRelevanceFieldEnum]
+
+
 export const DocumentPlaceOrderByRelevanceFieldEnum = {
   id: 'id',
   headFolder: 'headFolder',
@@ -12267,6 +12477,8 @@ export type GlobalOmitConfig = {
   contact?: Prisma.ContactOmit
   deliveryNoteSupplier?: Prisma.DeliveryNoteSupplierOmit
   department?: Prisma.DepartmentOmit
+  recruitmentApplicant?: Prisma.RecruitmentApplicantOmit
+  recruitmentVacancy?: Prisma.RecruitmentVacancyOmit
   documentPlace?: Prisma.DocumentPlaceOmit
   documentStructure?: Prisma.DocumentStructureOmit
   emergencyContact?: Prisma.EmergencyContactOmit

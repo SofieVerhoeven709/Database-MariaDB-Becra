@@ -56,6 +56,8 @@ export const ModelName = {
   Contact: 'Contact',
   DeliveryNoteSupplier: 'DeliveryNoteSupplier',
   Department: 'Department',
+  RecruitmentApplicant: 'RecruitmentApplicant',
+  RecruitmentVacancy: 'RecruitmentVacancy',
   DocumentPlace: 'DocumentPlace',
   DocumentStructure: 'DocumentStructure',
   EmergencyContact: 'EmergencyContact',
@@ -343,6 +345,53 @@ export const DepartmentScalarFieldEnum = {
 } as const
 
 export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
+export const RecruitmentApplicantScalarFieldEnum = {
+  id: 'id',
+  candidateName: 'candidateName',
+  profile: 'profile',
+  contactDate: 'contactDate',
+  interviewDate: 'interviewDate',
+  contactType: 'contactType',
+  description: 'description',
+  cvPath: 'cvPath',
+  potential: 'potential',
+  retained: 'retained',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentApplicantScalarFieldEnum = (typeof RecruitmentApplicantScalarFieldEnum)[keyof typeof RecruitmentApplicantScalarFieldEnum]
+
+
+export const RecruitmentVacancyScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  department: 'department',
+  contractType: 'contractType',
+  workRegime: 'workRegime',
+  salaryMin: 'salaryMin',
+  salaryMax: 'salaryMax',
+  publishWebsite: 'publishWebsite',
+  publishVdab: 'publishVdab',
+  publishOther: 'publishOther',
+  publishLinkedIn: 'publishLinkedIn',
+  publishTempAgencies: 'publishTempAgencies',
+  publishRecruitmentAgencies: 'publishRecruitmentAgencies',
+  otherPublication: 'otherPublication',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentVacancyScalarFieldEnum = (typeof RecruitmentVacancyScalarFieldEnum)[keyof typeof RecruitmentVacancyScalarFieldEnum]
 
 
 export const DocumentPlaceScalarFieldEnum = {
@@ -2424,6 +2473,35 @@ export const DepartmentOrderByRelevanceFieldEnum = {
 } as const
 
 export type DepartmentOrderByRelevanceFieldEnum = (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum]
+
+
+export const RecruitmentApplicantOrderByRelevanceFieldEnum = {
+  id: 'id',
+  candidateName: 'candidateName',
+  profile: 'profile',
+  contactType: 'contactType',
+  description: 'description',
+  cvPath: 'cvPath',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentApplicantOrderByRelevanceFieldEnum = (typeof RecruitmentApplicantOrderByRelevanceFieldEnum)[keyof typeof RecruitmentApplicantOrderByRelevanceFieldEnum]
+
+
+export const RecruitmentVacancyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  department: 'department',
+  contractType: 'contractType',
+  workRegime: 'workRegime',
+  otherPublication: 'otherPublication',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type RecruitmentVacancyOrderByRelevanceFieldEnum = (typeof RecruitmentVacancyOrderByRelevanceFieldEnum)[keyof typeof RecruitmentVacancyOrderByRelevanceFieldEnum]
 
 
 export const DocumentPlaceOrderByRelevanceFieldEnum = {

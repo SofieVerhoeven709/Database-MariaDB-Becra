@@ -80,6 +80,16 @@ export type DeliveryNoteSupplier = Prisma.DeliveryNoteSupplierModel
  */
 export type Department = Prisma.DepartmentModel
 /**
+ * Model RecruitmentApplicant
+ * 
+ */
+export type RecruitmentApplicant = Prisma.RecruitmentApplicantModel
+/**
+ * Model RecruitmentVacancy
+ * 
+ */
+export type RecruitmentVacancy = Prisma.RecruitmentVacancyModel
+/**
  * Model DocumentPlace
  * 
  */

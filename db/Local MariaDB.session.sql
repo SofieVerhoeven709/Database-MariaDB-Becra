@@ -2445,9 +2445,9 @@ CREATE TABLE IF NOT EXISTS RecruitmentApplicant (
     createdAt DATETIME NOT NULL,
     createdBy CHAR(36) NOT NULL,
     updatedAt DATETIME,
-  deleted BOOLEAN NOT NULL DEFAULT false,
-  deletedAt DATETIME NULL,
-  deletedBy CHAR(36) NULL,
+    deleted BOOLEAN NOT NULL DEFAULT 0,
+    deletedAt DATETIME NULL,
+    deletedBy CHAR(36) NULL,
   INDEX createdBy (createdBy),
   INDEX deletedBy (deletedBy),
 
@@ -2455,7 +2455,7 @@ CONSTRAINT RecruitmentApplicant_ibfk_1
   FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT,
 CONSTRAINT RecruitmentApplicant_ibfk_2
   FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL
-);
+) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS RecruitmentVacancy (
     id CHAR(36) NOT NULL PRIMARY KEY,
@@ -2474,10 +2474,11 @@ CREATE TABLE IF NOT EXISTS RecruitmentVacancy (
     publishRecruitmentAgencies BOOLEAN DEFAULT 0 NOT NULL,
     otherPublication VARCHAR(255),
     createdAt DATETIME NOT NULL,
-    createdBy CHAR(36),
-  deleted BOOLEAN NOT NULL DEFAULT false,
-  deletedAt DATETIME NULL,
-  deletedBy CHAR(36) NULL,
+    updatedAt DATETIME NULL,
+    createdBy CHAR(36) NOT NULL,
+    deleted BOOLEAN DEFAULT 0 NOT NULL,
+    deletedAt DATETIME NULL,
+    deletedBy CHAR(36) NULL,
 
   INDEX createdBy (createdBy),
   INDEX deletedBy (deletedBy),
@@ -2486,4 +2487,4 @@ CONSTRAINT RecruitmentVacancy_ibfk_1
   FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT,
 CONSTRAINT RecruitmentVacancy_ibfk_2
   FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL
-);
+) ENGINE = InnoDB; 

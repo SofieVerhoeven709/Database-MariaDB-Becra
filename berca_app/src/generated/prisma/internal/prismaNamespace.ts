@@ -8753,8 +8753,8 @@ export const RecruitmentVacancyScalarFieldEnum = {
   publishRecruitmentAgencies: 'publishRecruitmentAgencies',
   otherPublication: 'otherPublication',
   createdAt: 'createdAt',
-  createdBy: 'createdBy',
   updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'

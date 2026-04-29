@@ -80,36 +80,54 @@ function BOMStatusBadges({bom}: {bom: MappedPurchaseBOM}) {
 
   const badges: React.ReactNode[] = []
 
+  if (bom.purchased)
+    badges.push(
+      <Badge key="purchased" className="bg-accent/15 text-accent border-0 text-xs">
+        Purchased
+      </Badge>,
+    )
+
   if (bom.closed)
     badges.push(
       <Badge key="closed" variant="secondary" className="text-xs">
         Closed
       </Badge>,
     )
+
   if (bom.materialClosed)
     badges.push(
       <Badge key="mat" variant="secondary" className="text-xs">
         Mat. Closed
       </Badge>,
     )
-  else
+
+  if (bom.approvedForQuote)
+    badges.push(
+      <Badge key="approved" className="bg-green-500/15 text-green-600 border-0 text-xs dark:text-green-400">
+        Approved
+      </Badge>,
+    )
+  else if (!bom.purchased)
     badges.push(
       <Badge key="needApprove" className="bg-amber-700/10 text-orange-400 border-0 text-xs">
         Needs approving
       </Badge>,
     )
+
   if (fullyIssued)
     badges.push(
       <Badge key="issued" className="bg-green-500/15 text-green-600 border-0 text-xs dark:text-green-400">
         Fully Issued
       </Badge>,
     )
+
   if (anyNotDeliverable)
     badges.push(
       <Badge key="nd" variant="secondary" className="text-xs text-red-600 bg-red-600/15">
         Not Deliverable
       </Badge>,
     )
+
   if (anyNotCorrect)
     badges.push(
       <Badge key="nc" variant="secondary" className="text-xs text-orange-600 bg-orange-600/15">

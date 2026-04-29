@@ -4,6 +4,7 @@ export interface MappedMaterialDemand {
   materialBeNumber: string | null
   materialName: string | null
   materialShortDescription: string | null
+  isSerialTracked: boolean
   stockQuantity: number
   minimumStockQuantity: number
   hasMinimumStock: boolean
@@ -23,6 +24,19 @@ export interface MappedMaterialDemand {
   selectedQuoteLineIds: string[]
   bestQuoteLineId: string | null
   quoteOptions: MaterialDemandQuoteOption[]
+}
+
+export interface MaterialDemandSourceEntry {
+  id: string
+  sourceTypeName: string
+  sourceReferenceId: string | null
+  sourceReferenceLabel: string
+  requiredQty: number
+  reservedQty: number
+  createdAt: string
+  fulfilled: boolean
+  isManual: boolean
+  manualLabel: string | null
 }
 
 export interface MaterialDemandQuoteOption {
@@ -62,5 +76,7 @@ export interface MaterialDemandSourceEntry {
   reservedQty: number
   createdAt: string
   fulfilled: boolean
+  isManual: boolean
+  manualLabel: string | null
+  description: string | null
 }
-

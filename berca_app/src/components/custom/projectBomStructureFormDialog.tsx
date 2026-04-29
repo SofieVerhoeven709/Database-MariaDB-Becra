@@ -47,6 +47,7 @@ export function ProjectBOMStructureFormDialog({
   const isEdit = !!structure
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState(emptyForm())
+  const [materialSearch, setMaterialSearch] = useState('')
 
   useEffect(() => {
     if (structure) {
@@ -69,6 +70,13 @@ export function ProjectBOMStructureFormDialog({
       setForm(emptyForm())
     }
   }, [structure?.id, open])
+
+  const filteredInventories = materialOptions.filter(i => {
+    if (!materialSearch) return true
+    const q = materialSearch.toLowerCase()
+    // Search inventory by BE number or description.
+    return (i.beNumber ?? '').toLowerCase().includes(q) || (i.shortDescription ?? '').toLowerCase().includes(q)
+  })
 
   function set<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
     setForm(prev => ({...prev, [key]: value}))
@@ -112,17 +120,32 @@ export function ProjectBOMStructureFormDialog({
           {/* Material — full width */}
           <div className="flex flex-col gap-1.5 sm:col-span-2">
             <Label className="text-xs text-muted-foreground">Material *</Label>
-            <Select value={form.materialId} onValueChange={v => set('materialId', v)}>
+            <Input
+              value={materialSearch}
+              onChange={e => setMaterialSearch(e.target.value)}
+              placeholder="Search by number or name..."
+              className="bg-secondary border-border"
+            />
+            <Select
+              value={form.materialId || '__none__'}
+              onValueChange={v => set('materialId', v === '__none__' ? '' : v)}>
               <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select material…" />
+                <SelectValue placeholder="Select inventory item" />
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
-                {materialOptions.map(m => (
-                  <SelectItem key={m.id} value={m.id}>
-                    {m.beNumber ?? m.id}
-                    {m.name ? ` — ${m.name}` : m.shortDescription ? ` — ${m.shortDescription}` : ''}
+                <SelectItem value="__none__">— Select item —</SelectItem>
+                {filteredInventories.length === 0 ? (
+                  <SelectItem value="__no_results__" disabled>
+                    No matching materials found
                   </SelectItem>
-                ))}
+                ) : (
+                  filteredInventories.map(i => (
+                    <SelectItem key={i.id} value={i.id}>
+                      {i.beNumber ?? i.id}
+                      {i.name ? ` — ${i.name}` : i.shortDescription ? ` — ${i.shortDescription}` : ''}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
           </div>

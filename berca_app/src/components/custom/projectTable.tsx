@@ -60,11 +60,16 @@ interface Option {
   id: string
   name: string
 }
+interface CompanyOption {
+  id: string
+  name: string
+  deleted: boolean
+}
 
 interface ProjectTableProps {
   initialProjects: MappedProject[]
   projectTypes: Option[]
-  companies: Option[]
+  companies: CompanyOption[]
   currentUserRole: string
   currentUserLevel: number
   employees: Option[]

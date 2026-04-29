@@ -2,7 +2,7 @@
 
 import {useState, useEffect, useRef} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Pencil, X, Save, Plus, Trash2} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Plus, Trash2, AlertTriangle} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -163,7 +163,9 @@ function ItemDialog({
               <option value="STAY_OVER" />
             </datalist>
             {!isEditingCostMargin && (
-              <p className="text-[11px] text-muted-foreground">Use `STAY_OVER` to bill time-registry stay-over markers.</p>
+              <p className="text-[11px] text-muted-foreground">
+                Use `STAY_OVER` to bill time-registry stay-over markers.
+              </p>
             )}
             {errors.unit && <p className="text-xs text-destructive">{errors.unit}</p>}
           </div>
@@ -524,6 +526,7 @@ export function PriceListDetail({priceList, currentUserLevel, currentUserRole, d
 
   const costMarginItem = priceList.items.find(i => i.isCostMargin && !i.deleted)
   const regularItems = priceList.items.filter(i => !i.isCostMargin)
+  const belowCostItems = regularItems.filter(i => !i.deleted && i.belowSupplierCost)
 
   return (
     <div className="flex flex-col gap-6">
@@ -655,6 +658,12 @@ export function PriceListDetail({priceList, currentUserLevel, currentUserRole, d
               {regularItems.filter(i => !i.deleted).length}
             </Badge>
           </h2>
+          {belowCostItems.length > 0 && (
+            <span className="flex items-center gap-1 text-xs text-red-600 dark:text-red-400">
+              <AlertTriangle className="h-3.5 w-3.5" />
+              {belowCostItems.length} below supplier cost
+            </span>
+          )}
           <div className="flex items-center gap-2">
             <Select value={itemFilter} onValueChange={v => setItemFilter(v as ItemFilter)}>
               <SelectTrigger className="h-7 text-xs w-[130px] bg-secondary border-border">
@@ -718,7 +727,23 @@ export function PriceListDetail({priceList, currentUserLevel, currentUserRole, d
                       <TableCell className={`${tdClass} text-foreground font-medium`}>{item.description}</TableCell>
                       <TableCell className={tdClass}>{item.unit}</TableCell>
                       <TableCell className={`${tdClass} font-mono`}>
-                        {formatPrice(item.price, item.isCostMargin)}
+                        <div className="flex flex-col gap-0.5">
+                          <span className="flex items-center gap-1">
+                            {formatPrice(item.price, item.isCostMargin)}
+                            {item.belowSupplierCost && (
+                              <span
+                                title={`Lowest supplier price: €${item.supplierUnitPrice?.toFixed(2)} — list price is below cost`}
+                                className="cursor-help">
+                                <AlertTriangle className="h-3.5 w-3.5 text-red-500 shrink-0" />
+                              </span>
+                            )}
+                          </span>
+                          {item.supplierUnitPrice != null && !item.isCostMargin && (
+                            <span className="text-[10px] text-muted-foreground font-normal">
+                              Supplier: €{item.supplierUnitPrice.toFixed(2)}
+                            </span>
+                          )}
+                        </div>
                       </TableCell>
                       <TableCell className={tdClass}>
                         {item.linkedTarget ? (

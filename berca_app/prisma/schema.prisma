@@ -2935,6 +2935,7 @@ model MaterialDemandSource {
   fulfilledBy                                         String?                          @db.Char(36)
   createdAt                                           DateTime                         @db.DateTime(0)
   createdBy                                           String                           @db.Char(36)
+  description                                         String?                          @db.VarChar(255)
   IncomingDeliveryLineAllocation                      IncomingDeliveryLineAllocation[]
   MaterialDemand                                      MaterialDemand                   @relation(fields: [materialDemandId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialDemandSource_ibfk_1")
   MaterialDemandSourceType                            MaterialDemandSourceType         @relation(fields: [sourceTypeId], references: [id], onUpdate: Restrict, map: "MaterialDemandSource_ibfk_2")

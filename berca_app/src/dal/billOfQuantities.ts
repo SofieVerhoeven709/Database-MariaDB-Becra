@@ -225,18 +225,3 @@ export async function getOpenProjects() {
     orderBy: {projectNumber: 'asc'},
   })
 }
-
-export async function getActiveWorkOrdersForProject(projectId: string) {
-  return prismaClient.workOrder.findMany({
-    where: {
-      deleted: false,
-      completed: false,
-      projectId,
-      WorkOrderBoQ: {
-        none: {deleted: false},
-      },
-    },
-    select: {id: true, workOrderNumber: true, description: true},
-    orderBy: {workOrderNumber: 'asc'},
-  })
-}

@@ -41,7 +41,10 @@ export interface MappedBillingLine {
   lineVatAmount: number | null
   lineTotalInclVat: number | null
   unmatched: boolean
-  workOrderStructureId?: string // For materials with VAT
+  workOrderStructureId?: string
+  beNumber?: string | null
+  materialSupplierPrice?: number | null
+  priceListBelowCost?: boolean
 }
 
 // ─── InvoiceOut ────────────────────────────────────────────────────────────────

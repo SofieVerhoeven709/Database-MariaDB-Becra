@@ -3,6 +3,7 @@ export interface MappedIncomingDelivery {
   incomingDeliveryNumber: string
   purchaseId: string | null
   purchaseNumber: string | null
+  purchaseDescription: string | null
   status: string
   deliveryDate: string
   receivedAt: string | null
@@ -71,6 +72,7 @@ export interface WarehousePlaceOption {
 export interface IncomingDeliveryOption {
   id: string
   name: string
+  description: string
 }
 
 export interface MaterialDemandSourceOption {
@@ -83,4 +85,3 @@ export interface MaterialDemandSourceOption {
   fulfilledAt: string | null
   fulfilledBy: string | null
 }
-

@@ -11,6 +11,7 @@ type MaterialDemandWithRelations = Prisma.MaterialDemandGetPayload<{
         beNumber: true
         name: true
         shortDescription: true
+        isSerialTracked: true
         InventoryOrder: {
           where: {deleted: false}
           select: {
@@ -49,6 +50,7 @@ type MaterialDemandWithRelations = Prisma.MaterialDemandGetPayload<{
         reservedQty: true
         createdAt: true
         fulfilled: true
+        description: true
         MaterialDemandSourceType: {
           select: {
             name: true
@@ -171,17 +173,25 @@ export function mapMaterialDemand(
   }).sort((a, b) => compareBestQuoteCandidate(a, b))
 
   const sources = row.MaterialDemandSource.map(source => {
-    const key = sourceLabelKey(source.MaterialDemandSourceType.name, source.sourceReferenceId)
+    const typeName = source.MaterialDemandSourceType.name
+    const isManual = typeName === 'Manual'
+    const key = sourceLabelKey(typeName, source.sourceReferenceId)
     return {
       id: source.id,
-      sourceTypeName: source.MaterialDemandSourceType.name,
+      sourceTypeName: typeName,
       sourceReferenceId: source.sourceReferenceId,
-      // Fall back to the raw reference id when no label is known.
-      sourceReferenceLabel: key ? (sourceLabels[key] ?? source.sourceReferenceId ?? '—') : '—',
+      sourceReferenceLabel: isManual
+        ? (source.description ?? '—')
+        : key
+          ? (sourceLabels[key] ?? source.sourceReferenceId ?? '—')
+          : '—',
+      description: source.description ?? null,
       requiredQty: source.requiredQty,
       reservedQty: source.reservedQty ?? 0,
       createdAt: source.createdAt.toISOString(),
       fulfilled: source.fulfilled ?? false,
+      isManual,
+      manualLabel: isManual ? (source.description ?? null) : null,
     }
   })
 
@@ -209,6 +219,7 @@ export function mapMaterialDemand(
     totalRequiredQty: row.totalRequiredQty,
     reservedQty: row.reservedQty ?? 0,
     createdAt: row.createdAt.toISOString(),
+    isSerialTracked: row.Material.isSerialTracked,
     sourceCount: sources.length,
     sources,
     quoteLineCount: quoteOptions.length, // Only count visible/eligible quotes
@@ -217,4 +228,3 @@ export function mapMaterialDemand(
     quoteOptions,
   }
 }
-

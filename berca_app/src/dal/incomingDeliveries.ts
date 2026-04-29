@@ -5,12 +5,19 @@ export async function getIncomingDeliveries() {
   return prismaClient.incomingDelivery.findMany({
     orderBy: [{deliveryDate: 'desc'}, {incomingDeliveryNumber: 'desc'}],
     include: {
-      Purchase: {select: {id: true, purchaseNumber: true}},
+      Purchase: {select: {id: true, purchaseNumber: true, description: true}},
       Employee_IncomingDelivery_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       IncomingDeliveryLine: {
         // Exclude deleted lines when computing totals/flags.
         where: {deleted: false},
-        select: {id: true, orderedQty: true, acceptedQty: true, backorderQty: true, notCorrect: true, notCorrectReason: true},
+        select: {
+          id: true,
+          orderedQty: true,
+          acceptedQty: true,
+          backorderQty: true,
+          notCorrect: true,
+          notCorrectReason: true,
+        },
       },
     },
   })
@@ -66,7 +73,7 @@ export async function getIncomingDeliveryById(id: string) {
 export async function getIncomingDeliveryPurchaseOptions() {
   return prismaClient.purchase.findMany({
     where: {deleted: false},
-    select: {id: true, purchaseNumber: true, status: true},
+    select: {id: true, purchaseNumber: true, status: true, description: true},
     orderBy: {purchaseDate: 'desc'},
   })
 }
@@ -74,7 +81,7 @@ export async function getIncomingDeliveryPurchaseOptions() {
 export async function getIncomingDeliveryMaterialOptions() {
   return prismaClient.material.findMany({
     where: {deleted: false},
-    select: {id: true, beNumber: true, name: true, shortDescription: true},
+    select: {id: true, beNumber: true, name: true, shortDescription: true, warehousePlaceId: true},
     orderBy: {beNumber: 'asc'},
   })
 }
@@ -117,4 +124,3 @@ export async function getMaterialDemandSourceOptions() {
     },
   })
 }
-

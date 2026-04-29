@@ -37,7 +37,7 @@ export default async function ProjectsPage({params}: PageProps) {
       : allProjects.filter(p => p.projectEmployees.some(pe => pe.employeeId === currentEmployeeId))
 
   const projectTypeOptions = projectTypes.map(t => ({id: t.id, name: t.name}))
-  const companyOptions = companies.map(c => ({id: c.id, name: c.name}))
+  const companyOptions = companies.map(c => ({id: c.id, name: c.name, deleted: c.deleted}))
   const employees = employeesFromDAL.map(mapEmployee)
   const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
 

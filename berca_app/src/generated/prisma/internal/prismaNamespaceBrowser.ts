@@ -2171,7 +2171,8 @@ export const MaterialDemandSourceScalarFieldEnum = {
   fulfilledAt: 'fulfilledAt',
   fulfilledBy: 'fulfilledBy',
   createdAt: 'createdAt',
-  createdBy: 'createdBy'
+  createdBy: 'createdBy',
+  description: 'description'
 } as const
 
 export type MaterialDemandSourceScalarFieldEnum = (typeof MaterialDemandSourceScalarFieldEnum)[keyof typeof MaterialDemandSourceScalarFieldEnum]
@@ -3926,7 +3927,8 @@ export const MaterialDemandSourceOrderByRelevanceFieldEnum = {
   sourceTypeId: 'sourceTypeId',
   sourceReferenceId: 'sourceReferenceId',
   fulfilledBy: 'fulfilledBy',
-  createdBy: 'createdBy'
+  createdBy: 'createdBy',
+  description: 'description'
 } as const
 
 export type MaterialDemandSourceOrderByRelevanceFieldEnum = (typeof MaterialDemandSourceOrderByRelevanceFieldEnum)[keyof typeof MaterialDemandSourceOrderByRelevanceFieldEnum]

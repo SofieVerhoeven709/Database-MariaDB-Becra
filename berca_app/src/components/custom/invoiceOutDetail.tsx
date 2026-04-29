@@ -387,6 +387,8 @@ export function InvoiceOutDetail({
     }
   }
 
+  const belowCostCount = allLines.filter(l => l.type === 'material' && l.priceListBelowCost).length
+
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
@@ -732,6 +734,15 @@ export function InvoiceOutDetail({
               </div>
             )}
 
+            {belowCostCount > 0 && (
+              <div className="flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2">
+                <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />
+                <p className="text-xs text-red-600 dark:text-red-400">
+                  {belowCostCount} material line{belowCostCount !== 1 ? 's are' : ' is'} priced below supplier cost.
+                </p>
+              </div>
+            )}
+
             {allLines.length === 0 ? (
               <p className="text-sm text-muted-foreground text-center py-6">No billing lines found.</p>
             ) : (
@@ -786,7 +797,16 @@ export function InvoiceOutDetail({
                                 <TableCell className={tdClass}>{line.unit}</TableCell>
                                 <TableCell className={`${tdClass} font-mono`}>
                                   {line.unitPriceFinal != null ? (
-                                    formatEur(line.unitPriceFinal)
+                                    <span className="flex items-center gap-1">
+                                      {formatEur(line.unitPriceFinal)}
+                                      {line.priceListBelowCost && (
+                                        <span
+                                          title={`Supplier cost: ${line.materialSupplierPrice != null ? formatEur(line.materialSupplierPrice) : '?'} — price list base (${line.unitPriceBase != null ? formatEur(line.unitPriceBase) : '?'}) is below cost`}
+                                          className="cursor-help">
+                                          <AlertTriangle className="h-3.5 w-3.5 text-red-500 shrink-0" />
+                                        </span>
+                                      )}
+                                    </span>
                                   ) : (
                                     <span className="text-amber-500 text-xs">No price</span>
                                   )}

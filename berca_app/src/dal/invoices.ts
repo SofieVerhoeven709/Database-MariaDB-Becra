@@ -335,3 +335,27 @@ export async function getActiveWorkOrdersForProject(projectId: string) {
     orderBy: {workOrderNumber: 'asc'},
   })
 }
+
+export async function getMaterialPricesForBeNumbers(beNumbers: string[]): Promise<Map<string, number>> {
+  if (beNumbers.length === 0) return new Map()
+
+  const rows = await prismaClient.materialPrice.findMany({
+    where: {
+      deleted: false,
+      beNumber: {in: beNumbers},
+      unitPrice: {not: null},
+    },
+    select: {beNumber: true, unitPrice: true},
+  })
+
+  const map = new Map<string, number>()
+  for (const row of rows) {
+    if (!row.beNumber || row.unitPrice == null) continue
+    const price = Number(row.unitPrice.toString())
+    const existing = map.get(row.beNumber)
+    if (existing === undefined || price < existing) {
+      map.set(row.beNumber, price)
+    }
+  }
+  return map
+}

@@ -2007,8 +2007,8 @@ ALTER TABLE InvoiceOut
     FOREIGN KEY (boqId) REFERENCES BillOfQuantities (id) ON DELETE RESTRICT;
 
 ALTER TABLE InvoiceOut CHANGE COLUMN IF EXISTS `humanId` `clientReference` VARCHAR(255) NULL;
-ALTER TABLE BillOfQuantities CHANGE COLUMN IF EXISTS `humanId` `clientReference` VARCHAR(255) NULL;
---HR Schedule meetings
+
+-- HR Schedule meetings
 
 CREATE TABLE
 IF NOT EXISTS ScheduleMeeting (
@@ -2024,7 +2024,7 @@ IF NOT EXISTS ScheduleMeeting (
   createdAt DATETIME NOT NULL,
   createdBy CHAR(36) NOT NULL,
   updatedAt DATETIME NULL,
-  deleted BOOLEAN NOT NULL DEFAULT false,
+  deleted BOOLEAN NOT NULL DEFAULT 0,
   deletedAt DATETIME NULL,
   deletedBy CHAR(36) NULL,
 
@@ -2112,7 +2112,7 @@ CONSTRAINT RecruitmentVacancy_ibfk_2
 ALTER TABLE Employee
 ADD COLUMN IF NOT EXISTS photoFileId VARCHAR(255) NULL,
 ADD COLUMN IF NOT EXISTS bankAccountNumber VARCHAR(100) NULL,
-ADD COLUMN IF NOT EXISTS RRN VARCHAR(100) NULL,
+ADD COLUMN IF NOT EXISTS rrn VARCHAR(100) NULL,
 ADD COLUMN IF NOT EXISTS idExpirationDate DATETIME NULL,
 ADD COLUMN IF NOT EXISTS driversLicense BOOLEAN NOT NULL DEFAULT 0,
 ADD COLUMN IF NOT EXISTS maritalStatus VARCHAR(100),
@@ -2120,7 +2120,7 @@ ADD COLUMN IF NOT EXISTS dependents INT NULL,
 ADD COLUMN IF NOT EXISTS employmentStatus VARCHAR(100) NULL,
 ADD COLUMN IF NOT EXISTS contractType VARCHAR(255) NULL,
 ADD COLUMN IF NOT EXISTS contractDuration VARCHAR(255) NULL,
-ADD COLUMN IF NOT EXISTS grossSalary DECIMAL(10,2) NULL,
+ADD COLUMN IF NOT EXISTS grossSalary VARCHAR(255) NULL,
 ADD COLUMN IF NOT EXISTS mealVouchers BOOLEAN NOT NULL DEFAULT 0,
 ADD COLUMN IF NOT EXISTS ecoVouchers BOOLEAN NOT NULL DEFAULT 0,
 ADD COLUMN IF NOT EXISTS companyCar BOOLEAN NOT NULL DEFAULT 0,
@@ -2131,43 +2131,47 @@ ADD COLUMN IF NOT EXISTS mobilePhone BOOLEAN NOT NULL DEFAULT 0,
 ADD COLUMN IF NOT EXISTS laptop BOOLEAN NOT NULL DEFAULT 0,
 ADD COLUMN IF NOT EXISTS fixedExpenseAllowance BOOLEAN NOT NULL DEFAULT 0,
 ADD COLUMN IF NOT EXISTS homeWorkInternetAllowance BOOLEAN NOT NULL DEFAULT 0,
-ADD COLUMN IF NOT EXISTS extraLegalBenefits TEXT NULL,
+ADD COLUMN IF NOT EXISTS extraLegalBenefits TEXT NULL;
 
-CREATE TABLE 
-    IF NOT EXISTS EmployeeContractStatusOption (
+CREATE TABLE IF NOT EXISTS EmployeeContractStatusOption (
         id CHAR(36) NOT NULL PRIMARY KEY,
-        name VARCHAR(255),
+        name VARCHAR(255) NULL,
         createdBy CHAR(36) NOT NULL,
         createdAt DATETIME NOT NULL,
         deleted BOOLEAN NOT NULL DEFAULT 0,
-        deletedAt DATETIME,
-        deletedBy CHAR(36),
-        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+        deletedAt DATETIME NULL,
+        deletedBy CHAR(36) NULL,
+        INDEX createdBy (createdBy),
+        INDEX deletedBy (deletedBy),
+        FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL,
+        FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT
 ) ENGINE = InnoDB;
 
-CREATE TABLE 
-    IF NOT EXISTS EmployeeContractTypeOption (
+CREATE TABLE IF NOT EXISTS EmployeeContractTypeOption (
         id CHAR(36) NOT NULL PRIMARY KEY,
-        name VARCHAR(255),
+        name VARCHAR(255) NULL,
         createdBy CHAR(36) NOT NULL,
         createdAt DATETIME NOT NULL,
         deleted BOOLEAN NOT NULL DEFAULT 0,
-        deletedAt DATETIME,
-        deletedBy CHAR(36),
-        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+        deletedAt DATETIME NULL,
+        deletedBy CHAR(36) NULL,
+        INDEX createdBy (createdBy),
+        INDEX deletedBy (deletedBy),
+        FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL,
+        FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT
 ) ENGINE = InnoDB;
 
-CREATE TABLE 
-    IF NOT EXISTS EmployeeBenefitOption (
+CREATE TABLE IF NOT EXISTS EmployeeBenefitOption (
         id CHAR(36) NOT NULL PRIMARY KEY,
-        name VARCHAR(255),
+        name VARCHAR(255) NULL,
         createdBy CHAR(36) NOT NULL,
         createdAt DATETIME NOT NULL,
         deleted BOOLEAN NOT NULL DEFAULT 0,
-        deletedAt DATETIME,
-        deletedBy CHAR(36),
-        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+        deletedAt DATETIME NULL,
+        deletedBy CHAR(36) NULL,
+        INDEX createdBy (createdBy),
+        INDEX deletedBy (deletedBy),
+        FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL,
+        FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT
 ) ENGINE = InnoDB;
+ALTER TABLE BillOfQuantities CHANGE COLUMN IF EXISTS `humanId` `clientReference` VARCHAR(255) NULL; 

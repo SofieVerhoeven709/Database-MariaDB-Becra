@@ -352,11 +352,11 @@ export type InventoryOrderWhereInput = {
   deleted?: Prisma.BoolFilter<"InventoryOrder"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"InventoryOrder"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
-  Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
 }
 
 export type InventoryOrderOrderByWithRelationInput = {
@@ -382,11 +382,11 @@ export type InventoryOrderOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  Material?: Prisma.MaterialOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  Material?: Prisma.MaterialOrderByWithRelationInput
   _relevance?: Prisma.InventoryOrderOrderByRelevanceInput
 }
 
@@ -416,11 +416,11 @@ export type InventoryOrderWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"InventoryOrder"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"InventoryOrder"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
-  Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
 }, "id">
 
 export type InventoryOrderOrderByWithAggregationInput = {
@@ -499,11 +499,11 @@ export type InventoryOrderCreateInput = {
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeInput
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_rejectedByToEmployeeInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeInput
+  Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
 }
 
 export type InventoryOrderUncheckedCreateInput = {
@@ -549,11 +549,11 @@ export type InventoryOrderUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeNestedInput
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_rejectedByToEmployeeNestedInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeNestedInput
+  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
 }
 
 export type InventoryOrderUncheckedUpdateInput = {
@@ -978,10 +978,10 @@ export type InventoryOrderCreateWithoutEmployeeInput = {
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeInput
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_rejectedByToEmployeeInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeInput
+  Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
 }
 
 export type InventoryOrderUncheckedCreateWithoutEmployeeInput = {
@@ -1036,10 +1036,10 @@ export type InventoryOrderCreateWithoutEmployee_InventoryOrder_approvedByToEmplo
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_rejectedByToEmployeeInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeInput
+  Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
 }
 
 export type InventoryOrderUncheckedCreateWithoutEmployee_InventoryOrder_approvedByToEmployeeInput = {
@@ -1094,10 +1094,10 @@ export type InventoryOrderCreateWithoutEmployee_InventoryOrder_rejectedByToEmplo
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeInput
+  Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
 }
 
 export type InventoryOrderUncheckedCreateWithoutEmployee_InventoryOrder_rejectedByToEmployeeInput = {
@@ -1152,10 +1152,10 @@ export type InventoryOrderCreateWithoutEmployee_InventoryOrder_deletedByToEmploy
   createdAt?: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeInput
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryOrder_InventoryOrder_rejectedByToEmployeeInput
+  Material: Prisma.MaterialCreateNestedOneWithoutInventoryOrderInput
 }
 
 export type InventoryOrderUncheckedCreateWithoutEmployee_InventoryOrder_deletedByToEmployeeInput = {
@@ -1472,10 +1472,10 @@ export type InventoryOrderUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeNestedInput
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_rejectedByToEmployeeNestedInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeNestedInput
+  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
 }
 
 export type InventoryOrderUncheckedUpdateWithoutEmployeeInput = {
@@ -1544,10 +1544,10 @@ export type InventoryOrderUpdateWithoutEmployee_InventoryOrder_approvedByToEmplo
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_rejectedByToEmployeeNestedInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeNestedInput
+  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
 }
 
 export type InventoryOrderUncheckedUpdateWithoutEmployee_InventoryOrder_approvedByToEmployeeInput = {
@@ -1616,10 +1616,10 @@ export type InventoryOrderUpdateWithoutEmployee_InventoryOrder_rejectedByToEmplo
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeNestedInput
   Employee_InventoryOrder_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_deletedByToEmployeeNestedInput
+  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
 }
 
 export type InventoryOrderUncheckedUpdateWithoutEmployee_InventoryOrder_rejectedByToEmployeeInput = {
@@ -1688,10 +1688,10 @@ export type InventoryOrderUpdateWithoutEmployee_InventoryOrder_deletedByToEmploy
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee_InventoryOrder_approvedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_approvedByToEmployeeNestedInput
   Employee_InventoryOrder_rejectedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryOrder_InventoryOrder_rejectedByToEmployeeNestedInput
+  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryOrderNestedInput
 }
 
 export type InventoryOrderUncheckedUpdateWithoutEmployee_InventoryOrder_deletedByToEmployeeInput = {
@@ -1863,11 +1863,11 @@ export type InventoryOrderSelect<ExtArgs extends runtime.Types.Extensions.Intern
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_InventoryOrder_approvedByToEmployee?: boolean | Prisma.InventoryOrder$Employee_InventoryOrder_approvedByToEmployeeArgs<ExtArgs>
   Employee_InventoryOrder_rejectedByToEmployee?: boolean | Prisma.InventoryOrder$Employee_InventoryOrder_rejectedByToEmployeeArgs<ExtArgs>
   Employee_InventoryOrder_deletedByToEmployee?: boolean | Prisma.InventoryOrder$Employee_InventoryOrder_deletedByToEmployeeArgs<ExtArgs>
+  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryOrder"]>
 
 
@@ -1899,21 +1899,21 @@ export type InventoryOrderSelectScalar = {
 
 export type InventoryOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "orderNumber" | "requestedQty" | "orderDate" | "shortDescription" | "longDescription" | "approved" | "approvedAt" | "approvedBy" | "rejected" | "rejectedAt" | "rejectedBy" | "notDeliverable" | "notCorrect" | "notCorrectReason" | "snapshotTakenAt" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["inventoryOrder"]>
 export type InventoryOrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_InventoryOrder_approvedByToEmployee?: boolean | Prisma.InventoryOrder$Employee_InventoryOrder_approvedByToEmployeeArgs<ExtArgs>
   Employee_InventoryOrder_rejectedByToEmployee?: boolean | Prisma.InventoryOrder$Employee_InventoryOrder_rejectedByToEmployeeArgs<ExtArgs>
   Employee_InventoryOrder_deletedByToEmployee?: boolean | Prisma.InventoryOrder$Employee_InventoryOrder_deletedByToEmployeeArgs<ExtArgs>
+  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
 }
 
 export type $InventoryOrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "InventoryOrder"
   objects: {
-    Material: Prisma.$MaterialPayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Employee_InventoryOrder_approvedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Employee_InventoryOrder_rejectedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Employee_InventoryOrder_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    Material: Prisma.$MaterialPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2278,11 +2278,11 @@ readonly fields: InventoryOrderFieldRefs;
  */
 export interface Prisma__InventoryOrderClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Material<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_InventoryOrder_approvedByToEmployee<T extends Prisma.InventoryOrder$Employee_InventoryOrder_approvedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryOrder$Employee_InventoryOrder_approvedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_InventoryOrder_rejectedByToEmployee<T extends Prisma.InventoryOrder$Employee_InventoryOrder_rejectedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryOrder$Employee_InventoryOrder_rejectedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_InventoryOrder_deletedByToEmployee<T extends Prisma.InventoryOrder$Employee_InventoryOrder_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryOrder$Employee_InventoryOrder_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Material<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

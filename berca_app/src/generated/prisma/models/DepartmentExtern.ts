@@ -207,8 +207,8 @@ export type DepartmentExternWhereInput = {
   deletedBy?: Prisma.StringNullableFilter<"DepartmentExtern"> | string | null
   targetId?: Prisma.StringFilter<"DepartmentExtern"> | string
   Contact?: Prisma.ContactListRelationFilter
-  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_DepartmentExtern_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
 }
 
@@ -222,8 +222,8 @@ export type DepartmentExternOrderByWithRelationInput = {
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
   Contact?: Prisma.ContactOrderByRelationAggregateInput
-  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_DepartmentExtern_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
   _relevance?: Prisma.DepartmentExternOrderByRelevanceInput
 }
@@ -241,8 +241,8 @@ export type DepartmentExternWhereUniqueInput = Prisma.AtLeast<{
   deletedBy?: Prisma.StringNullableFilter<"DepartmentExtern"> | string | null
   targetId?: Prisma.StringFilter<"DepartmentExtern"> | string
   Contact?: Prisma.ContactListRelationFilter
-  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_DepartmentExtern_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
 }, "id">
 
@@ -281,8 +281,8 @@ export type DepartmentExternCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDepartmentExternInput
-  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeInput
   Employee_DepartmentExtern_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeInput
+  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
 }
 
@@ -305,8 +305,8 @@ export type DepartmentExternUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDepartmentExternNestedInput
-  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeNestedInput
   Employee_DepartmentExtern_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeNestedInput
+  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDepartmentExternNestedInput
 }
 
@@ -422,13 +422,6 @@ export type DepartmentExternUpdateOneWithoutContactNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DepartmentExternUpdateToOneWithWhereWithoutContactInput, Prisma.DepartmentExternUpdateWithoutContactInput>, Prisma.DepartmentExternUncheckedUpdateWithoutContactInput>
 }
 
-export type DepartmentExternCreateNestedManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
-  create?: Prisma.XOR<Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput> | Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[] | Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
-  connectOrCreate?: Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
-  createMany?: Prisma.DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInputEnvelope
-  connect?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
-}
-
 export type DepartmentExternCreateNestedManyWithoutEmployee_DepartmentExtern_createdByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_createdByToEmployeeInput, Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_createdByToEmployeeInput> | Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_createdByToEmployeeInput[] | Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_createdByToEmployeeInput | Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_createdByToEmployeeInput[]
@@ -436,7 +429,7 @@ export type DepartmentExternCreateNestedManyWithoutEmployee_DepartmentExtern_cre
   connect?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
 }
 
-export type DepartmentExternUncheckedCreateNestedManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+export type DepartmentExternCreateNestedManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput> | Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[] | Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
   connectOrCreate?: Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
   createMany?: Prisma.DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInputEnvelope
@@ -450,18 +443,11 @@ export type DepartmentExternUncheckedCreateNestedManyWithoutEmployee_DepartmentE
   connect?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
 }
 
-export type DepartmentExternUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeNestedInput = {
+export type DepartmentExternUncheckedCreateNestedManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput> | Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[] | Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
   connectOrCreate?: Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
-  upsert?: Prisma.DepartmentExternUpsertWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternUpsertWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
   createMany?: Prisma.DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInputEnvelope
-  set?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
-  disconnect?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
-  delete?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
   connect?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
-  update?: Prisma.DepartmentExternUpdateWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternUpdateWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
-  updateMany?: Prisma.DepartmentExternUpdateManyWithWhereWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternUpdateManyWithWhereWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
-  deleteMany?: Prisma.DepartmentExternScalarWhereInput | Prisma.DepartmentExternScalarWhereInput[]
 }
 
 export type DepartmentExternUpdateManyWithoutEmployee_DepartmentExtern_createdByToEmployeeNestedInput = {
@@ -478,7 +464,7 @@ export type DepartmentExternUpdateManyWithoutEmployee_DepartmentExtern_createdBy
   deleteMany?: Prisma.DepartmentExternScalarWhereInput | Prisma.DepartmentExternScalarWhereInput[]
 }
 
-export type DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeNestedInput = {
+export type DepartmentExternUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput> | Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[] | Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
   connectOrCreate?: Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
   upsert?: Prisma.DepartmentExternUpsertWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternUpsertWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
@@ -503,6 +489,20 @@ export type DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_
   connect?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
   update?: Prisma.DepartmentExternUpdateWithWhereUniqueWithoutEmployee_DepartmentExtern_createdByToEmployeeInput | Prisma.DepartmentExternUpdateWithWhereUniqueWithoutEmployee_DepartmentExtern_createdByToEmployeeInput[]
   updateMany?: Prisma.DepartmentExternUpdateManyWithWhereWithoutEmployee_DepartmentExtern_createdByToEmployeeInput | Prisma.DepartmentExternUpdateManyWithWhereWithoutEmployee_DepartmentExtern_createdByToEmployeeInput[]
+  deleteMany?: Prisma.DepartmentExternScalarWhereInput | Prisma.DepartmentExternScalarWhereInput[]
+}
+
+export type DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput> | Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[] | Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
+  upsert?: Prisma.DepartmentExternUpsertWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternUpsertWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
+  createMany?: Prisma.DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInputEnvelope
+  set?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
+  disconnect?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
+  delete?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
+  connect?: Prisma.DepartmentExternWhereUniqueInput | Prisma.DepartmentExternWhereUniqueInput[]
+  update?: Prisma.DepartmentExternUpdateWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternUpdateWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
+  updateMany?: Prisma.DepartmentExternUpdateManyWithWhereWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternUpdateManyWithWhereWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput[]
   deleteMany?: Prisma.DepartmentExternScalarWhereInput | Prisma.DepartmentExternScalarWhereInput[]
 }
 
@@ -554,8 +554,8 @@ export type DepartmentExternCreateWithoutContactInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeInput
   Employee_DepartmentExtern_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeInput
+  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
 }
 
@@ -592,8 +592,8 @@ export type DepartmentExternUpdateWithoutContactInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeNestedInput
   Employee_DepartmentExtern_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeNestedInput
+  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDepartmentExternNestedInput
 }
 
@@ -606,38 +606,6 @@ export type DepartmentExternUncheckedUpdateWithoutContactInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
-  id: string
-  name: string
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Contact?: Prisma.ContactCreateNestedManyWithoutDepartmentExternInput
-  Employee_DepartmentExtern_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
-}
-
-export type DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
-  id: string
-  name: string
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  createdBy: string
-  targetId: string
-  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDepartmentExternInput
-}
-
-export type DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
-  where: Prisma.DepartmentExternWhereUniqueInput
-  create: Prisma.XOR<Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput>
-}
-
-export type DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInputEnvelope = {
-  data: Prisma.DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInput[]
-  skipDuplicates?: boolean
 }
 
 export type DepartmentExternCreateWithoutEmployee_DepartmentExtern_createdByToEmployeeInput = {
@@ -672,34 +640,36 @@ export type DepartmentExternCreateManyEmployee_DepartmentExtern_createdByToEmplo
   skipDuplicates?: boolean
 }
 
-export type DepartmentExternUpsertWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+export type DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Contact?: Prisma.ContactCreateNestedManyWithoutDepartmentExternInput
+  Employee_DepartmentExtern_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeInput
+  Target: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
+}
+
+export type DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  createdBy: string
+  targetId: string
+  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDepartmentExternInput
+}
+
+export type DepartmentExternCreateOrConnectWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
   where: Prisma.DepartmentExternWhereUniqueInput
-  update: Prisma.XOR<Prisma.DepartmentExternUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput>
   create: Prisma.XOR<Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput>
 }
 
-export type DepartmentExternUpdateWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
-  where: Prisma.DepartmentExternWhereUniqueInput
-  data: Prisma.XOR<Prisma.DepartmentExternUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput>
-}
-
-export type DepartmentExternUpdateManyWithWhereWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
-  where: Prisma.DepartmentExternScalarWhereInput
-  data: Prisma.XOR<Prisma.DepartmentExternUpdateManyMutationInput, Prisma.DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput>
-}
-
-export type DepartmentExternScalarWhereInput = {
-  AND?: Prisma.DepartmentExternScalarWhereInput | Prisma.DepartmentExternScalarWhereInput[]
-  OR?: Prisma.DepartmentExternScalarWhereInput[]
-  NOT?: Prisma.DepartmentExternScalarWhereInput | Prisma.DepartmentExternScalarWhereInput[]
-  id?: Prisma.StringFilter<"DepartmentExtern"> | string
-  name?: Prisma.StringFilter<"DepartmentExtern"> | string
-  createdAt?: Prisma.DateTimeFilter<"DepartmentExtern"> | Date | string
-  deleted?: Prisma.BoolFilter<"DepartmentExtern"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"DepartmentExtern"> | Date | string | null
-  createdBy?: Prisma.StringFilter<"DepartmentExtern"> | string
-  deletedBy?: Prisma.StringNullableFilter<"DepartmentExtern"> | string | null
-  targetId?: Prisma.StringFilter<"DepartmentExtern"> | string
+export type DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInput | Prisma.DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInput[]
+  skipDuplicates?: boolean
 }
 
 export type DepartmentExternUpsertWithWhereUniqueWithoutEmployee_DepartmentExtern_createdByToEmployeeInput = {
@@ -718,6 +688,36 @@ export type DepartmentExternUpdateManyWithWhereWithoutEmployee_DepartmentExtern_
   data: Prisma.XOR<Prisma.DepartmentExternUpdateManyMutationInput, Prisma.DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_createdByToEmployeeInput>
 }
 
+export type DepartmentExternScalarWhereInput = {
+  AND?: Prisma.DepartmentExternScalarWhereInput | Prisma.DepartmentExternScalarWhereInput[]
+  OR?: Prisma.DepartmentExternScalarWhereInput[]
+  NOT?: Prisma.DepartmentExternScalarWhereInput | Prisma.DepartmentExternScalarWhereInput[]
+  id?: Prisma.StringFilter<"DepartmentExtern"> | string
+  name?: Prisma.StringFilter<"DepartmentExtern"> | string
+  createdAt?: Prisma.DateTimeFilter<"DepartmentExtern"> | Date | string
+  deleted?: Prisma.BoolFilter<"DepartmentExtern"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"DepartmentExtern"> | Date | string | null
+  createdBy?: Prisma.StringFilter<"DepartmentExtern"> | string
+  deletedBy?: Prisma.StringNullableFilter<"DepartmentExtern"> | string | null
+  targetId?: Prisma.StringFilter<"DepartmentExtern"> | string
+}
+
+export type DepartmentExternUpsertWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+  where: Prisma.DepartmentExternWhereUniqueInput
+  update: Prisma.XOR<Prisma.DepartmentExternUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput>
+}
+
+export type DepartmentExternUpdateWithWhereUniqueWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+  where: Prisma.DepartmentExternWhereUniqueInput
+  data: Prisma.XOR<Prisma.DepartmentExternUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput, Prisma.DepartmentExternUncheckedUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput>
+}
+
+export type DepartmentExternUpdateManyWithWhereWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+  where: Prisma.DepartmentExternScalarWhereInput
+  data: Prisma.XOR<Prisma.DepartmentExternUpdateManyMutationInput, Prisma.DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput>
+}
+
 export type DepartmentExternCreateWithoutTargetInput = {
   id: string
   name: string
@@ -725,8 +725,8 @@ export type DepartmentExternCreateWithoutTargetInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDepartmentExternInput
-  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeInput
   Employee_DepartmentExtern_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeInput
+  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeInput
 }
 
 export type DepartmentExternUncheckedCreateWithoutTargetInput = {
@@ -766,16 +766,6 @@ export type DepartmentExternUpdateManyWithWhereWithoutTargetInput = {
   data: Prisma.XOR<Prisma.DepartmentExternUpdateManyMutationInput, Prisma.DepartmentExternUncheckedUpdateManyWithoutTargetInput>
 }
 
-export type DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInput = {
-  id: string
-  name: string
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  createdBy: string
-  targetId: string
-}
-
 export type DepartmentExternCreateManyEmployee_DepartmentExtern_createdByToEmployeeInput = {
   id: string
   name: string
@@ -786,36 +776,14 @@ export type DepartmentExternCreateManyEmployee_DepartmentExtern_createdByToEmplo
   targetId: string
 }
 
-export type DepartmentExternUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Contact?: Prisma.ContactUpdateManyWithoutDepartmentExternNestedInput
-  Employee_DepartmentExtern_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutDepartmentExternNestedInput
-}
-
-export type DepartmentExternUncheckedUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  Contact?: Prisma.ContactUncheckedUpdateManyWithoutDepartmentExternNestedInput
-}
-
-export type DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+export type DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  createdBy: string
+  targetId: string
 }
 
 export type DepartmentExternUpdateWithoutEmployee_DepartmentExtern_createdByToEmployeeInput = {
@@ -850,6 +818,38 @@ export type DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
+export type DepartmentExternUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Contact?: Prisma.ContactUpdateManyWithoutDepartmentExternNestedInput
+  Employee_DepartmentExtern_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutDepartmentExternNestedInput
+}
+
+export type DepartmentExternUncheckedUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  Contact?: Prisma.ContactUncheckedUpdateManyWithoutDepartmentExternNestedInput
+}
+
+export type DepartmentExternUncheckedUpdateManyWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 export type DepartmentExternCreateManyTargetInput = {
   id: string
   name: string
@@ -867,8 +867,8 @@ export type DepartmentExternUpdateWithoutTargetInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDepartmentExternNestedInput
-  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeNestedInput
   Employee_DepartmentExtern_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeNestedInput
+  Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeNestedInput
 }
 
 export type DepartmentExternUncheckedUpdateWithoutTargetInput = {
@@ -933,8 +933,8 @@ export type DepartmentExternSelect<ExtArgs extends runtime.Types.Extensions.Inte
   deletedBy?: boolean
   targetId?: boolean
   Contact?: boolean | Prisma.DepartmentExtern$ContactArgs<ExtArgs>
-  Employee_DepartmentExtern_deletedByToEmployee?: boolean | Prisma.DepartmentExtern$Employee_DepartmentExtern_deletedByToEmployeeArgs<ExtArgs>
   Employee_DepartmentExtern_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_DepartmentExtern_deletedByToEmployee?: boolean | Prisma.DepartmentExtern$Employee_DepartmentExtern_deletedByToEmployeeArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.DepartmentExternCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["departmentExtern"]>
@@ -955,8 +955,8 @@ export type DepartmentExternSelectScalar = {
 export type DepartmentExternOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "deleted" | "deletedAt" | "createdBy" | "deletedBy" | "targetId", ExtArgs["result"]["departmentExtern"]>
 export type DepartmentExternInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Contact?: boolean | Prisma.DepartmentExtern$ContactArgs<ExtArgs>
-  Employee_DepartmentExtern_deletedByToEmployee?: boolean | Prisma.DepartmentExtern$Employee_DepartmentExtern_deletedByToEmployeeArgs<ExtArgs>
   Employee_DepartmentExtern_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_DepartmentExtern_deletedByToEmployee?: boolean | Prisma.DepartmentExtern$Employee_DepartmentExtern_deletedByToEmployeeArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.DepartmentExternCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -965,8 +965,8 @@ export type $DepartmentExternPayload<ExtArgs extends runtime.Types.Extensions.In
   name: "DepartmentExtern"
   objects: {
     Contact: Prisma.$ContactPayload<ExtArgs>[]
-    Employee_DepartmentExtern_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Employee_DepartmentExtern_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_DepartmentExtern_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Target: Prisma.$TargetPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1319,8 +1319,8 @@ readonly fields: DepartmentExternFieldRefs;
 export interface Prisma__DepartmentExternClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Contact<T extends Prisma.DepartmentExtern$ContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DepartmentExtern$ContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  Employee_DepartmentExtern_deletedByToEmployee<T extends Prisma.DepartmentExtern$Employee_DepartmentExtern_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DepartmentExtern$Employee_DepartmentExtern_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_DepartmentExtern_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_DepartmentExtern_deletedByToEmployee<T extends Prisma.DepartmentExtern$Employee_DepartmentExtern_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DepartmentExtern$Employee_DepartmentExtern_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

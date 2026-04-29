@@ -409,29 +409,35 @@ export function PurchaseBOMFormDialog({
                   <Label className="text-xs text-muted-foreground">Approved for Quote</Label>
                   <Switch checked={approvedForQuote} onCheckedChange={setApprovedForQuote} />
                 </div>
-                {/* Work Order selection — only when approving for quote and >1 open work order */}
-                {approvedForQuote && workOrders.length > 1 && (
+                {/* Work Order selection — always shown when approving for quote */}
+                {approvedForQuote && (
                   <div className="flex flex-col gap-1.5">
                     <Label className="text-xs text-muted-foreground">Work Order</Label>
-                    <Select value={selectedWorkOrderId} onValueChange={setSelectedWorkOrderId}>
-                      <SelectTrigger className="bg-secondary border-border">
-                        <SelectValue placeholder="Select work order" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border">
-                        {workOrders.map(wo => (
-                          <SelectItem key={wo.id} value={wo.id}>
-                            <div className="flex flex-col">
-                              <span className="font-medium">{wo.workOrderNumber ?? wo.id}</span>
-                              {wo.description && (
-                                <span className="text-xs text-muted-foreground truncate max-w-75">
-                                  {wo.description}
-                                </span>
-                              )}
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    {workOrders.length === 0 ? (
+                      <p className="text-xs text-destructive/80 px-1">
+                        No open work orders found for this project. Ask a manager to open one before approving.
+                      </p>
+                    ) : (
+                      <Select value={selectedWorkOrderId} onValueChange={setSelectedWorkOrderId}>
+                        <SelectTrigger className="bg-secondary border-border">
+                          <SelectValue placeholder="Select work order" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-card border-border">
+                          {workOrders.map(wo => (
+                            <SelectItem key={wo.id} value={wo.id}>
+                              <div className="flex flex-col">
+                                <span className="font-medium">{wo.workOrderNumber ?? wo.id}</span>
+                                {wo.description && (
+                                  <span className="text-xs text-muted-foreground truncate max-w-75">
+                                    {wo.description}
+                                  </span>
+                                )}
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
                   </div>
                 )}
               </div>

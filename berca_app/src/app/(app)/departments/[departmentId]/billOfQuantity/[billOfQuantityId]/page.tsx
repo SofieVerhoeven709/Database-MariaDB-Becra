@@ -15,15 +15,15 @@ import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface PageProps {
-  params: Promise<{departmentId: string; boqId: string}>
+  params: Promise<{departmentId: string; billOfQuantityId: string}>
 }
 
 export default async function BoqDetailPage({params}: PageProps) {
-  const {departmentId, boqId} = await params
+  const {departmentId, billOfQuantityId} = await params
 
   const [department, boqRaw, boqTypes, paymentMethods, boqSentTypes, boqStatuses, profile] = await Promise.all([
     getDepartmentById(departmentId),
-    getBoqById(boqId).catch(() => null),
+    getBoqById(billOfQuantityId).catch(() => null),
     getBoqTypes(),
     getPaymentMethods(),
     getBoqSentTypes(),

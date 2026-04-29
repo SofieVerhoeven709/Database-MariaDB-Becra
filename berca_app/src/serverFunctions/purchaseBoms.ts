@@ -65,7 +65,7 @@ export const createPurchaseBOMAction = protectedServerFunction({
 export const updatePurchaseBOMAction = protectedServerFunction({
   schema: updatePurchaseBOMSchema,
   functionName: 'Update purchase BOM action',
-  serverFn: async ({data: {id, ...data}, logger, profile}) => {
+  serverFn: async ({data: {id, workOrderId, purchaseBomId, ...data}, logger, profile}) => {
     const existingBom = await prismaClient.purchaseBOM.findUnique({
       where: {id},
       select: {projectId: true, projectBOMId: true, approvedForQuote: true},
@@ -73,16 +73,25 @@ export const updatePurchaseBOMAction = protectedServerFunction({
     if (!existingBom) throw new Error('Purchase BOM not found.')
 
     const approvingNow = data.approvedForQuote === true && !existingBom.approvedForQuote
-    const openWorkOrder = approvingNow ? await findOpenWorkOrderForProject(existingBom.projectId) : null
+
+    const openWorkOrder = approvingNow
+      ? workOrderId
+        ? await prismaClient.workOrder.findUnique({where: {id: workOrderId}, select: {id: true}})
+        : await findOpenWorkOrderForProject(existingBom.projectId)
+      : null
 
     if (approvingNow && !openWorkOrder) {
       throw new Error(OPEN_WORK_ORDER_ERROR)
     }
 
-    // purchased=true forces materialClosed/closed=true on this BOM.
     const bomUpdateData = {
       ...data,
       ...(data.purchased ? {materialClosed: true, closed: true} : {}),
+      ...(purchaseBomId !== undefined
+        ? {
+            PurchaseBOM: purchaseBomId ? {connect: {id: purchaseBomId}} : {disconnect: true},
+          }
+        : {}),
     }
 
     const updatedBom = await prismaClient.purchaseBOM.update({
@@ -93,14 +102,12 @@ export const updatePurchaseBOMAction = protectedServerFunction({
     logger.info(`Purchase BOM updated: ${id}`)
 
     if (data.purchased) {
-      // Mark every active structure on THIS BOM as purchased
       await prismaClient.purchaseBOMStructure.updateMany({
         where: {purchaseBOMId: id, deleted: false},
         data: {purchased: true},
       })
       logger.info(`Marked all active structures as purchased for PurchaseBOM: ${id}`)
 
-      // Mirror materialClosed=true onto the linked ProjectBOM
       if (updatedBom.projectBOMId) {
         await prismaClient.projectBOM.update({
           where: {id: updatedBom.projectBOMId},
@@ -111,8 +118,6 @@ export const updatePurchaseBOMAction = protectedServerFunction({
     }
 
     if (approvingNow) {
-      // Approval releases this BOM for demand/quote flow and locks project-side structure edits.
-      // First, fetch all active PurchaseBOMStructures with their ProjectBOMStructure relations
       const purchaseStructures = await prismaClient.purchaseBOMStructure.findMany({
         where: {purchaseBOMId: id, deleted: false},
         include: {
@@ -169,21 +174,18 @@ export const updatePurchaseBOMAction = protectedServerFunction({
         )
       }
 
-      // Mark all structures as approvedForQuote
       await prismaClient.purchaseBOMStructure.updateMany({
         where: {purchaseBOMId: id, deleted: false},
         data: {approvedForQuote: true},
       })
       logger.info(`Marked all active structures as approvedForQuote for PurchaseBOM: ${id}`)
 
-      // Create MaterialDemandSource entries for tracking source allocations
       const projectBomStructureIds = purchaseStructures
         .filter(ps => ps.ProjectBOMStructure)
         .map(ps => ps.ProjectBOMStructure!.id)
 
       if (projectBomStructureIds.length > 0) {
         try {
-          // Get or create MaterialDemandSourceType for ProjectBOMStructure
           const sourceType = await prismaClient.materialDemandSourceType.upsert({
             where: {name: 'ProjectBOMStructure'},
             update: {},
@@ -204,7 +206,6 @@ export const updatePurchaseBOMAction = protectedServerFunction({
           )
           logger.info(`Created ${createdSources.length} MaterialDemandSource entries for PurchaseBOM approval: ${id}`)
 
-          // Validate allocations don't exceed demands
           const materials = new Set(
             purchaseStructures
               .filter(ps => ps.ProjectBOMStructure?.Material)
@@ -227,7 +228,6 @@ export const updatePurchaseBOMAction = protectedServerFunction({
           logger.error(
             `Failed to create MaterialDemandSource entries: ${err instanceof Error ? err.message : String(err)}`,
           )
-          // Don't fail the whole approval, but log the issue
         }
       }
 

@@ -2457,7 +2457,7 @@
 
     CREATE TABLE 
         IF NOT EXISTS QuoteSupplierMiscLine (
-            id  CHAR(36) PRIMARY KEY,
+            id CHAR(36) PRIMARY KEY,
             quoteSupplierId CHAR(36) NOT NULL,
             description VARCHAR(255) NOT NULL,
             unitPrice DECIMAL(10,2) NOT NULL,

@@ -3096,7 +3096,7 @@ model BillOfQuantities {
   id                                             String                   @id @db.Char(36)
   boqNumber                                      String                   @unique(map: "boqNumber") @db.VarChar(255)
   poNumber                                       String?                  @db.VarChar(255)
-  humanId                                        String?                  @db.VarChar(255)
+  clientReference                                String?                  @db.VarChar(255)
   boqDate                                        DateTime                 @db.DateTime(0)
   createdAt                                      DateTime                 @db.DateTime(0)
   dueDate                                        DateTime                 @db.DateTime(0)

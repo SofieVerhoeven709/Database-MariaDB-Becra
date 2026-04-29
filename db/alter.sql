@@ -2171,3 +2171,4 @@ CREATE TABLE IF NOT EXISTS EmployeeBenefitOption (
         FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL,
         FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT
 ) ENGINE = InnoDB;
+ALTER TABLE BillOfQuantities CHANGE COLUMN IF EXISTS `humanId` `clientReference` VARCHAR(255) NULL; 

@@ -620,6 +620,16 @@ export type IncomingDeliveryLineAllocation = Prisma.IncomingDeliveryLineAllocati
  */
 export type ScheduleMeeting = Prisma.ScheduleMeetingModel
 /**
+ * Model HrCertificationTraining
+ * 
+ */
+export type HrCertificationTraining = Prisma.HrCertificationTrainingModel
+/**
+ * Model HrEmployeeAbsence
+ * 
+ */
+export type HrEmployeeAbsence = Prisma.HrEmployeeAbsenceModel
+/**
  * Model BillOfQuantities
  * 
  */

@@ -2007,7 +2007,8 @@ ALTER TABLE InvoiceOut
     FOREIGN KEY (boqId) REFERENCES BillOfQuantities (id) ON DELETE RESTRICT;
 
 ALTER TABLE InvoiceOut CHANGE COLUMN IF EXISTS `humanId` `clientReference` VARCHAR(255) NULL;
---HR Schedule meetings
+
+-- HR Schedule meetings
 
 CREATE TABLE
 IF NOT EXISTS ScheduleMeeting (
@@ -2023,7 +2024,7 @@ IF NOT EXISTS ScheduleMeeting (
   createdAt DATETIME NOT NULL,
   createdBy CHAR(36) NOT NULL,
   updatedAt DATETIME NULL,
-  deleted BOOLEAN NOT NULL DEFAULT false,
+  deleted BOOLEAN NOT NULL DEFAULT 0,
   deletedAt DATETIME NULL,
   deletedBy CHAR(36) NULL,
 

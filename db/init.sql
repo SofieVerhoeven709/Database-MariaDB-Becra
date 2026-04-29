@@ -91,12 +91,80 @@ CREATE TABLE IF NOT EXISTS Employee (
             createdBy CHAR(36),
             titleId CHAR(36),
             pictureId CHAR(36),
+            photoFileId VARCHAR(255),
+            bankAccountNumber VARCHAR(100),
+            rrn VARCHAR(100),
+            idExpirationDate DATETIME,
+            driversLicense BOOLEAN NOT NULL DEFAULT 0,
+            maritalStatus VARCHAR(100),
+            dependents INT,
+            employmentStatus VARCHAR(100),
+            contractType VARCHAR(255),
+            contractDuration VARCHAR(255),
+            grossSalary VARCHAR(255),
+            mealVouchers BOOLEAN NOT NULL DEFAULT 0,
+            ecoVouchers BOOLEAN NOT NULL DEFAULT 0,
+            companyCar BOOLEAN NOT NULL DEFAULT 0,
+            companyCarDescription VARCHAR(255),
+            fuelCard BOOLEAN NOT NULL DEFAULT 0,
+            bikeLease BOOLEAN NOT NULL DEFAULT 0,
+            mobilePhone BOOLEAN NOT NULL DEFAULT 0,
+            laptop BOOLEAN NOT NULL DEFAULT 0,
+            fixedExpenseAllowance BOOLEAN NOT NULL DEFAULT 0,
+            homeWorkInternetAllowance BOOLEAN NOT NULL DEFAULT 0,
+            extraLegalBenefits TEXT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
+            INDEX createdBy (createdBy),
+            INDEX deletedBy (deletedBy),
+            INDEX pictureId (pictureId),
+            INDEX titleId (titleId),
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (titleId) REFERENCES Title (id) ON DELETE RESTRICT,
             FOREIGN KEY (pictureId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS EmployeeContractStatusOption (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(255),
+            createdBy CHAR(36) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            INDEX createdBy (createdBy),
+            INDEX deletedBy (deletedBy),
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS EmployeeContractTypeOption (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(255),
+            createdBy CHAR(36) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            INDEX createdBy (createdBy),
+            INDEX deletedBy (deletedBy),
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS EmployeeBenefitOption (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(255),
+            createdBy CHAR(36) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            INDEX createdBy (createdBy),
+            INDEX deletedBy (deletedBy),
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
@@ -681,7 +749,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS Project (
-    id NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     projectNumber VARCHAR(255) NOT NULL,
     projectName VARCHAR(255) NOT NULL,
     description TEXT,
@@ -714,7 +782,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS Certificate (
-    id(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     description TEXT,
     descriptionShort TEXT,
     createdAt DATETIME NOT NULL,
@@ -766,7 +834,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS WorkOrder (
-        id(36) NOT NULL PRIMARY KEY,
+        id CHAR(36) NOT NULL PRIMARY KEY,
         workOrderNumber VARCHAR(255) NOT NULL,
         description TEXT,
         additionalInfo TEXT,
@@ -1043,6 +1111,7 @@ CREATE TABLE
     invoiceSentTypeId CHAR(36) NOT NULL,
     invoiceStatusId CHAR(36) NOT NULL,
     priceListId CHAR(36),
+    boqId CHAR(36),
     FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
     FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
     FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
@@ -1963,7 +2032,7 @@ CREATE TABLE
             closed BOOLEAN NOT NULL DEFAULT 0,
             materialClosed BOOLEAN NOT NULL DEFAULT 0,
             readyForPurchase BOOLEAN NOT NULL DEFAULT 0,
-            canCopy BOOLEAN NOT NULL DEFAULT 0;
+            canCopy BOOLEAN NOT NULL DEFAULT 0,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             projectId CHAR(36) NOT NULL,
@@ -2430,8 +2499,6 @@ CREATE TABLE
         FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
         FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT
     ) ENGINE = InnoDB;
-
-ALTER TABLE InvoiceOut ADD COLUMN IF NOT EXISTS boqId CHAR(36) NULL;
 
 ALTER TABLE InvoiceOut
     ADD CONSTRAINT fk_invoiceout_boq

@@ -8954,8 +8954,8 @@ export const RecruitmentVacancyScalarFieldEnum = {
   publishRecruitmentAgencies: 'publishRecruitmentAgencies',
   otherPublication: 'otherPublication',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -9411,7 +9411,8 @@ export const MaterialScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  targetId: 'targetId'
+  targetId: 'targetId',
+  bePartDoc: 'bePartDoc'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -9624,7 +9625,6 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
-  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -10862,7 +10862,7 @@ export const BillOfQuantitiesScalarFieldEnum = {
   id: 'id',
   boqNumber: 'boqNumber',
   poNumber: 'poNumber',
-  clientReference: 'clientReference',
+  humanId: 'humanId',
   boqDate: 'boqDate',
   createdAt: 'createdAt',
   dueDate: 'dueDate',
@@ -11445,7 +11445,8 @@ export const MaterialOrderByRelevanceFieldEnum = {
   unitId: 'unitId',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy',
-  targetId: 'targetId'
+  targetId: 'targetId',
+  bePartDoc: 'bePartDoc'
 } as const
 
 export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
@@ -11619,7 +11620,6 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
-  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -12541,7 +12541,7 @@ export const BillOfQuantitiesOrderByRelevanceFieldEnum = {
   id: 'id',
   boqNumber: 'boqNumber',
   poNumber: 'poNumber',
-  clientReference: 'clientReference',
+  humanId: 'humanId',
   deletedBy: 'deletedBy',
   createdBy: 'createdBy',
   modifiedBy: 'modifiedBy',

@@ -1,8 +1,7 @@
 CREATE DATABASE BecraBV;
 USE BecraBV;
 
-CREATE TABLE
-      IF NOT EXISTS Role (
+CREATE TABLE IF NOT EXISTS Role (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -10,8 +9,15 @@ CREATE TABLE
             deletedAt DATETIME
       ) ENGINE = InnoDB;
 
-CREATE TABLE
-      IF NOT EXISTS Function (
+CREATE TABLE IF NOT EXISTS `Function` (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME
+    ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS Title (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -19,17 +25,7 @@ CREATE TABLE
             deletedAt DATETIME
       ) ENGINE = InnoDB;
 
-CREATE TABLE
-      IF NOT EXISTS Title (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            name VARCHAR(100) NOT NULL,
-            createdAt DATETIME NOT NULL,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME
-      ) ENGINE = InnoDB;
-
-CREATE TABLE
-      IF NOT EXISTS DocumentStructure (
+CREATE TABLE IF NOT EXISTS DocumentStructure (
             id CHAR(36) NOT NULL PRIMARY KEY,
             documentNumber VARCHAR(100) NOT NULL,
             description TEXT,
@@ -43,14 +39,13 @@ CREATE TABLE
             canCopy BOOLEAN NOT NULL DEFAULT 0,
             additionalInfo TEXT,
             referenceDocId CHAR(36),
-            FOREIGN KEY (referenceDocId) REFERENCES DocumentStructure (id) ON DELETE SET NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
-            UNIQUE (documentNumber)
+            UNIQUE (documentNumber),
+            FOREIGN KEY (referenceDocId) REFERENCES DocumentStructure (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
- CREATE TABLE
-      IF NOT EXISTS SubRole (
+CREATE TABLE IF NOT EXISTS SubRole (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             level INT NOT NULL,
@@ -59,8 +54,7 @@ CREATE TABLE
             deletedAt DATETIME
       ) ENGINE = InnoDB;     
 
-CREATE TABLE
-      IF NOT EXISTS RoleLevel(
+CREATE TABLE IF NOT EXISTS RoleLevel(
             id CHAR(36) NOT NULL PRIMARY KEY,
             roleId CHAR(36) NOT NULL,
             subRoleId CHAR(36) NOT NULL,
@@ -71,8 +65,7 @@ CREATE TABLE
             FOREIGN KEY (subRoleId) REFERENCES SubRole (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;    
 
-CREATE TABLE
-      IF NOT EXISTS Employee (
+CREATE TABLE IF NOT EXISTS Employee (
             id CHAR(36) NOT NULL PRIMARY KEY,
             firstName VARCHAR(100) NOT NULL,
             lastName VARCHAR(100) NOT NULL,
@@ -98,17 +91,16 @@ CREATE TABLE
             createdBy CHAR(36),
             titleId CHAR(36),
             pictureId CHAR(36),
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (titleId) REFERENCES Title (id) ON DELETE RESTRICT,
-            FOREIGN KEY (pictureId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (titleId) REFERENCES Title (id) ON DELETE RESTRICT,
+            FOREIGN KEY (pictureId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-CREATE TABLE
-      IF NOT EXISTS Department (
+CREATE TABLE IF NOT EXISTS Department (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             color VARCHAR(10),
@@ -120,12 +112,11 @@ CREATE TABLE
             deletedAt DATETIME,
             createdBy CHAR(36) NOT NULL,
             deletedBy CHAR(36) NULL,
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
-CREATE TABLE
-      IF NOT EXISTS DepartmentExtern (
+CREATE TABLE IF NOT EXISTS DepartmentExtern (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -133,13 +124,12 @@ CREATE TABLE
             deletedAt DATETIME,
             createdBy CHAR(36) NOT NULL,
             deletedBy CHAR(36) NULL,
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 
-CREATE TABLE
-IF NOT EXISTS ScheduleMeeting (
+CREATE TABLE IF NOT EXISTS ScheduleMeeting (
   id CHAR(36) NOT NULL PRIMARY KEY,
   employeeId CHAR(36) NOT NULL,
   conversationType VARCHAR(100) NOT NULL,
@@ -152,7 +142,7 @@ IF NOT EXISTS ScheduleMeeting (
   createdAt DATETIME NOT NULL,
   createdBy CHAR(36) NOT NULL,
   updatedAt DATETIME NULL,
-  deleted BOOLEAN NOT NULL DEFAULT false,
+  deleted BOOLEAN NOT NULL DEFAULT 0,
   deletedAt DATETIME NULL,
   deletedBy CHAR(36) NULL,
 
@@ -169,8 +159,7 @@ CONSTRAINT ScheduleMeeting_ibfk_3
 
 ) ENGINE = InnoDB;
 
-CREATE TABLE
-IF NOT EXISTS RecruitmentApplicant (
+CREATE TABLE IF NOT EXISTS RecruitmentApplicant (
   id CHAR(36) NOT NULL PRIMARY KEY,
   candidateName VARCHAR(255) NOT NULL,
   profile TEXT NULL,
@@ -179,12 +168,12 @@ IF NOT EXISTS RecruitmentApplicant (
   contactType VARCHAR(50) NOT NULL,
   description TEXT NULL,
   cvPath VARCHAR(500) NULL,
-  potential BOOLEAN NOT NULL DEFAULT false,
-  retained BOOLEAN NOT NULL DEFAULT false,
+  potential BOOLEAN NOT NULL DEFAULT 0,
+  retained BOOLEAN NOT NULL DEFAULT 0,
   createdAt DATETIME NOT NULL,
   createdBy CHAR(36) NOT NULL,
   updatedAt DATETIME NULL,
-  deleted BOOLEAN NOT NULL DEFAULT false,
+  deleted BOOLEAN NOT NULL DEFAULT 0,
   deletedAt DATETIME NULL,
   deletedBy CHAR(36) NULL,
 
@@ -198,8 +187,7 @@ CONSTRAINT RecruitmentApplicant_ibfk_2
 
 ) ENGINE = InnoDB;
 
-CREATE TABLE
-IF NOT EXISTS RecruitmentVacancy (
+CREATE TABLE IF NOT EXISTS RecruitmentVacancy (
   id CHAR(36) NOT NULL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   description TEXT NULL,
@@ -208,12 +196,12 @@ IF NOT EXISTS RecruitmentVacancy (
   workRegime VARCHAR(50) NOT NULL,
   salaryMin DECIMAL(10,2) NULL,
   salaryMax DECIMAL(10,2) NULL,
-  publishWebsite BOOLEAN NOT NULL DEFAULT false,
-  publishVdab BOOLEAN NOT NULL DEFAULT false,
-  publishOther BOOLEAN NOT NULL DEFAULT false,
-  publishLinkedIn BOOLEAN NOT NULL DEFAULT false,
-  publishTempAgencies BOOLEAN NOT NULL DEFAULT false,
-  publishRecruitmentAgencies BOOLEAN NOT NULL DEFAULT false,
+  publishWebsite BOOLEAN NOT NULL DEFAULT 0,
+  publishVdab BOOLEAN NOT NULL DEFAULT 0,
+  publishOther BOOLEAN NOT NULL DEFAULT 0,
+  publishLinkedIn BOOLEAN NOT NULL DEFAULT 0,
+  publishTempAgencies BOOLEAN NOT NULL DEFAULT 0,
+  publishRecruitmentAgencies BOOLEAN NOT NULL DEFAULT 0,
   otherPublication VARCHAR(255) NULL,
   createdAt DATETIME NOT NULL,
   createdBy CHAR(36) NOT NULL,
@@ -233,8 +221,7 @@ CONSTRAINT RecruitmentVacancy_ibfk_2
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE
-      IF NOT EXISTS MaterialGroup (
+CREATE TABLE IF NOT EXISTS MaterialGroup (
             id CHAR(36) NOT NULL PRIMARY KEY,
             groupA VARCHAR(255) NOT NULL,
             groupB VARCHAR(255),
@@ -246,8 +233,7 @@ CREATE TABLE
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-CREATE TABLE
-      IF NOT EXISTS Unit (
+CREATE TABLE IF NOT EXISTS Unit (
             id CHAR(36) NOT NULL PRIMARY KEY,
             unitName VARCHAR(255) NOT NULL,
             physicalQuantity VARCHAR(255) NOT NULL,
@@ -258,15 +244,14 @@ CREATE TABLE
             valid BOOLEAN NOT NULL,
             createdBy CHAR(36) NOT NULL,
             createdAt TIMESTAMP NOT NULL,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-CREATE TABLE
-      IF NOT EXISTS WarehousePlace (
+CREATE TABLE IF NOT EXISTS WarehousePlace (
             id CHAR(36) NOT NULL PRIMARY KEY,
             abbreviation VARCHAR(255) NOT NULL,
             beNumber VARCHAR(255),
@@ -280,15 +265,14 @@ CREATE TABLE
             quantityInStock INT NOT NULL,
             createdAt DATETIME NOT NULL,
             createdBy CHAR(36) NOT NULL,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-CREATE TABLE
-      IF NOT EXISTS Material (
+CREATE TABLE IF NOT EXISTS Material (
             id CHAR(36) NOT NULL PRIMARY KEY,
             beNumber VARCHAR(255),
             name VARCHAR(255),
@@ -318,6 +302,9 @@ CREATE TABLE
             hasINSP BOOLEAN NOT NULL DEFAULT 0,
             partApproved BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
             CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
             FOREIGN KEY (materialGroupIdA) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
             FOREIGN KEY (materialGroupIdB) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
@@ -326,9 +313,6 @@ CREATE TABLE
             FOREIGN KEY (warehousePlaceId) REFERENCES WarehousePlace (id) ON DELETE SET NULL,
             FOREIGN KEY (unitId) REFERENCES Unit (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
@@ -487,7 +471,7 @@ ALTER TABLE Material ADD CONSTRAINT fk_material_preferredSupplierCompanyId FOREI
 
 CREATE TABLE
     IF NOT EXISTS Country (
-                              id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     createdAt DATETIME NOT NULL,
     deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -500,7 +484,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS CompanyAddress (
-                                     id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     street VARCHAR(100),
     houseNumber VARCHAR(100),
     busNumber VARCHAR(100),
@@ -522,7 +506,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS Contact (
-                              id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     firstName VARCHAR(100) NOT NULL,
     lastName VARCHAR(100) NOT NULL,
     mail1 VARCHAR(100),
@@ -569,7 +553,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS CompanyContact (
-                                     id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     startedDate DATETIME NOT NULL,
     endDate DATETIME,
     roleWithCompany VARCHAR(100),
@@ -590,7 +574,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS MaterialSupplier (
-                                       id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     materialId CHAR(36) NOT NULL,
     companyId CHAR(36) NOT NULL,
     supplierOrderNr VARCHAR(255) NULL,
@@ -603,7 +587,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS ProjectType (
-                                  id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     createdAt DATETIME NOT NULL,
     createdBy CHAR(36) NOT NULL,
@@ -616,7 +600,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS CertificateType (
-                                      id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     createdAt DATETIME NOT NULL,
     createdBy CHAR(36) NOT NULL,
@@ -629,7 +613,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS UrgencyType (
-                                  id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     createdAt DATETIME NOT NULL,
     createdBy CHAR(36) NOT NULL,
@@ -642,7 +626,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS Status (
-                             id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     createdAt DATETIME NOT NULL,
     createdBy CHAR(36) NOT NULL,
@@ -655,7 +639,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS FollowUpType (
-                                   id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     createdAt DATETIME NOT NULL,
     createdBy CHAR(36) NOT NULL,
@@ -668,7 +652,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS InvoiceType (
-                                  id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     createdAt DATETIME NOT NULL,
     createdBy CHAR(36) NOT NULL,
@@ -681,7 +665,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS HourType (
-                               id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     createdAt DATETIME NOT NULL,
     info TEXT,
@@ -697,7 +681,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS Project (
-                              id CHAR(36) NOT NULL PRIMARY KEY,
+    id NOT NULL PRIMARY KEY,
     projectNumber VARCHAR(255) NOT NULL,
     projectName VARCHAR(255) NOT NULL,
     description TEXT,
@@ -730,7 +714,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS Certificate (
-                                  id CHAR(36) NOT NULL PRIMARY KEY,
+    id(36) NOT NULL PRIMARY KEY,
     description TEXT,
     descriptionShort TEXT,
     createdAt DATETIME NOT NULL,
@@ -748,7 +732,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS TrainingStandard (
-                                       id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     description TEXT,
     descriptionShort TEXT,
     location VARCHAR(100),
@@ -769,7 +753,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS TrainingDocument (
-                                       id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     documentId CHAR(36) NOT NULL,
     trainingStandardId CHAR(36) NOT NULL,
     FOREIGN KEY (documentId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
@@ -782,11 +766,11 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS WorkOrder (
-                                id CHAR(36) NOT NULL PRIMARY KEY,
-    workOrderNumber VARCHAR(255) NOT NULL,
-    description TEXT,
-    additionalInfo TEXT,
-    startDate DATETIME NOT NULL,
+        id(36) NOT NULL PRIMARY KEY,
+        workOrderNumber VARCHAR(255) NOT NULL,
+        description TEXT,
+        additionalInfo TEXT,
+        startDate DATETIME NOT NULL,
     endDate DATETIME,
     createdAt DATETIME NOT NULL,
     hoursMaterialClosed BOOLEAN NOT NULL DEFAULT 0,
@@ -822,7 +806,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS TimeRegistry (
-                                   id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     activityDescription TEXT,
     additionalInfo TEXT,
     invoiceInfo TEXT,
@@ -861,7 +845,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS ProjectContact (
-                                     id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     description TEXT,
     extraInfo TEXT,
     createdAt DATETIME NOT NULL,
@@ -883,7 +867,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS Training (
-                               id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     trainingNumber VARCHAR(100),
     trainingDate DATETIME NOT NULL,
     createdAt DATETIME NOT NULL,
@@ -907,7 +891,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS TrainingContact (
-                                      id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     attendeeNumber VARCHAR(100),
     certSentDate DATETIME,
     createdAt DATETIME NOT NULL,
@@ -954,7 +938,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS InvoiceStatus (
-                                    id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     createdAt DATETIME NOT NULL,
     createdBy CHAR(36) NOT NULL,

@@ -83,7 +83,7 @@ function validityBadge(record: HrCertificationTraining) {
     return (
       <Badge className="border-0 bg-amber-500/20 text-amber-800 dark:text-amber-300">
         <AlertTriangle className="h-3.5 w-3.5" />
-        Withing 6 months
+        Within 6 months
       </Badge>
     )
   }

@@ -482,6 +482,9 @@ export const ModelName = {
   DocumentGroupB: 'DocumentGroupB',
   DocumentGroupC: 'DocumentGroupC',
   DocumentGroupD: 'DocumentGroupD',
+  EmployeeContractStatusOption: 'EmployeeContractStatusOption',
+  EmployeeContractTypeOption: 'EmployeeContractTypeOption',
+  EmployeeBenefitOption: 'EmployeeBenefitOption',
   PriceListCompany: 'PriceListCompany',
   DocumentGroup: 'DocumentGroup',
   DocumentRevision: 'DocumentRevision',
@@ -526,7 +529,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "recruitmentApplicant" | "recruitmentVacancy" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "recruitmentApplicant" | "recruitmentVacancy" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "employeeContractStatusOption" | "employeeContractTypeOption" | "employeeBenefitOption" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -6602,6 +6605,204 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    EmployeeContractStatusOption: {
+      payload: Prisma.$EmployeeContractStatusOptionPayload<ExtArgs>
+      fields: Prisma.EmployeeContractStatusOptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmployeeContractStatusOptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractStatusOptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmployeeContractStatusOptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractStatusOptionPayload>
+        }
+        findFirst: {
+          args: Prisma.EmployeeContractStatusOptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractStatusOptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmployeeContractStatusOptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractStatusOptionPayload>
+        }
+        findMany: {
+          args: Prisma.EmployeeContractStatusOptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractStatusOptionPayload>[]
+        }
+        create: {
+          args: Prisma.EmployeeContractStatusOptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractStatusOptionPayload>
+        }
+        createMany: {
+          args: Prisma.EmployeeContractStatusOptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.EmployeeContractStatusOptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractStatusOptionPayload>
+        }
+        update: {
+          args: Prisma.EmployeeContractStatusOptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractStatusOptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.EmployeeContractStatusOptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmployeeContractStatusOptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.EmployeeContractStatusOptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractStatusOptionPayload>
+        }
+        aggregate: {
+          args: Prisma.EmployeeContractStatusOptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmployeeContractStatusOption>
+        }
+        groupBy: {
+          args: Prisma.EmployeeContractStatusOptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmployeeContractStatusOptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmployeeContractStatusOptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmployeeContractStatusOptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    EmployeeContractTypeOption: {
+      payload: Prisma.$EmployeeContractTypeOptionPayload<ExtArgs>
+      fields: Prisma.EmployeeContractTypeOptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmployeeContractTypeOptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractTypeOptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmployeeContractTypeOptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractTypeOptionPayload>
+        }
+        findFirst: {
+          args: Prisma.EmployeeContractTypeOptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractTypeOptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmployeeContractTypeOptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractTypeOptionPayload>
+        }
+        findMany: {
+          args: Prisma.EmployeeContractTypeOptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractTypeOptionPayload>[]
+        }
+        create: {
+          args: Prisma.EmployeeContractTypeOptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractTypeOptionPayload>
+        }
+        createMany: {
+          args: Prisma.EmployeeContractTypeOptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.EmployeeContractTypeOptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractTypeOptionPayload>
+        }
+        update: {
+          args: Prisma.EmployeeContractTypeOptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractTypeOptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.EmployeeContractTypeOptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmployeeContractTypeOptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.EmployeeContractTypeOptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeContractTypeOptionPayload>
+        }
+        aggregate: {
+          args: Prisma.EmployeeContractTypeOptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmployeeContractTypeOption>
+        }
+        groupBy: {
+          args: Prisma.EmployeeContractTypeOptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmployeeContractTypeOptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmployeeContractTypeOptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmployeeContractTypeOptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    EmployeeBenefitOption: {
+      payload: Prisma.$EmployeeBenefitOptionPayload<ExtArgs>
+      fields: Prisma.EmployeeBenefitOptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmployeeBenefitOptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeBenefitOptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmployeeBenefitOptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeBenefitOptionPayload>
+        }
+        findFirst: {
+          args: Prisma.EmployeeBenefitOptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeBenefitOptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmployeeBenefitOptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeBenefitOptionPayload>
+        }
+        findMany: {
+          args: Prisma.EmployeeBenefitOptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeBenefitOptionPayload>[]
+        }
+        create: {
+          args: Prisma.EmployeeBenefitOptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeBenefitOptionPayload>
+        }
+        createMany: {
+          args: Prisma.EmployeeBenefitOptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.EmployeeBenefitOptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeBenefitOptionPayload>
+        }
+        update: {
+          args: Prisma.EmployeeBenefitOptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeBenefitOptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.EmployeeBenefitOptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmployeeBenefitOptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.EmployeeBenefitOptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmployeeBenefitOptionPayload>
+        }
+        aggregate: {
+          args: Prisma.EmployeeBenefitOptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmployeeBenefitOption>
+        }
+        groupBy: {
+          args: Prisma.EmployeeBenefitOptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmployeeBenefitOptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmployeeBenefitOptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmployeeBenefitOptionCountAggregateOutputType> | number
+        }
+      }
+    }
     PriceListCompany: {
       payload: Prisma.$PriceListCompanyPayload<ExtArgs>
       fields: Prisma.PriceListCompanyFieldRefs
@@ -8844,6 +9045,28 @@ export const EmployeeScalarFieldEnum = {
   createdBy: 'createdBy',
   titleId: 'titleId',
   pictureId: 'pictureId',
+  photoFileId: 'photoFileId',
+  bankAccountNumber: 'bankAccountNumber',
+  rrn: 'rrn',
+  idExpirationDate: 'idExpirationDate',
+  driversLicense: 'driversLicense',
+  maritalStatus: 'maritalStatus',
+  dependents: 'dependents',
+  employmentStatus: 'employmentStatus',
+  contractType: 'contractType',
+  contractDuration: 'contractDuration',
+  grossSalary: 'grossSalary',
+  mealVouchers: 'mealVouchers',
+  ecoVouchers: 'ecoVouchers',
+  companyCar: 'companyCar',
+  companyCarDescription: 'companyCarDescription',
+  fuelCard: 'fuelCard',
+  bikeLease: 'bikeLease',
+  mobilePhone: 'mobilePhone',
+  laptop: 'laptop',
+  fixedExpenseAllowance: 'fixedExpenseAllowance',
+  homeWorkInternetAllowance: 'homeWorkInternetAllowance',
+  extraLegalBenefits: 'extraLegalBenefits',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -10265,6 +10488,45 @@ export const DocumentGroupDScalarFieldEnum = {
 export type DocumentGroupDScalarFieldEnum = (typeof DocumentGroupDScalarFieldEnum)[keyof typeof DocumentGroupDScalarFieldEnum]
 
 
+export const EmployeeContractStatusOptionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeContractStatusOptionScalarFieldEnum = (typeof EmployeeContractStatusOptionScalarFieldEnum)[keyof typeof EmployeeContractStatusOptionScalarFieldEnum]
+
+
+export const EmployeeContractTypeOptionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeContractTypeOptionScalarFieldEnum = (typeof EmployeeContractTypeOptionScalarFieldEnum)[keyof typeof EmployeeContractTypeOptionScalarFieldEnum]
+
+
+export const EmployeeBenefitOptionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeBenefitOptionScalarFieldEnum = (typeof EmployeeBenefitOptionScalarFieldEnum)[keyof typeof EmployeeBenefitOptionScalarFieldEnum]
+
+
 export const PriceListCompanyScalarFieldEnum = {
   id: 'id',
   priceListId: 'priceListId',
@@ -10934,6 +11196,16 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   createdBy: 'createdBy',
   titleId: 'titleId',
   pictureId: 'pictureId',
+  photoFileId: 'photoFileId',
+  bankAccountNumber: 'bankAccountNumber',
+  rrn: 'rrn',
+  maritalStatus: 'maritalStatus',
+  employmentStatus: 'employmentStatus',
+  contractType: 'contractType',
+  contractDuration: 'contractDuration',
+  grossSalary: 'grossSalary',
+  companyCarDescription: 'companyCarDescription',
+  extraLegalBenefits: 'extraLegalBenefits',
   deletedBy: 'deletedBy'
 } as const
 
@@ -11994,6 +12266,36 @@ export const DocumentGroupDOrderByRelevanceFieldEnum = {
 export type DocumentGroupDOrderByRelevanceFieldEnum = (typeof DocumentGroupDOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupDOrderByRelevanceFieldEnum]
 
 
+export const EmployeeContractStatusOptionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeContractStatusOptionOrderByRelevanceFieldEnum = (typeof EmployeeContractStatusOptionOrderByRelevanceFieldEnum)[keyof typeof EmployeeContractStatusOptionOrderByRelevanceFieldEnum]
+
+
+export const EmployeeContractTypeOptionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeContractTypeOptionOrderByRelevanceFieldEnum = (typeof EmployeeContractTypeOptionOrderByRelevanceFieldEnum)[keyof typeof EmployeeContractTypeOptionOrderByRelevanceFieldEnum]
+
+
+export const EmployeeBenefitOptionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeBenefitOptionOrderByRelevanceFieldEnum = (typeof EmployeeBenefitOptionOrderByRelevanceFieldEnum)[keyof typeof EmployeeBenefitOptionOrderByRelevanceFieldEnum]
+
+
 export const PriceListCompanyOrderByRelevanceFieldEnum = {
   id: 'id',
   priceListId: 'priceListId',
@@ -12564,6 +12866,9 @@ export type GlobalOmitConfig = {
   documentGroupB?: Prisma.DocumentGroupBOmit
   documentGroupC?: Prisma.DocumentGroupCOmit
   documentGroupD?: Prisma.DocumentGroupDOmit
+  employeeContractStatusOption?: Prisma.EmployeeContractStatusOptionOmit
+  employeeContractTypeOption?: Prisma.EmployeeContractTypeOptionOmit
+  employeeBenefitOption?: Prisma.EmployeeBenefitOptionOmit
   priceListCompany?: Prisma.PriceListCompanyOmit
   documentGroup?: Prisma.DocumentGroupOmit
   documentRevision?: Prisma.DocumentRevisionOmit

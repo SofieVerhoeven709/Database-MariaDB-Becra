@@ -141,6 +141,9 @@ export const ModelName = {
   DocumentGroupB: 'DocumentGroupB',
   DocumentGroupC: 'DocumentGroupC',
   DocumentGroupD: 'DocumentGroupD',
+  EmployeeContractStatusOption: 'EmployeeContractStatusOption',
+  EmployeeContractTypeOption: 'EmployeeContractTypeOption',
+  EmployeeBenefitOption: 'EmployeeBenefitOption',
   PriceListCompany: 'PriceListCompany',
   DocumentGroup: 'DocumentGroup',
   DocumentRevision: 'DocumentRevision',
@@ -477,6 +480,28 @@ export const EmployeeScalarFieldEnum = {
   createdBy: 'createdBy',
   titleId: 'titleId',
   pictureId: 'pictureId',
+  photoFileId: 'photoFileId',
+  bankAccountNumber: 'bankAccountNumber',
+  rrn: 'rrn',
+  idExpirationDate: 'idExpirationDate',
+  driversLicense: 'driversLicense',
+  maritalStatus: 'maritalStatus',
+  dependents: 'dependents',
+  employmentStatus: 'employmentStatus',
+  contractType: 'contractType',
+  contractDuration: 'contractDuration',
+  grossSalary: 'grossSalary',
+  mealVouchers: 'mealVouchers',
+  ecoVouchers: 'ecoVouchers',
+  companyCar: 'companyCar',
+  companyCarDescription: 'companyCarDescription',
+  fuelCard: 'fuelCard',
+  bikeLease: 'bikeLease',
+  mobilePhone: 'mobilePhone',
+  laptop: 'laptop',
+  fixedExpenseAllowance: 'fixedExpenseAllowance',
+  homeWorkInternetAllowance: 'homeWorkInternetAllowance',
+  extraLegalBenefits: 'extraLegalBenefits',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -1898,6 +1923,45 @@ export const DocumentGroupDScalarFieldEnum = {
 export type DocumentGroupDScalarFieldEnum = (typeof DocumentGroupDScalarFieldEnum)[keyof typeof DocumentGroupDScalarFieldEnum]
 
 
+export const EmployeeContractStatusOptionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeContractStatusOptionScalarFieldEnum = (typeof EmployeeContractStatusOptionScalarFieldEnum)[keyof typeof EmployeeContractStatusOptionScalarFieldEnum]
+
+
+export const EmployeeContractTypeOptionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeContractTypeOptionScalarFieldEnum = (typeof EmployeeContractTypeOptionScalarFieldEnum)[keyof typeof EmployeeContractTypeOptionScalarFieldEnum]
+
+
+export const EmployeeBenefitOptionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeBenefitOptionScalarFieldEnum = (typeof EmployeeBenefitOptionScalarFieldEnum)[keyof typeof EmployeeBenefitOptionScalarFieldEnum]
+
+
 export const PriceListCompanyScalarFieldEnum = {
   id: 'id',
   priceListId: 'priceListId',
@@ -2567,6 +2631,16 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   createdBy: 'createdBy',
   titleId: 'titleId',
   pictureId: 'pictureId',
+  photoFileId: 'photoFileId',
+  bankAccountNumber: 'bankAccountNumber',
+  rrn: 'rrn',
+  maritalStatus: 'maritalStatus',
+  employmentStatus: 'employmentStatus',
+  contractType: 'contractType',
+  contractDuration: 'contractDuration',
+  grossSalary: 'grossSalary',
+  companyCarDescription: 'companyCarDescription',
+  extraLegalBenefits: 'extraLegalBenefits',
   deletedBy: 'deletedBy'
 } as const
 
@@ -3625,6 +3699,36 @@ export const DocumentGroupDOrderByRelevanceFieldEnum = {
 } as const
 
 export type DocumentGroupDOrderByRelevanceFieldEnum = (typeof DocumentGroupDOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupDOrderByRelevanceFieldEnum]
+
+
+export const EmployeeContractStatusOptionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeContractStatusOptionOrderByRelevanceFieldEnum = (typeof EmployeeContractStatusOptionOrderByRelevanceFieldEnum)[keyof typeof EmployeeContractStatusOptionOrderByRelevanceFieldEnum]
+
+
+export const EmployeeContractTypeOptionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeContractTypeOptionOrderByRelevanceFieldEnum = (typeof EmployeeContractTypeOptionOrderByRelevanceFieldEnum)[keyof typeof EmployeeContractTypeOptionOrderByRelevanceFieldEnum]
+
+
+export const EmployeeBenefitOptionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type EmployeeBenefitOptionOrderByRelevanceFieldEnum = (typeof EmployeeBenefitOptionOrderByRelevanceFieldEnum)[keyof typeof EmployeeBenefitOptionOrderByRelevanceFieldEnum]
 
 
 export const PriceListCompanyOrderByRelevanceFieldEnum = {

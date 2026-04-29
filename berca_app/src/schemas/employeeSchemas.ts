@@ -39,6 +39,28 @@ export const employeeSchemas = z.object({
   roleLevelIds: z.array(z.string()).optional().default([]),
   titleId: z.string().nullable().optional(),
   pictureId: z.string().nullable().optional(),
+  photoFileId: z.string().max(255).nullable().optional(),
+  bankAccountNumber: z.string().max(100).nullable().optional(),
+  rrn: z.string().max(100).nullable().optional(),
+  idExpirationDate: dateSchema.optional(),
+  driversLicense: z.boolean().default(false),
+  maritalStatus: z.string().max(100).nullable().optional(),
+  dependents: z.coerce.number().int().min(0).nullable().optional(),
+  employmentStatus: z.string().max(100).nullable().optional(),
+  contractType: z.string().max(255).nullable().optional(),
+  contractDuration: z.string().max(255).nullable().optional(),
+  grossSalary: z.string().max(100).nullable().optional(),
+  mealVouchers: z.boolean().default(false),
+  ecoVouchers: z.boolean().default(false),
+  companyCar: z.boolean().default(false),
+  companyCarDescription: z.string().max(255).nullable().optional(),
+  fuelCard: z.boolean().default(false),
+  bikeLease: z.boolean().default(false),
+  mobilePhone: z.boolean().default(false),
+  laptop: z.boolean().default(false),
+  fixedExpenseAllowance: z.boolean().default(false),
+  homeWorkInternetAllowance: z.boolean().default(false),
+  extraLegalBenefits: z.string().nullable().optional(),
   deleted: z.boolean().default(false),
   deletedAt: dateSchema.optional(),
   deletedBy: z.string().nullable().optional(),
@@ -52,6 +74,14 @@ export const emergencyContactSchema = z.object({
   phoneNumber: z.string(),
   // employeeId is populated server-side when persisting contacts.
   employeeId: z.string().optional(),
+})
+
+export const employeeManagedOptionSchema = z.object({
+  name: z.string().max(255).nullable().optional(),
+})
+
+export const updateEmployeeManagedOptionSchema = employeeManagedOptionSchema.extend({
+  id: z.string(),
 })
 
 export const signInSchema = employeeSchemas.pick({

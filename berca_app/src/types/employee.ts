@@ -24,6 +24,28 @@ export interface MappedEmployee {
   createdBy: string | null
   passwordCreatedAt: string
   pictureId: string | null
+  photoFileId: string | null
+  bankAccountNumber: string | null
+  rrn: string | null
+  idExpirationDate: string | null
+  driversLicense: boolean
+  maritalStatus: string | null
+  dependents: number | null
+  employmentStatus: string | null
+  contractType: string | null
+  contractDuration: string | null
+  grossSalary: string | null
+  mealVouchers: boolean
+  ecoVouchers: boolean
+  companyCar: boolean
+  companyCarDescription: string | null
+  fuelCard: boolean
+  bikeLease: boolean
+  mobilePhone: boolean
+  laptop: boolean
+  fixedExpenseAllowance: boolean
+  homeWorkInternetAllowance: boolean
+  extraLegalBenefits: string | null
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
@@ -189,6 +211,28 @@ export interface EmployeeDetailData {
   createdByName: string | null
   passwordCreatedAt: string
   pictureId: string | null
+  photoFileId: string | null
+  bankAccountNumber: string | null
+  rrn: string | null
+  idExpirationDate: string | null
+  driversLicense: boolean
+  maritalStatus: string | null
+  dependents: number | null
+  employmentStatus: string | null
+  contractType: string | null
+  contractDuration: string | null
+  grossSalary: string | null
+  mealVouchers: boolean
+  ecoVouchers: boolean
+  companyCar: boolean
+  companyCarDescription: string | null
+  fuelCard: boolean
+  bikeLease: boolean
+  mobilePhone: boolean
+  laptop: boolean
+  fixedExpenseAllowance: boolean
+  homeWorkInternetAllowance: boolean
+  extraLegalBenefits: string | null
   deleted: boolean
   deletedAt: string | null
   deletedByName: string | null
@@ -277,4 +321,14 @@ export const TYPE_COLOURS: Record<RecordType, string> = {
   Unit: 'bg-zinc-400/10 text-zinc-500 border-zinc-400/20',
   'Urgency Type': 'bg-orange-700/10 text-orange-800 border-orange-700/20',
   'Warehouse Place': 'bg-blue-700/10 text-blue-800 border-blue-700/20',
+}
+
+export interface ManagedEmployeeOption {
+  id: string
+  name: string | null
+  createdAt: string
+  createdByName: string
+  deleted: boolean
+  deletedAt: string | null
+  deletedByName: string | null
 }

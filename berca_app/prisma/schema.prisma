@@ -397,6 +397,28 @@ model Employee {
   createdBy                                                                         String?                          @db.Char(36)
   titleId                                                                           String?                          @db.Char(36)
   pictureId                                                                         String?                          @db.Char(36)
+  photoFileId                                                                       String?                          @db.VarChar(255)
+  bankAccountNumber                                                                 String?                          @db.VarChar(100)
+  rrn                                                                               String?                          @db.VarChar(100)
+  idExpirationDate                                                                  DateTime?                        @db.DateTime(0)
+  driversLicense                                                                    Boolean                          @default(false)
+  maritalStatus                                                                     String?                          @db.VarChar(100)
+  dependents                                                                        Int?
+  employmentStatus                                                                  String?                          @db.VarChar(100)
+  contractType                                                                      String?                          @db.VarChar(255)
+  contractDuration                                                                  String?                          @db.VarChar(255)
+  grossSalary                                                                       String?                          @db.VarChar(255)
+  mealVouchers                                                                      Boolean                          @default(false)
+  ecoVouchers                                                                       Boolean                          @default(false)
+  companyCar                                                                        Boolean                          @default(false)
+  companyCarDescription                                                             String?                          @db.VarChar(255)
+  fuelCard                                                                          Boolean                          @default(false)
+  bikeLease                                                                         Boolean                          @default(false)
+  mobilePhone                                                                       Boolean                          @default(false)
+  laptop                                                                            Boolean                          @default(false)
+  fixedExpenseAllowance                                                             Boolean                          @default(false)
+  homeWorkInternetAllowance                                                         Boolean                          @default(false)
+  extraLegalBenefits                                                                String?                          @db.Text
   deleted                                                                           Boolean                          @default(false)
   deletedAt                                                                         DateTime?                        @db.DateTime(0)
   deletedBy                                                                         String?                          @db.Char(36)
@@ -456,6 +478,12 @@ model Employee {
   DocumentStructure_Employee_pictureIdToDocumentStructure                           DocumentStructure?               @relation("Employee_pictureIdToDocumentStructure", fields: [pictureId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_6")
   Employee_Employee_deletedByToEmployee                                             Employee?                        @relation("Employee_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Employee_ibfk_7")
   other_Employee_Employee_deletedByToEmployee                                       Employee[]                       @relation("Employee_deletedByToEmployee")
+  EmployeeBenefitOption_EmployeeBenefitOption_deletedByToEmployee                   EmployeeBenefitOption[]          @relation("EmployeeBenefitOption_deletedByToEmployee")
+  EmployeeBenefitOption_EmployeeBenefitOption_createdByToEmployee                   EmployeeBenefitOption[]          @relation("EmployeeBenefitOption_createdByToEmployee")
+  EmployeeContractStatusOption_EmployeeContractStatusOption_deletedByToEmployee     EmployeeContractStatusOption[]   @relation("EmployeeContractStatusOption_deletedByToEmployee")
+  EmployeeContractStatusOption_EmployeeContractStatusOption_createdByToEmployee     EmployeeContractStatusOption[]   @relation("EmployeeContractStatusOption_createdByToEmployee")
+  EmployeeContractTypeOption_EmployeeContractTypeOption_deletedByToEmployee         EmployeeContractTypeOption[]     @relation("EmployeeContractTypeOption_deletedByToEmployee")
+  EmployeeContractTypeOption_EmployeeContractTypeOption_createdByToEmployee         EmployeeContractTypeOption[]     @relation("EmployeeContractTypeOption_createdByToEmployee")
   FollowUp_FollowUp_ownedByToEmployee                                               FollowUp[]                       @relation("FollowUp_ownedByToEmployee")
   FollowUp_FollowUp_executedByToEmployee                                            FollowUp[]                       @relation("FollowUp_executedByToEmployee")
   FollowUp_FollowUp_createdByToEmployee                                             FollowUp[]                       @relation("FollowUp_createdByToEmployee")
@@ -2577,6 +2605,51 @@ model DocumentGroupD {
   DocumentGroup                               DocumentGroup[]
   Employee_DocumentGroupD_deletedByToEmployee Employee?       @relation("DocumentGroupD_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentGroupD_ibfk_1")
   Employee_DocumentGroupD_createdByToEmployee Employee        @relation("DocumentGroupD_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentGroupD_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model EmployeeContractStatusOption {
+  id                                                        String    @id @db.Char(36)
+  name                                                      String?   @db.VarChar(255)
+  createdBy                                                 String    @db.Char(36)
+  createdAt                                                 DateTime  @db.DateTime(0)
+  deleted                                                   Boolean   @default(false)
+  deletedAt                                                 DateTime? @db.DateTime(0)
+  deletedBy                                                 String?   @db.Char(36)
+  Employee_EmployeeContractStatusOption_deletedByToEmployee Employee? @relation("EmployeeContractStatusOption_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "EmployeeContractStatusOption_ibfk_1")
+  Employee_EmployeeContractStatusOption_createdByToEmployee Employee  @relation("EmployeeContractStatusOption_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "EmployeeContractStatusOption_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model EmployeeContractTypeOption {
+  id                                                      String    @id @db.Char(36)
+  name                                                    String?   @db.VarChar(255)
+  createdBy                                               String    @db.Char(36)
+  createdAt                                               DateTime  @db.DateTime(0)
+  deleted                                                 Boolean   @default(false)
+  deletedAt                                               DateTime? @db.DateTime(0)
+  deletedBy                                               String?   @db.Char(36)
+  Employee_EmployeeContractTypeOption_deletedByToEmployee Employee? @relation("EmployeeContractTypeOption_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "EmployeeContractTypeOption_ibfk_1")
+  Employee_EmployeeContractTypeOption_createdByToEmployee Employee  @relation("EmployeeContractTypeOption_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "EmployeeContractTypeOption_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model EmployeeBenefitOption {
+  id                                                 String    @id @db.Char(36)
+  name                                               String?   @db.VarChar(255)
+  createdBy                                          String    @db.Char(36)
+  createdAt                                          DateTime  @db.DateTime(0)
+  deleted                                            Boolean   @default(false)
+  deletedAt                                          DateTime? @db.DateTime(0)
+  deletedBy                                          String?   @db.Char(36)
+  Employee_EmployeeBenefitOption_deletedByToEmployee Employee? @relation("EmployeeBenefitOption_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "EmployeeBenefitOption_ibfk_1")
+  Employee_EmployeeBenefitOption_createdByToEmployee Employee  @relation("EmployeeBenefitOption_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "EmployeeBenefitOption_ibfk_2")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")

@@ -15,7 +15,14 @@ import {createEmployee, getEmployeeByUsername, startSession, stopSession, update
 import {getSalt, hashOptions, hashPassword, verifyPassword} from '@/lib/passwordUtils'
 import {clearSessionCookie, getSessionId, setSessionCookie} from '@/lib/sessionUtils'
 import {protectedFormAction, protectedServerFunction, publicFormAction} from '@/lib/serverFunctions'
-import {registerSchema, signInSchema, updateEmployeeSchema, upsertEmployeeSchema} from '@/schemas/employeeSchemas'
+import {
+  employeeManagedOptionSchema,
+  registerSchema,
+  signInSchema,
+  updateEmployeeManagedOptionSchema,
+  updateEmployeeSchema,
+  upsertEmployeeSchema,
+} from '@/schemas/employeeSchemas'
 import {prismaClient} from '@/dal/prismaClient'
 
 export const signInAction = publicFormAction({
@@ -221,5 +228,203 @@ export const hardDeleteEmployeeAction = protectedServerFunction({
     await prismaClient.employee.delete({where: {id}})
     logger.info(`Employee hard deleted: ${id}`)
     revalidatePath('/employees')
+  },
+})
+
+export const createEmployeeContractStatusOptionAction = protectedServerFunction({
+  schema: employeeManagedOptionSchema,
+  functionName: 'Create employee contract status option action',
+  serverFn: async ({data, profile, logger}) => {
+    const option = await prismaClient.employeeContractStatusOption.create({
+      data: {
+        id: crypto.randomUUID(),
+        name: data.name ?? null,
+        createdBy: profile.id,
+        createdAt: new Date(),
+      },
+    })
+    logger.info(`Employee contract status option created: ${option.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const updateEmployeeContractStatusOptionAction = protectedServerFunction({
+  schema: updateEmployeeManagedOptionSchema,
+  functionName: 'Update employee contract status option action',
+  serverFn: async ({data, logger}) => {
+    await prismaClient.employeeContractStatusOption.update({
+      where: {id: data.id},
+      data: {name: data.name ?? null},
+    })
+    logger.info(`Employee contract status option updated: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const softDeleteEmployeeContractStatusOptionAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Soft delete employee contract status option action',
+  serverFn: async ({data, profile, logger}) => {
+    await prismaClient.employeeContractStatusOption.update({
+      where: {id: data.id},
+      data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
+    })
+    logger.info(`Employee contract status option soft deleted: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const hardDeleteEmployeeContractStatusOptionAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Hard delete employee contract status option action',
+  serverFn: async ({data, logger}) => {
+    await prismaClient.employeeContractStatusOption.delete({where: {id: data.id}})
+    logger.info(`Employee contract status option hard deleted: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const restoreEmployeeContractStatusOptionAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Restore employee contract status option action',
+  serverFn: async ({data, logger}) => {
+    await prismaClient.employeeContractStatusOption.update({
+      where: {id: data.id},
+      data: {deleted: false, deletedAt: null, deletedBy: null},
+    })
+    logger.info(`Employee contract status option restored: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const createEmployeeContractTypeOptionAction = protectedServerFunction({
+  schema: employeeManagedOptionSchema,
+  functionName: 'Create employee contract type option action',
+  serverFn: async ({data, profile, logger}) => {
+    const option = await prismaClient.employeeContractTypeOption.create({
+      data: {
+        id: crypto.randomUUID(),
+        name: data.name ?? null,
+        createdBy: profile.id,
+        createdAt: new Date(),
+      },
+    })
+    logger.info(`Employee contract type option created: ${option.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const updateEmployeeContractTypeOptionAction = protectedServerFunction({
+  schema: updateEmployeeManagedOptionSchema,
+  functionName: 'Update employee contract type option action',
+  serverFn: async ({data, logger}) => {
+    await prismaClient.employeeContractTypeOption.update({
+      where: {id: data.id},
+      data: {name: data.name ?? null},
+    })
+    logger.info(`Employee contract type option updated: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const softDeleteEmployeeContractTypeOptionAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Soft delete employee contract type option action',
+  serverFn: async ({data, profile, logger}) => {
+    await prismaClient.employeeContractTypeOption.update({
+      where: {id: data.id},
+      data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
+    })
+    logger.info(`Employee contract type option soft deleted: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const hardDeleteEmployeeContractTypeOptionAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Hard delete employee contract type option action',
+  serverFn: async ({data, logger}) => {
+    await prismaClient.employeeContractTypeOption.delete({where: {id: data.id}})
+    logger.info(`Employee contract type option hard deleted: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const restoreEmployeeContractTypeOptionAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Restore employee contract type option action',
+  serverFn: async ({data, logger}) => {
+    await prismaClient.employeeContractTypeOption.update({
+      where: {id: data.id},
+      data: {deleted: false, deletedAt: null, deletedBy: null},
+    })
+    logger.info(`Employee contract type option restored: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const createEmployeeBenefitOptionAction = protectedServerFunction({
+  schema: employeeManagedOptionSchema,
+  functionName: 'Create employee benefit option action',
+  serverFn: async ({data, profile, logger}) => {
+    const option = await prismaClient.employeeBenefitOption.create({
+      data: {
+        id: crypto.randomUUID(),
+        name: data.name ?? null,
+        createdBy: profile.id,
+        createdAt: new Date(),
+      },
+    })
+    logger.info(`Employee benefit option created: ${option.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const updateEmployeeBenefitOptionAction = protectedServerFunction({
+  schema: updateEmployeeManagedOptionSchema,
+  functionName: 'Update employee benefit option action',
+  serverFn: async ({data, logger}) => {
+    await prismaClient.employeeBenefitOption.update({
+      where: {id: data.id},
+      data: {name: data.name ?? null},
+    })
+    logger.info(`Employee benefit option updated: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const softDeleteEmployeeBenefitOptionAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Soft delete employee benefit option action',
+  serverFn: async ({data, profile, logger}) => {
+    await prismaClient.employeeBenefitOption.update({
+      where: {id: data.id},
+      data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
+    })
+    logger.info(`Employee benefit option soft deleted: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const hardDeleteEmployeeBenefitOptionAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Hard delete employee benefit option action',
+  serverFn: async ({data, logger}) => {
+    await prismaClient.employeeBenefitOption.delete({where: {id: data.id}})
+    logger.info(`Employee benefit option hard deleted: ${data.id}`)
+    revalidatePath('/departments/hr/records')
+  },
+})
+
+export const restoreEmployeeBenefitOptionAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Restore employee benefit option action',
+  serverFn: async ({data, logger}) => {
+    await prismaClient.employeeBenefitOption.update({
+      where: {id: data.id},
+      data: {deleted: false, deletedAt: null, deletedBy: null},
+    })
+    logger.info(`Employee benefit option restored: ${data.id}`)
+    revalidatePath('/departments/hr/records')
   },
 })

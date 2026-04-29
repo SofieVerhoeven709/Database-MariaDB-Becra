@@ -25,6 +25,8 @@ export interface MappedPriceListItem {
   deletedAt: string | null
   deletedBy: string | null
   linkedTarget: MappedPriceListItemTarget | null
+  supplierUnitPrice?: number | null
+  belowSupplierCost?: boolean
 }
 
 // ─── PriceList ─────────────────────────────────────────────────────────────────

@@ -2007,6 +2007,7 @@ ALTER TABLE InvoiceOut
     FOREIGN KEY (boqId) REFERENCES BillOfQuantities (id) ON DELETE RESTRICT;
 
 ALTER TABLE InvoiceOut CHANGE COLUMN IF EXISTS `humanId` `clientReference` VARCHAR(255) NULL;
+ALTER TABLE BillOfQuantities CHANGE COLUMN IF EXISTS `humanId` `clientReference` VARCHAR(255) NULL;
 --HR Schedule meetings
 
 CREATE TABLE

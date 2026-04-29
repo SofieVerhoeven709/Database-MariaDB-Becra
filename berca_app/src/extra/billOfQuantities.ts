@@ -190,6 +190,7 @@ function mapWorkOrderWithLines(
   priceMap: Map<string, {itemId: string; unit: string; basePrice: number}>,
   costMargin: number,
   stayOverPrice: {itemId: string; unit: string; basePrice: number} | null,
+  materialPriceMap: Map<string, number> = new Map(),
 ): MappedBoqWorkOrder {
   const wo = w.WorkOrder
   const lines: MappedBillingLine[] = []
@@ -346,6 +347,12 @@ function mapWorkOrderWithLines(
       vatByRateMap.set(vatRate, (vatByRateMap.get(vatRate) ?? 0) + (lineVat ?? 0))
     }
 
+    // ← NEW
+    const beNum = mat.beNumber ?? null
+    const materialSupplierPrice = beNum ? (materialPriceMap.get(beNum) ?? null) : null
+    const priceListBelowCost =
+      match?.basePrice != null && materialSupplierPrice != null ? match.basePrice < materialSupplierPrice : false
+
     lines.push({
       workOrderId: wo.id,
       type: 'material',
@@ -363,6 +370,9 @@ function mapWorkOrderWithLines(
       lineTotalInclVat,
       unmatched: !match,
       workOrderStructureId: wos.id,
+      beNumber: beNum,
+      materialSupplierPrice,
+      priceListBelowCost,
     })
   }
 
@@ -426,13 +436,15 @@ function mapWorkOrderWithLines(
   }
 }
 
-export function mapBoq(r: BoqRaw): MappedBoq {
+export function mapBoq(r: BoqRaw, materialPriceMap: Map<string, number> = new Map()): MappedBoq {
   const priceItems = r.PriceList?.PriceListItem ?? []
   const priceMap = buildTargetPriceMap(priceItems)
   const costMargin = priceItems.find(i => i.isCostMargin)?.price.toNumber() ?? 0
   const stayOverPrice = findStayOverPrice(priceItems)
 
-  const workOrders = r.WorkOrderBoQ.map(w => mapWorkOrderWithLines(w, priceMap, costMargin, stayOverPrice))
+  const workOrders = r.WorkOrderBoQ.map(
+    w => mapWorkOrderWithLines(w, priceMap, costMargin, stayOverPrice, materialPriceMap), // ← NEW
+  )
 
   const boqVatByRateMap = new Map<number, number>()
   for (const wo of workOrders) {

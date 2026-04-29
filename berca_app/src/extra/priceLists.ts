@@ -50,12 +50,12 @@ type PriceListRaw = {
 function mapItem(
   r: PriceListItemRaw,
   resolvedTargets: Map<string, {targetType: LinkableTargetType; displayLabel: string}>,
+  materialPriceMap: Map<string, number> = new Map(), // ← NEW
 ): MappedPriceListItem {
   let linkedTarget: MappedPriceListItemTarget | null = null
 
   if (r.PriceListItemTarget) {
     const resolved = resolvedTargets.get(r.PriceListItemTarget.targetId)
-    // Fall back to the raw target id when no label is resolved.
     linkedTarget = {
       id: r.PriceListItemTarget.id,
       priceListItemId: r.PriceListItemTarget.priceListItemId,
@@ -65,14 +65,20 @@ function mapItem(
     }
   }
 
+  // below-cost check for material items
+  const targetId = r.PriceListItemTarget?.targetId ?? null
+  const supplierUnitPrice = targetId ? (materialPriceMap.get(targetId) ?? null) : null
+  const itemPrice = r.price.toNumber()
+  const belowSupplierCost =
+    supplierUnitPrice !== null && linkedTarget?.targetType === 'Material' ? itemPrice < supplierUnitPrice : false
+
   return {
     id: r.id,
     priceListId: r.priceListId,
     description: r.description,
     unit: r.unit,
-    price: r.price.toNumber(),
+    price: itemPrice,
     isCostMargin: r.isCostMargin,
-    // Normalize dates to ISO strings for the client.
     createdAt: r.createdAt.toISOString(),
     createdBy: r.createdBy,
     createdByName: `${r.Employee_PriceListItem_createdByToEmployee.firstName} ${r.Employee_PriceListItem_createdByToEmployee.lastName}`,
@@ -80,15 +86,17 @@ function mapItem(
     deletedAt: r.deletedAt?.toISOString() ?? null,
     deletedBy: r.deletedBy,
     linkedTarget,
+    supplierUnitPrice,
+    belowSupplierCost,
   }
 }
 
 export function mapPriceList(
   r: PriceListRaw,
   resolvedTargets: Map<string, {targetType: LinkableTargetType; displayLabel: string}> = new Map(),
+  materialPriceMap: Map<string, number> = new Map(),
 ): MappedPriceList {
-  const items = r.PriceListItem.map(item => mapItem(item, resolvedTargets))
-
+  const items = r.PriceListItem.map(item => mapItem(item, resolvedTargets, materialPriceMap))
   const companies: MappedPriceListCompany[] = r.PriceListCompany.map(c => ({
     id: c.id,
     companyId: c.Company.id,

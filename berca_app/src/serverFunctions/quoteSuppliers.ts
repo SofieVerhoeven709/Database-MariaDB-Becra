@@ -122,7 +122,11 @@ export const createQuoteSupplierAction = protectedServerFunction({
         },
       })
       // Only allow one active (unsent or unapproved) quote per demand.
-      if (existingForDemand.some(line => !line.QuoteSupplier.deleted && !(line.QuoteSupplier.sent && line.QuoteSupplier.acceptedForPOB))) {
+      if (
+        existingForDemand.some(
+          line => !line.QuoteSupplier.deleted && !(line.QuoteSupplier.sent && line.QuoteSupplier.acceptedForPOB),
+        )
+      ) {
         throw new Error('A quote already exists for this material demand.')
       }
     }
@@ -156,7 +160,9 @@ export const createQuoteSupplierAction = protectedServerFunction({
           },
         })
 
-        logger.info(`Quote line added to existing unsent quote ${reusableQuote.id} from material demand ${data.initialMaterialDemandId}`)
+        logger.info(
+          `Quote line added to existing unsent quote ${reusableQuote.id} from material demand ${data.initialMaterialDemandId}`,
+        )
         revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
         return
       }
@@ -215,11 +221,75 @@ export const createQuoteSupplierAction = protectedServerFunction({
         logger.info(`Purchase ensured from quote create approval: quote=${id}, purchase=${result.purchaseId}`)
         revalidatePath(REVALIDATE_PURCHASES_PATH)
       }
+      await createMaterialPricesFromApprovedQuote(id, data.companyId, profile.id, logger)
     }
 
     revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
+
+async function createMaterialPricesFromApprovedQuote(
+  quoteId: string,
+  companyId: string,
+  createdBy: string,
+  logger: {info: (msg: string) => void},
+) {
+  const lines = await prismaClient.quoteSupplierLine.findMany({
+    where: {
+      quoteSupplierId: quoteId,
+      notDeliverable: false,
+      unitPrice: {gt: 0},
+    },
+    select: {
+      id: true,
+      unitPrice: true,
+      Material: {
+        select: {
+          beNumber: true,
+          shortDescription: true,
+        },
+      },
+    },
+  })
+
+  for (const line of lines) {
+    const beNumber = line.Material.beNumber
+    if (!beNumber) continue
+
+    const unitPrice = Number(line.unitPrice)
+
+    // Avoid exact duplicate: same beNumber + company + unitPrice already recorded.
+    const existing = await prismaClient.materialPrice.findFirst({
+      where: {
+        beNumber,
+        companyId,
+        unitPrice: {equals: unitPrice},
+        deleted: false,
+      },
+      select: {id: true},
+    })
+
+    if (existing) {
+      logger.info(`MaterialPrice already exists for beNumber=${beNumber}, companyId=${companyId}, skipping`)
+      continue
+    }
+
+    await prismaClient.materialPrice.create({
+      data: {
+        id: crypto.randomUUID(),
+        beNumber,
+        companyId,
+        unitPrice,
+        shortDescription: line.Material.shortDescription ?? null,
+        createdBy,
+        updatedAt: new Date(),
+        deleted: false,
+      },
+    })
+
+    logger.info(`MaterialPrice created for beNumber=${beNumber}, companyId=${companyId}, unitPrice=${unitPrice}`)
+  }
+}
 
 export const updateQuoteSupplierAction = protectedServerFunction({
   schema: updateQuoteSupplierSchema,
@@ -281,6 +351,7 @@ export const updateQuoteSupplierAction = protectedServerFunction({
         logger.info(`Purchase ensured from quote approval: quote=${id}, purchase=${result.purchaseId}`)
         revalidatePath(REVALIDATE_PURCHASES_PATH)
       }
+      await createMaterialPricesFromApprovedQuote(id, data.companyId, profile.id, logger)
     }
 
     logger.info(`Quote supplier updated: ${id}`)
@@ -470,4 +541,3 @@ export const setQuoteSupplierReceivedAction = protectedServerFunction({
     revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
-

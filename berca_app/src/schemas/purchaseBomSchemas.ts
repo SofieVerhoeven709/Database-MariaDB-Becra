@@ -32,22 +32,25 @@ export const createPurchaseBOMSchema = purchaseBOMSchema.omit({
   deletedBy: true,
 })
 
-export const updatePurchaseBOMSchema = purchaseBOMSchema.pick({
-  id: true,
-  purchaseBomId: true,
-  purchaseBomNumber: true,
-  additionalInfo: true,
-  description: true,
-  shortDescription: true,
-  startDate: true,
-  endDate: true,
-  closed: true,
-  materialClosed: true,
-  approvedForQuote: true,
-  purchased: true,
-}).extend({
-  approvedForQuote: z.boolean().optional(),
-})
+export const updatePurchaseBOMSchema = purchaseBOMSchema
+  .pick({
+    id: true,
+    purchaseBomId: true,
+    purchaseBomNumber: true,
+    additionalInfo: true,
+    description: true,
+    shortDescription: true,
+    startDate: true,
+    endDate: true,
+    closed: true,
+    materialClosed: true,
+    approvedForQuote: true,
+    purchased: true,
+  })
+  .extend({
+    approvedForQuote: z.boolean().optional(),
+    workOrderId: z.string().optional(),
+  })
 
 export const purchaseBOMIdSchema = purchaseBOMSchema.pick({id: true})
 
@@ -90,19 +93,22 @@ export const createPurchaseBOMStructureSchema = purchaseBOMStructureSchema.omit(
 // They are created automatically when a ProjectBOMStructure is marked readyForPurchase=true.
 // The purchase side can only update the execution fields below.
 
-export const updatePurchaseBOMStructureSchema = purchaseBOMStructureSchema.pick({
-  id: true,
-  // ── Only execution fields are editable on the purchase side ─────────────────
-  stockReservedQuantity: true,
-  issuedQuantity: true,
-  notDeliverable: true,
-  projectBOMStructureId: true,
-  approvedForQuote: true,
-  purchased: true,
-}).extend({
-  approvedForQuote: z.boolean().optional(),
-  notCorrect: z.boolean().optional(),
-  notCorrectReason: z.string().max(255).nullable().optional(),
-})
+export const updatePurchaseBOMStructureSchema = purchaseBOMStructureSchema
+  .pick({
+    id: true,
+    // ── Only execution fields are editable on the purchase side ─────────────────
+    stockReservedQuantity: true,
+    issuedQuantity: true,
+    notDeliverable: true,
+    projectBOMStructureId: true,
+    approvedForQuote: true,
+    purchased: true,
+  })
+  .extend({
+    approvedForQuote: z.boolean().optional(),
+    notCorrect: z.boolean().optional(),
+    notCorrectReason: z.string().max(255).nullable().optional(),
+    workOrderId: z.string().optional(),
+  })
 
 export const purchaseBOMStructureIdSchema = purchaseBOMStructureSchema.pick({id: true})

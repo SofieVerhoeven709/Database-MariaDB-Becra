@@ -10,6 +10,7 @@ const materialDemandInclude = {
       beNumber: true,
       name: true,
       shortDescription: true,
+      isSerialTracked: true,
       InventoryOrder: {
         where: {deleted: false},
         select: {id: true, approved: true, shortDescription: true},
@@ -41,6 +42,7 @@ const materialDemandInclude = {
       id: true,
       sourceReferenceId: true,
       requiredQty: true,
+      description: true,
       reservedQty: true,
       createdAt: true,
       fulfilled: true,
@@ -290,7 +292,7 @@ export async function removeMaterialDemandSourceForInventoryOrder(params: {
 
   const demand = await db.materialDemand.findUnique({
     where: {id: source.materialDemandId},
-    select: {id: true, totalRequiredQty: true, reservedQty: true},
+    select: {id: true, totalRequiredQty: true, reservedQty: true, materialId: true}, // add materialId
   })
 
   if (!demand) {
@@ -303,7 +305,6 @@ export async function removeMaterialDemandSourceForInventoryOrder(params: {
   const sourceReservedQty = source.reservedQty ?? 0
   const nextReservedQty = Math.max(currentReservedQty - sourceReservedQty, 0)
 
-  // Keep demand totals in sync when removing a source.
   await db.materialDemand.update({
     where: {id: demand.id},
     data: {
@@ -313,6 +314,11 @@ export async function removeMaterialDemandSourceForInventoryOrder(params: {
   })
 
   await db.materialDemandSource.delete({where: {id: source.id}})
+
+  // Add reserved qty back to inventory since the commitment is being removed.
+  if (sourceReservedQty > 0) {
+    await adjustInventoryStockForMaterial(demand.materialId, sourceReservedQty, db)
+  }
 
   if (nextTotalRequiredQty === 0 && nextReservedQty === 0) {
     const sourceCount = await db.materialDemandSource.count({where: {materialDemandId: demand.id}})
@@ -489,9 +495,7 @@ export async function syncMaterialDemandFromIncomingAllocations(
             fulfilledAt: true,
             fulfilledBy: true,
             MaterialDemandSourceType: {
-              select: {
-                name: true,
-              },
+              select: {name: true},
             },
             IncomingDeliveryLineAllocation: {
               where: {deleted: false},
@@ -521,31 +525,27 @@ export async function syncMaterialDemandFromIncomingAllocations(
     let nextDemandReservedQty = 0
 
     for (const source of demand.MaterialDemandSource) {
-      const activeAllocations = source.IncomingDeliveryLineAllocation.filter(
-        allocation => !allocation.IncomingDeliveryLine?.deleted,
-      )
-      const allocatedQty = activeAllocations.reduce((sum, allocation) => sum + allocation.allocatedQty, 0)
-      const matchedQty = Math.min(source.requiredQty, allocatedQty)
-      const nextOutstandingQty = Math.max(source.requiredQty - matchedQty, 0)
-      const nextFulfilled = nextOutstandingQty === 0
-      const nextReservedQty = nextFulfilled ? 0 : matchedQty
-      const notCorrectAllocation = activeAllocations.find(allocation => allocation.IncomingDeliveryLine?.notCorrect)
+      const activeAllocations = source.IncomingDeliveryLineAllocation.filter(a => !a.IncomingDeliveryLine?.deleted)
+
+      const allocatedQty = activeAllocations.reduce((sum, a) => sum + a.allocatedQty, 0)
+
+      const nextFulfilled = allocatedQty >= source.requiredQty
+
+      const notCorrectAllocation = activeAllocations.find(a => a.IncomingDeliveryLine?.notCorrect)
+
       const hasNotCorrect = Boolean(notCorrectAllocation)
       const notCorrectReason = notCorrectAllocation?.IncomingDeliveryLine?.notCorrectReason?.trim() || null
 
-      nextTotalRequiredQty += nextOutstandingQty
-      nextDemandReservedQty += nextReservedQty
+      if (!nextFulfilled) {
+        nextTotalRequiredQty += source.requiredQty
+        nextDemandReservedQty += source.reservedQty ?? 0
+      }
 
       const updates: {
-        reservedQty?: number
         fulfilled?: boolean
         fulfilledAt?: Date | null
         fulfilledBy?: string | null
       } = {}
-
-      if ((source.reservedQty ?? 0) !== nextReservedQty) {
-        updates.reservedQty = nextReservedQty
-      }
 
       if ((source.fulfilled ?? false) !== nextFulfilled) {
         updates.fulfilled = nextFulfilled
@@ -570,11 +570,10 @@ export async function syncMaterialDemandFromIncomingAllocations(
         })
       }
 
-      // Propagate fulfillment state back to the originating source records.
       await syncSourceOriginFeedback(db, {
         sourceTypeName: source.MaterialDemandSourceType.name,
         sourceReferenceId: source.sourceReferenceId,
-        reservedQty: nextReservedQty,
+        reservedQty: allocatedQty,
         fulfilled: nextFulfilled,
         hasNotCorrect,
         notCorrectReason,
@@ -591,12 +590,15 @@ export async function syncMaterialDemandFromIncomingAllocations(
         },
       })
     }
-    return {materialDemandId: demand.id, totalRequiredQty: nextTotalRequiredQty}
+
+    return {
+      materialDemandId: demand.id,
+      totalRequiredQty: nextTotalRequiredQty,
+    }
   }
 
   return tx ? apply(tx) : prismaClient.$transaction(apply)
 }
-
 // ─── MaterialDemandSource tracking ──────────────────────────────────────────────
 
 /**
@@ -770,4 +772,114 @@ export async function validateMaterialDemandSourceAllocation(materialDemandId: s
   }
 
   return {valid: true, message: 'Allocation valid'}
+}
+
+export async function adjustInventoryStockForMaterial(
+  materialId: string,
+  delta: number,
+  tx?: Prisma.TransactionClient,
+) {
+  if (delta === 0) return
+  const db = tx ?? prismaClient
+
+  const inventory = await db.inventory.findFirst({
+    where: {materialId, deleted: false},
+    orderBy: {quantityInStock: 'asc'},
+    select: {id: true, quantityInStock: true},
+  })
+
+  if (!inventory) return
+
+  await db.inventory.update({
+    where: {id: inventory.id},
+    data: {quantityInStock: Math.max(inventory.quantityInStock + delta, 0)},
+  })
+}
+
+export async function updateMaterialDemandSourceReservedQtyWithStockSync(params: {
+  sourceId: string
+  materialDemandId: string
+  newReservedQty: number
+  employeeId: string
+  tx?: Prisma.TransactionClient
+}) {
+  const db = params.tx ?? prismaClient
+
+  const source = await db.materialDemandSource.findUnique({
+    where: {id: params.sourceId},
+    select: {
+      id: true,
+      reservedQty: true,
+      requiredQty: true,
+      fulfilled: true,
+      fulfilledAt: true,
+      materialDemandId: true,
+      MaterialDemand: {
+        select: {
+          reservedQty: true,
+          materialId: true,
+          Material: {select: {isSerialTracked: true}},
+        },
+      },
+    },
+  })
+
+  if (!source) throw new Error('Source not found.')
+  if (source.materialDemandId !== params.materialDemandId) {
+    throw new Error('Source does not belong to this demand.')
+  }
+
+  if (source.MaterialDemand.Material.isSerialTracked && params.newReservedQty > source.requiredQty) {
+    throw new Error('Reserved quantity cannot exceed required quantity for serial-tracked materials.')
+  }
+
+  const currentReservedQty = source.reservedQty ?? 0
+  const delta = params.newReservedQty - currentReservedQty
+  const wasAlreadyFulfilled = source.fulfilled ?? false
+  const nextFulfilled = params.newReservedQty >= source.requiredQty
+
+  const becameFulfilled = nextFulfilled && !wasAlreadyFulfilled
+  const becameUnfulfilled = !nextFulfilled && wasAlreadyFulfilled
+
+  const sourceUpdates: {
+    reservedQty: number
+    fulfilled: boolean
+    fulfilledAt?: Date | null
+    fulfilledBy?: string | null
+  } = {
+    reservedQty: params.newReservedQty,
+    fulfilled: nextFulfilled,
+  }
+
+  if (nextFulfilled && !wasAlreadyFulfilled) {
+    sourceUpdates.fulfilledAt = new Date()
+    sourceUpdates.fulfilledBy = params.employeeId
+  } else if (!nextFulfilled && wasAlreadyFulfilled) {
+    sourceUpdates.fulfilledAt = null
+    sourceUpdates.fulfilledBy = null
+  }
+
+  await db.materialDemandSource.update({
+    where: {id: params.sourceId},
+    data: sourceUpdates,
+  })
+
+  const currentDemandReservedQty = source.MaterialDemand.reservedQty ?? 0
+
+  const sources = await db.materialDemandSource.findMany({
+    where: {materialDemandId: params.materialDemandId},
+    select: {requiredQty: true, reservedQty: true, fulfilled: true},
+  })
+
+  const activeSources = sources.filter(s => !s.fulfilled)
+
+  const totalRequiredQty = activeSources.reduce((sum, s) => sum + s.requiredQty, 0)
+  const reservedQty = activeSources.reduce((sum, s) => sum + (s.reservedQty ?? 0), 0)
+
+  await db.materialDemand.update({
+    where: {id: params.materialDemandId},
+    data: {totalRequiredQty, reservedQty},
+  })
+
+  await adjustInventoryStockForMaterial(source.MaterialDemand.materialId, -delta, db)
 }

@@ -1,5 +1,5 @@
 import {notFound} from 'next/navigation'
-import {getPriceListById, enrichLinkedTargets} from '@/dal/priceLists'
+import {getPriceListById, enrichLinkedTargets, getMaterialPricesForPriceListItems} from '@/dal/priceLists'
 import {mapPriceList} from '@/extra/priceLists'
 import {PriceListDetail} from '@/components/custom/priceListDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
@@ -25,9 +25,16 @@ export default async function PriceListDetailPage({params}: PageProps) {
   const linkedTargetIds = priceListRaw.PriceListItem.map(i => i.PriceListItemTarget?.targetId).filter(
     (id): id is string => !!id,
   )
+  const materialTargetIds = priceListRaw.PriceListItem.filter(i => i.PriceListItemTarget != null).map(
+    i => i.PriceListItemTarget!.targetId,
+  )
 
-  const resolvedTargets = await enrichLinkedTargets(linkedTargetIds)
-  const priceList = mapPriceList(priceListRaw, resolvedTargets)
+  const [resolvedTargets, materialPriceMap] = await Promise.all([
+    enrichLinkedTargets(linkedTargetIds),
+    getMaterialPricesForPriceListItems(materialTargetIds),
+  ])
+
+  const priceList = mapPriceList(priceListRaw, resolvedTargets, materialPriceMap)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   return (

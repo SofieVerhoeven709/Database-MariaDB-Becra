@@ -54,8 +54,8 @@ export default async function IncomingDeliveryDetailPage({params}: PageProps) {
 
   const materialOptions = materialOptionsRaw.map(material => ({
     id: material.id,
-    // Build human-friendly labels for dropdowns.
     label: [material.beNumber, material.shortDescription ?? material.name].filter(Boolean).join(' - ') || material.id,
+    warehousePlaceId: material.warehousePlaceId ?? null,
   }))
 
   const purchaseDetailOptionsRaw = await getIncomingDeliveryPurchaseDetailOptions(incomingDelivery.purchaseId)

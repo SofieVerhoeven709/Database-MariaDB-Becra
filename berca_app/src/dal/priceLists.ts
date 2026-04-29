@@ -140,3 +140,41 @@ export async function searchLinkableTargets(type: LinkableTargetType, query: str
 
   return []
 }
+
+export async function getMaterialPricesForPriceListItems(targetIds: string[]): Promise<Map<string, number>> {
+  // Returns Map<targetId, lowestUnitPrice>
+  if (targetIds.length === 0) return new Map()
+
+  const materials = await prismaClient.material.findMany({
+    where: {targetId: {in: targetIds}, deleted: false},
+    select: {targetId: true, beNumber: true},
+  })
+
+  const beNumbers = materials.map(m => m.beNumber).filter((b): b is string => !!b)
+  if (beNumbers.length === 0) return new Map()
+
+  const prices = await prismaClient.materialPrice.findMany({
+    where: {deleted: false, beNumber: {in: beNumbers}, unitPrice: {not: null}},
+    select: {beNumber: true, unitPrice: true},
+  })
+
+  // beNumber → lowest unitPrice
+  const lowestByBeNumber = new Map<string, number>()
+  for (const row of prices) {
+    if (!row.beNumber || row.unitPrice == null) continue
+    const price = Number(row.unitPrice.toString())
+    const existing = lowestByBeNumber.get(row.beNumber)
+    if (existing === undefined || price < existing) {
+      lowestByBeNumber.set(row.beNumber, price)
+    }
+  }
+
+  // targetId → lowest unitPrice
+  const result = new Map<string, number>()
+  for (const mat of materials) {
+    if (!mat.targetId || !mat.beNumber) continue
+    const price = lowestByBeNumber.get(mat.beNumber)
+    if (price !== undefined) result.set(mat.targetId, price)
+  }
+  return result
+}

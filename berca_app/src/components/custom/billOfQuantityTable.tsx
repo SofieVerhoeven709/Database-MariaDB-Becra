@@ -273,7 +273,7 @@ export function BoqTable({
                   className={`border-border/40 hover:bg-secondary/50 ${boq.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/${departmentId}/boq/${boq.id}` as Route}
+                      href={`/departments/${departmentId}/billOfQuantity/${boq.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {boq.boqNumber}
                     </Link>
@@ -305,7 +305,7 @@ export function BoqTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${departmentId}/boq/${boq.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/billOfQuantity/${boq.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

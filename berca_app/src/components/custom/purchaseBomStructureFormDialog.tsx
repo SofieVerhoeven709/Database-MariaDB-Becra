@@ -1,21 +1,24 @@
 'use client'
 
-import {useEffect, useState} from 'react'
+import {useState, useEffect} from 'react'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from '@/components/ui/dialog'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import {updatePurchaseBOMStructureAction} from '@/serverFunctions/purchaseBoms'
+import {updatePurchaseBOMStructureAction, getOpenWorkOrdersForProjectAction} from '@/serverFunctions/purchaseBoms'
 import type {MappedPurchaseBOMStructure, BomMaterialOption} from '@/types/purchaseBom'
 import {useRouter} from 'next/navigation'
 import {Switch} from '@/components/ui/switch'
 import {AlertCircle} from 'lucide-react'
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
+import type {MappedWorkOrder} from '@/types/workOrder'
 
 interface PurchaseBOMStructureFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   structure: MappedPurchaseBOMStructure | null
   purchaseBOMId: string
+  projectId: string
   materialOptions: BomMaterialOption[]
 }
 
@@ -35,7 +38,12 @@ function ReadOnlyField({label, value}: {label: string; value: React.ReactNode}) 
   )
 }
 
-export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: PurchaseBOMStructureFormDialogProps) {
+export function PurchaseBOMStructureFormDialog({
+  open,
+  onOpenChange,
+  structure,
+  projectId,
+}: PurchaseBOMStructureFormDialogProps) {
   const router = useRouter()
   const [saving, setSaving] = useState(false)
 
@@ -44,7 +52,10 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
   const [notDeliverable, setNotDeliverable] = useState(false)
   const [purchased, setPurchased] = useState(false)
   const [approvedForQuote, setApprovedForQuote] = useState(false)
+  const [workOrders, setWorkOrders] = useState<MappedWorkOrder[]>([])
+  const [selectedWorkOrderId, setSelectedWorkOrderId] = useState<string>('')
 
+  // Populate form fields when dialog opens
   useEffect(() => {
     if (structure) {
       setReservedQuantity(structure.reservedQuantity?.toString() ?? '')
@@ -58,8 +69,24 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
       setNotDeliverable(false)
       setPurchased(false)
       setApprovedForQuote(false)
+      setWorkOrders([])
+      setSelectedWorkOrderId('')
     }
   }, [structure?.id, open])
+
+  // Fetch open work orders whenever the dialog opens — not gated on approvedForQuote
+  // so they're ready immediately when the toggle is turned on
+  useEffect(() => {
+    if (!open || !projectId) {
+      setWorkOrders([])
+      setSelectedWorkOrderId('')
+      return
+    }
+    getOpenWorkOrdersForProjectAction(projectId).then(orders => {
+      setWorkOrders(orders)
+      if (orders.length === 1) setSelectedWorkOrderId(orders[0].id)
+    })
+  }, [open, projectId])
 
   async function handleSubmit() {
     if (!structure) return
@@ -73,6 +100,7 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
         notDeliverable,
         purchased,
         approvedForQuote,
+        workOrderId: approvedForQuote ? selectedWorkOrderId : undefined,
       })
       onOpenChange(false)
       router.refresh()
@@ -85,7 +113,7 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-border">
         <DialogHeader>
-          <DialogTitle className="text-foreground">Approve & Execute Structure</DialogTitle>
+          <DialogTitle className="text-foreground">Approve &amp; Execute Structure</DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-5 py-3">
@@ -115,31 +143,27 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
             </div>
           </div>
 
-           {/* ── Read-only structural information ─────────────────────────────── */}
-           <div className="rounded-lg border border-border/40 bg-secondary/20 px-4 py-3">
-             <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wide">
-               Specification (read-only — managed from Project BOM)
-             </p>
-             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-               <ReadOnlyField label="Required Qty" value={structure?.requiredQuantity?.toString()} />
-               <ReadOnlyField
-                 label="Ready for Purchase Date"
-                 value={formatDate(structure?.readyForPurchaseDate ?? null)}
-               />
-               <ReadOnlyField
-                 label="Created By"
-                 value={structure?.createdByName}
-               />
-               <ReadOnlyField
-                 label="Created At"
-                 value={formatDate(structure?.createdAt ?? null)}
-               />
-             </div>
-           </div>
+          {/* ── Read-only structural information ─────────────────────────────── */}
+          <div className="rounded-lg border border-border/40 bg-secondary/20 px-4 py-3">
+            <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wide">
+              Specification (read-only — managed from Project BOM)
+            </p>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <ReadOnlyField label="Required Qty" value={structure?.requiredQuantity?.toString()} />
+              <ReadOnlyField
+                label="Ready for Purchase Date"
+                value={formatDate(structure?.readyForPurchaseDate ?? null)}
+              />
+              <ReadOnlyField label="Created By" value={structure?.createdByName} />
+              <ReadOnlyField label="Created At" value={formatDate(structure?.createdAt ?? null)} />
+            </div>
+          </div>
 
           {/* ── Editable execution fields ─────────────────────────────────────── */}
           <div className="flex flex-col gap-3">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Execution & Approval</p>
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              Execution &amp; Approval
+            </p>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
@@ -168,40 +192,72 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
               </div>
             </div>
 
-             {/* ── Status toggles ──────────────────────────────────────────────── */}
-             <div className="flex flex-col gap-2">
-               {/* Approved for Quote — editable */}
-               <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
-                 <div className="flex flex-col gap-0.5">
-                   <Label className="text-xs text-muted-foreground">Approved for Quote</Label>
-                   <p className="text-xs text-muted-foreground/60">
-                     Approve this structure for quotation and procurement
-                   </p>
-                 </div>
-                 <Switch checked={approvedForQuote} onCheckedChange={setApprovedForQuote} />
-               </div>
+            {/* ── Status toggles ──────────────────────────────────────────────── */}
+            <div className="flex flex-col gap-2">
+              {/* Approved for Quote — editable */}
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <div className="flex flex-col gap-0.5">
+                  <Label className="text-xs text-muted-foreground">Approved for Quote</Label>
+                  <p className="text-xs text-muted-foreground/60">
+                    Approve this structure for quotation and procurement
+                  </p>
+                </div>
+                <Switch checked={approvedForQuote} onCheckedChange={setApprovedForQuote} />
+              </div>
 
-               {/* Not Deliverable — editable */}
-               <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
-                 <div className="flex flex-col gap-0.5">
-                   <Label className="text-xs text-muted-foreground">Not Deliverable</Label>
-                   <p className="text-xs text-muted-foreground/60">
-                     Mark if this material cannot be delivered for this project
-                   </p>
-                 </div>
-                 <Switch checked={notDeliverable} onCheckedChange={setNotDeliverable} />
-               </div>
+              {/* Work Order selection — shown when approving for quote */}
+              {approvedForQuote && (
+                <div className="flex flex-col gap-1.5">
+                  <Label className="text-xs text-muted-foreground">Work Order</Label>
+                  {workOrders.length === 0 ? (
+                    <p className="text-xs text-destructive/80 px-1">
+                      No open work orders found for this project. Ask a manager to open one before approving.
+                    </p>
+                  ) : (
+                    <Select value={selectedWorkOrderId} onValueChange={setSelectedWorkOrderId}>
+                      <SelectTrigger className="bg-secondary border-border">
+                        <SelectValue placeholder="Select work order" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-card border-border">
+                        {workOrders.map(wo => (
+                          <SelectItem key={wo.id} value={wo.id}>
+                            <div className="flex flex-col">
+                              <span className="font-medium">{wo.workOrderNumber ?? wo.id}</span>
+                              {wo.description && (
+                                <span className="text-xs text-muted-foreground truncate max-w-75">
+                                  {wo.description}
+                                </span>
+                              )}
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                </div>
+              )}
 
-               {/* Purchased — editable */}
-               <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
-                 <div className="flex flex-col gap-0.5">
-                   <Label className="text-xs text-muted-foreground">Purchased</Label>
-                   <p className="text-xs text-muted-foreground/60">
-                     Mark when the material has been purchased and received
-                   </p>
-                 </div>
-                 <Switch checked={purchased} onCheckedChange={setPurchased} />
-               </div>
+              {/* Not Deliverable — editable */}
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <div className="flex flex-col gap-0.5">
+                  <Label className="text-xs text-muted-foreground">Not Deliverable</Label>
+                  <p className="text-xs text-muted-foreground/60">
+                    Mark if this material cannot be delivered for this project
+                  </p>
+                </div>
+                <Switch checked={notDeliverable} onCheckedChange={setNotDeliverable} />
+              </div>
+
+              {/* Purchased — editable */}
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <div className="flex flex-col gap-0.5">
+                  <Label className="text-xs text-muted-foreground">Purchased</Label>
+                  <p className="text-xs text-muted-foreground/60">
+                    Mark when the material has been purchased and received
+                  </p>
+                </div>
+                <Switch checked={purchased} onCheckedChange={setPurchased} />
+              </div>
 
               {/* Not Correct — read-only status */}
               <div
@@ -225,10 +281,7 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
 
               {/* Completed Date — read-only */}
               {structure?.completedDate && (
-                <ReadOnlyField
-                  label="Completed Date"
-                  value={formatDate(structure.completedDate)}
-                />
+                <ReadOnlyField label="Completed Date" value={formatDate(structure.completedDate)} />
               )}
             </div>
           </div>

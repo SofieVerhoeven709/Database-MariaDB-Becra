@@ -500,6 +500,14 @@ model Employee {
   Function_Function_deletedByToEmployee                                             Function[]                       @relation("Function_deletedByToEmployee")
   HourType                                                                          HourType[]
   HourType_HourType_deletedByToEmployee                                             HourType[]                       @relation("HourType_deletedByToEmployee")
+  HrCertificationTraining_HrCertificationTraining_employeeIdToEmployee              HrCertificationTraining[]        @relation("HrCertificationTraining_employeeIdToEmployee")
+  HrCertificationTraining_HrCertificationTraining_createdByToEmployee               HrCertificationTraining[]        @relation("HrCertificationTraining_createdByToEmployee")
+  HrCertificationTraining_HrCertificationTraining_deletedByToEmployee               HrCertificationTraining[]        @relation("HrCertificationTraining_deletedByToEmployee")
+  HrCertificationTraining_HrCertificationTraining_updatedByToEmployee               HrCertificationTraining[]        @relation("HrCertificationTraining_updatedByToEmployee")
+  HrEmployeeAbsence_HrEmployeeAbsence_employeeIdToEmployee                          HrEmployeeAbsence[]              @relation("HrEmployeeAbsence_employeeIdToEmployee")
+  HrEmployeeAbsence_HrEmployeeAbsence_createdByToEmployee                           HrEmployeeAbsence[]              @relation("HrEmployeeAbsence_createdByToEmployee")
+  HrEmployeeAbsence_HrEmployeeAbsence_deletedByToEmployee                           HrEmployeeAbsence[]              @relation("HrEmployeeAbsence_deletedByToEmployee")
+  HrEmployeeAbsence_HrEmployeeAbsence_updatedByToEmployee                           HrEmployeeAbsence[]              @relation("HrEmployeeAbsence_updatedByToEmployee")
   IncomingDelivery_IncomingDelivery_createdByToEmployee                             IncomingDelivery[]               @relation("IncomingDelivery_createdByToEmployee")
   IncomingDelivery_IncomingDelivery_deletedByToEmployee                             IncomingDelivery[]               @relation("IncomingDelivery_deletedByToEmployee")
   IncomingDeliveryLine_IncomingDeliveryLine_createdByToEmployee                     IncomingDeliveryLine[]           @relation("IncomingDeliveryLine_createdByToEmployee")
@@ -3091,6 +3099,61 @@ model ScheduleMeeting {
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
   @@index([employeeId], map: "employeeId")
+}
+
+model HrCertificationTraining {
+  id                                                    String    @id @db.Char(36)
+  employeeId                                            String    @db.Char(36)
+  trainingName                                          String    @db.VarChar(255)
+  trainingType                                          String    @db.VarChar(30)
+  recurrenceInterval                                    String    @default("none") @db.VarChar(10)
+  trainingDate                                          DateTime  @db.DateTime(0)
+  certificateValidUntil                                 DateTime? @db.DateTime(0)
+  providerName                                          String    @db.VarChar(255)
+  additionalInfo                                        String?   @db.Text
+  createdAt                                             DateTime  @db.DateTime(0)
+  createdBy                                             String    @db.Char(36)
+  updatedAt                                             DateTime? @db.DateTime(0)
+  updatedBy                                             String?   @db.Char(36)
+  deleted                                               Boolean   @default(false)
+  deletedAt                                             DateTime? @db.DateTime(0)
+  deletedBy                                             String?   @db.Char(36)
+  Employee_HrCertificationTraining_employeeIdToEmployee Employee  @relation("HrCertificationTraining_employeeIdToEmployee", fields: [employeeId], references: [id], onUpdate: Restrict, map: "HrCertificationTraining_ibfk_1")
+  Employee_HrCertificationTraining_createdByToEmployee  Employee  @relation("HrCertificationTraining_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "HrCertificationTraining_ibfk_2")
+  Employee_HrCertificationTraining_deletedByToEmployee  Employee? @relation("HrCertificationTraining_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "HrCertificationTraining_ibfk_3")
+  Employee_HrCertificationTraining_updatedByToEmployee  Employee? @relation("HrCertificationTraining_updatedByToEmployee", fields: [updatedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "HrCertificationTraining_ibfk_4")
+
+  @@index([employeeId], map: "employeeId")
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([updatedBy], map: "HrCertificationTraining_ibfk_4")
+}
+
+model HrEmployeeAbsence {
+  id                                              String    @id @db.Char(36)
+  employeeId                                      String    @db.Char(36)
+  year                                            Int
+  absenceType                                     String    @db.VarChar(30)
+  days                                            Decimal   @default(0.00) @db.Decimal(6, 2)
+  additionalInfo                                  String?   @db.Text
+  createdAt                                       DateTime  @db.DateTime(0)
+  createdBy                                       String    @db.Char(36)
+  updatedAt                                       DateTime? @db.DateTime(0)
+  updatedBy                                       String?   @db.Char(36)
+  deleted                                         Boolean   @default(false)
+  deletedAt                                       DateTime? @db.DateTime(0)
+  deletedBy                                       String?   @db.Char(36)
+  Employee_HrEmployeeAbsence_employeeIdToEmployee Employee  @relation("HrEmployeeAbsence_employeeIdToEmployee", fields: [employeeId], references: [id], onUpdate: Restrict, map: "HrEmployeeAbsence_ibfk_1")
+  Employee_HrEmployeeAbsence_createdByToEmployee  Employee  @relation("HrEmployeeAbsence_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "HrEmployeeAbsence_ibfk_2")
+  Employee_HrEmployeeAbsence_deletedByToEmployee  Employee? @relation("HrEmployeeAbsence_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "HrEmployeeAbsence_ibfk_3")
+  Employee_HrEmployeeAbsence_updatedByToEmployee  Employee? @relation("HrEmployeeAbsence_updatedByToEmployee", fields: [updatedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "HrEmployeeAbsence_ibfk_4")
+
+  @@index([employeeId], map: "employeeId")
+  @@index([year], map: "year")
+  @@index([absenceType], map: "absenceType")
+  @@index([createdBy], map: "HrEmployeeAbsence_ibfk_2")
+  @@index([deletedBy], map: "HrEmployeeAbsence_ibfk_3")
+  @@index([updatedBy], map: "HrEmployeeAbsence_ibfk_4")
 }
 
 model BillOfQuantities {

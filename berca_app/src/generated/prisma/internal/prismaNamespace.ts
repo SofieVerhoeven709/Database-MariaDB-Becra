@@ -505,6 +505,8 @@ export const ModelName = {
   IncomingDeliveryLine: 'IncomingDeliveryLine',
   IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation',
   ScheduleMeeting: 'ScheduleMeeting',
+  HrCertificationTraining: 'HrCertificationTraining',
+  HrEmployeeAbsence: 'HrEmployeeAbsence',
   BillOfQuantities: 'BillOfQuantities',
   BillOfQuantitiesSentType: 'BillOfQuantitiesSentType',
   BillOfQuantitiesStatus: 'BillOfQuantitiesStatus',
@@ -529,7 +531,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "recruitmentApplicant" | "recruitmentVacancy" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "employeeContractStatusOption" | "employeeContractTypeOption" | "employeeBenefitOption" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "recruitmentApplicant" | "recruitmentVacancy" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "employeeContractStatusOption" | "employeeContractTypeOption" | "employeeBenefitOption" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "hrCertificationTraining" | "hrEmployeeAbsence" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -8123,6 +8125,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    HrCertificationTraining: {
+      payload: Prisma.$HrCertificationTrainingPayload<ExtArgs>
+      fields: Prisma.HrCertificationTrainingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HrCertificationTrainingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrCertificationTrainingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HrCertificationTrainingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrCertificationTrainingPayload>
+        }
+        findFirst: {
+          args: Prisma.HrCertificationTrainingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrCertificationTrainingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HrCertificationTrainingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrCertificationTrainingPayload>
+        }
+        findMany: {
+          args: Prisma.HrCertificationTrainingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrCertificationTrainingPayload>[]
+        }
+        create: {
+          args: Prisma.HrCertificationTrainingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrCertificationTrainingPayload>
+        }
+        createMany: {
+          args: Prisma.HrCertificationTrainingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.HrCertificationTrainingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrCertificationTrainingPayload>
+        }
+        update: {
+          args: Prisma.HrCertificationTrainingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrCertificationTrainingPayload>
+        }
+        deleteMany: {
+          args: Prisma.HrCertificationTrainingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HrCertificationTrainingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.HrCertificationTrainingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrCertificationTrainingPayload>
+        }
+        aggregate: {
+          args: Prisma.HrCertificationTrainingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHrCertificationTraining>
+        }
+        groupBy: {
+          args: Prisma.HrCertificationTrainingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrCertificationTrainingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HrCertificationTrainingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrCertificationTrainingCountAggregateOutputType> | number
+        }
+      }
+    }
+    HrEmployeeAbsence: {
+      payload: Prisma.$HrEmployeeAbsencePayload<ExtArgs>
+      fields: Prisma.HrEmployeeAbsenceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HrEmployeeAbsenceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeAbsencePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HrEmployeeAbsenceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeAbsencePayload>
+        }
+        findFirst: {
+          args: Prisma.HrEmployeeAbsenceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeAbsencePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HrEmployeeAbsenceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeAbsencePayload>
+        }
+        findMany: {
+          args: Prisma.HrEmployeeAbsenceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeAbsencePayload>[]
+        }
+        create: {
+          args: Prisma.HrEmployeeAbsenceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeAbsencePayload>
+        }
+        createMany: {
+          args: Prisma.HrEmployeeAbsenceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.HrEmployeeAbsenceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeAbsencePayload>
+        }
+        update: {
+          args: Prisma.HrEmployeeAbsenceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeAbsencePayload>
+        }
+        deleteMany: {
+          args: Prisma.HrEmployeeAbsenceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HrEmployeeAbsenceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.HrEmployeeAbsenceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeAbsencePayload>
+        }
+        aggregate: {
+          args: Prisma.HrEmployeeAbsenceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHrEmployeeAbsence>
+        }
+        groupBy: {
+          args: Prisma.HrEmployeeAbsenceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrEmployeeAbsenceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HrEmployeeAbsenceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrEmployeeAbsenceCountAggregateOutputType> | number
+        }
+      }
+    }
     BillOfQuantities: {
       payload: Prisma.$BillOfQuantitiesPayload<ExtArgs>
       fields: Prisma.BillOfQuantitiesFieldRefs
@@ -10859,6 +10993,47 @@ export const ScheduleMeetingScalarFieldEnum = {
 export type ScheduleMeetingScalarFieldEnum = (typeof ScheduleMeetingScalarFieldEnum)[keyof typeof ScheduleMeetingScalarFieldEnum]
 
 
+export const HrCertificationTrainingScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  trainingName: 'trainingName',
+  trainingType: 'trainingType',
+  recurrenceInterval: 'recurrenceInterval',
+  trainingDate: 'trainingDate',
+  certificateValidUntil: 'certificateValidUntil',
+  providerName: 'providerName',
+  additionalInfo: 'additionalInfo',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrCertificationTrainingScalarFieldEnum = (typeof HrCertificationTrainingScalarFieldEnum)[keyof typeof HrCertificationTrainingScalarFieldEnum]
+
+
+export const HrEmployeeAbsenceScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  year: 'year',
+  absenceType: 'absenceType',
+  days: 'days',
+  additionalInfo: 'additionalInfo',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrEmployeeAbsenceScalarFieldEnum = (typeof HrEmployeeAbsenceScalarFieldEnum)[keyof typeof HrEmployeeAbsenceScalarFieldEnum]
+
+
 export const BillOfQuantitiesScalarFieldEnum = {
   id: 'id',
   boqNumber: 'boqNumber',
@@ -12539,6 +12714,35 @@ export const ScheduleMeetingOrderByRelevanceFieldEnum = {
 export type ScheduleMeetingOrderByRelevanceFieldEnum = (typeof ScheduleMeetingOrderByRelevanceFieldEnum)[keyof typeof ScheduleMeetingOrderByRelevanceFieldEnum]
 
 
+export const HrCertificationTrainingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  trainingName: 'trainingName',
+  trainingType: 'trainingType',
+  recurrenceInterval: 'recurrenceInterval',
+  providerName: 'providerName',
+  additionalInfo: 'additionalInfo',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrCertificationTrainingOrderByRelevanceFieldEnum = (typeof HrCertificationTrainingOrderByRelevanceFieldEnum)[keyof typeof HrCertificationTrainingOrderByRelevanceFieldEnum]
+
+
+export const HrEmployeeAbsenceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  absenceType: 'absenceType',
+  additionalInfo: 'additionalInfo',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrEmployeeAbsenceOrderByRelevanceFieldEnum = (typeof HrEmployeeAbsenceOrderByRelevanceFieldEnum)[keyof typeof HrEmployeeAbsenceOrderByRelevanceFieldEnum]
+
+
 export const BillOfQuantitiesOrderByRelevanceFieldEnum = {
   id: 'id',
   boqNumber: 'boqNumber',
@@ -12891,6 +13095,8 @@ export type GlobalOmitConfig = {
   incomingDeliveryLine?: Prisma.IncomingDeliveryLineOmit
   incomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationOmit
   scheduleMeeting?: Prisma.ScheduleMeetingOmit
+  hrCertificationTraining?: Prisma.HrCertificationTrainingOmit
+  hrEmployeeAbsence?: Prisma.HrEmployeeAbsenceOmit
   billOfQuantities?: Prisma.BillOfQuantitiesOmit
   billOfQuantitiesSentType?: Prisma.BillOfQuantitiesSentTypeOmit
   billOfQuantitiesStatus?: Prisma.BillOfQuantitiesStatusOmit

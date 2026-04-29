@@ -2174,4 +2174,58 @@ CREATE TABLE IF NOT EXISTS EmployeeBenefitOption (
         FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE SET NULL,
         FOREIGN KEY (createdBy) REFERENCES Employee(id) ON DELETE RESTRICT
 ) ENGINE = InnoDB;
+
 ALTER TABLE BillOfQuantities CHANGE COLUMN IF EXISTS `humanId` `clientReference` VARCHAR(255) NULL; 
+
+CREATE TABLE IF NOT EXISTS HrCertificationTraining (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      employeeId CHAR(36) NOT NULL,
+      trainingName VARCHAR(255) NOT NULL,
+      trainingType VARCHAR(30) NOT NULL,
+      recurrenceInterval VARCHAR(10) NOT NULL DEFAULT 'none',
+      trainingDate DATETIME NOT NULL,
+      certificateValidUntil DATETIME NULL,
+      providerName VARCHAR(255) NOT NULL,
+      additionalInfo TEXT NULL,
+      createdAt DATETIME NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      updatedAt DATETIME NULL,
+      updatedBy CHAR(36) NULL,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedAt DATETIME NULL,
+      deletedBy CHAR(36) NULL,
+
+      INDEX employeeId (employeeId),
+      INDEX createdBy (createdBy),
+      INDEX deletedBy (deletedBy),
+
+      CONSTRAINT HrCertificationTraining_ibfk_1 FOREIGN KEY (employeeId) REFERENCES Employee(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrCertificationTraining_ibfk_2 FOREIGN KEY (createdBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrCertificationTraining_ibfk_3 FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrCertificationTraining_ibfk_4 FOREIGN KEY (updatedBy) REFERENCES Employee(id) ON UPDATE RESTRICT
+    ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS HrEmployeeAbsence (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      employeeId CHAR(36) NOT NULL,
+      year INT NOT NULL,
+      absenceType VARCHAR(30) NOT NULL,
+      days DECIMAL(6,2) NOT NULL DEFAULT 0,
+      additionalInfo TEXT NULL,
+      createdAt DATETIME NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      updatedAt DATETIME NULL,
+      updatedBy CHAR(36) NULL,
+      deleted BOOLEAN NOT NULL DEFAULT false,
+      deletedAt DATETIME NULL,
+      deletedBy CHAR(36) NULL,
+
+      INDEX employeeId (employeeId),
+      INDEX year (year),
+      INDEX absenceType (absenceType),
+
+      CONSTRAINT HrEmployeeAbsence_ibfk_1 FOREIGN KEY (employeeId) REFERENCES Employee(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeAbsence_ibfk_2 FOREIGN KEY (createdBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeAbsence_ibfk_3 FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeAbsence_ibfk_4 FOREIGN KEY (updatedBy) REFERENCES Employee(id) ON UPDATE RESTRICT
+    )

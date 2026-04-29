@@ -17,13 +17,19 @@ interface Option {
   name: string
 }
 
+interface CompanyOption {
+  id: string
+  name: string
+  deleted: boolean
+}
+
 interface ProjectFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   project: MappedProject | null
   projects: MappedProject[]
   projectTypes: Option[]
-  companies: Option[]
+  companies: CompanyOption[]
   canEditNumber: boolean
   onSave: (project: MappedProject) => Promise<void>
 }
@@ -162,11 +168,13 @@ export function ProjectFormDialog({
                 <SelectValue placeholder="Select company" />
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
-                {companies.map(c => (
-                  <SelectItem key={c.id} value={c.id}>
-                    {c.name}
-                  </SelectItem>
-                ))}
+                {companies
+                  .filter(c => !c.deleted)
+                  .map(c => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.name}
+                    </SelectItem>
+                  ))}
               </SelectContent>
             </Select>
           </div>

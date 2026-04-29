@@ -15,9 +15,13 @@ export const INCOMING_PERMISSION_LEVELS = {
   hardDelete: 100,
   addSourceLink: 40,
   deleteSourceLink: 80,
-  } as const
-  
+} as const
+
+export const DEMAND_PERMISSION_LEVELS = {
+  assign: 40,
+  addSource: 60,
+} as const
+
 export const AppSettings = {
   inspectionReminderMonths: 2,
 } as const
-

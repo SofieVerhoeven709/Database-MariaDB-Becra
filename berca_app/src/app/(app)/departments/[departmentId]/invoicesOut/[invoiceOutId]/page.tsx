@@ -7,6 +7,7 @@ import {
   getInvoiceStatuses,
   getCompanyContactsForInvoice,
   getPriceListsForCompanies,
+  getMaterialPricesForBeNumbers,
 } from '@/dal/invoices'
 import {mapInvoiceOut} from '@/extra/invoices'
 import {InvoiceOutDetail} from '@/components/custom/invoiceOutDetail'
@@ -60,7 +61,17 @@ export default async function InvoiceOutDetailPage({params}: PageProps) {
       })),
     }
   }
-  const invoice = mapInvoiceOut(invoiceRawFixed as any)
+
+  const beNumbers = [
+    ...new Set(
+      invoiceRawFixed.WorkOrderInvoice.flatMap((wi: any) =>
+        (wi.WorkOrder?.WorkOrderStructure ?? []).map((wos: any) => wos.Material?.beNumber).filter(Boolean),
+      ),
+    ),
+  ]
+
+  const materialPriceMap = await getMaterialPricesForBeNumbers(beNumbers)
+  const invoice = mapInvoiceOut(invoiceRawFixed as any, materialPriceMap)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const companyIds = [...new Set(invoice.workOrders.map(wo => wo.companyId))]

@@ -13,17 +13,18 @@ import {BoqDetail} from '@/components/custom/billOfQuantityDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {getMaterialPricesForBeNumbers} from '@/dal/invoices'
 
 interface PageProps {
-  params: Promise<{departmentId: string; boqId: string}>
+  params: Promise<{departmentId: string; billOfQuantityId: string}>
 }
 
 export default async function BoqDetailPage({params}: PageProps) {
-  const {departmentId, boqId} = await params
+  const {departmentId, billOfQuantityId} = await params
 
   const [department, boqRaw, boqTypes, paymentMethods, boqSentTypes, boqStatuses, profile] = await Promise.all([
     getDepartmentById(departmentId),
-    getBoqById(boqId).catch(() => null),
+    getBoqById(billOfQuantityId).catch(() => null),
     getBoqTypes(),
     getPaymentMethods(),
     getBoqSentTypes(),
@@ -60,7 +61,16 @@ export default async function BoqDetailPage({params}: PageProps) {
     }
   }
 
-  const boq = mapBoq(boqRawFixed as any)
+  const beNumbers = [
+    ...new Set(
+      boqRawFixed.WorkOrderBoQ.flatMap((wb: any) =>
+        (wb.WorkOrder?.WorkOrderStructure ?? []).map((wos: any) => wos.Material?.beNumber).filter(Boolean),
+      ),
+    ),
+  ]
+
+  const materialPriceMap = await getMaterialPricesForBeNumbers(beNumbers)
+  const boq = mapBoq(boqRawFixed as any, materialPriceMap)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const companyIds = [...new Set(boq.workOrders.map(wo => wo.companyId))]

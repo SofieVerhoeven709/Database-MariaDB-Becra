@@ -215,6 +215,7 @@ function mapWorkOrderWithLines(
   priceMap: Map<string, {itemId: string; unit: string; basePrice: number}>,
   costMargin: number,
   stayOverPrice: {itemId: string; unit: string; basePrice: number} | null,
+  materialPriceMap: Map<string, number> = new Map(),
 ): MappedInvoiceOutWorkOrder {
   const wo = w.WorkOrder
   const lines: MappedBillingLine[] = []
@@ -367,10 +368,15 @@ function mapWorkOrderWithLines(
     const lineVat = lineTotal !== null ? lineTotal * ((vatRate ?? 0) / 100) : null
     const lineTotalInclVat = lineTotal !== null ? lineTotal + (lineVat ?? 0) : null
 
-    // Calculate VAT for this material line based on its VatMargin
     if (lineTotal !== null && vatRate && vatRate > 0) {
       vatByRateMap.set(vatRate, (vatByRateMap.get(vatRate) ?? 0) + (lineVat ?? 0))
     }
+
+    // ← NEW: below-cost check
+    const beNum = mat.beNumber ?? null
+    const materialSupplierPrice = beNum ? (materialPriceMap.get(beNum) ?? null) : null
+    const priceListBelowCost =
+      match?.basePrice != null && materialSupplierPrice != null ? match.basePrice < materialSupplierPrice : false
 
     lines.push({
       workOrderId: wo.id,
@@ -389,6 +395,9 @@ function mapWorkOrderWithLines(
       lineTotalInclVat,
       unmatched: !match,
       workOrderStructureId: wos.id,
+      beNumber: beNum, // ← NEW
+      materialSupplierPrice, // ← NEW
+      priceListBelowCost, // ← NEW
     })
   }
 
@@ -454,14 +463,16 @@ function mapWorkOrderWithLines(
   }
 }
 
-export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
+export function mapInvoiceOut(r: InvoiceOutRaw, materialPriceMap: Map<string, number> = new Map()): MappedInvoiceOut {
   // Build price map from invoice-level price list
   const priceItems = r.PriceList?.PriceListItem ?? []
   const priceMap = buildTargetPriceMap(priceItems)
   const costMargin = priceItems.find(i => i.isCostMargin)?.price.toNumber() ?? 0
   const stayOverPrice = findStayOverPrice(priceItems)
 
-  const workOrders = r.WorkOrderInvoice.map(w => mapWorkOrderWithLines(w, priceMap, costMargin, stayOverPrice))
+  const workOrders = r.WorkOrderInvoice.map(w =>
+    mapWorkOrderWithLines(w, priceMap, costMargin, stayOverPrice, materialPriceMap),
+  )
 
   // Aggregate VAT from all work orders
   const invoiceVatByRateMap = new Map<number, number>() // rate → total amount

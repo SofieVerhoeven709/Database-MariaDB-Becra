@@ -26,6 +26,7 @@ function emptyDelivery(): MappedIncomingDelivery {
     incomingDeliveryNumber: generateIncomingDeliveryNumber(),
     purchaseId: null,
     purchaseNumber: null,
+    purchaseDescription: null,
     status: 'DRAFT',
     deliveryDate: new Date().toISOString(),
     receivedAt: null,
@@ -110,7 +111,9 @@ export function IncomingDeliveryFormDialog({
 
           <div className="grid gap-1.5">
             <Label>Purchase Order (optional)</Label>
-            <Select value={form.purchaseId ?? '__none__'} onValueChange={v => set('purchaseId', v === '__none__' ? null : v)}>
+            <Select
+              value={form.purchaseId ?? '__none__'}
+              onValueChange={v => set('purchaseId', v === '__none__' ? null : v)}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select purchase order" />
               </SelectTrigger>
@@ -118,7 +121,7 @@ export function IncomingDeliveryFormDialog({
                 <SelectItem value="__none__">No linked purchase</SelectItem>
                 {purchaseOptions.map(option => (
                   <SelectItem key={option.id} value={option.id}>
-                    {option.name}
+                    {option.name} {option.description ? `- ${option.description}` : ''}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -148,7 +151,9 @@ export function IncomingDeliveryFormDialog({
               type="date"
               value={form.deliveryDate ? form.deliveryDate.slice(0, 10) : ''}
               // Convert date input back to ISO for storage.
-              onChange={e => set('deliveryDate', e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString())}
+              onChange={e =>
+                set('deliveryDate', e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString())
+              }
               className="bg-secondary border-border"
             />
           </div>
@@ -203,4 +208,3 @@ export function IncomingDeliveryFormDialog({
     </Dialog>
   )
 }
-

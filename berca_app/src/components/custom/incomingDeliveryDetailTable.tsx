@@ -29,6 +29,7 @@ import {INCOMING_PERMISSION_LEVELS} from '@/constants'
 interface MaterialOption {
   id: string
   label: string
+  warehousePlaceId: string | null
 }
 
 interface PurchaseDetailOption {
@@ -237,7 +238,10 @@ export function IncomingDeliveryDetailTable({
     return materialDemandSourceOptions.filter(option => option.materialId === line.materialId && !option.fulfilled)
   })()
 
-  const expandedLine = expandedLineId ? lineById.get(expandedLineId) ?? null : null
+  const expandedLine = expandedLineId ? (lineById.get(expandedLineId) ?? null) : null
+  const expandedLineMaterialWarehousePlaceId = expandedLine
+    ? (materialOptions.find(m => m.id === expandedLine.materialId)?.warehousePlaceId ?? null)
+    : null
   const overDeliveredQty = expandedLine ? Math.max(expandedLine.deliveredQty - expandedLine.orderedQty, 0) : 0
   const overDeliveredAssignedQty = expandedLine
     ? (allocationsByLineId[expandedLine.id] ?? [])
@@ -347,7 +351,13 @@ export function IncomingDeliveryDetailTable({
             <Checkbox
               id="notCorrect"
               checked={form.notCorrect}
-              onCheckedChange={checked => setForm(prev => ({...prev, notCorrect: checked === true, notCorrectReason: checked === true ? prev.notCorrectReason : ''}))}
+              onCheckedChange={checked =>
+                setForm(prev => ({
+                  ...prev,
+                  notCorrect: checked === true,
+                  notCorrectReason: checked === true ? prev.notCorrectReason : '',
+                }))
+              }
             />
             <Label htmlFor="notCorrect" className="text-sm font-normal cursor-pointer">
               Not correct
@@ -368,27 +378,64 @@ export function IncomingDeliveryDetailTable({
         <div className="grid gap-3 md:grid-cols-6">
           <div className="grid gap-1.5">
             <Label>Ordered</Label>
-            <Input value={form.orderedQty} onChange={e => setForm(prev => ({...prev, orderedQty: e.target.value}))} type="number" min={0} className="bg-secondary border-border" />
+            <Input
+              value={form.orderedQty}
+              onChange={e => setForm(prev => ({...prev, orderedQty: e.target.value}))}
+              type="number"
+              min={0}
+              className="bg-secondary border-border"
+            />
           </div>
           <div className="grid gap-1.5">
             <Label>Delivered</Label>
-            <Input value={form.deliveredQty} onChange={e => setForm(prev => ({...prev, deliveredQty: e.target.value}))} type="number" min={0} className="bg-secondary border-border" />
+            <Input
+              value={form.deliveredQty}
+              onChange={e => setForm(prev => ({...prev, deliveredQty: e.target.value}))}
+              type="number"
+              min={0}
+              className="bg-secondary border-border"
+            />
           </div>
           <div className="grid gap-1.5">
             <Label>Accepted</Label>
-            <Input value={form.acceptedQty} onChange={e => setForm(prev => ({...prev, acceptedQty: e.target.value}))} type="number" min={0} className="bg-secondary border-border" />
+            <Input
+              value={form.acceptedQty}
+              onChange={e => setForm(prev => ({...prev, acceptedQty: e.target.value}))}
+              type="number"
+              min={0}
+              className="bg-secondary border-border"
+            />
           </div>
           <div className="grid gap-1.5">
             <Label>Rejected</Label>
-            <Input value={form.rejectedQty} onChange={e => setForm(prev => ({...prev, rejectedQty: e.target.value}))} type="number" min={0} className="bg-secondary border-border" />
+            <Input
+              value={form.rejectedQty}
+              onChange={e => setForm(prev => ({...prev, rejectedQty: e.target.value}))}
+              type="number"
+              min={0}
+              className="bg-secondary border-border"
+            />
           </div>
           <div className="grid gap-1.5">
             <Label>Backorder</Label>
-            <Input value={form.backorderQty} onChange={e => setForm(prev => ({...prev, backorderQty: e.target.value}))} type="number" min={0} className="bg-secondary border-border" />
+            <Input
+              value={form.backorderQty}
+              onChange={e => setForm(prev => ({...prev, backorderQty: e.target.value}))}
+              type="number"
+              min={0}
+              className="bg-secondary border-border"
+            />
           </div>
           <div className="grid gap-1.5">
             <Label>Unit price</Label>
-            <Input value={form.unitPrice} onChange={e => setForm(prev => ({...prev, unitPrice: e.target.value}))} type="number" min={0} step="0.01" className="bg-secondary border-border" />
+            <Input
+              value={form.unitPrice}
+              onChange={e => setForm(prev => ({...prev, unitPrice: e.target.value}))}
+              type="number"
+              min={0}
+              step="0.01"
+              className="bg-secondary border-border"
+            />
           </div>
         </div>
 
@@ -423,13 +470,17 @@ export function IncomingDeliveryDetailTable({
               <TableHead className="text-xs">Status</TableHead>
               <TableHead className="text-xs">Flags</TableHead>
               <TableHead className="text-xs">Links</TableHead>
-              <TableHead className="w-28"><span className="sr-only">Actions</span></TableHead>
+              <TableHead className="w-28">
+                <span className="sr-only">Actions</span>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {lines.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={10} className="h-24 text-center text-muted-foreground">No incoming lines yet.</TableCell>
+                <TableCell colSpan={10} className="h-24 text-center text-muted-foreground">
+                  No incoming lines yet.
+                </TableCell>
               </TableRow>
             ) : (
               lines.map(line => (
@@ -438,69 +489,89 @@ export function IncomingDeliveryDetailTable({
                     const overDelivery = getOverDeliveryStats(line)
                     return (
                       <>
-                  <TableCell className="text-sm text-foreground">{line.materialLabel || materialById.get(line.materialId)?.label || line.materialId}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground">{line.orderedQty}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground">{line.deliveredQty}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground">{line.acceptedQty}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground">{line.backorderQty}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground">{formatMoney(line.unitPrice)}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline" className="text-[11px]">{line.lineStatus}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex flex-col gap-1">
-                      {line.notCorrect && (
-                        <>
-                          <Badge variant="destructive" className="text-[10px] w-fit">Not correct</Badge>
-                          {line.notCorrectReason && <span className="text-[11px] text-muted-foreground">{line.notCorrectReason}</span>}
-                        </>
-                      )}
-                      {overDelivery.overDeliveredQty > 0 && (
-                        <Badge
-                          variant="outline"
-                          className={`text-[10px] w-fit ${
-                            overDelivery.remainingQty > 0
-                              ? 'border-amber-500/60 text-amber-700'
-                              : 'border-emerald-500/50 text-emerald-700'
-                          }`}>
-                          {overDelivery.remainingQty > 0
-                            ? `Over rem: ${overDelivery.remainingQty}`
-                            : 'Over fully allocated'}
-                        </Badge>
-                      )}
-                      {!line.notCorrect && overDelivery.overDeliveredQty === 0 && '—'}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      size="sm"
-                      variant={expandedLineId === line.id ? 'secondary' : 'outline'}
-                      className="h-7 text-xs"
-                      onClick={() => {
-                        setExpandedLineId(expandedLineId === line.id ? null : line.id)
-                        setAllocationSourceId('__none__')
-                        setAllocationQty('1')
-                        setWarehousePlaceId('__none__')
-                        setWarehouseAllocationQty('1')
-                      }}>
-                      <Link2 className="h-3.5 w-3.5 mr-1" />
-                      {line.allocationCount} source{line.allocationCount === 1 ? '' : 's'}
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      {canEdit && (
-                        <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary" onClick={() => loadLine(line)}>
-                          <Pencil className="h-3.5 w-3.5" />
-                        </Button>
-                      )}
-                      {canDelete && (
-                        <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive hover:bg-destructive/10" onClick={() => deleteLine(line.id)}>
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
-                      )}
-                    </div>
-                  </TableCell>
+                        <TableCell className="text-sm text-foreground">
+                          {line.materialLabel || materialById.get(line.materialId)?.label || line.materialId}
+                        </TableCell>
+                        <TableCell className="text-sm text-muted-foreground">{line.orderedQty}</TableCell>
+                        <TableCell className="text-sm text-muted-foreground">{line.deliveredQty}</TableCell>
+                        <TableCell className="text-sm text-muted-foreground">{line.acceptedQty}</TableCell>
+                        <TableCell className="text-sm text-muted-foreground">{line.backorderQty}</TableCell>
+                        <TableCell className="text-sm text-muted-foreground">{formatMoney(line.unitPrice)}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-[11px]">
+                            {line.lineStatus}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col gap-1">
+                            {line.notCorrect && (
+                              <>
+                                <Badge variant="destructive" className="text-[10px] w-fit">
+                                  Not correct
+                                </Badge>
+                                {line.notCorrectReason && (
+                                  <span className="text-[11px] text-muted-foreground">{line.notCorrectReason}</span>
+                                )}
+                              </>
+                            )}
+                            {overDelivery.overDeliveredQty > 0 && (
+                              <Badge
+                                variant="outline"
+                                className={`text-[10px] w-fit ${
+                                  overDelivery.remainingQty > 0
+                                    ? 'border-amber-500/60 text-amber-700'
+                                    : 'border-emerald-500/50 text-emerald-700'
+                                }`}>
+                                {overDelivery.remainingQty > 0
+                                  ? `Over rem: ${overDelivery.remainingQty}`
+                                  : 'Over fully allocated'}
+                              </Badge>
+                            )}
+                            {!line.notCorrect && overDelivery.overDeliveredQty === 0 && '—'}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            size="sm"
+                            variant={expandedLineId === line.id ? 'secondary' : 'outline'}
+                            className="h-7 text-xs"
+                            onClick={() => {
+                              const isOpening = expandedLineId !== line.id
+                              setExpandedLineId(isOpening ? line.id : null)
+                              setAllocationSourceId('__none__')
+                              setAllocationQty('1')
+                              const mat = materialOptions.find(m => m.id === line.materialId)
+                              setWarehousePlaceId(
+                                isOpening && mat?.warehousePlaceId ? mat.warehousePlaceId : '__none__',
+                              )
+                              setWarehouseAllocationQty('1')
+                            }}>
+                            <Link2 className="h-3.5 w-3.5 mr-1" />
+                            {line.allocationCount} source{line.allocationCount === 1 ? '' : 's'}
+                          </Button>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1">
+                            {canEdit && (
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                onClick={() => loadLine(line)}>
+                                <Pencil className="h-3.5 w-3.5" />
+                              </Button>
+                            )}
+                            {canDelete && (
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                onClick={() => deleteLine(line.id)}>
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </Button>
+                            )}
+                          </div>
+                        </TableCell>
                       </>
                     )
                   })()}
@@ -515,7 +586,10 @@ export function IncomingDeliveryDetailTable({
         <section className="rounded-xl border border-border/60 bg-card p-4 space-y-4">
           <div className="flex items-center justify-between gap-2">
             <h3 className="text-sm font-medium text-foreground">Material demand source links</h3>
-            <span className="text-xs text-muted-foreground">Add lvl {INCOMING_PERMISSION_LEVELS.addSourceLink}+, delete lvl {INCOMING_PERMISSION_LEVELS.deleteSourceLink}+</span>
+            <span className="text-xs text-muted-foreground">
+              Add lvl {INCOMING_PERMISSION_LEVELS.addSourceLink}+, delete lvl{' '}
+              {INCOMING_PERMISSION_LEVELS.deleteSourceLink}+
+            </span>
           </div>
 
           <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
@@ -538,7 +612,13 @@ export function IncomingDeliveryDetailTable({
 
             <div className="grid gap-1.5">
               <Label>Allocated Qty</Label>
-              <Input type="number" min={1} value={allocationQty} onChange={e => setAllocationQty(e.target.value)} className="bg-secondary border-border" />
+              <Input
+                type="number"
+                min={1}
+                value={allocationQty}
+                onChange={e => setAllocationQty(e.target.value)}
+                className="bg-secondary border-border"
+              />
             </div>
 
             <Button
@@ -553,7 +633,8 @@ export function IncomingDeliveryDetailTable({
           {overDeliveredQty > 0 && (
             <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 space-y-3">
               <div className="text-xs text-amber-800">
-                Over-delivered: {overDeliveredQty} · Assigned to warehouse: {overDeliveredAssignedQty} · Remaining: {overDeliveredRemainingQty}
+                Over-delivered: {overDeliveredQty} · Assigned to warehouse: {overDeliveredAssignedQty} · Remaining:{' '}
+                {overDeliveredRemainingQty}
               </div>
               <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
                 <div className="grid gap-1.5">
@@ -566,7 +647,14 @@ export function IncomingDeliveryDetailTable({
                       <SelectItem value="__none__">Select location</SelectItem>
                       {warehousePlaceOptions.map(option => (
                         <SelectItem key={option.id} value={option.id}>
-                          {option.label}
+                          <span className="flex items-center gap-2">
+                            {option.label}
+                            {option.id === expandedLineMaterialWarehousePlaceId && (
+                              <Badge variant="outline" className="text-[10px] border-blue-500/60 text-blue-700 ml-1">
+                                Current
+                              </Badge>
+                            )}
+                          </span>
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -587,11 +675,7 @@ export function IncomingDeliveryDetailTable({
 
                 <Button
                   onClick={addOverDeliveryAllocation}
-                  disabled={
-                    !canAddSourceLink ||
-                    warehousePlaceId === '__none__' ||
-                    overDeliveredRemainingQty <= 0
-                  }
+                  disabled={!canAddSourceLink || warehousePlaceId === '__none__' || overDeliveredRemainingQty <= 0}
                   className="bg-amber-600 text-white hover:bg-amber-700">
                   Store Over-delivery
                 </Button>
@@ -607,13 +691,17 @@ export function IncomingDeliveryDetailTable({
                   <TableHead className="text-xs">Allocated Qty</TableHead>
                   <TableHead className="text-xs">Status</TableHead>
                   <TableHead className="text-xs">Created</TableHead>
-                  <TableHead className="w-20"><span className="sr-only">Actions</span></TableHead>
+                  <TableHead className="w-20">
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {(allocationsByLineId[expandedLineId] ?? []).length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={4} className="h-20 text-center text-muted-foreground text-sm">No source links yet.</TableCell>
+                    <TableCell colSpan={4} className="h-20 text-center text-muted-foreground text-sm">
+                      No source links yet.
+                    </TableCell>
                   </TableRow>
                 ) : (
                   (allocationsByLineId[expandedLineId] ?? []).map(allocation => (
@@ -626,7 +714,9 @@ export function IncomingDeliveryDetailTable({
                             Fulfilled
                           </Badge>
                         ) : (
-                          <Badge variant="outline" className="text-[11px]">Pending</Badge>
+                          <Badge variant="outline" className="text-[11px]">
+                            Pending
+                          </Badge>
                         )}
                       </TableCell>
                       <TableCell className="text-sm text-muted-foreground">
@@ -655,5 +745,3 @@ export function IncomingDeliveryDetailTable({
     </div>
   )
 }
-
-

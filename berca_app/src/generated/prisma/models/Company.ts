@@ -398,6 +398,7 @@ export type CompanyWhereInput = {
   CompanyAddress?: Prisma.CompanyAddressListRelationFilter
   CompanyContact?: Prisma.CompanyContactListRelationFilter
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierListRelationFilter
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileListRelationFilter
   InvoiceIn?: Prisma.InvoiceInListRelationFilter
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialListRelationFilter
   MaterialPrice?: Prisma.MaterialPriceListRelationFilter
@@ -449,6 +450,7 @@ export type CompanyOrderByWithRelationInput = {
   CompanyAddress?: Prisma.CompanyAddressOrderByRelationAggregateInput
   CompanyContact?: Prisma.CompanyContactOrderByRelationAggregateInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierOrderByRelationAggregateInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileOrderByRelationAggregateInput
   InvoiceIn?: Prisma.InvoiceInOrderByRelationAggregateInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialOrderByRelationAggregateInput
   MaterialPrice?: Prisma.MaterialPriceOrderByRelationAggregateInput
@@ -504,6 +506,7 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   CompanyAddress?: Prisma.CompanyAddressListRelationFilter
   CompanyContact?: Prisma.CompanyContactListRelationFilter
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierListRelationFilter
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileListRelationFilter
   InvoiceIn?: Prisma.InvoiceInListRelationFilter
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialListRelationFilter
   MaterialPrice?: Prisma.MaterialPriceListRelationFilter
@@ -625,6 +628,7 @@ export type CompanyCreateInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -672,6 +676,7 @@ export type CompanyUncheckedCreateInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -719,6 +724,7 @@ export type CompanyUpdateInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -766,6 +772,7 @@ export type CompanyUncheckedUpdateInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -1361,6 +1368,22 @@ export type CompanyUpdateOneRequiredWithoutPriceListCompanyNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutPriceListCompanyInput, Prisma.CompanyUpdateWithoutPriceListCompanyInput>, Prisma.CompanyUncheckedUpdateWithoutPriceListCompanyInput>
 }
 
+export type CompanyCreateNestedOneWithoutHrEmployeeHseFileInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutHrEmployeeHseFileInput, Prisma.CompanyUncheckedCreateWithoutHrEmployeeHseFileInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutHrEmployeeHseFileInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneWithoutHrEmployeeHseFileNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutHrEmployeeHseFileInput, Prisma.CompanyUncheckedCreateWithoutHrEmployeeHseFileInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutHrEmployeeHseFileInput
+  upsert?: Prisma.CompanyUpsertWithoutHrEmployeeHseFileInput
+  disconnect?: Prisma.CompanyWhereInput | boolean
+  delete?: Prisma.CompanyWhereInput | boolean
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutHrEmployeeHseFileInput, Prisma.CompanyUpdateWithoutHrEmployeeHseFileInput>, Prisma.CompanyUncheckedUpdateWithoutHrEmployeeHseFileInput>
+}
+
 export type CompanyCreateWithoutOther_CompanyInput = {
   id: string
   name: string
@@ -1396,6 +1419,7 @@ export type CompanyCreateWithoutOther_CompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -1442,6 +1466,7 @@ export type CompanyUncheckedCreateWithoutOther_CompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -1493,6 +1518,7 @@ export type CompanyCreateWithoutCompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -1539,6 +1565,7 @@ export type CompanyUncheckedCreateWithoutCompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -1606,6 +1633,7 @@ export type CompanyUpdateWithoutOther_CompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -1652,6 +1680,7 @@ export type CompanyUncheckedUpdateWithoutOther_CompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -1751,6 +1780,7 @@ export type CompanyCreateWithoutCompanyContactInput = {
   Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -1797,6 +1827,7 @@ export type CompanyUncheckedCreateWithoutCompanyContactInput = {
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -1859,6 +1890,7 @@ export type CompanyUpdateWithoutCompanyContactInput = {
   Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -1905,6 +1937,7 @@ export type CompanyUncheckedUpdateWithoutCompanyContactInput = {
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -1951,6 +1984,7 @@ export type CompanyCreateWithoutDeliveryNoteSupplierInput = {
   Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -1997,6 +2031,7 @@ export type CompanyUncheckedCreateWithoutDeliveryNoteSupplierInput = {
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -2059,6 +2094,7 @@ export type CompanyUpdateWithoutDeliveryNoteSupplierInput = {
   Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -2105,6 +2141,7 @@ export type CompanyUncheckedUpdateWithoutDeliveryNoteSupplierInput = {
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2151,6 +2188,7 @@ export type CompanyCreateWithoutEmployeeInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -2197,6 +2235,7 @@ export type CompanyUncheckedCreateWithoutEmployeeInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -2253,6 +2292,7 @@ export type CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -2299,6 +2339,7 @@ export type CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInp
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -2388,6 +2429,7 @@ export type CompanyCreateWithoutInvoiceInInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
@@ -2434,6 +2476,7 @@ export type CompanyUncheckedCreateWithoutInvoiceInInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
@@ -2496,6 +2539,7 @@ export type CompanyUpdateWithoutInvoiceInInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
@@ -2542,6 +2586,7 @@ export type CompanyUncheckedUpdateWithoutInvoiceInInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2588,6 +2633,7 @@ export type CompanyCreateWithoutMaterial_Material_preferredSupplierCompanyIdToCo
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
@@ -2634,6 +2680,7 @@ export type CompanyUncheckedCreateWithoutMaterial_Material_preferredSupplierComp
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
@@ -2696,6 +2743,7 @@ export type CompanyUpdateWithoutMaterial_Material_preferredSupplierCompanyIdToCo
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
@@ -2742,6 +2790,7 @@ export type CompanyUncheckedUpdateWithoutMaterial_Material_preferredSupplierComp
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2788,6 +2837,7 @@ export type CompanyCreateWithoutMaterialSupplierInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -2834,6 +2884,7 @@ export type CompanyUncheckedCreateWithoutMaterialSupplierInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -2896,6 +2947,7 @@ export type CompanyUpdateWithoutMaterialSupplierInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -2942,6 +2994,7 @@ export type CompanyUncheckedUpdateWithoutMaterialSupplierInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2988,6 +3041,7 @@ export type CompanyCreateWithoutMaterialPriceInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
@@ -3034,6 +3088,7 @@ export type CompanyUncheckedCreateWithoutMaterialPriceInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
@@ -3096,6 +3151,7 @@ export type CompanyUpdateWithoutMaterialPriceInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
@@ -3142,6 +3198,7 @@ export type CompanyUncheckedUpdateWithoutMaterialPriceInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
@@ -3188,6 +3245,7 @@ export type CompanyCreateWithoutMaterialSerialTrackInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -3234,6 +3292,7 @@ export type CompanyUncheckedCreateWithoutMaterialSerialTrackInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -3296,6 +3355,7 @@ export type CompanyUpdateWithoutMaterialSerialTrackInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -3342,6 +3402,7 @@ export type CompanyUncheckedUpdateWithoutMaterialSerialTrackInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -3388,6 +3449,7 @@ export type CompanyCreateWithoutProjectInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -3434,6 +3496,7 @@ export type CompanyUncheckedCreateWithoutProjectInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -3496,6 +3559,7 @@ export type CompanyUpdateWithoutProjectInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -3542,6 +3606,7 @@ export type CompanyUncheckedUpdateWithoutProjectInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -3588,6 +3653,7 @@ export type CompanyCreateWithoutPurchaseInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -3634,6 +3700,7 @@ export type CompanyUncheckedCreateWithoutPurchaseInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -3696,6 +3763,7 @@ export type CompanyUpdateWithoutPurchaseInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -3742,6 +3810,7 @@ export type CompanyUncheckedUpdateWithoutPurchaseInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -3788,6 +3857,7 @@ export type CompanyCreateWithoutQuoteSupplierInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -3834,6 +3904,7 @@ export type CompanyUncheckedCreateWithoutQuoteSupplierInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -3896,6 +3967,7 @@ export type CompanyUpdateWithoutQuoteSupplierInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -3942,6 +4014,7 @@ export type CompanyUncheckedUpdateWithoutQuoteSupplierInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -3987,6 +4060,7 @@ export type CompanyCreateWithoutTargetInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -4033,6 +4107,7 @@ export type CompanyUncheckedCreateWithoutTargetInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -4105,6 +4180,7 @@ export type CompanyCreateWithoutCompanyAddressInput = {
   Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -4151,6 +4227,7 @@ export type CompanyUncheckedCreateWithoutCompanyAddressInput = {
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -4213,6 +4290,7 @@ export type CompanyUpdateWithoutCompanyAddressInput = {
   Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -4259,6 +4337,7 @@ export type CompanyUncheckedUpdateWithoutCompanyAddressInput = {
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -4306,6 +4385,7 @@ export type CompanyCreateWithoutPriceListCompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
@@ -4352,6 +4432,7 @@ export type CompanyUncheckedCreateWithoutPriceListCompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedCreateNestedManyWithoutCompanyInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
@@ -4414,6 +4495,7 @@ export type CompanyUpdateWithoutPriceListCompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -4460,11 +4542,216 @@ export type CompanyUncheckedUpdateWithoutPriceListCompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutHrEmployeeHseFileInput = {
+  id: string
+  name: string
+  officialName: string
+  number: string
+  idOld?: string | null
+  mail?: string | null
+  businessPhone?: string | null
+  website?: string | null
+  vatNumber?: string | null
+  bankNumber?: string | null
+  iban?: string | null
+  bic?: string | null
+  becraCustomerNumber?: string | null
+  becraWebsiteLogin?: string | null
+  supplier?: boolean
+  preferredSupplier?: boolean
+  companyActive?: boolean
+  newsLetter?: boolean
+  customer?: boolean
+  potentialCustomer?: boolean
+  headQuarters?: boolean
+  potentialSubContractor?: boolean
+  subContractor?: boolean
+  notes?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
+  Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
+  other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
+  Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
+  CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
+  CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
+  Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
+  MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
+  MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutHrEmployeeHseFileInput = {
+  id: string
+  name: string
+  officialName: string
+  number: string
+  idOld?: string | null
+  mail?: string | null
+  businessPhone?: string | null
+  website?: string | null
+  vatNumber?: string | null
+  bankNumber?: string | null
+  iban?: string | null
+  bic?: string | null
+  becraCustomerNumber?: string | null
+  becraWebsiteLogin?: string | null
+  supplier?: boolean
+  preferredSupplier?: boolean
+  companyActive?: boolean
+  newsLetter?: boolean
+  customer?: boolean
+  potentialCustomer?: boolean
+  headQuarters?: boolean
+  potentialSubContractor?: boolean
+  subContractor?: boolean
+  notes?: string | null
+  createdAt: Date | string
+  createdBy: string
+  companyId?: string | null
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
+  CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
+  CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
+  Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
+  MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
+  MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutHrEmployeeHseFileInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutHrEmployeeHseFileInput, Prisma.CompanyUncheckedCreateWithoutHrEmployeeHseFileInput>
+}
+
+export type CompanyUpsertWithoutHrEmployeeHseFileInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutHrEmployeeHseFileInput, Prisma.CompanyUncheckedUpdateWithoutHrEmployeeHseFileInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutHrEmployeeHseFileInput, Prisma.CompanyUncheckedCreateWithoutHrEmployeeHseFileInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutHrEmployeeHseFileInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutHrEmployeeHseFileInput, Prisma.CompanyUncheckedUpdateWithoutHrEmployeeHseFileInput>
+}
+
+export type CompanyUpdateWithoutHrEmployeeHseFileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iban?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialCustomer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  headQuarters?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialSubContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
+  Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
+  other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
+  CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
+  CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
+  Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
+  MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
+  MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutHrEmployeeHseFileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iban?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialCustomer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  headQuarters?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialSubContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
+  CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
+  Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
+  MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
+  MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
@@ -4538,6 +4825,7 @@ export type CompanyUpdateWithoutCompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -4584,6 +4872,7 @@ export type CompanyUncheckedUpdateWithoutCompanyInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -4729,6 +5018,7 @@ export type CompanyUpdateWithoutEmployeeInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -4775,6 +5065,7 @@ export type CompanyUncheckedUpdateWithoutEmployeeInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -4854,6 +5145,7 @@ export type CompanyUpdateWithoutEmployee_Company_deletedByToEmployeeInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -4900,6 +5192,7 @@ export type CompanyUncheckedUpdateWithoutEmployee_Company_deletedByToEmployeeInp
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -5012,6 +5305,7 @@ export type CompanyUpdateWithoutTargetInput = {
   CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
@@ -5058,6 +5352,7 @@ export type CompanyUncheckedUpdateWithoutTargetInput = {
   CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  HrEmployeeHseFile?: Prisma.HrEmployeeHseFileUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
@@ -5112,6 +5407,7 @@ export type CompanyCountOutputType = {
   CompanyAddress: number
   CompanyContact: number
   DeliveryNoteSupplier: number
+  HrEmployeeHseFile: number
   InvoiceIn: number
   Material_Material_preferredSupplierCompanyIdToCompany: number
   MaterialPrice: number
@@ -5128,6 +5424,7 @@ export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   CompanyAddress?: boolean | CompanyCountOutputTypeCountCompanyAddressArgs
   CompanyContact?: boolean | CompanyCountOutputTypeCountCompanyContactArgs
   DeliveryNoteSupplier?: boolean | CompanyCountOutputTypeCountDeliveryNoteSupplierArgs
+  HrEmployeeHseFile?: boolean | CompanyCountOutputTypeCountHrEmployeeHseFileArgs
   InvoiceIn?: boolean | CompanyCountOutputTypeCountInvoiceInArgs
   Material_Material_preferredSupplierCompanyIdToCompany?: boolean | CompanyCountOutputTypeCountMaterial_Material_preferredSupplierCompanyIdToCompanyArgs
   MaterialPrice?: boolean | CompanyCountOutputTypeCountMaterialPriceArgs
@@ -5175,6 +5472,13 @@ export type CompanyCountOutputTypeCountCompanyContactArgs<ExtArgs extends runtim
  */
 export type CompanyCountOutputTypeCountDeliveryNoteSupplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.DeliveryNoteSupplierWhereInput
+}
+
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountHrEmployeeHseFileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HrEmployeeHseFileWhereInput
 }
 
 /**
@@ -5281,6 +5585,7 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   CompanyAddress?: boolean | Prisma.Company$CompanyAddressArgs<ExtArgs>
   CompanyContact?: boolean | Prisma.Company$CompanyContactArgs<ExtArgs>
   DeliveryNoteSupplier?: boolean | Prisma.Company$DeliveryNoteSupplierArgs<ExtArgs>
+  HrEmployeeHseFile?: boolean | Prisma.Company$HrEmployeeHseFileArgs<ExtArgs>
   InvoiceIn?: boolean | Prisma.Company$InvoiceInArgs<ExtArgs>
   Material_Material_preferredSupplierCompanyIdToCompany?: boolean | Prisma.Company$Material_Material_preferredSupplierCompanyIdToCompanyArgs<ExtArgs>
   MaterialPrice?: boolean | Prisma.Company$MaterialPriceArgs<ExtArgs>
@@ -5339,6 +5644,7 @@ export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   CompanyAddress?: boolean | Prisma.Company$CompanyAddressArgs<ExtArgs>
   CompanyContact?: boolean | Prisma.Company$CompanyContactArgs<ExtArgs>
   DeliveryNoteSupplier?: boolean | Prisma.Company$DeliveryNoteSupplierArgs<ExtArgs>
+  HrEmployeeHseFile?: boolean | Prisma.Company$HrEmployeeHseFileArgs<ExtArgs>
   InvoiceIn?: boolean | Prisma.Company$InvoiceInArgs<ExtArgs>
   Material_Material_preferredSupplierCompanyIdToCompany?: boolean | Prisma.Company$Material_Material_preferredSupplierCompanyIdToCompanyArgs<ExtArgs>
   MaterialPrice?: boolean | Prisma.Company$MaterialPriceArgs<ExtArgs>
@@ -5362,6 +5668,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     CompanyAddress: Prisma.$CompanyAddressPayload<ExtArgs>[]
     CompanyContact: Prisma.$CompanyContactPayload<ExtArgs>[]
     DeliveryNoteSupplier: Prisma.$DeliveryNoteSupplierPayload<ExtArgs>[]
+    HrEmployeeHseFile: Prisma.$HrEmployeeHseFilePayload<ExtArgs>[]
     InvoiceIn: Prisma.$InvoiceInPayload<ExtArgs>[]
     Material_Material_preferredSupplierCompanyIdToCompany: Prisma.$MaterialPayload<ExtArgs>[]
     MaterialPrice: Prisma.$MaterialPricePayload<ExtArgs>[]
@@ -5752,6 +6059,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   CompanyAddress<T extends Prisma.Company$CompanyAddressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$CompanyAddressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyAddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   CompanyContact<T extends Prisma.Company$CompanyContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$CompanyContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   DeliveryNoteSupplier<T extends Prisma.Company$DeliveryNoteSupplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$DeliveryNoteSupplierArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryNoteSupplierPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  HrEmployeeHseFile<T extends Prisma.Company$HrEmployeeHseFileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$HrEmployeeHseFileArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HrEmployeeHseFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   InvoiceIn<T extends Prisma.Company$InvoiceInArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$InvoiceInArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Material_Material_preferredSupplierCompanyIdToCompany<T extends Prisma.Company$Material_Material_preferredSupplierCompanyIdToCompanyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$Material_Material_preferredSupplierCompanyIdToCompanyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MaterialPrice<T extends Prisma.Company$MaterialPriceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$MaterialPriceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialPricePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6295,6 +6603,30 @@ export type Company$DeliveryNoteSupplierArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.DeliveryNoteSupplierScalarFieldEnum | Prisma.DeliveryNoteSupplierScalarFieldEnum[]
+}
+
+/**
+ * Company.HrEmployeeHseFile
+ */
+export type Company$HrEmployeeHseFileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HrEmployeeHseFile
+   */
+  select?: Prisma.HrEmployeeHseFileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HrEmployeeHseFile
+   */
+  omit?: Prisma.HrEmployeeHseFileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HrEmployeeHseFileInclude<ExtArgs> | null
+  where?: Prisma.HrEmployeeHseFileWhereInput
+  orderBy?: Prisma.HrEmployeeHseFileOrderByWithRelationInput | Prisma.HrEmployeeHseFileOrderByWithRelationInput[]
+  cursor?: Prisma.HrEmployeeHseFileWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HrEmployeeHseFileScalarFieldEnum | Prisma.HrEmployeeHseFileScalarFieldEnum[]
 }
 
 /**

@@ -90,12 +90,12 @@ function validityBadge(record: HrCertificationTraining) {
   if (state === 'valid') {
     return <Badge className="border-0 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">Geldig</Badge>
   }
-  return <Badge variant="secondary">Geen certificaat</Badge>
+  return <Badge variant="secondary">No certificate</Badge>
 }
 
 function recurrenceLabel(value: string) {
   if (value === '5y') return '5 year'
-  if (value === '10y') return '10 jaar'
+  if (value === '10y') return '10 years'
   return '-'
 }
 

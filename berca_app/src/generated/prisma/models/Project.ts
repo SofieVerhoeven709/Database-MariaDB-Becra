@@ -318,6 +318,7 @@ export type ProjectWhereInput = {
   deleted?: Prisma.BoolFilter<"Project"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Project"> | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeListRelationFilter
   MaterialSerialTrack?: Prisma.MaterialSerialTrackListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
@@ -356,6 +357,7 @@ export type ProjectOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeOrderByRelationAggregateInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Company?: Prisma.CompanyOrderByWithRelationInput
@@ -398,6 +400,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"Project"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Project"> | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeListRelationFilter
   MaterialSerialTrack?: Prisma.MaterialSerialTrackListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
@@ -486,6 +489,7 @@ export type ProjectCreateInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -524,6 +528,7 @@ export type ProjectUncheckedCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -550,6 +555,7 @@ export type ProjectUpdateInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -588,6 +594,7 @@ export type ProjectUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
@@ -1107,6 +1114,20 @@ export type ProjectUpdateOneRequiredWithoutPurchaseBOMNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutPurchaseBOMInput, Prisma.ProjectUpdateWithoutPurchaseBOMInput>, Prisma.ProjectUncheckedUpdateWithoutPurchaseBOMInput>
 }
 
+export type ProjectCreateNestedOneWithoutHrEmployeeOvertimeInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutHrEmployeeOvertimeInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutHrEmployeeOvertimeNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutHrEmployeeOvertimeInput
+  upsert?: Prisma.ProjectUpsertWithoutHrEmployeeOvertimeInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutHrEmployeeOvertimeInput, Prisma.ProjectUpdateWithoutHrEmployeeOvertimeInput>, Prisma.ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput>
+}
+
 export type ProjectCreateNestedOneWithoutProjectEmployeeInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutProjectEmployeeInput, Prisma.ProjectUncheckedCreateWithoutProjectEmployeeInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutProjectEmployeeInput
@@ -1138,6 +1159,7 @@ export type ProjectCreateWithoutCompanyInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
@@ -1174,6 +1196,7 @@ export type ProjectUncheckedCreateWithoutCompanyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -1254,6 +1277,7 @@ export type ProjectCreateWithoutEmployeeInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
@@ -1290,6 +1314,7 @@ export type ProjectUncheckedCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -1326,6 +1351,7 @@ export type ProjectCreateWithoutEmployee_Project_deletedByToEmployeeInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -1362,6 +1388,7 @@ export type ProjectUncheckedCreateWithoutEmployee_Project_deletedByToEmployeeInp
   targetId: string
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -1430,6 +1457,7 @@ export type ProjectCreateWithoutMaterialSerialTrackInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
@@ -1467,6 +1495,7 @@ export type ProjectUncheckedCreateWithoutMaterialSerialTrackInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
@@ -1508,6 +1537,7 @@ export type ProjectUpdateWithoutMaterialSerialTrackInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
@@ -1545,6 +1575,7 @@ export type ProjectUncheckedUpdateWithoutMaterialSerialTrackInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
@@ -1570,6 +1601,7 @@ export type ProjectCreateWithoutOther_ProjectInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -1607,6 +1639,7 @@ export type ProjectUncheckedCreateWithoutOther_ProjectInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
@@ -1637,6 +1670,7 @@ export type ProjectCreateWithoutProjectInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -1673,6 +1707,7 @@ export type ProjectUncheckedCreateWithoutProjectInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -1720,6 +1755,7 @@ export type ProjectUpdateWithoutOther_ProjectInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -1757,6 +1793,7 @@ export type ProjectUncheckedUpdateWithoutOther_ProjectInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
@@ -1798,6 +1835,7 @@ export type ProjectCreateWithoutProjectContactInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -1835,6 +1873,7 @@ export type ProjectUncheckedCreateWithoutProjectContactInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -1876,6 +1915,7 @@ export type ProjectUpdateWithoutProjectContactInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -1913,6 +1953,7 @@ export type ProjectUncheckedUpdateWithoutProjectContactInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
@@ -1938,6 +1979,7 @@ export type ProjectCreateWithoutProjectTypeInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -1974,6 +2016,7 @@ export type ProjectUncheckedCreateWithoutProjectTypeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -2026,6 +2069,7 @@ export type ProjectCreateWithoutTargetInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -2062,6 +2106,7 @@ export type ProjectUncheckedCreateWithoutTargetInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -2114,6 +2159,7 @@ export type ProjectCreateWithoutWorkOrderInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -2151,6 +2197,7 @@ export type ProjectUncheckedCreateWithoutWorkOrderInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -2192,6 +2239,7 @@ export type ProjectUpdateWithoutWorkOrderInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -2229,6 +2277,7 @@ export type ProjectUncheckedUpdateWithoutWorkOrderInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
@@ -2254,6 +2303,7 @@ export type ProjectCreateWithoutProjectBOMInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -2291,6 +2341,7 @@ export type ProjectUncheckedCreateWithoutProjectBOMInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
@@ -2332,6 +2383,7 @@ export type ProjectUpdateWithoutProjectBOMInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -2369,6 +2421,7 @@ export type ProjectUncheckedUpdateWithoutProjectBOMInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
@@ -2394,6 +2447,7 @@ export type ProjectCreateWithoutPurchaseBOMInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -2431,6 +2485,7 @@ export type ProjectUncheckedCreateWithoutPurchaseBOMInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -2472,6 +2527,7 @@ export type ProjectUpdateWithoutPurchaseBOMInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -2509,11 +2565,156 @@ export type ProjectUncheckedUpdateWithoutPurchaseBOMInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   ProjectEmployee?: Prisma.ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutHrEmployeeOvertimeInput = {
+  id: string
+  projectNumber: string
+  projectName: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
+  Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
+  ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
+  Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
+  other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
+  Target: Prisma.TargetCreateNestedOneWithoutProjectInput
+  Employee_Project_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProject_Project_deletedByToEmployeeInput
+  ProjectBOM?: Prisma.ProjectBOMCreateNestedManyWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  ProjectEmployee?: Prisma.ProjectEmployeeCreateNestedManyWithoutProjectInput
+  PurchaseBOM?: Prisma.PurchaseBOMCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput = {
+  id: string
+  projectNumber: string
+  projectName: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
+  other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
+  ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  ProjectEmployee?: Prisma.ProjectEmployeeUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutHrEmployeeOvertimeInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
+}
+
+export type ProjectUpsertWithoutHrEmployeeOvertimeInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutHrEmployeeOvertimeInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput>
+}
+
+export type ProjectUpdateWithoutHrEmployeeOvertimeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  projectName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
+  Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
+  ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
+  Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
+  other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
+  Employee_Project_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProject_Project_deletedByToEmployeeNestedInput
+  ProjectBOM?: Prisma.ProjectBOMUpdateManyWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  ProjectEmployee?: Prisma.ProjectEmployeeUpdateManyWithoutProjectNestedInput
+  PurchaseBOM?: Prisma.PurchaseBOMUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  projectName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
+  other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
+  ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  ProjectEmployee?: Prisma.ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2534,6 +2735,7 @@ export type ProjectCreateWithoutProjectEmployeeInput = {
   isClosed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
@@ -2571,6 +2773,7 @@ export type ProjectUncheckedCreateWithoutProjectEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedCreateNestedManyWithoutProjectInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
@@ -2612,6 +2815,7 @@ export type ProjectUpdateWithoutProjectEmployeeInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -2649,6 +2853,7 @@ export type ProjectUncheckedUpdateWithoutProjectEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
@@ -2698,6 +2903,7 @@ export type ProjectUpdateWithoutCompanyInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
@@ -2734,6 +2940,7 @@ export type ProjectUncheckedUpdateWithoutCompanyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
@@ -2832,6 +3039,7 @@ export type ProjectUpdateWithoutEmployeeInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
@@ -2868,6 +3076,7 @@ export type ProjectUncheckedUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
@@ -2918,6 +3127,7 @@ export type ProjectUpdateWithoutEmployee_Project_deletedByToEmployeeInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -2954,6 +3164,7 @@ export type ProjectUncheckedUpdateWithoutEmployee_Project_deletedByToEmployeeInp
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
@@ -3028,6 +3239,7 @@ export type ProjectUpdateWithoutProjectInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -3064,6 +3276,7 @@ export type ProjectUncheckedUpdateWithoutProjectInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
@@ -3138,6 +3351,7 @@ export type ProjectUpdateWithoutProjectTypeInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -3174,6 +3388,7 @@ export type ProjectUncheckedUpdateWithoutProjectTypeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
@@ -3248,6 +3463,7 @@ export type ProjectUpdateWithoutTargetInput = {
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
@@ -3284,6 +3500,7 @@ export type ProjectUncheckedUpdateWithoutTargetInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrEmployeeOvertime?: Prisma.HrEmployeeOvertimeUncheckedUpdateManyWithoutProjectNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
@@ -3323,6 +3540,7 @@ export type ProjectUncheckedUpdateManyWithoutTargetInput = {
  */
 
 export type ProjectCountOutputType = {
+  HrEmployeeOvertime: number
   MaterialSerialTrack: number
   other_Project: number
   ProjectBOM: number
@@ -3333,6 +3551,7 @@ export type ProjectCountOutputType = {
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  HrEmployeeOvertime?: boolean | ProjectCountOutputTypeCountHrEmployeeOvertimeArgs
   MaterialSerialTrack?: boolean | ProjectCountOutputTypeCountMaterialSerialTrackArgs
   other_Project?: boolean | ProjectCountOutputTypeCountOther_ProjectArgs
   ProjectBOM?: boolean | ProjectCountOutputTypeCountProjectBOMArgs
@@ -3350,6 +3569,13 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
    * Select specific fields to fetch from the ProjectCountOutputType
    */
   select?: Prisma.ProjectCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountHrEmployeeOvertimeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HrEmployeeOvertimeWhereInput
 }
 
 /**
@@ -3425,6 +3651,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
+  HrEmployeeOvertime?: boolean | Prisma.Project$HrEmployeeOvertimeArgs<ExtArgs>
   MaterialSerialTrack?: boolean | Prisma.Project$MaterialSerialTrackArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
@@ -3470,6 +3697,7 @@ export type ProjectSelectScalar = {
 
 export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectNumber" | "projectName" | "description" | "extraInfo" | "startDate" | "endDate" | "closingDate" | "engineeringStartDate" | "createdAt" | "isMainProject" | "isIntern" | "isOpen" | "isClosed" | "createdBy" | "companyId" | "projectTypeId" | "parentProjectId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  HrEmployeeOvertime?: boolean | Prisma.Project$HrEmployeeOvertimeArgs<ExtArgs>
   MaterialSerialTrack?: boolean | Prisma.Project$MaterialSerialTrackArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
@@ -3489,6 +3717,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Project"
   objects: {
+    HrEmployeeOvertime: Prisma.$HrEmployeeOvertimePayload<ExtArgs>[]
     MaterialSerialTrack: Prisma.$MaterialSerialTrackPayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Company: Prisma.$CompanyPayload<ExtArgs>
@@ -3866,6 +4095,7 @@ readonly fields: ProjectFieldRefs;
  */
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  HrEmployeeOvertime<T extends Prisma.Project$HrEmployeeOvertimeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$HrEmployeeOvertimeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HrEmployeeOvertimePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MaterialSerialTrack<T extends Prisma.Project$MaterialSerialTrackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$MaterialSerialTrackArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Company<T extends Prisma.CompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -4270,6 +4500,30 @@ export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Projects to delete.
    */
   limit?: number
+}
+
+/**
+ * Project.HrEmployeeOvertime
+ */
+export type Project$HrEmployeeOvertimeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HrEmployeeOvertime
+   */
+  select?: Prisma.HrEmployeeOvertimeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HrEmployeeOvertime
+   */
+  omit?: Prisma.HrEmployeeOvertimeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HrEmployeeOvertimeInclude<ExtArgs> | null
+  where?: Prisma.HrEmployeeOvertimeWhereInput
+  orderBy?: Prisma.HrEmployeeOvertimeOrderByWithRelationInput | Prisma.HrEmployeeOvertimeOrderByWithRelationInput[]
+  cursor?: Prisma.HrEmployeeOvertimeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HrEmployeeOvertimeScalarFieldEnum | Prisma.HrEmployeeOvertimeScalarFieldEnum[]
 }
 
 /**

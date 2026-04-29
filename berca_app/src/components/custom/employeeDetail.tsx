@@ -58,6 +58,14 @@ function YesNoBadge({value}: {value: boolean}) {
   )
 }
 
+function getIdExpirationClass(date: string | null) {
+  if (!date) return ''
+  const expiration = new Date(date)
+  const warningDate = new Date()
+  warningDate.setMonth(warningDate.getMonth() + 6)
+  return expiration <= warningDate ? 'text-destructive font-medium' : ''
+}
+
 function RoleBadge({role}: {role: string}) {
   const map: Record<string, string> = {
     owner: 'Owner',
@@ -367,6 +375,28 @@ export function EmployeeDetail({
     active: employee.active,
     roleLevelIds: employee.roleLevelIds ?? [],
     titleId: employee.titleId ?? 'none',
+    photoFileId: employee.photoFileId ?? '',
+    bankAccountNumber: employee.bankAccountNumber ?? '',
+    rrn: employee.rrn ?? '',
+    idExpirationDate: employee.idExpirationDate ? employee.idExpirationDate.slice(0, 10) : '',
+    driversLicense: employee.driversLicense,
+    maritalStatus: employee.maritalStatus ?? '',
+    dependents: employee.dependents?.toString() ?? '',
+    employmentStatus: employee.employmentStatus ?? '',
+    contractType: employee.contractType ?? '',
+    contractDuration: employee.contractDuration ?? '',
+    grossSalary: employee.grossSalary ?? '',
+    mealVouchers: employee.mealVouchers,
+    ecoVouchers: employee.ecoVouchers,
+    companyCar: employee.companyCar,
+    companyCarDescription: employee.companyCarDescription ?? '',
+    fuelCard: employee.fuelCard,
+    bikeLease: employee.bikeLease,
+    mobilePhone: employee.mobilePhone,
+    laptop: employee.laptop,
+    fixedExpenseAllowance: employee.fixedExpenseAllowance,
+    homeWorkInternetAllowance: employee.homeWorkInternetAllowance,
+    extraLegalBenefits: employee.extraLegalBenefits ?? '',
   })
 
   const [form, setForm] = useState(buildForm)
@@ -403,6 +433,28 @@ export function EmployeeDetail({
         active: form.active,
         roleLevelIds: form.roleLevelIds,
         titleId: form.titleId === 'none' ? null : form.titleId,
+        photoFileId: form.photoFileId || null,
+        bankAccountNumber: form.bankAccountNumber || null,
+        rrn: form.rrn || null,
+        idExpirationDate: form.idExpirationDate ? new Date(form.idExpirationDate) : null,
+        driversLicense: form.driversLicense,
+        maritalStatus: form.maritalStatus || null,
+        dependents: form.dependents ? Number(form.dependents) : null,
+        employmentStatus: form.employmentStatus || null,
+        contractType: form.contractType || null,
+        contractDuration: form.contractDuration || null,
+        grossSalary: form.grossSalary || null,
+        mealVouchers: form.mealVouchers,
+        ecoVouchers: form.ecoVouchers,
+        companyCar: form.companyCar,
+        companyCarDescription: form.companyCarDescription || null,
+        fuelCard: form.fuelCard,
+        bikeLease: form.bikeLease,
+        mobilePhone: form.mobilePhone,
+        laptop: form.laptop,
+        fixedExpenseAllowance: form.fixedExpenseAllowance,
+        homeWorkInternetAllowance: form.homeWorkInternetAllowance,
+        extraLegalBenefits: form.extraLegalBenefits || null,
         // required by upsertEmployeeSchema but not editable here
         createdAt: new Date(employee.createdAt),
         passwordCreatedAt: new Date(employee.passwordCreatedAt),
@@ -577,6 +629,7 @@ export function EmployeeDetail({
               <p className="text-sm text-muted-foreground">{employee.roleName || '-'}</p>
             </div>
             {selectRow('Title', employee.titleName, 'titleId', titleOptions)}
+            {textRow('HSE Photo File', employee.photoFileId, 'photoFileId')}
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Created By</Label>
               <p className="text-sm text-muted-foreground">{employee.createdByName ?? '-'}</p>
@@ -594,6 +647,62 @@ export function EmployeeDetail({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {textRow('Email', employee.mail, 'mail', {type: 'email'})}
             {textRow('Phone', employee.phoneNumber, 'phoneNumber', {type: 'tel'})}
+            {textRow('Bank Account Number', employee.bankAccountNumber, 'bankAccountNumber')}
+            {textRow('RRN', employee.rrn, 'rrn')}
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">ID Expiration Date</Label>
+              {editing ? (
+                <Input
+                  type="date"
+                  value={form.idExpirationDate}
+                  onChange={e => s('idExpirationDate', e.target.value)}
+                  className="bg-secondary border-border"
+                />
+              ) : (
+                <p className={`text-sm text-muted-foreground ${getIdExpirationClass(employee.idExpirationDate)}`}>
+                  {formatDate(employee.idExpirationDate)}
+                </p>
+              )}
+            </div>
+            {textRow('Marital Status', employee.maritalStatus, 'maritalStatus')}
+            {textRow('Dependents', employee.dependents?.toString() ?? null, 'dependents', {type: 'number'})}
+          </div>
+        </div>
+
+        {/* Contract */}
+        <div>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Contract Details</p>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {textRow('Status', employee.employmentStatus, 'employmentStatus')}
+            {textRow('Contract Type', employee.contractType, 'contractType')}
+            {textRow('Contract Duration', employee.contractDuration, 'contractDuration')}
+            {textRow('Gross Salary', employee.grossSalary, 'grossSalary')}
+            {textRow('Company Car Description', employee.companyCarDescription, 'companyCarDescription')}
+          </div>
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {toggleRow('Drivers License', employee.driversLicense, 'driversLicense')}
+            {toggleRow('MC', employee.mealVouchers, 'mealVouchers')}
+            {toggleRow('Eco', employee.ecoVouchers, 'ecoVouchers')}
+            {toggleRow('Company Car', employee.companyCar, 'companyCar')}
+            {toggleRow('Fuel Card', employee.fuelCard, 'fuelCard')}
+            {toggleRow('Bike Lease', employee.bikeLease, 'bikeLease')}
+            {toggleRow('GSM', employee.mobilePhone, 'mobilePhone')}
+            {toggleRow('Laptop', employee.laptop, 'laptop')}
+            {toggleRow('Fixed Expense', employee.fixedExpenseAllowance, 'fixedExpenseAllowance')}
+            {toggleRow('Internet Allowance', employee.homeWorkInternetAllowance, 'homeWorkInternetAllowance')}
+          </div>
+          <div className="mt-4 flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Extra Legal Benefits</Label>
+            {editing ? (
+              <Textarea
+                value={form.extraLegalBenefits}
+                onChange={e => s('extraLegalBenefits', e.target.value)}
+                rows={2}
+                className="bg-secondary border-border resize-none"
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground whitespace-pre-wrap">{employee.extraLegalBenefits || '-'}</p>
+            )}
           </div>
         </div>
 

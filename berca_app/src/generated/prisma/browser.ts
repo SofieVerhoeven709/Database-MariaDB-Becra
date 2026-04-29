@@ -478,6 +478,21 @@ export type DocumentGroupC = Prisma.DocumentGroupCModel
  */
 export type DocumentGroupD = Prisma.DocumentGroupDModel
 /**
+ * Model EmployeeContractStatusOption
+ * 
+ */
+export type EmployeeContractStatusOption = Prisma.EmployeeContractStatusOptionModel
+/**
+ * Model EmployeeContractTypeOption
+ * 
+ */
+export type EmployeeContractTypeOption = Prisma.EmployeeContractTypeOptionModel
+/**
+ * Model EmployeeBenefitOption
+ * 
+ */
+export type EmployeeBenefitOption = Prisma.EmployeeBenefitOptionModel
+/**
  * Model PriceListCompany
  * 
  */

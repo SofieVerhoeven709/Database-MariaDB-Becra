@@ -16,6 +16,9 @@ interface EmployeeFormDialogProps {
   onOpenChange: (open: boolean) => void
   employee: MappedEmployee | null
   employees: MappedEmployee[]
+  employmentStatusOptions: string[]
+  contractTypeOptions: string[]
+  benefitTemplateOptions: string[]
   roles: {id: string; name: string}[]
   titles: {id: string; name: string}[]
   onSave: (employee: MappedEmployee, password: string) => void
@@ -46,6 +49,28 @@ export const EMPTY_EMPLOYEE: MappedEmployee = {
   createdBy: null,
   passwordCreatedAt: new Date().toISOString().split('T')[0],
   pictureId: null,
+  photoFileId: null,
+  bankAccountNumber: null,
+  rrn: null,
+  idExpirationDate: null,
+  driversLicense: false,
+  maritalStatus: null,
+  dependents: null,
+  employmentStatus: null,
+  contractType: null,
+  contractDuration: null,
+  grossSalary: null,
+  mealVouchers: false,
+  ecoVouchers: false,
+  companyCar: false,
+  companyCarDescription: null,
+  fuelCard: false,
+  bikeLease: false,
+  mobilePhone: false,
+  laptop: false,
+  fixedExpenseAllowance: false,
+  homeWorkInternetAllowance: false,
+  extraLegalBenefits: null,
   deleted: false,
   deletedAt: null,
   deletedBy: null,
@@ -57,6 +82,40 @@ export const EMPTY_EMPLOYEE: MappedEmployee = {
 }
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
+
+type BenefitSwitchField =
+  | 'mealVouchers'
+  | 'ecoVouchers'
+  | 'companyCar'
+  | 'fuelCard'
+  | 'bikeLease'
+  | 'mobilePhone'
+  | 'laptop'
+  | 'fixedExpenseAllowance'
+  | 'homeWorkInternetAllowance'
+
+const benefitSwitches: {field: BenefitSwitchField; label: string}[] = [
+  {field: 'mealVouchers', label: 'MC'},
+  {field: 'ecoVouchers', label: 'Eco'},
+  {field: 'companyCar', label: 'Company Car'},
+  {field: 'fuelCard', label: 'Fuel Card'},
+  {field: 'bikeLease', label: 'Bike Lease'},
+  {field: 'mobilePhone', label: 'GSM'},
+  {field: 'laptop', label: 'Laptop'},
+  {field: 'fixedExpenseAllowance', label: 'Fixed Expense Allowance'},
+  {field: 'homeWorkInternetAllowance', label: 'Home Work Internet Allowance'},
+]
+
+const defaultEmploymentStatusOptions = ['Arbeider', 'Bediende']
+
+const defaultContractTypeOptions = [
+  'Bepaalde duur arbeider',
+  'Bepaalde duur bediende',
+  'Bepaalde duur duidelijk omschreven werk',
+  'Onbepaalde duur bediende',
+  'Onbepaalde duur arbeider',
+  'Deeltijds contract',
+]
 
 function ReadOnlyField({label, value}: {label: string; value: string}) {
   return (
@@ -74,6 +133,9 @@ export function EmployeeFormDialog({
   onOpenChange,
   employee,
   employees,
+  employmentStatusOptions,
+  contractTypeOptions,
+  benefitTemplateOptions,
   onSave,
   titles,
   roles,
@@ -82,6 +144,11 @@ export function EmployeeFormDialog({
   const [form, setForm] = useState<MappedEmployee>(EMPTY_EMPLOYEE)
   const [password, setPassword] = useState('')
   const [passwordTouched, setPasswordTouched] = useState(false)
+
+  const availableEmploymentStatusOptions = employmentStatusOptions.length
+    ? employmentStatusOptions
+    : defaultEmploymentStatusOptions
+  const availableContractTypeOptions = contractTypeOptions.length ? contractTypeOptions : defaultContractTypeOptions
 
   const passwordTooShort = password.length > 0 && password.length < 8
   const showPasswordError = passwordTouched && passwordTooShort
@@ -95,6 +162,7 @@ export function EmployeeFormDialog({
           startDate: employee.startDate ? employee.startDate.split('T')[0] : '',
           endDate: employee.endDate ? employee.endDate.split('T')[0] : null,
           birthDate: employee.birthDate ? employee.birthDate.split('T')[0] : null,
+          idExpirationDate: employee.idExpirationDate ? employee.idExpirationDate.split('T')[0] : null,
           deletedAt: employee.deletedAt ? employee.deletedAt.split('T')[0] : null,
           roleLevelIds: employee.roleLevelIds ?? [],
         })
@@ -108,6 +176,18 @@ export function EmployeeFormDialog({
 
   function update<K extends keyof MappedEmployee>(field: K, value: MappedEmployee[K]) {
     setForm(prev => ({...prev, [field]: value}))
+  }
+
+  function appendBenefitTemplate(template: string) {
+    const current = form.extraLegalBenefits?.trim() ?? ''
+    const lines = current
+      ? current
+          .split('\n')
+          .map(line => line.trim())
+          .filter(Boolean)
+      : []
+    if (lines.includes(template)) return
+    update('extraLegalBenefits', [...lines, template].join('\n'))
   }
 
   function getEmployeeName(id: string | null) {
@@ -158,6 +238,9 @@ export function EmployeeFormDialog({
               </TabsTrigger>
               <TabsTrigger value="contact" className="flex-1 data-[state=active]:bg-card">
                 Contact
+              </TabsTrigger>
+              <TabsTrigger value="contract" className="flex-1 data-[state=active]:bg-card">
+                Contract
               </TabsTrigger>
               <TabsTrigger value="address" className="flex-1 data-[state=active]:bg-card">
                 Address
@@ -291,6 +374,17 @@ export function EmployeeFormDialog({
                 </div>
               </div>
 
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="photoFileId">HSE Photo File</Label>
+                <Input
+                  id="photoFileId"
+                  value={form.photoFileId ?? ''}
+                  onChange={e => update('photoFileId', e.target.value || null)}
+                  className={inputStyles}
+                  placeholder="HSE file ID or reference"
+                />
+              </div>
+
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="startDate">
@@ -373,6 +467,74 @@ export function EmployeeFormDialog({
                   className={inputStyles}
                   placeholder="+32 471 123 456"
                 />
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="bankAccountNumber">Bank Account Number</Label>
+                  <Input
+                    id="bankAccountNumber"
+                    value={form.bankAccountNumber ?? ''}
+                    onChange={e => update('bankAccountNumber', e.target.value || null)}
+                    className={inputStyles}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="rrn">RRN</Label>
+                  <Input
+                    id="rrn"
+                    value={form.rrn ?? ''}
+                    onChange={e => update('rrn', e.target.value || null)}
+                    className={inputStyles}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="idExpirationDate">ID Expiration Date</Label>
+                  <Input
+                    id="idExpirationDate"
+                    type="date"
+                    value={form.idExpirationDate ?? ''}
+                    onChange={e => update('idExpirationDate', e.target.value || null)}
+                    className={inputStyles}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="maritalStatus">Marital Status</Label>
+                  <Input
+                    id="maritalStatus"
+                    value={form.maritalStatus ?? ''}
+                    onChange={e => update('maritalStatus', e.target.value || null)}
+                    className={inputStyles}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="flex items-center justify-between rounded-lg border border-border/60 bg-secondary/50 p-4">
+                  <Label htmlFor="driversLicense" className="text-sm font-medium">
+                    Drivers License
+                  </Label>
+                  <Switch
+                    id="driversLicense"
+                    checked={form.driversLicense}
+                    onCheckedChange={v => update('driversLicense', v)}
+                    className="data-[state=checked]:bg-accent"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="dependents">Dependents</Label>
+                  <Input
+                    id="dependents"
+                    type="number"
+                    min={0}
+                    value={form.dependents ?? ''}
+                    onChange={e => update('dependents', e.target.value ? Number(e.target.value) : null)}
+                    className={inputStyles}
+                  />
+                </div>
               </div>
 
               {/* Emergency Contacts */}
@@ -466,6 +628,118 @@ export function EmployeeFormDialog({
                     </div>
                   </div>
                 ))}
+              </div>
+            </TabsContent>
+
+            {/* ---- Contract tab ---- */}
+            <TabsContent value="contract" className="flex flex-col gap-4 mt-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="employmentStatus">Status</Label>
+                  <Input
+                    id="employmentStatus"
+                    list="employment-status-options"
+                    value={form.employmentStatus ?? ''}
+                    onChange={e => update('employmentStatus', e.target.value || null)}
+                    className={inputStyles}
+                    placeholder="Kies of vul zelf aan"
+                  />
+                  <datalist id="employment-status-options">
+                    {availableEmploymentStatusOptions.map(option => (
+                      <option key={option} value={option} />
+                    ))}
+                  </datalist>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="contractType">Contract Type</Label>
+                  <Input
+                    id="contractType"
+                    list="contract-type-options"
+                    value={form.contractType ?? ''}
+                    onChange={e => update('contractType', e.target.value || null)}
+                    className={inputStyles}
+                  />
+                  <datalist id="contract-type-options">
+                    {availableContractTypeOptions.map(option => (
+                      <option key={option} value={option} />
+                    ))}
+                  </datalist>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="contractDuration">Contract Duration</Label>
+                  <Input
+                    id="contractDuration"
+                    value={form.contractDuration ?? ''}
+                    onChange={e => update('contractDuration', e.target.value || null)}
+                    className={inputStyles}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="grossSalary">Gross Salary</Label>
+                  <Input
+                    id="grossSalary"
+                    value={form.grossSalary ?? ''}
+                    onChange={e => update('grossSalary', e.target.value || null)}
+                    className={inputStyles}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {benefitSwitches.map(({field, label}) => (
+                  <div
+                    key={field}
+                    className="flex items-center justify-between rounded-lg border border-border/60 bg-secondary/50 p-4">
+                    <Label htmlFor={field} className="text-sm font-medium">
+                      {label}
+                    </Label>
+                    <Switch
+                      id={field}
+                      checked={form[field]}
+                      onCheckedChange={v => update(field, v)}
+                      className="data-[state=checked]:bg-accent"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {form.companyCar && (
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="companyCarDescription">Company Car Description</Label>
+                  <Input
+                    id="companyCarDescription"
+                    value={form.companyCarDescription ?? ''}
+                    onChange={e => update('companyCarDescription', e.target.value || null)}
+                    className={inputStyles}
+                  />
+                </div>
+              )}
+
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="extraLegalBenefits">Extra Legal Benefits</Label>
+                <Textarea
+                  id="extraLegalBenefits"
+                  value={form.extraLegalBenefits ?? ''}
+                  onChange={e => update('extraLegalBenefits', e.target.value || null)}
+                  className={`${inputStyles} min-h-20`}
+                />
+                {benefitTemplateOptions.length > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {benefitTemplateOptions.map(option => (
+                      <Button
+                        key={option}
+                        type="button"
+                        variant="outline"
+                        className="h-8 border-border bg-secondary/40 text-xs"
+                        onClick={() => appendBenefitTemplate(option)}>
+                        {option}
+                      </Button>
+                    ))}
+                  </div>
+                )}
               </div>
             </TabsContent>
 

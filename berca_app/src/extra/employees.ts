@@ -1,5 +1,5 @@
 import {EmergencyContact, Employee, Prisma} from '@/generated/prisma/client'
-import type {EmployeeDetailData, MappedEmployee, UnifiedRecord} from '@/types/employee'
+import type {EmployeeDetailData, ManagedEmployeeOption, MappedEmployee, UnifiedRecord} from '@/types/employee'
 
 type EmployeeWithRelations = Employee & {
   RoleLevelEmployee: {
@@ -13,6 +13,39 @@ type EmployeeWithRelations = Employee & {
   EmergencyContact: EmergencyContact[]
   Employee: {id: string} | null
   Employee_Employee_deletedByToEmployee: {id: string} | null
+}
+
+export function mapManagedEmployeeOption(item: {
+  id: string
+  name: string | null
+  createdAt: Date
+  deleted: boolean
+  deletedAt: Date | null
+  Employee_EmployeeBenefitOption_createdByToEmployee?: {firstName: string; lastName: string} | null
+  Employee_EmployeeBenefitOption_deletedByToEmployee?: {firstName: string; lastName: string} | null
+  Employee_EmployeeContractStatusOption_createdByToEmployee?: {firstName: string; lastName: string} | null
+  Employee_EmployeeContractStatusOption_deletedByToEmployee?: {firstName: string; lastName: string} | null
+  Employee_EmployeeContractTypeOption_createdByToEmployee?: {firstName: string; lastName: string} | null
+  Employee_EmployeeContractTypeOption_deletedByToEmployee?: {firstName: string; lastName: string} | null
+}): ManagedEmployeeOption {
+  const createdBy =
+    item.Employee_EmployeeBenefitOption_createdByToEmployee ??
+    item.Employee_EmployeeContractStatusOption_createdByToEmployee ??
+    item.Employee_EmployeeContractTypeOption_createdByToEmployee
+  const deletedBy =
+    item.Employee_EmployeeBenefitOption_deletedByToEmployee ??
+    item.Employee_EmployeeContractStatusOption_deletedByToEmployee ??
+    item.Employee_EmployeeContractTypeOption_deletedByToEmployee
+
+  return {
+    id: item.id,
+    name: item.name,
+    createdAt: item.createdAt.toISOString(),
+    createdByName: createdBy ? `${createdBy.firstName} ${createdBy.lastName}` : '-',
+    deleted: item.deleted,
+    deletedAt: item.deletedAt?.toISOString() ?? null,
+    deletedByName: deletedBy ? `${deletedBy.firstName} ${deletedBy.lastName}` : null,
+  }
 }
 
 export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
@@ -49,6 +82,28 @@ export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
     createdBy: prismaEmp.Employee?.id ?? null,
     passwordCreatedAt: prismaEmp.passwordCreatedAt.toISOString(),
     pictureId: prismaEmp.pictureId,
+    photoFileId: prismaEmp.photoFileId,
+    bankAccountNumber: prismaEmp.bankAccountNumber,
+    rrn: prismaEmp.rrn,
+    idExpirationDate: prismaEmp.idExpirationDate?.toISOString() ?? null,
+    driversLicense: prismaEmp.driversLicense,
+    maritalStatus: prismaEmp.maritalStatus,
+    dependents: prismaEmp.dependents,
+    employmentStatus: prismaEmp.employmentStatus,
+    contractType: prismaEmp.contractType,
+    contractDuration: prismaEmp.contractDuration,
+    grossSalary: prismaEmp.grossSalary,
+    mealVouchers: prismaEmp.mealVouchers,
+    ecoVouchers: prismaEmp.ecoVouchers,
+    companyCar: prismaEmp.companyCar,
+    companyCarDescription: prismaEmp.companyCarDescription,
+    fuelCard: prismaEmp.fuelCard,
+    bikeLease: prismaEmp.bikeLease,
+    mobilePhone: prismaEmp.mobilePhone,
+    laptop: prismaEmp.laptop,
+    fixedExpenseAllowance: prismaEmp.fixedExpenseAllowance,
+    homeWorkInternetAllowance: prismaEmp.homeWorkInternetAllowance,
+    extraLegalBenefits: prismaEmp.extraLegalBenefits,
     deleted: prismaEmp.deleted,
     deletedAt: prismaEmp.deletedAt?.toISOString() ?? null,
     deletedBy: prismaEmp.Employee_Employee_deletedByToEmployee?.id ?? null,
@@ -362,21 +417,21 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Purchase: {select: {purchaseNumber: true}}
       }
     }
-    PurchaseOrderBecra: {select: {id: true, description: true, date: true}}
-    QuoteBecra_QuoteBecra_createdByToEmployee: {select: {id: true, description: true, date: true}}
-    Role_Role_createdByToEmployee: {select: {id: true, name: true, createdAt: true}}
+    PurchaseOrderBecra: {select: {id: true; description: true; date: true}}
+    QuoteBecra_QuoteBecra_createdByToEmployee: {select: {id: true; description: true; date: true}}
+    Role_Role_createdByToEmployee: {select: {id: true; name: true; createdAt: true}}
     RoleLevel_RoleLevel_createdByToEmployee: {
-      select: {id: true, createdAt: true, Role: {select: {name: true}}; SubRole: {select: {name: true}}}
+      select: {id: true; createdAt: true; Role: {select: {name: true}}; SubRole: {select: {name: true}}}
     }
-    Status: {select: {id: true, name: true, createdAt: true}}
-    SubRole_SubRole_createdByToEmployee: {select: {id: true, name: true, createdAt: true}}
+    Status: {select: {id: true; name: true; createdAt: true}}
+    SubRole_SubRole_createdByToEmployee: {select: {id: true; name: true; createdAt: true}}
     SupplierDeliveryNoteFollowUp: {
-      select: {id: true, information: true, deliveryDate: true; DeliveryNoteSupplier: {select: {supplierNN: true}}}
+      select: {id: true; information: true; deliveryDate: true; DeliveryNoteSupplier: {select: {supplierNN: true}}}
     }
-    Target: {select: {id: true, createdAt: true; TargetType: {select: {name: true}}}}
-    TargetType: {select: {id: true, name: true, createdAt: true}}
-    TestProcedure: {select: {id: true, name: true, shortDescription: true, createdAt: true}}
-    Title_Title_createdByToEmployee: {select: {id: true, name: true, createdAt: true}}
+    Target: {select: {id: true; createdAt: true; TargetType: {select: {name: true}}}}
+    TargetType: {select: {id: true; name: true; createdAt: true}}
+    TestProcedure: {select: {id: true; name: true; shortDescription: true; createdAt: true}}
+    Title_Title_createdByToEmployee: {select: {id: true; name: true; createdAt: true}}
     TrainingContact: {
       select: {
         id: true
@@ -385,16 +440,16 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Training: {select: {trainingNumber: true}}
       }
     }
-    Unit: {select: {id: true, unitName: true, abbreviation: true; createdAt: true}}
-    UrgencyType: {select: {id: true, name: true, createdAt: true}}
-    WarehousePlace: {select: {id: true, place: true, shelf: true; createdAt: true}}
+    Unit: {select: {id: true; unitName: true; abbreviation: true; createdAt: true}}
+    UrgencyType: {select: {id: true; name: true; createdAt: true}}
+    WarehousePlace: {select: {id: true; place: true; shelf: true; createdAt: true}}
     // Other deleted
     Certificate_Certificate_deletedByToEmployee: {
-      select: {id: true, descriptionShort: true, deletedAt: true; CertificateType: {select: {name: true}}}
+      select: {id: true; descriptionShort: true; deletedAt: true; CertificateType: {select: {name: true}}}
     }
-    CertificateType_CertificateType_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    CertificateType_CertificateType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     CompanyAddress_CompanyAddress_deletedByToEmployee: {
-      select: {id: true, street: true, houseNumber: true, place: true, deletedAt: true; Company: {select: {name: true}}}
+      select: {id: true; street: true; houseNumber: true; place: true; deletedAt: true; Company: {select: {name: true}}}
     }
     CompanyContact_CompanyContact_deletedByToEmployee: {
       select: {
@@ -405,11 +460,11 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Company: {select: {name: true}}
       }
     }
-    Department_Department_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
-    Function_Function_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
-    HourType_HourType_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    Department_Department_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    Function_Function_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    HourType_HourType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     Inventory_Inventory_deletedByToEmployee: {
-      select: {id: true, beNumber: true, shortDescription: true, deletedAt: true}
+      select: {id: true; beNumber: true; shortDescription: true; deletedAt: true}
     }
     InventoryChange_InventoryChange_deletedByToEmployee: {
       select: {
@@ -420,31 +475,31 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       }
     }
     InventoryOrder_InventoryOrder_deletedByToEmployee: {
-      select: {id: true, orderNumber: true, shortDescription: true, deletedAt: true}
+      select: {id: true; orderNumber: true; shortDescription: true; deletedAt: true}
     }
     InventoryStructure_InventoryStructure_deletedByToEmployee: {
-      select: {id: true, shortDescription: true, deletedAt: true; Inventory: {select: {beNumber: true}}}
+      select: {id: true; shortDescription: true; deletedAt: true; Inventory: {select: {beNumber: true}}}
     }
-    InvoiceType_InvoiceType_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
-    Material_Material_deletedByToEmployee: {select: {id: true, beNumber: true, shortDescription: true, deletedAt: true}}
+    InvoiceType_InvoiceType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    Material_Material_deletedByToEmployee: {select: {id: true; beNumber: true; shortDescription: true; deletedAt: true}}
     MaterialAssembly_MaterialAssembly_deletedByToEmployee: {
-      select: {id: true, name: true, shortDescription: true, deletedAt: true}
+      select: {id: true; name: true; shortDescription: true; deletedAt: true}
     }
-    MaterialCode_MaterialCode_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
-    MaterialFamily_MaterialFamily_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
-    MaterialMovement_MaterialMovement_deletedByToEmployee: {select: {id: true, shortDescription: true, deletedAt: true}}
+    MaterialCode_MaterialCode_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    MaterialFamily_MaterialFamily_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    MaterialMovement_MaterialMovement_deletedByToEmployee: {select: {id: true; shortDescription: true; deletedAt: true}}
     MaterialOther_MaterialOther_deletedByToEmployee: {
-      select: {id: true, name: true, shortDescription: true, deletedAt: true; Material: {select: {beNumber: true}}}
+      select: {id: true; name: true; shortDescription: true; deletedAt: true; Material: {select: {beNumber: true}}}
     }
     MaterialPrice_MaterialPrice_deletedByToEmployee: {
-      select: {id: true, beNumber: true, shortDescription: true, deletedAt: true}
+      select: {id: true; beNumber: true; shortDescription: true; deletedAt: true}
     }
     MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee: {
-      select: {id: true, shortDescription: true, deletedAt: true}
+      select: {id: true; shortDescription: true; deletedAt: true}
     }
-    Part_Part_deletedByToEmployee: {select: {id: true, name: true, shortDescription: true, deletedAt: true}}
-    Phantom_Phantom_deletedByToEmployee: {select: {id: true, description: true, deletedAt: true}}
-    Product_Product_deletedByToEmployee: {select: {id: true, shortDescription: true, status: true, deletedAt: true}}
+    Part_Part_deletedByToEmployee: {select: {id: true; name: true; shortDescription: true; deletedAt: true}}
+    Phantom_Phantom_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
+    Product_Product_deletedByToEmployee: {select: {id: true; shortDescription: true; status: true; deletedAt: true}}
     PurchaseDetail_PurchaseDetail_deletedByToEmployee: {
       select: {
         id: true
@@ -454,23 +509,23 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Purchase: {select: {purchaseNumber: true}}
       }
     }
-    PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {select: {id: true, description: true, deletedAt: true}}
-    QuoteBecra_QuoteBecra_deletedByToEmployee: {select: {id: true, description: true, deletedAt: true}}
-    Role_Role_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
+    QuoteBecra_QuoteBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
+    Role_Role_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     RoleLevel_RoleLevel_deletedByToEmployee: {
-      select: {id: true, deletedAt: true, Role: {select: {name: true}}; SubRole: {select: {name: true}}}
+      select: {id: true; deletedAt: true; Role: {select: {name: true}}; SubRole: {select: {name: true}}}
     }
-    Status_Status_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
-    SubRole_SubRole_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    Status_Status_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    SubRole_SubRole_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee: {
-      select: {id: true, information: true, deletedAt: true; DeliveryNoteSupplier: {select: {supplierNN: true}}}
+      select: {id: true; information: true; deletedAt: true; DeliveryNoteSupplier: {select: {supplierNN: true}}}
     }
-    Target_Target_deletedByToEmployee: {select: {id: true, deletedAt: true; TargetType: {select: {name: true}}}}
-    TargetType_TargetType_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    Target_Target_deletedByToEmployee: {select: {id: true; deletedAt: true; TargetType: {select: {name: true}}}}
+    TargetType_TargetType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     TestProcedure_TestProcedure_deletedByToEmployee: {
-      select: {id: true, name: true, shortDescription: true, deletedAt: true}
+      select: {id: true; name: true; shortDescription: true; deletedAt: true}
     }
-    Title_Title_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
+    Title_Title_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     TrainingContact_TrainingContact_deletedByToEmployee: {
       select: {
         id: true
@@ -479,9 +534,9 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         Training: {select: {trainingNumber: true}}
       }
     }
-    Unit_Unit_deletedByToEmployee: {select: {id: true, unitName: true, abbreviation: true, deletedAt: true}}
-    UrgencyType_UrgencyType_deletedByToEmployee: {select: {id: true, name: true, deletedAt: true}}
-    WarehousePlace_WarehousePlace_deletedByToEmployee: {select: {id: true, place: true, shelf: true, deletedAt: true}}
+    Unit_Unit_deletedByToEmployee: {select: {id: true; unitName: true; abbreviation: true; deletedAt: true}}
+    UrgencyType_UrgencyType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
+    WarehousePlace_WarehousePlace_deletedByToEmployee: {select: {id: true; place: true; shelf: true; deletedAt: true}}
   }
 }>
 
@@ -881,6 +936,28 @@ export function mapEmployeeDetail(
     createdByName: e.Employee ? `${e.Employee.firstName} ${e.Employee.lastName}` : null,
     passwordCreatedAt: e.passwordCreatedAt.toISOString(),
     pictureId: e.pictureId,
+    photoFileId: e.photoFileId,
+    bankAccountNumber: e.bankAccountNumber,
+    rrn: e.rrn,
+    idExpirationDate: e.idExpirationDate?.toISOString() ?? null,
+    driversLicense: e.driversLicense,
+    maritalStatus: e.maritalStatus,
+    dependents: e.dependents,
+    employmentStatus: e.employmentStatus,
+    contractType: e.contractType,
+    contractDuration: e.contractDuration,
+    grossSalary: e.grossSalary,
+    mealVouchers: e.mealVouchers,
+    ecoVouchers: e.ecoVouchers,
+    companyCar: e.companyCar,
+    companyCarDescription: e.companyCarDescription,
+    fuelCard: e.fuelCard,
+    bikeLease: e.bikeLease,
+    mobilePhone: e.mobilePhone,
+    laptop: e.laptop,
+    fixedExpenseAllowance: e.fixedExpenseAllowance,
+    homeWorkInternetAllowance: e.homeWorkInternetAllowance,
+    extraLegalBenefits: e.extraLegalBenefits,
     deleted: e.deleted,
     deletedAt: e.deletedAt?.toISOString() ?? null,
     deletedByName: e.Employee_Employee_deletedByToEmployee

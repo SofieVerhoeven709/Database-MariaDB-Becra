@@ -1,6 +1,6 @@
 import {EmployeeTable} from '@/components/custom/employeeTable'
-import {getEmployees} from '@/dal/employees'
-import {mapEmployee} from '@/extra/employees'
+import {getEmployeeBenefitOptions, getEmployeeContractStatusOptions, getEmployeeContractTypeOptions, getEmployees} from '@/dal/employees'
+import {mapEmployee, mapManagedEmployeeOption} from '@/extra/employees'
 import {getTitles} from '@/dal/titles'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getRoleLevels} from '@/dal/roleLevel'
@@ -14,13 +14,17 @@ interface PageProps {
 export default async function RecordPage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [department, employeesFromDAL, roleLevels, titles, profile] = await Promise.all([
-    getDepartmentById(departmentId),
-    getEmployees(),
-    getRoleLevels(),
-    getTitles(),
-    getSessionProfileFromCookieOrThrow(),
-  ])
+  const [department, employeesFromDAL, roleLevels, titles, profile, contractStatuses, contractTypes, benefitOptions] =
+    await Promise.all([
+      getDepartmentById(departmentId),
+      getEmployees(),
+      getRoleLevels(),
+      getTitles(),
+      getSessionProfileFromCookieOrThrow(),
+      getEmployeeContractStatusOptions(),
+      getEmployeeContractTypeOptions(),
+      getEmployeeBenefitOptions(),
+    ])
 
   if (!department) return <p>Department not found</p>
 
@@ -43,6 +47,9 @@ export default async function RecordPage({params}: PageProps) {
 
       <EmployeeTable
         initialEmployees={employees}
+        initialContractStatusOptions={contractStatuses.map(mapManagedEmployeeOption)}
+        initialContractTypeOptions={contractTypes.map(mapManagedEmployeeOption)}
+        initialBenefitOptions={benefitOptions.map(mapManagedEmployeeOption)}
         roleOptions={roleOptions}
         titleOptions={titleOptions}
         currentUserRole={currentUserRole}

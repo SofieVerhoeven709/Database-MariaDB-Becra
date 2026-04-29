@@ -99,6 +99,48 @@ export async function getEmployees(): Promise<
   })
 }
 
+export async function getEmployeeContractStatusOptions() {
+  return prismaClient.employeeContractStatusOption.findMany({
+    orderBy: [{deleted: 'asc'}, {name: 'asc'}],
+    include: {
+      Employee_EmployeeContractStatusOption_createdByToEmployee: {
+        select: {firstName: true, lastName: true},
+      },
+      Employee_EmployeeContractStatusOption_deletedByToEmployee: {
+        select: {firstName: true, lastName: true},
+      },
+    },
+  })
+}
+
+export async function getEmployeeContractTypeOptions() {
+  return prismaClient.employeeContractTypeOption.findMany({
+    orderBy: [{deleted: 'asc'}, {name: 'asc'}],
+    include: {
+      Employee_EmployeeContractTypeOption_createdByToEmployee: {
+        select: {firstName: true, lastName: true},
+      },
+      Employee_EmployeeContractTypeOption_deletedByToEmployee: {
+        select: {firstName: true, lastName: true},
+      },
+    },
+  })
+}
+
+export async function getEmployeeBenefitOptions() {
+  return prismaClient.employeeBenefitOption.findMany({
+    orderBy: [{deleted: 'asc'}, {name: 'asc'}],
+    include: {
+      Employee_EmployeeBenefitOption_createdByToEmployee: {
+        select: {firstName: true, lastName: true},
+      },
+      Employee_EmployeeBenefitOption_deletedByToEmployee: {
+        select: {firstName: true, lastName: true},
+      },
+    },
+  })
+}
+
 /**
  * Start a new session.
  *

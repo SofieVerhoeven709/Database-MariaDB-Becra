@@ -101,6 +101,28 @@ CREATE TABLE
         createdBy CHAR(36),
         titleId CHAR(36),
         pictureId CHAR(36),
+        photoFileId VARCHAR(255) NULL,
+        bankAccountNumber VARCHAR(100) NULL,
+        rrn VARCHAR(100) NULL,
+        idExpirationDate DATETIME NULL,
+        driversLicense BOOLEAN NOT NULL DEFAULT 0,
+        maritalStatus VARCHAR(100),
+        dependents INT NULL,
+        employmentStatus VARCHAR(100) NULL,
+        contractType VARCHAR(255) NULL,
+        contractDuration VARCHAR(255) NULL,
+        grossSalary VARCHAR(255) NULL,
+        mealVouchers BOOLEAN NOT NULL DEFAULT 0,
+        ecoVouchers BOOLEAN NOT NULL DEFAULT 0,
+        companyCar BOOLEAN NOT NULL DEFAULT 0,
+        companyCarDescription VARCHAR(255) NULL,
+        fuelCard BOOLEAN NOT NULL DEFAULT 0,
+        bikeLease BOOLEAN NOT NULL DEFAULT 0,
+        mobilePhone BOOLEAN NOT NULL DEFAULT 0,
+        laptop BOOLEAN NOT NULL DEFAULT 0,
+        fixedExpenseAllowance BOOLEAN NOT NULL DEFAULT 0,
+        homeWorkInternetAllowance BOOLEAN NOT NULL DEFAULT 0,
+        extraLegalBenefits TEXT NULL,
         FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
         FOREIGN KEY (titleId) REFERENCES Title (id) ON DELETE RESTRICT,
         FOREIGN KEY (pictureId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
@@ -109,6 +131,45 @@ CREATE TABLE
         deletedBy CHAR(36),
         FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
     ) ENGINE = InnoDB;
+    
+CREATE TABLE 
+    IF NOT EXISTS EmployeeContractStatusOption (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        name VARCHAR(255),
+        createdBy CHAR(36) NOT NULL,
+        createdAt DATETIME NOT NULL,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedAt DATETIME,
+        deletedBy CHAR(36),
+        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+) ENGINE = InnoDB;
+
+CREATE TABLE 
+    IF NOT EXISTS EmployeeContractTypeOption (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        name VARCHAR(255),
+        createdBy CHAR(36) NOT NULL,
+        createdAt DATETIME NOT NULL,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedAt DATETIME,
+        deletedBy CHAR(36),
+        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+) ENGINE = InnoDB;
+
+CREATE TABLE 
+    IF NOT EXISTS EmployeeBenefitOption (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        name VARCHAR(255),
+        createdBy CHAR(36) NOT NULL,
+        createdAt DATETIME NOT NULL,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedAt DATETIME,
+        deletedBy CHAR(36),
+        FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+        FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+) ENGINE = InnoDB;
 
 CREATE TABLE
     IF NOT EXISTS Department (

@@ -99,6 +99,160 @@ async function assertMaterialIsSupplierLinked(companyId: string, materialId: str
   }
 }
 
+/**
+ * Round a number to 2 decimal places using standard half-up rounding.
+ * e.g. 17.25647 → 17.26, 17.22224 → 17.22
+ */
+function roundTo2dp(value: number): number {
+  return Math.round((value + Number.EPSILON) * 100) / 100
+}
+
+/**
+ * Distribute total misc costs proportionally across material lines by their unit price.
+ * Lines with notDeliverable=true or unitPrice=0 are excluded from distribution.
+ *
+ * The addition for each line is:
+ *   addition = totalMiscCost * (line.unitPrice / sumOfAllLinePrices)
+ *
+ * rounded to 2dp (half-up). Any rounding residual (to keep the sum exact) is
+ * applied to the largest line.
+ *
+ * Returns a map of lineId → adjusted unit price.
+ */
+function distributeMiscCosts(
+  lines: Array<{id: string; unitPrice: number; notDeliverable: boolean}>,
+  totalMiscCost: number,
+): Map<string, number> {
+  const result = new Map<string, number>()
+
+  // Only lines that are deliverable and have a positive price participate.
+  const eligible = lines.filter(l => !l.notDeliverable && l.unitPrice > 0)
+
+  if (eligible.length === 0 || totalMiscCost === 0) {
+    for (const l of lines) result.set(l.id, l.unitPrice)
+    return result
+  }
+
+  const sumPrices = eligible.reduce((acc, l) => acc + l.unitPrice, 0)
+
+  // Compute raw additions and round each to 2dp.
+  const additions = eligible.map(l => ({
+    id: l.id,
+    basePrice: l.unitPrice,
+    rawAddition: totalMiscCost * (l.unitPrice / sumPrices),
+  }))
+
+  const roundedAdditions = additions.map(a => ({...a, addition: roundTo2dp(a.rawAddition)}))
+
+  // Check for rounding residual (sum of rounded additions vs actual total).
+  const sumRounded = roundedAdditions.reduce((acc, a) => acc + a.addition, 0)
+  const residual = roundTo2dp(totalMiscCost - sumRounded)
+
+  // Apply residual to the line with the highest unit price (largest contributor).
+  if (residual !== 0) {
+    const maxIdx = roundedAdditions.reduce(
+      (bestIdx, a, idx, arr) => (a.basePrice > arr[bestIdx].basePrice ? idx : bestIdx),
+      0,
+    )
+    roundedAdditions[maxIdx].addition = roundTo2dp(roundedAdditions[maxIdx].addition + residual)
+  }
+
+  // Build result map — ineligible lines keep their original price unchanged.
+  const eligibleIds = new Set(eligible.map(l => l.id))
+  for (const l of lines) {
+    if (!eligibleIds.has(l.id)) {
+      result.set(l.id, l.unitPrice)
+    }
+  }
+  for (const a of roundedAdditions) {
+    result.set(a.id, roundTo2dp(a.basePrice + a.addition))
+  }
+
+  return result
+}
+
+async function createMaterialPricesFromApprovedQuote(
+  quoteId: string,
+  companyId: string,
+  createdBy: string,
+  logger: {info: (msg: string) => void},
+) {
+  // Fetch material lines and misc lines together so we can distribute misc costs.
+  const [lines, miscLines] = await Promise.all([
+    prismaClient.quoteSupplierLine.findMany({
+      where: {quoteSupplierId: quoteId},
+      select: {
+        id: true,
+        unitPrice: true,
+        notDeliverable: true,
+        Material: {
+          select: {
+            beNumber: true,
+            shortDescription: true,
+          },
+        },
+      },
+    }),
+    prismaClient.quoteSupplierMiscLine.findMany({
+      where: {quoteSupplierId: quoteId},
+      select: {unitPrice: true},
+    }),
+  ])
+
+  // Total of all miscellaneous cost lines to distribute.
+  const totalMiscCost = miscLines.reduce((acc, ml) => acc + Number(ml.unitPrice), 0)
+
+  // Build the adjusted prices with proportional misc cost distribution.
+  const adjustedPrices = distributeMiscCosts(
+    lines.map(l => ({id: l.id, unitPrice: Number(l.unitPrice), notDeliverable: l.notDeliverable})),
+    totalMiscCost,
+  )
+
+  for (const line of lines) {
+    // Skip lines that are not deliverable or have no BE number to key on.
+    if (line.notDeliverable) continue
+    const beNumber = line.Material.beNumber
+    if (!beNumber) continue
+
+    const adjustedUnitPrice = adjustedPrices.get(line.id) ?? Number(line.unitPrice)
+    if (adjustedUnitPrice <= 0) continue
+
+    // Avoid exact duplicate: same beNumber + company + unitPrice already recorded.
+    const existing = await prismaClient.materialPrice.findFirst({
+      where: {
+        beNumber,
+        companyId,
+        unitPrice: {equals: adjustedUnitPrice},
+        deleted: false,
+      },
+      select: {id: true},
+    })
+
+    if (existing) {
+      logger.info(`MaterialPrice already exists for beNumber=${beNumber}, companyId=${companyId}, skipping`)
+      continue
+    }
+
+    await prismaClient.materialPrice.create({
+      data: {
+        id: crypto.randomUUID(),
+        beNumber,
+        companyId,
+        unitPrice: adjustedUnitPrice,
+        shortDescription: line.Material.shortDescription ?? null,
+        createdBy,
+        updatedAt: new Date(),
+        deleted: false,
+      },
+    })
+
+    logger.info(
+      `MaterialPrice created for beNumber=${beNumber}, companyId=${companyId}, unitPrice=${adjustedUnitPrice}` +
+        (totalMiscCost > 0 ? ` (includes proportional misc cost distribution from total misc=${totalMiscCost})` : ''),
+    )
+  }
+}
+
 export const createQuoteSupplierAction = protectedServerFunction({
   schema: createQuoteSupplierSchema,
   functionName: 'Create quote supplier action',
@@ -227,69 +381,6 @@ export const createQuoteSupplierAction = protectedServerFunction({
     revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
-
-async function createMaterialPricesFromApprovedQuote(
-  quoteId: string,
-  companyId: string,
-  createdBy: string,
-  logger: {info: (msg: string) => void},
-) {
-  const lines = await prismaClient.quoteSupplierLine.findMany({
-    where: {
-      quoteSupplierId: quoteId,
-      notDeliverable: false,
-      unitPrice: {gt: 0},
-    },
-    select: {
-      id: true,
-      unitPrice: true,
-      Material: {
-        select: {
-          beNumber: true,
-          shortDescription: true,
-        },
-      },
-    },
-  })
-
-  for (const line of lines) {
-    const beNumber = line.Material.beNumber
-    if (!beNumber) continue
-
-    const unitPrice = Number(line.unitPrice)
-
-    // Avoid exact duplicate: same beNumber + company + unitPrice already recorded.
-    const existing = await prismaClient.materialPrice.findFirst({
-      where: {
-        beNumber,
-        companyId,
-        unitPrice: {equals: unitPrice},
-        deleted: false,
-      },
-      select: {id: true},
-    })
-
-    if (existing) {
-      logger.info(`MaterialPrice already exists for beNumber=${beNumber}, companyId=${companyId}, skipping`)
-      continue
-    }
-
-    await prismaClient.materialPrice.create({
-      data: {
-        id: crypto.randomUUID(),
-        beNumber,
-        companyId,
-        unitPrice,
-        shortDescription: line.Material.shortDescription ?? null,
-        createdBy,
-        updatedAt: new Date(),
-        deleted: false,
-      },
-    })
-
-    logger.info(`MaterialPrice created for beNumber=${beNumber}, companyId=${companyId}, unitPrice=${unitPrice}`)
-  }
-}
 
 export const updateQuoteSupplierAction = protectedServerFunction({
   schema: updateQuoteSupplierSchema,

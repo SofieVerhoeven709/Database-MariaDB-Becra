@@ -22,6 +22,11 @@ import {
   updateQuoteSupplierLineAction,
 } from '@/serverFunctions/quoteSupplierLines'
 import {updateQuoteSupplierAction} from '@/serverFunctions/quoteSuppliers'
+import {
+  createQuoteSupplierMiscLineAction,
+  updateQuoteSupplierMiscLineAction,
+  deleteQuoteSupplierMiscLineAction,
+} from '@/serverFunctions/quoteSupplierMiscLines'
 
 // ── Prop types ───────────────────────────────────────────────────────────────
 
@@ -91,6 +96,9 @@ export function QuoteSupplierDetail({
   const canCreateLines = currentUserLevel >= 60 && !quote.sent && !isApprovedLocked
   const canDeleteLines = currentUserLevel >= 80 && !isApprovedLocked
   const lifecycleStatus = getLifecycleStatus(quote)
+
+  // Misc lines are available once sent or received, and locked once approved for PO.
+  const canManageMiscLines = currentUserLevel >= 40 && (quote.sent || quote.received) && !quote.acceptedForPOB
 
   // ── Header edit state ────────────────────────────────────────────────────
   const [editing, setEditing] = useState(false)
@@ -180,6 +188,17 @@ export function QuoteSupplierDetail({
   const [editMinQuantity, setEditMinQuantity] = useState('')
   const [editNotDeliverable, setEditNotDeliverable] = useState(false)
 
+  // ── Misc line state ──────────────────────────────────────────────────────
+  const [miscError, setMiscError] = useState<string | null>(null)
+  const [miscSubmitting, setMiscSubmitting] = useState(false)
+  const [editingMiscLineId, setEditingMiscLineId] = useState<string | null>(null)
+
+  const [newMiscDescription, setNewMiscDescription] = useState('')
+  const [newMiscUnitPrice, setNewMiscUnitPrice] = useState('')
+
+  const [editMiscDescription, setEditMiscDescription] = useState('')
+  const [editMiscUnitPrice, setEditMiscUnitPrice] = useState('')
+
   const demandOptionsForSelectedMaterial = useMemo(() => {
     if (!newMaterialId || newMaterialId === '__none__') return materialDemandOptions
     return materialDemandOptions.filter(o => o.materialId === newMaterialId)
@@ -199,6 +218,18 @@ export function QuoteSupplierDetail({
     setEditUnitPrice('')
     setEditMinQuantity('')
     setEditNotDeliverable(false)
+  }
+
+  function startMiscEdit(miscLine: MappedQuoteSupplierDetail['miscLines'][number]) {
+    setEditingMiscLineId(miscLine.id)
+    setEditMiscDescription(miscLine.description)
+    setEditMiscUnitPrice(String(miscLine.unitPrice))
+  }
+
+  function cancelMiscEdit() {
+    setEditingMiscLineId(null)
+    setEditMiscDescription('')
+    setEditMiscUnitPrice('')
   }
 
   async function handleCreateLine() {
@@ -309,6 +340,77 @@ export function QuoteSupplierDetail({
       setSubmitting(false)
     }
   }
+
+  async function handleCreateMiscLine() {
+    const unitPrice = Number.parseFloat(newMiscUnitPrice)
+    if (!newMiscDescription.trim()) {
+      setMiscError('Description is required.')
+      return
+    }
+    if (Number.isNaN(unitPrice) || unitPrice <= 0) {
+      setMiscError('Unit price must be greater than 0.')
+      return
+    }
+    try {
+      setMiscSubmitting(true)
+      await createQuoteSupplierMiscLineAction({
+        quoteSupplierId: quote.id,
+        description: newMiscDescription.trim(),
+        unitPrice,
+      })
+      setMiscError(null)
+      setNewMiscDescription('')
+      setNewMiscUnitPrice('')
+      router.refresh()
+    } catch (e) {
+      setMiscError(e instanceof Error ? e.message : 'Could not create misc line.')
+    } finally {
+      setMiscSubmitting(false)
+    }
+  }
+
+  async function handleUpdateMiscLine(miscLineId: string) {
+    const unitPrice = Number.parseFloat(editMiscUnitPrice)
+    if (!editMiscDescription.trim()) {
+      setMiscError('Description is required.')
+      return
+    }
+    if (Number.isNaN(unitPrice) || unitPrice <= 0) {
+      setMiscError('Unit price must be greater than 0.')
+      return
+    }
+    try {
+      setMiscSubmitting(true)
+      await updateQuoteSupplierMiscLineAction({
+        id: miscLineId,
+        description: editMiscDescription.trim(),
+        unitPrice,
+      })
+      setMiscError(null)
+      cancelMiscEdit()
+      router.refresh()
+    } catch (e) {
+      setMiscError(e instanceof Error ? e.message : 'Could not update misc line.')
+    } finally {
+      setMiscSubmitting(false)
+    }
+  }
+
+  async function handleDeleteMiscLine(miscLineId: string) {
+    try {
+      setMiscSubmitting(true)
+      await deleteQuoteSupplierMiscLineAction({id: miscLineId})
+      setMiscError(null)
+      router.refresh()
+    } catch (e) {
+      setMiscError(e instanceof Error ? e.message : 'Could not delete misc line.')
+    } finally {
+      setMiscSubmitting(false)
+    }
+  }
+
+  // Total misc cost shown as an informational sum under the misc table.
+  const totalMiscCost = quote.miscLines.reduce((acc, ml) => acc + ml.unitPrice, 0)
 
   return (
     <div className="flex flex-col gap-6">
@@ -838,6 +940,186 @@ export function QuoteSupplierDetail({
           </TableBody>
         </Table>
       </div>
+
+      {/* ── Miscellaneous cost lines ── */}
+      {/* Show this section whenever the quote is sent or received, regardless of approval state.
+          Editing is only allowed before approval (canManageMiscLines). */}
+      {(quote.sent || quote.received || quote.miscLines.length > 0) && (
+        <div className="rounded-xl border border-border/60 bg-card p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h2 className="text-sm font-medium text-foreground">Miscellaneous costs</h2>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Additional costs (freight, handling, etc.) distributed proportionally across material prices on
+                approval.
+              </p>
+            </div>
+          </div>
+
+          {miscError && (
+            <div className="mb-3 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              {miscError}
+            </div>
+          )}
+
+          {/* Add misc line form */}
+          {canManageMiscLines && (
+            <div className="mb-4 flex items-end gap-3">
+              <div className="flex-1">
+                <Label className="text-xs">Description</Label>
+                <Input
+                  value={newMiscDescription}
+                  onChange={e => setNewMiscDescription(e.target.value)}
+                  placeholder="e.g. Freight, handling…"
+                  className="bg-secondary border-border mt-1"
+                />
+              </div>
+              <div className="w-36">
+                <Label className="text-xs">Amount (€)</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  min={0.01}
+                  value={newMiscUnitPrice}
+                  onChange={e => setNewMiscUnitPrice(e.target.value)}
+                  placeholder="0.00"
+                  className="bg-secondary border-border mt-1"
+                />
+              </div>
+              <Button onClick={handleCreateMiscLine} disabled={miscSubmitting}>
+                Add
+              </Button>
+            </div>
+          )}
+
+          {/* Misc lines table */}
+          <div className="rounded-lg border border-border/40 overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent border-border/60">
+                  <TableHead className="text-xs">Description</TableHead>
+                  <TableHead className="text-xs text-right">Amount</TableHead>
+                  {canManageMiscLines && (
+                    <TableHead className="w-20">
+                      <span className="sr-only">Actions</span>
+                    </TableHead>
+                  )}
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {quote.miscLines.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={canManageMiscLines ? 3 : 2}
+                      className="h-16 text-center text-muted-foreground text-sm">
+                      No miscellaneous costs added yet.
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  quote.miscLines.map(ml => {
+                    const isEditingMisc = editingMiscLineId === ml.id
+                    return (
+                      <TableRow key={ml.id} className="border-border/40 hover:bg-secondary/50">
+                        <TableCell className="text-sm text-foreground">
+                          {isEditingMisc ? (
+                            <Input
+                              value={editMiscDescription}
+                              onChange={e => setEditMiscDescription(e.target.value)}
+                              className="h-8 bg-secondary border-border"
+                            />
+                          ) : (
+                            ml.description
+                          )}
+                        </TableCell>
+                        <TableCell className="text-sm text-right text-muted-foreground">
+                          {isEditingMisc ? (
+                            <Input
+                              type="number"
+                              step="0.01"
+                              min={0.01}
+                              value={editMiscUnitPrice}
+                              onChange={e => setEditMiscUnitPrice(e.target.value)}
+                              className="h-8 bg-secondary border-border text-right"
+                            />
+                          ) : (
+                            formatMoney(ml.unitPrice)
+                          )}
+                        </TableCell>
+                        {canManageMiscLines && (
+                          <TableCell>
+                            <div className="flex items-center gap-1 justify-end">
+                              {isEditingMisc ? (
+                                <>
+                                  <Button
+                                    size="icon"
+                                    variant="ghost"
+                                    className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10"
+                                    disabled={miscSubmitting}
+                                    onClick={() => handleUpdateMiscLine(ml.id)}>
+                                    <Check className="h-3.5 w-3.5" />
+                                  </Button>
+                                  <Button
+                                    size="icon"
+                                    variant="ghost"
+                                    className="h-7 w-7 text-muted-foreground hover:bg-secondary"
+                                    onClick={cancelMiscEdit}>
+                                    <X className="h-3.5 w-3.5" />
+                                  </Button>
+                                </>
+                              ) : (
+                                <>
+                                  <Button
+                                    size="icon"
+                                    variant="ghost"
+                                    className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                    onClick={() => startMiscEdit(ml)}>
+                                    <Pencil className="h-3.5 w-3.5" />
+                                  </Button>
+                                  <Button
+                                    size="icon"
+                                    variant="ghost"
+                                    className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                    disabled={miscSubmitting}
+                                    onClick={() => handleDeleteMiscLine(ml.id)}>
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                  </Button>
+                                </>
+                              )}
+                            </div>
+                          </TableCell>
+                        )}
+                      </TableRow>
+                    )
+                  })
+                )}
+                {/* Total row */}
+                {quote.miscLines.length > 0 && (
+                  <TableRow className="border-t border-border/60 bg-secondary/20 hover:bg-secondary/30">
+                    <TableCell className="text-xs font-medium text-muted-foreground">Total misc costs</TableCell>
+                    <TableCell className="text-sm font-semibold text-right text-foreground">
+                      {formatMoney(totalMiscCost)}
+                    </TableCell>
+                    {canManageMiscLines && <TableCell />}
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+
+          {quote.miscLines.length > 0 && !quote.acceptedForPOB && (
+            <p className="mt-2 text-xs text-muted-foreground">
+              {formatMoney(totalMiscCost)} will be distributed proportionally across deliverable material lines when
+              this quote is approved for PO.
+            </p>
+          )}
+
+          {quote.miscLines.length > 0 && quote.acceptedForPOB && (
+            <p className="mt-2 text-xs text-muted-foreground">
+              Misc costs were distributed into material prices at the time of approval.
+            </p>
+          )}
+        </div>
+      )}
     </div>
   )
 }

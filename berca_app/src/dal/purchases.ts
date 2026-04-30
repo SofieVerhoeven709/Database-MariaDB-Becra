@@ -306,16 +306,17 @@ export async function ensurePurchaseFromApprovedQuote(quoteSupplierId: string, c
   return {purchaseId: createdPurchase?.id ?? null, created: true}
 }
 
+const employeeSelect = {select: {id: true, firstName: true, lastName: true}} as const
+
 export async function getPurchases() {
   return prismaClient.purchase.findMany({
-    where: {deleted: false},
     orderBy: {purchaseDate: 'desc'},
     include: {
       Company: true,
       QuoteSupplier: {select: {id: true, quoteNumber: true}},
       PaymentCondition: {select: {id: true, name: true}},
-      Employee: {select: {id: true, firstName: true, lastName: true}},
-      Employee_Purchase_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
+      Employee: employeeSelect,
+      Employee_Purchase_deletedByToEmployee: employeeSelect,
     },
   })
 }

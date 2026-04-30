@@ -814,6 +814,10 @@ export async function updateMaterialDemandSourceReservedQtyWithStockSync(params:
       fulfilled: true,
       fulfilledAt: true,
       materialDemandId: true,
+      sourceReferenceId: true,
+      MaterialDemandSourceType: {
+        select: {name: true},
+      },
       MaterialDemand: {
         select: {
           reservedQty: true,
@@ -838,9 +842,6 @@ export async function updateMaterialDemandSourceReservedQtyWithStockSync(params:
   const wasAlreadyFulfilled = source.fulfilled ?? false
   const nextFulfilled = params.newReservedQty >= source.requiredQty
 
-  const becameFulfilled = nextFulfilled && !wasAlreadyFulfilled
-  const becameUnfulfilled = !nextFulfilled && wasAlreadyFulfilled
-
   const sourceUpdates: {
     reservedQty: number
     fulfilled: boolean
@@ -864,15 +865,12 @@ export async function updateMaterialDemandSourceReservedQtyWithStockSync(params:
     data: sourceUpdates,
   })
 
-  const currentDemandReservedQty = source.MaterialDemand.reservedQty ?? 0
-
   const sources = await db.materialDemandSource.findMany({
     where: {materialDemandId: params.materialDemandId},
     select: {requiredQty: true, reservedQty: true, fulfilled: true},
   })
 
   const activeSources = sources.filter(s => !s.fulfilled)
-
   const totalRequiredQty = activeSources.reduce((sum, s) => sum + s.requiredQty, 0)
   const reservedQty = activeSources.reduce((sum, s) => sum + (s.reservedQty ?? 0), 0)
 
@@ -881,5 +879,23 @@ export async function updateMaterialDemandSourceReservedQtyWithStockSync(params:
     data: {totalRequiredQty, reservedQty},
   })
 
-  await adjustInventoryStockForMaterial(source.MaterialDemand.materialId, -delta, db)
+  if (delta !== 0) {
+    const sourceTypeName = source.MaterialDemandSourceType.name
+    const isInventoryOrderSource = sourceTypeName === 'InventoryOrder' && source.sourceReferenceId !== null
+
+    if (isInventoryOrderSource) {
+      const inventoryOrder = await db.inventoryOrder.findUnique({
+        where: {id: source.sourceReferenceId!},
+        select: {shortDescription: true},
+      })
+      const isLowStock = (inventoryOrder?.shortDescription ?? '').toLowerCase().startsWith('low-stock request for')
+      // Low-stock orders bring stock in — reserving more means more has arrived, so stock increases.
+      if (isLowStock) {
+        await adjustInventoryStockForMaterial(source.MaterialDemand.materialId, delta, db)
+      }
+    } else {
+      // All other sources pull from existing stock — reserving more decreases available stock.
+      await adjustInventoryStockForMaterial(source.MaterialDemand.materialId, -delta, db)
+    }
+  }
 }

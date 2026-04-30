@@ -253,7 +253,24 @@ export function EmployeeTable({
     setDialogOpen(true)
   }
 
-  async function handleSave(emp: MappedEmployee, password: string) {
+  async function uploadEmployeePhoto(employeeId: string, photo: File) {
+    const uploadData = new FormData()
+    uploadData.append('photo', photo)
+
+    const response = await fetch(`/api/employees/${employeeId}/photo`, {
+      method: 'POST',
+      body: uploadData,
+    })
+    const result = (await response.json()) as {photoFileId?: string; error?: string}
+
+    if (!response.ok || !result.photoFileId) {
+      throw new Error(result.error ?? 'The employee photo could not be uploaded.')
+    }
+
+    return result.photoFileId
+  }
+
+  async function handleSave(emp: MappedEmployee, password: string, photo?: File | null) {
     // Convert UI strings to the schema's expected Date types and omit UI-only fields.
     const payload = {
       ...emp,
@@ -274,10 +291,12 @@ export function EmployeeTable({
 
     if (editingEmployee) {
       await updateEmployeeAdminAction(payload)
-      setEmployees(prev => prev.map(e => (e.id === emp.id ? emp : e)))
+      const photoFileId = photo ? await uploadEmployeePhoto(emp.id, photo) : emp.photoFileId
+      setEmployees(prev => prev.map(e => (e.id === emp.id ? {...emp, photoFileId} : e)))
     } else {
       await createEmployeeAction(payload)
-      setEmployees(prev => [...prev, emp])
+      const photoFileId = photo ? await uploadEmployeePhoto(emp.id, photo) : emp.photoFileId
+      setEmployees(prev => [...prev, {...emp, photoFileId}])
       router.refresh()
     }
 

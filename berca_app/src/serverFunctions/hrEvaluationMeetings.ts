@@ -16,6 +16,7 @@ import {
 function revalidateHrEvaluationViews(departmentId: string) {
   revalidatePath('/dashboard')
   revalidatePath(`/departments/${departmentId}/schedule`)
+  revalidatePath(`/departments/${departmentId}/performance`)
 }
 
 export const createHrEvaluationMeetingAction = protectedServerFunction({

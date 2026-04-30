@@ -29,6 +29,7 @@ type QuoteSupplierDetailWithRelations = Prisma.QuoteSupplierGetPayload<{
         }
       }
     }
+    QuoteSupplierMiscLine: true
   }
 }>
 
@@ -89,6 +90,11 @@ export function mapQuoteSupplierDetail(q: QuoteSupplierDetailWithRelations): Map
       minQuantity: line.minQuantity ?? null,
       selected: !!line.selected,
       notDeliverable: line.notDeliverable,
+    })),
+    miscLines: q.QuoteSupplierMiscLine.map(ml => ({
+      id: ml.id,
+      description: ml.description,
+      unitPrice: Number(ml.unitPrice),
     })),
   }
 }

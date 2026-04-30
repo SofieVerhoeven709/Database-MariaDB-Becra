@@ -38,8 +38,15 @@ export interface MappedQuoteSupplierDetailLine {
   notDeliverable: boolean
 }
 
+export interface MappedQuoteSupplierMiscLine {
+  id: string
+  description: string
+  unitPrice: number
+}
+
 export interface MappedQuoteSupplierDetail extends MappedQuoteSupplier {
   lines: MappedQuoteSupplierDetailLine[]
+  miscLines: MappedQuoteSupplierMiscLine[]
 }
 
 export interface MappedPaymentCondition {

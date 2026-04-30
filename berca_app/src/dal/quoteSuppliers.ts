@@ -66,6 +66,10 @@ const quoteSupplierDetailInclude = {
     // Stable order for detail line rendering.
     orderBy: {id: 'asc'},
   },
+  QuoteSupplierMiscLine: {
+    // Stable order for misc line rendering.
+    orderBy: {id: 'asc'},
+  },
 } as const
 
 async function normalizeAndMergePaymentConditions() {

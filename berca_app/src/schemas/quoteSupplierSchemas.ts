@@ -19,18 +19,20 @@ export const quoteSupplierSchema = z.object({
   deletedBy: z.string().nullable().optional(),
 })
 
-export const createQuoteSupplierSchema = quoteSupplierSchema.omit({
-  id: true,
-  createdBy: true,
-  deleted: true,
-  deletedAt: true,
-  deletedBy: true,
-}).extend({
-  initialMaterialId: z.string().uuid().optional(),
-  initialMaterialDemandId: z.string().uuid().optional(),
-  // Optional initial line quantity when creating from a material context.
-  initialQuantity: z.coerce.number().int().positive().optional(),
-})
+export const createQuoteSupplierSchema = quoteSupplierSchema
+  .omit({
+    id: true,
+    createdBy: true,
+    deleted: true,
+    deletedAt: true,
+    deletedBy: true,
+  })
+  .extend({
+    initialMaterialId: z.string().uuid().optional(),
+    initialMaterialDemandId: z.string().uuid().optional(),
+    // Optional initial line quantity when creating from a material context.
+    initialQuantity: z.coerce.number().int().positive().optional(),
+  })
 
 export const updateQuoteSupplierSchema = quoteSupplierSchema.pick({
   id: true,
@@ -67,3 +69,20 @@ export const quoteSupplierReceivedSchema = z.object({
   received: z.boolean(),
 })
 
+// ── Misc line schemas ─────────────────────────────────────────────────────────
+
+export const createQuoteSupplierMiscLineSchema = z.object({
+  quoteSupplierId: z.string().uuid(),
+  description: z.string().min(1).max(255),
+  unitPrice: z.number().positive(),
+})
+
+export const updateQuoteSupplierMiscLineSchema = z.object({
+  id: z.string().uuid(),
+  description: z.string().min(1).max(255).optional(),
+  unitPrice: z.number().positive().optional(),
+})
+
+export const quoteSupplierMiscLineIdSchema = z.object({
+  id: z.string().uuid(),
+})

@@ -58,6 +58,7 @@ function emptyPurchase(): PurchaseFormState {
     deleted: false,
     deletedAt: null,
     deletedBy: null,
+    deletedByName: null,
   }
 }
 

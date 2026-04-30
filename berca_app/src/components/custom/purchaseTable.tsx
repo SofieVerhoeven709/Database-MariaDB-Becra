@@ -525,7 +525,7 @@ export function PurchaseTable({
           </div>
         </TabsContent>
 
-        {/* Payment Conditions tab — unchanged */}
+        {/* Payment Conditions tab */}
         <TabsContent value="payment-conditions" className="mt-4 space-y-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative max-w-sm flex-1">

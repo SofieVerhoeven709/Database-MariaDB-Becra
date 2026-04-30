@@ -38,12 +38,12 @@ export type ProjectBOMMinAggregateOutputType = {
   closed: boolean | null
   materialClosed: boolean | null
   readyForPurchase: boolean | null
-  canCopy: boolean | null
   deleted: boolean | null
   createdBy: string | null
   projectId: string | null
   targetId: string | null
   deletedBy: string | null
+  canCopy: boolean | null
 }
 
 export type ProjectBOMMaxAggregateOutputType = {
@@ -60,12 +60,12 @@ export type ProjectBOMMaxAggregateOutputType = {
   closed: boolean | null
   materialClosed: boolean | null
   readyForPurchase: boolean | null
-  canCopy: boolean | null
   deleted: boolean | null
   createdBy: string | null
   projectId: string | null
   targetId: string | null
   deletedBy: string | null
+  canCopy: boolean | null
 }
 
 export type ProjectBOMCountAggregateOutputType = {
@@ -82,12 +82,12 @@ export type ProjectBOMCountAggregateOutputType = {
   closed: number
   materialClosed: number
   readyForPurchase: number
-  canCopy: number
   deleted: number
   createdBy: number
   projectId: number
   targetId: number
   deletedBy: number
+  canCopy: number
   _all: number
 }
 
@@ -106,12 +106,12 @@ export type ProjectBOMMinAggregateInputType = {
   closed?: true
   materialClosed?: true
   readyForPurchase?: true
-  canCopy?: true
   deleted?: true
   createdBy?: true
   projectId?: true
   targetId?: true
   deletedBy?: true
+  canCopy?: true
 }
 
 export type ProjectBOMMaxAggregateInputType = {
@@ -128,12 +128,12 @@ export type ProjectBOMMaxAggregateInputType = {
   closed?: true
   materialClosed?: true
   readyForPurchase?: true
-  canCopy?: true
   deleted?: true
   createdBy?: true
   projectId?: true
   targetId?: true
   deletedBy?: true
+  canCopy?: true
 }
 
 export type ProjectBOMCountAggregateInputType = {
@@ -150,12 +150,12 @@ export type ProjectBOMCountAggregateInputType = {
   closed?: true
   materialClosed?: true
   readyForPurchase?: true
-  canCopy?: true
   deleted?: true
   createdBy?: true
   projectId?: true
   targetId?: true
   deletedBy?: true
+  canCopy?: true
   _all?: true
 }
 
@@ -245,12 +245,12 @@ export type ProjectBOMGroupByOutputType = {
   closed: boolean
   materialClosed: boolean
   readyForPurchase: boolean
-  canCopy: boolean
   deleted: boolean
   createdBy: string
   projectId: string
   targetId: string
   deletedBy: string | null
+  canCopy: boolean
   _count: ProjectBOMCountAggregateOutputType | null
   _min: ProjectBOMMinAggregateOutputType | null
   _max: ProjectBOMMaxAggregateOutputType | null
@@ -288,12 +288,12 @@ export type ProjectBOMWhereInput = {
   closed?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   materialClosed?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   readyForPurchase?: Prisma.BoolFilter<"ProjectBOM"> | boolean
-  canCopy?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   deleted?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   createdBy?: Prisma.StringFilter<"ProjectBOM"> | string
   projectId?: Prisma.StringFilter<"ProjectBOM"> | string
   targetId?: Prisma.StringFilter<"ProjectBOM"> | string
   deletedBy?: Prisma.StringNullableFilter<"ProjectBOM"> | string | null
+  canCopy?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   Project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   Employee_ProjectBOM_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
@@ -318,12 +318,12 @@ export type ProjectBOMOrderByWithRelationInput = {
   closed?: Prisma.SortOrder
   materialClosed?: Prisma.SortOrder
   readyForPurchase?: Prisma.SortOrder
-  canCopy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  canCopy?: Prisma.SortOrder
   Project?: Prisma.ProjectOrderByWithRelationInput
   Employee_ProjectBOM_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
@@ -352,12 +352,12 @@ export type ProjectBOMWhereUniqueInput = Prisma.AtLeast<{
   closed?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   materialClosed?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   readyForPurchase?: Prisma.BoolFilter<"ProjectBOM"> | boolean
-  canCopy?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   deleted?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   createdBy?: Prisma.StringFilter<"ProjectBOM"> | string
   projectId?: Prisma.StringFilter<"ProjectBOM"> | string
   targetId?: Prisma.StringFilter<"ProjectBOM"> | string
   deletedBy?: Prisma.StringNullableFilter<"ProjectBOM"> | string | null
+  canCopy?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   Project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   Employee_ProjectBOM_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
@@ -382,12 +382,12 @@ export type ProjectBOMOrderByWithAggregationInput = {
   closed?: Prisma.SortOrder
   materialClosed?: Prisma.SortOrder
   readyForPurchase?: Prisma.SortOrder
-  canCopy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  canCopy?: Prisma.SortOrder
   _count?: Prisma.ProjectBOMCountOrderByAggregateInput
   _max?: Prisma.ProjectBOMMaxOrderByAggregateInput
   _min?: Prisma.ProjectBOMMinOrderByAggregateInput
@@ -410,12 +410,12 @@ export type ProjectBOMScalarWhereWithAggregatesInput = {
   closed?: Prisma.BoolWithAggregatesFilter<"ProjectBOM"> | boolean
   materialClosed?: Prisma.BoolWithAggregatesFilter<"ProjectBOM"> | boolean
   readyForPurchase?: Prisma.BoolWithAggregatesFilter<"ProjectBOM"> | boolean
-  canCopy?: Prisma.BoolWithAggregatesFilter<"ProjectBOM"> | boolean
   deleted?: Prisma.BoolWithAggregatesFilter<"ProjectBOM"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"ProjectBOM"> | string
   projectId?: Prisma.StringWithAggregatesFilter<"ProjectBOM"> | string
   targetId?: Prisma.StringWithAggregatesFilter<"ProjectBOM"> | string
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"ProjectBOM"> | string | null
+  canCopy?: Prisma.BoolWithAggregatesFilter<"ProjectBOM"> | boolean
 }
 
 export type ProjectBOMCreateInput = {
@@ -431,8 +431,8 @@ export type ProjectBOMCreateInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
+  canCopy?: boolean
   Project: Prisma.ProjectCreateNestedOneWithoutProjectBOMInput
   Employee_ProjectBOM_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_createdByToEmployeeInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeInput
@@ -457,12 +457,12 @@ export type ProjectBOMUncheckedCreateInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectBOMInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedOneWithoutProjectBOMInput
@@ -481,8 +481,8 @@ export type ProjectBOMUpdateInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectBOMNestedInput
   Employee_ProjectBOM_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOM_ProjectBOM_createdByToEmployeeNestedInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeNestedInput
@@ -507,12 +507,12 @@ export type ProjectBOMUncheckedUpdateInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectBOMNestedInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateOneWithoutProjectBOMNestedInput
@@ -532,12 +532,12 @@ export type ProjectBOMCreateManyInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
 }
 
 export type ProjectBOMUpdateManyMutationInput = {
@@ -553,8 +553,8 @@ export type ProjectBOMUpdateManyMutationInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ProjectBOMUncheckedUpdateManyInput = {
@@ -571,12 +571,12 @@ export type ProjectBOMUncheckedUpdateManyInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ProjectBOMListRelationFilter = {
@@ -614,12 +614,12 @@ export type ProjectBOMCountOrderByAggregateInput = {
   closed?: Prisma.SortOrder
   materialClosed?: Prisma.SortOrder
   readyForPurchase?: Prisma.SortOrder
-  canCopy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  canCopy?: Prisma.SortOrder
 }
 
 export type ProjectBOMMaxOrderByAggregateInput = {
@@ -636,12 +636,12 @@ export type ProjectBOMMaxOrderByAggregateInput = {
   closed?: Prisma.SortOrder
   materialClosed?: Prisma.SortOrder
   readyForPurchase?: Prisma.SortOrder
-  canCopy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  canCopy?: Prisma.SortOrder
 }
 
 export type ProjectBOMMinOrderByAggregateInput = {
@@ -658,12 +658,12 @@ export type ProjectBOMMinOrderByAggregateInput = {
   closed?: Prisma.SortOrder
   materialClosed?: Prisma.SortOrder
   readyForPurchase?: Prisma.SortOrder
-  canCopy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  canCopy?: Prisma.SortOrder
 }
 
 export type ProjectBOMScalarRelationFilter = {
@@ -938,8 +938,8 @@ export type ProjectBOMCreateWithoutEmployee_ProjectBOM_createdByToEmployeeInput 
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
+  canCopy?: boolean
   Project: Prisma.ProjectCreateNestedOneWithoutProjectBOMInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeInput
   ProjectBOM?: Prisma.ProjectBOMCreateNestedOneWithoutOther_ProjectBOMInput
@@ -963,11 +963,11 @@ export type ProjectBOMUncheckedCreateWithoutEmployee_ProjectBOM_createdByToEmplo
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   projectId: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectBOMInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedOneWithoutProjectBOMInput
@@ -996,8 +996,8 @@ export type ProjectBOMCreateWithoutEmployee_ProjectBOM_deletedByToEmployeeInput 
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
+  canCopy?: boolean
   Project: Prisma.ProjectCreateNestedOneWithoutProjectBOMInput
   Employee_ProjectBOM_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_createdByToEmployeeInput
   ProjectBOM?: Prisma.ProjectBOMCreateNestedOneWithoutOther_ProjectBOMInput
@@ -1021,11 +1021,11 @@ export type ProjectBOMUncheckedCreateWithoutEmployee_ProjectBOM_deletedByToEmplo
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   targetId: string
+  canCopy?: boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectBOMInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedOneWithoutProjectBOMInput
@@ -1074,12 +1074,12 @@ export type ProjectBOMScalarWhereInput = {
   closed?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   materialClosed?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   readyForPurchase?: Prisma.BoolFilter<"ProjectBOM"> | boolean
-  canCopy?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   deleted?: Prisma.BoolFilter<"ProjectBOM"> | boolean
   createdBy?: Prisma.StringFilter<"ProjectBOM"> | string
   projectId?: Prisma.StringFilter<"ProjectBOM"> | string
   targetId?: Prisma.StringFilter<"ProjectBOM"> | string
   deletedBy?: Prisma.StringNullableFilter<"ProjectBOM"> | string | null
+  canCopy?: Prisma.BoolFilter<"ProjectBOM"> | boolean
 }
 
 export type ProjectBOMUpsertWithWhereUniqueWithoutEmployee_ProjectBOM_deletedByToEmployeeInput = {
@@ -1111,8 +1111,8 @@ export type ProjectBOMCreateWithoutProjectInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
+  canCopy?: boolean
   Employee_ProjectBOM_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_createdByToEmployeeInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeInput
   ProjectBOM?: Prisma.ProjectBOMCreateNestedOneWithoutOther_ProjectBOMInput
@@ -1136,11 +1136,11 @@ export type ProjectBOMUncheckedCreateWithoutProjectInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectBOMInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedOneWithoutProjectBOMInput
@@ -1185,8 +1185,8 @@ export type ProjectBOMCreateWithoutTargetInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
+  canCopy?: boolean
   Project: Prisma.ProjectCreateNestedOneWithoutProjectBOMInput
   Employee_ProjectBOM_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_createdByToEmployeeInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeInput
@@ -1210,11 +1210,11 @@ export type ProjectBOMUncheckedCreateWithoutTargetInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   deletedBy?: string | null
+  canCopy?: boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectBOMInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedOneWithoutProjectBOMInput
@@ -1259,8 +1259,8 @@ export type ProjectBOMCreateWithoutOther_ProjectBOMInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
+  canCopy?: boolean
   Project: Prisma.ProjectCreateNestedOneWithoutProjectBOMInput
   Employee_ProjectBOM_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_createdByToEmployeeInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeInput
@@ -1284,12 +1284,12 @@ export type ProjectBOMUncheckedCreateWithoutOther_ProjectBOMInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedOneWithoutProjectBOMInput
 }
@@ -1312,8 +1312,8 @@ export type ProjectBOMCreateWithoutProjectBOMInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
+  canCopy?: boolean
   Project: Prisma.ProjectCreateNestedOneWithoutProjectBOMInput
   Employee_ProjectBOM_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_createdByToEmployeeInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeInput
@@ -1336,12 +1336,12 @@ export type ProjectBOMUncheckedCreateWithoutProjectBOMInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectBOMInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedOneWithoutProjectBOMInput
@@ -1381,8 +1381,8 @@ export type ProjectBOMUpdateWithoutOther_ProjectBOMInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectBOMNestedInput
   Employee_ProjectBOM_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOM_ProjectBOM_createdByToEmployeeNestedInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeNestedInput
@@ -1406,12 +1406,12 @@ export type ProjectBOMUncheckedUpdateWithoutOther_ProjectBOMInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateOneWithoutProjectBOMNestedInput
 }
@@ -1445,8 +1445,8 @@ export type ProjectBOMCreateWithoutProjectBOMStructureInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
+  canCopy?: boolean
   Project: Prisma.ProjectCreateNestedOneWithoutProjectBOMInput
   Employee_ProjectBOM_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_createdByToEmployeeInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeInput
@@ -1470,12 +1470,12 @@ export type ProjectBOMUncheckedCreateWithoutProjectBOMStructureInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectBOMInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedOneWithoutProjectBOMInput
 }
@@ -1509,8 +1509,8 @@ export type ProjectBOMUpdateWithoutProjectBOMStructureInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectBOMNestedInput
   Employee_ProjectBOM_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOM_ProjectBOM_createdByToEmployeeNestedInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeNestedInput
@@ -1534,12 +1534,12 @@ export type ProjectBOMUncheckedUpdateWithoutProjectBOMStructureInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectBOMNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateOneWithoutProjectBOMNestedInput
 }
@@ -1557,8 +1557,8 @@ export type ProjectBOMCreateWithoutPurchaseBOMInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
+  canCopy?: boolean
   Project: Prisma.ProjectCreateNestedOneWithoutProjectBOMInput
   Employee_ProjectBOM_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_createdByToEmployeeInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeInput
@@ -1582,12 +1582,12 @@ export type ProjectBOMUncheckedCreateWithoutPurchaseBOMInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectBOMInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedCreateNestedManyWithoutProjectBOMInput
 }
@@ -1621,8 +1621,8 @@ export type ProjectBOMUpdateWithoutPurchaseBOMInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectBOMNestedInput
   Employee_ProjectBOM_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOM_ProjectBOM_createdByToEmployeeNestedInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeNestedInput
@@ -1646,12 +1646,12 @@ export type ProjectBOMUncheckedUpdateWithoutPurchaseBOMInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectBOMNestedInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMNestedInput
 }
@@ -1670,11 +1670,11 @@ export type ProjectBOMCreateManyEmployee_ProjectBOM_createdByToEmployeeInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   projectId: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
 }
 
 export type ProjectBOMCreateManyEmployee_ProjectBOM_deletedByToEmployeeInput = {
@@ -1691,11 +1691,11 @@ export type ProjectBOMCreateManyEmployee_ProjectBOM_deletedByToEmployeeInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   targetId: string
+  canCopy?: boolean
 }
 
 export type ProjectBOMUpdateWithoutEmployee_ProjectBOM_createdByToEmployeeInput = {
@@ -1711,8 +1711,8 @@ export type ProjectBOMUpdateWithoutEmployee_ProjectBOM_createdByToEmployeeInput 
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectBOMNestedInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneWithoutOther_ProjectBOMNestedInput
@@ -1736,11 +1736,11 @@ export type ProjectBOMUncheckedUpdateWithoutEmployee_ProjectBOM_createdByToEmplo
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectBOMNestedInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateOneWithoutProjectBOMNestedInput
@@ -1760,11 +1760,11 @@ export type ProjectBOMUncheckedUpdateManyWithoutEmployee_ProjectBOM_createdByToE
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ProjectBOMUpdateWithoutEmployee_ProjectBOM_deletedByToEmployeeInput = {
@@ -1780,8 +1780,8 @@ export type ProjectBOMUpdateWithoutEmployee_ProjectBOM_deletedByToEmployeeInput 
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectBOMNestedInput
   Employee_ProjectBOM_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOM_ProjectBOM_createdByToEmployeeNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneWithoutOther_ProjectBOMNestedInput
@@ -1805,11 +1805,11 @@ export type ProjectBOMUncheckedUpdateWithoutEmployee_ProjectBOM_deletedByToEmplo
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectBOMNestedInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateOneWithoutProjectBOMNestedInput
@@ -1829,11 +1829,11 @@ export type ProjectBOMUncheckedUpdateManyWithoutEmployee_ProjectBOM_deletedByToE
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ProjectBOMCreateManyProjectInput = {
@@ -1850,11 +1850,11 @@ export type ProjectBOMCreateManyProjectInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
 }
 
 export type ProjectBOMUpdateWithoutProjectInput = {
@@ -1870,8 +1870,8 @@ export type ProjectBOMUpdateWithoutProjectInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Employee_ProjectBOM_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOM_ProjectBOM_createdByToEmployeeNestedInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeNestedInput
   ProjectBOM?: Prisma.ProjectBOMUpdateOneWithoutOther_ProjectBOMNestedInput
@@ -1895,11 +1895,11 @@ export type ProjectBOMUncheckedUpdateWithoutProjectInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectBOMNestedInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateOneWithoutProjectBOMNestedInput
@@ -1919,11 +1919,11 @@ export type ProjectBOMUncheckedUpdateManyWithoutProjectInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ProjectBOMCreateManyTargetInput = {
@@ -1940,11 +1940,11 @@ export type ProjectBOMCreateManyTargetInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   deletedBy?: string | null
+  canCopy?: boolean
 }
 
 export type ProjectBOMUpdateWithoutTargetInput = {
@@ -1960,8 +1960,8 @@ export type ProjectBOMUpdateWithoutTargetInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectBOMNestedInput
   Employee_ProjectBOM_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOM_ProjectBOM_createdByToEmployeeNestedInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeNestedInput
@@ -1985,11 +1985,11 @@ export type ProjectBOMUncheckedUpdateWithoutTargetInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectBOMNestedInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateOneWithoutProjectBOMNestedInput
@@ -2009,11 +2009,11 @@ export type ProjectBOMUncheckedUpdateManyWithoutTargetInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ProjectBOMCreateManyProjectBOMInput = {
@@ -2029,12 +2029,12 @@ export type ProjectBOMCreateManyProjectBOMInput = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy: string
   projectId: string
   targetId: string
   deletedBy?: string | null
+  canCopy?: boolean
 }
 
 export type ProjectBOMUpdateWithoutProjectBOMInput = {
@@ -2050,8 +2050,8 @@ export type ProjectBOMUpdateWithoutProjectBOMInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectBOMNestedInput
   Employee_ProjectBOM_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectBOM_ProjectBOM_createdByToEmployeeNestedInput
   Employee_ProjectBOM_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectBOM_ProjectBOM_deletedByToEmployeeNestedInput
@@ -2074,12 +2074,12 @@ export type ProjectBOMUncheckedUpdateWithoutProjectBOMInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   other_ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectBOMNestedInput
   ProjectBOMStructure?: Prisma.ProjectBOMStructureUncheckedUpdateManyWithoutProjectBOMNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateOneWithoutProjectBOMNestedInput
@@ -2098,12 +2098,12 @@ export type ProjectBOMUncheckedUpdateManyWithoutProjectBOMInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   readyForPurchase?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -2160,12 +2160,12 @@ export type ProjectBOMSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy?: boolean
   projectId?: boolean
   targetId?: boolean
   deletedBy?: boolean
+  canCopy?: boolean
   Project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   Employee_ProjectBOM_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_ProjectBOM_deletedByToEmployee?: boolean | Prisma.ProjectBOM$Employee_ProjectBOM_deletedByToEmployeeArgs<ExtArgs>
@@ -2193,15 +2193,15 @@ export type ProjectBOMSelectScalar = {
   closed?: boolean
   materialClosed?: boolean
   readyForPurchase?: boolean
-  canCopy?: boolean
   deleted?: boolean
   createdBy?: boolean
   projectId?: boolean
   targetId?: boolean
   deletedBy?: boolean
+  canCopy?: boolean
 }
 
-export type ProjectBOMOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectBomNumber" | "projectBomId" | "additionalInfo" | "description" | "shortDescription" | "startDate" | "endDate" | "createdAt" | "deletedAt" | "closed" | "materialClosed" | "readyForPurchase" | "canCopy" | "deleted" | "createdBy" | "projectId" | "targetId" | "deletedBy", ExtArgs["result"]["projectBOM"]>
+export type ProjectBOMOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectBomNumber" | "projectBomId" | "additionalInfo" | "description" | "shortDescription" | "startDate" | "endDate" | "createdAt" | "deletedAt" | "closed" | "materialClosed" | "readyForPurchase" | "deleted" | "createdBy" | "projectId" | "targetId" | "deletedBy" | "canCopy", ExtArgs["result"]["projectBOM"]>
 export type ProjectBOMInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   Employee_ProjectBOM_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -2240,12 +2240,12 @@ export type $ProjectBOMPayload<ExtArgs extends runtime.Types.Extensions.Internal
     closed: boolean
     materialClosed: boolean
     readyForPurchase: boolean
-    canCopy: boolean
     deleted: boolean
     createdBy: string
     projectId: string
     targetId: string
     deletedBy: string | null
+    canCopy: boolean
   }, ExtArgs["result"]["projectBOM"]>
   composites: {}
 }
@@ -2636,12 +2636,12 @@ export interface ProjectBOMFieldRefs {
   readonly closed: Prisma.FieldRef<"ProjectBOM", 'Boolean'>
   readonly materialClosed: Prisma.FieldRef<"ProjectBOM", 'Boolean'>
   readonly readyForPurchase: Prisma.FieldRef<"ProjectBOM", 'Boolean'>
-  readonly canCopy: Prisma.FieldRef<"ProjectBOM", 'Boolean'>
   readonly deleted: Prisma.FieldRef<"ProjectBOM", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"ProjectBOM", 'String'>
   readonly projectId: Prisma.FieldRef<"ProjectBOM", 'String'>
   readonly targetId: Prisma.FieldRef<"ProjectBOM", 'String'>
   readonly deletedBy: Prisma.FieldRef<"ProjectBOM", 'String'>
+  readonly canCopy: Prisma.FieldRef<"ProjectBOM", 'Boolean'>
 }
     
 

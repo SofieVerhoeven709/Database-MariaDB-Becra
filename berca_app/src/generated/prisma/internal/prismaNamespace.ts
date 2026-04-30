@@ -9179,6 +9179,9 @@ export const EmployeeScalarFieldEnum = {
   createdBy: 'createdBy',
   titleId: 'titleId',
   pictureId: 'pictureId',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy',
   photoFileId: 'photoFileId',
   bankAccountNumber: 'bankAccountNumber',
   rrn: 'rrn',
@@ -9200,10 +9203,7 @@ export const EmployeeScalarFieldEnum = {
   laptop: 'laptop',
   fixedExpenseAllowance: 'fixedExpenseAllowance',
   homeWorkInternetAllowance: 'homeWorkInternetAllowance',
-  extraLegalBenefits: 'extraLegalBenefits',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  extraLegalBenefits: 'extraLegalBenefits'
 } as const
 
 export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
@@ -9545,8 +9545,7 @@ export const MaterialScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  targetId: 'targetId',
-  bePartDoc: 'bePartDoc'
+  targetId: 'targetId'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -9759,6 +9758,7 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -10742,12 +10742,12 @@ export const ProjectBOMScalarFieldEnum = {
   closed: 'closed',
   materialClosed: 'materialClosed',
   readyForPurchase: 'readyForPurchase',
-  canCopy: 'canCopy',
   deleted: 'deleted',
   createdBy: 'createdBy',
   projectId: 'projectId',
   targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  canCopy: 'canCopy'
 } as const
 
 export type ProjectBOMScalarFieldEnum = (typeof ProjectBOMScalarFieldEnum)[keyof typeof ProjectBOMScalarFieldEnum]
@@ -11372,6 +11372,7 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   createdBy: 'createdBy',
   titleId: 'titleId',
   pictureId: 'pictureId',
+  deletedBy: 'deletedBy',
   photoFileId: 'photoFileId',
   bankAccountNumber: 'bankAccountNumber',
   rrn: 'rrn',
@@ -11381,8 +11382,7 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   contractDuration: 'contractDuration',
   grossSalary: 'grossSalary',
   companyCarDescription: 'companyCarDescription',
-  extraLegalBenefits: 'extraLegalBenefits',
-  deletedBy: 'deletedBy'
+  extraLegalBenefits: 'extraLegalBenefits'
 } as const
 
 export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
@@ -11621,8 +11621,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   unitId: 'unitId',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy',
-  targetId: 'targetId',
-  bePartDoc: 'bePartDoc'
+  targetId: 'targetId'
 } as const
 
 export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
@@ -11796,6 +11795,7 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',

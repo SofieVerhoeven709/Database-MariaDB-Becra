@@ -198,8 +198,8 @@ export type EmployeeBenefitOptionWhereInput = {
   deleted?: Prisma.BoolFilter<"EmployeeBenefitOption"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"EmployeeBenefitOption"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"EmployeeBenefitOption"> | string | null
-  Employee_EmployeeBenefitOption_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_EmployeeBenefitOption_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_EmployeeBenefitOption_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
 export type EmployeeBenefitOptionOrderByWithRelationInput = {
@@ -210,8 +210,8 @@ export type EmployeeBenefitOptionOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  Employee_EmployeeBenefitOption_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_EmployeeBenefitOption_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_EmployeeBenefitOption_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.EmployeeBenefitOptionOrderByRelevanceInput
 }
 
@@ -226,8 +226,8 @@ export type EmployeeBenefitOptionWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"EmployeeBenefitOption"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"EmployeeBenefitOption"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"EmployeeBenefitOption"> | string | null
-  Employee_EmployeeBenefitOption_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_EmployeeBenefitOption_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_EmployeeBenefitOption_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
 export type EmployeeBenefitOptionOrderByWithAggregationInput = {
@@ -262,8 +262,8 @@ export type EmployeeBenefitOptionCreateInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Employee_EmployeeBenefitOption_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutEmployeeBenefitOption_EmployeeBenefitOption_createdByToEmployeeInput
   Employee_EmployeeBenefitOption_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutEmployeeBenefitOption_EmployeeBenefitOption_deletedByToEmployeeInput
+  Employee_EmployeeBenefitOption_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutEmployeeBenefitOption_EmployeeBenefitOption_createdByToEmployeeInput
 }
 
 export type EmployeeBenefitOptionUncheckedCreateInput = {
@@ -282,8 +282,8 @@ export type EmployeeBenefitOptionUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_EmployeeBenefitOption_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutEmployeeBenefitOption_EmployeeBenefitOption_createdByToEmployeeNestedInput
   Employee_EmployeeBenefitOption_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutEmployeeBenefitOption_EmployeeBenefitOption_deletedByToEmployeeNestedInput
+  Employee_EmployeeBenefitOption_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutEmployeeBenefitOption_EmployeeBenefitOption_createdByToEmployeeNestedInput
 }
 
 export type EmployeeBenefitOptionUncheckedUpdateInput = {
@@ -370,13 +370,6 @@ export type EmployeeBenefitOptionMinOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
-export type EmployeeBenefitOptionCreateNestedManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
-  create?: Prisma.XOR<Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput> | Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[] | Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
-  connectOrCreate?: Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
-  createMany?: Prisma.EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInputEnvelope
-  connect?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
-}
-
 export type EmployeeBenefitOptionCreateNestedManyWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput> | Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput[] | Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput[]
   connectOrCreate?: Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput | Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput[]
@@ -384,7 +377,7 @@ export type EmployeeBenefitOptionCreateNestedManyWithoutEmployee_EmployeeBenefit
   connect?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
 }
 
-export type EmployeeBenefitOptionUncheckedCreateNestedManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+export type EmployeeBenefitOptionCreateNestedManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput> | Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[] | Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
   createMany?: Prisma.EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInputEnvelope
@@ -398,18 +391,11 @@ export type EmployeeBenefitOptionUncheckedCreateNestedManyWithoutEmployee_Employ
   connect?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
 }
 
-export type EmployeeBenefitOptionUpdateManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeNestedInput = {
+export type EmployeeBenefitOptionUncheckedCreateNestedManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput> | Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[] | Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
-  upsert?: Prisma.EmployeeBenefitOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
   createMany?: Prisma.EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInputEnvelope
-  set?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
-  disconnect?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
-  delete?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
   connect?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
-  update?: Prisma.EmployeeBenefitOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
-  updateMany?: Prisma.EmployeeBenefitOptionUpdateManyWithWhereWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionUpdateManyWithWhereWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
-  deleteMany?: Prisma.EmployeeBenefitOptionScalarWhereInput | Prisma.EmployeeBenefitOptionScalarWhereInput[]
 }
 
 export type EmployeeBenefitOptionUpdateManyWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeNestedInput = {
@@ -426,7 +412,7 @@ export type EmployeeBenefitOptionUpdateManyWithoutEmployee_EmployeeBenefitOption
   deleteMany?: Prisma.EmployeeBenefitOptionScalarWhereInput | Prisma.EmployeeBenefitOptionScalarWhereInput[]
 }
 
-export type EmployeeBenefitOptionUncheckedUpdateManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeNestedInput = {
+export type EmployeeBenefitOptionUpdateManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput> | Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[] | Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
   upsert?: Prisma.EmployeeBenefitOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
@@ -454,32 +440,18 @@ export type EmployeeBenefitOptionUncheckedUpdateManyWithoutEmployee_EmployeeBene
   deleteMany?: Prisma.EmployeeBenefitOptionScalarWhereInput | Prisma.EmployeeBenefitOptionScalarWhereInput[]
 }
 
-export type EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
-  id: string
-  name?: string | null
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Employee_EmployeeBenefitOption_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutEmployeeBenefitOption_EmployeeBenefitOption_deletedByToEmployeeInput
-}
-
-export type EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
-  id: string
-  name?: string | null
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-}
-
-export type EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
-  where: Prisma.EmployeeBenefitOptionWhereUniqueInput
-  create: Prisma.XOR<Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput>
-}
-
-export type EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInputEnvelope = {
-  data: Prisma.EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
-  skipDuplicates?: boolean
+export type EmployeeBenefitOptionUncheckedUpdateManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput> | Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[] | Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
+  connectOrCreate?: Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
+  upsert?: Prisma.EmployeeBenefitOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
+  createMany?: Prisma.EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInputEnvelope
+  set?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
+  disconnect?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
+  delete?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
+  connect?: Prisma.EmployeeBenefitOptionWhereUniqueInput | Prisma.EmployeeBenefitOptionWhereUniqueInput[]
+  update?: Prisma.EmployeeBenefitOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
+  updateMany?: Prisma.EmployeeBenefitOptionUpdateManyWithWhereWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionUpdateManyWithWhereWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
+  deleteMany?: Prisma.EmployeeBenefitOptionScalarWhereInput | Prisma.EmployeeBenefitOptionScalarWhereInput[]
 }
 
 export type EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput = {
@@ -510,33 +482,32 @@ export type EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_delete
   skipDuplicates?: boolean
 }
 
-export type EmployeeBenefitOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+export type EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+  id: string
+  name?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee_EmployeeBenefitOption_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutEmployeeBenefitOption_EmployeeBenefitOption_deletedByToEmployeeInput
+}
+
+export type EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+  id: string
+  name?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type EmployeeBenefitOptionCreateOrConnectWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
   where: Prisma.EmployeeBenefitOptionWhereUniqueInput
-  update: Prisma.XOR<Prisma.EmployeeBenefitOptionUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput>
   create: Prisma.XOR<Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput>
 }
 
-export type EmployeeBenefitOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
-  where: Prisma.EmployeeBenefitOptionWhereUniqueInput
-  data: Prisma.XOR<Prisma.EmployeeBenefitOptionUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput>
-}
-
-export type EmployeeBenefitOptionUpdateManyWithWhereWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
-  where: Prisma.EmployeeBenefitOptionScalarWhereInput
-  data: Prisma.XOR<Prisma.EmployeeBenefitOptionUpdateManyMutationInput, Prisma.EmployeeBenefitOptionUncheckedUpdateManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput>
-}
-
-export type EmployeeBenefitOptionScalarWhereInput = {
-  AND?: Prisma.EmployeeBenefitOptionScalarWhereInput | Prisma.EmployeeBenefitOptionScalarWhereInput[]
-  OR?: Prisma.EmployeeBenefitOptionScalarWhereInput[]
-  NOT?: Prisma.EmployeeBenefitOptionScalarWhereInput | Prisma.EmployeeBenefitOptionScalarWhereInput[]
-  id?: Prisma.StringFilter<"EmployeeBenefitOption"> | string
-  name?: Prisma.StringNullableFilter<"EmployeeBenefitOption"> | string | null
-  createdBy?: Prisma.StringFilter<"EmployeeBenefitOption"> | string
-  createdAt?: Prisma.DateTimeFilter<"EmployeeBenefitOption"> | Date | string
-  deleted?: Prisma.BoolFilter<"EmployeeBenefitOption"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"EmployeeBenefitOption"> | Date | string | null
-  deletedBy?: Prisma.StringNullableFilter<"EmployeeBenefitOption"> | string | null
+export type EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInputEnvelope = {
+  data: Prisma.EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInput | Prisma.EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInput[]
+  skipDuplicates?: boolean
 }
 
 export type EmployeeBenefitOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput = {
@@ -555,13 +526,33 @@ export type EmployeeBenefitOptionUpdateManyWithWhereWithoutEmployee_EmployeeBene
   data: Prisma.XOR<Prisma.EmployeeBenefitOptionUpdateManyMutationInput, Prisma.EmployeeBenefitOptionUncheckedUpdateManyWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput>
 }
 
-export type EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
-  id: string
-  name?: string | null
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
+export type EmployeeBenefitOptionScalarWhereInput = {
+  AND?: Prisma.EmployeeBenefitOptionScalarWhereInput | Prisma.EmployeeBenefitOptionScalarWhereInput[]
+  OR?: Prisma.EmployeeBenefitOptionScalarWhereInput[]
+  NOT?: Prisma.EmployeeBenefitOptionScalarWhereInput | Prisma.EmployeeBenefitOptionScalarWhereInput[]
+  id?: Prisma.StringFilter<"EmployeeBenefitOption"> | string
+  name?: Prisma.StringNullableFilter<"EmployeeBenefitOption"> | string | null
+  createdBy?: Prisma.StringFilter<"EmployeeBenefitOption"> | string
+  createdAt?: Prisma.DateTimeFilter<"EmployeeBenefitOption"> | Date | string
+  deleted?: Prisma.BoolFilter<"EmployeeBenefitOption"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"EmployeeBenefitOption"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"EmployeeBenefitOption"> | string | null
+}
+
+export type EmployeeBenefitOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+  where: Prisma.EmployeeBenefitOptionWhereUniqueInput
+  update: Prisma.XOR<Prisma.EmployeeBenefitOptionUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput>
+  create: Prisma.XOR<Prisma.EmployeeBenefitOptionCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedCreateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput>
+}
+
+export type EmployeeBenefitOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+  where: Prisma.EmployeeBenefitOptionWhereUniqueInput
+  data: Prisma.XOR<Prisma.EmployeeBenefitOptionUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput, Prisma.EmployeeBenefitOptionUncheckedUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput>
+}
+
+export type EmployeeBenefitOptionUpdateManyWithWhereWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+  where: Prisma.EmployeeBenefitOptionScalarWhereInput
+  data: Prisma.XOR<Prisma.EmployeeBenefitOptionUpdateManyMutationInput, Prisma.EmployeeBenefitOptionUncheckedUpdateManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput>
 }
 
 export type EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_deletedByToEmployeeInput = {
@@ -573,31 +564,13 @@ export type EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_delete
   deletedAt?: Date | string | null
 }
 
-export type EmployeeBenefitOptionUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_EmployeeBenefitOption_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutEmployeeBenefitOption_EmployeeBenefitOption_deletedByToEmployeeNestedInput
-}
-
-export type EmployeeBenefitOptionUncheckedUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type EmployeeBenefitOptionUncheckedUpdateManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+export type EmployeeBenefitOptionCreateManyEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+  id: string
+  name?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type EmployeeBenefitOptionUpdateWithoutEmployee_EmployeeBenefitOption_deletedByToEmployeeInput = {
@@ -627,6 +600,33 @@ export type EmployeeBenefitOptionUncheckedUpdateManyWithoutEmployee_EmployeeBene
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
+export type EmployeeBenefitOptionUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee_EmployeeBenefitOption_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutEmployeeBenefitOption_EmployeeBenefitOption_deletedByToEmployeeNestedInput
+}
+
+export type EmployeeBenefitOptionUncheckedUpdateWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type EmployeeBenefitOptionUncheckedUpdateManyWithoutEmployee_EmployeeBenefitOption_createdByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
 
 
 export type EmployeeBenefitOptionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -637,8 +637,8 @@ export type EmployeeBenefitOptionSelect<ExtArgs extends runtime.Types.Extensions
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  Employee_EmployeeBenefitOption_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_EmployeeBenefitOption_deletedByToEmployee?: boolean | Prisma.EmployeeBenefitOption$Employee_EmployeeBenefitOption_deletedByToEmployeeArgs<ExtArgs>
+  Employee_EmployeeBenefitOption_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["employeeBenefitOption"]>
 
 
@@ -655,15 +655,15 @@ export type EmployeeBenefitOptionSelectScalar = {
 
 export type EmployeeBenefitOptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdBy" | "createdAt" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["employeeBenefitOption"]>
 export type EmployeeBenefitOptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Employee_EmployeeBenefitOption_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_EmployeeBenefitOption_deletedByToEmployee?: boolean | Prisma.EmployeeBenefitOption$Employee_EmployeeBenefitOption_deletedByToEmployeeArgs<ExtArgs>
+  Employee_EmployeeBenefitOption_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }
 
 export type $EmployeeBenefitOptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EmployeeBenefitOption"
   objects: {
-    Employee_EmployeeBenefitOption_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_EmployeeBenefitOption_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    Employee_EmployeeBenefitOption_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1013,8 +1013,8 @@ readonly fields: EmployeeBenefitOptionFieldRefs;
  */
 export interface Prisma__EmployeeBenefitOptionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Employee_EmployeeBenefitOption_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_EmployeeBenefitOption_deletedByToEmployee<T extends Prisma.EmployeeBenefitOption$Employee_EmployeeBenefitOption_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeBenefitOption$Employee_EmployeeBenefitOption_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee_EmployeeBenefitOption_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

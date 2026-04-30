@@ -21,6 +21,7 @@ import {
   updatePurchaseAction,
   softDeletePurchaseAction,
   hardDeletePurchaseAction,
+  undeletePurchaseAction, // ← you'll need to add/expose this action
 } from '@/serverFunctions/purchases'
 import {
   createPaymentConditionAction,
@@ -34,6 +35,7 @@ type SortField = 'purchaseNumber' | 'purchaseDate' | 'companyName' | 'quote' | '
 type SortDir = 'asc' | 'desc'
 type StatusFilter = string
 type ConfirmationFilter = 'all' | 'confirmed' | 'not-confirmed'
+type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 
 function isOrderedNotSentStatus(status: string | null | undefined): boolean {
   const normalized = normalizePurchaseStatus(status)
@@ -96,13 +98,13 @@ export function PurchaseTable({
     initialPurchases.forEach(p => {
       if (p.status) statuses.add(p.status)
     })
-    // Stable, de-duplicated list for the status filter dropdown.
     return Array.from(statuses).sort()
   }, [initialPurchases])
 
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [confirmationFilter, setConfirmationFilter] = useState<ConfirmationFilter>('all')
+  const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
   const [sortField, setSortField] = useState<SortField>('purchaseDate')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -113,19 +115,23 @@ export function PurchaseTable({
   const [editingPaymentCondition, setEditingPaymentCondition] = useState<MappedPaymentCondition | null>(null)
   const [prefillHandled, setPrefillHandled] = useState(false)
   const [confirmationCreateFlow, setConfirmationCreateFlow] = useState(false)
+
   const filteredPaymentConditions = paymentConditionRows
     .filter(row => row.name.toLowerCase().includes(paymentSearch.toLowerCase()))
     .sort((a, b) => a.name.localeCompare(b.name))
 
   const filtered = initialPurchases
     .filter(p => {
+      // Deleted filter
+      if (filterDeleted === 'not-deleted' && p.deleted) return false
+      if (filterDeleted === 'deleted' && !p.deleted) return false
+
       if (statusFilter !== 'all' && p.status !== statusFilter) return false
       const hasConfirmation = !!p.bocNumber?.trim()
       if (confirmationFilter === 'confirmed' && !hasConfirmation) return false
       if (confirmationFilter === 'not-confirmed' && hasConfirmation) return false
       if (!search) return true
       const q = search.toLowerCase()
-      // Match against the most common purchase identifiers and labels.
       return (
         (p.purchaseNumber ?? '').toLowerCase().includes(q) ||
         (p.customerPoNumber ?? '').toLowerCase().includes(q) ||
@@ -141,7 +147,6 @@ export function PurchaseTable({
       const dir = sortDir === 'asc' ? 1 : -1
       const cmpStr = (x: string | null | undefined, y: string | null | undefined) =>
         dir * (x ?? '').localeCompare(y ?? '')
-      // Comparator switches on the active column, falling back to 0.
       switch (sortField) {
         case 'purchaseNumber':
           return cmpStr(a.purchaseNumber, b.purchaseNumber)
@@ -162,8 +167,6 @@ export function PurchaseTable({
 
   useEffect(() => {
     if (!prefillPurchase || prefillHandled) return
-
-    // Confirmation is linked to the original purchase order, so update that record.
     setDraftPurchase(null)
     setEditing({
       ...prefillPurchase,
@@ -188,7 +191,6 @@ export function PurchaseTable({
 
   async function handleSave(p: MappedPurchase) {
     const isCreateFlow = !editing
-
     if (editing) {
       await updatePurchaseAction({
         id: p.id,
@@ -246,6 +248,11 @@ export function PurchaseTable({
     router.refresh()
   }
 
+  async function handleUndelete(id: string) {
+    await undeletePurchaseAction({id})
+    router.refresh()
+  }
+
   async function handleSavePaymentCondition(name: string, id?: string) {
     if (id) await updatePaymentConditionAction({id, name})
     else await createPaymentConditionAction({name})
@@ -253,6 +260,9 @@ export function PurchaseTable({
     setEditingPaymentCondition(null)
     router.refresh()
   }
+
+  // How many extra columns are shown when viewing deleted purchases
+  const showDeletedCols = filterDeleted !== 'not-deleted'
 
   return (
     <div className="flex flex-col gap-6">
@@ -274,6 +284,17 @@ export function PurchaseTable({
                   className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
                 />
               </div>
+              {/* Deleted filter – mirrors QuoteSupplierTable */}
+              <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
+                <SelectTrigger className="w-40 bg-secondary border-border">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="not-deleted">Not Deleted</SelectItem>
+                  <SelectItem value="deleted">Deleted Only</SelectItem>
+                  <SelectItem value="all">Show All</SelectItem>
+                </SelectContent>
+              </Select>
               <Select value={statusFilter} onValueChange={v => setStatusFilter(v)}>
                 <SelectTrigger className="w-45 bg-secondary border-border">
                   <SelectValue placeholder="All statuses" />
@@ -317,7 +338,6 @@ export function PurchaseTable({
             </div>
           </div>
 
-          {/* Table */}
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -341,6 +361,13 @@ export function PurchaseTable({
                   <TableHead className={thClass} onClick={() => toggleSort('createdBy')}>
                     Created By <SortIcon field="createdBy" sortField={sortField} sortDir={sortDir} />
                   </TableHead>
+                  {/* Extra columns visible only when viewing deleted records */}
+                  {showDeletedCols && (
+                    <>
+                      <TableHead className="text-xs whitespace-nowrap">Deleted At</TableHead>
+                      <TableHead className="text-xs whitespace-nowrap">Deleted By</TableHead>
+                    </>
+                  )}
                   <TableHead className="w-28">
                     <span className="sr-only">Actions</span>
                   </TableHead>
@@ -349,7 +376,7 @@ export function PurchaseTable({
               <TableBody>
                 {filtered.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={8} className="h-28 text-center text-muted-foreground">
+                    <TableCell colSpan={showDeletedCols ? 10 : 8} className="h-28 text-center text-muted-foreground">
                       No purchase orders match the current filters.
                     </TableCell>
                   </TableRow>
@@ -358,7 +385,6 @@ export function PurchaseTable({
                     const secondaryLabel = purchase.customerPoNumber ?? purchase.paymentConditionName ?? ''
                     const detailHref = `/departments/${departmentId}/orders/${purchase.id}` as Route
                     const isOrderedNotSent = isOrderedNotSentStatus(purchase.status)
-                    // Ordered purchases are locked unless the user meets the manager threshold.
                     const canMutatePurchase = !isOrderedNotSent || canManageOrderedPurchases
                     return (
                       <TableRow
@@ -413,47 +439,81 @@ export function PurchaseTable({
                             <span className="text-[11px] text-muted-foreground">{formatDate(purchase.createdAt)}</span>
                           </div>
                         </TableCell>
+                        {showDeletedCols && (
+                          <>
+                            <TableCell className={tdClass}>{formatDate(purchase.deletedAt)}</TableCell>
+                            <TableCell className={tdClass}>{purchase.deletedByName ?? '—'}</TableCell>
+                          </>
+                        )}
                         <TableCell>
                           <div className="flex items-center gap-1" onClick={e => e.stopPropagation()}>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                              onClick={() => router.push(detailHref)}>
-                              <ExternalLink className="h-3.5 w-3.5" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                              onClick={() =>
-                                router.push(
-                                  `/departments/${departmentId}/purchaseOrdersConfirmation?purchaseId=${purchase.id}` as Route,
-                                )
-                              }>
-                              <Link2 className="h-3.5 w-3.5" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                              disabled={!canMutatePurchase}
-                              onClick={() => {
-                                setDraftPurchase(null)
-                                setConfirmationCreateFlow(false)
-                                setEditing(purchase)
-                                setDialogOpen(true)
-                              }}>
-                              <Pencil className="h-3.5 w-3.5" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                              disabled={!canMutatePurchase}
-                              onClick={() => (isAdmin ? handleHardDelete(purchase.id) : handleSoftDelete(purchase.id))}>
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </Button>
+                            {!purchase.deleted && (
+                              <>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                  onClick={() => router.push(detailHref)}>
+                                  <ExternalLink className="h-3.5 w-3.5" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                  onClick={() =>
+                                    router.push(
+                                      `/departments/${departmentId}/purchaseOrdersConfirmation?purchaseId=${purchase.id}` as Route,
+                                    )
+                                  }>
+                                  <Link2 className="h-3.5 w-3.5" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                  disabled={!canMutatePurchase}
+                                  onClick={() => {
+                                    setDraftPurchase(null)
+                                    setConfirmationCreateFlow(false)
+                                    setEditing(purchase)
+                                    setDialogOpen(true)
+                                  }}>
+                                  <Pencil className="h-3.5 w-3.5" />
+                                </Button>
+                                {canDelete && (
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                    disabled={!canMutatePurchase}
+                                    onClick={() => handleSoftDelete(purchase.id)}>
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                  </Button>
+                                )}
+                              </>
+                            )}
+                            {purchase.deleted && (
+                              <>
+                                {canDelete && (
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                    onClick={() => handleUndelete(purchase.id)}>
+                                    <RotateCcw className="h-3.5 w-3.5" />
+                                  </Button>
+                                )}
+                                {isAdmin && (
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                    onClick={() => handleHardDelete(purchase.id)}>
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                  </Button>
+                                )}
+                              </>
+                            )}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -465,6 +525,7 @@ export function PurchaseTable({
           </div>
         </TabsContent>
 
+        {/* Payment Conditions tab — unchanged */}
         <TabsContent value="payment-conditions" className="mt-4 space-y-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative max-w-sm flex-1">

@@ -49,6 +49,7 @@ export const updateHrPerformanceSettingsAction = protectedServerFunction({
 export const createHrEmployeeOvertimeAction = protectedServerFunction({
   schema: createHrEmployeeOvertimeSchema,
   functionName: 'Create HR employee overtime',
+  globalErrorMessage: 'Overtime could not be saved. Check the employee overtime limit and on-site time registry.',
   serverFn: async ({data, profile, logger}) => {
     const {departmentId, ...overtime} = data
 
@@ -66,6 +67,7 @@ export const createHrEmployeeOvertimeAction = protectedServerFunction({
 export const updateHrEmployeeOvertimeAction = protectedServerFunction({
   schema: updateHrEmployeeOvertimeSchema,
   functionName: 'Update HR employee overtime',
+  globalErrorMessage: 'Overtime could not be saved. Check the employee overtime limit and on-site time registry.',
   serverFn: async ({data, profile, logger}) => {
     const {id, departmentId, ...overtime} = data
 

@@ -7,6 +7,7 @@ type PurchaseWithRelations = Prisma.PurchaseGetPayload<{
     QuoteSupplier: {select: {id: true; quoteNumber: true}}
     PaymentCondition: {select: {id: true; name: true}}
     Employee: {select: {id: true; firstName: true; lastName: true}}
+    Employee_Purchase_deletedByToEmployee: {select: {id: true; firstName: true; lastName: true}}
   }
 }>
 
@@ -54,6 +55,9 @@ export function mapPurchase(p: PurchaseWithRelations): MappedPurchase {
     deleted: purchase.deleted,
     deletedAt: purchase.deletedAt?.toISOString() ?? null,
     deletedBy: purchase.deletedBy,
+    deletedByName: purchase.Employee_Purchase_deletedByToEmployee
+      ? `${purchase.Employee_Purchase_deletedByToEmployee.firstName} ${purchase.Employee_Purchase_deletedByToEmployee.lastName}`
+      : null,
   }
 }
 
@@ -80,9 +84,7 @@ export function mapPurchaseDetail(
     quoteSupplierLineId: d.quoteSupplierLineId,
     materialId: d.materialId,
     // Prefer BE number + name for purchase labels.
-    materialLabel: [d.Material?.beNumber, d.Material?.name]
-      .filter(Boolean)
-      .join(' - '),
+    materialLabel: [d.Material?.beNumber, d.Material?.name].filter(Boolean).join(' - '),
     materialDemandId: d.materialDemandId,
     unitPrice: d.unitPrice?.toString() ?? null,
     quantity: d.quantity ?? 0,

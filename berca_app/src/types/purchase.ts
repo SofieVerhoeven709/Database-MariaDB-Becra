@@ -23,6 +23,7 @@ export interface MappedPurchase {
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
+  deletedByName: string | null
 }
 
 export interface MappedPurchaseDetail {

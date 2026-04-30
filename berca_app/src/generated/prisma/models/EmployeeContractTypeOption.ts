@@ -198,8 +198,8 @@ export type EmployeeContractTypeOptionWhereInput = {
   deleted?: Prisma.BoolFilter<"EmployeeContractTypeOption"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"EmployeeContractTypeOption"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"EmployeeContractTypeOption"> | string | null
-  Employee_EmployeeContractTypeOption_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_EmployeeContractTypeOption_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_EmployeeContractTypeOption_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
 export type EmployeeContractTypeOptionOrderByWithRelationInput = {
@@ -210,8 +210,8 @@ export type EmployeeContractTypeOptionOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  Employee_EmployeeContractTypeOption_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_EmployeeContractTypeOption_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_EmployeeContractTypeOption_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.EmployeeContractTypeOptionOrderByRelevanceInput
 }
 
@@ -226,8 +226,8 @@ export type EmployeeContractTypeOptionWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"EmployeeContractTypeOption"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"EmployeeContractTypeOption"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"EmployeeContractTypeOption"> | string | null
-  Employee_EmployeeContractTypeOption_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_EmployeeContractTypeOption_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_EmployeeContractTypeOption_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
 export type EmployeeContractTypeOptionOrderByWithAggregationInput = {
@@ -262,8 +262,8 @@ export type EmployeeContractTypeOptionCreateInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Employee_EmployeeContractTypeOption_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutEmployeeContractTypeOption_EmployeeContractTypeOption_createdByToEmployeeInput
   Employee_EmployeeContractTypeOption_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutEmployeeContractTypeOption_EmployeeContractTypeOption_deletedByToEmployeeInput
+  Employee_EmployeeContractTypeOption_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutEmployeeContractTypeOption_EmployeeContractTypeOption_createdByToEmployeeInput
 }
 
 export type EmployeeContractTypeOptionUncheckedCreateInput = {
@@ -282,8 +282,8 @@ export type EmployeeContractTypeOptionUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_EmployeeContractTypeOption_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutEmployeeContractTypeOption_EmployeeContractTypeOption_createdByToEmployeeNestedInput
   Employee_EmployeeContractTypeOption_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutEmployeeContractTypeOption_EmployeeContractTypeOption_deletedByToEmployeeNestedInput
+  Employee_EmployeeContractTypeOption_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutEmployeeContractTypeOption_EmployeeContractTypeOption_createdByToEmployeeNestedInput
 }
 
 export type EmployeeContractTypeOptionUncheckedUpdateInput = {
@@ -370,13 +370,6 @@ export type EmployeeContractTypeOptionMinOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
-export type EmployeeContractTypeOptionCreateNestedManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
-  create?: Prisma.XOR<Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput> | Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[] | Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
-  connectOrCreate?: Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
-  createMany?: Prisma.EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInputEnvelope
-  connect?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
-}
-
 export type EmployeeContractTypeOptionCreateNestedManyWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput> | Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput[] | Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput[]
   connectOrCreate?: Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput | Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput[]
@@ -384,7 +377,7 @@ export type EmployeeContractTypeOptionCreateNestedManyWithoutEmployee_EmployeeCo
   connect?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
 }
 
-export type EmployeeContractTypeOptionUncheckedCreateNestedManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+export type EmployeeContractTypeOptionCreateNestedManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput> | Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[] | Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
   createMany?: Prisma.EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInputEnvelope
@@ -398,18 +391,11 @@ export type EmployeeContractTypeOptionUncheckedCreateNestedManyWithoutEmployee_E
   connect?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
 }
 
-export type EmployeeContractTypeOptionUpdateManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeNestedInput = {
+export type EmployeeContractTypeOptionUncheckedCreateNestedManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput> | Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[] | Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
-  upsert?: Prisma.EmployeeContractTypeOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
   createMany?: Prisma.EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInputEnvelope
-  set?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
-  disconnect?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
-  delete?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
   connect?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
-  update?: Prisma.EmployeeContractTypeOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
-  updateMany?: Prisma.EmployeeContractTypeOptionUpdateManyWithWhereWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionUpdateManyWithWhereWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
-  deleteMany?: Prisma.EmployeeContractTypeOptionScalarWhereInput | Prisma.EmployeeContractTypeOptionScalarWhereInput[]
 }
 
 export type EmployeeContractTypeOptionUpdateManyWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeNestedInput = {
@@ -426,7 +412,7 @@ export type EmployeeContractTypeOptionUpdateManyWithoutEmployee_EmployeeContract
   deleteMany?: Prisma.EmployeeContractTypeOptionScalarWhereInput | Prisma.EmployeeContractTypeOptionScalarWhereInput[]
 }
 
-export type EmployeeContractTypeOptionUncheckedUpdateManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeNestedInput = {
+export type EmployeeContractTypeOptionUpdateManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput> | Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[] | Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
   upsert?: Prisma.EmployeeContractTypeOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
@@ -454,32 +440,18 @@ export type EmployeeContractTypeOptionUncheckedUpdateManyWithoutEmployee_Employe
   deleteMany?: Prisma.EmployeeContractTypeOptionScalarWhereInput | Prisma.EmployeeContractTypeOptionScalarWhereInput[]
 }
 
-export type EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
-  id: string
-  name?: string | null
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Employee_EmployeeContractTypeOption_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutEmployeeContractTypeOption_EmployeeContractTypeOption_deletedByToEmployeeInput
-}
-
-export type EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
-  id: string
-  name?: string | null
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-}
-
-export type EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
-  where: Prisma.EmployeeContractTypeOptionWhereUniqueInput
-  create: Prisma.XOR<Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput>
-}
-
-export type EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInputEnvelope = {
-  data: Prisma.EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
-  skipDuplicates?: boolean
+export type EmployeeContractTypeOptionUncheckedUpdateManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput> | Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[] | Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
+  connectOrCreate?: Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
+  upsert?: Prisma.EmployeeContractTypeOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
+  createMany?: Prisma.EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInputEnvelope
+  set?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
+  disconnect?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
+  delete?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
+  connect?: Prisma.EmployeeContractTypeOptionWhereUniqueInput | Prisma.EmployeeContractTypeOptionWhereUniqueInput[]
+  update?: Prisma.EmployeeContractTypeOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
+  updateMany?: Prisma.EmployeeContractTypeOptionUpdateManyWithWhereWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionUpdateManyWithWhereWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
+  deleteMany?: Prisma.EmployeeContractTypeOptionScalarWhereInput | Prisma.EmployeeContractTypeOptionScalarWhereInput[]
 }
 
 export type EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput = {
@@ -510,33 +482,32 @@ export type EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOpt
   skipDuplicates?: boolean
 }
 
-export type EmployeeContractTypeOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+export type EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+  id: string
+  name?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee_EmployeeContractTypeOption_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutEmployeeContractTypeOption_EmployeeContractTypeOption_deletedByToEmployeeInput
+}
+
+export type EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+  id: string
+  name?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type EmployeeContractTypeOptionCreateOrConnectWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
   where: Prisma.EmployeeContractTypeOptionWhereUniqueInput
-  update: Prisma.XOR<Prisma.EmployeeContractTypeOptionUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput>
   create: Prisma.XOR<Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput>
 }
 
-export type EmployeeContractTypeOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
-  where: Prisma.EmployeeContractTypeOptionWhereUniqueInput
-  data: Prisma.XOR<Prisma.EmployeeContractTypeOptionUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput>
-}
-
-export type EmployeeContractTypeOptionUpdateManyWithWhereWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
-  where: Prisma.EmployeeContractTypeOptionScalarWhereInput
-  data: Prisma.XOR<Prisma.EmployeeContractTypeOptionUpdateManyMutationInput, Prisma.EmployeeContractTypeOptionUncheckedUpdateManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput>
-}
-
-export type EmployeeContractTypeOptionScalarWhereInput = {
-  AND?: Prisma.EmployeeContractTypeOptionScalarWhereInput | Prisma.EmployeeContractTypeOptionScalarWhereInput[]
-  OR?: Prisma.EmployeeContractTypeOptionScalarWhereInput[]
-  NOT?: Prisma.EmployeeContractTypeOptionScalarWhereInput | Prisma.EmployeeContractTypeOptionScalarWhereInput[]
-  id?: Prisma.StringFilter<"EmployeeContractTypeOption"> | string
-  name?: Prisma.StringNullableFilter<"EmployeeContractTypeOption"> | string | null
-  createdBy?: Prisma.StringFilter<"EmployeeContractTypeOption"> | string
-  createdAt?: Prisma.DateTimeFilter<"EmployeeContractTypeOption"> | Date | string
-  deleted?: Prisma.BoolFilter<"EmployeeContractTypeOption"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"EmployeeContractTypeOption"> | Date | string | null
-  deletedBy?: Prisma.StringNullableFilter<"EmployeeContractTypeOption"> | string | null
+export type EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInputEnvelope = {
+  data: Prisma.EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInput | Prisma.EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInput[]
+  skipDuplicates?: boolean
 }
 
 export type EmployeeContractTypeOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput = {
@@ -555,13 +526,33 @@ export type EmployeeContractTypeOptionUpdateManyWithWhereWithoutEmployee_Employe
   data: Prisma.XOR<Prisma.EmployeeContractTypeOptionUpdateManyMutationInput, Prisma.EmployeeContractTypeOptionUncheckedUpdateManyWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput>
 }
 
-export type EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
-  id: string
-  name?: string | null
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
+export type EmployeeContractTypeOptionScalarWhereInput = {
+  AND?: Prisma.EmployeeContractTypeOptionScalarWhereInput | Prisma.EmployeeContractTypeOptionScalarWhereInput[]
+  OR?: Prisma.EmployeeContractTypeOptionScalarWhereInput[]
+  NOT?: Prisma.EmployeeContractTypeOptionScalarWhereInput | Prisma.EmployeeContractTypeOptionScalarWhereInput[]
+  id?: Prisma.StringFilter<"EmployeeContractTypeOption"> | string
+  name?: Prisma.StringNullableFilter<"EmployeeContractTypeOption"> | string | null
+  createdBy?: Prisma.StringFilter<"EmployeeContractTypeOption"> | string
+  createdAt?: Prisma.DateTimeFilter<"EmployeeContractTypeOption"> | Date | string
+  deleted?: Prisma.BoolFilter<"EmployeeContractTypeOption"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"EmployeeContractTypeOption"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"EmployeeContractTypeOption"> | string | null
+}
+
+export type EmployeeContractTypeOptionUpsertWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+  where: Prisma.EmployeeContractTypeOptionWhereUniqueInput
+  update: Prisma.XOR<Prisma.EmployeeContractTypeOptionUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput>
+  create: Prisma.XOR<Prisma.EmployeeContractTypeOptionCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedCreateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput>
+}
+
+export type EmployeeContractTypeOptionUpdateWithWhereUniqueWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+  where: Prisma.EmployeeContractTypeOptionWhereUniqueInput
+  data: Prisma.XOR<Prisma.EmployeeContractTypeOptionUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput, Prisma.EmployeeContractTypeOptionUncheckedUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput>
+}
+
+export type EmployeeContractTypeOptionUpdateManyWithWhereWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+  where: Prisma.EmployeeContractTypeOptionScalarWhereInput
+  data: Prisma.XOR<Prisma.EmployeeContractTypeOptionUpdateManyMutationInput, Prisma.EmployeeContractTypeOptionUncheckedUpdateManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput>
 }
 
 export type EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput = {
@@ -573,31 +564,13 @@ export type EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOpt
   deletedAt?: Date | string | null
 }
 
-export type EmployeeContractTypeOptionUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_EmployeeContractTypeOption_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutEmployeeContractTypeOption_EmployeeContractTypeOption_deletedByToEmployeeNestedInput
-}
-
-export type EmployeeContractTypeOptionUncheckedUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type EmployeeContractTypeOptionUncheckedUpdateManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+export type EmployeeContractTypeOptionCreateManyEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+  id: string
+  name?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type EmployeeContractTypeOptionUpdateWithoutEmployee_EmployeeContractTypeOption_deletedByToEmployeeInput = {
@@ -627,6 +600,33 @@ export type EmployeeContractTypeOptionUncheckedUpdateManyWithoutEmployee_Employe
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
+export type EmployeeContractTypeOptionUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee_EmployeeContractTypeOption_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutEmployeeContractTypeOption_EmployeeContractTypeOption_deletedByToEmployeeNestedInput
+}
+
+export type EmployeeContractTypeOptionUncheckedUpdateWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type EmployeeContractTypeOptionUncheckedUpdateManyWithoutEmployee_EmployeeContractTypeOption_createdByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
 
 
 export type EmployeeContractTypeOptionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -637,8 +637,8 @@ export type EmployeeContractTypeOptionSelect<ExtArgs extends runtime.Types.Exten
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  Employee_EmployeeContractTypeOption_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_EmployeeContractTypeOption_deletedByToEmployee?: boolean | Prisma.EmployeeContractTypeOption$Employee_EmployeeContractTypeOption_deletedByToEmployeeArgs<ExtArgs>
+  Employee_EmployeeContractTypeOption_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["employeeContractTypeOption"]>
 
 
@@ -655,15 +655,15 @@ export type EmployeeContractTypeOptionSelectScalar = {
 
 export type EmployeeContractTypeOptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdBy" | "createdAt" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["employeeContractTypeOption"]>
 export type EmployeeContractTypeOptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Employee_EmployeeContractTypeOption_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_EmployeeContractTypeOption_deletedByToEmployee?: boolean | Prisma.EmployeeContractTypeOption$Employee_EmployeeContractTypeOption_deletedByToEmployeeArgs<ExtArgs>
+  Employee_EmployeeContractTypeOption_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }
 
 export type $EmployeeContractTypeOptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EmployeeContractTypeOption"
   objects: {
-    Employee_EmployeeContractTypeOption_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_EmployeeContractTypeOption_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    Employee_EmployeeContractTypeOption_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1013,8 +1013,8 @@ readonly fields: EmployeeContractTypeOptionFieldRefs;
  */
 export interface Prisma__EmployeeContractTypeOptionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Employee_EmployeeContractTypeOption_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_EmployeeContractTypeOption_deletedByToEmployee<T extends Prisma.EmployeeContractTypeOption$Employee_EmployeeContractTypeOption_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeContractTypeOption$Employee_EmployeeContractTypeOption_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee_EmployeeContractTypeOption_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

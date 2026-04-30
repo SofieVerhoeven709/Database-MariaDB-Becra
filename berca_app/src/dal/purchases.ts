@@ -72,9 +72,7 @@ export async function syncPurchaseBOMStructuresForOrderedApprovedPurchase(
     for (const row of byQuoteLine) structureIds.add(row.id)
   }
 
-  const demandIds = purchase.PurchaseDetail.map(detail => detail.materialDemandId).filter(
-    (id): id is string => !!id,
-  )
+  const demandIds = purchase.PurchaseDetail.map(detail => detail.materialDemandId).filter((id): id is string => !!id)
 
   if (demandIds.length > 0) {
     const sources = await db.materialDemandSource.findMany({
@@ -141,10 +139,7 @@ export async function syncPurchaseBOMStructuresForOrderedApprovedPurchase(
   return {updatedCount: result.count, matchedStructureCount: structureIds.size}
 }
 
-export async function syncPurchaseStatusFromFulfilledSources(
-  purchaseId: string,
-  tx?: Prisma.TransactionClient,
-) {
+export async function syncPurchaseStatusFromFulfilledSources(purchaseId: string, tx?: Prisma.TransactionClient) {
   const db = tx ?? prismaClient
 
   const purchase = await db.purchase.findUnique({
@@ -164,7 +159,9 @@ export async function syncPurchaseStatusFromFulfilledSources(
     return {updated: false, status: purchase.status}
   }
 
-  const demandIds = [...new Set(purchase.PurchaseDetail.map(line => line.materialDemandId).filter((id): id is string => !!id))]
+  const demandIds = [
+    ...new Set(purchase.PurchaseDetail.map(line => line.materialDemandId).filter((id): id is string => !!id)),
+  ]
   if (demandIds.length === 0) return {updated: false, status: purchase.status}
 
   // Only non-warehouse demand sources affect the purchase lifecycle here; warehouse place sources are fulfillment context, not receipt progress.
@@ -318,6 +315,7 @@ export async function getPurchases() {
       QuoteSupplier: {select: {id: true, quoteNumber: true}},
       PaymentCondition: {select: {id: true, name: true}},
       Employee: {select: {id: true, firstName: true, lastName: true}},
+      Employee_Purchase_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
     },
   })
 }
@@ -381,4 +379,3 @@ export async function getPurchaseDetailMaterialDemandOptions() {
     orderBy: {createdAt: 'desc'},
   })
 }
-

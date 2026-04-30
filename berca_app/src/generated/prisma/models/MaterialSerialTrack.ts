@@ -400,6 +400,7 @@ export type MaterialSerialTrackWhereInput = {
   deleted?: Prisma.BoolFilter<"MaterialSerialTrack"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"MaterialSerialTrack"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleListRelationFilter
   MaterialMovement?: Prisma.MaterialMovementListRelationFilter
   Company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   MaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
@@ -440,6 +441,7 @@ export type MaterialSerialTrackOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleOrderByRelationAggregateInput
   MaterialMovement?: Prisma.MaterialMovementOrderByRelationAggregateInput
   Company?: Prisma.CompanyOrderByWithRelationInput
   MaterialGroup?: Prisma.MaterialGroupOrderByWithRelationInput
@@ -484,6 +486,7 @@ export type MaterialSerialTrackWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"MaterialSerialTrack"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"MaterialSerialTrack"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleListRelationFilter
   MaterialMovement?: Prisma.MaterialMovementListRelationFilter
   Company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   MaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
@@ -588,6 +591,7 @@ export type MaterialSerialTrackCreateInput = {
   becraCode?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput
   Company?: Prisma.CompanyCreateNestedOneWithoutMaterialSerialTrackInput
   MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackInput
@@ -628,6 +632,7 @@ export type MaterialSerialTrackUncheckedCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
@@ -656,6 +661,7 @@ export type MaterialSerialTrackUpdateInput = {
   becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutMaterialSerialTrackNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackNestedInput
@@ -696,6 +702,7 @@ export type MaterialSerialTrackUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
@@ -1217,6 +1224,22 @@ export type MaterialSerialTrackUpdateOneWithoutWarehousePlaceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialSerialTrackUpdateToOneWithWhereWithoutWarehousePlaceInput, Prisma.MaterialSerialTrackUpdateWithoutWarehousePlaceInput>, Prisma.MaterialSerialTrackUncheckedUpdateWithoutWarehousePlaceInput>
 }
 
+export type MaterialSerialTrackCreateNestedOneWithoutHrFacilityVehicleInput = {
+  create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutHrFacilityVehicleInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutHrFacilityVehicleInput>
+  connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutHrFacilityVehicleInput
+  connect?: Prisma.MaterialSerialTrackWhereUniqueInput
+}
+
+export type MaterialSerialTrackUpdateOneWithoutHrFacilityVehicleNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutHrFacilityVehicleInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutHrFacilityVehicleInput>
+  connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutHrFacilityVehicleInput
+  upsert?: Prisma.MaterialSerialTrackUpsertWithoutHrFacilityVehicleInput
+  disconnect?: Prisma.MaterialSerialTrackWhereInput | boolean
+  delete?: Prisma.MaterialSerialTrackWhereInput | boolean
+  connect?: Prisma.MaterialSerialTrackWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialSerialTrackUpdateToOneWithWhereWithoutHrFacilityVehicleInput, Prisma.MaterialSerialTrackUpdateWithoutHrFacilityVehicleInput>, Prisma.MaterialSerialTrackUncheckedUpdateWithoutHrFacilityVehicleInput>
+}
+
 export type MaterialSerialTrackCreateWithoutCompanyInput = {
   id: string
   beNumber?: string | null
@@ -1240,6 +1263,7 @@ export type MaterialSerialTrackCreateWithoutCompanyInput = {
   becraCode?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackInput
   Project?: Prisma.ProjectCreateNestedOneWithoutMaterialSerialTrackInput
@@ -1278,6 +1302,7 @@ export type MaterialSerialTrackUncheckedCreateWithoutCompanyInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
@@ -1366,6 +1391,7 @@ export type MaterialSerialTrackCreateWithoutEmployeeInput = {
   becraCode?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput
   Company?: Prisma.CompanyCreateNestedOneWithoutMaterialSerialTrackInput
   MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackInput
@@ -1404,6 +1430,7 @@ export type MaterialSerialTrackUncheckedCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
@@ -1442,6 +1469,7 @@ export type MaterialSerialTrackCreateWithoutEmployee_MaterialSerialTrack_deleted
   becraCode?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput
   Company?: Prisma.CompanyCreateNestedOneWithoutMaterialSerialTrackInput
   MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackInput
@@ -1480,6 +1508,7 @@ export type MaterialSerialTrackUncheckedCreateWithoutEmployee_MaterialSerialTrac
   createdBy?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
@@ -1550,6 +1579,7 @@ export type MaterialSerialTrackCreateWithoutMaterialInput = {
   becraCode?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput
   Company?: Prisma.CompanyCreateNestedOneWithoutMaterialSerialTrackInput
   MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackInput
@@ -1588,6 +1618,7 @@ export type MaterialSerialTrackUncheckedCreateWithoutMaterialInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
@@ -1642,6 +1673,7 @@ export type MaterialSerialTrackCreateWithoutMaterialGroupInput = {
   becraCode?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput
   Company?: Prisma.CompanyCreateNestedOneWithoutMaterialSerialTrackInput
   Project?: Prisma.ProjectCreateNestedOneWithoutMaterialSerialTrackInput
@@ -1680,6 +1712,7 @@ export type MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
@@ -1734,6 +1767,7 @@ export type MaterialSerialTrackCreateWithoutMaterialMovementInput = {
   becraCode?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleCreateNestedManyWithoutMaterialSerialTrackInput
   Company?: Prisma.CompanyCreateNestedOneWithoutMaterialSerialTrackInput
   MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackInput
   Project?: Prisma.ProjectCreateNestedOneWithoutMaterialSerialTrackInput
@@ -1773,6 +1807,7 @@ export type MaterialSerialTrackUncheckedCreateWithoutMaterialMovementInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
 }
@@ -1816,6 +1851,7 @@ export type MaterialSerialTrackUpdateWithoutMaterialMovementInput = {
   becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUpdateManyWithoutMaterialSerialTrackNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutMaterialSerialTrackNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackNestedInput
   Project?: Prisma.ProjectUpdateOneWithoutMaterialSerialTrackNestedInput
@@ -1855,6 +1891,7 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialMovementInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
 }
@@ -1882,6 +1919,7 @@ export type MaterialSerialTrackCreateWithoutMaterialSerialTrackedStructureInput 
   becraCode?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput
   Company?: Prisma.CompanyCreateNestedOneWithoutMaterialSerialTrackInput
   MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackInput
@@ -1921,6 +1959,7 @@ export type MaterialSerialTrackUncheckedCreateWithoutMaterialSerialTrackedStruct
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
 }
@@ -1964,6 +2003,7 @@ export type MaterialSerialTrackUpdateWithoutMaterialSerialTrackedStructureInput 
   becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutMaterialSerialTrackNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackNestedInput
@@ -2003,6 +2043,7 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialSerialTrackedStruct
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
 }
@@ -2030,6 +2071,7 @@ export type MaterialSerialTrackCreateWithoutProjectInput = {
   becraCode?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput
   Company?: Prisma.CompanyCreateNestedOneWithoutMaterialSerialTrackInput
   MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackInput
@@ -2068,6 +2110,7 @@ export type MaterialSerialTrackUncheckedCreateWithoutProjectInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
@@ -2122,6 +2165,7 @@ export type MaterialSerialTrackCreateWithoutWarehousePlaceInput = {
   becraCode?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput
   Company?: Prisma.CompanyCreateNestedOneWithoutMaterialSerialTrackInput
   MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackInput
@@ -2161,6 +2205,7 @@ export type MaterialSerialTrackUncheckedCreateWithoutWarehousePlaceInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
 }
@@ -2204,6 +2249,7 @@ export type MaterialSerialTrackUpdateWithoutWarehousePlaceInput = {
   becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutMaterialSerialTrackNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackNestedInput
@@ -2243,8 +2289,161 @@ export type MaterialSerialTrackUncheckedUpdateWithoutWarehousePlaceInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
+}
+
+export type MaterialSerialTrackCreateWithoutHrFacilityVehicleInput = {
+  id: string
+  beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
+  brandName?: string | null
+  management?: string | null
+  brandOrderNumber?: string | null
+  orderNumber?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  transactionType?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  updatedAt?: Date | string | null
+  preferredSupplier?: string | null
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  becraCode?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput
+  Company?: Prisma.CompanyCreateNestedOneWithoutMaterialSerialTrackInput
+  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackInput
+  Project?: Prisma.ProjectCreateNestedOneWithoutMaterialSerialTrackInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackInput
+  material?: Prisma.MaterialCreateNestedOneWithoutMaterialSerialTrackInput
+  Employee_MaterialSerialTrack_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrack_MaterialSerialTrack_deletedByToEmployeeInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialSerialTrackInput
+  WarehousePlace?: Prisma.WarehousePlaceCreateNestedManyWithoutMaterialSerialTrackInput
+}
+
+export type MaterialSerialTrackUncheckedCreateWithoutHrFacilityVehicleInput = {
+  id: string
+  materialId?: string | null
+  beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
+  brandName?: string | null
+  management?: string | null
+  brandOrderNumber?: string | null
+  companyId?: string | null
+  orderNumber?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  transactionType?: string | null
+  materialGroupId?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  updatedAt?: Date | string | null
+  preferredSupplier?: string | null
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  projectId?: string | null
+  becraCode?: string | null
+  createdBy?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
+  WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
+}
+
+export type MaterialSerialTrackCreateOrConnectWithoutHrFacilityVehicleInput = {
+  where: Prisma.MaterialSerialTrackWhereUniqueInput
+  create: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutHrFacilityVehicleInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutHrFacilityVehicleInput>
+}
+
+export type MaterialSerialTrackUpsertWithoutHrFacilityVehicleInput = {
+  update: Prisma.XOR<Prisma.MaterialSerialTrackUpdateWithoutHrFacilityVehicleInput, Prisma.MaterialSerialTrackUncheckedUpdateWithoutHrFacilityVehicleInput>
+  create: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutHrFacilityVehicleInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutHrFacilityVehicleInput>
+  where?: Prisma.MaterialSerialTrackWhereInput
+}
+
+export type MaterialSerialTrackUpdateToOneWithWhereWithoutHrFacilityVehicleInput = {
+  where?: Prisma.MaterialSerialTrackWhereInput
+  data: Prisma.XOR<Prisma.MaterialSerialTrackUpdateWithoutHrFacilityVehicleInput, Prisma.MaterialSerialTrackUncheckedUpdateWithoutHrFacilityVehicleInput>
+}
+
+export type MaterialSerialTrackUpdateWithoutHrFacilityVehicleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput
+  Company?: Prisma.CompanyUpdateOneWithoutMaterialSerialTrackNestedInput
+  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackNestedInput
+  Project?: Prisma.ProjectUpdateOneWithoutMaterialSerialTrackNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackNestedInput
+  material?: Prisma.MaterialUpdateOneWithoutMaterialSerialTrackNestedInput
+  Employee_MaterialSerialTrack_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrack_MaterialSerialTrack_deletedByToEmployeeNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialSerialTrackNestedInput
+  WarehousePlace?: Prisma.WarehousePlaceUpdateManyWithoutMaterialSerialTrackNestedInput
+}
+
+export type MaterialSerialTrackUncheckedUpdateWithoutHrFacilityVehicleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
+  WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
 }
 
 export type MaterialSerialTrackCreateManyCompanyInput = {
@@ -2300,6 +2499,7 @@ export type MaterialSerialTrackUpdateWithoutCompanyInput = {
   becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackNestedInput
   Project?: Prisma.ProjectUpdateOneWithoutMaterialSerialTrackNestedInput
@@ -2338,6 +2538,7 @@ export type MaterialSerialTrackUncheckedUpdateWithoutCompanyInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
@@ -2456,6 +2657,7 @@ export type MaterialSerialTrackUpdateWithoutEmployeeInput = {
   becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutMaterialSerialTrackNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackNestedInput
@@ -2494,6 +2696,7 @@ export type MaterialSerialTrackUncheckedUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
@@ -2552,6 +2755,7 @@ export type MaterialSerialTrackUpdateWithoutEmployee_MaterialSerialTrack_deleted
   becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutMaterialSerialTrackNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackNestedInput
@@ -2590,6 +2794,7 @@ export type MaterialSerialTrackUncheckedUpdateWithoutEmployee_MaterialSerialTrac
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
@@ -2678,6 +2883,7 @@ export type MaterialSerialTrackUpdateWithoutMaterialInput = {
   becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutMaterialSerialTrackNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackNestedInput
@@ -2716,6 +2922,7 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
@@ -2804,6 +3011,7 @@ export type MaterialSerialTrackUpdateWithoutMaterialGroupInput = {
   becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutMaterialSerialTrackNestedInput
   Project?: Prisma.ProjectUpdateOneWithoutMaterialSerialTrackNestedInput
@@ -2842,6 +3050,7 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialGroupInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
@@ -2930,6 +3139,7 @@ export type MaterialSerialTrackUpdateWithoutProjectInput = {
   becraCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutMaterialSerialTrackNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackNestedInput
@@ -2968,6 +3178,7 @@ export type MaterialSerialTrackUncheckedUpdateWithoutProjectInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  HrFacilityVehicle?: Prisma.HrFacilityVehicleUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
   WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
@@ -3009,12 +3220,14 @@ export type MaterialSerialTrackUncheckedUpdateManyWithoutProjectInput = {
  */
 
 export type MaterialSerialTrackCountOutputType = {
+  HrFacilityVehicle: number
   MaterialMovement: number
   MaterialSerialTrackedStructure: number
   WarehousePlace: number
 }
 
 export type MaterialSerialTrackCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  HrFacilityVehicle?: boolean | MaterialSerialTrackCountOutputTypeCountHrFacilityVehicleArgs
   MaterialMovement?: boolean | MaterialSerialTrackCountOutputTypeCountMaterialMovementArgs
   MaterialSerialTrackedStructure?: boolean | MaterialSerialTrackCountOutputTypeCountMaterialSerialTrackedStructureArgs
   WarehousePlace?: boolean | MaterialSerialTrackCountOutputTypeCountWarehousePlaceArgs
@@ -3028,6 +3241,13 @@ export type MaterialSerialTrackCountOutputTypeDefaultArgs<ExtArgs extends runtim
    * Select specific fields to fetch from the MaterialSerialTrackCountOutputType
    */
   select?: Prisma.MaterialSerialTrackCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MaterialSerialTrackCountOutputType without action
+ */
+export type MaterialSerialTrackCountOutputTypeCountHrFacilityVehicleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HrFacilityVehicleWhereInput
 }
 
 /**
@@ -3081,6 +3301,7 @@ export type MaterialSerialTrackSelect<ExtArgs extends runtime.Types.Extensions.I
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
+  HrFacilityVehicle?: boolean | Prisma.MaterialSerialTrack$HrFacilityVehicleArgs<ExtArgs>
   MaterialMovement?: boolean | Prisma.MaterialSerialTrack$MaterialMovementArgs<ExtArgs>
   Company?: boolean | Prisma.MaterialSerialTrack$CompanyArgs<ExtArgs>
   MaterialGroup?: boolean | Prisma.MaterialSerialTrack$MaterialGroupArgs<ExtArgs>
@@ -3128,6 +3349,7 @@ export type MaterialSerialTrackSelectScalar = {
 
 export type MaterialSerialTrackOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "beNumber" | "lastInspectionDate" | "inspectionIntervalValue" | "inspectionIntervalUnit" | "nextInspectionDate" | "brandName" | "management" | "brandOrderNumber" | "companyId" | "orderNumber" | "shortDescription" | "longDescription" | "transactionType" | "materialGroupId" | "fromLocation" | "toLocation" | "updatedAt" | "preferredSupplier" | "rejected" | "additionalInfo" | "projectId" | "becraCode" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["materialSerialTrack"]>
 export type MaterialSerialTrackInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  HrFacilityVehicle?: boolean | Prisma.MaterialSerialTrack$HrFacilityVehicleArgs<ExtArgs>
   MaterialMovement?: boolean | Prisma.MaterialSerialTrack$MaterialMovementArgs<ExtArgs>
   Company?: boolean | Prisma.MaterialSerialTrack$CompanyArgs<ExtArgs>
   MaterialGroup?: boolean | Prisma.MaterialSerialTrack$MaterialGroupArgs<ExtArgs>
@@ -3143,6 +3365,7 @@ export type MaterialSerialTrackInclude<ExtArgs extends runtime.Types.Extensions.
 export type $MaterialSerialTrackPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MaterialSerialTrack"
   objects: {
+    HrFacilityVehicle: Prisma.$HrFacilityVehiclePayload<ExtArgs>[]
     MaterialMovement: Prisma.$MaterialMovementPayload<ExtArgs>[]
     Company: Prisma.$CompanyPayload<ExtArgs> | null
     MaterialGroup: Prisma.$MaterialGroupPayload<ExtArgs> | null
@@ -3522,6 +3745,7 @@ readonly fields: MaterialSerialTrackFieldRefs;
  */
 export interface Prisma__MaterialSerialTrackClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  HrFacilityVehicle<T extends Prisma.MaterialSerialTrack$HrFacilityVehicleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrack$HrFacilityVehicleArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HrFacilityVehiclePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MaterialMovement<T extends Prisma.MaterialSerialTrack$MaterialMovementArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrack$MaterialMovementArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Company<T extends Prisma.MaterialSerialTrack$CompanyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrack$CompanyArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   MaterialGroup<T extends Prisma.MaterialSerialTrack$MaterialGroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrack$MaterialGroupArgs<ExtArgs>>): Prisma.Prisma__MaterialGroupClient<runtime.Types.Result.GetResult<Prisma.$MaterialGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -3928,6 +4152,30 @@ export type MaterialSerialTrackDeleteManyArgs<ExtArgs extends runtime.Types.Exte
    * Limit how many MaterialSerialTracks to delete.
    */
   limit?: number
+}
+
+/**
+ * MaterialSerialTrack.HrFacilityVehicle
+ */
+export type MaterialSerialTrack$HrFacilityVehicleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HrFacilityVehicle
+   */
+  select?: Prisma.HrFacilityVehicleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HrFacilityVehicle
+   */
+  omit?: Prisma.HrFacilityVehicleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HrFacilityVehicleInclude<ExtArgs> | null
+  where?: Prisma.HrFacilityVehicleWhereInput
+  orderBy?: Prisma.HrFacilityVehicleOrderByWithRelationInput | Prisma.HrFacilityVehicleOrderByWithRelationInput[]
+  cursor?: Prisma.HrFacilityVehicleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HrFacilityVehicleScalarFieldEnum | Prisma.HrFacilityVehicleScalarFieldEnum[]
 }
 
 /**

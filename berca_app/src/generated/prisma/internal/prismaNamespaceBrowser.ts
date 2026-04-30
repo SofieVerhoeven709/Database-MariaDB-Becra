@@ -176,7 +176,10 @@ export const ModelName = {
   ProjectEmployee: 'ProjectEmployee',
   QuoteSupplierMiscLine: 'QuoteSupplierMiscLine',
   VisibilityForDepartment: 'VisibilityForDepartment',
-  WorkOrderBoQ: 'WorkOrderBoQ'
+  WorkOrderBoQ: 'WorkOrderBoQ',
+  HrFacilityVehicle: 'HrFacilityVehicle',
+  HrFacilityFuelCard: 'HrFacilityFuelCard',
+  HrFacilityFine: 'HrFacilityFine'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2516,6 +2519,76 @@ export const WorkOrderBoQScalarFieldEnum = {
 export type WorkOrderBoQScalarFieldEnum = (typeof WorkOrderBoQScalarFieldEnum)[keyof typeof WorkOrderBoQScalarFieldEnum]
 
 
+export const HrFacilityVehicleScalarFieldEnum = {
+  id: 'id',
+  serialTrackedId: 'serialTrackedId',
+  assignedEmployeeId: 'assignedEmployeeId',
+  licensePlate: 'licensePlate',
+  brand: 'brand',
+  model: 'model',
+  vin: 'vin',
+  status: 'status',
+  conditionStatus: 'conditionStatus',
+  signedVehicleDocument: 'signedVehicleDocument',
+  signedDocumentFileId: 'signedDocumentFileId',
+  monthlyFuelBudget: 'monthlyFuelBudget',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityVehicleScalarFieldEnum = (typeof HrFacilityVehicleScalarFieldEnum)[keyof typeof HrFacilityVehicleScalarFieldEnum]
+
+
+export const HrFacilityFuelCardScalarFieldEnum = {
+  id: 'id',
+  vehicleId: 'vehicleId',
+  employeeId: 'employeeId',
+  cardNumber: 'cardNumber',
+  provider: 'provider',
+  monthlyBudget: 'monthlyBudget',
+  currentMonthSpend: 'currentMonthSpend',
+  active: 'active',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityFuelCardScalarFieldEnum = (typeof HrFacilityFuelCardScalarFieldEnum)[keyof typeof HrFacilityFuelCardScalarFieldEnum]
+
+
+export const HrFacilityFineScalarFieldEnum = {
+  id: 'id',
+  vehicleId: 'vehicleId',
+  employeeId: 'employeeId',
+  fineDate: 'fineDate',
+  amount: 'amount',
+  referenceNumber: 'referenceNumber',
+  description: 'description',
+  paidByEmployee: 'paidByEmployee',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityFineScalarFieldEnum = (typeof HrFacilityFineScalarFieldEnum)[keyof typeof HrFacilityFineScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -4234,4 +4307,53 @@ export const WorkOrderBoQOrderByRelevanceFieldEnum = {
 } as const
 
 export type WorkOrderBoQOrderByRelevanceFieldEnum = (typeof WorkOrderBoQOrderByRelevanceFieldEnum)[keyof typeof WorkOrderBoQOrderByRelevanceFieldEnum]
+
+
+export const HrFacilityVehicleOrderByRelevanceFieldEnum = {
+  id: 'id',
+  serialTrackedId: 'serialTrackedId',
+  assignedEmployeeId: 'assignedEmployeeId',
+  licensePlate: 'licensePlate',
+  brand: 'brand',
+  model: 'model',
+  vin: 'vin',
+  status: 'status',
+  conditionStatus: 'conditionStatus',
+  signedDocumentFileId: 'signedDocumentFileId',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityVehicleOrderByRelevanceFieldEnum = (typeof HrFacilityVehicleOrderByRelevanceFieldEnum)[keyof typeof HrFacilityVehicleOrderByRelevanceFieldEnum]
+
+
+export const HrFacilityFuelCardOrderByRelevanceFieldEnum = {
+  id: 'id',
+  vehicleId: 'vehicleId',
+  employeeId: 'employeeId',
+  cardNumber: 'cardNumber',
+  provider: 'provider',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityFuelCardOrderByRelevanceFieldEnum = (typeof HrFacilityFuelCardOrderByRelevanceFieldEnum)[keyof typeof HrFacilityFuelCardOrderByRelevanceFieldEnum]
+
+
+export const HrFacilityFineOrderByRelevanceFieldEnum = {
+  id: 'id',
+  vehicleId: 'vehicleId',
+  employeeId: 'employeeId',
+  referenceNumber: 'referenceNumber',
+  description: 'description',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityFineOrderByRelevanceFieldEnum = (typeof HrFacilityFineOrderByRelevanceFieldEnum)[keyof typeof HrFacilityFineOrderByRelevanceFieldEnum]
 

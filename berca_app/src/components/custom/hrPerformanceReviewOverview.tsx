@@ -81,6 +81,7 @@ export function HrPerformanceReviewOverview({
   const router = useRouter()
   const [filter, setFilter] = useState('')
   const [saving, setSaving] = useState(false)
+  const [overtimeError, setOvertimeError] = useState<string | null>(null)
   const [settingsEmployee, setSettingsEmployee] = useState<HrPerformanceReviewRow | null>(null)
   const [overtimeEmployee, setOvertimeEmployee] = useState<HrPerformanceReviewRow | null>(null)
   const [editingOvertime, setEditingOvertime] = useState<HrPerformanceOvertime | null>(null)
@@ -111,6 +112,15 @@ export function HrPerformanceReviewOverview({
     : []
   const selectedTimeRegistryOption =
     timeRegistryOptions.find(option => option.id === overtimeForm.sourceTimeRegistryId) ?? null
+  const overtimeHoursValue = Number(overtimeForm.hours)
+  const overtimeAvailableHours =
+    overtimeEmployee?.maxOvertimeHours === null || !overtimeEmployee
+      ? null
+      : Number(overtimeEmployee.overtimeRemainingHours ?? 0) + (editingOvertime ? Number(editingOvertime.hours) : 0)
+  const overtimeLimitError =
+    overtimeAvailableHours !== null && overtimeHoursValue > overtimeAvailableHours
+      ? `This employee only has ${overtimeAvailableHours.toFixed(2)} overtime hour(s) available.`
+      : null
 
   function openSettingsDialog(row: HrPerformanceReviewRow) {
     if (!canManageOvertime) return
@@ -134,6 +144,7 @@ export function HrPerformanceReviewOverview({
 
     setOvertimeEmployee(row)
     setEditingOvertime(null)
+    setOvertimeError(null)
     setOvertimeForm({
       projectId: '',
       sourceTimeRegistryId: '',
@@ -148,6 +159,7 @@ export function HrPerformanceReviewOverview({
 
     setOvertimeEmployee(row)
     setEditingOvertime(overtime)
+    setOvertimeError(null)
     setOvertimeForm({
       projectId: overtime.projectId,
       sourceTimeRegistryId: overtime.sourceTimeRegistryId ?? '',
@@ -178,7 +190,13 @@ export function HrPerformanceReviewOverview({
 
   async function handleSaveOvertime() {
     if (!overtimeEmployee) return
+    if (overtimeLimitError) {
+      setOvertimeError(overtimeLimitError)
+      return
+    }
+
     setSaving(true)
+    setOvertimeError(null)
     try {
       const payload = {
         departmentId,
@@ -191,14 +209,24 @@ export function HrPerformanceReviewOverview({
       }
 
       if (editingOvertime) {
-        await updateHrEmployeeOvertimeAction({...payload, id: editingOvertime.id})
+        const result = (await updateHrEmployeeOvertimeAction({...payload, id: editingOvertime.id})) as unknown as {
+          success?: boolean
+          errors?: {global?: string[]}
+        }
+        if (result?.success === false) throw new Error(result.errors?.global?.[0] ?? 'Overtime could not be saved.')
       } else {
-        await createHrEmployeeOvertimeAction(payload)
+        const result = (await createHrEmployeeOvertimeAction(payload)) as unknown as {
+          success?: boolean
+          errors?: {global?: string[]}
+        }
+        if (result?.success === false) throw new Error(result.errors?.global?.[0] ?? 'Overtime could not be saved.')
       }
 
       setOvertimeEmployee(null)
       setEditingOvertime(null)
       router.refresh()
+    } catch (error) {
+      setOvertimeError(error instanceof Error ? error.message : 'Overtime could not be saved.')
     } finally {
       setSaving(false)
     }
@@ -481,6 +509,7 @@ export function HrPerformanceReviewOverview({
           if (!open) {
             setOvertimeEmployee(null)
             setEditingOvertime(null)
+            setOvertimeError(null)
           }
         }}>
         <DialogContent className="max-w-xl">
@@ -542,6 +571,12 @@ export function HrPerformanceReviewOverview({
                 value={overtimeForm.hours}
                 onChange={event => setOvertimeForm(form => ({...form, hours: event.target.value}))}
               />
+              {overtimeLimitError && <span className="text-xs text-destructive">{overtimeLimitError}</span>}
+              {overtimeAvailableHours !== null && !overtimeLimitError && (
+                <span className="text-xs text-muted-foreground">
+                  {overtimeAvailableHours.toFixed(2)} overtime hour(s) available.
+                </span>
+              )}
             </div>
             <div className="flex flex-col gap-1.5 sm:col-span-2">
               <Label>Description</Label>
@@ -559,10 +594,15 @@ export function HrPerformanceReviewOverview({
               onClick={() => {
                 setOvertimeEmployee(null)
                 setEditingOvertime(null)
+                setOvertimeError(null)
               }}>
               Cancel
             </Button>
-            <Button type="button" onClick={handleSaveOvertime} disabled={!overtimeValid || saving}>
+            {overtimeError && <p className="mr-auto max-w-xs text-left text-xs text-destructive">{overtimeError}</p>}
+            <Button
+              type="button"
+              onClick={handleSaveOvertime}
+              disabled={!overtimeValid || Boolean(overtimeLimitError) || saving}>
               Save
             </Button>
           </DialogFooter>

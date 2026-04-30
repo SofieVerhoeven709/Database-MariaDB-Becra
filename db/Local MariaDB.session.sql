@@ -2685,3 +2685,106 @@
         CONSTRAINT HrEmployeeOvertime_ibfk_5 FOREIGN KEY (updatedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
         CONSTRAINT HrEmployeeOvertime_ibfk_6 FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT
         ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS HrFacilityVehicle (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        serialTrackedId CHAR(36) NULL,
+        assignedEmployeeId CHAR(36) NULL,
+        licensePlate VARCHAR(50) NULL,
+        brand VARCHAR(100) NULL,
+        model VARCHAR(100) NULL,
+        vin VARCHAR(100) NULL,
+        status VARCHAR(30) NOT NULL DEFAULT 'active',
+        conditionStatus VARCHAR(100) NULL,
+        signedVehicleDocument BOOLEAN NOT NULL DEFAULT 0,
+        signedDocumentFileId VARCHAR(255) NULL,
+        monthlyFuelBudget DECIMAL(10,2) NULL,
+        notes TEXT NULL,
+        createdAt DATETIME NOT NULL,
+        createdBy CHAR(36) NOT NULL,
+        updatedAt DATETIME NULL,
+        updatedBy CHAR(36) NULL,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedAt DATETIME NULL,
+        deletedBy CHAR(36) NULL,
+
+        UNIQUE KEY licensePlate (licensePlate),
+        INDEX serialTrackedId (serialTrackedId),
+        INDEX assignedEmployeeId (assignedEmployeeId),
+        INDEX status (status),
+        INDEX createdBy (createdBy),
+        INDEX updatedBy (updatedBy),
+        INDEX deletedBy (deletedBy),
+
+        CONSTRAINT HrFacilityVehicle_ibfk_1 FOREIGN KEY (serialTrackedId) REFERENCES MaterialSerialTrack(id) ON DELETE SET NULL ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityVehicle_ibfk_2 FOREIGN KEY (assignedEmployeeId) REFERENCES Employee(id) ON DELETE SET NULL ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityVehicle_ibfk_3 FOREIGN KEY (createdBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityVehicle_ibfk_4 FOREIGN KEY (updatedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityVehicle_ibfk_5 FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+        ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS HrFacilityFuelCard (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        vehicleId CHAR(36) NULL,
+        employeeId CHAR(36) NULL,
+        cardNumber VARCHAR(100) NOT NULL,
+        provider VARCHAR(100) NULL,
+        monthlyBudget DECIMAL(10,2) NULL,
+        currentMonthSpend DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+        active BOOLEAN NOT NULL DEFAULT 1,
+        notes TEXT NULL,
+        createdAt DATETIME NOT NULL,
+        createdBy CHAR(36) NOT NULL,
+        updatedAt DATETIME NULL,
+        updatedBy CHAR(36) NULL,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedAt DATETIME NULL,
+        deletedBy CHAR(36) NULL,
+
+        UNIQUE KEY cardNumber (cardNumber),
+        INDEX vehicleId (vehicleId),
+        INDEX employeeId (employeeId),
+        INDEX active (active),
+        INDEX createdBy (createdBy),
+        INDEX updatedBy (updatedBy),
+        INDEX deletedBy (deletedBy),
+
+        CONSTRAINT HrFacilityFuelCard_ibfk_1 FOREIGN KEY (vehicleId) REFERENCES HrFacilityVehicle(id) ON DELETE SET NULL ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityFuelCard_ibfk_2 FOREIGN KEY (employeeId) REFERENCES Employee(id) ON DELETE SET NULL ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityFuelCard_ibfk_3 FOREIGN KEY (createdBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityFuelCard_ibfk_4 FOREIGN KEY (updatedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityFuelCard_ibfk_5 FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+        ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS HrFacilityFine (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        vehicleId CHAR(36) NULL,
+        employeeId CHAR(36) NULL,
+        fineDate DATETIME NOT NULL,
+        amount DECIMAL(10,2) NOT NULL,
+        referenceNumber VARCHAR(100) NULL,
+        description TEXT NULL,
+        paidByEmployee BOOLEAN NOT NULL DEFAULT 0,
+        paidAt DATETIME NULL,
+        createdAt DATETIME NOT NULL,
+        createdBy CHAR(36) NOT NULL,
+        updatedAt DATETIME NULL,
+        updatedBy CHAR(36) NULL,
+        deleted BOOLEAN NOT NULL DEFAULT 0,
+        deletedAt DATETIME NULL,
+        deletedBy CHAR(36) NULL,
+
+        INDEX vehicleId (vehicleId),
+        INDEX employeeId (employeeId),
+        INDEX fineDate (fineDate),
+        INDEX paidByEmployee (paidByEmployee),
+        INDEX createdBy (createdBy),
+        INDEX updatedBy (updatedBy),
+        INDEX deletedBy (deletedBy),
+
+        CONSTRAINT HrFacilityFine_ibfk_1 FOREIGN KEY (vehicleId) REFERENCES HrFacilityVehicle(id) ON DELETE SET NULL ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityFine_ibfk_2 FOREIGN KEY (employeeId) REFERENCES Employee(id) ON DELETE SET NULL ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityFine_ibfk_3 FOREIGN KEY (createdBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityFine_ibfk_4 FOREIGN KEY (updatedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+        CONSTRAINT HrFacilityFine_ibfk_5 FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+        ) ENGINE = InnoDB;

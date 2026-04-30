@@ -684,3 +684,18 @@ export type VisibilityForDepartment = Prisma.VisibilityForDepartmentModel
  * 
  */
 export type WorkOrderBoQ = Prisma.WorkOrderBoQModel
+/**
+ * Model HrFacilityVehicle
+ * 
+ */
+export type HrFacilityVehicle = Prisma.HrFacilityVehicleModel
+/**
+ * Model HrFacilityFuelCard
+ * 
+ */
+export type HrFacilityFuelCard = Prisma.HrFacilityFuelCardModel
+/**
+ * Model HrFacilityFine
+ * 
+ */
+export type HrFacilityFine = Prisma.HrFacilityFineModel

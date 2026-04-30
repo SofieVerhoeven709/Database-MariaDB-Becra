@@ -49,6 +49,13 @@ const HR_ACTIONS: DepartmentAction[] = [
     icon: 'ShieldCheck',
     owner: 'hr',
   },
+  {
+    id: 'facility',
+    name: 'Facility',
+    description: 'Manage company cars, fuel cards, budgets, signed vehicle documents, and fines',
+    icon: 'CarFront',
+    owner: 'hr',
+  },
 ]
 
 export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {

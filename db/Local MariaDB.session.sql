@@ -2146,6 +2146,7 @@
                 fulfilledBy CHAR(36),
                 createdAt DATETIME NOT NULL,
                 createdBy CHAR(36) NOT NULL,
+                description VARCHAR(255),
                 FOREIGN KEY (materialDemandId) REFERENCES MaterialDemand (id) ON DELETE CASCADE,
                 FOREIGN KEY (sourceTypeId) REFERENCES MaterialDemandSourceType (id) ON DELETE RESTRICT,
                 FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,

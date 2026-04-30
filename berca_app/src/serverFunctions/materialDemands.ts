@@ -258,7 +258,7 @@ export const createManualDemandSourceAction = protectedServerFunction({
           materialDemandId: data.materialDemandId,
           sourceTypeId,
           sourceReferenceId: null,
-          description: data.label,
+          /* description: data.label, */
           requiredQty: data.requiredQty,
           reservedQty: 0,
           createdAt: new Date(),

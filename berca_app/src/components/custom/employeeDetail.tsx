@@ -1,8 +1,19 @@
 'use client'
 
-import {useState, useMemo} from 'react'
+import {useRef, useState, useMemo} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Pencil, X, Save, ExternalLink, ChevronUp, ChevronDown, ChevronsUpDown} from 'lucide-react'
+import {
+  ArrowLeft,
+  Pencil,
+  X,
+  Save,
+  ExternalLink,
+  ChevronUp,
+  ChevronDown,
+  ChevronsUpDown,
+  Upload,
+  Trash2,
+} from 'lucide-react'
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
@@ -345,13 +356,19 @@ export function EmployeeDetail({
 }: EmployeeDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const isHrRole =
+    currentUserRole.toLowerCase().includes('hr') || currentUserRole.toLowerCase().includes('human resource')
   const canEdit = currentUserLevel >= 40
   const canCreate = currentUserLevel >= 60
   const canDelete = currentUserLevel >= 80
   const canManageVisibility = currentUserLevel >= 80
+  const canManagePhoto = isAdmin || (isHrRole && currentUserLevel >= 80)
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [photoBusy, setPhotoBusy] = useState(false)
+  const [photoError, setPhotoError] = useState<string | null>(null)
+  const photoInputRef = useRef<HTMLInputElement | null>(null)
 
   // Build form defaults from the current employee.
   const buildForm = () => ({
@@ -467,6 +484,57 @@ export function EmployeeDetail({
     }
   }
 
+  async function handlePhotoUpload(file: File | undefined) {
+    if (!file) return
+
+    setPhotoBusy(true)
+    setPhotoError(null)
+
+    try {
+      const uploadData = new FormData()
+      uploadData.append('photo', file)
+
+      const response = await fetch(`/api/employees/${employee.id}/photo`, {
+        method: 'POST',
+        body: uploadData,
+      })
+      const result = (await response.json()) as {photoFileId?: string; error?: string}
+
+      if (!response.ok || !result.photoFileId) {
+        throw new Error(result.error ?? 'The photo could not be uploaded.')
+      }
+
+      s('photoFileId', result.photoFileId)
+      router.refresh()
+    } catch (error) {
+      setPhotoError(error instanceof Error ? error.message : 'The photo could not be uploaded.')
+    } finally {
+      setPhotoBusy(false)
+      if (photoInputRef.current) photoInputRef.current.value = ''
+    }
+  }
+
+  async function handlePhotoRemove() {
+    setPhotoBusy(true)
+    setPhotoError(null)
+
+    try {
+      const response = await fetch(`/api/employees/${employee.id}/photo`, {method: 'DELETE'})
+      const result = (await response.json()) as {error?: string}
+
+      if (!response.ok) {
+        throw new Error(result.error ?? 'The photo could not be removed.')
+      }
+
+      s('photoFileId', '')
+      router.refresh()
+    } catch (error) {
+      setPhotoError(error instanceof Error ? error.message : 'The photo could not be removed.')
+    } finally {
+      setPhotoBusy(false)
+    }
+  }
+
   // ─── Reusable field renderers ──────────────────────────────────────────────
   const textRow = (label: string, val: string | null, formKey?: keyof typeof form, opts?: {type?: string}) => (
     <div className="flex flex-col gap-1.5">
@@ -578,6 +646,61 @@ export function EmployeeDetail({
 
       {/* ── Info card ──────────────────────────────────────────────────────── */}
       <div className="rounded-xl border border-border/60 bg-card p-6 flex flex-col gap-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            {form.photoFileId ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={form.photoFileId}
+                alt={`${employee.firstName} ${employee.lastName}`}
+                className="h-20 w-20 rounded-full border border-border bg-secondary object-cover"
+              />
+            ) : (
+              <div className="flex h-20 w-20 items-center justify-center rounded-full border border-border bg-secondary text-lg font-semibold text-muted-foreground">
+                {employee.firstName && employee.lastName
+                  ? `${employee.firstName[0]}${employee.lastName[0]}`.toUpperCase()
+                  : '?'}
+              </div>
+            )}
+            <div>
+              <p className="text-sm font-medium text-foreground">Employee Photo</p>
+              <p className="text-xs text-muted-foreground">JPG or PNG, maximum 5 MB.</p>
+              {photoError && <p className="mt-1 text-xs text-destructive">{photoError}</p>}
+            </div>
+          </div>
+          {canManagePhoto && (
+            <div className="flex flex-wrap items-center gap-2">
+              <input
+                ref={photoInputRef}
+                type="file"
+                accept="image/jpeg,image/png"
+                className="hidden"
+                onChange={e => handlePhotoUpload(e.target.files?.[0])}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                className="gap-2 border-border"
+                disabled={photoBusy}
+                onClick={() => photoInputRef.current?.click()}>
+                <Upload className="h-4 w-4" />
+                {photoBusy ? 'Uploading...' : 'Upload'}
+              </Button>
+              {form.photoFileId && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="gap-2 border-border text-destructive hover:text-destructive"
+                  disabled={photoBusy}
+                  onClick={handlePhotoRemove}>
+                  <Trash2 className="h-4 w-4" />
+                  Remove
+                </Button>
+              )}
+            </div>
+          )}
+        </div>
+
         {/* Identity */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Identity</p>
@@ -629,7 +752,10 @@ export function EmployeeDetail({
               <p className="text-sm text-muted-foreground">{employee.roleName || '-'}</p>
             </div>
             {selectRow('Title', employee.titleName, 'titleId', titleOptions)}
-            {textRow('HSE Photo File', employee.photoFileId, 'photoFileId')}
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Photo File</Label>
+              <p className="text-sm text-muted-foreground break-all">{form.photoFileId || '-'}</p>
+            </div>
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Created By</Label>
               <p className="text-sm text-muted-foreground">{employee.createdByName ?? '-'}</p>

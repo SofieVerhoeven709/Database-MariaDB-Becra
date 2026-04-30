@@ -30,9 +30,11 @@ export type HrCertificationTrainingMinAggregateOutputType = {
   trainingName: string | null
   trainingType: string | null
   recurrenceInterval: string | null
+  trainingDocumentNumber: string | null
   trainingDate: Date | null
   certificateValidUntil: Date | null
   providerName: string | null
+  includeInHseFile: boolean | null
   additionalInfo: string | null
   createdAt: Date | null
   createdBy: string | null
@@ -49,9 +51,11 @@ export type HrCertificationTrainingMaxAggregateOutputType = {
   trainingName: string | null
   trainingType: string | null
   recurrenceInterval: string | null
+  trainingDocumentNumber: string | null
   trainingDate: Date | null
   certificateValidUntil: Date | null
   providerName: string | null
+  includeInHseFile: boolean | null
   additionalInfo: string | null
   createdAt: Date | null
   createdBy: string | null
@@ -68,9 +72,11 @@ export type HrCertificationTrainingCountAggregateOutputType = {
   trainingName: number
   trainingType: number
   recurrenceInterval: number
+  trainingDocumentNumber: number
   trainingDate: number
   certificateValidUntil: number
   providerName: number
+  includeInHseFile: number
   additionalInfo: number
   createdAt: number
   createdBy: number
@@ -89,9 +95,11 @@ export type HrCertificationTrainingMinAggregateInputType = {
   trainingName?: true
   trainingType?: true
   recurrenceInterval?: true
+  trainingDocumentNumber?: true
   trainingDate?: true
   certificateValidUntil?: true
   providerName?: true
+  includeInHseFile?: true
   additionalInfo?: true
   createdAt?: true
   createdBy?: true
@@ -108,9 +116,11 @@ export type HrCertificationTrainingMaxAggregateInputType = {
   trainingName?: true
   trainingType?: true
   recurrenceInterval?: true
+  trainingDocumentNumber?: true
   trainingDate?: true
   certificateValidUntil?: true
   providerName?: true
+  includeInHseFile?: true
   additionalInfo?: true
   createdAt?: true
   createdBy?: true
@@ -127,9 +137,11 @@ export type HrCertificationTrainingCountAggregateInputType = {
   trainingName?: true
   trainingType?: true
   recurrenceInterval?: true
+  trainingDocumentNumber?: true
   trainingDate?: true
   certificateValidUntil?: true
   providerName?: true
+  includeInHseFile?: true
   additionalInfo?: true
   createdAt?: true
   createdBy?: true
@@ -219,9 +231,11 @@ export type HrCertificationTrainingGroupByOutputType = {
   trainingName: string
   trainingType: string
   recurrenceInterval: string
+  trainingDocumentNumber: string | null
   trainingDate: Date
   certificateValidUntil: Date | null
   providerName: string
+  includeInHseFile: boolean
   additionalInfo: string | null
   createdAt: Date
   createdBy: string
@@ -259,9 +273,11 @@ export type HrCertificationTrainingWhereInput = {
   trainingName?: Prisma.StringFilter<"HrCertificationTraining"> | string
   trainingType?: Prisma.StringFilter<"HrCertificationTraining"> | string
   recurrenceInterval?: Prisma.StringFilter<"HrCertificationTraining"> | string
+  trainingDocumentNumber?: Prisma.StringNullableFilter<"HrCertificationTraining"> | string | null
   trainingDate?: Prisma.DateTimeFilter<"HrCertificationTraining"> | Date | string
   certificateValidUntil?: Prisma.DateTimeNullableFilter<"HrCertificationTraining"> | Date | string | null
   providerName?: Prisma.StringFilter<"HrCertificationTraining"> | string
+  includeInHseFile?: Prisma.BoolFilter<"HrCertificationTraining"> | boolean
   additionalInfo?: Prisma.StringNullableFilter<"HrCertificationTraining"> | string | null
   createdAt?: Prisma.DateTimeFilter<"HrCertificationTraining"> | Date | string
   createdBy?: Prisma.StringFilter<"HrCertificationTraining"> | string
@@ -282,9 +298,11 @@ export type HrCertificationTrainingOrderByWithRelationInput = {
   trainingName?: Prisma.SortOrder
   trainingType?: Prisma.SortOrder
   recurrenceInterval?: Prisma.SortOrder
+  trainingDocumentNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   trainingDate?: Prisma.SortOrder
   certificateValidUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   providerName?: Prisma.SortOrder
+  includeInHseFile?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -309,9 +327,11 @@ export type HrCertificationTrainingWhereUniqueInput = Prisma.AtLeast<{
   trainingName?: Prisma.StringFilter<"HrCertificationTraining"> | string
   trainingType?: Prisma.StringFilter<"HrCertificationTraining"> | string
   recurrenceInterval?: Prisma.StringFilter<"HrCertificationTraining"> | string
+  trainingDocumentNumber?: Prisma.StringNullableFilter<"HrCertificationTraining"> | string | null
   trainingDate?: Prisma.DateTimeFilter<"HrCertificationTraining"> | Date | string
   certificateValidUntil?: Prisma.DateTimeNullableFilter<"HrCertificationTraining"> | Date | string | null
   providerName?: Prisma.StringFilter<"HrCertificationTraining"> | string
+  includeInHseFile?: Prisma.BoolFilter<"HrCertificationTraining"> | boolean
   additionalInfo?: Prisma.StringNullableFilter<"HrCertificationTraining"> | string | null
   createdAt?: Prisma.DateTimeFilter<"HrCertificationTraining"> | Date | string
   createdBy?: Prisma.StringFilter<"HrCertificationTraining"> | string
@@ -332,9 +352,11 @@ export type HrCertificationTrainingOrderByWithAggregationInput = {
   trainingName?: Prisma.SortOrder
   trainingType?: Prisma.SortOrder
   recurrenceInterval?: Prisma.SortOrder
+  trainingDocumentNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   trainingDate?: Prisma.SortOrder
   certificateValidUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   providerName?: Prisma.SortOrder
+  includeInHseFile?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -357,9 +379,11 @@ export type HrCertificationTrainingScalarWhereWithAggregatesInput = {
   trainingName?: Prisma.StringWithAggregatesFilter<"HrCertificationTraining"> | string
   trainingType?: Prisma.StringWithAggregatesFilter<"HrCertificationTraining"> | string
   recurrenceInterval?: Prisma.StringWithAggregatesFilter<"HrCertificationTraining"> | string
+  trainingDocumentNumber?: Prisma.StringNullableWithAggregatesFilter<"HrCertificationTraining"> | string | null
   trainingDate?: Prisma.DateTimeWithAggregatesFilter<"HrCertificationTraining"> | Date | string
   certificateValidUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"HrCertificationTraining"> | Date | string | null
   providerName?: Prisma.StringWithAggregatesFilter<"HrCertificationTraining"> | string
+  includeInHseFile?: Prisma.BoolWithAggregatesFilter<"HrCertificationTraining"> | boolean
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"HrCertificationTraining"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"HrCertificationTraining"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"HrCertificationTraining"> | string
@@ -375,9 +399,11 @@ export type HrCertificationTrainingCreateInput = {
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   updatedAt?: Date | string | null
@@ -395,9 +421,11 @@ export type HrCertificationTrainingUncheckedCreateInput = {
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   createdBy: string
@@ -413,9 +441,11 @@ export type HrCertificationTrainingUpdateInput = {
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -433,9 +463,11 @@ export type HrCertificationTrainingUncheckedUpdateInput = {
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -452,9 +484,11 @@ export type HrCertificationTrainingCreateManyInput = {
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   createdBy: string
@@ -470,9 +504,11 @@ export type HrCertificationTrainingUpdateManyMutationInput = {
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -486,9 +522,11 @@ export type HrCertificationTrainingUncheckedUpdateManyInput = {
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -521,9 +559,11 @@ export type HrCertificationTrainingCountOrderByAggregateInput = {
   trainingName?: Prisma.SortOrder
   trainingType?: Prisma.SortOrder
   recurrenceInterval?: Prisma.SortOrder
+  trainingDocumentNumber?: Prisma.SortOrder
   trainingDate?: Prisma.SortOrder
   certificateValidUntil?: Prisma.SortOrder
   providerName?: Prisma.SortOrder
+  includeInHseFile?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -540,9 +580,11 @@ export type HrCertificationTrainingMaxOrderByAggregateInput = {
   trainingName?: Prisma.SortOrder
   trainingType?: Prisma.SortOrder
   recurrenceInterval?: Prisma.SortOrder
+  trainingDocumentNumber?: Prisma.SortOrder
   trainingDate?: Prisma.SortOrder
   certificateValidUntil?: Prisma.SortOrder
   providerName?: Prisma.SortOrder
+  includeInHseFile?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -559,9 +601,11 @@ export type HrCertificationTrainingMinOrderByAggregateInput = {
   trainingName?: Prisma.SortOrder
   trainingType?: Prisma.SortOrder
   recurrenceInterval?: Prisma.SortOrder
+  trainingDocumentNumber?: Prisma.SortOrder
   trainingDate?: Prisma.SortOrder
   certificateValidUntil?: Prisma.SortOrder
   providerName?: Prisma.SortOrder
+  includeInHseFile?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -745,9 +789,11 @@ export type HrCertificationTrainingCreateWithoutEmployee_HrCertificationTraining
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   updatedAt?: Date | string | null
@@ -763,9 +809,11 @@ export type HrCertificationTrainingUncheckedCreateWithoutEmployee_HrCertificatio
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   createdBy: string
@@ -791,9 +839,11 @@ export type HrCertificationTrainingCreateWithoutEmployee_HrCertificationTraining
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   updatedAt?: Date | string | null
@@ -810,9 +860,11 @@ export type HrCertificationTrainingUncheckedCreateWithoutEmployee_HrCertificatio
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   updatedAt?: Date | string | null
@@ -837,9 +889,11 @@ export type HrCertificationTrainingCreateWithoutEmployee_HrCertificationTraining
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   updatedAt?: Date | string | null
@@ -856,9 +910,11 @@ export type HrCertificationTrainingUncheckedCreateWithoutEmployee_HrCertificatio
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   createdBy: string
@@ -883,9 +939,11 @@ export type HrCertificationTrainingCreateWithoutEmployee_HrCertificationTraining
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   updatedAt?: Date | string | null
@@ -902,9 +960,11 @@ export type HrCertificationTrainingUncheckedCreateWithoutEmployee_HrCertificatio
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   createdBy: string
@@ -949,9 +1009,11 @@ export type HrCertificationTrainingScalarWhereInput = {
   trainingName?: Prisma.StringFilter<"HrCertificationTraining"> | string
   trainingType?: Prisma.StringFilter<"HrCertificationTraining"> | string
   recurrenceInterval?: Prisma.StringFilter<"HrCertificationTraining"> | string
+  trainingDocumentNumber?: Prisma.StringNullableFilter<"HrCertificationTraining"> | string | null
   trainingDate?: Prisma.DateTimeFilter<"HrCertificationTraining"> | Date | string
   certificateValidUntil?: Prisma.DateTimeNullableFilter<"HrCertificationTraining"> | Date | string | null
   providerName?: Prisma.StringFilter<"HrCertificationTraining"> | string
+  includeInHseFile?: Prisma.BoolFilter<"HrCertificationTraining"> | boolean
   additionalInfo?: Prisma.StringNullableFilter<"HrCertificationTraining"> | string | null
   createdAt?: Prisma.DateTimeFilter<"HrCertificationTraining"> | Date | string
   createdBy?: Prisma.StringFilter<"HrCertificationTraining"> | string
@@ -1015,9 +1077,11 @@ export type HrCertificationTrainingCreateManyEmployee_HrCertificationTraining_em
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1034,9 +1098,11 @@ export type HrCertificationTrainingCreateManyEmployee_HrCertificationTraining_cr
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   updatedAt?: Date | string | null
@@ -1052,9 +1118,11 @@ export type HrCertificationTrainingCreateManyEmployee_HrCertificationTraining_de
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1070,9 +1138,11 @@ export type HrCertificationTrainingCreateManyEmployee_HrCertificationTraining_up
   trainingName: string
   trainingType: string
   recurrenceInterval?: string
+  trainingDocumentNumber?: string | null
   trainingDate: Date | string
   certificateValidUntil?: Date | string | null
   providerName: string
+  includeInHseFile?: boolean
   additionalInfo?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1087,9 +1157,11 @@ export type HrCertificationTrainingUpdateWithoutEmployee_HrCertificationTraining
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1105,9 +1177,11 @@ export type HrCertificationTrainingUncheckedUpdateWithoutEmployee_HrCertificatio
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1123,9 +1197,11 @@ export type HrCertificationTrainingUncheckedUpdateManyWithoutEmployee_HrCertific
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1141,9 +1217,11 @@ export type HrCertificationTrainingUpdateWithoutEmployee_HrCertificationTraining
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1160,9 +1238,11 @@ export type HrCertificationTrainingUncheckedUpdateWithoutEmployee_HrCertificatio
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1178,9 +1258,11 @@ export type HrCertificationTrainingUncheckedUpdateManyWithoutEmployee_HrCertific
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1195,9 +1277,11 @@ export type HrCertificationTrainingUpdateWithoutEmployee_HrCertificationTraining
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1214,9 +1298,11 @@ export type HrCertificationTrainingUncheckedUpdateWithoutEmployee_HrCertificatio
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1232,9 +1318,11 @@ export type HrCertificationTrainingUncheckedUpdateManyWithoutEmployee_HrCertific
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1249,9 +1337,11 @@ export type HrCertificationTrainingUpdateWithoutEmployee_HrCertificationTraining
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1268,9 +1358,11 @@ export type HrCertificationTrainingUncheckedUpdateWithoutEmployee_HrCertificatio
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1286,9 +1378,11 @@ export type HrCertificationTrainingUncheckedUpdateManyWithoutEmployee_HrCertific
   trainingName?: Prisma.StringFieldUpdateOperationsInput | string
   trainingType?: Prisma.StringFieldUpdateOperationsInput | string
   recurrenceInterval?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingDocumentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateValidUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerName?: Prisma.StringFieldUpdateOperationsInput | string
+  includeInHseFile?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1306,9 +1400,11 @@ export type HrCertificationTrainingSelect<ExtArgs extends runtime.Types.Extensio
   trainingName?: boolean
   trainingType?: boolean
   recurrenceInterval?: boolean
+  trainingDocumentNumber?: boolean
   trainingDate?: boolean
   certificateValidUntil?: boolean
   providerName?: boolean
+  includeInHseFile?: boolean
   additionalInfo?: boolean
   createdAt?: boolean
   createdBy?: boolean
@@ -1331,9 +1427,11 @@ export type HrCertificationTrainingSelectScalar = {
   trainingName?: boolean
   trainingType?: boolean
   recurrenceInterval?: boolean
+  trainingDocumentNumber?: boolean
   trainingDate?: boolean
   certificateValidUntil?: boolean
   providerName?: boolean
+  includeInHseFile?: boolean
   additionalInfo?: boolean
   createdAt?: boolean
   createdBy?: boolean
@@ -1344,7 +1442,7 @@ export type HrCertificationTrainingSelectScalar = {
   deletedBy?: boolean
 }
 
-export type HrCertificationTrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "trainingName" | "trainingType" | "recurrenceInterval" | "trainingDate" | "certificateValidUntil" | "providerName" | "additionalInfo" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["hrCertificationTraining"]>
+export type HrCertificationTrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "trainingName" | "trainingType" | "recurrenceInterval" | "trainingDocumentNumber" | "trainingDate" | "certificateValidUntil" | "providerName" | "includeInHseFile" | "additionalInfo" | "createdAt" | "createdBy" | "updatedAt" | "updatedBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["hrCertificationTraining"]>
 export type HrCertificationTrainingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee_HrCertificationTraining_employeeIdToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_HrCertificationTraining_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -1366,9 +1464,11 @@ export type $HrCertificationTrainingPayload<ExtArgs extends runtime.Types.Extens
     trainingName: string
     trainingType: string
     recurrenceInterval: string
+    trainingDocumentNumber: string | null
     trainingDate: Date
     certificateValidUntil: Date | null
     providerName: string
+    includeInHseFile: boolean
     additionalInfo: string | null
     createdAt: Date
     createdBy: string
@@ -1755,9 +1855,11 @@ export interface HrCertificationTrainingFieldRefs {
   readonly trainingName: Prisma.FieldRef<"HrCertificationTraining", 'String'>
   readonly trainingType: Prisma.FieldRef<"HrCertificationTraining", 'String'>
   readonly recurrenceInterval: Prisma.FieldRef<"HrCertificationTraining", 'String'>
+  readonly trainingDocumentNumber: Prisma.FieldRef<"HrCertificationTraining", 'String'>
   readonly trainingDate: Prisma.FieldRef<"HrCertificationTraining", 'DateTime'>
   readonly certificateValidUntil: Prisma.FieldRef<"HrCertificationTraining", 'DateTime'>
   readonly providerName: Prisma.FieldRef<"HrCertificationTraining", 'String'>
+  readonly includeInHseFile: Prisma.FieldRef<"HrCertificationTraining", 'Boolean'>
   readonly additionalInfo: Prisma.FieldRef<"HrCertificationTraining", 'String'>
   readonly createdAt: Prisma.FieldRef<"HrCertificationTraining", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"HrCertificationTraining", 'String'>

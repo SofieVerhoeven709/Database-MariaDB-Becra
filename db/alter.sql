@@ -2228,4 +2228,87 @@ CREATE TABLE IF NOT EXISTS HrEmployeeAbsence (
       CONSTRAINT HrEmployeeAbsence_ibfk_2 FOREIGN KEY (createdBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
       CONSTRAINT HrEmployeeAbsence_ibfk_3 FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
       CONSTRAINT HrEmployeeAbsence_ibfk_4 FOREIGN KEY (updatedBy) REFERENCES Employee(id) ON UPDATE RESTRICT
-    )
+    )  ENGINE = InnoDB;
+
+ALTER TABLE Employee
+ADD COLUMN IF NOT EXISTS weeklyWorkHours DECIMAL(5,2) NOT NULL DEFAULT 40.00,
+ADD COLUMN IF NOT EXISTS workScheduleType VARCHAR(20) NOT NULL DEFAULT 'fixed',
+ADD COLUMN IF NOT EXISTS overtimeTrackingEnabled BOOLEAN NOT NULL DEFAULT 0,
+ADD COLUMN IF NOT EXISTS maxOvertimeHours DECIMAL(7,2) NULL;
+
+ALTER TABLE HrCertificationTraining
+ADD COLUMN IF NOT EXISTS trainingDocumentNumber VARCHAR(100) NULL,
+ADD COLUMN IF NOT EXISTS includeInHseFile BOOLEAN NOT NULL DEFAULT 0;
+
+CREATE TABLE IF NOT EXISTS HrEmployeeHseFile (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      employeeId CHAR(36) NOT NULL,
+      includeEmployeeData BOOLEAN NOT NULL DEFAULT 1,
+      includePartnerData BOOLEAN NOT NULL DEFAULT 0,
+      partnerName VARCHAR(255) NULL,
+      partnerPhone VARCHAR(100) NULL,
+      partnerEmail VARCHAR(255) NULL,
+      includeEmergencyContact BOOLEAN NOT NULL DEFAULT 1,
+      includeEmployerData BOOLEAN NOT NULL DEFAULT 1,
+      employerCompanyId CHAR(36) NULL,
+      employerName VARCHAR(255) NULL,
+      employerContactName VARCHAR(255) NULL,
+      employerPhone VARCHAR(100) NULL,
+      employerEmail VARCHAR(255) NULL,
+      includeMedicalExamination BOOLEAN NOT NULL DEFAULT 1,
+      lastMedicalExaminationDate DATETIME NULL,
+      lastMedicalExaminationValidUntil DATETIME NULL,
+      lastMedicalExaminationProvider VARCHAR(255) NULL,
+      includeTrainingData BOOLEAN NOT NULL DEFAULT 1,
+      createdAt DATETIME NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      updatedAt DATETIME NULL,
+      updatedBy CHAR(36) NULL,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedAt DATETIME NULL,
+      deletedBy CHAR(36) NULL,
+
+      UNIQUE KEY employeeId (employeeId),
+      INDEX employerCompanyId (employerCompanyId),
+      INDEX createdBy (createdBy),
+      INDEX updatedBy (updatedBy),
+      INDEX deletedBy (deletedBy),
+
+      CONSTRAINT HrEmployeeHseFile_ibfk_1 FOREIGN KEY (employeeId) REFERENCES Employee(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeHseFile_ibfk_2 FOREIGN KEY (employerCompanyId) REFERENCES Company(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeHseFile_ibfk_3 FOREIGN KEY (createdBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeHseFile_ibfk_4 FOREIGN KEY (updatedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeHseFile_ibfk_5 FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+    ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS HrEmployeeOvertime (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      employeeId CHAR(36) NOT NULL,
+      projectId CHAR(36) NOT NULL,
+      sourceTimeRegistryId CHAR(36) NULL,
+      overtimeDate DATETIME NOT NULL,
+      hours DECIMAL(7,2) NOT NULL,
+      description TEXT NULL,
+      createdAt DATETIME NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      updatedAt DATETIME NULL,
+      updatedBy CHAR(36) NULL,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedAt DATETIME NULL,
+      deletedBy CHAR(36) NULL,
+
+      INDEX employeeId (employeeId),
+      INDEX projectId (projectId),
+      INDEX sourceTimeRegistryId (sourceTimeRegistryId),
+      INDEX overtimeDate (overtimeDate),
+      INDEX createdBy (createdBy),
+      INDEX updatedBy (updatedBy),
+      INDEX deletedBy (deletedBy),
+
+      CONSTRAINT HrEmployeeOvertime_ibfk_1 FOREIGN KEY (employeeId) REFERENCES Employee(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeOvertime_ibfk_2 FOREIGN KEY (projectId) REFERENCES Project(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeOvertime_ibfk_3 FOREIGN KEY (sourceTimeRegistryId) REFERENCES TimeRegistry(id) ON DELETE SET NULL ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeOvertime_ibfk_4 FOREIGN KEY (createdBy) REFERENCES Employee(id) ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeOvertime_ibfk_5 FOREIGN KEY (updatedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+      CONSTRAINT HrEmployeeOvertime_ibfk_6 FOREIGN KEY (deletedBy) REFERENCES Employee(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+    ) ENGINE = InnoDB;

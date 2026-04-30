@@ -90,12 +90,12 @@ function validityBadge(record: HrCertificationTraining) {
   if (state === 'valid') {
     return <Badge className="border-0 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">Geldig</Badge>
   }
-  return <Badge variant="secondary">Geen certificaat</Badge>
+  return <Badge variant="secondary">No certificate</Badge>
 }
 
 function recurrenceLabel(value: string) {
   if (value === '5y') return '5 year'
-  if (value === '10y') return '10 jaar'
+  if (value === '10y') return '10 years'
   return '-'
 }
 
@@ -237,7 +237,7 @@ export function HrCertificationTrainingTable({
         <div>
           <h1 className="text-2xl font-bold text-foreground">Employee Certificates & Training</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Beheer opleidingen, certificaten en afwezigheden per werknemer.
+            Manage training, certificates and absences for every employee.
           </p>
         </div>
 
@@ -260,7 +260,7 @@ export function HrCertificationTrainingTable({
           </TabsTrigger>
           <TabsTrigger value="absences">
             <CalendarDays className="h-4 w-4" />
-            Afwezigheden
+            Absences
           </TabsTrigger>
         </TabsList>
 
@@ -271,16 +271,16 @@ export function HrCertificationTrainingTable({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Alle certificaten</SelectItem>
-                <SelectItem value="expiring">Binnen 6 maanden</SelectItem>
-                <SelectItem value="expired">Vervallen</SelectItem>
-                <SelectItem value="valid">Geldig</SelectItem>
-                <SelectItem value="no_validity">Geen certificaat</SelectItem>
+                <SelectItem value="all">All certificates</SelectItem>
+                <SelectItem value="expiring">Expiring within 6 months</SelectItem>
+                <SelectItem value="expired">Expired</SelectItem>
+                <SelectItem value="valid">Valid</SelectItem>
+                <SelectItem value="no_validity">No certificate</SelectItem>
               </SelectContent>
             </Select>
             <Button type="button" onClick={openCreateCertificationDialog}>
               <Plus className="h-4 w-4" />
-              Opleiding toevoegen
+              Add Training
             </Button>
           </div>
 
@@ -291,18 +291,18 @@ export function HrCertificationTrainingTable({
                   <TableHead>
                     <span className="inline-flex items-center gap-2">
                       <UserRound className="h-4 w-4" />
-                      Werknemer
+                      Employee
                     </span>
                   </TableHead>
                   <TableHead>
                     <span className="inline-flex items-center gap-2">
                       <GraduationCap className="h-4 w-4" />
-                      Opleiding
+                      Training
                     </span>
                   </TableHead>
                   <TableHead>Type</TableHead>
-                  <TableHead>Datum</TableHead>
-                  <TableHead>Geldig tot</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Valid until</TableHead>
                   <TableHead>Verstrekker</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
@@ -351,7 +351,7 @@ export function HrCertificationTrainingTable({
                 {!filteredCertifications.length && (
                   <TableRow>
                     <TableCell colSpan={8} className="h-24 text-center text-sm text-muted-foreground">
-                      Geen opleidingen of certificaten gevonden.
+                      No trainings of certificates found.
                     </TableCell>
                   </TableRow>
                 )}
@@ -368,7 +368,7 @@ export function HrCertificationTrainingTable({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Alle jaren</SelectItem>
+                  <SelectItem value="all">All years</SelectItem>
                   {years.map(year => (
                     <SelectItem key={year} value={String(year)}>
                       {year}
@@ -381,18 +381,18 @@ export function HrCertificationTrainingTable({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Alle types</SelectItem>
+                  <SelectItem value="all">All types</SelectItem>
                   <SelectItem value="ADV">ADV</SelectItem>
-                  <SelectItem value="VACATION">Vakantiedagen</SelectItem>
-                  <SelectItem value="SICKNESS">Ziekte</SelectItem>
-                  <SelectItem value="SMALL_LEAVE">Klein verlet</SelectItem>
-                  <SelectItem value="HOLIDAY">Feestdag</SelectItem>
+                  <SelectItem value="VACATION">Vacation</SelectItem>
+                  <SelectItem value="SICKNESS">Sickness</SelectItem>
+                  <SelectItem value="SMALL_LEAVE">Small leave</SelectItem>
+                  <SelectItem value="HOLIDAY">Holiday</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <Button type="button" onClick={openCreateAbsenceDialog}>
               <Plus className="h-4 w-4" />
-              Afwezigheid toevoegen
+              Adding absence
             </Button>
           </div>
 
@@ -400,10 +400,10 @@ export function HrCertificationTrainingTable({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Werknemer</TableHead>
-                  <TableHead>Jaar</TableHead>
+                  <TableHead>Employee</TableHead>
+                  <TableHead>Year</TableHead>
                   <TableHead>Type</TableHead>
-                  <TableHead>Dagen</TableHead>
+                  <TableHead>Days</TableHead>
                   <TableHead>Additional info</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -435,7 +435,7 @@ export function HrCertificationTrainingTable({
                 {!filteredAbsences.length && (
                   <TableRow>
                     <TableCell colSpan={6} className="h-24 text-center text-sm text-muted-foreground">
-                      Geen afwezigheden gevonden.
+                      No absences found.
                     </TableCell>
                   </TableRow>
                 )}

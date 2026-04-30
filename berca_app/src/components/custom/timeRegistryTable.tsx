@@ -47,6 +47,33 @@ function formatTime(iso: string | null | undefined) {
   return new Date(iso).toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
 }
 
+function getDayHourStatus(totalHours: number) {
+  const expectedHours = 8
+  const difference = totalHours - expectedHours
+
+  if (Math.abs(difference) < 0.01) {
+    return {
+      isFullDay: true,
+      label: 'Correct',
+      detail: '8.00h worked',
+    }
+  }
+
+  if (difference > 0) {
+    return {
+      isFullDay: false,
+      label: 'Too much',
+      detail: `${difference.toFixed(2)}h too much worked`,
+    }
+  }
+
+  return {
+    isFullDay: false,
+    label: 'Too little',
+    detail: `${Math.abs(difference).toFixed(2)}h too little worked`,
+  }
+}
+
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
   return sortDir === 'asc' ? (
@@ -505,17 +532,27 @@ export function TimeRegistryTable({
                   <TableCell>
                     {(() => {
                       const totalHours = getEmployeeDayTotalHours(tr.createdBy, tr.workDate)
-                      const isFullDay = totalHours === 8
+                      const dayHourStatus = getDayHourStatus(totalHours)
 
                       return (
-                        <Badge
-                          className={
-                            isFullDay
-                              ? 'border-0 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
-                              : 'border-0 bg-red-500/15 text-red-700 dark:text-red-300'
-                          }>
-                          {totalHours.toFixed(2)}h
-                        </Badge>
+                        <div className="flex min-w-36 flex-col gap-1">
+                          <Badge
+                            className={
+                              dayHourStatus.isFullDay
+                                ? 'w-fit border-0 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                                : 'w-fit border-0 bg-red-500/15 text-red-700 dark:text-red-300'
+                            }>
+                            {totalHours.toFixed(2)}h - {dayHourStatus.label}
+                          </Badge>
+                          <span
+                            className={
+                              dayHourStatus.isFullDay
+                                ? 'text-xs text-emerald-700 dark:text-emerald-300'
+                                : 'text-xs text-red-700 dark:text-red-300'
+                            }>
+                            {dayHourStatus.detail}
+                          </span>
+                        </div>
                       )
                     })()}
                   </TableCell>

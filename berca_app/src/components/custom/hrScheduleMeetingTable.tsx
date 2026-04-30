@@ -24,6 +24,9 @@ interface HrScheduleMeetingTableProps {
   meetings: HrEvaluationMeeting[]
   employees: HrEvaluationEmployeeOption[]
   departmentId: string
+  title?: string
+  description?: string
+  createButtonLabel?: string
 }
 
 type StatusFilter = HrEvaluationStatus | 'all'
@@ -50,7 +53,14 @@ function statusBadge(status: HrEvaluationStatus) {
   return <Badge variant="outline">Planned</Badge>
 }
 
-export function HrScheduleMeetingTable({meetings, employees, departmentId}: HrScheduleMeetingTableProps) {
+export function HrScheduleMeetingTable({
+  meetings,
+  employees,
+  departmentId,
+  title = 'HR Schedule meetings',
+  description = 'Plan evaluations and maintain history for inspection.',
+  createButtonLabel = 'New Schedule Meeting',
+}: HrScheduleMeetingTableProps) {
   const router = useRouter()
   const [nameFilter, setNameFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
@@ -138,8 +148,8 @@ export function HrScheduleMeetingTable({meetings, employees, departmentId}: HrSc
     <div className="space-y-4">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">HR Schedule meetings</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Plan evaluations and maintain history for inspection.</p>
+          <h1 className="text-2xl font-bold text-foreground">{title}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
         </div>
 
         <div className="flex flex-col gap-2 sm:flex-row">
@@ -165,7 +175,7 @@ export function HrScheduleMeetingTable({meetings, employees, departmentId}: HrSc
           </Select>
           <Button type="button" onClick={openCreateDialog}>
             <Plus className="h-4 w-4" />
-            New Schedule Meeting
+            {createButtonLabel}
           </Button>
         </div>
       </div>

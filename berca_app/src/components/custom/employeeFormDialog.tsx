@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter} from '@/components/ui/dialog'
 import {Textarea} from '@/components/ui/textarea'
 import {Switch} from '@/components/ui/switch'
@@ -9,6 +9,7 @@ import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
+import {Trash2, Upload} from 'lucide-react'
 import type {MappedEmployee} from '@/types/employee'
 
 interface EmployeeFormDialogProps {
@@ -21,7 +22,7 @@ interface EmployeeFormDialogProps {
   benefitTemplateOptions: string[]
   roles: {id: string; name: string}[]
   titles: {id: string; name: string}[]
-  onSave: (employee: MappedEmployee, password: string) => void
+  onSave: (employee: MappedEmployee, password: string, photo?: File | null) => Promise<void>
 }
 
 // Defaults used when creating a new employee or resetting the form.
@@ -144,6 +145,11 @@ export function EmployeeFormDialog({
   const [form, setForm] = useState<MappedEmployee>(EMPTY_EMPLOYEE)
   const [password, setPassword] = useState('')
   const [passwordTouched, setPasswordTouched] = useState(false)
+  const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null)
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null)
+  const [photoError, setPhotoError] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
+  const photoInputRef = useRef<HTMLInputElement | null>(null)
 
   const availableEmploymentStatusOptions = employmentStatusOptions.length
     ? employmentStatusOptions
@@ -171,11 +177,67 @@ export function EmployeeFormDialog({
       }
       setPassword('')
       setPasswordTouched(false)
+      setSelectedPhoto(null)
+      setPhotoPreview(null)
+      setPhotoError(null)
     }
   }, [open, employee])
 
+  useEffect(() => {
+    return () => {
+      if (photoPreview) URL.revokeObjectURL(photoPreview)
+    }
+  }, [photoPreview])
+
   function update<K extends keyof MappedEmployee>(field: K, value: MappedEmployee[K]) {
     setForm(prev => ({...prev, [field]: value}))
+  }
+
+  function handlePhotoSelect(file: File | undefined) {
+    setPhotoError(null)
+
+    if (!file) return
+
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+      setPhotoError('Only JPG and PNG photos are allowed.')
+      return
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setPhotoError('The photo must be smaller than 5 MB.')
+      return
+    }
+
+    if (photoPreview) URL.revokeObjectURL(photoPreview)
+    setSelectedPhoto(file)
+    setPhotoPreview(URL.createObjectURL(file))
+  }
+
+  function clearSelectedPhoto() {
+    if (photoPreview) URL.revokeObjectURL(photoPreview)
+    setSelectedPhoto(null)
+    setPhotoPreview(null)
+    setPhotoError(null)
+    if (photoInputRef.current) photoInputRef.current.value = ''
+  }
+
+  async function handleSubmit() {
+    if (passwordTooShort) {
+      setPasswordTouched(true)
+      return
+    }
+
+    setSaving(true)
+    setPhotoError(null)
+
+    try {
+      await onSave({...form, id: form.id || crypto.randomUUID()}, password, selectedPhoto)
+      clearSelectedPhoto()
+    } catch (error) {
+      setPhotoError(error instanceof Error ? error.message : 'The employee could not be saved.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   function appendBenefitTemplate(template: string) {
@@ -218,14 +280,9 @@ export function EmployeeFormDialog({
         </DialogHeader>
 
         <form
-          onSubmit={e => {
+          onSubmit={async e => {
             e.preventDefault()
-            // Block submit if password is set but too short
-            if (passwordTooShort) {
-              setPasswordTouched(true)
-              return
-            }
-            onSave(form, password)
+            await handleSubmit()
           }}
           className="flex flex-col gap-6">
           <Tabs defaultValue="general" className="w-full">
@@ -355,34 +412,68 @@ export function EmployeeFormDialog({
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="pictureId">Profile Picture</Label>
+                  <Label htmlFor="employeePhoto">Employee Photo</Label>
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary border border-border text-xs text-muted-foreground">
-                      {form.firstName && form.lastName ? `${form.firstName[0]}${form.lastName[0]}`.toUpperCase() : '?'}
-                    </div>
+                    {photoPreview || form.photoFileId ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={photoPreview ?? form.photoFileId ?? ''}
+                        alt={`${form.firstName} ${form.lastName}`}
+                        className="h-12 w-12 rounded-full border border-border bg-secondary object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary border border-border text-xs text-muted-foreground">
+                        {form.firstName && form.lastName
+                          ? `${form.firstName[0]}${form.lastName[0]}`.toUpperCase()
+                          : '?'}
+                      </div>
+                    )}
+                    <input
+                      ref={photoInputRef}
+                      id="employeePhoto"
+                      type="file"
+                      accept="image/jpeg,image/png"
+                      className="hidden"
+                      onChange={e => handlePhotoSelect(e.target.files?.[0])}
+                    />
                     <Button
                       type="button"
                       variant="outline"
                       size="sm"
-                      className="bg-secondary border-border text-foreground hover:bg-muted hover:text-foreground">
+                      className="gap-2 bg-secondary border-border text-foreground hover:bg-muted hover:text-foreground"
+                      onClick={() => photoInputRef.current?.click()}>
+                      <Upload className="h-4 w-4" />
                       Upload
                     </Button>
-                    {form.pictureId && (
-                      <span className="text-xs text-muted-foreground truncate max-w-[120px]">{form.pictureId}</span>
+                    {(selectedPhoto || form.photoFileId) && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="gap-2 border-border text-destructive hover:text-destructive"
+                        onClick={() => {
+                          if (selectedPhoto) {
+                            clearSelectedPhoto()
+                          } else {
+                            update('photoFileId', null)
+                          }
+                        }}>
+                        <Trash2 className="h-4 w-4" />
+                        Remove
+                      </Button>
                     )}
                   </div>
+                  <p className="text-xs text-muted-foreground">JPG or PNG, maximum 5 MB.</p>
+                  {selectedPhoto && <p className="text-xs text-muted-foreground truncate">{selectedPhoto.name}</p>}
+                  {photoError && <p className="text-xs text-destructive">{photoError}</p>}
                 </div>
               </div>
 
               <div className="flex flex-col gap-2">
-                <Label htmlFor="photoFileId">HSE Photo File</Label>
-                <Input
-                  id="photoFileId"
-                  value={form.photoFileId ?? ''}
-                  onChange={e => update('photoFileId', e.target.value || null)}
-                  className={inputStyles}
-                  placeholder="HSE file ID or reference"
-                />
+                <Label htmlFor="photoFileId">Photo File</Label>
+                <div className="rounded-md border border-border/40 bg-muted/30 px-3 py-2 text-sm text-muted-foreground break-all">
+                  {form.photoFileId ?? 'The file path will appear here after upload.'}
+                </div>
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -889,8 +980,8 @@ export function EmployeeFormDialog({
               className="bg-secondary border-border text-foreground hover:bg-muted hover:text-foreground">
               Cancel
             </Button>
-            <Button type="submit" className="bg-accent text-accent-foreground hover:bg-accent/80">
-              {isEditing ? 'Save Changes' : 'Create Employee'}
+            <Button type="submit" disabled={saving} className="bg-accent text-accent-foreground hover:bg-accent/80">
+              {saving ? 'Saving...' : isEditing ? 'Save Changes' : 'Create Employee'}
             </Button>
           </DialogFooter>
         </form>

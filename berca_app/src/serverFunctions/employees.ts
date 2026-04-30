@@ -120,11 +120,12 @@ export const createEmployeeAction = protectedServerFunction({
     if (!password_hash) throw new Error('Password is required when creating an employee.')
 
     logger.info(`Creating employee, createdBy: ${profile.id}`)
+    const employeeId = data.id || crypto.randomUUID()
 
     const employee = await prismaClient.employee.create({
       data: {
         ...data,
-        id: crypto.randomUUID(),
+        id: employeeId,
         password_hash: hashPassword(password_hash),
         createdBy: profile.id,
         createdAt: new Date(),

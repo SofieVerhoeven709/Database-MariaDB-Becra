@@ -6,6 +6,51 @@ export interface DepartmentAction {
   owner: string
 }
 
+const HR_ACTIONS: DepartmentAction[] = [
+  {
+    id: 'recruitment',
+    name: 'Recruitment',
+    description: 'Manage vacancies and candidate pipelines',
+    icon: 'UserSearch',
+    owner: 'hr',
+  },
+  {
+    id: 'records',
+    name: 'Employee Records',
+    description: 'Maintain employee master data and files',
+    icon: 'FolderUser',
+    owner: 'hr',
+  },
+  {
+    id: 'certificationTraining',
+    name: 'Employee Certificates & Training',
+    description: 'Track employee certifications and required trainings',
+    icon: 'BadgeCheck',
+    owner: 'hr',
+  },
+  {
+    id: 'benefits',
+    name: 'Benefits Administration',
+    description: 'Manage employee benefits, payroll inputs, and perks',
+    icon: 'CreditCard',
+    owner: 'hr',
+  },
+  {
+    id: 'performance',
+    name: 'Performance Review',
+    description: 'Manage employee evaluation meetings, schedules, and review records',
+    icon: 'BarChart3',
+    owner: 'hr',
+  },
+  {
+    id: 'hseFile',
+    name: 'HSE File',
+    description: 'Review employee HSE data, emergency contacts, employer data, medical checks, and trainings',
+    icon: 'ShieldCheck',
+    owner: 'hr',
+  },
+]
+
 export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
   General: [
     {
@@ -242,43 +287,15 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
     },
   ],
 
-  HR: [
-    {
-      id: 'recruitment',
-      name: 'Recruitment',
-      description: 'Manage vacancies and candidate pipelines',
-      icon: 'UserSearch',
-      owner: 'hr',
-    },
-    {
-      id: 'records',
-      name: 'Employee Records',
-      description: 'Maintain employee master data and files',
-      icon: 'FolderUser',
-      owner: 'hr',
-    },
-    {
-      id: 'certificationTraining',
-      name: 'Employee Certificates & Training',
-      description: 'Track employee certifications and required trainings',
-      icon: 'BadgeCheck',
-      owner: 'hr',
-    },
-    {
-      id: 'benefits',
-      name: 'Benefits Administration',
-      description: 'Manage employee benefits, payroll inputs, and perks',
-      icon: 'CreditCard',
-      owner: 'hr',
-    },
-    {
-      id: 'performance',
-      name: 'Performance Reviews',
-      description: 'Conduct and archive employee evaluations',
-      icon: 'BarChart3',
-      owner: 'hr',
-    },
-  ],
+  HR: HR_ACTIONS,
+
+  HRM: HR_ACTIONS,
+
+  'Human Resource': HR_ACTIONS,
+
+  'Human Resources': HR_ACTIONS,
+
+  Personeel: HR_ACTIONS,
 
   Management: [
     {

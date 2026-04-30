@@ -517,7 +517,10 @@ export const ModelName = {
   ProjectEmployee: 'ProjectEmployee',
   QuoteSupplierMiscLine: 'QuoteSupplierMiscLine',
   VisibilityForDepartment: 'VisibilityForDepartment',
-  WorkOrderBoQ: 'WorkOrderBoQ'
+  WorkOrderBoQ: 'WorkOrderBoQ',
+  HrFacilityVehicle: 'HrFacilityVehicle',
+  HrFacilityFuelCard: 'HrFacilityFuelCard',
+  HrFacilityFine: 'HrFacilityFine'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -533,7 +536,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "recruitmentApplicant" | "recruitmentVacancy" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "employeeContractStatusOption" | "employeeContractTypeOption" | "employeeBenefitOption" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "hrCertificationTraining" | "hrEmployeeHseFile" | "hrEmployeeOvertime" | "hrEmployeeAbsence" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "recruitmentApplicant" | "recruitmentVacancy" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "employeeContractStatusOption" | "employeeContractTypeOption" | "employeeBenefitOption" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "hrCertificationTraining" | "hrEmployeeHseFile" | "hrEmployeeOvertime" | "hrEmployeeAbsence" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ" | "hrFacilityVehicle" | "hrFacilityFuelCard" | "hrFacilityFine"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -8985,6 +8988,204 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    HrFacilityVehicle: {
+      payload: Prisma.$HrFacilityVehiclePayload<ExtArgs>
+      fields: Prisma.HrFacilityVehicleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HrFacilityVehicleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityVehiclePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HrFacilityVehicleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityVehiclePayload>
+        }
+        findFirst: {
+          args: Prisma.HrFacilityVehicleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityVehiclePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HrFacilityVehicleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityVehiclePayload>
+        }
+        findMany: {
+          args: Prisma.HrFacilityVehicleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityVehiclePayload>[]
+        }
+        create: {
+          args: Prisma.HrFacilityVehicleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityVehiclePayload>
+        }
+        createMany: {
+          args: Prisma.HrFacilityVehicleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.HrFacilityVehicleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityVehiclePayload>
+        }
+        update: {
+          args: Prisma.HrFacilityVehicleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityVehiclePayload>
+        }
+        deleteMany: {
+          args: Prisma.HrFacilityVehicleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HrFacilityVehicleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.HrFacilityVehicleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityVehiclePayload>
+        }
+        aggregate: {
+          args: Prisma.HrFacilityVehicleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHrFacilityVehicle>
+        }
+        groupBy: {
+          args: Prisma.HrFacilityVehicleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrFacilityVehicleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HrFacilityVehicleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrFacilityVehicleCountAggregateOutputType> | number
+        }
+      }
+    }
+    HrFacilityFuelCard: {
+      payload: Prisma.$HrFacilityFuelCardPayload<ExtArgs>
+      fields: Prisma.HrFacilityFuelCardFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HrFacilityFuelCardFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFuelCardPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HrFacilityFuelCardFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFuelCardPayload>
+        }
+        findFirst: {
+          args: Prisma.HrFacilityFuelCardFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFuelCardPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HrFacilityFuelCardFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFuelCardPayload>
+        }
+        findMany: {
+          args: Prisma.HrFacilityFuelCardFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFuelCardPayload>[]
+        }
+        create: {
+          args: Prisma.HrFacilityFuelCardCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFuelCardPayload>
+        }
+        createMany: {
+          args: Prisma.HrFacilityFuelCardCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.HrFacilityFuelCardDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFuelCardPayload>
+        }
+        update: {
+          args: Prisma.HrFacilityFuelCardUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFuelCardPayload>
+        }
+        deleteMany: {
+          args: Prisma.HrFacilityFuelCardDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HrFacilityFuelCardUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.HrFacilityFuelCardUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFuelCardPayload>
+        }
+        aggregate: {
+          args: Prisma.HrFacilityFuelCardAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHrFacilityFuelCard>
+        }
+        groupBy: {
+          args: Prisma.HrFacilityFuelCardGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrFacilityFuelCardGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HrFacilityFuelCardCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrFacilityFuelCardCountAggregateOutputType> | number
+        }
+      }
+    }
+    HrFacilityFine: {
+      payload: Prisma.$HrFacilityFinePayload<ExtArgs>
+      fields: Prisma.HrFacilityFineFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HrFacilityFineFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFinePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HrFacilityFineFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFinePayload>
+        }
+        findFirst: {
+          args: Prisma.HrFacilityFineFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFinePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HrFacilityFineFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFinePayload>
+        }
+        findMany: {
+          args: Prisma.HrFacilityFineFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFinePayload>[]
+        }
+        create: {
+          args: Prisma.HrFacilityFineCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFinePayload>
+        }
+        createMany: {
+          args: Prisma.HrFacilityFineCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.HrFacilityFineDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFinePayload>
+        }
+        update: {
+          args: Prisma.HrFacilityFineUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFinePayload>
+        }
+        deleteMany: {
+          args: Prisma.HrFacilityFineDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HrFacilityFineUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.HrFacilityFineUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrFacilityFinePayload>
+        }
+        aggregate: {
+          args: Prisma.HrFacilityFineAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHrFacilityFine>
+        }
+        groupBy: {
+          args: Prisma.HrFacilityFineGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrFacilityFineGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HrFacilityFineCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrFacilityFineCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -11345,6 +11546,76 @@ export const WorkOrderBoQScalarFieldEnum = {
 export type WorkOrderBoQScalarFieldEnum = (typeof WorkOrderBoQScalarFieldEnum)[keyof typeof WorkOrderBoQScalarFieldEnum]
 
 
+export const HrFacilityVehicleScalarFieldEnum = {
+  id: 'id',
+  serialTrackedId: 'serialTrackedId',
+  assignedEmployeeId: 'assignedEmployeeId',
+  licensePlate: 'licensePlate',
+  brand: 'brand',
+  model: 'model',
+  vin: 'vin',
+  status: 'status',
+  conditionStatus: 'conditionStatus',
+  signedVehicleDocument: 'signedVehicleDocument',
+  signedDocumentFileId: 'signedDocumentFileId',
+  monthlyFuelBudget: 'monthlyFuelBudget',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityVehicleScalarFieldEnum = (typeof HrFacilityVehicleScalarFieldEnum)[keyof typeof HrFacilityVehicleScalarFieldEnum]
+
+
+export const HrFacilityFuelCardScalarFieldEnum = {
+  id: 'id',
+  vehicleId: 'vehicleId',
+  employeeId: 'employeeId',
+  cardNumber: 'cardNumber',
+  provider: 'provider',
+  monthlyBudget: 'monthlyBudget',
+  currentMonthSpend: 'currentMonthSpend',
+  active: 'active',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityFuelCardScalarFieldEnum = (typeof HrFacilityFuelCardScalarFieldEnum)[keyof typeof HrFacilityFuelCardScalarFieldEnum]
+
+
+export const HrFacilityFineScalarFieldEnum = {
+  id: 'id',
+  vehicleId: 'vehicleId',
+  employeeId: 'employeeId',
+  fineDate: 'fineDate',
+  amount: 'amount',
+  referenceNumber: 'referenceNumber',
+  description: 'description',
+  paidByEmployee: 'paidByEmployee',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityFineScalarFieldEnum = (typeof HrFacilityFineScalarFieldEnum)[keyof typeof HrFacilityFineScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -13065,6 +13336,55 @@ export const WorkOrderBoQOrderByRelevanceFieldEnum = {
 export type WorkOrderBoQOrderByRelevanceFieldEnum = (typeof WorkOrderBoQOrderByRelevanceFieldEnum)[keyof typeof WorkOrderBoQOrderByRelevanceFieldEnum]
 
 
+export const HrFacilityVehicleOrderByRelevanceFieldEnum = {
+  id: 'id',
+  serialTrackedId: 'serialTrackedId',
+  assignedEmployeeId: 'assignedEmployeeId',
+  licensePlate: 'licensePlate',
+  brand: 'brand',
+  model: 'model',
+  vin: 'vin',
+  status: 'status',
+  conditionStatus: 'conditionStatus',
+  signedDocumentFileId: 'signedDocumentFileId',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityVehicleOrderByRelevanceFieldEnum = (typeof HrFacilityVehicleOrderByRelevanceFieldEnum)[keyof typeof HrFacilityVehicleOrderByRelevanceFieldEnum]
+
+
+export const HrFacilityFuelCardOrderByRelevanceFieldEnum = {
+  id: 'id',
+  vehicleId: 'vehicleId',
+  employeeId: 'employeeId',
+  cardNumber: 'cardNumber',
+  provider: 'provider',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityFuelCardOrderByRelevanceFieldEnum = (typeof HrFacilityFuelCardOrderByRelevanceFieldEnum)[keyof typeof HrFacilityFuelCardOrderByRelevanceFieldEnum]
+
+
+export const HrFacilityFineOrderByRelevanceFieldEnum = {
+  id: 'id',
+  vehicleId: 'vehicleId',
+  employeeId: 'employeeId',
+  referenceNumber: 'referenceNumber',
+  description: 'description',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrFacilityFineOrderByRelevanceFieldEnum = (typeof HrFacilityFineOrderByRelevanceFieldEnum)[keyof typeof HrFacilityFineOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -13334,6 +13654,9 @@ export type GlobalOmitConfig = {
   quoteSupplierMiscLine?: Prisma.QuoteSupplierMiscLineOmit
   visibilityForDepartment?: Prisma.VisibilityForDepartmentOmit
   workOrderBoQ?: Prisma.WorkOrderBoQOmit
+  hrFacilityVehicle?: Prisma.HrFacilityVehicleOmit
+  hrFacilityFuelCard?: Prisma.HrFacilityFuelCardOmit
+  hrFacilityFine?: Prisma.HrFacilityFineOmit
 }
 
 /* Types for Logging */

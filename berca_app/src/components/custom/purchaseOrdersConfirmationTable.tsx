@@ -4,6 +4,7 @@ import {useMemo, useState} from 'react'
 import Link from 'next/link'
 import {useRouter} from 'next/navigation'
 import {Button} from '@/components/ui/button'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {PurchaseFormDialog} from '@/components/custom/purchaseFormDialog'
 import type {MappedPurchase} from '@/types/purchase'
 import {updatePurchaseAction} from '@/serverFunctions/purchases'
@@ -57,6 +58,9 @@ export function PurchaseOrdersConfirmationTable({
 
   return (
     <>
+      <div className="mb-3 flex justify-end">
+        <TableCsvActions filename="purchase-orders-confirmation-table.csv" />
+      </div>
       <div className="overflow-hidden rounded-xl border border-border/70 bg-card">
         <table className="w-full text-sm">
           <thead className="bg-secondary/40">

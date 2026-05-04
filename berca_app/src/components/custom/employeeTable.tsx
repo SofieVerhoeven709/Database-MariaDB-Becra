@@ -35,7 +35,8 @@ import {
   updateEmployeeContractStatusOptionAction,
   updateEmployeeContractTypeOptionAction,
 } from '@/serverFunctions/employees'
-import {useRouter} from 'next/navigation'
+import {useRouter} from 'next/navigation'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 type SortField =
   | 'name'
@@ -369,6 +370,8 @@ export function EmployeeTable({
               </SelectContent>
             </Select>
           </div>
+          <TableCsvActions filename="employee-table.csv" />
+
           {canCreate && (
             <Button onClick={handleCreate} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
               <Plus className="h-4 w-4" />

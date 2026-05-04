@@ -6,6 +6,7 @@ import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {Badge} from '@/components/ui/badge'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
@@ -358,6 +359,7 @@ export function SerialTrackedTable({
           )}
         </div>
 
+        <TableCsvActions filename="serial-tracked-table.csv" />
         {canDelete && (
           <Button
             onClick={() => {

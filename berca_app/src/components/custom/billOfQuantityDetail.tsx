@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {ArrowLeft, Pencil, X, Save, Plus, Trash2, ExternalLink, AlertTriangle} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Plus, Trash2, ExternalLink, AlertTriangle, Download, FileText} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -26,6 +26,7 @@ import {
   updateTrainingVatMarginAction,
 } from '@/serverFunctions/billOfQuantities'
 import type {MappedBoq, MappedBillingLine, BoqLookup, PriceListOption} from '@/types/billOfQuantity'
+import {buildCsv, downloadCsv} from '@/lib/csv'
 
 function formatDate(date: string | null) {
   if (!date) return '-'
@@ -373,6 +374,47 @@ export function BoqDetail({
 
   const belowCostCount = allLines.filter(l => l.type === 'material' && l.priceListBelowCost).length
 
+  function handleDownloadCsv() {
+    const headers = [
+      'BoQ Number',
+      'Work Order',
+      'Project',
+      'Company',
+      'Type',
+      'Description',
+      'BE Number',
+      'Quantity',
+      'Unit',
+      'Unit Price',
+      'Total Ex VAT',
+      'VAT %',
+      'VAT Amount',
+      'Total Incl VAT',
+    ]
+    const rows = boq.workOrders.flatMap(wo =>
+      wo.billingLines.map(line => [
+        boq.boqNumber,
+        wo.workOrderNumber ?? '',
+        wo.projectNumber,
+        wo.companyName,
+        line.type,
+        line.sourceLabel,
+        line.beNumber ?? '',
+        line.quantity,
+        line.unit,
+        line.unitPriceFinal ?? '',
+        line.lineTotalFinal ?? '',
+        line.vatRate ?? '',
+        line.lineVatAmount ?? '',
+        line.lineTotalInclVat ?? '',
+      ]),
+    )
+    rows.push(['', '', '', '', '', 'Subtotal (ex VAT)', '', '', '', '', boq.subtotalExVat, '', '', ''])
+    rows.push(['', '', '', '', '', 'Total VAT', '', '', '', '', '', '', boq.totalVat, ''])
+    rows.push(['', '', '', '', '', 'Total (incl VAT)', '', '', '', '', '', '', '', boq.totalInclVat])
+    downloadCsv(`${boq.boqNumber || 'bill-of-quantity'}.csv`, buildCsv(headers, rows))
+  }
+
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
@@ -393,9 +435,17 @@ export function BoqDetail({
             </p>
           </div>
         </div>
-        {canEdit && (
-          <div className="flex items-center gap-2">
-            {editing ? (
+        <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={handleDownloadCsv} className="gap-2 border-border">
+            <Download className="h-4 w-4" /> CSV
+          </Button>
+          <Link href={`/api/billOfQuantity/${boq.id}/pdf` as Route}>
+            <Button variant="outline" className="gap-2 border-border">
+              <FileText className="h-4 w-4" /> PDF
+            </Button>
+          </Link>
+          {canEdit &&
+            (editing ? (
               <>
                 <Button variant="outline" onClick={handleCancel} className="gap-2 border-border">
                   <X className="h-4 w-4" /> Cancel
@@ -411,9 +461,8 @@ export function BoqDetail({
               <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
                 <Pencil className="h-4 w-4" /> Edit
               </Button>
-            )}
-          </div>
-        )}
+            ))}
+        </div>
       </div>
 
       {/* Info card */}

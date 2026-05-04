@@ -13,7 +13,8 @@ import {Badge} from '@/components/ui/badge'
 import type {MappedBoq, BoqLookup} from '@/types/billOfQuantity'
 import {softDeleteBoqAction, hardDeleteBoqAction, undeleteBoqAction} from '@/serverFunctions/billOfQuantities'
 import {BoqFormDialog} from '@/components/custom/billOfQuantityFormDialog'
-import type {ProjectOption} from '@/components/custom/billOfQuantityFormDialog'
+import type {ProjectOption} from '@/components/custom/billOfQuantityFormDialog'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 type SortField =
   | 'boqNumber'
@@ -212,6 +213,8 @@ export function BoqTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="bill-of-quantity-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {

@@ -386,24 +386,39 @@ interface CopyProjectBOMDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   sourceBOM: MappedProjectBOM
-  onCopy: (projectBomNumber: string, shortDescription: string) => Promise<void>
+  onCopy: (projectBomNumber: string, shortDescription: string, targetProjectId: string | null) => Promise<void>
 }
 
 export function CopyProjectBOMDialog({open, onOpenChange, sourceBOM, onCopy}: CopyProjectBOMDialogProps) {
   const [projectBomNumber, setProjectBomNumber] = useState('')
   const [shortDescription, setShortDescription] = useState('')
+  const [projectQuery, setProjectQuery] = useState('')
+  const [projectResults, setProjectResults] = useState<ProjectOption[]>([])
+  const [projectSearching, setProjectSearching] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<ProjectOption | null>(null)
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     if (!open) return
     setProjectBomNumber(generateBomNumber())
     setShortDescription(sourceBOM.shortDescription ? `Copy of ${sourceBOM.shortDescription}` : '')
+    setProjectQuery('')
+    setProjectResults([])
+    setSelectedProject(null)
   }, [open, sourceBOM.id, sourceBOM.shortDescription])
+
+  useEffect(() => {
+    if (!open) return
+    setProjectSearching(true)
+    searchProjectsAction(projectQuery)
+      .then(setProjectResults)
+      .finally(() => setProjectSearching(false))
+  }, [projectQuery, open])
 
   async function handleCopy() {
     setSaving(true)
     try {
-      await onCopy(projectBomNumber.trim(), shortDescription.trim())
+      await onCopy(projectBomNumber.trim(), shortDescription.trim(), selectedProject?.id ?? null)
       onOpenChange(false)
     } finally {
       setSaving(false)
@@ -418,9 +433,58 @@ export function CopyProjectBOMDialog({open, onOpenChange, sourceBOM, onCopy}: Co
         </DialogHeader>
         <div className="flex flex-col gap-4 py-2">
           <p className="text-xs text-muted-foreground">
-            Copying <span className="font-medium text-foreground">{sourceBOM.projectBomNumber}</span>. A new BOM will
-            be created with the same project, parent, settings and structures.
+            Copying <span className="font-medium text-foreground">{sourceBOM.projectBomNumber}</span>. A new BOM will be
+            created with the selected project, settings and structures.
           </p>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Project</Label>
+            {selectedProject ? (
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-sm text-foreground font-medium">
+                    {selectedProject.projectName ?? selectedProject.id}
+                  </span>
+                  {selectedProject.projectNumber && (
+                    <span className="text-xs text-muted-foreground">{selectedProject.projectNumber}</span>
+                  )}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 text-xs text-muted-foreground hover:text-foreground px-2"
+                  onClick={() => setSelectedProject(null)}>
+                  Same as source
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Input
+                  value={projectQuery}
+                  onChange={e => setProjectQuery(e.target.value)}
+                  placeholder={`${sourceBOM.projectName ?? 'Same project'}${sourceBOM.projectNumber ? ` (${sourceBOM.projectNumber})` : ''}`}
+                  className="bg-secondary border-border"
+                />
+                <div className="flex flex-col gap-1 max-h-32 overflow-y-auto rounded-lg border border-border bg-secondary/30">
+                  {projectSearching ? (
+                    <p className="text-xs text-muted-foreground px-3 py-3 text-center">Searching…</p>
+                  ) : projectResults.length === 0 ? (
+                    <p className="text-xs text-muted-foreground px-3 py-3 text-center">No projects found.</p>
+                  ) : (
+                    projectResults.map(p => (
+                      <button
+                        key={p.id}
+                        type="button"
+                        onClick={() => setSelectedProject(p)}
+                        className="flex flex-col gap-0.5 px-3 py-2 text-left hover:bg-secondary/80 transition-colors border-b border-border/40 last:border-0">
+                        <span className="text-sm text-foreground font-medium">{p.projectName ?? p.id}</span>
+                        {p.projectNumber && <span className="text-xs text-muted-foreground">{p.projectNumber}</span>}
+                      </button>
+                    ))
+                  )}
+                </div>
+              </>
+            )}
+          </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">BOM Number *</Label>
             <div className="flex gap-2">

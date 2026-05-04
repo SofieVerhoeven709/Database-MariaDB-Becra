@@ -1,10 +1,22 @@
 'use client'
 
-import {useState} from 'react'
+import {useRef, useState} from 'react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {Search, Plus, Pencil, Trash2, ChevronDown, ChevronUp, ExternalLink, RotateCcw, Copy} from 'lucide-react'
+import {
+  Search,
+  Plus,
+  Pencil,
+  Trash2,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  RotateCcw,
+  Copy,
+  Download,
+  Upload,
+} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -16,8 +28,10 @@ import {
   hardDeleteProjectBOMAction,
   undeleteProjectBOMAction,
   copyProjectBOMAction,
+  importProjectBOMRowsAction,
 } from '@/serverFunctions/projectBoms'
 import {ProjectBOMFormDialog, CopyProjectBOMDialog} from '@/components/custom/projectBomFormDialog'
+import {buildCsv, downloadCsv, isTruthyCsvValue, parseCsv} from '@/lib/csv'
 
 type SortField =
   | 'description'
@@ -161,6 +175,7 @@ export function ProjectBOMTable({
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingBOM, setEditingBOM] = useState<MappedProjectBOM | null>(null)
   const [copyingBOM, setCopyingBOM] = useState<MappedProjectBOM | null>(null)
+  const uploadInputRef = useRef<HTMLInputElement>(null)
 
   // Build a lookup: bomId -> BOM (for parent name display)
   const bomById = Object.fromEntries(initialBOMs.map(b => [b.id, b]))
@@ -198,6 +213,8 @@ export function ProjectBOMTable({
       switch (sortField) {
         case 'description':
           return s(a.description ?? '', b.description ?? '')
+        case 'shortDescription':
+          return s(a.shortDescription ?? '', b.shortDescription ?? '')
         case 'project':
           return s(a.projectName ?? '', b.projectName ?? '')
         case 'bomNumber':
@@ -235,6 +252,68 @@ export function ProjectBOMTable({
     await undeleteProjectBOMAction({id: bom.id})
     router.refresh()
   }
+  function handleExportCsv() {
+    if (filtered.length === 0) return
+
+    const headers = [
+      'Project ID',
+      'Project Number',
+      'BOM Number',
+      'Short Description',
+      'Description',
+      'Parent BOM Number',
+      'Additional Info',
+      'Start Date',
+      'End Date',
+      'Closed',
+      'Material Closed',
+      'Ready For Purchase',
+      'Can Copy',
+      'Structures',
+    ]
+    const rows = filtered.map(bom => {
+      const parentBom = bom.projectBomId ? bomById[bom.projectBomId] : null
+      return [
+        bom.projectId,
+        bom.projectNumber,
+        bom.projectBomNumber,
+        bom.shortDescription,
+        bom.description,
+        parentBom?.projectBomNumber,
+        bom.additionalInfo,
+        bom.startDate.slice(0, 10),
+        bom.endDate?.slice(0, 10),
+        bom.closed ? 'Yes' : 'No',
+        bom.materialClosed ? 'Yes' : 'No',
+        bom.readyForPurchase ? 'Yes' : 'No',
+        bom.canCopy ? 'Yes' : 'No',
+        bom.structureCount,
+      ]
+    })
+    downloadCsv('project-boms.csv', buildCsv(headers, rows))
+  }
+
+  async function handleImportCsv(file: File | null) {
+    if (!file) return
+    const rows = parseCsv(await file.text()).map(row => ({
+      projectId: row['Project ID'] || row.projectId || projectId || undefined,
+      projectNumber: row['Project Number'] || row.projectNumber || undefined,
+      projectBomNumber: row['BOM Number'] || row.projectBomNumber || row.Number || '',
+      shortDescription: row['Short Description'] || row.shortDescription || undefined,
+      description: row.Description || row.description || undefined,
+      parentProjectBomNumber: row['Parent BOM Number'] || row.parentProjectBomNumber || undefined,
+      additionalInfo: row['Additional Info'] || row.additionalInfo || undefined,
+      startDate: row['Start Date'] || row.startDate || undefined,
+      endDate: row['End Date'] || row.endDate || undefined,
+      closed: isTruthyCsvValue(row.Closed || row.closed),
+      materialClosed: isTruthyCsvValue(row['Material Closed'] || row.materialClosed),
+      readyForPurchase: isTruthyCsvValue(row['Ready For Purchase'] || row.readyForPurchase),
+      canCopy: isTruthyCsvValue(row['Can Copy'] || row.canCopy),
+    }))
+    await importProjectBOMRowsAction({rows})
+    if (uploadInputRef.current) uploadInputRef.current.value = ''
+    router.refresh()
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -260,6 +339,33 @@ export function ProjectBOMTable({
               <SelectItem value="all">Show All</SelectItem>
             </SelectContent>
           </Select>
+          {/* Download CSV button*/}
+          <Button
+            variant="outline"
+            onClick={handleExportCsv}
+            disabled={filtered.length === 0}
+            className="flex items-center gap-2">
+            <Download className="h-4 w-4" />
+            Download CSV
+          </Button>
+          {canCreate && (
+            <>
+              <input
+                ref={uploadInputRef}
+                type="file"
+                accept=".csv,text/csv"
+                className="hidden"
+                onChange={e => void handleImportCsv(e.target.files?.[0] ?? null)}
+              />
+              <Button
+                variant="outline"
+                onClick={() => uploadInputRef.current?.click()}
+                className="flex items-center gap-2">
+                <Upload className="h-4 w-4" />
+                Upload CSV
+              </Button>
+            </>
+          )}
         </div>
         {canCreate && (
           <Button
@@ -484,8 +590,8 @@ export function ProjectBOMTable({
             if (!open) setCopyingBOM(null)
           }}
           sourceBOM={copyingBOM}
-          onCopy={async (projectBomNumber, shortDescription) => {
-            await copyProjectBOMAction({sourceId: copyingBOM.id, projectBomNumber, shortDescription})
+          onCopy={async (projectBomNumber, shortDescription, targetProjectId) => {
+            await copyProjectBOMAction({sourceId: copyingBOM.id, projectBomNumber, shortDescription, targetProjectId})
             setCopyingBOM(null)
             router.refresh()
           }}

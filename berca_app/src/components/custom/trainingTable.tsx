@@ -21,6 +21,7 @@ import {
   createTrainingAction,
   updateTrainingAction,
 } from '@/serverFunctions/training'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 type SortField =
@@ -163,6 +164,8 @@ export function TrainingTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="training-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {

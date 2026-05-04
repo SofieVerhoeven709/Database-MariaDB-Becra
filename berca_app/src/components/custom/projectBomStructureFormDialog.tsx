@@ -78,6 +78,8 @@ export function ProjectBOMStructureFormDialog({
     return (i.beNumber ?? '').toLowerCase().includes(q) || (i.shortDescription ?? '').toLowerCase().includes(q)
   })
 
+  const selectedMaterial = materialOptions.find(i => i.id === form.materialId)
+
   function set<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
     setForm(prev => ({...prev, [key]: value}))
   }
@@ -128,7 +130,18 @@ export function ProjectBOMStructureFormDialog({
             />
             <Select
               value={form.materialId || '__none__'}
-              onValueChange={v => set('materialId', v === '__none__' ? '' : v)}>
+              onValueChange={v => {
+                const materialId = v === '__none__' ? '' : v
+                const material = materialOptions.find(i => i.id === materialId)
+                setForm(prev => ({
+                  ...prev,
+                  materialId,
+                  shortDescription:
+                    !isEdit || !prev.shortDescription
+                      ? (material?.shortDescription ?? material?.name ?? prev.shortDescription)
+                      : prev.shortDescription,
+                }))
+              }}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select inventory item" />
               </SelectTrigger>
@@ -155,6 +168,7 @@ export function ProjectBOMStructureFormDialog({
             <Input
               value={form.shortDescription}
               onChange={e => set('shortDescription', e.target.value)}
+              placeholder={selectedMaterial?.shortDescription ?? selectedMaterial?.name ?? undefined}
               className="bg-secondary border-border"
             />
           </div>

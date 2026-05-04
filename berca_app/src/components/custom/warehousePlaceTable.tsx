@@ -4,6 +4,7 @@ import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown} from 'lucide-react
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {WarehousePlaceFormDialog} from '@/components/custom/warehousePlaceFormDialog'
 import type {MappedWarehousePlace} from '@/types/warehousePlace'
 import {
@@ -192,6 +193,7 @@ export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTab
             <SelectItem value="deleted">Deleted</SelectItem>
           </SelectContent>
         </Select>
+        <TableCsvActions filename="warehouse-place-table.csv" />
         <Button
           onClick={() => {
             setEditingItem(null)

@@ -21,7 +21,8 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import type {CountryOption} from '@/components/custom/countrySelect'
+import type {CountryOption} from '@/components/custom/countrySelect'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 type SortField =
   | 'name'
@@ -312,6 +313,8 @@ export function CompanyTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="company-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {

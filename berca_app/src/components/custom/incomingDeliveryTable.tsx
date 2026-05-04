@@ -18,7 +18,8 @@ import {
   undeleteIncomingDeliveryAction,
   hardDeleteIncomingDeliveryAction,
 } from '@/serverFunctions/incomingDeliveries'
-import {INCOMING_PERMISSION_LEVELS} from '@/constants'
+import {INCOMING_PERMISSION_LEVELS} from '@/constants'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 type SortField = 'incomingDeliveryNumber' | 'deliveryDate' | 'purchaseNumber' | 'status'
 type SortDir = 'asc' | 'desc'
@@ -219,6 +220,8 @@ export function IncomingDeliveryTable({
           <span className="text-xs uppercase tracking-wide text-muted-foreground">
             {filtered.length} / {initialEntries.length}
           </span>
+          <TableCsvActions filename="incoming-delivery-table.csv" />
+
           {canCreate && (
             <Button
               onClick={() => {

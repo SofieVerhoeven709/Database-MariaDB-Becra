@@ -7,6 +7,7 @@ import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {Badge} from '@/components/ui/badge'
 import {useRouter} from 'next/navigation'
 import type {MappedWorkOrderStructure, MaterialOption} from '@/types/workOrderStructure'
@@ -190,6 +191,7 @@ export function WorkOrderStructureTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="work-order-structure-table.csv" />
         <Button
           onClick={() => {
             setEditingStructure(null)

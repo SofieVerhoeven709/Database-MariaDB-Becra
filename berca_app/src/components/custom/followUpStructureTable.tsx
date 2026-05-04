@@ -20,7 +20,8 @@ import {
 } from '@/serverFunctions/followUpStructures'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
-import type {Route} from 'next'
+import type {Route} from 'next'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -298,6 +299,8 @@ export function FollowUpStructureTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="follow-up-structure-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {

@@ -10,6 +10,7 @@ import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import type {
   MappedIncomingDeliveryLine,
   MappedIncomingDeliveryLineAllocation,
@@ -599,6 +600,7 @@ export function IncomingDeliveryDetailTable({
               </SelectContent>
             </Select>
           )}
+          <TableCsvActions filename="incoming-delivery-detail-table.csv" />
         </div>
 
         <Table>

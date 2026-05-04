@@ -31,6 +31,7 @@ import {
   setQuoteSupplierSentAction,
   setQuoteSupplierReceivedAction,
 } from '@/serverFunctions/quoteSuppliers'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
 type SortField = 'quoteNumber' | 'companyName' | 'validUntil' | 'deliveryTimeDays'
 type SortDir = 'asc' | 'desc'
@@ -61,7 +62,11 @@ function formatDate(iso: string | null | undefined) {
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
-  return sortDir === 'asc' ? <ChevronUp className="inline h-3.5 w-3.5 ml-1" /> : <ChevronDown className="inline h-3.5 w-3.5 ml-1" />
+  return sortDir === 'asc' ? (
+    <ChevronUp className="inline h-3.5 w-3.5 ml-1" />
+  ) : (
+    <ChevronDown className="inline h-3.5 w-3.5 ml-1" />
+  )
 }
 
 interface Props {
@@ -82,7 +87,12 @@ const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 
 function extractActionError(result: unknown): string | null {
-  if (!result || typeof result !== 'object' || !('success' in result) || (result as {success?: boolean}).success !== false) {
+  if (
+    !result ||
+    typeof result !== 'object' ||
+    !('success' in result) ||
+    (result as {success?: boolean}).success !== false
+  ) {
     return null
   }
 
@@ -155,7 +165,8 @@ export function QuoteSupplierTable({
         paymentConditionFilter !== PAYMENT_FILTER_ALL &&
         paymentConditionFilter !== PAYMENT_FILTER_NONE &&
         e.paymentConditionId !== paymentConditionFilter
-      ) return false
+      )
+        return false
 
       if (!search) return true
       const q = search.toLowerCase()
@@ -219,11 +230,11 @@ export function QuoteSupplierTable({
     const result = editing
       ? await updateQuoteSupplierAction({id: e.id, ...payload})
       : await createQuoteSupplierAction({
-        ...payload,
-        initialMaterialId: defaultMaterialId,
-        initialMaterialDemandId: defaultMaterialDemandId,
-        initialQuantity: defaultInitialQuantity,
-      })
+          ...payload,
+          initialMaterialId: defaultMaterialId,
+          initialMaterialDemandId: defaultMaterialDemandId,
+          initialQuantity: defaultInitialQuantity,
+        })
 
     const error = extractActionError(result)
     if (error) throw new Error(error)
@@ -288,7 +299,8 @@ export function QuoteSupplierTable({
   function statusBadge(e: MappedQuoteSupplier) {
     const status = getLifecycleStatus(e)
 
-    if (status === 'rejected') return <Badge className="border text-xs bg-red-500/10 text-red-600 border-red-500/30">Rejected</Badge>
+    if (status === 'rejected')
+      return <Badge className="border text-xs bg-red-500/10 text-red-600 border-red-500/30">Rejected</Badge>
     if (status === 'approved' && isExpiredWhenApproved(e)) {
       return <Badge className="border text-xs bg-orange-500/10 text-orange-700 border-orange-500/30">Expired</Badge>
     }
@@ -359,7 +371,11 @@ export function QuoteSupplierTable({
               </Select>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-xs uppercase tracking-wide text-muted-foreground">{filtered.length} / {initialEntries.length}</span>
+              <span className="text-xs uppercase tracking-wide text-muted-foreground">
+                {filtered.length} / {initialEntries.length}
+              </span>
+              <TableCsvActions filename="quote-supplier-table.csv" />
+
               {canCreate && (
                 <Button
                   onClick={() => {
@@ -406,14 +422,20 @@ export function QuoteSupplierTable({
               <div className="flex items-center gap-3">
                 <div>
                   <p className="text-sm font-medium text-foreground">Create a new quote for this material</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Add quote lines and pricing information for the selected material</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Add quote lines and pricing information for the selected material
+                  </p>
                   {defaultSupplierId && (
                     <p className="text-xs text-muted-foreground mt-0.5">Supplier will be preselected in the form.</p>
                   )}
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button size="sm" variant="outline" onClick={() => setShowCreateWithMaterial(false)} className="text-xs">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setShowCreateWithMaterial(false)}
+                  className="text-xs">
                   Dismiss
                 </Button>
                 <Button
@@ -456,20 +478,25 @@ export function QuoteSupplierTable({
                       <TableHead className="text-xs whitespace-nowrap">Deleted By</TableHead>
                     </>
                   )}
-                  <TableHead className="w-24"><span className="sr-only">Actions</span></TableHead>
+                  <TableHead className="w-24">
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filtered.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={filterDeleted !== 'not-deleted' ? 12 : 10} className="h-28 text-center text-muted-foreground">
+                    <TableCell
+                      colSpan={filterDeleted !== 'not-deleted' ? 12 : 10}
+                      className="h-28 text-center text-muted-foreground">
                       No supplier quotes found.
                     </TableCell>
                   </TableRow>
                 ) : (
                   filtered.map(entry => (
-
-                    <TableRow key={entry.id} className={`border-border/40 hover:bg-secondary/50 ${entry.deleted ? 'opacity-50' : ''}`}>
+                    <TableRow
+                      key={entry.id}
+                      className={`border-border/40 hover:bg-secondary/50 ${entry.deleted ? 'opacity-50' : ''}`}>
                       <TableCell>{statusBadge(entry)}</TableCell>
                       <TableCell className={tdClass}>
                         <Link
@@ -502,15 +529,20 @@ export function QuoteSupplierTable({
                               {entry.sent ? 'Sent' : 'Mark Sent'}
                             </Button>
                           )}
-                          {!entry.deleted && canEdit && (!entry.acceptedForPOB || canManageApprovedQuotes) && entry.sent && !entry.rejected && !entry.acceptedForPOB && (
-                            <Button
-                              variant={entry.received ? 'secondary' : 'outline'}
-                              size="sm"
-                              className="h-7 text-[11px]"
-                              onClick={() => handleReceivedToggle(entry)}>
-                              {entry.received ? 'Received' : 'Mark Received'}
-                            </Button>
-                          )}
+                          {!entry.deleted &&
+                            canEdit &&
+                            (!entry.acceptedForPOB || canManageApprovedQuotes) &&
+                            entry.sent &&
+                            !entry.rejected &&
+                            !entry.acceptedForPOB && (
+                              <Button
+                                variant={entry.received ? 'secondary' : 'outline'}
+                                size="sm"
+                                className="h-7 text-[11px]"
+                                onClick={() => handleReceivedToggle(entry)}>
+                                {entry.received ? 'Received' : 'Mark Received'}
+                              </Button>
+                            )}
                           {!entry.deleted && canEdit && (!entry.acceptedForPOB || canManageApprovedQuotes) && (
                             <Button
                               variant="ghost"
@@ -601,26 +633,36 @@ export function QuoteSupplierTable({
                       <TableHead className="text-xs whitespace-nowrap">Deleted By</TableHead>
                     </>
                   )}
-                  <TableHead className="w-24"><span className="sr-only">Actions</span></TableHead>
+                  <TableHead className="w-24">
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredPaymentConditions.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={paymentFilterDeleted !== 'not-deleted' ? 7 : 4} className="h-32 text-center text-muted-foreground">
+                    <TableCell
+                      colSpan={paymentFilterDeleted !== 'not-deleted' ? 7 : 4}
+                      className="h-32 text-center text-muted-foreground">
                       No payment conditions found.
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredPaymentConditions.map(row => (
-                    <TableRow key={row.id} className={`border-border/40 hover:bg-secondary/50 ${row.deleted ? 'opacity-50' : ''}`}>
+                    <TableRow
+                      key={row.id}
+                      className={`border-border/40 hover:bg-secondary/50 ${row.deleted ? 'opacity-50' : ''}`}>
                       <TableCell className="text-sm text-foreground font-medium">{row.name}</TableCell>
                       <TableCell className={tdClass}>{formatDate(row.createdAt)}</TableCell>
                       <TableCell className={tdClass}>{row.createdByName}</TableCell>
                       {paymentFilterDeleted !== 'not-deleted' && (
                         <>
                           <TableCell>
-                            {row.deleted ? <Badge variant="destructive">Yes</Badge> : <span className="text-muted-foreground text-sm">No</span>}
+                            {row.deleted ? (
+                              <Badge variant="destructive">Yes</Badge>
+                            ) : (
+                              <span className="text-muted-foreground text-sm">No</span>
+                            )}
                           </TableCell>
                           <TableCell className={tdClass}>{formatDate(row.deletedAt)}</TableCell>
                           <TableCell className={tdClass}>{row.deletedByName ?? '—'}</TableCell>
@@ -712,4 +754,3 @@ export function QuoteSupplierTable({
     </div>
   )
 }
-

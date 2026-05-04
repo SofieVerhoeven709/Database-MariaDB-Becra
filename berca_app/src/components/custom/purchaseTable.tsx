@@ -10,6 +10,7 @@ import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {PurchaseFormDialog, type PurchaseOption} from '@/components/custom/purchaseFormDialog'
 import {PaymentConditionFormDialog} from '@/components/custom/paymentConditionFormDialog'
 import {normalizePurchaseStatus} from '@/extra/purchases'
@@ -323,6 +324,7 @@ export function PurchaseTable({
               <span className="text-xs uppercase tracking-wide text-muted-foreground">
                 {filtered.length} / {initialPurchases.length}
               </span>
+              <TableCsvActions filename="purchase-table.csv" />
               <Button
                 onClick={() => {
                   setEditing(null)
@@ -537,6 +539,7 @@ export function PurchaseTable({
                 className="pl-10 bg-secondary border-border"
               />
             </div>
+            <TableCsvActions filename="payment-conditions-table.csv" />
             <Button
               onClick={() => {
                 setEditingPaymentCondition(null)

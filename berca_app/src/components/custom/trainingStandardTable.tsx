@@ -21,6 +21,7 @@ import {
   createTrainingStandardAction,
   updateTrainingStandardAction,
 } from '@/serverFunctions/training'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 type SortField = 'descriptionShort' | 'location' | 'certificateName' | 'createdAt'
@@ -156,6 +157,8 @@ export function TrainingStandardTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="training-standard-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {

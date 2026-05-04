@@ -2218,6 +2218,7 @@
                 quantity INT NOT NULL,
                 unitPrice DECIMAL(10, 2) NOT NULL,
                 minQuantity INT,
+                supplierDescription TEXT,
                 selected BOOLEAN DEFAULT 0,
                 notDeliverable BOOLEAN NOT NULL DEFAULT 0,
                 FOREIGN KEY (quoteSupplierId) REFERENCES QuoteSupplier (id) ON DELETE RESTRICT,

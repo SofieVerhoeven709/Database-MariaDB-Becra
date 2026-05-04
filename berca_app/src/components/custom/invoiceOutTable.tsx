@@ -17,7 +17,8 @@ import {
   undeleteInvoiceOutAction,
 } from '@/serverFunctions/invoices'
 import {InvoiceOutFormDialog} from '@/components/custom/invoiceOutFormDialog'
-import type {ProjectOption} from '@/components/custom/invoiceOutFormDialog'
+import type {ProjectOption} from '@/components/custom/invoiceOutFormDialog'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 type SortField =
   | 'invoiceNumber'
@@ -227,6 +228,8 @@ export function InvoiceOutTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="invoice-out-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {

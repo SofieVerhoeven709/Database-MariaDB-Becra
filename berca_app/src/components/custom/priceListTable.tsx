@@ -14,6 +14,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from '@/components/ui/dialog'
 import type {MappedPriceList} from '@/types/priceList'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {
   createPriceListAction,
   clonePriceListAction,
@@ -256,6 +257,8 @@ export function PriceListTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="price-list-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {

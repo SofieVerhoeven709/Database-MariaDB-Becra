@@ -30,14 +30,14 @@ export async function getIncomingDeliveryById(id: string) {
       Purchase: {select: {id: true, purchaseNumber: true, status: true}},
       Employee_IncomingDelivery_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
       IncomingDeliveryLine: {
-        where: {deleted: false},
+        // Fetch all lines (including deleted) so the client can filter and show restore/hard-delete controls.
         orderBy: {createdAt: 'desc'},
         include: {
           Material: {select: {id: true, beNumber: true, name: true, shortDescription: true}},
           PurchaseDetail: {select: {id: true, purchaseId: true, materialDemandId: true}},
           Employee_IncomingDeliveryLine_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
           IncomingDeliveryLineAllocation: {
-            where: {deleted: false},
+            // Include deleted allocations so UI can toggle visibility.
             orderBy: {createdAt: 'desc'},
             include: {
               MaterialDemandSource: {

@@ -165,8 +165,6 @@ export const ModelName = {
   IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation',
   ScheduleMeeting: 'ScheduleMeeting',
   HrCertificationTraining: 'HrCertificationTraining',
-  HrEmployeeHseFile: 'HrEmployeeHseFile',
-  HrEmployeeOvertime: 'HrEmployeeOvertime',
   HrEmployeeAbsence: 'HrEmployeeAbsence',
   BillOfQuantities: 'BillOfQuantities',
   BillOfQuantitiesSentType: 'BillOfQuantitiesSentType',
@@ -179,7 +177,9 @@ export const ModelName = {
   WorkOrderBoQ: 'WorkOrderBoQ',
   HrFacilityVehicle: 'HrFacilityVehicle',
   HrFacilityFuelCard: 'HrFacilityFuelCard',
-  HrFacilityFine: 'HrFacilityFine'
+  HrFacilityFine: 'HrFacilityFine',
+  HrEmployeeHseFile: 'HrEmployeeHseFile',
+  HrEmployeeOvertime: 'HrEmployeeOvertime'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -2180,7 +2180,8 @@ export const MaterialDemandSourceScalarFieldEnum = {
   fulfilledAt: 'fulfilledAt',
   fulfilledBy: 'fulfilledBy',
   createdAt: 'createdAt',
-  createdBy: 'createdBy'
+  createdBy: 'createdBy',
+  description: 'description'
 } as const
 
 export type MaterialDemandSourceScalarFieldEnum = (typeof MaterialDemandSourceScalarFieldEnum)[keyof typeof MaterialDemandSourceScalarFieldEnum]
@@ -2326,58 +2327,6 @@ export const HrCertificationTrainingScalarFieldEnum = {
 } as const
 
 export type HrCertificationTrainingScalarFieldEnum = (typeof HrCertificationTrainingScalarFieldEnum)[keyof typeof HrCertificationTrainingScalarFieldEnum]
-
-
-export const HrEmployeeHseFileScalarFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  includeEmployeeData: 'includeEmployeeData',
-  includePartnerData: 'includePartnerData',
-  partnerName: 'partnerName',
-  partnerPhone: 'partnerPhone',
-  partnerEmail: 'partnerEmail',
-  includeEmergencyContact: 'includeEmergencyContact',
-  includeEmployerData: 'includeEmployerData',
-  employerCompanyId: 'employerCompanyId',
-  employerName: 'employerName',
-  employerContactName: 'employerContactName',
-  employerPhone: 'employerPhone',
-  employerEmail: 'employerEmail',
-  includeMedicalExamination: 'includeMedicalExamination',
-  lastMedicalExaminationDate: 'lastMedicalExaminationDate',
-  lastMedicalExaminationValidUntil: 'lastMedicalExaminationValidUntil',
-  lastMedicalExaminationProvider: 'lastMedicalExaminationProvider',
-  includeTrainingData: 'includeTrainingData',
-  createdAt: 'createdAt',
-  createdBy: 'createdBy',
-  updatedAt: 'updatedAt',
-  updatedBy: 'updatedBy',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type HrEmployeeHseFileScalarFieldEnum = (typeof HrEmployeeHseFileScalarFieldEnum)[keyof typeof HrEmployeeHseFileScalarFieldEnum]
-
-
-export const HrEmployeeOvertimeScalarFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  projectId: 'projectId',
-  sourceTimeRegistryId: 'sourceTimeRegistryId',
-  overtimeDate: 'overtimeDate',
-  hours: 'hours',
-  description: 'description',
-  createdAt: 'createdAt',
-  createdBy: 'createdBy',
-  updatedAt: 'updatedAt',
-  updatedBy: 'updatedBy',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type HrEmployeeOvertimeScalarFieldEnum = (typeof HrEmployeeOvertimeScalarFieldEnum)[keyof typeof HrEmployeeOvertimeScalarFieldEnum]
 
 
 export const HrEmployeeAbsenceScalarFieldEnum = {
@@ -2587,6 +2536,58 @@ export const HrFacilityFineScalarFieldEnum = {
 } as const
 
 export type HrFacilityFineScalarFieldEnum = (typeof HrFacilityFineScalarFieldEnum)[keyof typeof HrFacilityFineScalarFieldEnum]
+
+
+export const HrEmployeeHseFileScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  includeEmployeeData: 'includeEmployeeData',
+  includePartnerData: 'includePartnerData',
+  partnerName: 'partnerName',
+  partnerPhone: 'partnerPhone',
+  partnerEmail: 'partnerEmail',
+  includeEmergencyContact: 'includeEmergencyContact',
+  includeEmployerData: 'includeEmployerData',
+  employerCompanyId: 'employerCompanyId',
+  employerName: 'employerName',
+  employerContactName: 'employerContactName',
+  employerPhone: 'employerPhone',
+  employerEmail: 'employerEmail',
+  includeMedicalExamination: 'includeMedicalExamination',
+  lastMedicalExaminationDate: 'lastMedicalExaminationDate',
+  lastMedicalExaminationValidUntil: 'lastMedicalExaminationValidUntil',
+  lastMedicalExaminationProvider: 'lastMedicalExaminationProvider',
+  includeTrainingData: 'includeTrainingData',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrEmployeeHseFileScalarFieldEnum = (typeof HrEmployeeHseFileScalarFieldEnum)[keyof typeof HrEmployeeHseFileScalarFieldEnum]
+
+
+export const HrEmployeeOvertimeScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  sourceTimeRegistryId: 'sourceTimeRegistryId',
+  overtimeDate: 'overtimeDate',
+  hours: 'hours',
+  description: 'description',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrEmployeeOvertimeScalarFieldEnum = (typeof HrEmployeeOvertimeScalarFieldEnum)[keyof typeof HrEmployeeOvertimeScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -4060,7 +4061,8 @@ export const MaterialDemandSourceOrderByRelevanceFieldEnum = {
   sourceTypeId: 'sourceTypeId',
   sourceReferenceId: 'sourceReferenceId',
   fulfilledBy: 'fulfilledBy',
-  createdBy: 'createdBy'
+  createdBy: 'createdBy',
+  description: 'description'
 } as const
 
 export type MaterialDemandSourceOrderByRelevanceFieldEnum = (typeof MaterialDemandSourceOrderByRelevanceFieldEnum)[keyof typeof MaterialDemandSourceOrderByRelevanceFieldEnum]
@@ -4164,40 +4166,6 @@ export const HrCertificationTrainingOrderByRelevanceFieldEnum = {
 } as const
 
 export type HrCertificationTrainingOrderByRelevanceFieldEnum = (typeof HrCertificationTrainingOrderByRelevanceFieldEnum)[keyof typeof HrCertificationTrainingOrderByRelevanceFieldEnum]
-
-
-export const HrEmployeeHseFileOrderByRelevanceFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  partnerName: 'partnerName',
-  partnerPhone: 'partnerPhone',
-  partnerEmail: 'partnerEmail',
-  employerCompanyId: 'employerCompanyId',
-  employerName: 'employerName',
-  employerContactName: 'employerContactName',
-  employerPhone: 'employerPhone',
-  employerEmail: 'employerEmail',
-  lastMedicalExaminationProvider: 'lastMedicalExaminationProvider',
-  createdBy: 'createdBy',
-  updatedBy: 'updatedBy',
-  deletedBy: 'deletedBy'
-} as const
-
-export type HrEmployeeHseFileOrderByRelevanceFieldEnum = (typeof HrEmployeeHseFileOrderByRelevanceFieldEnum)[keyof typeof HrEmployeeHseFileOrderByRelevanceFieldEnum]
-
-
-export const HrEmployeeOvertimeOrderByRelevanceFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  projectId: 'projectId',
-  sourceTimeRegistryId: 'sourceTimeRegistryId',
-  description: 'description',
-  createdBy: 'createdBy',
-  updatedBy: 'updatedBy',
-  deletedBy: 'deletedBy'
-} as const
-
-export type HrEmployeeOvertimeOrderByRelevanceFieldEnum = (typeof HrEmployeeOvertimeOrderByRelevanceFieldEnum)[keyof typeof HrEmployeeOvertimeOrderByRelevanceFieldEnum]
 
 
 export const HrEmployeeAbsenceOrderByRelevanceFieldEnum = {
@@ -4356,4 +4324,38 @@ export const HrFacilityFineOrderByRelevanceFieldEnum = {
 } as const
 
 export type HrFacilityFineOrderByRelevanceFieldEnum = (typeof HrFacilityFineOrderByRelevanceFieldEnum)[keyof typeof HrFacilityFineOrderByRelevanceFieldEnum]
+
+
+export const HrEmployeeHseFileOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  partnerName: 'partnerName',
+  partnerPhone: 'partnerPhone',
+  partnerEmail: 'partnerEmail',
+  employerCompanyId: 'employerCompanyId',
+  employerName: 'employerName',
+  employerContactName: 'employerContactName',
+  employerPhone: 'employerPhone',
+  employerEmail: 'employerEmail',
+  lastMedicalExaminationProvider: 'lastMedicalExaminationProvider',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrEmployeeHseFileOrderByRelevanceFieldEnum = (typeof HrEmployeeHseFileOrderByRelevanceFieldEnum)[keyof typeof HrEmployeeHseFileOrderByRelevanceFieldEnum]
+
+
+export const HrEmployeeOvertimeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  sourceTimeRegistryId: 'sourceTimeRegistryId',
+  description: 'description',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrEmployeeOvertimeOrderByRelevanceFieldEnum = (typeof HrEmployeeOvertimeOrderByRelevanceFieldEnum)[keyof typeof HrEmployeeOvertimeOrderByRelevanceFieldEnum]
 

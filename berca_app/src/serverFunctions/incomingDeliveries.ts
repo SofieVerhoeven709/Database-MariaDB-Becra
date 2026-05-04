@@ -454,6 +454,43 @@ export const softDeleteIncomingDeliveryLineAction = protectedServerFunction({
   },
 })
 
+export const undeleteIncomingDeliveryLineAction = protectedServerFunction({
+  schema: incomingDeliveryLineIdSchema,
+  functionName: 'Undelete incoming delivery line action',
+  serverFn: async ({data: {id, incomingDeliveryId}, profile, logger}) => {
+    assertMinRoleLevel(
+      profile,
+      INCOMING_PERMISSION_LEVELS.delete,
+      'You do not have permission to restore incoming delivery lines.',
+    )
+
+    await prismaClient.incomingDeliveryLine.update({
+      where: {id},
+      data: {deleted: false, deletedAt: null, deletedBy: null},
+    })
+
+    logger.info(`Incoming delivery line restored: ${id}`)
+    revalidateIncomingDeliveryRoutes(incomingDeliveryId)
+  },
+})
+
+export const hardDeleteIncomingDeliveryLineAction = protectedServerFunction({
+  schema: incomingDeliveryLineIdSchema,
+  functionName: 'Hard delete incoming delivery line action',
+  serverFn: async ({data: {id, incomingDeliveryId}, profile, logger}) => {
+    assertMinRoleLevel(
+      profile,
+      INCOMING_PERMISSION_LEVELS.hardDelete,
+      'You do not have permission to permanently delete incoming delivery lines.',
+    )
+
+    await prismaClient.incomingDeliveryLine.delete({where: {id}})
+
+    logger.info(`Incoming delivery line hard deleted: ${id}`)
+    revalidateIncomingDeliveryRoutes(incomingDeliveryId)
+  },
+})
+
 export const createIncomingDeliveryLineAllocationAction = protectedServerFunction({
   schema: createIncomingDeliveryLineAllocationSchema,
   functionName: 'Create incoming delivery line allocation action',
@@ -540,8 +577,9 @@ export const createIncomingDeliveryOverDeliveryAllocationAction = protectedServe
       incomingDeliveryId = line.incomingDeliveryId
 
       const overDeliveredQty = Math.max(line.deliveredQty - line.orderedQty, 0)
-      if (overDeliveredQty <= 0) {
-        throw new Error('No over-delivered quantity is available for warehouse assignment.')
+      const availableQtyForAllocation = overDeliveredQty > 0 ? overDeliveredQty : line.deliveredQty
+      if (availableQtyForAllocation <= 0) {
+        throw new Error('No quantity available for warehouse assignment.')
       }
 
       const warehousePlace = await tx.warehousePlace.findFirst({
@@ -595,23 +633,48 @@ export const createIncomingDeliveryOverDeliveryAllocationAction = protectedServe
       })
 
       const alreadyAssignedQty = assignedQtyAggregate._sum.allocatedQty ?? 0
-      const remainingQty = Math.max(overDeliveredQty - alreadyAssignedQty, 0)
+      const remainingQty = Math.max(availableQtyForAllocation - alreadyAssignedQty, 0)
       if (data.allocatedQty > remainingQty) {
         throw new Error(
-          `Assigned quantity (${data.allocatedQty}) exceeds over-delivery remaining quantity (${remainingQty}).`,
+          `Assigned quantity (${data.allocatedQty}) exceeds available remaining quantity (${remainingQty}).`,
         )
       }
 
-      await tx.incomingDeliveryLineAllocation.create({
-        data: {
-          id: crypto.randomUUID(),
+      // Check if there's an existing allocation (including soft-deleted) to this source
+      const existingAllocation = await tx.incomingDeliveryLineAllocation.findFirst({
+        where: {
           incomingDeliveryLineId: line.id,
           materialDemandSourceId: warehouseSource.id,
-          allocatedQty: data.allocatedQty,
-          createdAt: new Date(),
-          createdBy: profile.id,
         },
+        select: {id: true, deleted: true},
       })
+
+      if (existingAllocation) {
+        // If it exists, update it (restore if deleted)
+        await tx.incomingDeliveryLineAllocation.update({
+          where: {id: existingAllocation.id},
+          data: {
+            allocatedQty: data.allocatedQty,
+            deleted: false,
+            deletedAt: null,
+            deletedBy: null,
+            createdAt: new Date(),
+            createdBy: profile.id,
+          },
+        })
+      } else {
+        // Otherwise create new
+        await tx.incomingDeliveryLineAllocation.create({
+          data: {
+            id: crypto.randomUUID(),
+            incomingDeliveryLineId: line.id,
+            materialDemandSourceId: warehouseSource.id,
+            allocatedQty: data.allocatedQty,
+            createdAt: new Date(),
+            createdBy: profile.id,
+          },
+        })
+      }
 
       // Over-delivered items physically arrived — increase inventory stock, not warehouse place qty.
       await adjustInventoryStockForMaterial(line.materialId, data.allocatedQty, tx)
@@ -621,6 +684,58 @@ export const createIncomingDeliveryOverDeliveryAllocationAction = protectedServe
         where: {id: line.materialId},
         data: {warehousePlaceId: data.warehousePlaceId},
       })
+
+      // Create or update inventory structure for this material at the warehouse place
+      const material = await tx.material.findUnique({
+        where: {id: line.materialId},
+        select: {beNumber: true},
+      })
+
+      if (material?.beNumber) {
+        // Find the inventory record for this material
+        const inventory = await tx.inventory.findFirst({
+          where: {materialId: line.materialId, deleted: false},
+          select: {id: true},
+        })
+
+        if (inventory) {
+          // Check if inventory structure already exists for this warehouse place
+          const existingStructure = await tx.inventoryStructure.findFirst({
+            where: {
+              inventoryId: inventory.id,
+              warehousePlaceId: data.warehousePlaceId,
+              deleted: false,
+            },
+            select: {id: true},
+          })
+
+          if (existingStructure) {
+            // Update existing structure - note: we track quantity via IncomingDelivery allocations
+            // The actual quantity tracking happens at the material/inventory level
+          } else {
+            // Create new inventory structure for this warehouse place
+            await tx.inventoryStructure.create({
+              data: {
+                id: crypto.randomUUID(),
+                inventoryId: inventory.id,
+                inventoryPlaceId: data.warehousePlaceId, // Use warehouse place as inventory place
+                place: '', // Placeholder
+                shortDescription: material.beNumber,
+                warehousePlaceId: data.warehousePlaceId,
+                coordinate: false,
+                forInventory: true,
+                forProject: false,
+                active: true,
+                materialActive: true,
+                valid: true,
+                createdAt: new Date(),
+                createdBy: profile.id,
+                deleted: false,
+              },
+            })
+          }
+        }
+      }
 
       await syncMaterialDemandFromIncomingAllocations(materialDemand.id, profile.id, tx)
     })

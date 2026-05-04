@@ -3,6 +3,9 @@ import type {Prisma} from '@/generated/prisma/client'
 export const profileOmit = {
   // Never expose password hashes in profile payloads.
   password_hash: true,
+  // Prisma Decimal instances cannot cross the Server Component -> Client Component boundary.
+  weeklyWorkHours: true,
+  maxOvertimeHours: true,
 } satisfies Prisma.EmployeeOmit
 
 export type Profile = Prisma.EmployeeGetPayload<{

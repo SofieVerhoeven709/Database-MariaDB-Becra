@@ -506,8 +506,6 @@ export const ModelName = {
   IncomingDeliveryLineAllocation: 'IncomingDeliveryLineAllocation',
   ScheduleMeeting: 'ScheduleMeeting',
   HrCertificationTraining: 'HrCertificationTraining',
-  HrEmployeeHseFile: 'HrEmployeeHseFile',
-  HrEmployeeOvertime: 'HrEmployeeOvertime',
   HrEmployeeAbsence: 'HrEmployeeAbsence',
   BillOfQuantities: 'BillOfQuantities',
   BillOfQuantitiesSentType: 'BillOfQuantitiesSentType',
@@ -520,7 +518,9 @@ export const ModelName = {
   WorkOrderBoQ: 'WorkOrderBoQ',
   HrFacilityVehicle: 'HrFacilityVehicle',
   HrFacilityFuelCard: 'HrFacilityFuelCard',
-  HrFacilityFine: 'HrFacilityFine'
+  HrFacilityFine: 'HrFacilityFine',
+  HrEmployeeHseFile: 'HrEmployeeHseFile',
+  HrEmployeeOvertime: 'HrEmployeeOvertime'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -536,7 +536,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "recruitmentApplicant" | "recruitmentVacancy" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "employeeContractStatusOption" | "employeeContractTypeOption" | "employeeBenefitOption" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "hrCertificationTraining" | "hrEmployeeHseFile" | "hrEmployeeOvertime" | "hrEmployeeAbsence" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ" | "hrFacilityVehicle" | "hrFacilityFuelCard" | "hrFacilityFine"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "recruitmentApplicant" | "recruitmentVacancy" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "employeeContractStatusOption" | "employeeContractTypeOption" | "employeeBenefitOption" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime" | "projectBOM" | "projectBOMStructure" | "purchaseBOM" | "purchaseBOMStructure" | "bOMExecution" | "materialDemand" | "materialDemandSource" | "materialDemandSourceType" | "paymentCondition" | "quoteSupplierLine" | "incomingDelivery" | "incomingDeliveryLine" | "incomingDeliveryLineAllocation" | "scheduleMeeting" | "hrCertificationTraining" | "hrEmployeeAbsence" | "billOfQuantities" | "billOfQuantitiesSentType" | "billOfQuantitiesStatus" | "billOfQuantitiesType" | "boqContact" | "projectEmployee" | "quoteSupplierMiscLine" | "visibilityForDepartment" | "workOrderBoQ" | "hrFacilityVehicle" | "hrFacilityFuelCard" | "hrFacilityFine" | "hrEmployeeHseFile" | "hrEmployeeOvertime"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -8196,138 +8196,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    HrEmployeeHseFile: {
-      payload: Prisma.$HrEmployeeHseFilePayload<ExtArgs>
-      fields: Prisma.HrEmployeeHseFileFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.HrEmployeeHseFileFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.HrEmployeeHseFileFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
-        }
-        findFirst: {
-          args: Prisma.HrEmployeeHseFileFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.HrEmployeeHseFileFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
-        }
-        findMany: {
-          args: Prisma.HrEmployeeHseFileFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>[]
-        }
-        create: {
-          args: Prisma.HrEmployeeHseFileCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
-        }
-        createMany: {
-          args: Prisma.HrEmployeeHseFileCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.HrEmployeeHseFileDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
-        }
-        update: {
-          args: Prisma.HrEmployeeHseFileUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
-        }
-        deleteMany: {
-          args: Prisma.HrEmployeeHseFileDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.HrEmployeeHseFileUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.HrEmployeeHseFileUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
-        }
-        aggregate: {
-          args: Prisma.HrEmployeeHseFileAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateHrEmployeeHseFile>
-        }
-        groupBy: {
-          args: Prisma.HrEmployeeHseFileGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.HrEmployeeHseFileGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.HrEmployeeHseFileCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.HrEmployeeHseFileCountAggregateOutputType> | number
-        }
-      }
-    }
-    HrEmployeeOvertime: {
-      payload: Prisma.$HrEmployeeOvertimePayload<ExtArgs>
-      fields: Prisma.HrEmployeeOvertimeFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.HrEmployeeOvertimeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.HrEmployeeOvertimeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
-        }
-        findFirst: {
-          args: Prisma.HrEmployeeOvertimeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.HrEmployeeOvertimeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
-        }
-        findMany: {
-          args: Prisma.HrEmployeeOvertimeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>[]
-        }
-        create: {
-          args: Prisma.HrEmployeeOvertimeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
-        }
-        createMany: {
-          args: Prisma.HrEmployeeOvertimeCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.HrEmployeeOvertimeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
-        }
-        update: {
-          args: Prisma.HrEmployeeOvertimeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
-        }
-        deleteMany: {
-          args: Prisma.HrEmployeeOvertimeDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.HrEmployeeOvertimeUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.HrEmployeeOvertimeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
-        }
-        aggregate: {
-          args: Prisma.HrEmployeeOvertimeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateHrEmployeeOvertime>
-        }
-        groupBy: {
-          args: Prisma.HrEmployeeOvertimeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.HrEmployeeOvertimeGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.HrEmployeeOvertimeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.HrEmployeeOvertimeCountAggregateOutputType> | number
-        }
-      }
-    }
     HrEmployeeAbsence: {
       payload: Prisma.$HrEmployeeAbsencePayload<ExtArgs>
       fields: Prisma.HrEmployeeAbsenceFieldRefs
@@ -9183,6 +9051,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.HrFacilityFineCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.HrFacilityFineCountAggregateOutputType> | number
+        }
+      }
+    }
+    HrEmployeeHseFile: {
+      payload: Prisma.$HrEmployeeHseFilePayload<ExtArgs>
+      fields: Prisma.HrEmployeeHseFileFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HrEmployeeHseFileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HrEmployeeHseFileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
+        }
+        findFirst: {
+          args: Prisma.HrEmployeeHseFileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HrEmployeeHseFileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
+        }
+        findMany: {
+          args: Prisma.HrEmployeeHseFileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>[]
+        }
+        create: {
+          args: Prisma.HrEmployeeHseFileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
+        }
+        createMany: {
+          args: Prisma.HrEmployeeHseFileCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.HrEmployeeHseFileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
+        }
+        update: {
+          args: Prisma.HrEmployeeHseFileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
+        }
+        deleteMany: {
+          args: Prisma.HrEmployeeHseFileDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HrEmployeeHseFileUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.HrEmployeeHseFileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeHseFilePayload>
+        }
+        aggregate: {
+          args: Prisma.HrEmployeeHseFileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHrEmployeeHseFile>
+        }
+        groupBy: {
+          args: Prisma.HrEmployeeHseFileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrEmployeeHseFileGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HrEmployeeHseFileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrEmployeeHseFileCountAggregateOutputType> | number
+        }
+      }
+    }
+    HrEmployeeOvertime: {
+      payload: Prisma.$HrEmployeeOvertimePayload<ExtArgs>
+      fields: Prisma.HrEmployeeOvertimeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HrEmployeeOvertimeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HrEmployeeOvertimeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
+        }
+        findFirst: {
+          args: Prisma.HrEmployeeOvertimeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HrEmployeeOvertimeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
+        }
+        findMany: {
+          args: Prisma.HrEmployeeOvertimeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>[]
+        }
+        create: {
+          args: Prisma.HrEmployeeOvertimeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
+        }
+        createMany: {
+          args: Prisma.HrEmployeeOvertimeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.HrEmployeeOvertimeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
+        }
+        update: {
+          args: Prisma.HrEmployeeOvertimeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
+        }
+        deleteMany: {
+          args: Prisma.HrEmployeeOvertimeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HrEmployeeOvertimeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.HrEmployeeOvertimeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HrEmployeeOvertimePayload>
+        }
+        aggregate: {
+          args: Prisma.HrEmployeeOvertimeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHrEmployeeOvertime>
+        }
+        groupBy: {
+          args: Prisma.HrEmployeeOvertimeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrEmployeeOvertimeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HrEmployeeOvertimeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HrEmployeeOvertimeCountAggregateOutputType> | number
         }
       }
     }
@@ -11207,7 +11207,8 @@ export const MaterialDemandSourceScalarFieldEnum = {
   fulfilledAt: 'fulfilledAt',
   fulfilledBy: 'fulfilledBy',
   createdAt: 'createdAt',
-  createdBy: 'createdBy'
+  createdBy: 'createdBy',
+  description: 'description'
 } as const
 
 export type MaterialDemandSourceScalarFieldEnum = (typeof MaterialDemandSourceScalarFieldEnum)[keyof typeof MaterialDemandSourceScalarFieldEnum]
@@ -11353,58 +11354,6 @@ export const HrCertificationTrainingScalarFieldEnum = {
 } as const
 
 export type HrCertificationTrainingScalarFieldEnum = (typeof HrCertificationTrainingScalarFieldEnum)[keyof typeof HrCertificationTrainingScalarFieldEnum]
-
-
-export const HrEmployeeHseFileScalarFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  includeEmployeeData: 'includeEmployeeData',
-  includePartnerData: 'includePartnerData',
-  partnerName: 'partnerName',
-  partnerPhone: 'partnerPhone',
-  partnerEmail: 'partnerEmail',
-  includeEmergencyContact: 'includeEmergencyContact',
-  includeEmployerData: 'includeEmployerData',
-  employerCompanyId: 'employerCompanyId',
-  employerName: 'employerName',
-  employerContactName: 'employerContactName',
-  employerPhone: 'employerPhone',
-  employerEmail: 'employerEmail',
-  includeMedicalExamination: 'includeMedicalExamination',
-  lastMedicalExaminationDate: 'lastMedicalExaminationDate',
-  lastMedicalExaminationValidUntil: 'lastMedicalExaminationValidUntil',
-  lastMedicalExaminationProvider: 'lastMedicalExaminationProvider',
-  includeTrainingData: 'includeTrainingData',
-  createdAt: 'createdAt',
-  createdBy: 'createdBy',
-  updatedAt: 'updatedAt',
-  updatedBy: 'updatedBy',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type HrEmployeeHseFileScalarFieldEnum = (typeof HrEmployeeHseFileScalarFieldEnum)[keyof typeof HrEmployeeHseFileScalarFieldEnum]
-
-
-export const HrEmployeeOvertimeScalarFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  projectId: 'projectId',
-  sourceTimeRegistryId: 'sourceTimeRegistryId',
-  overtimeDate: 'overtimeDate',
-  hours: 'hours',
-  description: 'description',
-  createdAt: 'createdAt',
-  createdBy: 'createdBy',
-  updatedAt: 'updatedAt',
-  updatedBy: 'updatedBy',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type HrEmployeeOvertimeScalarFieldEnum = (typeof HrEmployeeOvertimeScalarFieldEnum)[keyof typeof HrEmployeeOvertimeScalarFieldEnum]
 
 
 export const HrEmployeeAbsenceScalarFieldEnum = {
@@ -11614,6 +11563,58 @@ export const HrFacilityFineScalarFieldEnum = {
 } as const
 
 export type HrFacilityFineScalarFieldEnum = (typeof HrFacilityFineScalarFieldEnum)[keyof typeof HrFacilityFineScalarFieldEnum]
+
+
+export const HrEmployeeHseFileScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  includeEmployeeData: 'includeEmployeeData',
+  includePartnerData: 'includePartnerData',
+  partnerName: 'partnerName',
+  partnerPhone: 'partnerPhone',
+  partnerEmail: 'partnerEmail',
+  includeEmergencyContact: 'includeEmergencyContact',
+  includeEmployerData: 'includeEmployerData',
+  employerCompanyId: 'employerCompanyId',
+  employerName: 'employerName',
+  employerContactName: 'employerContactName',
+  employerPhone: 'employerPhone',
+  employerEmail: 'employerEmail',
+  includeMedicalExamination: 'includeMedicalExamination',
+  lastMedicalExaminationDate: 'lastMedicalExaminationDate',
+  lastMedicalExaminationValidUntil: 'lastMedicalExaminationValidUntil',
+  lastMedicalExaminationProvider: 'lastMedicalExaminationProvider',
+  includeTrainingData: 'includeTrainingData',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrEmployeeHseFileScalarFieldEnum = (typeof HrEmployeeHseFileScalarFieldEnum)[keyof typeof HrEmployeeHseFileScalarFieldEnum]
+
+
+export const HrEmployeeOvertimeScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  sourceTimeRegistryId: 'sourceTimeRegistryId',
+  overtimeDate: 'overtimeDate',
+  hours: 'hours',
+  description: 'description',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrEmployeeOvertimeScalarFieldEnum = (typeof HrEmployeeOvertimeScalarFieldEnum)[keyof typeof HrEmployeeOvertimeScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -13087,7 +13088,8 @@ export const MaterialDemandSourceOrderByRelevanceFieldEnum = {
   sourceTypeId: 'sourceTypeId',
   sourceReferenceId: 'sourceReferenceId',
   fulfilledBy: 'fulfilledBy',
-  createdBy: 'createdBy'
+  createdBy: 'createdBy',
+  description: 'description'
 } as const
 
 export type MaterialDemandSourceOrderByRelevanceFieldEnum = (typeof MaterialDemandSourceOrderByRelevanceFieldEnum)[keyof typeof MaterialDemandSourceOrderByRelevanceFieldEnum]
@@ -13191,40 +13193,6 @@ export const HrCertificationTrainingOrderByRelevanceFieldEnum = {
 } as const
 
 export type HrCertificationTrainingOrderByRelevanceFieldEnum = (typeof HrCertificationTrainingOrderByRelevanceFieldEnum)[keyof typeof HrCertificationTrainingOrderByRelevanceFieldEnum]
-
-
-export const HrEmployeeHseFileOrderByRelevanceFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  partnerName: 'partnerName',
-  partnerPhone: 'partnerPhone',
-  partnerEmail: 'partnerEmail',
-  employerCompanyId: 'employerCompanyId',
-  employerName: 'employerName',
-  employerContactName: 'employerContactName',
-  employerPhone: 'employerPhone',
-  employerEmail: 'employerEmail',
-  lastMedicalExaminationProvider: 'lastMedicalExaminationProvider',
-  createdBy: 'createdBy',
-  updatedBy: 'updatedBy',
-  deletedBy: 'deletedBy'
-} as const
-
-export type HrEmployeeHseFileOrderByRelevanceFieldEnum = (typeof HrEmployeeHseFileOrderByRelevanceFieldEnum)[keyof typeof HrEmployeeHseFileOrderByRelevanceFieldEnum]
-
-
-export const HrEmployeeOvertimeOrderByRelevanceFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  projectId: 'projectId',
-  sourceTimeRegistryId: 'sourceTimeRegistryId',
-  description: 'description',
-  createdBy: 'createdBy',
-  updatedBy: 'updatedBy',
-  deletedBy: 'deletedBy'
-} as const
-
-export type HrEmployeeOvertimeOrderByRelevanceFieldEnum = (typeof HrEmployeeOvertimeOrderByRelevanceFieldEnum)[keyof typeof HrEmployeeOvertimeOrderByRelevanceFieldEnum]
 
 
 export const HrEmployeeAbsenceOrderByRelevanceFieldEnum = {
@@ -13383,6 +13351,40 @@ export const HrFacilityFineOrderByRelevanceFieldEnum = {
 } as const
 
 export type HrFacilityFineOrderByRelevanceFieldEnum = (typeof HrFacilityFineOrderByRelevanceFieldEnum)[keyof typeof HrFacilityFineOrderByRelevanceFieldEnum]
+
+
+export const HrEmployeeHseFileOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  partnerName: 'partnerName',
+  partnerPhone: 'partnerPhone',
+  partnerEmail: 'partnerEmail',
+  employerCompanyId: 'employerCompanyId',
+  employerName: 'employerName',
+  employerContactName: 'employerContactName',
+  employerPhone: 'employerPhone',
+  employerEmail: 'employerEmail',
+  lastMedicalExaminationProvider: 'lastMedicalExaminationProvider',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrEmployeeHseFileOrderByRelevanceFieldEnum = (typeof HrEmployeeHseFileOrderByRelevanceFieldEnum)[keyof typeof HrEmployeeHseFileOrderByRelevanceFieldEnum]
+
+
+export const HrEmployeeOvertimeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  sourceTimeRegistryId: 'sourceTimeRegistryId',
+  description: 'description',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type HrEmployeeOvertimeOrderByRelevanceFieldEnum = (typeof HrEmployeeOvertimeOrderByRelevanceFieldEnum)[keyof typeof HrEmployeeOvertimeOrderByRelevanceFieldEnum]
 
 
 
@@ -13642,8 +13644,6 @@ export type GlobalOmitConfig = {
   incomingDeliveryLineAllocation?: Prisma.IncomingDeliveryLineAllocationOmit
   scheduleMeeting?: Prisma.ScheduleMeetingOmit
   hrCertificationTraining?: Prisma.HrCertificationTrainingOmit
-  hrEmployeeHseFile?: Prisma.HrEmployeeHseFileOmit
-  hrEmployeeOvertime?: Prisma.HrEmployeeOvertimeOmit
   hrEmployeeAbsence?: Prisma.HrEmployeeAbsenceOmit
   billOfQuantities?: Prisma.BillOfQuantitiesOmit
   billOfQuantitiesSentType?: Prisma.BillOfQuantitiesSentTypeOmit
@@ -13657,6 +13657,8 @@ export type GlobalOmitConfig = {
   hrFacilityVehicle?: Prisma.HrFacilityVehicleOmit
   hrFacilityFuelCard?: Prisma.HrFacilityFuelCardOmit
   hrFacilityFine?: Prisma.HrFacilityFineOmit
+  hrEmployeeHseFile?: Prisma.HrEmployeeHseFileOmit
+  hrEmployeeOvertime?: Prisma.HrEmployeeOvertimeOmit
 }
 
 /* Types for Logging */

@@ -108,64 +108,76 @@ function roundTo2dp(value: number): number {
 }
 
 /**
- * Distribute total misc costs proportionally across material lines by their unit price.
- * Lines with notDeliverable=true or unitPrice=0 are excluded from distribution.
+ * Distribute total misc costs proportionally across material lines.
  *
- * The addition for each line is:
- *   addition = totalMiscCost * (line.unitPrice / sumOfAllLinePrices)
+ * Distribution is weighted by the line's total value (unitPrice * quantity).
+ * Lines with notDeliverable=true, unitPrice=0 or quantity<=0 are excluded from
+ * distribution.
  *
- * rounded to 2dp (half-up). Any rounding residual (to keep the sum exact) is
- * applied to the largest line.
+ * The per-line addition (total for the line) is computed as:
+ *   lineTotalAddition = totalMiscCost * (line.unitPrice * line.quantity / sumOfAllLineTotals)
+ *
+ * We round per-line additions to 2dp (half-up) and apply any rounding residual
+ * to the largest contributing line so the sum of per-line additions equals
+ * totalMiscCost exactly. The per-unit addition is then lineTotalAddition / quantity
+ * and the returned adjusted unit price is:
+ *   adjustedUnitPrice = roundTo2dp(line.unitPrice + (lineTotalAddition / quantity))
  *
  * Returns a map of lineId → adjusted unit price.
  */
 function distributeMiscCosts(
-  lines: Array<{id: string; unitPrice: number; notDeliverable: boolean}>,
+  lines: Array<{id: string; unitPrice: number; quantity: number; notDeliverable: boolean}>,
   totalMiscCost: number,
 ): Map<string, number> {
   const result = new Map<string, number>()
 
   // Only lines that are deliverable and have a positive price participate.
-  const eligible = lines.filter(l => !l.notDeliverable && l.unitPrice > 0)
+  const eligible = lines.filter(l => !l.notDeliverable && l.unitPrice > 0 && l.quantity > 0)
 
   if (eligible.length === 0 || totalMiscCost === 0) {
     for (const l of lines) result.set(l.id, l.unitPrice)
     return result
   }
 
-  const sumPrices = eligible.reduce((acc, l) => acc + l.unitPrice, 0)
+  // Sum of line totals (unitPrice * quantity) for weighting.
+  const sumWeighted = eligible.reduce((acc, l) => acc + l.unitPrice * l.quantity, 0)
 
-  // Compute raw additions and round each to 2dp.
+  // Compute raw per-line TOTAL additions (not per-unit) and round each to 2dp.
   const additions = eligible.map(l => ({
     id: l.id,
-    basePrice: l.unitPrice,
-    rawAddition: totalMiscCost * (l.unitPrice / sumPrices),
+    baseUnitPrice: l.unitPrice,
+    quantity: l.quantity,
+    rawTotalAddition: totalMiscCost * ((l.unitPrice * l.quantity) / sumWeighted),
   }))
 
-  const roundedAdditions = additions.map(a => ({...a, addition: roundTo2dp(a.rawAddition)}))
+  const roundedTotals = additions.map(a => ({...a, totalAddition: roundTo2dp(a.rawTotalAddition)}))
 
-  // Check for rounding residual (sum of rounded additions vs actual total).
-  const sumRounded = roundedAdditions.reduce((acc, a) => acc + a.addition, 0)
-  const residual = roundTo2dp(totalMiscCost - sumRounded)
+  // Check for rounding residual (sum of rounded totals vs actual totalMiscCost).
+  const sumRoundedTotals = roundedTotals.reduce((acc, a) => acc + a.totalAddition, 0)
+  const residual = roundTo2dp(totalMiscCost - sumRoundedTotals)
 
-  // Apply residual to the line with the highest unit price (largest contributor).
+  // Apply residual to the line with the highest line total (largest contributor).
   if (residual !== 0) {
-    const maxIdx = roundedAdditions.reduce(
-      (bestIdx, a, idx, arr) => (a.basePrice > arr[bestIdx].basePrice ? idx : bestIdx),
+    const maxIdx = roundedTotals.reduce(
+      (bestIdx, a, idx, arr) => (a.baseUnitPrice * a.quantity > arr[bestIdx].baseUnitPrice * arr[bestIdx].quantity ? idx : bestIdx),
       0,
     )
-    roundedAdditions[maxIdx].addition = roundTo2dp(roundedAdditions[maxIdx].addition + residual)
+    roundedTotals[maxIdx].totalAddition = roundTo2dp(roundedTotals[maxIdx].totalAddition + residual)
   }
 
-  // Build result map — ineligible lines keep their original price unchanged.
+  // Build result map — ineligible lines keep their original unit price unchanged.
   const eligibleIds = new Set(eligible.map(l => l.id))
   for (const l of lines) {
     if (!eligibleIds.has(l.id)) {
       result.set(l.id, l.unitPrice)
     }
   }
-  for (const a of roundedAdditions) {
-    result.set(a.id, roundTo2dp(a.basePrice + a.addition))
+
+  // For eligible lines compute per-unit addition = totalAddition / quantity
+  // then add to unitPrice and round to 2dp for the final unit price.
+  for (const a of roundedTotals) {
+    const perUnitAddition = a.quantity > 0 ? a.totalAddition / a.quantity : 0
+    result.set(a.id, roundTo2dp(a.baseUnitPrice + perUnitAddition))
   }
 
   return result
@@ -184,6 +196,7 @@ async function createMaterialPricesFromApprovedQuote(
       select: {
         id: true,
         unitPrice: true,
+        quantity: true,
         notDeliverable: true,
         Material: {
           select: {
@@ -204,7 +217,12 @@ async function createMaterialPricesFromApprovedQuote(
 
   // Build the adjusted prices with proportional misc cost distribution.
   const adjustedPrices = distributeMiscCosts(
-    lines.map(l => ({id: l.id, unitPrice: Number(l.unitPrice), notDeliverable: l.notDeliverable})),
+    lines.map(l => ({
+      id: l.id,
+      unitPrice: Number(l.unitPrice),
+      quantity: Number(l.quantity ?? 1),
+      notDeliverable: l.notDeliverable,
+    })),
     totalMiscCost,
   )
 

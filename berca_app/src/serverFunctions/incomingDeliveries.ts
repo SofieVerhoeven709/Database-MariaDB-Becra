@@ -454,6 +454,43 @@ export const softDeleteIncomingDeliveryLineAction = protectedServerFunction({
   },
 })
 
+export const undeleteIncomingDeliveryLineAction = protectedServerFunction({
+  schema: incomingDeliveryLineIdSchema,
+  functionName: 'Undelete incoming delivery line action',
+  serverFn: async ({data: {id, incomingDeliveryId}, profile, logger}) => {
+    assertMinRoleLevel(
+      profile,
+      INCOMING_PERMISSION_LEVELS.delete,
+      'You do not have permission to restore incoming delivery lines.',
+    )
+
+    await prismaClient.incomingDeliveryLine.update({
+      where: {id},
+      data: {deleted: false, deletedAt: null, deletedBy: null},
+    })
+
+    logger.info(`Incoming delivery line restored: ${id}`)
+    revalidateIncomingDeliveryRoutes(incomingDeliveryId)
+  },
+})
+
+export const hardDeleteIncomingDeliveryLineAction = protectedServerFunction({
+  schema: incomingDeliveryLineIdSchema,
+  functionName: 'Hard delete incoming delivery line action',
+  serverFn: async ({data: {id, incomingDeliveryId}, profile, logger}) => {
+    assertMinRoleLevel(
+      profile,
+      INCOMING_PERMISSION_LEVELS.hardDelete,
+      'You do not have permission to permanently delete incoming delivery lines.',
+    )
+
+    await prismaClient.incomingDeliveryLine.delete({where: {id}})
+
+    logger.info(`Incoming delivery line hard deleted: ${id}`)
+    revalidateIncomingDeliveryRoutes(incomingDeliveryId)
+  },
+})
+
 export const createIncomingDeliveryLineAllocationAction = protectedServerFunction({
   schema: createIncomingDeliveryLineAllocationSchema,
   functionName: 'Create incoming delivery line allocation action',
@@ -540,8 +577,9 @@ export const createIncomingDeliveryOverDeliveryAllocationAction = protectedServe
       incomingDeliveryId = line.incomingDeliveryId
 
       const overDeliveredQty = Math.max(line.deliveredQty - line.orderedQty, 0)
-      if (overDeliveredQty <= 0) {
-        throw new Error('No over-delivered quantity is available for warehouse assignment.')
+      const availableQtyForAllocation = overDeliveredQty > 0 ? overDeliveredQty : line.deliveredQty
+      if (availableQtyForAllocation <= 0) {
+        throw new Error('No quantity available for warehouse assignment.')
       }
 
       const warehousePlace = await tx.warehousePlace.findFirst({
@@ -595,32 +633,97 @@ export const createIncomingDeliveryOverDeliveryAllocationAction = protectedServe
       })
 
       const alreadyAssignedQty = assignedQtyAggregate._sum.allocatedQty ?? 0
-      const remainingQty = Math.max(overDeliveredQty - alreadyAssignedQty, 0)
+      const remainingQty = Math.max(availableQtyForAllocation - alreadyAssignedQty, 0)
       if (data.allocatedQty > remainingQty) {
         throw new Error(
-          `Assigned quantity (${data.allocatedQty}) exceeds over-delivery remaining quantity (${remainingQty}).`,
+          `Assigned quantity (${data.allocatedQty}) exceeds available remaining quantity (${remainingQty}).`,
         )
       }
 
-      await tx.incomingDeliveryLineAllocation.create({
-        data: {
-          id: crypto.randomUUID(),
+      const existingAllocation = await tx.incomingDeliveryLineAllocation.findFirst({
+        where: {
           incomingDeliveryLineId: line.id,
           materialDemandSourceId: warehouseSource.id,
-          allocatedQty: data.allocatedQty,
-          createdAt: new Date(),
-          createdBy: profile.id,
         },
+        select: {id: true, deleted: true},
       })
 
-      // Over-delivered items physically arrived — increase inventory stock, not warehouse place qty.
+      if (existingAllocation) {
+        await tx.incomingDeliveryLineAllocation.update({
+          where: {id: existingAllocation.id},
+          data: {
+            allocatedQty: data.allocatedQty,
+            deleted: false,
+            deletedAt: null,
+            deletedBy: null,
+            createdAt: new Date(),
+            createdBy: profile.id,
+          },
+        })
+      } else {
+        await tx.incomingDeliveryLineAllocation.create({
+          data: {
+            id: crypto.randomUUID(),
+            incomingDeliveryLineId: line.id,
+            materialDemandSourceId: warehouseSource.id,
+            allocatedQty: data.allocatedQty,
+            createdAt: new Date(),
+            createdBy: profile.id,
+          },
+        })
+      }
+
       await adjustInventoryStockForMaterial(line.materialId, data.allocatedQty, tx)
 
-      // Keep material pointing at the latest warehouse location.
       await tx.material.update({
         where: {id: line.materialId},
         data: {warehousePlaceId: data.warehousePlaceId},
       })
+
+      const material = await tx.material.findUnique({
+        where: {id: line.materialId},
+        select: {beNumber: true},
+      })
+
+      if (material?.beNumber) {
+        const inventory = await tx.inventory.findFirst({
+          where: {materialId: line.materialId, deleted: false},
+          select: {id: true},
+        })
+
+        if (inventory) {
+          const existingStructure = await tx.inventoryStructure.findFirst({
+            where: {
+              inventoryId: inventory.id,
+              warehousePlaceId: data.warehousePlaceId,
+              deleted: false,
+            },
+            select: {id: true},
+          })
+
+          if (!existingStructure) {
+            await tx.inventoryStructure.create({
+              data: {
+                id: crypto.randomUUID(),
+                inventoryId: inventory.id,
+                inventoryPlaceId: data.warehousePlaceId,
+                place: '',
+                shortDescription: material.beNumber,
+                warehousePlaceId: data.warehousePlaceId,
+                coordinate: false,
+                forInventory: true,
+                forProject: false,
+                active: true,
+                materialActive: true,
+                valid: true,
+                createdAt: new Date(),
+                createdBy: profile.id,
+                deleted: false,
+              },
+            })
+          }
+        }
+      }
 
       await syncMaterialDemandFromIncomingAllocations(materialDemand.id, profile.id, tx)
     })
@@ -675,6 +778,60 @@ export const softDeleteIncomingDeliveryLineAllocationAction = protectedServerFun
     await syncPurchaseStatusForIncomingDelivery(incomingDeliveryId)
 
     logger.info(`Incoming delivery line allocation soft deleted: ${id}`)
+    revalidateIncomingDeliveryRoutes(incomingDeliveryId)
+  },
+})
+
+export const undeleteIncomingDeliveryLineAllocationAction = protectedServerFunction({
+  schema: incomingDeliveryLineAllocationIdSchema,
+  functionName: 'Undelete incoming delivery line allocation action',
+  serverFn: async ({data: {id, incomingDeliveryId}, profile, logger}) => {
+    assertMinRoleLevel(
+      profile,
+      INCOMING_PERMISSION_LEVELS.deleteSourceLink,
+      'You do not have permission to restore source links.',
+    )
+
+    await prismaClient.incomingDeliveryLineAllocation.update({
+      where: {id},
+      data: {deleted: false, deletedAt: null, deletedBy: null},
+    })
+
+    const allocation = await prismaClient.incomingDeliveryLineAllocation.findUnique({
+      where: {id},
+      select: {materialDemandSourceId: true},
+    })
+
+    if (allocation?.materialDemandSourceId) {
+      const source = await prismaClient.materialDemandSource.findUnique({
+        where: {id: allocation.materialDemandSourceId},
+        select: {materialDemandId: true},
+      })
+      if (source) {
+        await syncMaterialDemandFromIncomingAllocations(source.materialDemandId, profile.id)
+      }
+    }
+
+    await syncPurchaseStatusForIncomingDelivery(incomingDeliveryId)
+
+    logger.info(`Incoming delivery line allocation restored: ${id}`)
+    revalidateIncomingDeliveryRoutes(incomingDeliveryId)
+  },
+})
+
+export const hardDeleteIncomingDeliveryLineAllocationAction = protectedServerFunction({
+  schema: incomingDeliveryLineAllocationIdSchema,
+  functionName: 'Hard delete incoming delivery line allocation action',
+  serverFn: async ({data: {id, incomingDeliveryId}, profile, logger}) => {
+    assertMinRoleLevel(
+      profile,
+      INCOMING_PERMISSION_LEVELS.hardDelete,
+      'You do not have permission to permanently delete source links.',
+    )
+
+    await prismaClient.incomingDeliveryLineAllocation.delete({where: {id}})
+
+    logger.info(`Incoming delivery line allocation hard deleted: ${id}`)
     revalidateIncomingDeliveryRoutes(incomingDeliveryId)
   },
 })

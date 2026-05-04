@@ -20,11 +20,17 @@ import {
   createIncomingDeliveryLineAction,
   updateIncomingDeliveryLineAction,
   softDeleteIncomingDeliveryLineAction,
+  undeleteIncomingDeliveryLineAction,
+  hardDeleteIncomingDeliveryLineAction,
   createIncomingDeliveryLineAllocationAction,
   createIncomingDeliveryOverDeliveryAllocationAction,
   softDeleteIncomingDeliveryLineAllocationAction,
+  undeleteIncomingDeliveryLineAllocationAction,
+  hardDeleteIncomingDeliveryLineAllocationAction,
 } from '@/serverFunctions/incomingDeliveries'
 import {INCOMING_PERMISSION_LEVELS} from '@/constants'
+
+type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 
 interface MaterialOption {
   id: string
@@ -111,6 +117,8 @@ export function IncomingDeliveryDetailTable({
   const canDelete = isAdmin || currentUserLevel >= INCOMING_PERMISSION_LEVELS.delete
   const canAddSourceLink = isAdmin || currentUserLevel >= INCOMING_PERMISSION_LEVELS.addSourceLink
   const canDeleteSourceLink = isAdmin || currentUserLevel >= INCOMING_PERMISSION_LEVELS.deleteSourceLink
+
+  const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
   const [form, setForm] = useState<LineFormState>(emptyLineForm())
   const [saving, setSaving] = useState(false)
   const [editingLineId, setEditingLineId] = useState<string | null>(null)
@@ -122,6 +130,15 @@ export function IncomingDeliveryDetailTable({
 
   const materialById = useMemo(() => new Map(materialOptions.map(option => [option.id, option])), [materialOptions])
   const lineById = useMemo(() => new Map(lines.map(line => [line.id, line])), [lines])
+
+  // Filter lines client-side so deleted ones can be shown/hidden without a server round-trip.
+  const visibleLines = useMemo(() => {
+    return lines.filter(line => {
+      if (filterDeleted === 'not-deleted') return !line.deleted
+      if (filterDeleted === 'deleted') return line.deleted
+      return true
+    })
+  }, [lines, filterDeleted])
 
   function loadLine(line: MappedIncomingDeliveryLine) {
     setEditingLineId(line.id)
@@ -188,6 +205,20 @@ export function IncomingDeliveryDetailTable({
     router.refresh()
   }
 
+  async function restoreLine(lineId: string) {
+    if (!canDelete) return
+    await undeleteIncomingDeliveryLineAction({id: lineId, incomingDeliveryId})
+    router.refresh()
+  }
+
+  async function hardDeleteLine(lineId: string) {
+    if (!isAdmin) return
+    await hardDeleteIncomingDeliveryLineAction({id: lineId, incomingDeliveryId})
+    if (editingLineId === lineId) resetForm()
+    if (expandedLineId === lineId) setExpandedLineId(null)
+    router.refresh()
+  }
+
   async function addAllocation() {
     if (!canAddSourceLink) return
     if (!expandedLineId) return
@@ -204,6 +235,29 @@ export function IncomingDeliveryDetailTable({
     router.refresh()
   }
 
+  function handleSourceSelectionChange(sourceId: string) {
+    setAllocationSourceId(sourceId)
+    // Auto-calculate and populate allocation quantity
+    if (sourceId && sourceId !== '__none__') {
+      const smartAllocations = calculateSmartAllocations(expandedLineId || '')
+      const suggestedQty = smartAllocations.get(sourceId) ?? 1
+      setAllocationQty(String(Math.max(suggestedQty, 1)))
+    } else {
+      setAllocationQty('1')
+    }
+  }
+
+  function handleWarehouseLocationChange(warehouseLocId: string) {
+    setWarehousePlaceId(warehouseLocId)
+    // Auto-calculate and populate warehouse allocation quantity
+    if (warehouseLocId && warehouseLocId !== '__none__' && expandedLine) {
+      const availableQty = overDeliveredQty > 0 ? overDeliveredRemainingQty : expandedLine.deliveredQty
+      setWarehouseAllocationQty(String(Math.max(availableQty, 1)))
+    } else {
+      setWarehouseAllocationQty('1')
+    }
+  }
+
   async function deleteAllocation(allocationId: string, lineId: string) {
     if (!canDeleteSourceLink) return
     await softDeleteIncomingDeliveryLineAllocationAction({
@@ -212,6 +266,26 @@ export function IncomingDeliveryDetailTable({
       incomingDeliveryId,
     })
 
+    router.refresh()
+  }
+
+  async function restoreAllocation(allocationId: string, lineId: string) {
+    if (!canDeleteSourceLink) return
+    await undeleteIncomingDeliveryLineAllocationAction({
+      id: allocationId,
+      incomingDeliveryLineId: lineId,
+      incomingDeliveryId,
+    })
+    router.refresh()
+  }
+
+  async function hardDeleteAllocation(allocationId: string, lineId: string) {
+    if (!isAdmin) return
+    await hardDeleteIncomingDeliveryLineAllocationAction({
+      id: allocationId,
+      incomingDeliveryLineId: lineId,
+      incomingDeliveryId,
+    })
     router.refresh()
   }
 
@@ -273,6 +347,55 @@ export function IncomingDeliveryDetailTable({
       remainingQty: Math.max(overDeliveredQty - assignedWarehouseQty, 0),
     }
   }
+
+  /**
+   * Calculate smart allocation amounts for demand sources based on accepted quantity.
+   * Returns a map of sourceId → suggested allocation qty.
+   *
+   * Algorithm:
+   * - available = line.acceptedQty
+   * - for each source (in order):
+   *   - already_allocated = sum of allocations for this source
+   *   - can_allocate_more = source.requiredQty - already_allocated
+   *   - allocation_for_this_source = min(can_allocate_more, available)
+   *   - available -= allocation_for_this_source
+   *
+   * This ensures we don't over-allocate beyond accepted and don't duplicate existing allocations.
+   */
+  function calculateSmartAllocations(lineId: string): Map<string, number> {
+    const line = lineById.get(lineId)
+    const sources = sourceOptionsForExpandedLine
+    const currentAllocations = allocationsByLineId[lineId] ?? []
+
+    if (!line) return new Map()
+
+    const result = new Map<string, number>()
+    let availableQty = line.acceptedQty
+
+    for (const source of sources) {
+      // Sum allocations already made to this source
+      const alreadyAllocated = currentAllocations
+        .filter(alloc => alloc.materialDemandSourceId === source.id)
+        .reduce((sum, alloc) => sum + alloc.allocatedQty, 0)
+
+      // How much more can we allocate to this source?
+      const requiredQty = source.requiredQty - alreadyAllocated
+      if (requiredQty <= 0) {
+        // Already fully allocated
+        result.set(source.id, 0)
+        continue
+      }
+
+      // Allocate the minimum of what's needed and what's available
+      const toAllocate = Math.min(requiredQty, availableQty)
+      result.set(source.id, toAllocate)
+      availableQty -= toAllocate
+    }
+
+    return result
+  }
+
+  const deletedCount = lines.filter(l => l.deleted).length
 
   return (
     <div className="space-y-6">
@@ -458,6 +581,26 @@ export function IncomingDeliveryDetailTable({
       </section>
 
       <section className="rounded-xl border border-border/60 bg-card overflow-x-auto">
+        {/* Toolbar: deleted filter */}
+        <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-border/60">
+          <p className="text-xs text-muted-foreground">
+            {visibleLines.length} line{visibleLines.length === 1 ? '' : 's'}
+            {deletedCount > 0 && filterDeleted === 'not-deleted' && ` · ${deletedCount} deleted (hidden)`}
+          </p>
+          {deletedCount > 0 && (
+            <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
+              <SelectTrigger className="w-[160px] h-8 text-xs bg-secondary border-border">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                <SelectItem value="not-deleted">Not deleted</SelectItem>
+                <SelectItem value="deleted">Deleted only</SelectItem>
+                <SelectItem value="all">Show all</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        </div>
+
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
@@ -476,15 +619,17 @@ export function IncomingDeliveryDetailTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {lines.length === 0 ? (
+            {visibleLines.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={10} className="h-24 text-center text-muted-foreground">
                   No incoming lines yet.
                 </TableCell>
               </TableRow>
             ) : (
-              lines.map(line => (
-                <TableRow key={line.id} className="border-border/40 hover:bg-secondary/50">
+              visibleLines.map(line => (
+                <TableRow
+                  key={line.id}
+                  className={`border-border/40 hover:bg-secondary/50 ${line.deleted ? 'opacity-50' : ''}`}>
                   {(() => {
                     const overDelivery = getOverDeliveryStats(line)
                     return (
@@ -504,6 +649,11 @@ export function IncomingDeliveryDetailTable({
                         </TableCell>
                         <TableCell>
                           <div className="flex flex-col gap-1">
+                            {line.deleted && (
+                              <Badge variant="destructive" className="text-[10px] w-fit">
+                                Deleted
+                              </Badge>
+                            )}
                             {line.notCorrect && (
                               <>
                                 <Badge variant="destructive" className="text-[10px] w-fit">
@@ -527,32 +677,34 @@ export function IncomingDeliveryDetailTable({
                                   : 'Over fully allocated'}
                               </Badge>
                             )}
-                            {!line.notCorrect && overDelivery.overDeliveredQty === 0 && '—'}
+                            {!line.deleted && !line.notCorrect && overDelivery.overDeliveredQty === 0 && '—'}
                           </div>
                         </TableCell>
                         <TableCell>
-                          <Button
-                            size="sm"
-                            variant={expandedLineId === line.id ? 'secondary' : 'outline'}
-                            className="h-7 text-xs"
-                            onClick={() => {
-                              const isOpening = expandedLineId !== line.id
-                              setExpandedLineId(isOpening ? line.id : null)
-                              setAllocationSourceId('__none__')
-                              setAllocationQty('1')
-                              const mat = materialOptions.find(m => m.id === line.materialId)
-                              setWarehousePlaceId(
-                                isOpening && mat?.warehousePlaceId ? mat.warehousePlaceId : '__none__',
-                              )
-                              setWarehouseAllocationQty('1')
-                            }}>
-                            <Link2 className="h-3.5 w-3.5 mr-1" />
-                            {line.allocationCount} source{line.allocationCount === 1 ? '' : 's'}
-                          </Button>
+                          {!line.deleted && (
+                            <Button
+                              size="sm"
+                              variant={expandedLineId === line.id ? 'secondary' : 'outline'}
+                              className="h-7 text-xs"
+                              onClick={() => {
+                                const isOpening = expandedLineId !== line.id
+                                setExpandedLineId(isOpening ? line.id : null)
+                                setAllocationSourceId('__none__')
+                                setAllocationQty('1')
+                                const mat = materialOptions.find(m => m.id === line.materialId)
+                                setWarehousePlaceId(
+                                  isOpening && mat?.warehousePlaceId ? mat.warehousePlaceId : '__none__',
+                                )
+                                setWarehouseAllocationQty('1')
+                              }}>
+                              <Link2 className="h-3.5 w-3.5 mr-1" />
+                              {line.allocationCount} source{line.allocationCount === 1 ? '' : 's'}
+                            </Button>
+                          )}
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-1">
-                            {canEdit && (
+                            {!line.deleted && canEdit && (
                               <Button
                                 size="icon"
                                 variant="ghost"
@@ -561,12 +713,31 @@ export function IncomingDeliveryDetailTable({
                                 <Pencil className="h-3.5 w-3.5" />
                               </Button>
                             )}
-                            {canDelete && (
+                            {!line.deleted && canDelete && (
                               <Button
                                 size="icon"
                                 variant="ghost"
                                 className="h-7 w-7 text-destructive hover:bg-destructive/10"
                                 onClick={() => deleteLine(line.id)}>
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </Button>
+                            )}
+                            {line.deleted && canDelete && (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-7 text-xs px-2 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                onClick={() => restoreLine(line.id)}>
+                                Restore
+                              </Button>
+                            )}
+                            {line.deleted && isAdmin && (
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                title="Permanently delete"
+                                onClick={() => hardDeleteLine(line.id)}>
                                 <Trash2 className="h-3.5 w-3.5" />
                               </Button>
                             )}
@@ -595,7 +766,7 @@ export function IncomingDeliveryDetailTable({
           <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
             <div className="grid gap-1.5">
               <Label>Source</Label>
-              <Select value={allocationSourceId} onValueChange={setAllocationSourceId}>
+              <Select value={allocationSourceId} onValueChange={handleSourceSelectionChange}>
                 <SelectTrigger className="bg-secondary border-border">
                   <SelectValue placeholder="Select material demand source" />
                 </SelectTrigger>
@@ -630,16 +801,61 @@ export function IncomingDeliveryDetailTable({
             </Button>
           </div>
 
-          {overDeliveredQty > 0 && (
-            <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 space-y-3">
-              <div className="text-xs text-amber-800">
-                Over-delivered: {overDeliveredQty} · Assigned to warehouse: {overDeliveredAssignedQty} · Remaining:{' '}
-                {overDeliveredRemainingQty}
+          {expandedLine && sourceOptionsForExpandedLine.length > 0 && (
+            <div className="rounded-lg border border-blue-500/40 bg-blue-500/10 p-3 space-y-2">
+              <div className="text-xs text-blue-800 font-medium">Smart Allocation Summary</div>
+              <div className="text-xs text-blue-800 space-y-1">
+                <div>
+                  Available to allocate: <span className="font-mono font-semibold">{expandedLine.acceptedQty}</span>
+                </div>
+                {sourceOptionsForExpandedLine.map(source => {
+                  const smartAllocations = calculateSmartAllocations(expandedLineId || '')
+                  const suggestedQty = smartAllocations.get(source.id) ?? 0
+                  const currentAllocated = (allocationsByLineId[expandedLineId || ''] ?? [])
+                    .filter(alloc => alloc.materialDemandSourceId === source.id)
+                    .reduce((sum, alloc) => sum + alloc.allocatedQty, 0)
+                  const totalWillBeAllocated = currentAllocated + suggestedQty
+
+                  return (
+                    <div key={source.id} className="pl-2 border-l border-blue-500/30">
+                      <div className="text-xs">
+                        {source.label.substring(0, 40)}:{' '}
+                        {currentAllocated > 0 && <span className="text-blue-700">{currentAllocated} already + </span>}
+                        <span className="font-mono font-semibold">{suggestedQty}</span>
+                        {suggestedQty > 0 && (
+                          <span className="text-blue-700">
+                            {' '}
+                            = <span className="font-mono font-semibold">{totalWillBeAllocated}</span>/
+                            {source.requiredQty}
+                          </span>
+                        )}
+                        {suggestedQty === 0 && currentAllocated >= source.requiredQty && (
+                          <span className="text-emerald-700"> ✓ Fulfilled</span>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
+            </div>
+          )}
+
+          {(overDeliveredQty > 0 || (sourceOptionsForExpandedLine.length === 0 && expandedLine)) && (
+            <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 space-y-3">
+              {overDeliveredQty > 0 ? (
+                <div className="text-xs text-amber-800">
+                  Over-delivered: {overDeliveredQty} · Assigned to warehouse: {overDeliveredAssignedQty} · Remaining:{' '}
+                  {overDeliveredRemainingQty}
+                </div>
+              ) : (
+                <div className="text-xs text-amber-800">
+                  No material demand sources available. Assign materials directly to warehouse location.
+                </div>
+              )}
               <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
                 <div className="grid gap-1.5">
                   <Label>Warehouse location</Label>
-                  <Select value={warehousePlaceId} onValueChange={setWarehousePlaceId}>
+                  <Select value={warehousePlaceId} onValueChange={handleWarehouseLocationChange}>
                     <SelectTrigger className="bg-secondary border-border">
                       <SelectValue placeholder="Select warehouse location" />
                     </SelectTrigger>
@@ -666,7 +882,10 @@ export function IncomingDeliveryDetailTable({
                   <Input
                     type="number"
                     min={1}
-                    max={Math.max(overDeliveredRemainingQty, 1)}
+                    max={Math.max(
+                      overDeliveredQty > 0 ? overDeliveredRemainingQty : (expandedLine?.deliveredQty ?? 0),
+                      1,
+                    )}
                     value={warehouseAllocationQty}
                     onChange={e => setWarehouseAllocationQty(e.target.value)}
                     className="bg-secondary border-border"
@@ -675,9 +894,17 @@ export function IncomingDeliveryDetailTable({
 
                 <Button
                   onClick={addOverDeliveryAllocation}
-                  disabled={!canAddSourceLink || warehousePlaceId === '__none__' || overDeliveredRemainingQty <= 0}
-                  className="bg-amber-600 text-white hover:bg-amber-700">
-                  Store Over-delivery
+                  disabled={
+                    !canAddSourceLink ||
+                    warehousePlaceId === '__none__' ||
+                    (overDeliveredQty > 0 ? overDeliveredRemainingQty : (expandedLine?.deliveredQty ?? 0)) <= 0
+                  }
+                  className={
+                    overDeliveredQty > 0
+                      ? 'bg-amber-600 text-white hover:bg-amber-700'
+                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                  }>
+                  {overDeliveredQty > 0 ? 'Store Over-delivery' : 'Assign to Warehouse'}
                 </Button>
               </div>
             </div>
@@ -705,7 +932,9 @@ export function IncomingDeliveryDetailTable({
                   </TableRow>
                 ) : (
                   (allocationsByLineId[expandedLineId] ?? []).map(allocation => (
-                    <TableRow key={allocation.id} className="border-border/40">
+                    <TableRow
+                      key={allocation.id}
+                      className={`border-border/40 ${allocation.deleted ? 'opacity-50' : ''}`}>
                       <TableCell className="text-sm text-muted-foreground">{allocationLabel(allocation)}</TableCell>
                       <TableCell className="text-sm text-muted-foreground">{allocation.allocatedQty}</TableCell>
                       <TableCell className="text-sm">
@@ -723,16 +952,37 @@ export function IncomingDeliveryDetailTable({
                         {allocation.createdByName} · {formatDate(allocation.createdAt)}
                       </TableCell>
                       <TableCell>
-                        {canDeleteSourceLink && (
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                            title={`Requires role level ${INCOMING_PERMISSION_LEVELS.deleteSourceLink}+`}
-                            onClick={() => deleteAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </Button>
-                        )}
+                        <div className="flex items-center gap-1">
+                          {!allocation.deleted && canDeleteSourceLink && (
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                              onClick={() => deleteAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+
+                          {allocation.deleted && canDeleteSourceLink && (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-7 text-xs px-2"
+                              onClick={() => restoreAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
+                              Restore
+                            </Button>
+                          )}
+
+                          {allocation.deleted && isAdmin && (
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                              onClick={() => hardDeleteAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))

@@ -26,7 +26,7 @@ interface DashboardNavbarProps {
   roleContext: RoleContext
   roleContextInput: RoleContextInput
 }
-export type EmployeeSafe = Omit<Employee, 'password_hash'>
+export type EmployeeSafe = Omit<Employee, 'password_hash' | 'weeklyWorkHours' | 'maxOvertimeHours'>
 type AppTheme = 'light' | 'dark' | 'high-contrast'
 type BreadcrumbItem = {
   href: Route
@@ -194,10 +194,9 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
       const results = await Promise.all(
         toFetch.map(async ({id, type}) => {
           try {
-            const res = await fetch(
-              `/api/breadcrumb?type=${encodeURIComponent(type)}&id=${encodeURIComponent(id)}`,
-              {signal: controller.signal},
-            )
+            const res = await fetch(`/api/breadcrumb?type=${encodeURIComponent(type)}&id=${encodeURIComponent(id)}`, {
+              signal: controller.signal,
+            })
             if (!res.ok) return {id, name: null}
             const data = (await res.json()) as {name: string | null}
             return {id, name: data.name}
@@ -235,14 +234,10 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
   const isHome = breadcrumbSegments.length === 0
 
   const breadcrumbItems: BreadcrumbItem[] = breadcrumbSegments.map((segment, index) => {
-    const hrefSegments = [
-      ...(isDashboardRoute ? ['dashboard'] : []),
-      ...breadcrumbSegments.slice(0, index + 1),
-    ]
+    const hrefSegments = [...(isDashboardRoute ? ['dashboard'] : []), ...breadcrumbSegments.slice(0, index + 1)]
 
     const isDepartmentsRoot = !isDashboardRoute && index === 0 && segment === 'departments'
-    const isDepartmentId =
-      !isDashboardRoute && isUUID(segment) && breadcrumbSegments[index - 1] === 'departments'
+    const isDepartmentId = !isDashboardRoute && isUUID(segment) && breadcrumbSegments[index - 1] === 'departments'
     const isEntityId = isUUID(segment) && !isDepartmentsRoot && !isDepartmentId
 
     const getLabel = (): string => {

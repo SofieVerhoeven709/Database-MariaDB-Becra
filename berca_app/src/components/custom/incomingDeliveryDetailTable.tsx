@@ -25,6 +25,8 @@ import {
   createIncomingDeliveryLineAllocationAction,
   createIncomingDeliveryOverDeliveryAllocationAction,
   softDeleteIncomingDeliveryLineAllocationAction,
+  undeleteIncomingDeliveryLineAllocationAction,
+  hardDeleteIncomingDeliveryLineAllocationAction,
 } from '@/serverFunctions/incomingDeliveries'
 import {INCOMING_PERMISSION_LEVELS} from '@/constants'
 
@@ -264,6 +266,26 @@ export function IncomingDeliveryDetailTable({
       incomingDeliveryId,
     })
 
+    router.refresh()
+  }
+
+  async function restoreAllocation(allocationId: string, lineId: string) {
+    if (!canDeleteSourceLink) return
+    await undeleteIncomingDeliveryLineAllocationAction({
+      id: allocationId,
+      incomingDeliveryLineId: lineId,
+      incomingDeliveryId,
+    })
+    router.refresh()
+  }
+
+  async function hardDeleteAllocation(allocationId: string, lineId: string) {
+    if (!isAdmin) return
+    await hardDeleteIncomingDeliveryLineAllocationAction({
+      id: allocationId,
+      incomingDeliveryLineId: lineId,
+      incomingDeliveryId,
+    })
     router.refresh()
   }
 
@@ -910,7 +932,9 @@ export function IncomingDeliveryDetailTable({
                   </TableRow>
                 ) : (
                   (allocationsByLineId[expandedLineId] ?? []).map(allocation => (
-                    <TableRow key={allocation.id} className="border-border/40">
+                    <TableRow
+                      key={allocation.id}
+                      className={`border-border/40 ${allocation.deleted ? 'opacity-50' : ''}`}>
                       <TableCell className="text-sm text-muted-foreground">{allocationLabel(allocation)}</TableCell>
                       <TableCell className="text-sm text-muted-foreground">{allocation.allocatedQty}</TableCell>
                       <TableCell className="text-sm">
@@ -928,16 +952,37 @@ export function IncomingDeliveryDetailTable({
                         {allocation.createdByName} · {formatDate(allocation.createdAt)}
                       </TableCell>
                       <TableCell>
-                        {canDeleteSourceLink && (
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                            title={`Requires role level ${INCOMING_PERMISSION_LEVELS.deleteSourceLink}+`}
-                            onClick={() => deleteAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </Button>
-                        )}
+                        <div className="flex items-center gap-1">
+                          {!allocation.deleted && canDeleteSourceLink && (
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                              onClick={() => deleteAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+
+                          {allocation.deleted && canDeleteSourceLink && (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-7 text-xs px-2"
+                              onClick={() => restoreAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
+                              Restore
+                            </Button>
+                          )}
+
+                          {allocation.deleted && isAdmin && (
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                              onClick={() => hardDeleteAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))

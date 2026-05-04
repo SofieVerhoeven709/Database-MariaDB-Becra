@@ -395,7 +395,18 @@ export const updateProjectBOMStructureAction = protectedServerFunction({
       },
     })
 
-    await prismaClient.projectBOMStructure.update({where: {id}, data})
+    const {materialId, ...rest} = data
+    await prismaClient.projectBOMStructure.update({
+      where: {id},
+      data: {
+        ...rest,
+        ...(materialId && {
+          Material: {
+            connect: {id: materialId},
+          },
+        }),
+      },
+    })
 
     const purchaseBomExists = await prismaClient.purchaseBOM.findFirst({
       where: {projectBOMId: existing.projectBOMId},

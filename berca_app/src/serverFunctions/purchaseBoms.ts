@@ -132,7 +132,7 @@ export const updatePurchaseBOMAction = protectedServerFunction({
       })
 
       if (openWorkOrder) {
-        const sourceClientNumbers = purchaseStructures.map(s => `PBOMS:${s.id}`)
+        const sourceClientNumbers = purchaseStructures.map(s => `PBOMS:${data.purchaseBomNumber}`)
         const existingWorkOrderStructures = await prismaClient.workOrderStructure.findMany({
           where: {
             workOrderId: openWorkOrder.id,
@@ -146,7 +146,7 @@ export const updatePurchaseBOMAction = protectedServerFunction({
         let createdWorkOrderStructures = 0
 
         for (const structure of purchaseStructures) {
-          const clientNumber = `PBOMS:${structure.id}`
+          const clientNumber = `PBOMS:${data.purchaseBomNumber}`
           if (existingClientNumbers.has(clientNumber)) continue
 
           const target = await createTargetForType('WorkOrderStructure', profile.id)

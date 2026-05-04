@@ -625,16 +625,6 @@ export type ScheduleMeeting = Prisma.ScheduleMeetingModel
  */
 export type HrCertificationTraining = Prisma.HrCertificationTrainingModel
 /**
- * Model HrEmployeeHseFile
- * 
- */
-export type HrEmployeeHseFile = Prisma.HrEmployeeHseFileModel
-/**
- * Model HrEmployeeOvertime
- * 
- */
-export type HrEmployeeOvertime = Prisma.HrEmployeeOvertimeModel
-/**
  * Model HrEmployeeAbsence
  * 
  */
@@ -699,3 +689,13 @@ export type HrFacilityFuelCard = Prisma.HrFacilityFuelCardModel
  * 
  */
 export type HrFacilityFine = Prisma.HrFacilityFineModel
+/**
+ * Model HrEmployeeHseFile
+ * 
+ */
+export type HrEmployeeHseFile = Prisma.HrEmployeeHseFileModel
+/**
+ * Model HrEmployeeOvertime
+ * 
+ */
+export type HrEmployeeOvertime = Prisma.HrEmployeeOvertimeModel

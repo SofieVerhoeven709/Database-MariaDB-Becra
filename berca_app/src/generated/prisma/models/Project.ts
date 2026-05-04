@@ -1114,20 +1114,6 @@ export type ProjectUpdateOneRequiredWithoutPurchaseBOMNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutPurchaseBOMInput, Prisma.ProjectUpdateWithoutPurchaseBOMInput>, Prisma.ProjectUncheckedUpdateWithoutPurchaseBOMInput>
 }
 
-export type ProjectCreateNestedOneWithoutHrEmployeeOvertimeInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutHrEmployeeOvertimeInput
-  connect?: Prisma.ProjectWhereUniqueInput
-}
-
-export type ProjectUpdateOneRequiredWithoutHrEmployeeOvertimeNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutHrEmployeeOvertimeInput
-  upsert?: Prisma.ProjectUpsertWithoutHrEmployeeOvertimeInput
-  connect?: Prisma.ProjectWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutHrEmployeeOvertimeInput, Prisma.ProjectUpdateWithoutHrEmployeeOvertimeInput>, Prisma.ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput>
-}
-
 export type ProjectCreateNestedOneWithoutProjectEmployeeInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutProjectEmployeeInput, Prisma.ProjectUncheckedCreateWithoutProjectEmployeeInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutProjectEmployeeInput
@@ -1140,6 +1126,20 @@ export type ProjectUpdateOneRequiredWithoutProjectEmployeeNestedInput = {
   upsert?: Prisma.ProjectUpsertWithoutProjectEmployeeInput
   connect?: Prisma.ProjectWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutProjectEmployeeInput, Prisma.ProjectUpdateWithoutProjectEmployeeInput>, Prisma.ProjectUncheckedUpdateWithoutProjectEmployeeInput>
+}
+
+export type ProjectCreateNestedOneWithoutHrEmployeeOvertimeInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutHrEmployeeOvertimeInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutHrEmployeeOvertimeNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutHrEmployeeOvertimeInput
+  upsert?: Prisma.ProjectUpsertWithoutHrEmployeeOvertimeInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutHrEmployeeOvertimeInput, Prisma.ProjectUpdateWithoutHrEmployeeOvertimeInput>, Prisma.ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput>
 }
 
 export type ProjectCreateWithoutCompanyInput = {
@@ -2574,150 +2574,6 @@ export type ProjectUncheckedUpdateWithoutPurchaseBOMInput = {
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
-export type ProjectCreateWithoutHrEmployeeOvertimeInput = {
-  id: string
-  projectNumber: string
-  projectName: string
-  description?: string | null
-  extraInfo?: string | null
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  closingDate?: Date | string | null
-  engineeringStartDate?: Date | string | null
-  createdAt: Date | string
-  isMainProject?: boolean
-  isIntern?: boolean
-  isOpen?: boolean
-  isClosed?: boolean
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
-  Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
-  ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
-  Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
-  other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
-  Target: Prisma.TargetCreateNestedOneWithoutProjectInput
-  Employee_Project_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProject_Project_deletedByToEmployeeInput
-  ProjectBOM?: Prisma.ProjectBOMCreateNestedManyWithoutProjectInput
-  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
-  ProjectEmployee?: Prisma.ProjectEmployeeCreateNestedManyWithoutProjectInput
-  PurchaseBOM?: Prisma.PurchaseBOMCreateNestedManyWithoutProjectInput
-  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
-}
-
-export type ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput = {
-  id: string
-  projectNumber: string
-  projectName: string
-  description?: string | null
-  extraInfo?: string | null
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  closingDate?: Date | string | null
-  engineeringStartDate?: Date | string | null
-  createdAt: Date | string
-  isMainProject?: boolean
-  isIntern?: boolean
-  isOpen?: boolean
-  isClosed?: boolean
-  createdBy: string
-  companyId: string
-  projectTypeId: string
-  parentProjectId?: string | null
-  targetId: string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
-  other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
-  ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
-  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
-  ProjectEmployee?: Prisma.ProjectEmployeeUncheckedCreateNestedManyWithoutProjectInput
-  PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedManyWithoutProjectInput
-  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
-}
-
-export type ProjectCreateOrConnectWithoutHrEmployeeOvertimeInput = {
-  where: Prisma.ProjectWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
-}
-
-export type ProjectUpsertWithoutHrEmployeeOvertimeInput = {
-  update: Prisma.XOR<Prisma.ProjectUpdateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput>
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
-  where?: Prisma.ProjectWhereInput
-}
-
-export type ProjectUpdateToOneWithWhereWithoutHrEmployeeOvertimeInput = {
-  where?: Prisma.ProjectWhereInput
-  data: Prisma.XOR<Prisma.ProjectUpdateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput>
-}
-
-export type ProjectUpdateWithoutHrEmployeeOvertimeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  projectName?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
-  Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
-  ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
-  Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
-  other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
-  Employee_Project_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProject_Project_deletedByToEmployeeNestedInput
-  ProjectBOM?: Prisma.ProjectBOMUpdateManyWithoutProjectNestedInput
-  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
-  ProjectEmployee?: Prisma.ProjectEmployeeUpdateManyWithoutProjectNestedInput
-  PurchaseBOM?: Prisma.PurchaseBOMUpdateManyWithoutProjectNestedInput
-  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
-}
-
-export type ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  projectName?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
-  other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
-  ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
-  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
-  ProjectEmployee?: Prisma.ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput
-  PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateManyWithoutProjectNestedInput
-  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
-}
-
 export type ProjectCreateWithoutProjectEmployeeInput = {
   id: string
   projectNumber: string
@@ -2858,6 +2714,150 @@ export type ProjectUncheckedUpdateWithoutProjectEmployeeInput = {
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutHrEmployeeOvertimeInput = {
+  id: string
+  projectNumber: string
+  projectName: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
+  Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
+  ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
+  Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
+  other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
+  Target: Prisma.TargetCreateNestedOneWithoutProjectInput
+  Employee_Project_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProject_Project_deletedByToEmployeeInput
+  ProjectBOM?: Prisma.ProjectBOMCreateNestedManyWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  ProjectEmployee?: Prisma.ProjectEmployeeCreateNestedManyWithoutProjectInput
+  PurchaseBOM?: Prisma.PurchaseBOMCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput = {
+  id: string
+  projectNumber: string
+  projectName: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
+  other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
+  ProjectBOM?: Prisma.ProjectBOMUncheckedCreateNestedManyWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  ProjectEmployee?: Prisma.ProjectEmployeeUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseBOM?: Prisma.PurchaseBOMUncheckedCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutHrEmployeeOvertimeInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
+}
+
+export type ProjectUpsertWithoutHrEmployeeOvertimeInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedCreateWithoutHrEmployeeOvertimeInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutHrEmployeeOvertimeInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutHrEmployeeOvertimeInput, Prisma.ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput>
+}
+
+export type ProjectUpdateWithoutHrEmployeeOvertimeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  projectName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
+  Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
+  ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
+  Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
+  other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
+  Employee_Project_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProject_Project_deletedByToEmployeeNestedInput
+  ProjectBOM?: Prisma.ProjectBOMUpdateManyWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  ProjectEmployee?: Prisma.ProjectEmployeeUpdateManyWithoutProjectNestedInput
+  PurchaseBOM?: Prisma.PurchaseBOMUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutHrEmployeeOvertimeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  projectName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
+  other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
+  ProjectBOM?: Prisma.ProjectBOMUncheckedUpdateManyWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  ProjectEmployee?: Prisma.ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput
   PurchaseBOM?: Prisma.PurchaseBOMUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }

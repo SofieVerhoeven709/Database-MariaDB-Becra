@@ -125,8 +125,10 @@ export function IncomingDeliveryDetailTable({
   const [expandedLineId, setExpandedLineId] = useState<string | null>(null)
   const [allocationSourceId, setAllocationSourceId] = useState<string>('__none__')
   const [allocationQty, setAllocationQty] = useState('1')
+  const [sourceAllocationError, setSourceAllocationError] = useState<string | null>(null)
   const [warehousePlaceId, setWarehousePlaceId] = useState<string>('__none__')
   const [warehouseAllocationQty, setWarehouseAllocationQty] = useState('1')
+  const [warehouseAllocationError, setWarehouseAllocationError] = useState<string | null>(null)
   // Inline allocation editing state
   const [editingAllocationId, setEditingAllocationId] = useState<string | null>(null)
   const [editingAllocationOriginal, setEditingAllocationOriginal] = useState<
@@ -134,6 +136,7 @@ export function IncomingDeliveryDetailTable({
   >(null)
   const [editingAllocationTarget, setEditingAllocationTarget] = useState<string>('__none__')
   const [editingAllocationQty, setEditingAllocationQty] = useState('1')
+  const [editingAllocationError, setEditingAllocationError] = useState<string | null>(null)
 
   const materialById = useMemo(() => new Map(materialOptions.map(option => [option.id, option])), [materialOptions])
   const lineById = useMemo(() => new Map(lines.map(line => [line.id, line])), [lines])
@@ -231,14 +234,29 @@ export function IncomingDeliveryDetailTable({
     if (!expandedLineId) return
     if (!allocationSourceId || allocationSourceId === '__none__') return
 
+    setSourceAllocationError(null)
+
+    const requestedQty = Number.parseInt(allocationQty, 10)
+    const remainingAcceptedQty = getRemainingAcceptedQtyForLine(expandedLineId)
+    const sourceValidationError = getSourceAllocationValidationError(
+      requestedQty,
+      currentSuggestedForSelectedSource,
+      remainingAcceptedQty,
+    )
+    if (sourceValidationError) {
+      setSourceAllocationError(sourceValidationError)
+      return
+    }
+
     await createIncomingDeliveryLineAllocationAction({
       incomingDeliveryLineId: expandedLineId,
       materialDemandSourceId: allocationSourceId,
-      allocatedQty: Number.parseInt(allocationQty, 10) || 1,
+      allocatedQty: requestedQty,
     })
 
     setAllocationSourceId('__none__')
     setAllocationQty('1')
+    setSourceAllocationError(null)
     router.refresh()
   }
 
@@ -249,6 +267,7 @@ export function IncomingDeliveryDetailTable({
   })()
 
   function startEditAllocation(allocation: MappedIncomingDeliveryLineAllocation) {
+    setEditingAllocationError(null)
     setEditingAllocationId(allocation.id)
     setEditingAllocationOriginal(allocation)
     // Preselect current target (source id or warehouse prefixed)
@@ -265,16 +284,24 @@ export function IncomingDeliveryDetailTable({
     setEditingAllocationOriginal(null)
     setEditingAllocationTarget('__none__')
     setEditingAllocationQty('1')
+    setEditingAllocationError(null)
   }
 
   async function saveEditedAllocation() {
     if (!expandedLineId || !editingAllocationOriginal || !editingAllocationId) return
     const target = editingAllocationTarget
-    const qty = Number.parseInt(editingAllocationQty, 10) || 1
+    const qty = Number.parseInt(editingAllocationQty, 10)
 
     // If target is a warehouse (prefixed), call the over-delivery allocation endpoint which handles restore/update
     if (target.startsWith('__wh__:')) {
       const whId = target.split(':')[1]
+      const availableQty = getAvailableWarehouseQtyForLine(expandedLineId)
+      const warehouseValidationError = getWarehouseAllocationValidationError(qty, availableQty)
+      if (warehouseValidationError) {
+        setEditingAllocationError(warehouseValidationError)
+        return
+      }
+
       // If original was not warehouse, soft-delete it first
       if (editingAllocationOriginal.sourceTypeName.toLowerCase() !== 'warehouseplace') {
         await softDeleteIncomingDeliveryLineAllocationAction({
@@ -292,13 +319,16 @@ export function IncomingDeliveryDetailTable({
       // Target is a material demand source id
       const sourceId = target
         // Prevent assigning more than available acceptedQty for this source on the client
+            if (!Number.isFinite(qty) || qty < 1) {
+              setEditingAllocationError('Please enter a quantity of at least 1.')
+              return
+            }
         const smartAllocations = calculateSmartAllocations(expandedLineId)
         const allowedForSource = smartAllocations.get(sourceId) ?? 0
-        if (qty > allowedForSource) {
-          // Provide quick client-side feedback; server also enforces this.
-          window.alert(
-            `Cannot assign ${qty} — only ${allowedForSource} available based on accepted quantity and existing allocations.`,
-          )
+            const sourceValidationError = getSourceAllocationValidationError(qty, allowedForSource, allowedForSource)
+            if (sourceValidationError) {
+              // Provide quick in-page feedback; server also enforces this.
+              setEditingAllocationError(sourceValidationError)
           return
         }
       // If changing away from a previous source/warehouse, remove the old allocation first
@@ -327,11 +357,13 @@ export function IncomingDeliveryDetailTable({
     }
 
     cancelEditAllocation()
+    setSourceAllocationError(null)
     router.refresh()
   }
 
   function handleSourceSelectionChange(sourceId: string) {
     setAllocationSourceId(sourceId)
+    setSourceAllocationError(null)
     // Auto-calculate and populate allocation quantity
     if (sourceId && sourceId !== '__none__') {
       const smartAllocations = calculateSmartAllocations(expandedLineId || '')
@@ -344,9 +376,10 @@ export function IncomingDeliveryDetailTable({
 
   function handleWarehouseLocationChange(warehouseLocId: string) {
     setWarehousePlaceId(warehouseLocId)
+    setWarehouseAllocationError(null)
     // Auto-calculate and populate warehouse allocation quantity
     if (warehouseLocId && warehouseLocId !== '__none__' && expandedLine) {
-      const availableQty = overDeliveredQty > 0 ? overDeliveredRemainingQty : expandedLine.deliveredQty
+      const availableQty = getAvailableWarehouseQtyForLine(expandedLineId || '')
       setWarehouseAllocationQty(String(Math.max(availableQty, 1)))
     } else {
       setWarehouseAllocationQty('1')
@@ -389,14 +422,32 @@ export function IncomingDeliveryDetailTable({
     if (!expandedLineId) return
     if (!warehousePlaceId || warehousePlaceId === '__none__') return
 
+    setWarehouseAllocationError(null)
+
+    const requestedQty = Number.parseInt(warehouseAllocationQty, 10)
+    const availableQty = getAvailableWarehouseQtyForLine(expandedLineId)
+    if (!Number.isFinite(requestedQty) || requestedQty < 1) {
+      setWarehouseAllocationError('Please enter a quantity of at least 1.')
+      return
+    }
+    if (availableQty <= 0) {
+      setWarehouseAllocationError('No accepted quantity remains available for additional warehouse links.')
+      return
+    }
+    if (requestedQty > availableQty) {
+      setWarehouseAllocationError(`Cannot assign ${requestedQty} — only ${availableQty} available for warehouse assignment.`)
+      return
+    }
+
     await createIncomingDeliveryOverDeliveryAllocationAction({
       incomingDeliveryLineId: expandedLineId,
       warehousePlaceId,
-      allocatedQty: Number.parseInt(warehouseAllocationQty, 10) || 1,
+      allocatedQty: requestedQty,
     })
 
     setWarehousePlaceId('__none__')
     setWarehouseAllocationQty('1')
+    setWarehouseAllocationError(null)
     router.refresh()
   }
 
@@ -408,6 +459,8 @@ export function IncomingDeliveryDetailTable({
   })()
 
   const expandedLine = expandedLineId ? (lineById.get(expandedLineId) ?? null) : null
+  const remainingAcceptedQtyForExpandedLine = expandedLineId ? getRemainingAcceptedQtyForLine(expandedLineId) : 0
+  const availableWarehouseQtyForExpandedLine = expandedLineId ? getAvailableWarehouseQtyForLine(expandedLineId) : 0
   const expandedLineMaterialWarehousePlaceId = expandedLine
     ? (materialOptions.find(m => m.id === expandedLine.materialId)?.warehousePlaceId ?? null)
     : null
@@ -443,12 +496,40 @@ export function IncomingDeliveryDetailTable({
     }
   }
 
+  function getActiveAllocatedQtyForLine(lineId: string) {
+    return (allocationsByLineId[lineId] ?? [])
+      .filter(allocation => !allocation.deleted)
+      .reduce((sum, allocation) => sum + allocation.allocatedQty, 0)
+  }
+
+  function getRemainingAcceptedQtyForLine(lineId: string) {
+    const line = lineById.get(lineId)
+    if (!line) return 0
+    return Math.max(line.acceptedQty - getActiveAllocatedQtyForLine(lineId), 0)
+  }
+
+  function getAvailableWarehouseQtyForLine(lineId: string) {
+    const line = lineById.get(lineId)
+    if (!line) return 0
+
+    const overDeliveredQty = Math.max(line.deliveredQty - line.orderedQty, 0)
+    const physicalAvailableQty = overDeliveredQty > 0 ? overDeliveredQty : line.deliveredQty
+    const alreadyAllocatedWarehouseQty = (allocationsByLineId[lineId] ?? [])
+      .filter(allocation => !allocation.deleted && allocation.sourceTypeName.toLowerCase() === 'warehouseplace')
+      .reduce((sum, allocation) => sum + allocation.allocatedQty, 0)
+
+    return Math.min(
+      getRemainingAcceptedQtyForLine(lineId),
+      Math.max(physicalAvailableQty - alreadyAllocatedWarehouseQty, 0),
+    )
+  }
+
   /**
    * Calculate smart allocation amounts for demand sources based on accepted quantity.
    * Returns a map of sourceId → suggested allocation qty.
    *
    * Algorithm:
-   * - available = line.acceptedQty
+   * - available = remaining accepted qty after all active allocations
    * - for each source (in order):
    *   - already_allocated = sum of allocations for this source
    *   - can_allocate_more = source.requiredQty - already_allocated
@@ -465,7 +546,7 @@ export function IncomingDeliveryDetailTable({
     if (!line) return new Map()
 
     const result = new Map<string, number>()
-    let availableQty = line.acceptedQty
+    let availableQty = getRemainingAcceptedQtyForLine(lineId)
 
     for (const source of sources) {
       // Sum allocations already made to this source
@@ -488,6 +569,32 @@ export function IncomingDeliveryDetailTable({
     }
 
     return result
+  }
+
+  function getSourceAllocationValidationError(requestedQty: number, allowedQty: number, remainingAcceptedQty: number) {
+    if (!Number.isFinite(requestedQty) || requestedQty < 1) {
+      return 'Please enter a quantity of at least 1.'
+    }
+    if (remainingAcceptedQty <= 0 || allowedQty <= 0) {
+      return 'No accepted quantity remains available for additional links.'
+    }
+    if (requestedQty > allowedQty) {
+      return `Cannot assign ${requestedQty} — only ${allowedQty} available based on accepted quantity and existing allocations.`
+    }
+    return null
+  }
+
+  function getWarehouseAllocationValidationError(requestedQty: number, allowedQty: number) {
+    if (!Number.isFinite(requestedQty) || requestedQty < 1) {
+      return 'Please enter a quantity of at least 1.'
+    }
+    if (allowedQty <= 0) {
+      return 'No accepted quantity remains available for additional warehouse links.'
+    }
+    if (requestedQty > allowedQty) {
+      return `Cannot assign ${requestedQty} — only ${allowedQty} available for warehouse assignment.`
+    }
+    return null
   }
 
   const deletedCount = lines.filter(l => l.deleted).length
@@ -684,7 +791,7 @@ export function IncomingDeliveryDetailTable({
           </p>
           {deletedCount > 0 && (
             <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
-              <SelectTrigger className="w-[160px] h-8 text-xs bg-secondary border-border">
+              <SelectTrigger className="w-40 h-8 text-xs bg-secondary border-border">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
@@ -858,54 +965,72 @@ export function IncomingDeliveryDetailTable({
             </span>
           </div>
 
-          <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
-            <div className="grid gap-1.5">
-              <Label>Source</Label>
-              <Select value={allocationSourceId} onValueChange={handleSourceSelectionChange}>
-                <SelectTrigger className="bg-secondary border-border">
-                  <SelectValue placeholder="Select material demand source" />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border">
-                  <SelectItem value="__none__">Select source</SelectItem>
-                  {sourceOptionsForExpandedLine.map(option => (
-                    <SelectItem key={option.id} value={option.id}>
-                      {option.label} ({option.reservedQty}/{option.requiredQty})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          {remainingAcceptedQtyForExpandedLine > 0 && sourceOptionsForExpandedLine.length > 0 ? (
+            <>
+              <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
+              <div className="grid gap-1.5">
+                <Label>Source</Label>
+                <Select value={allocationSourceId} onValueChange={handleSourceSelectionChange}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select material demand source" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="__none__">Select source</SelectItem>
+                    {sourceOptionsForExpandedLine.map(option => (
+                      <SelectItem key={option.id} value={option.id}>
+                        {option.label} ({option.reservedQty}/{option.requiredQty})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="grid gap-1.5">
+                <Label>Allocated Qty</Label>
+                <Input
+                  type="number"
+                  min={1}
+                  value={allocationQty}
+                  onChange={e => {
+                    setAllocationQty(e.target.value)
+                    setSourceAllocationError(null)
+                  }}
+                  className="bg-secondary border-border"
+                />
+              </div>
+
+              <Button
+                onClick={addAllocation}
+                disabled={
+                  !canAddSourceLink ||
+                  allocationSourceId === '__none__' ||
+                  !Number.isFinite(Number.parseInt(allocationQty, 10)) ||
+                  Number.parseInt(allocationQty, 10) < 1 ||
+                  Number.parseInt(allocationQty, 10) > currentSuggestedForSelectedSource
+                }
+                title={`Requires role level ${INCOMING_PERMISSION_LEVELS.addSourceLink}+`}
+                className="bg-accent text-accent-foreground hover:bg-accent/80">
+                Add Link
+              </Button>
+              </div>
+              {sourceAllocationError && (
+                <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive">
+                  {sourceAllocationError}
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-2 text-xs text-blue-800">
+              No accepted quantity remains available for new source links.
             </div>
+          )}
 
-            <div className="grid gap-1.5">
-              <Label>Allocated Qty</Label>
-              <Input
-                type="number"
-                min={1}
-                value={allocationQty}
-                onChange={e => setAllocationQty(e.target.value)}
-                className="bg-secondary border-border"
-              />
-            </div>
-
-            <Button
-              onClick={addAllocation}
-              disabled={
-                !canAddSourceLink ||
-                allocationSourceId === '__none__' ||
-                Number.parseInt(allocationQty || '0', 10) > currentSuggestedForSelectedSource
-              }
-              title={`Requires role level ${INCOMING_PERMISSION_LEVELS.addSourceLink}+`}
-              className="bg-accent text-accent-foreground hover:bg-accent/80">
-              Add Link
-            </Button>
-          </div>
-
-          {expandedLine && sourceOptionsForExpandedLine.length > 0 && (
+          {expandedLine && sourceOptionsForExpandedLine.length > 0 && remainingAcceptedQtyForExpandedLine > 0 && (
             <div className="rounded-lg border border-blue-500/40 bg-blue-500/10 p-3 space-y-2">
               <div className="text-xs text-blue-800 font-medium">Smart Allocation Summary</div>
               <div className="text-xs text-blue-800 space-y-1">
                 <div>
-                  Available to allocate: <span className="font-mono font-semibold">{expandedLine.acceptedQty}</span>
+                  Remaining accepted qty: <span className="font-mono font-semibold">{remainingAcceptedQtyForExpandedLine}</span>
                 </div>
                 {sourceOptionsForExpandedLine.map(source => {
                   const smartAllocations = calculateSmartAllocations(expandedLineId || '')
@@ -941,71 +1066,91 @@ export function IncomingDeliveryDetailTable({
 
           {(overDeliveredQty > 0 || (sourceOptionsForExpandedLine.length === 0 && expandedLine)) && (
             <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 space-y-3">
-              {overDeliveredQty > 0 ? (
-                <div className="text-xs text-amber-800">
-                  Over-delivered: {overDeliveredQty} · Assigned to warehouse: {overDeliveredAssignedQty} · Remaining:{' '}
-                  {overDeliveredRemainingQty}
-                </div>
+              {availableWarehouseQtyForExpandedLine > 0 ? (
+                <>
+                  {overDeliveredQty > 0 ? (
+                    <div className="text-xs text-amber-800">
+                      Over-delivered: {overDeliveredQty} · Assigned to warehouse: {overDeliveredAssignedQty} · Remaining:{' '}
+                      {overDeliveredRemainingQty} · Allowed now: {availableWarehouseQtyForExpandedLine}
+                    </div>
+                  ) : (
+                    <div className="text-xs text-amber-800">
+                      No material demand sources available. Assign materials directly to warehouse location. Allowed now:{' '}
+                      {availableWarehouseQtyForExpandedLine}
+                    </div>
+                  )}
+                  <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
+                    <div className="grid gap-1.5">
+                      <Label>Warehouse location</Label>
+                      <Select value={warehousePlaceId} onValueChange={handleWarehouseLocationChange}>
+                        <SelectTrigger className="bg-secondary border-border">
+                          <SelectValue placeholder="Select warehouse location" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-card border-border">
+                          <SelectItem value="__none__">Select location</SelectItem>
+                          {warehousePlaceOptions.map(option => (
+                            <SelectItem key={option.id} value={option.id}>
+                              <span className="flex items-center gap-2">
+                                {option.label}
+                                {option.id === expandedLineMaterialWarehousePlaceId && (
+                                  <Badge variant="outline" className="text-[10px] border-blue-500/60 text-blue-700 ml-1">
+                                    Current
+                                  </Badge>
+                                )}
+                              </span>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="grid gap-1.5">
+                      <Label>Qty to store</Label>
+                      <Input
+                        type="number"
+                        min={1}
+                        max={Math.max(
+                          overDeliveredQty > 0 ? overDeliveredRemainingQty : (expandedLine?.deliveredQty ?? 0),
+                          1,
+                        )}
+                        value={warehouseAllocationQty}
+                          onChange={e => {
+                            setWarehouseAllocationQty(e.target.value)
+                            setWarehouseAllocationError(null)
+                          }}
+                        className="bg-secondary border-border"
+                      />
+                    </div>
+
+                    <Button
+                      onClick={addOverDeliveryAllocation}
+                      disabled={
+                        !canAddSourceLink ||
+                        warehousePlaceId === '__none__' ||
+                          !Number.isFinite(Number.parseInt(warehouseAllocationQty, 10)) ||
+                          Number.parseInt(warehouseAllocationQty, 10) < 1 ||
+                        availableWarehouseQtyForExpandedLine <= 0 ||
+                        Number.parseInt(warehouseAllocationQty || '0', 10) > availableWarehouseQtyForExpandedLine
+                      }
+                      className={
+                        overDeliveredQty > 0
+                          ? 'bg-amber-600 text-white hover:bg-amber-700'
+                          : 'bg-blue-600 text-white hover:bg-blue-700'
+                      }>
+                      {overDeliveredQty > 0 ? 'Store Over-delivery' : 'Assign to Warehouse'}
+                    </Button>
+                  </div>
+                    {warehouseAllocationError && (
+                      <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive">
+                        {warehouseAllocationError}
+                      </div>
+                    )}
+                </>
               ) : (
-                <div className="text-xs text-amber-800">
-                  No material demand sources available. Assign materials directly to warehouse location.
+                <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-800">
+                  No accepted quantity remains available for warehouse assignment.
                 </div>
               )}
-              <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
-                <div className="grid gap-1.5">
-                  <Label>Warehouse location</Label>
-                  <Select value={warehousePlaceId} onValueChange={handleWarehouseLocationChange}>
-                    <SelectTrigger className="bg-secondary border-border">
-                      <SelectValue placeholder="Select warehouse location" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border">
-                      <SelectItem value="__none__">Select location</SelectItem>
-                      {warehousePlaceOptions.map(option => (
-                        <SelectItem key={option.id} value={option.id}>
-                          <span className="flex items-center gap-2">
-                            {option.label}
-                            {option.id === expandedLineMaterialWarehousePlaceId && (
-                              <Badge variant="outline" className="text-[10px] border-blue-500/60 text-blue-700 ml-1">
-                                Current
-                              </Badge>
-                            )}
-                          </span>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="grid gap-1.5">
-                  <Label>Qty to store</Label>
-                  <Input
-                    type="number"
-                    min={1}
-                    max={Math.max(
-                      overDeliveredQty > 0 ? overDeliveredRemainingQty : (expandedLine?.deliveredQty ?? 0),
-                      1,
-                    )}
-                    value={warehouseAllocationQty}
-                    onChange={e => setWarehouseAllocationQty(e.target.value)}
-                    className="bg-secondary border-border"
-                  />
-                </div>
-
-                <Button
-                  onClick={addOverDeliveryAllocation}
-                  disabled={
-                    !canAddSourceLink ||
-                    warehousePlaceId === '__none__' ||
-                    (overDeliveredQty > 0 ? overDeliveredRemainingQty : (expandedLine?.deliveredQty ?? 0)) <= 0
-                  }
-                  className={
-                    overDeliveredQty > 0
-                      ? 'bg-amber-600 text-white hover:bg-amber-700'
-                      : 'bg-blue-600 text-white hover:bg-blue-700'
-                  }>
-                  {overDeliveredQty > 0 ? 'Store Over-delivery' : 'Assign to Warehouse'}
-                </Button>
-              </div>
             </div>
           )}
 
@@ -1037,7 +1182,12 @@ export function IncomingDeliveryDetailTable({
                           <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
                             <div className="grid gap-1.5">
                               <Label>Target</Label>
-                              <Select value={editingAllocationTarget} onValueChange={setEditingAllocationTarget}>
+                              <Select
+                                value={editingAllocationTarget}
+                                onValueChange={value => {
+                                  setEditingAllocationTarget(value)
+                                  setEditingAllocationError(null)
+                                }}>
                                 <SelectTrigger className="bg-secondary border-border">
                                   <SelectValue placeholder="Select target" />
                                 </SelectTrigger>
@@ -1063,18 +1213,28 @@ export function IncomingDeliveryDetailTable({
                                 type="number"
                                 min={1}
                                 value={editingAllocationQty}
-                                onChange={e => setEditingAllocationQty(e.target.value)}
+                                onChange={e => {
+                                  setEditingAllocationQty(e.target.value)
+                                  setEditingAllocationError(null)
+                                }}
                                 className="bg-secondary border-border"
                               />
                             </div>
 
-                            <div className="flex items-end gap-2">
-                              <Button size="sm" onClick={saveEditedAllocation} className="bg-accent text-accent-foreground">
-                                Save
-                              </Button>
-                              <Button size="sm" variant="outline" onClick={cancelEditAllocation}>
-                                Cancel
-                              </Button>
+                            <div className="flex flex-col gap-2">
+                              <div className="flex items-end gap-2">
+                                <Button size="sm" onClick={saveEditedAllocation} className="bg-accent text-accent-foreground">
+                                  Save
+                                </Button>
+                                <Button size="sm" variant="outline" onClick={cancelEditAllocation}>
+                                  Cancel
+                                </Button>
+                              </div>
+                              {editingAllocationError && (
+                                <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive">
+                                  {editingAllocationError}
+                                </div>
+                              )}
                             </div>
                           </div>
                         </TableCell>

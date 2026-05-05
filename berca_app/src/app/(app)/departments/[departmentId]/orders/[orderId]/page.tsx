@@ -78,6 +78,12 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
     notDeliverable: line.notDeliverable,
   }))
 
+  const quoteMiscLineOptions = (purchase.QuoteSupplier?.QuoteSupplierMiscLine ?? []).map(miscLine => ({
+    id: miscLine.id,
+    description: miscLine.description,
+    unitPrice: Number(miscLine.unitPrice),
+  }))
+
   const createdByName = `${purchase.Employee.firstName} ${purchase.Employee.lastName}`
 
   // Shape the purchase into the flat header DTO the client component expects.
@@ -109,6 +115,16 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
     .map(p => ({id: p.id, name: p.name}))
     .sort((a, b) => a.name.localeCompare(b.name))
 
+  const purchaseDetailTableProps = {
+    purchaseId: orderId,
+    initialDetails: details,
+    materialOptions,
+    materialDemandOptions,
+    quoteLineOptions,
+    quoteMiscLines: quoteMiscLineOptions,
+    currentUserLevel,
+  } as const
+
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-7xl space-y-8">
@@ -133,14 +149,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
           canEdit={canEdit}
         />
 
-        <PurchaseDetailTable
-          purchaseId={orderId}
-          initialDetails={details}
-          materialOptions={materialOptions}
-          materialDemandOptions={materialDemandOptions}
-          quoteLineOptions={quoteLineOptions}
-          currentUserLevel={currentUserLevel}
-        />
+        <PurchaseDetailTable {...(purchaseDetailTableProps as any)} />
       </div>
     </main>
   )

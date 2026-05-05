@@ -344,6 +344,14 @@ export async function getPurchaseById(id: string) {
             },
             orderBy: {id: 'asc'},
           },
+          QuoteSupplierMiscLine: {
+            select: {
+              id: true,
+              description: true,
+              unitPrice: true,
+            },
+            orderBy: {id: 'asc'},
+          },
         },
       },
       PaymentCondition: {select: {id: true, name: true}},

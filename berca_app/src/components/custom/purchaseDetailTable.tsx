@@ -12,6 +12,7 @@ import {
   type QuoteLineOption,
 } from '@/components/custom/purchaseDetailFormDialog'
 import type {MappedPurchaseDetail} from '@/types/purchase'
+import type {MappedQuoteSupplierMiscLine} from '@/types/quoteSupplier'
 import {
   createPurchaseDetailAction,
   updatePurchaseDetailAction,
@@ -25,6 +26,7 @@ interface PurchaseDetailTableProps {
   materialOptions: DetailOption[]
   materialDemandOptions: DetailOption[]
   quoteLineOptions: QuoteLineOption[]
+  quoteMiscLines: MappedQuoteSupplierMiscLine[]
   currentUserLevel: number
 }
 
@@ -56,6 +58,7 @@ export function PurchaseDetailTable({
   materialOptions,
   materialDemandOptions,
   quoteLineOptions,
+  quoteMiscLines,
   currentUserLevel,
 }: PurchaseDetailTableProps) {
   const router = useRouter()
@@ -118,6 +121,11 @@ export function PurchaseDetailTable({
     const unit = d.unitPrice != null ? parseFloat(d.unitPrice) : 0
     const cost = unit * d.quantity
     return sum + (isNaN(cost) ? 0 : cost)
+  }, 0)
+
+  const totalMiscValue = quoteMiscLines.reduce((sum, line) => {
+    const amount = typeof line.unitPrice === 'number' ? line.unitPrice : Number.parseFloat(String(line.unitPrice))
+    return sum + (Number.isFinite(amount) ? amount : 0)
   }, 0)
 
   // Fast lookup from demand id to label for table rendering.
@@ -247,6 +255,44 @@ export function PurchaseDetailTable({
         quoteLineOptions={quoteLineOptions}
         onSave={handleSave}
       />
+
+      {quoteMiscLines.length > 0 && (
+        <div className="rounded-xl border border-border/60 bg-card p-4">
+          <div className="mb-3">
+            <h2 className="text-sm font-medium text-foreground">Quote miscellaneous costs</h2>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Read-only costs copied from the linked quote supplier.
+            </p>
+          </div>
+
+          <div className="rounded-lg border border-border/40 overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent border-border/60">
+                  <TableHead className="text-xs">Description</TableHead>
+                  <TableHead className="text-xs text-right">Amount</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {quoteMiscLines.map(line => (
+                  <TableRow key={line.id} className="border-border/40 hover:bg-secondary/50">
+                    <TableCell className="text-sm text-foreground">{line.description}</TableCell>
+                    <TableCell className="text-sm text-right text-muted-foreground">
+                      {formatCurrency(line.unitPrice)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow className="border-t border-border/60 bg-secondary/20 hover:bg-secondary/30">
+                  <TableCell className="text-xs font-medium text-muted-foreground">Total misc costs</TableCell>
+                  <TableCell className="text-sm font-semibold text-right text-foreground">
+                    {formatCurrency(totalMiscValue)}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -36,6 +36,7 @@ export default async function ProjectBOMDetailPage({params}: PageProps) {
           materialOptions={materialOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          currentUserId={profile.id}
           departmentId={departmentId}
           allBOMs={allBOMs}
         />

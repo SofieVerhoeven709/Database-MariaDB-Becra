@@ -35,6 +35,7 @@ interface ProjectBOMDetailProps {
   materialOptions: BomMaterialOption[]
   currentUserLevel: number
   currentUserRole: string
+  currentUserId: string
   departmentId: string
   allBOMs?: MappedProjectBOM[]
 }
@@ -44,6 +45,7 @@ export function ProjectBOMDetail({
   materialOptions,
   currentUserLevel,
   currentUserRole,
+  currentUserId,
   departmentId,
   allBOMs = [],
 }: ProjectBOMDetailProps) {
@@ -53,6 +55,15 @@ export function ProjectBOMDetail({
   const canDelete = currentUserLevel >= 80
   const canEditNumber = currentUserLevel >= 80
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+
+  const currentEmployee = bom.Project.ProjectEmployee.find(pe => pe.employeeId === currentUserId) ?? null
+  let isProjectManager = false
+  let isProjectSupervisor = false
+
+  if (currentEmployee) {
+    isProjectManager = currentEmployee.manager
+    isProjectSupervisor = currentEmployee.supervisor
+  }
 
   // ─── Header editing ──────────────────────────────────────────────────────────
   const [editing, setEditing] = useState(false)

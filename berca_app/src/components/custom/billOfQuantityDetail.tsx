@@ -490,6 +490,7 @@ export function BoqDetail({
             {editing ? (
               <Input
                 type="date"
+                min={form.boqDate}
                 value={form.dueDate}
                 onChange={e => s('dueDate', e.target.value)}
                 className="bg-secondary border-border"
@@ -504,6 +505,7 @@ export function BoqDetail({
             {editing ? (
               <Input
                 type="date"
+                min={form.boqDate}
                 value={form.sentDate}
                 onChange={e => s('sentDate', e.target.value)}
                 className="bg-secondary border-border"

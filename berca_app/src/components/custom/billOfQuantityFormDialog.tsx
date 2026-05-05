@@ -372,6 +372,7 @@ export function BoqFormDialog({
             <Label className="text-xs text-muted-foreground">Due Date *</Label>
             <Input
               type="date"
+              min={form.boqDate}
               value={form.dueDate}
               onChange={e => set('dueDate', e.target.value)}
               className="bg-secondary border-border"
@@ -382,6 +383,7 @@ export function BoqFormDialog({
             <Label className="text-xs text-muted-foreground">Sent Date</Label>
             <Input
               type="date"
+              min={form.boqDate}
               value={form.sentDate}
               onChange={e => set('sentDate', e.target.value)}
               className="bg-secondary border-border"

@@ -506,6 +506,7 @@ export function InvoiceOutDetail({
             {editing ? (
               <Input
                 type="date"
+                min={form.invoiceDate}
                 value={form.dueDate}
                 onChange={e => s('dueDate', e.target.value)}
                 className="bg-secondary border-border"
@@ -520,6 +521,7 @@ export function InvoiceOutDetail({
             {editing ? (
               <Input
                 type="date"
+                min={form.invoiceDate}
                 value={form.sentDate}
                 onChange={e => s('sentDate', e.target.value)}
                 className="bg-secondary border-border"

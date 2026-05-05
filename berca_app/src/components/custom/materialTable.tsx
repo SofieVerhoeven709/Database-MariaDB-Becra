@@ -1,18 +1,7 @@
 'use client'
 
 import {useMemo, useState} from 'react'
-import {
-  Search,
-  Plus,
-  Pencil,
-  Trash2,
-  ChevronUp,
-  ChevronDown,
-  ExternalLink,
-  Copy,
-  RotateCcw,
-  Download,
-} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, ExternalLink, Copy, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -31,6 +20,8 @@ import {
   restoreMaterialAction,
 } from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, splitCsvList, type CsvRow} from '@/lib/csv'
 
 interface MaterialGroup {
   id: string
@@ -136,14 +127,6 @@ function formatDateTime(value: string | null) {
     hour: '2-digit',
     minute: '2-digit',
   })
-}
-
-function escapeCsvValue(value: string) {
-  const normalized = value ?? ''
-  if (/[",\n\r]/.test(normalized)) {
-    return `"${normalized.replace(/"/g, '""')}"`
-  }
-  return normalized
 }
 
 function getMaterialWarehousePlace(material: MaterialWithWarehousePlace): string | null {
@@ -256,6 +239,144 @@ export function MaterialTable({
     if (!place) return ''
     const partValue = place[part]
     return typeof partValue === 'string' ? partValue : ''
+  }
+
+  function resolveMaterialGroupId(row: CsvRow, level: 'A' | 'B' | 'C' | 'D') {
+    const groupA = getCsvValue(row, ['Group A', 'Material Group A'])
+    const groupB = getCsvValue(row, ['Group B', 'Material Group B'])
+    const groupC = getCsvValue(row, ['Group C', 'Material Group C'])
+    const groupD = getCsvValue(row, ['Group D', 'Material Group D'])
+
+    const matchingGroups = materialGroups.filter(group => {
+      if (groupA && normalizeCsvLookup(group.groupA) !== normalizeCsvLookup(groupA)) return false
+      if (groupB && normalizeCsvLookup(group.groupB ?? '') !== normalizeCsvLookup(groupB)) return false
+      if (groupC && normalizeCsvLookup(group.groupC ?? '') !== normalizeCsvLookup(groupC)) return false
+      if (groupD && normalizeCsvLookup(group.groupD ?? '') !== normalizeCsvLookup(groupD)) return false
+      return true
+    })
+
+    const target = matchingGroups[0]
+    if (!target) return null
+
+    if (level === 'A') return target.id
+
+    const value = level === 'B' ? target.groupB : level === 'C' ? target.groupC : target.groupD
+    return value ? target.id : null
+  }
+
+  function resolveUnitId(row: CsvRow) {
+    const unitValue = getCsvValue(row, ['Unit'])
+    const normalizedUnit = normalizeCsvLookup(unitValue.replace(/\(.+\)$/, ''))
+    const abbreviationMatch = unitValue.match(/\(([^)]+)\)/)?.[1]
+
+    const unit = units.find(option => {
+      return (
+        normalizeCsvLookup(option.unitName) === normalizedUnit ||
+        normalizeCsvLookup(option.abbreviation) === normalizeCsvLookup(unitValue) ||
+        normalizeCsvLookup(option.abbreviation) === normalizeCsvLookup(abbreviationMatch ?? '')
+      )
+    })
+
+    return unit?.id ?? null
+  }
+
+  function resolveSupplierIds(row: CsvRow) {
+    const supplierValue = getCsvValue(row, ['Supplier', 'Suppliers'])
+    if (!supplierValue) return []
+
+    const supplierParts = splitCsvList(supplierValue).map(normalizeCsvLookup)
+    return supplierCompanies
+      .filter(company => {
+        const candidates = [company.name, company.number].map(normalizeCsvLookup)
+        return supplierParts.some(part => candidates.includes(part))
+      })
+      .map(company => company.id)
+  }
+
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      setAlert({title: 'CSV upload', description: 'The selected CSV file does not contain rows.', type: 'warning'})
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const shortDescription = getCsvValue(row, ['Description', 'Short Description'])
+      const materialGroupIdA = resolveMaterialGroupId(row, 'A')
+      const unitId = resolveUnitId(row)
+
+      if (!shortDescription) {
+        errors.push(`Row ${rowNumber}: Description is required.`)
+        continue
+      }
+
+      if (!materialGroupIdA) {
+        errors.push(`Row ${rowNumber}: Group A could not be matched.`)
+        continue
+      }
+
+      if (!unitId) {
+        errors.push(`Row ${rowNumber}: Unit could not be matched.`)
+        continue
+      }
+
+      const beNumber = getCsvValue(row, ['Number', 'Material Number', 'BE Number'])
+      const supplierCompanyIds = resolveSupplierIds(row)
+      const fd = new FormData()
+      fd.append('id', crypto.randomUUID())
+      fd.append('numberType', beNumber.startsWith('4') ? 'IOS' : 'BE')
+
+      if (beNumber) fd.append('beNumber', beNumber)
+
+      const fields = {
+        name: getCsvValue(row, ['Material Name', 'Name']),
+        shortDescription,
+        brandName: getCsvValue(row, ['Brand']),
+        rejected: getCsvValue(row, ['Status']).toLowerCase() === 'rejected' ? 'true' : 'false',
+        partApproved: isTruthyCsvValue(getCsvValue(row, ['Approved'])) ? 'true' : 'false',
+        longLeadTime: isTruthyCsvValue(getCsvValue(row, ['Long Lead'])) ? 'true' : 'false',
+        isSerialTracked: isTruthyCsvValue(getCsvValue(row, ['Serial Tracked'])) ? 'true' : 'false',
+        materialGroupIdA,
+        materialGroupIdB: resolveMaterialGroupId(row, 'B') ?? '',
+        materialGroupIdC: resolveMaterialGroupId(row, 'C') ?? '',
+        materialGroupIdD: resolveMaterialGroupId(row, 'D') ?? '',
+        unitId,
+      }
+
+      Object.entries(fields).forEach(([key, value]) => {
+        if (value !== '') fd.append(key, value)
+      })
+
+      splitCsvList(getCsvValue(row, ['Parent Parts', 'Parent BE Numbers'])).forEach(parent => {
+        fd.append('parentBeNumbers', parent)
+      })
+
+      supplierCompanyIds.forEach(id => {
+        fd.append('supplierCompanyIds', id)
+      })
+
+      const result = await createMaterialAction({success: false}, fd)
+      if (result && !result.success) {
+        errors.push(`Row ${rowNumber}: ${formatMaterialActionErrors(result.errors) || 'Could not create material.'}`)
+        continue
+      }
+
+      created += 1
+    }
+
+    if (created > 0) router.refresh()
+
+    setAlert({
+      title: 'CSV upload',
+      description:
+        errors.length > 0
+          ? `Created ${created} material(s). ${errors.slice(0, 5).join(' ')}${errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''}`
+          : `Created ${created} material(s).`,
+      type: errors.length > 0 ? 'warning' : 'success',
+    })
   }
 
   function handleGroupAChange(value: string) {
@@ -418,73 +539,6 @@ export function MaterialTable({
       const bVal = getSortValue(b, sortField)
       return sortDir === 'desc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
-
-  function handleExportCsv() {
-    if (filtered.length === 0) return
-
-    const headers = [
-      'Number',
-      'Material Name',
-      'Description',
-      'Brand',
-      'Supplier',
-      'Group A',
-      'Group B',
-      'Group C',
-      'Group D',
-      'Unit',
-      'Parent Parts',
-      'Status',
-      'Approved',
-      'Long Lead',
-      'Serial Tracked',
-      ...MATERIAL_DOCUMENT_FLAGS.map(flag => flag.label),
-    ]
-
-    const lines = filtered.map(material => {
-      const base = [
-        material.beNumber,
-        material.name ?? '',
-        material.shortDescription,
-        material.brandName ?? '',
-        material.supplierCompanyNames.length > 0
-          ? material.supplierCompanyNames.join(' | ')
-          : (material.supplierCompanyName ?? ''),
-        material.materialGroupLabelA || '',
-        material.materialGroupLabelB || '',
-        material.materialGroupLabelC || '',
-        material.materialGroupLabelD || '',
-        `${material.unitName} (${material.unitAbbreviation})`,
-        material.parentBeNumbers.join(' | '),
-        material.rejected ? 'Rejected' : 'Active',
-        material.partApproved ? 'Yes' : 'No',
-        material.longLeadTime ? 'Yes' : 'No',
-        material.isSerialTracked ? 'Yes' : 'No',
-      ]
-
-      const documentFlags = MATERIAL_DOCUMENT_FLAGS.map(flag => (material[flag.key] ? 'Yes' : 'No'))
-
-      const warehouseValues = [
-        getWarehousePart(getMaterialWarehousePlace(material), 'abbreviation') || '',
-        getWarehousePart(getMaterialWarehousePlace(material), 'place') || '',
-        getWarehousePart(getMaterialWarehousePlace(material), 'shelf') || '',
-      ]
-
-      return [...base, ...documentFlags, ...warehouseValues].map(value => escapeCsvValue(String(value))).join(',')
-    })
-
-    const csv = [headers.map(escapeCsvValue).join(','), ...lines].join('\n')
-    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'})
-    const url = URL.createObjectURL(blob)
-    const anchor = document.createElement('a')
-    const date = new Date().toISOString().slice(0, 10)
-    anchor.href = url
-    anchor.download = `materials-${date}.csv`
-    document.body.appendChild(anchor)
-    anchor.click()
-    document.body.removeChild(anchor)
-    URL.revokeObjectURL(url)
-  }
 
   async function handleSave(form: Partial<MappedMaterial> & {id: string; numberType?: NumberType}) {
     setSaving(true)
@@ -791,15 +845,7 @@ export function MaterialTable({
           </Select>
         )}
 
-        {/* Download CSV button*/}
-        <Button
-          variant="outline"
-          onClick={handleExportCsv}
-          disabled={filtered.length === 0}
-          className="flex items-center gap-2">
-          <Download className="h-4 w-4" />
-          Download CSV
-        </Button>
+        <TableCsvActions filename="material-table.csv" onUpload={handleUploadCsv} />
 
         <Button
           onClick={() => {
@@ -834,26 +880,6 @@ export function MaterialTable({
               <TableHead className="w-25 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
-
-              {/*<TableHead
-                className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
-                onClick={() => handleSort('warehouseAbbreviation')}>
-                Abbr
-                <SortIcon field="warehouseAbbreviation" sortField={sortField} sortDir={sortDir} />
-              </TableHead>*/}
-              {/*<TableHead
-                className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
-                onClick={() => handleSort('warehousePlace')}>
-                Warehouse
-                <SortIcon field="warehousePlace" sortField={sortField} sortDir={sortDir} />
-              </TableHead>*/}
-
-              {/* <TableHead
-                className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
-                onClick={() => handleSort('warehouseShelf')}>
-                Shelf
-                <SortIcon field="warehouseShelf" sortField={sortField} sortDir={sortDir} />
-              </TableHead>*/}
             </TableRow>
           </TableHeader>
 
@@ -1035,16 +1061,6 @@ export function MaterialTable({
                       )}
                     </div>
                   </TableCell>
-                  {/*
-                  <TableCell className="text-sm">
-                    {getWarehousePart(getMaterialWarehousePlace(m), 'abbreviation') || '—'}
-                  </TableCell>
-                  <TableCell className="text-sm">
-                    {getWarehousePart(getMaterialWarehousePlace(m), 'place') || '—'}
-                  </TableCell>
-                  <TableCell className="text-sm">
-                    {getWarehousePart(getMaterialWarehousePlace(m), 'shelf') || '—'}
-                  </TableCell>*/}
                 </TableRow>
               ))
             )}

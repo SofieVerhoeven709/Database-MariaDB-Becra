@@ -35,8 +35,10 @@ import {
   updateEmployeeContractStatusOptionAction,
   updateEmployeeContractTypeOptionAction,
 } from '@/serverFunctions/employees'
-import {useRouter} from 'next/navigation'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {useRouter} from 'next/navigation'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, splitCsvList, type CsvRow} from '@/lib/csv'
 
 type SortField =
   | 'name'
@@ -92,6 +94,25 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
 interface EmployeeOption {
   id: string
   name: string
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create employee.'
+}
+
+function parseCsvDate(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return null
+  const dayMonthYear = trimmed.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})$/)
+  if (dayMonthYear) {
+    const [, day, month, rawYear] = dayMonthYear
+    const year = rawYear.length === 2 ? `20${rawYear}` : rawYear
+    const parsed = new Date(Number(year), Number(month) - 1, Number(day))
+    return Number.isNaN(parsed.getTime()) ? null : parsed
+  }
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
 }
 
 interface EmployeeTableProps {
@@ -304,6 +325,145 @@ export function EmployeeTable({
     setDialogOpen(false)
   }
 
+  function resolveOptionId(value: string, options: EmployeeOption[]) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalizedValue)?.id ?? null
+    )
+  }
+
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const firstName = getCsvValue(row, ['First Name', 'firstName'])
+      const lastName = getCsvValue(row, ['Last Name', 'lastName'])
+      const username = getCsvValue(row, ['Username', 'username']) || `${firstName}.${lastName}`.toLowerCase()
+      const startDateValue = getCsvValue(row, ['Start Date', 'startDate'])
+      const startDate = startDateValue ? parseCsvDate(startDateValue) : new Date()
+      const roleValues = splitCsvList(getCsvValue(row, ['Role', 'Roles', 'roleName', 'roleLevelIds']))
+      const roleLevelIds = roleValues
+        .map(value => resolveOptionId(value, roleOptions))
+        .filter((value): value is string => Boolean(value))
+      const titleValue = getCsvValue(row, ['Title', 'titleName', 'titleId'])
+      const titleId = resolveOptionId(titleValue, titleOptions)
+
+      if (!firstName) {
+        errors.push(`Row ${rowNumber}: First Name is required.`)
+        continue
+      }
+
+      if (!lastName) {
+        errors.push(`Row ${rowNumber}: Last Name is required.`)
+        continue
+      }
+
+      if (!startDate) {
+        errors.push(`Row ${rowNumber}: Start Date is invalid.`)
+        continue
+      }
+
+      if (titleValue && !titleId) {
+        errors.push(`Row ${rowNumber}: Title could not be matched.`)
+        continue
+      }
+
+      if (roleValues.length > 0 && roleLevelIds.length !== roleValues.length) {
+        errors.push(`Row ${rowNumber}: One or more roles could not be matched.`)
+        continue
+      }
+
+      try {
+        const now = new Date()
+        await createEmployeeAction({
+          id: crypto.randomUUID(),
+          firstName,
+          lastName,
+          mail: getCsvValue(row, ['Email', 'Mail', 'mail']) || null,
+          password_hash: getCsvValue(row, ['Password', 'password_hash']) || crypto.randomUUID(),
+          phoneNumber: getCsvValue(row, ['Phone', 'Phone Number', 'phoneNumber']) || null,
+          startDate,
+          endDate: parseCsvDate(getCsvValue(row, ['End Date', 'endDate'])),
+          info: getCsvValue(row, ['Info', 'info']) || null,
+          birthDate: parseCsvDate(getCsvValue(row, ['Birth Date', 'birthDate'])),
+          street: getCsvValue(row, ['Street', 'street']) || null,
+          houseNumber: getCsvValue(row, ['House Number', 'houseNumber']) || null,
+          busNumber: getCsvValue(row, ['Bus Number', 'busNumber']) || null,
+          zipCode: getCsvValue(row, ['Zip Code', 'zipCode']) || null,
+          place: getCsvValue(row, ['Place', 'City', 'place']) || null,
+          username,
+          createdAt: now,
+          permanentEmployee: isTruthyCsvValue(
+            getCsvValue(row, ['Permanent', 'Permanent Employee', 'permanentEmployee']),
+          ),
+          checkInfo: isTruthyCsvValue(getCsvValue(row, ['Check Info', 'checkInfo'])),
+          newYearCard: isTruthyCsvValue(getCsvValue(row, ['NY Card', 'New Year Card', 'newYearCard'])),
+          active: getCsvValue(row, ['Active', 'active'])
+            ? isTruthyCsvValue(getCsvValue(row, ['Active', 'active']))
+            : true,
+          passwordCreatedAt: now,
+          roleLevelIds,
+          titleId,
+          pictureId: null,
+          photoFileId: null,
+          bankAccountNumber: getCsvValue(row, ['Bank Account', 'bankAccountNumber']) || null,
+          rrn: getCsvValue(row, ['RRN', 'rrn']) || null,
+          idExpirationDate: parseCsvDate(getCsvValue(row, ['ID Expiration Date', 'idExpirationDate'])),
+          driversLicense: isTruthyCsvValue(getCsvValue(row, ['Drivers License', 'driversLicense'])),
+          maritalStatus: getCsvValue(row, ['Marital Status', 'maritalStatus']) || null,
+          dependents: getCsvValue(row, ['Dependents', 'dependents'])
+            ? Number(getCsvValue(row, ['Dependents', 'dependents']))
+            : null,
+          employmentStatus: getCsvValue(row, ['Employment Status', 'employmentStatus']) || null,
+          contractType: getCsvValue(row, ['Contract Type', 'contractType']) || null,
+          contractDuration: getCsvValue(row, ['Contract Duration', 'contractDuration']) || null,
+          grossSalary: getCsvValue(row, ['Gross Salary', 'grossSalary']) || null,
+          mealVouchers: isTruthyCsvValue(getCsvValue(row, ['Meal Vouchers', 'mealVouchers'])),
+          ecoVouchers: isTruthyCsvValue(getCsvValue(row, ['Eco Vouchers', 'ecoVouchers'])),
+          companyCar: isTruthyCsvValue(getCsvValue(row, ['Company Car', 'companyCar'])),
+          companyCarDescription: getCsvValue(row, ['Company Car Description', 'companyCarDescription']) || null,
+          fuelCard: isTruthyCsvValue(getCsvValue(row, ['Fuel Card', 'fuelCard'])),
+          bikeLease: isTruthyCsvValue(getCsvValue(row, ['Bike Lease', 'bikeLease'])),
+          mobilePhone: isTruthyCsvValue(getCsvValue(row, ['Mobile Phone Benefit', 'mobilePhone'])),
+          laptop: isTruthyCsvValue(getCsvValue(row, ['Laptop', 'laptop'])),
+          fixedExpenseAllowance: isTruthyCsvValue(
+            getCsvValue(row, ['Fixed Expense Allowance', 'fixedExpenseAllowance']),
+          ),
+          homeWorkInternetAllowance: isTruthyCsvValue(
+            getCsvValue(row, ['Home Work Internet Allowance', 'homeWorkInternetAllowance']),
+          ),
+          extraLegalBenefits: getCsvValue(row, ['Extra Legal Benefits', 'extraLegalBenefits']) || null,
+          deleted: false,
+          deletedAt: null,
+          deletedBy: null,
+          createdBy: null,
+          emergencyContacts: [],
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+
+    window.alert(
+      errors.length > 0
+        ? `Created ${created} employee(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} employee(s).`,
+    )
+  }
+
   async function handleSoftDelete(emp: MappedEmployee) {
     await softDeleteEmployeeAction({id: emp.id})
     setEmployees(prev =>
@@ -370,7 +530,7 @@ export function EmployeeTable({
               </SelectContent>
             </Select>
           </div>
-          <TableCsvActions filename="employee-table.csv" />
+          <TableCsvActions filename="employee-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
 
           {canCreate && (
             <Button onClick={handleCreate} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">

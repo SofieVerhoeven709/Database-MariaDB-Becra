@@ -22,6 +22,7 @@ import {
   updateTrainingStandardAction,
 } from '@/serverFunctions/training'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 type SortField = 'descriptionShort' | 'location' | 'certificateName' | 'createdAt'
@@ -30,6 +31,11 @@ type SortDir = 'asc' | 'desc'
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create training standard.'
 }
 
 interface TrainingStandardTableProps {
@@ -128,6 +134,60 @@ export function TrainingStandardTable({
     setDialogOpen(false)
     router.refresh()
   }
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const descriptionShort = getCsvValue(row, ['Name', 'Description Short', 'descriptionShort'])
+      const certificateValue = getCsvValue(row, ['Certificate', 'certificateName', 'certificateId'])
+      const certificate = certificateOptions.find(
+        option =>
+          option.id === certificateValue || normalizeCsvLookup(option.name) === normalizeCsvLookup(certificateValue),
+      )
+
+      if (!descriptionShort) {
+        errors.push(`Row ${rowNumber}: Name is required.`)
+        continue
+      }
+
+      if (!certificate) {
+        errors.push(`Row ${rowNumber}: Certificate could not be matched.`)
+        continue
+      }
+
+      try {
+        await createTrainingStandardAction({
+          descriptionShort,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          location: getCsvValue(row, ['Location', 'location']) || null,
+          certificate: isTruthyCsvValue(getCsvValue(row, ['Has Cert', 'Certificate Required', 'certificate'])),
+          repeat: isTruthyCsvValue(getCsvValue(row, ['Repeat', 'repeat'])),
+          certificateId: certificate.id,
+          visibilityForRoles: [],
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+
+    window.alert(
+      errors.length > 0
+        ? `Created ${created} training standard(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} training standard(s).`,
+    )
+  }
 
   const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
   const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
@@ -157,7 +217,7 @@ export function TrainingStandardTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="training-standard-table.csv" />
+        <TableCsvActions filename="training-standard-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
 
         {canCreate && (
           <Button

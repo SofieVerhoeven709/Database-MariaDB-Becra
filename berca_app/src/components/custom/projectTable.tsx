@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, RotateCcw} from 'lucide-react'
 import {ProjectFormDialog} from '@/components/custom/projectFormDialog'
 import {Input} from '@/components/ui/input'
@@ -18,8 +19,8 @@ import {
 } from '@/serverFunctions/projects'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
-import type {Route} from 'next'import {TableCsvActions} from '@/components/custom/tableCsvActions'
-
+import type {Route} from 'next'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
 type SortField =
   | 'projectNumber'
@@ -46,6 +47,17 @@ type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function parseCsvDate(value: string) {
+  if (!value) return null
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create record.'
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -227,6 +239,98 @@ export function ProjectTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const projectName = getCsvValue(row, ['Project Name', 'Name', 'projectName'])
+      const companyValue = getCsvValue(row, ['Company', 'Company Name', 'companyId'])
+      const projectTypeValue = getCsvValue(row, ['Type', 'Project Type', 'projectTypeId'])
+      const company = companies.find(
+        option => option.id === companyValue || normalizeCsvLookup(option.name) === normalizeCsvLookup(companyValue),
+      )
+      const projectType = projectTypes.find(
+        option =>
+          option.id === projectTypeValue || normalizeCsvLookup(option.name) === normalizeCsvLookup(projectTypeValue),
+      )
+
+      if (!projectName) {
+        errors.push(`Row ${rowNumber}: Project Name is required.`)
+        continue
+      }
+
+      if (!company) {
+        errors.push(`Row ${rowNumber}: Company could not be matched.`)
+        continue
+      }
+
+      if (!projectType) {
+        errors.push(`Row ${rowNumber}: Project Type could not be matched.`)
+        continue
+      }
+
+      const parentValue = getCsvValue(row, ['Parent Project', 'Parent Project Number', 'parentProjectId'])
+      const parentProject = parentValue
+        ? projects.find(
+            project =>
+              project.id === parentValue ||
+              normalizeCsvLookup(project.projectNumber) === normalizeCsvLookup(parentValue) ||
+              normalizeCsvLookup(project.projectName) === normalizeCsvLookup(parentValue),
+          )
+        : null
+
+      if (parentValue && !parentProject) {
+        errors.push(`Row ${rowNumber}: Parent Project could not be matched.`)
+        continue
+      }
+
+      try {
+        await createProjectAction({
+          id: crypto.randomUUID(),
+          projectNumber: getCsvValue(row, ['Project #', 'Project Number', 'projectNumber']) || crypto.randomUUID(),
+          projectName,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          extraInfo: getCsvValue(row, ['Extra Info', 'extraInfo']) || null,
+          startDate: parseCsvDate(getCsvValue(row, ['Start Date', 'startDate'])),
+          endDate: parseCsvDate(getCsvValue(row, ['End Date', 'endDate'])),
+          closingDate: parseCsvDate(getCsvValue(row, ['Closing Date', 'closingDate'])),
+          engineeringStartDate: parseCsvDate(getCsvValue(row, ['Eng. Start', 'Engineering Start Date'])),
+          createdAt: new Date(),
+          isMainProject: isTruthyCsvValue(getCsvValue(row, ['Main', 'Is Main Project', 'isMainProject'])),
+          isIntern: isTruthyCsvValue(getCsvValue(row, ['Internal', 'Is Intern', 'isIntern'])),
+          isOpen: !isTruthyCsvValue(getCsvValue(row, ['Closed', 'Is Closed', 'isClosed'])),
+          isClosed: isTruthyCsvValue(getCsvValue(row, ['Closed', 'Is Closed', 'isClosed'])),
+          createdBy: '',
+          companyId: company.id,
+          projectTypeId: projectType.id,
+          parentProjectId: parentProject?.id ?? null,
+          deleted: false,
+          deletedAt: null,
+          deletedBy: null,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} project(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} project(s).`,
+    )
+  }
+
   const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
   const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
   const totalCols = filterDeleted !== 'not-deleted' ? 20 : 16
@@ -265,7 +369,7 @@ export function ProjectTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="project-table.csv" />
+        <TableCsvActions filename="project-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
 
         {canCreate && (
           <Button

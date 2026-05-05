@@ -26,6 +26,8 @@ import {
   deletePerformanceAction,
   restorePerformanceAction,
 } from '@/serverFunctions/materialSpecs'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -119,6 +121,35 @@ function formatDateTime(value: string | null) {
     hour: '2-digit',
     minute: '2-digit',
   })
+}
+
+function formatActionErrors(errors: Record<string, string[] | undefined> | undefined): string {
+  return Object.entries(errors ?? {})
+    .flatMap(([field, fieldErrors]) => {
+      if (!fieldErrors?.length) return []
+      if (field === 'global') return fieldErrors
+      return fieldErrors.map(error => `${field}: ${error}`)
+    })
+    .join(' | ')
+}
+
+function showCsvUploadResult(entity: string, created: number, errors: string[]) {
+  const description =
+    errors.length > 0
+      ? `Created ${created} ${entity}(s). ${errors.slice(0, 5).join(' ')}${
+          errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+        }`
+      : `Created ${created} ${entity}(s).`
+
+  window.alert(description)
+}
+
+function optionalCsvValue(row: CsvRow, aliases: string[]) {
+  return getCsvValue(row, aliases) || null
+}
+
+function isFalseCsvValue(value: string | undefined) {
+  return ['0', 'false', 'no', 'n', 'nee', 'non'].includes((value ?? '').trim().toLowerCase())
 }
 
 // ─── Material Group Tab ───────────────────────────────────────────────────────
@@ -226,6 +257,55 @@ function MaterialGroupTab({
     setGroups(prev => prev.map(g => (g.id === id ? {...g, deleted: false} : g)))
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    const createdGroups: MappedMaterialGroup[] = []
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const groupA = getCsvValue(row, ['Group A', 'Material Group A', 'groupA'])
+
+      if (!groupA) {
+        errors.push(`Row ${rowNumber}: Group A is required.`)
+        continue
+      }
+
+      const group: MappedMaterialGroup = {
+        id: crypto.randomUUID(),
+        groupA,
+        groupB: optionalCsvValue(row, ['Group B', 'Material Group B', 'groupB']),
+        groupC: optionalCsvValue(row, ['Group C', 'Material Group C', 'groupC']),
+        groupD: optionalCsvValue(row, ['Group D', 'Material Group D', 'groupD']),
+        createdAt: null,
+        createdByName: null,
+        deleted: false,
+      }
+
+      const fd = new FormData()
+      fd.append('id', group.id)
+      fd.append('groupA', group.groupA)
+      fd.append('groupB', group.groupB ?? '')
+      fd.append('groupC', group.groupC ?? '')
+      fd.append('groupD', group.groupD ?? '')
+
+      const result = await createMaterialGroupAction({success: false}, fd)
+      if (result && !result.success) {
+        errors.push(`Row ${rowNumber}: ${formatActionErrors(result.errors) || 'Could not create material group.'}`)
+        continue
+      }
+
+      createdGroups.push(group)
+    }
+
+    if (createdGroups.length > 0) setGroups(prev => [...prev, ...createdGroups])
+    showCsvUploadResult('material group', createdGroups.length, errors)
+  }
+
   const filtered = groups
     .filter(g => {
       if (statusFilter === 'active') return !g.deleted
@@ -271,6 +351,7 @@ function MaterialGroupTab({
             <SelectItem value="deleted">Deleted</SelectItem>
           </SelectContent>
         </Select>
+        <TableCsvActions filename="material-group-table.csv" onUpload={handleUploadCsv} />
         <Button onClick={openNew} className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
           New group
@@ -624,6 +705,81 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
     setUnits(prev => prev.map(u => (u.id === id ? {...u, deleted: false} : u)))
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    const createdUnits: MappedUnit[] = []
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const unitName = getCsvValue(row, ['Unit Name', 'Unit', 'unitName'])
+      const physicalQuantity = getCsvValue(row, ['Physical Quantity', 'physicalQuantity'])
+      const abbreviation = getCsvValue(row, ['Abbreviation', 'abbr', 'abbreviation'])
+      const quantityValueText = getCsvValue(row, ['Quantity Value', 'quantityValue'])
+      const quantityValue = quantityValueText ? Number(quantityValueText.replace(',', '.')) : null
+      const validValue = getCsvValue(row, ['Valid', 'valid'])
+
+      if (!unitName) {
+        errors.push(`Row ${rowNumber}: Unit Name is required.`)
+        continue
+      }
+
+      if (!physicalQuantity) {
+        errors.push(`Row ${rowNumber}: Physical Quantity is required.`)
+        continue
+      }
+
+      if (!abbreviation) {
+        errors.push(`Row ${rowNumber}: Abbreviation is required.`)
+        continue
+      }
+
+      if (quantityValueText && !Number.isFinite(quantityValue)) {
+        errors.push(`Row ${rowNumber}: Quantity Value must be a number.`)
+        continue
+      }
+
+      const unit: MappedUnit = {
+        id: crypto.randomUUID(),
+        unitName,
+        physicalQuantity,
+        abbreviation,
+        quantityValue,
+        shortDescription: optionalCsvValue(row, ['Short Description', 'shortDescription']),
+        longDescription: optionalCsvValue(row, ['Long Description', 'longDescription']),
+        createdAt: null,
+        createdByName: null,
+        valid: validValue ? isTruthyCsvValue(validValue) && !isFalseCsvValue(validValue) : true,
+        deleted: false,
+      }
+
+      const fd = new FormData()
+      fd.append('id', unit.id)
+      fd.append('unitName', unit.unitName)
+      fd.append('physicalQuantity', unit.physicalQuantity)
+      fd.append('abbreviation', unit.abbreviation)
+      fd.append('quantityValue', unit.quantityValue == null ? '' : String(unit.quantityValue))
+      fd.append('shortDescription', unit.shortDescription ?? '')
+      fd.append('longDescription', unit.longDescription ?? '')
+      fd.append('valid', String(unit.valid))
+
+      const result = await createUnitAction({success: false}, fd)
+      if (result && !result.success) {
+        errors.push(`Row ${rowNumber}: ${formatActionErrors(result.errors) || 'Could not create unit.'}`)
+        continue
+      }
+
+      createdUnits.push(unit)
+    }
+
+    if (createdUnits.length > 0) setUnits(prev => [...prev, ...createdUnits])
+    showCsvUploadResult('unit', createdUnits.length, errors)
+  }
+
   const filtered = units
     .filter(u => {
       if (statusFilter === 'active') return !u.deleted
@@ -647,7 +803,8 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
     .sort((a, b) => {
       let cmp: number
       if (sortField === 'physicalQuantity') cmp = a.physicalQuantity.localeCompare(b.physicalQuantity)
-      else if (sortField === 'quantityValue') cmp = (a.quantityValue ?? Number.NEGATIVE_INFINITY) - (b.quantityValue ?? Number.NEGATIVE_INFINITY)
+      else if (sortField === 'quantityValue')
+        cmp = (a.quantityValue ?? Number.NEGATIVE_INFINITY) - (b.quantityValue ?? Number.NEGATIVE_INFINITY)
       else cmp = String(a[sortField]).localeCompare(String(b[sortField]))
       return sortDir === 'asc' ? cmp : -cmp
     })
@@ -692,6 +849,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
             <SelectItem value="invalid">Invalid</SelectItem>
           </SelectContent>
         </Select>
+        <TableCsvActions filename="material-unit-table.csv" onUpload={handleUploadCsv} />
         <Button onClick={openNew} className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
           New unit
@@ -940,7 +1098,9 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
             </Button>
             <Button
               onClick={handleSave}
-              disabled={!form.unitName || !form.abbreviation || !form.physicalQuantity || quantityValueInvalid || saving}>
+              disabled={
+                !form.unitName || !form.abbreviation || !form.physicalQuantity || quantityValueInvalid || saving
+              }>
               {saving ? 'Saving…' : editing ? 'Save changes' : 'Create unit'}
             </Button>
           </DialogFooter>
@@ -1063,6 +1223,86 @@ function PerformanceTab({
     return families.find(f => f.id === id)?.name ?? id
   }
 
+  function resolveSpecId(value: string) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return specs.find(spec => spec.id === value || normalizeCsvLookup(spec.name ?? '') === normalizedValue)?.id ?? null
+  }
+
+  function resolveFamilyId(value: string) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      families.find(family => family.id === value || normalizeCsvLookup(family.name ?? '') === normalizedValue)?.id ??
+      null
+    )
+  }
+
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    const createdPerformances: MappedPerformance[] = []
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const name = getCsvValue(row, ['Name', 'Performance', 'Performance Spec', 'name'])
+      const specValue = getCsvValue(row, ['Material Spec', 'Spec', 'materialSpecId'])
+      const familyValue = getCsvValue(row, ['Material Family', 'Family', 'materialFamilyId'])
+      const materialSpecId = resolveSpecId(specValue)
+      const materialFamilyId = resolveFamilyId(familyValue)
+
+      if (!name) {
+        errors.push(`Row ${rowNumber}: Name is required.`)
+        continue
+      }
+
+      if (specValue && !materialSpecId) {
+        errors.push(`Row ${rowNumber}: Material Spec could not be matched.`)
+        continue
+      }
+
+      if (familyValue && !materialFamilyId) {
+        errors.push(`Row ${rowNumber}: Material Family could not be matched.`)
+        continue
+      }
+
+      const performance: MappedPerformance = {
+        id: crypto.randomUUID(),
+        name,
+        materialSpecId,
+        materialFamilyId,
+        shortDescription: optionalCsvValue(row, ['Short Description', 'shortDescription']),
+        longDescription: optionalCsvValue(row, ['Long Description', 'longDescription']),
+        createdAt: null,
+        createdByName: null,
+        deleted: false,
+      }
+
+      const fd = new FormData()
+      fd.append('id', performance.id)
+      fd.append('name', performance.name)
+      fd.append('materialSpecId', performance.materialSpecId ?? '')
+      fd.append('materialFamilyId', performance.materialFamilyId ?? '')
+      fd.append('shortDescription', performance.shortDescription ?? '')
+      fd.append('longDescription', performance.longDescription ?? '')
+
+      const result = await createPerformanceAction({success: false}, fd)
+      if (result && !result.success) {
+        errors.push(`Row ${rowNumber}: ${formatActionErrors(result.errors) || 'Could not create performance spec.'}`)
+        continue
+      }
+
+      createdPerformances.push(performance)
+    }
+
+    if (createdPerformances.length > 0) setPerformances(prev => [...prev, ...createdPerformances])
+    showCsvUploadResult('performance spec', createdPerformances.length, errors)
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
@@ -1085,6 +1325,7 @@ function PerformanceTab({
             <SelectItem value="deleted">Deleted</SelectItem>
           </SelectContent>
         </Select>
+        <TableCsvActions filename="material-performance-table.csv" onUpload={handleUploadCsv} />
         <Button onClick={openNew} className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
           New spec

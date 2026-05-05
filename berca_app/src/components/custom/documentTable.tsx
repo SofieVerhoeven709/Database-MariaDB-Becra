@@ -69,8 +69,10 @@ import {
 } from '@/serverFunctions/documents'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
-import type {Route} from 'next'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import type {Route} from 'next'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -98,6 +100,25 @@ interface SelectOption {
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create document.'
+}
+
+function parseCsvDate(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return null
+  const dayMonthYear = trimmed.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})$/)
+  if (dayMonthYear) {
+    const [, day, month, rawYear] = dayMonthYear
+    const year = rawYear.length === 2 ? `20${rawYear}` : rawYear
+    const parsed = new Date(Number(year), Number(month) - 1, Number(day))
+    return Number.isNaN(parsed.getTime()) ? null : parsed
+  }
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
 }
 
 function YesNoBadge({value}: {value: boolean}) {
@@ -327,6 +348,163 @@ export function DocumentTable({
     router.refresh()
   }
 
+  function resolveEmployeeId(value: string) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      employeeOptions.find(option => option.id === value || normalizeCsvLookup(option.name) === normalizedValue)?.id ??
+      null
+    )
+  }
+
+  function resolveDocumentGroupId(value: string) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      initialDocumentGroups.find(group => group.id === value || normalizeCsvLookup(group.label) === normalizedValue)
+        ?.id ?? null
+    )
+  }
+
+  function resolveDocumentPlaceId(value: string) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      initialPlaces.find(place => place.id === value || normalizeCsvLookup(place.label) === normalizedValue)?.id ?? null
+    )
+  }
+
+  function resolveDocumentStatusId(value: string) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      initialStatuses.find(status => status.id === value || normalizeCsvLookup(status.name ?? '') === normalizedValue)
+        ?.id ?? null
+    )
+  }
+
+  function resolveReferenceDocId(value: string) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      initialDocuments.find(doc => doc.id === value || normalizeCsvLookup(doc.documentNumber) === normalizedValue)
+        ?.id ?? null
+    )
+  }
+
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const documentNumber = getCsvValue(row, ['Document #', 'Document Number', 'documentNumber'])
+      const descriptionShort = getCsvValue(row, ['Short Description', 'Description Short', 'descriptionShort'])
+      const groupValue = getCsvValue(row, ['Group', 'Document Group', 'documentGroup'])
+      const placeValue = getCsvValue(row, ['Place', 'Document Place', 'documentPlace'])
+      const statusValue = getCsvValue(row, ['Status', 'Document Status', 'documentStatus'])
+      const managedByValue = getCsvValue(row, ['Managed By', 'managedBy'])
+      const revisedByValue = getCsvValue(row, ['Revised By', 'revisedBy'])
+      const referenceDocValue = getCsvValue(row, ['Reference', 'Reference Doc', 'referenceDoc'])
+      const documentGroupId = resolveDocumentGroupId(groupValue)
+      const documentPlaceId = resolveDocumentPlaceId(placeValue)
+      const documentStatusId = resolveDocumentStatusId(statusValue)
+      const managedById = resolveEmployeeId(managedByValue)
+      const revisedById = resolveEmployeeId(revisedByValue)
+      const referenceDocId = resolveReferenceDocId(referenceDocValue)
+      const expiryDateValue = getCsvValue(row, ['Expiry Date', 'expiryDate'])
+      const expiryDate = expiryDateValue ? parseCsvDate(expiryDateValue) : null
+
+      if (!documentNumber) {
+        errors.push(`Row ${rowNumber}: Document number is required.`)
+        continue
+      }
+
+      if (!descriptionShort) {
+        errors.push(`Row ${rowNumber}: Short description is required.`)
+        continue
+      }
+
+      if (groupValue && !documentGroupId) {
+        errors.push(`Row ${rowNumber}: Document group could not be matched.`)
+        continue
+      }
+
+      if (placeValue && !documentPlaceId) {
+        errors.push(`Row ${rowNumber}: Document place could not be matched.`)
+        continue
+      }
+
+      if (statusValue && !documentStatusId) {
+        errors.push(`Row ${rowNumber}: Document status could not be matched.`)
+        continue
+      }
+
+      if (managedByValue && !managedById) {
+        errors.push(`Row ${rowNumber}: Managed By could not be matched.`)
+        continue
+      }
+
+      if (revisedByValue && !revisedById) {
+        errors.push(`Row ${rowNumber}: Revised By could not be matched.`)
+        continue
+      }
+
+      if (referenceDocValue && !referenceDocId) {
+        errors.push(`Row ${rowNumber}: Reference document could not be matched.`)
+        continue
+      }
+
+      if (expiryDateValue && !expiryDate) {
+        errors.push(`Row ${rowNumber}: Expiry Date is invalid.`)
+        continue
+      }
+
+      const revisionValue = getCsvValue(row, ['Revision', 'Revision Number', 'revisionNumber'])
+
+      try {
+        await createDocumentAction({
+          documentNumber,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          descriptionShort,
+          expiryDate,
+          revisionNumber: revisionValue ? Number(revisionValue) : null,
+          revisionDetail: getCsvValue(row, ['Revision Detail', 'revisionDetail']) || null,
+          valid: getCsvValue(row, ['Valid', 'valid']) ? isTruthyCsvValue(getCsvValue(row, ['Valid', 'valid'])) : true,
+          process: isTruthyCsvValue(getCsvValue(row, ['Process', 'process'])),
+          canCopy: isTruthyCsvValue(getCsvValue(row, ['Can Copy', 'canCopy'])),
+          additionalInfo: getCsvValue(row, ['Additional Info', 'additionalInfo']) || null,
+          referenceDocId,
+          revisedById,
+          managedById,
+          documentGroupId,
+          documentPlaceId,
+          documentStatusId,
+          visibilityForRoles: [],
+          targetAssignments: [],
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+
+    window.alert(
+      errors.length > 0
+        ? `Created ${created} document(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} document(s).`,
+    )
+  }
+
   const showDeletedCols = filterDeleted !== 'not-deleted'
 
   return (
@@ -367,7 +545,7 @@ export function DocumentTable({
                 </SelectContent>
               </Select>
             </div>
-            <TableCsvActions filename="document-table.csv" />
+            <TableCsvActions filename="document-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
 
             {canCreate && (
               <Button

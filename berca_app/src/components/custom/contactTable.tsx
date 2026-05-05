@@ -40,8 +40,10 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import type {CountryOption} from '@/components/custom/countrySelect'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import type {CountryOption} from '@/components/custom/countrySelect'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 type SortField =
   | 'lastName'
@@ -87,6 +89,25 @@ interface SelectOption {
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create contact.'
+}
+
+function parseCsvDate(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return null
+  const dayMonthYear = trimmed.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})$/)
+  if (dayMonthYear) {
+    const [, day, month, rawYear] = dayMonthYear
+    const year = rawYear.length === 2 ? `20${rawYear}` : rawYear
+    const parsed = new Date(Number(year), Number(month) - 1, Number(day))
+    return Number.isNaN(parsed.getTime()) ? null : parsed
+  }
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -206,7 +227,7 @@ export function ContactTable({
   }
 
   const baseFiltered = initialContacts
-  // Client-side filter/sort keeps UI responsive.
+    // Client-side filter/sort keeps UI responsive.
     .filter(c => {
       if (filterDeleted === 'not-deleted' && c.deleted) return false
       if (filterDeleted === 'deleted' && !c.deleted) return false
@@ -384,6 +405,141 @@ export function ContactTable({
     router.refresh()
   }
 
+  function resolveOptionId(value: string, options: SelectOption[]) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalizedValue)?.id ?? null
+    )
+  }
+
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const firstName = getCsvValue(row, ['First Name', 'firstName'])
+      const lastName = getCsvValue(row, ['Last Name', 'lastName'])
+      const companyValue = getCsvValue(row, ['Company', 'currentCompanyName', 'initialCompanyId'])
+      const functionValue = getCsvValue(row, ['Function', 'functionName', 'functionId'])
+      const departmentValue = getCsvValue(row, [
+        'Ext. Dept',
+        'External Department',
+        'departmentExternName',
+        'departmentExternId',
+      ])
+      const titleValue = getCsvValue(row, ['Title', 'titleName', 'titleId'])
+      const birthDateValue = getCsvValue(row, ['Birth Date', 'birthDate'])
+      const initialCompanyId = resolveOptionId(companyValue, companyOptions)
+      const functionId = resolveOptionId(functionValue, functionOptions)
+      const departmentExternId = resolveOptionId(departmentValue, departmentExternOptions)
+      const titleId = resolveOptionId(titleValue, titleOptions)
+      const birthDate = birthDateValue ? parseCsvDate(birthDateValue) : null
+
+      if (!firstName) {
+        errors.push(`Row ${rowNumber}: First Name is required.`)
+        continue
+      }
+
+      if (!lastName) {
+        errors.push(`Row ${rowNumber}: Last Name is required.`)
+        continue
+      }
+
+      if (companyValue && !initialCompanyId) {
+        errors.push(`Row ${rowNumber}: Company could not be matched.`)
+        continue
+      }
+
+      if (functionValue && !functionId) {
+        errors.push(`Row ${rowNumber}: Function could not be matched.`)
+        continue
+      }
+
+      if (departmentValue && !departmentExternId) {
+        errors.push(`Row ${rowNumber}: External department could not be matched.`)
+        continue
+      }
+
+      if (titleValue && !titleId) {
+        errors.push(`Row ${rowNumber}: Title could not be matched.`)
+        continue
+      }
+
+      if (birthDateValue && !birthDate) {
+        errors.push(`Row ${rowNumber}: Birth Date is invalid.`)
+        continue
+      }
+
+      try {
+        await createContactAction({
+          firstName,
+          lastName,
+          mail1: getCsvValue(row, ['Email 1', 'Email', 'mail1']) || null,
+          mail2: getCsvValue(row, ['Email 2', 'mail2']) || null,
+          mail3: getCsvValue(row, ['Email 3', 'mail3']) || null,
+          generalPhone: getCsvValue(row, ['Phone', 'generalPhone']) || null,
+          homePhone: getCsvValue(row, ['Home Phone', 'homePhone']) || null,
+          mobilePhone: getCsvValue(row, ['Mobile', 'Mobile Phone', 'mobilePhone']) || null,
+          info: getCsvValue(row, ['Info', 'info']) || null,
+          birthDate,
+          through: getCsvValue(row, ['Source', 'Through', 'through']) || null,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          infoCorrect: isTruthyCsvValue(getCsvValue(row, ['Info OK', 'infoCorrect'])),
+          checkInfo: isTruthyCsvValue(getCsvValue(row, ['Check Info', 'checkInfo'])),
+          newYearCard: isTruthyCsvValue(getCsvValue(row, ['NY Card', 'New Year Card', 'newYearCard'])),
+          active: getCsvValue(row, ['Active', 'active'])
+            ? isTruthyCsvValue(getCsvValue(row, ['Active', 'active']))
+            : true,
+          newsLetter: isTruthyCsvValue(getCsvValue(row, ['Newsletter', 'newsLetter'])),
+          mailing: isTruthyCsvValue(getCsvValue(row, ['Mailing', 'mailing'])),
+          trainingAdvice: isTruthyCsvValue(getCsvValue(row, ['T&A', 'Training Advice', 'trainingAdvice'])),
+          contactForTrainingAndAdvice: isTruthyCsvValue(
+            getCsvValue(row, ['Contact T&A', 'Contact For Training And Advice', 'contactForTrainingAndAdvice']),
+          ),
+          customerTrainingAndAdvice: isTruthyCsvValue(getCsvValue(row, ['Customer T&A', 'customerTrainingAndAdvice'])),
+          potentialCustomerTrainingAndAdvice: isTruthyCsvValue(
+            getCsvValue(row, ['Pot. Customer T&A', 'potentialCustomerTrainingAndAdvice']),
+          ),
+          potentialTeacherTrainingAndAdvice: isTruthyCsvValue(
+            getCsvValue(row, ['Pot. Teacher T&A', 'potentialTeacherTrainingAndAdvice']),
+          ),
+          teacherTrainingAndAdvice: isTruthyCsvValue(getCsvValue(row, ['Teacher T&A', 'teacherTrainingAndAdvice'])),
+          participantTrainingAndAdvice: isTruthyCsvValue(
+            getCsvValue(row, ['Participant T&A', 'participantTrainingAndAdvice']),
+          ),
+          functionId,
+          departmentExternId,
+          titleId,
+          businessCardId: null,
+          visibilityForRoles: [],
+          initialCompanyId,
+          initialRoleWithCompany: getCsvValue(row, ['Role at Company', 'currentRoleWithCompany']) || null,
+          initialCompanyAddressId: null,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+
+    window.alert(
+      errors.length > 0
+        ? `Created ${created} contact(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} contact(s).`,
+    )
+  }
+
   async function handleSaveFunction(name: string, id?: string) {
     if (id) {
       await updateFunctionAction({id, name})
@@ -517,7 +673,9 @@ export function ContactTable({
             </TableRow>
           ) : (
             visibleContacts.map(c => (
-              <TableRow key={c.id} className={`border-border/40 hover:bg-secondary/50 ${c.deleted ? 'opacity-50' : ''}`}>
+              <TableRow
+                key={c.id}
+                className={`border-border/40 hover:bg-secondary/50 ${c.deleted ? 'opacity-50' : ''}`}>
                 <TableCell className={`${tdClass} text-foreground font-medium`}>
                   <Link
                     href={`/departments/${departmentId}/contact/${c.id}` as Route}
@@ -693,7 +851,7 @@ export function ContactTable({
           </SelectContent>
         </Select>
       </div>
-      <TableCsvActions filename="contact-table.csv" />
+      <TableCsvActions filename="contact-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
 
       {canCreate && (
         <Button
@@ -813,7 +971,9 @@ export function ContactTable({
             </TableRow>
           ) : (
             filteredFunctions.map(f => (
-              <TableRow key={f.id} className={`border-border/40 hover:bg-secondary/50 ${f.deleted ? 'opacity-50' : ''}`}>
+              <TableRow
+                key={f.id}
+                className={`border-border/40 hover:bg-secondary/50 ${f.deleted ? 'opacity-50' : ''}`}>
                 <TableCell className="text-sm text-foreground font-medium">{f.name}</TableCell>
                 <TableCell className={tdClass}>{formatDate(f.createdAt)}</TableCell>
                 <TableCell className={tdClass}>{f.createdByName}</TableCell>
@@ -925,7 +1085,9 @@ export function ContactTable({
             </TableRow>
           ) : (
             filteredDepartmentExterns.map(d => (
-              <TableRow key={d.id} className={`border-border/40 hover:bg-secondary/50 ${d.deleted ? 'opacity-50' : ''}`}>
+              <TableRow
+                key={d.id}
+                className={`border-border/40 hover:bg-secondary/50 ${d.deleted ? 'opacity-50' : ''}`}>
                 <TableCell className="text-sm text-foreground font-medium">{d.name}</TableCell>
                 <TableCell className={tdClass}>{formatDate(d.createdAt)}</TableCell>
                 <TableCell className={tdClass}>{d.createdByName}</TableCell>

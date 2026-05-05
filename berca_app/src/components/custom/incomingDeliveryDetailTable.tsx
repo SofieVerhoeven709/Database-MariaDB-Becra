@@ -128,6 +128,13 @@ export function IncomingDeliveryDetailTable({
   const [allocationQty, setAllocationQty] = useState('1')
   const [warehousePlaceId, setWarehousePlaceId] = useState<string>('__none__')
   const [warehouseAllocationQty, setWarehouseAllocationQty] = useState('1')
+  // Inline allocation editing state
+  const [editingAllocationId, setEditingAllocationId] = useState<string | null>(null)
+  const [editingAllocationOriginal, setEditingAllocationOriginal] = useState<
+    MappedIncomingDeliveryLineAllocation | null
+  >(null)
+  const [editingAllocationTarget, setEditingAllocationTarget] = useState<string>('__none__')
+  const [editingAllocationQty, setEditingAllocationQty] = useState('1')
 
   const materialById = useMemo(() => new Map(materialOptions.map(option => [option.id, option])), [materialOptions])
   const lineById = useMemo(() => new Map(lines.map(line => [line.id, line])), [lines])
@@ -233,6 +240,94 @@ export function IncomingDeliveryDetailTable({
 
     setAllocationSourceId('__none__')
     setAllocationQty('1')
+    router.refresh()
+  }
+
+  // Suggested qty available for currently selected material-demand source (based on acceptedQty)
+  const currentSuggestedForSelectedSource = (() => {
+    if (!expandedLineId || !allocationSourceId || allocationSourceId === '__none__') return 0
+    return calculateSmartAllocations(expandedLineId).get(allocationSourceId) ?? 0
+  })()
+
+  function startEditAllocation(allocation: MappedIncomingDeliveryLineAllocation) {
+    setEditingAllocationId(allocation.id)
+    setEditingAllocationOriginal(allocation)
+    // Preselect current target (source id or warehouse prefixed)
+    if (allocation.sourceTypeName.toLowerCase() === 'warehouseplace') {
+      setEditingAllocationTarget(`__wh__:${allocation.sourceReferenceId ?? ''}`)
+    } else {
+      setEditingAllocationTarget(allocation.materialDemandSourceId ?? '__none__')
+    }
+    setEditingAllocationQty(String(allocation.allocatedQty || 1))
+  }
+
+  function cancelEditAllocation() {
+    setEditingAllocationId(null)
+    setEditingAllocationOriginal(null)
+    setEditingAllocationTarget('__none__')
+    setEditingAllocationQty('1')
+  }
+
+  async function saveEditedAllocation() {
+    if (!expandedLineId || !editingAllocationOriginal || !editingAllocationId) return
+    const target = editingAllocationTarget
+    const qty = Number.parseInt(editingAllocationQty, 10) || 1
+
+    // If target is a warehouse (prefixed), call the over-delivery allocation endpoint which handles restore/update
+    if (target.startsWith('__wh__:')) {
+      const whId = target.split(':')[1]
+      // If original was not warehouse, soft-delete it first
+      if (editingAllocationOriginal.sourceTypeName.toLowerCase() !== 'warehouseplace') {
+        await softDeleteIncomingDeliveryLineAllocationAction({
+          id: editingAllocationOriginal.id,
+          incomingDeliveryLineId: expandedLineId as string,
+          incomingDeliveryId,
+        })
+      }
+      await createIncomingDeliveryOverDeliveryAllocationAction({
+        incomingDeliveryLineId: expandedLineId,
+        warehousePlaceId: whId,
+        allocatedQty: qty,
+      })
+      } else {
+      // Target is a material demand source id
+      const sourceId = target
+        // Prevent assigning more than available acceptedQty for this source on the client
+        const smartAllocations = calculateSmartAllocations(expandedLineId)
+        const allowedForSource = smartAllocations.get(sourceId) ?? 0
+        if (qty > allowedForSource) {
+          // Provide quick client-side feedback; server also enforces this.
+          window.alert(
+            `Cannot assign ${qty} — only ${allowedForSource} available based on accepted quantity and existing allocations.`,
+          )
+          return
+        }
+      // If changing away from a previous source/warehouse, remove the old allocation first
+      if (editingAllocationOriginal.sourceTypeName.toLowerCase() === 'warehouseplace') {
+        // original was warehouse, remove it
+        await softDeleteIncomingDeliveryLineAllocationAction({
+          id: editingAllocationOriginal.id,
+          incomingDeliveryLineId: expandedLineId as string,
+          incomingDeliveryId,
+        })
+      } else if (editingAllocationOriginal.materialDemandSourceId !== sourceId) {
+        // different source chosen, remove old allocation record
+        await softDeleteIncomingDeliveryLineAllocationAction({
+          id: editingAllocationOriginal.id,
+          incomingDeliveryLineId: expandedLineId as string,
+          incomingDeliveryId,
+        })
+      }
+
+      // create (or update if server finds existing) allocation for selected source
+      await createIncomingDeliveryLineAllocationAction({
+        incomingDeliveryLineId: expandedLineId,
+        materialDemandSourceId: sourceId,
+        allocatedQty: qty,
+      })
+    }
+
+    cancelEditAllocation()
     router.refresh()
   }
 
@@ -796,7 +891,11 @@ export function IncomingDeliveryDetailTable({
 
             <Button
               onClick={addAllocation}
-              disabled={!canAddSourceLink || allocationSourceId === '__none__'}
+              disabled={
+                !canAddSourceLink ||
+                allocationSourceId === '__none__' ||
+                Number.parseInt(allocationQty || '0', 10) > currentSuggestedForSelectedSource
+              }
               title={`Requires role level ${INCOMING_PERMISSION_LEVELS.addSourceLink}+`}
               className="bg-accent text-accent-foreground hover:bg-accent/80">
               Add Link
@@ -933,61 +1032,119 @@ export function IncomingDeliveryDetailTable({
                     </TableCell>
                   </TableRow>
                 ) : (
-                  (allocationsByLineId[expandedLineId] ?? []).map(allocation => (
-                    <TableRow
-                      key={allocation.id}
-                      className={`border-border/40 ${allocation.deleted ? 'opacity-50' : ''}`}>
-                      <TableCell className="text-sm text-muted-foreground">{allocationLabel(allocation)}</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">{allocation.allocatedQty}</TableCell>
-                      <TableCell className="text-sm">
-                        {allocation.fulfilled ? (
-                          <Badge variant="secondary" className="text-[11px] bg-green-500/20 text-green-700">
-                            Fulfilled
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline" className="text-[11px]">
-                            Pending
-                          </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        {allocation.createdByName} · {formatDate(allocation.createdAt)}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1">
-                          {!allocation.deleted && canDeleteSourceLink && (
-                            <Button
-                              size="icon"
-                              variant="ghost"
-                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                              onClick={() => deleteAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </Button>
-                          )}
+                  (allocationsByLineId[expandedLineId] ?? []).map(allocation =>
+                    editingAllocationId === allocation.id ? (
+                      <TableRow key={allocation.id} className={`border-border/40 ${allocation.deleted ? 'opacity-50' : ''}`}>
+                        <TableCell colSpan={4} className="text-sm">
+                          <div className="grid gap-3 md:grid-cols-[1fr_140px_auto] items-end">
+                            <div className="grid gap-1.5">
+                              <Label>Target</Label>
+                              <Select value={editingAllocationTarget} onValueChange={setEditingAllocationTarget}>
+                                <SelectTrigger className="bg-secondary border-border">
+                                  <SelectValue placeholder="Select target" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-card border-border">
+                                  <SelectItem value="__none__">Select target</SelectItem>
+                                  {sourceOptionsForExpandedLine.map(option => (
+                                    <SelectItem key={option.id} value={option.id}>
+                                      {option.label} ({option.reservedQty}/{option.requiredQty})
+                                    </SelectItem>
+                                  ))}
+                                  {warehousePlaceOptions.map(option => (
+                                    <SelectItem key={`wh-${option.id}`} value={`__wh__:${option.id}`}>
+                                      Warehouse — {option.label}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
 
-                          {allocation.deleted && canDeleteSourceLink && (
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="h-7 text-xs px-2"
-                              onClick={() => restoreAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
-                              Restore
-                            </Button>
-                          )}
+                            <div className="grid gap-1.5">
+                              <Label>Allocated Qty</Label>
+                              <Input
+                                type="number"
+                                min={1}
+                                value={editingAllocationQty}
+                                onChange={e => setEditingAllocationQty(e.target.value)}
+                                className="bg-secondary border-border"
+                              />
+                            </div>
 
-                          {allocation.deleted && isAdmin && (
-                            <Button
-                              size="icon"
-                              variant="ghost"
-                              className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                              onClick={() => hardDeleteAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </Button>
+                            <div className="flex items-end gap-2">
+                              <Button size="sm" onClick={saveEditedAllocation} className="bg-accent text-accent-foreground">
+                                Save
+                              </Button>
+                              <Button size="sm" variant="outline" onClick={cancelEditAllocation}>
+                                Cancel
+                              </Button>
+                            </div>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ) : (
+                      <TableRow key={allocation.id} className={`border-border/40 ${allocation.deleted ? 'opacity-50' : ''}`}>
+                        <TableCell className="text-sm text-muted-foreground">{allocationLabel(allocation)}</TableCell>
+                        <TableCell className="text-sm text-muted-foreground">{allocation.allocatedQty}</TableCell>
+                        <TableCell className="text-sm">
+                          {allocation.fulfilled ? (
+                            <Badge variant="secondary" className="text-[11px] bg-green-500/20 text-green-700">
+                              Fulfilled
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-[11px]">
+                              Pending
+                            </Badge>
                           )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                        </TableCell>
+                        <TableCell className="text-sm text-muted-foreground">
+                          {allocation.createdByName} · {formatDate(allocation.createdAt)}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1">
+                            {!allocation.deleted && canDeleteSourceLink && (
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                onClick={() => startEditAllocation(allocation)}>
+                                <Pencil className="h-3.5 w-3.5" />
+                              </Button>
+                            )}
+
+                            {!allocation.deleted && canDeleteSourceLink && (
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                onClick={() => deleteAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </Button>
+                            )}
+
+                            {allocation.deleted && canDeleteSourceLink && (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-7 text-xs px-2"
+                                onClick={() => restoreAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
+                                Restore
+                              </Button>
+                            )}
+
+                            {allocation.deleted && isAdmin && (
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                onClick={() => hardDeleteAllocation(allocation.id, allocation.incomingDeliveryLineId)}>
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </Button>
+                            )}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ),
+                  )
                 )}
               </TableBody>
             </Table>

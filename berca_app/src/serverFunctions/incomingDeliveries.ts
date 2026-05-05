@@ -501,25 +501,89 @@ export const createIncomingDeliveryLineAllocationAction = protectedServerFunctio
       'You do not have permission to add source links.',
     )
 
-    const allocation = await prismaClient.incomingDeliveryLineAllocation.create({
-      data: {
-        id: crypto.randomUUID(),
-        incomingDeliveryLineId: data.incomingDeliveryLineId,
-        materialDemandSourceId: data.materialDemandSourceId,
-        allocatedQty: data.allocatedQty,
-        createdAt: new Date(),
-        createdBy: profile.id,
-      },
-      include: {
-        MaterialDemandSource: {
-          select: {
-            materialDemandId: true,
-            sourceReferenceId: true,
-            MaterialDemandSourceType: {select: {name: true}},
-          },
-        },
+    // Validate against acceptedQty: allocations linked to material-demand sources
+    // must not exceed the incoming line's acceptedQty.
+    const allocLine = await prismaClient.incomingDeliveryLine.findUnique({
+      where: {id: data.incomingDeliveryLineId},
+      select: {id: true, acceptedQty: true},
+    })
+    if (!allocLine) throw new Error('Incoming delivery line not found.')
+
+    // Sum already allocated quantities for this line across NON-warehouse sources (deleted=false).
+    const allocatedAggregate = await prismaClient.incomingDeliveryLineAllocation.aggregate({
+      _sum: {allocatedQty: true},
+      where: {
+        incomingDeliveryLineId: allocLine.id,
+        deleted: false,
+        MaterialDemandSource: {MaterialDemandSourceType: {name: {not: 'WarehousePlace'}}},
       },
     })
+
+    const alreadyAllocatedTotal = allocatedAggregate._sum.allocatedQty ?? 0
+
+    // Check if an existing allocation for this exact source exists (including soft-deleted)
+    const existing = await prismaClient.incomingDeliveryLineAllocation.findFirst({
+      where: {
+        incomingDeliveryLineId: data.incomingDeliveryLineId,
+        materialDemandSourceId: data.materialDemandSourceId,
+      },
+      select: {id: true, deleted: true, allocatedQty: true},
+    })
+
+    // When updating an existing allocation, subtract its current value from alreadyAllocatedTotal
+    // because we'll replace it with the new value.
+    const excludingExisting = existing && !existing.deleted ? alreadyAllocatedTotal - (existing.allocatedQty ?? 0) : alreadyAllocatedTotal
+
+    const remainingForAllocation = Math.max((allocLine.acceptedQty ?? 0) - excludingExisting, 0)
+    if (data.allocatedQty > remainingForAllocation) {
+      throw new Error(`Assigned quantity (${data.allocatedQty}) exceeds available accepted quantity (${remainingForAllocation}).`)
+    }
+
+    // If an allocation for the same line+source already exists (including soft-deleted),
+    // update / restore it instead of creating a duplicate which could hit unique constraints.
+    let allocation
+    if (existing) {
+      allocation = await prismaClient.incomingDeliveryLineAllocation.update({
+        where: {id: existing.id},
+        data: {
+          allocatedQty: data.allocatedQty,
+          deleted: false,
+          deletedAt: null,
+          deletedBy: null,
+          createdAt: new Date(),
+          createdBy: profile.id,
+        },
+        include: {
+          MaterialDemandSource: {
+            select: {
+              materialDemandId: true,
+              sourceReferenceId: true,
+              MaterialDemandSourceType: {select: {name: true}},
+            },
+          },
+        },
+      })
+    } else {
+      allocation = await prismaClient.incomingDeliveryLineAllocation.create({
+        data: {
+          id: crypto.randomUUID(),
+          incomingDeliveryLineId: data.incomingDeliveryLineId,
+          materialDemandSourceId: data.materialDemandSourceId,
+          allocatedQty: data.allocatedQty,
+          createdAt: new Date(),
+          createdBy: profile.id,
+        },
+        include: {
+          MaterialDemandSource: {
+            select: {
+              materialDemandId: true,
+              sourceReferenceId: true,
+              MaterialDemandSourceType: {select: {name: true}},
+            },
+          },
+        },
+      })
+    }
 
     const line = await prismaClient.incomingDeliveryLine.findUnique({
       where: {id: data.incomingDeliveryLineId},

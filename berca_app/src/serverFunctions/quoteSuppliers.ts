@@ -159,7 +159,8 @@ function distributeMiscCosts(
   // Apply residual to the line with the highest line total (largest contributor).
   if (residual !== 0) {
     const maxIdx = roundedTotals.reduce(
-      (bestIdx, a, idx, arr) => (a.baseUnitPrice * a.quantity > arr[bestIdx].baseUnitPrice * arr[bestIdx].quantity ? idx : bestIdx),
+      (bestIdx, a, idx, arr) =>
+        a.baseUnitPrice * a.quantity > arr[bestIdx].baseUnitPrice * arr[bestIdx].quantity ? idx : bestIdx,
       0,
     )
     roundedTotals[maxIdx].totalAddition = roundTo2dp(roundedTotals[maxIdx].totalAddition + residual)
@@ -257,6 +258,7 @@ async function createMaterialPricesFromApprovedQuote(
         beNumber,
         companyId,
         unitPrice: adjustedUnitPrice,
+        quantityPrice: 1,
         shortDescription: line.Material.shortDescription ?? null,
         createdBy,
         updatedAt: new Date(),

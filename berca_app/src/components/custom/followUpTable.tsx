@@ -22,7 +22,8 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {VisibilityDepartmentRow} from '@/components/custom/visibilityForDepartmentTab'
+import {VisibilityDepartmentRow} from '@/components/custom/visibilityForDepartmentTab'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -352,6 +353,8 @@ export function FollowUpTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="follow-up-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {

@@ -5,6 +5,7 @@ import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialPlaceFormDialog} from '@/components/custom/materialPlaceFormDialog'
 import type {MappedMaterialPlace} from '@/types/materialPlace'
@@ -160,6 +161,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
             <SelectItem value="all">All statuses</SelectItem>
           </SelectContent>
         </Select>
+        <TableCsvActions filename="material-place-table.csv" />
         <Button
           onClick={() => {
             setDialogMode('create')
@@ -188,9 +190,15 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Information
               </TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Status</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Created
+              </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Deleted
+              </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Status
+              </TableHead>
               <TableHead className="w-22.5 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -210,11 +218,11 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
                   <TableCell className="text-sm">
                     {item.beNumber ?? <span className="text-muted-foreground">-</span>}
                   </TableCell>
-                  <TableCell className="text-sm">{item.place ?? <span className="text-muted-foreground">-</span>}</TableCell>
+                  <TableCell className="text-sm">
+                    {item.place ?? <span className="text-muted-foreground">-</span>}
+                  </TableCell>
                   <TableCell className="text-sm font-semibold">{item.quantityInStock}</TableCell>
-                  <TableCell
-                    className="text-sm text-muted-foreground max-w-50 truncate"
-                    title={item.information ?? ''}>
+                  <TableCell className="text-sm text-muted-foreground max-w-50 truncate" title={item.information ?? ''}>
                     {item.information ?? <span className="text-muted-foreground">-</span>}
                   </TableCell>
                   <TableCell className="text-sm">
@@ -311,4 +319,3 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
     </div>
   )
 }
-

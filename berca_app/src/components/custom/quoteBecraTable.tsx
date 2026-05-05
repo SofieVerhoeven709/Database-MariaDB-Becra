@@ -7,6 +7,7 @@ import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {QuoteBecraFormDialog} from '@/components/custom/quoteBecraFormDialog'
 import type {QuoteBecraCompanyOption} from '@/components/custom/quoteBecraCompanySelect'
 import type {MappedQuoteBecra} from '@/types/quoteBecra'
@@ -149,7 +150,9 @@ export function QuoteBecraTable({
         date: form.date ? new Date(form.date) : null,
       })
       if (result && !result.success) {
-        throw new Error(parseErrors(result.errors) || 'Could not update the quote. Please check the form and try again.')
+        throw new Error(
+          parseErrors(result.errors) || 'Could not update the quote. Please check the form and try again.',
+        )
       }
       // Update the matching quote in local state immediately
       setQuotes(prev =>
@@ -177,7 +180,9 @@ export function QuoteBecraTable({
         date: form.date ? new Date(form.date) : null,
       })
       if (result && !result.success) {
-        throw new Error(parseErrors(result.errors) || 'Could not create the quote. Please check the form and try again.')
+        throw new Error(
+          parseErrors(result.errors) || 'Could not create the quote. Please check the form and try again.',
+        )
       }
       // Add the new quote to local state immediately
       const newQuote: MappedQuoteBecra = {
@@ -299,6 +304,7 @@ export function QuoteBecraTable({
               <SelectItem value="all">All</SelectItem>
             </SelectContent>
           </Select>
+          <TableCsvActions filename="quote-becra-table.csv" />
           <Button onClick={openCreate} size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90">
             <Plus className="h-4 w-4 mr-1" /> New Quote
           </Button>

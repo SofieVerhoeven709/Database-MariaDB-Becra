@@ -1,6 +1,5 @@
-import {DashboardNavbar} from '@/components/custom/dashboardNavbar'
+import {DashboardNavbar, type NavbarEmployee} from '@/components/custom/dashboardNavbar'
 import {getSessionFromCookie} from '@/lib/sessionUtils'
-import {getRolelevelById} from '@/dal/roleLevel'
 import {redirect} from 'next/navigation'
 import {Route} from 'next'
 
@@ -34,9 +33,17 @@ export default async function DashboardLayout({children}: {children: React.React
     roleLevelIds: employee.RoleLevelEmployee.map(rle => rle.roleLevelId),
   }
 
+  // IMPORTANT:
+  // Never pass Prisma models directly to Client Components.
+  // Prisma fields like `Decimal` are not serializable across the Server→Client boundary.
+  const navbarEmployee: NavbarEmployee = {
+    id: employee.id,
+    username: employee.username,
+  }
+
   return (
     <div className="flex min-h-svh flex-col">
-      <DashboardNavbar employee={employee} roleContext={roleContext} roleContextInput={roleContextInput} />
+      <DashboardNavbar employee={navbarEmployee} roleContext={roleContext} roleContextInput={roleContextInput} />
       <div className="flex-1">{children}</div>
     </div>
   )

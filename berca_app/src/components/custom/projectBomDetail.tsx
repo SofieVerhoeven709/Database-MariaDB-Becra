@@ -1,10 +1,10 @@
 'use client'
 
-import {useState} from 'react'
+import {useRef, useState} from 'react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {ArrowLeft, Pencil, X, Save, Plus, Trash2, GitBranch, Layers} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Plus, Trash2, GitBranch, Layers, Download, Upload, Network} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -19,8 +19,10 @@ import {
   softDeleteProjectBOMStructureAction,
   hardDeleteProjectBOMStructureAction,
   restoreProjectBOMStructureAction,
+  importProjectBOMStructureRowsAction,
 } from '@/serverFunctions/projectBoms'
 import {ProjectBOMStructureFormDialog} from '@/components/custom/projectBomStructureFormDialog'
+import {buildCsv, downloadCsv, isTruthyCsvValue, parseCsv} from '@/lib/csv'
 
 function formatDate(date: string | null) {
   if (!date) return '—'
@@ -134,6 +136,7 @@ export function ProjectBOMDetail({
   type ChildFilter = 'active' | 'deleted' | 'all'
   const [structureFilter, setStructureFilter] = useState<StructureFilter>('active')
   const [childFilter, setChildFilter] = useState<ChildFilter>('active')
+  const structureUploadInputRef = useRef<HTMLInputElement>(null)
 
   async function handleDeleteStructure(s: MappedProjectBOMStructure) {
     await softDeleteProjectBOMStructureAction({id: s.id})
@@ -162,6 +165,56 @@ export function ProjectBOMDetail({
 
   const activeStructureCount = bom.structures.filter(s => !s.deleted).length
   const activeChildCount = bom.children.filter(c => !c.deleted).length
+
+  function handleExportStructuresCsv() {
+    const headers = [
+      'Material ID',
+      'Material BE Number',
+      'Material Name',
+      'Short Description',
+      'Description',
+      'Additional Info',
+      'Tag',
+      'Required Quantity',
+      'Ready For Purchase Date',
+      'Ready For Purchase',
+      'Reserved Quantity',
+      'Issued Quantity',
+    ]
+    const rows = visibleStructures.map(s => [
+      s.materialId,
+      s.materialBeNumber,
+      s.materialName,
+      s.shortDescription,
+      s.description,
+      s.additionalInfo,
+      s.tag,
+      s.requiredQuantity,
+      s.readyForPurchaseDate?.slice(0, 10),
+      s.readyForPurchase ? 'Yes' : 'No',
+      s.execStockReservedQuantity,
+      s.execIssuedQuantity,
+    ])
+    downloadCsv(`${bom.projectBomNumber || 'project-bom'}-structures.csv`, buildCsv(headers, rows))
+  }
+
+  async function handleImportStructuresCsv(file: File | null) {
+    if (!file) return
+    const rows = parseCsv(await file.text()).map(row => ({
+      materialId: row['Material ID'] || row.materialId || undefined,
+      materialBeNumber: row['Material BE Number'] || row.materialBeNumber || row['BE Number'] || undefined,
+      shortDescription: row['Short Description'] || row.shortDescription || undefined,
+      description: row.Description || row.description || undefined,
+      additionalInfo: row['Additional Info'] || row.additionalInfo || undefined,
+      tag: row.Tag || row.tag || undefined,
+      requiredQuantity: Number.parseInt(row['Required Quantity'] || row.requiredQuantity || '0', 10) || 0,
+      readyForPurchaseDate: row['Ready For Purchase Date'] || row.readyForPurchaseDate || undefined,
+      readyForPurchase: isTruthyCsvValue(row['Ready For Purchase'] || row.readyForPurchase),
+    }))
+    await importProjectBOMStructureRowsAction({projectBOMId: bom.id, rows})
+    if (structureUploadInputRef.current) structureUploadInputRef.current.value = ''
+    router.refresh()
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -413,12 +466,16 @@ export function ProjectBOMDetail({
                   {activeChildCount}
                 </Badge>
               </TabsTrigger>
+              <TabsTrigger value="visual" className="gap-1.5 text-xs">
+                <Network className="h-3.5 w-3.5" />
+                Visual
+              </TabsTrigger>
             </TabsList>
           </div>
 
           {/* ── Structures ─────────────────────────────────────────────────── */}
           <TabsContent value="structures" className="p-4 pt-3">
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex flex-col gap-3 mb-3 lg:flex-row lg:items-center lg:justify-between">
               <Select value={structureFilter} onValueChange={v => setStructureFilter(v as StructureFilter)}>
                 <SelectTrigger className="h-7 text-xs w-[130px] bg-secondary border-border">
                   <SelectValue />
@@ -436,23 +493,51 @@ export function ProjectBOMDetail({
                 </SelectContent>
               </Select>
 
-              {(canCreate || isProjectManager || isProjectSupervisor) &&
-                (bom.materialClosed ? (
-                  <div className="flex items-center gap-1.5 rounded-md border border-border bg-secondary/50 px-2.5 py-1 text-xs text-muted-foreground/60 select-none">
-                    <Plus className="h-3.5 w-3.5" /> Material Closed
-                  </div>
-                ) : (
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="text-xs h-7 border-border gap-1"
-                    onClick={() => {
-                      setEditingStructure(null)
-                      setStructureDialogOpen(true)
-                    }}>
-                    <Plus className="h-3.5 w-3.5" /> Add Structure
-                  </Button>
-                ))}
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={handleExportStructuresCsv}
+                  disabled={visibleStructures.length === 0}
+                  className="text-xs h-7 border-border gap-1">
+                  <Download className="h-3.5 w-3.5" /> Download CSV
+                </Button>
+                {canCreate && !bom.materialClosed && (
+                  <>
+                    <input
+                      ref={structureUploadInputRef}
+                      type="file"
+                      accept=".csv,text/csv"
+                      className="hidden"
+                      onChange={e => void handleImportStructuresCsv(e.target.files?.[0] ?? null)}
+                    />
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="text-xs h-7 border-border gap-1"
+                      onClick={() => structureUploadInputRef.current?.click()}>
+                      <Upload className="h-3.5 w-3.5" /> Upload CSV
+                    </Button>
+                  </>
+                )}
+                {(canCreate || isProjectManager || isProjectSupervisor) &&
+                  (bom.materialClosed ? (
+                    <div className="flex items-center gap-1.5 rounded-md border border-border bg-secondary/50 px-2.5 py-1 text-xs text-muted-foreground/60 select-none">
+                      <Plus className="h-3.5 w-3.5" /> Material Closed
+                    </div>
+                  ) : (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="text-xs h-7 border-border gap-1"
+                      onClick={() => {
+                        setEditingStructure(null)
+                        setStructureDialogOpen(true)
+                      }}>
+                      <Plus className="h-3.5 w-3.5" /> Add Structure
+                    </Button>
+                  ))}
+              </div>
             </div>
 
             {visibleStructures.length === 0 ? (
@@ -597,6 +682,59 @@ export function ProjectBOMDetail({
                 </Table>
               </div>
             )}
+          </TabsContent>
+
+          <TabsContent value="visual" className="p-4 pt-3">
+            <div className="overflow-x-auto rounded-lg border border-border/60 bg-secondary/20 p-4">
+              <div className="flex min-w-max items-start gap-4">
+                <div className="rounded-lg border border-border bg-card px-4 py-3">
+                  <div className="text-xs text-muted-foreground">Project BOM</div>
+                  <div className="mt-1 font-mono text-sm text-foreground">{bom.projectBomNumber}</div>
+                  <div className="mt-1 max-w-56 text-xs text-muted-foreground">
+                    {bom.shortDescription || bom.description || '—'}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <div className="text-xs font-medium text-muted-foreground">Structures</div>
+                  <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+                    {bom.structures
+                      .filter(s => !s.deleted)
+                      .map(s => (
+                        <div key={s.id} className="rounded-lg border border-border bg-card px-3 py-2">
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="font-mono text-xs text-foreground">{s.materialBeNumber}</span>
+                            <Badge variant="secondary" className="text-xs">
+                              Qty {s.requiredQuantity ?? 0}
+                            </Badge>
+                          </div>
+                          <div className="mt-1 text-xs text-muted-foreground">
+                            {s.shortDescription || s.materialName}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                {bom.children.length > 0 && (
+                  <div className="flex flex-col gap-3">
+                    <div className="text-xs font-medium text-muted-foreground">Child BOMs</div>
+                    {bom.children
+                      .filter(child => !child.deleted)
+                      .map(child => (
+                        <Link
+                          key={child.id}
+                          href={`/departments/${departmentId}/projectBom/${child.id}` as Route}
+                          className="rounded-lg border border-border bg-card px-3 py-2 hover:bg-secondary/70 transition-colors">
+                          <div className="font-mono text-xs text-foreground">{child.projectBomNumber}</div>
+                          <div className="mt-1 text-xs text-muted-foreground">{child.shortDescription || '—'}</div>
+                          <Badge variant="secondary" className="mt-2 text-xs">
+                            {child.structureCount} structures
+                          </Badge>
+                        </Link>
+                      ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </TabsContent>
 
           {/* ── Child BOMs ─────────────────────────────────────────────────── */}

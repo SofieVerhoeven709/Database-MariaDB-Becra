@@ -10,6 +10,7 @@ export const createQuoteSupplierLineSchema = z.object({
   // Unit price is positive and validated as a numeric value.
   unitPrice: z.number().positive(),
   minQuantity: z.number().int().nonnegative().optional(),
+  supplierDescription: z.string().max(1000).optional(),
   notDeliverable: z.boolean().optional(),
 })
 
@@ -18,6 +19,7 @@ export const updateQuoteSupplierLineSchema = z.object({
   quantity: z.number().int().positive().optional(),
   unitPrice: z.number().positive().optional(),
   minQuantity: z.number().int().nonnegative().optional(),
+  supplierDescription: z.string().max(1000).nullable().optional(),
   selected: z.boolean().optional(),
   materialDemandId: z.string().uuid().optional(),
   additionalInfo: z.string().nullable().optional(),
@@ -33,4 +35,3 @@ export const selectQuoteSupplierLineSchema = z.object({
 export const quoteSupplierLineIdSchema = z.object({
   id: z.string().uuid(),
 })
-

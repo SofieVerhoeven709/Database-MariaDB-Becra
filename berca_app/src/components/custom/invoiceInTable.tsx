@@ -12,7 +12,8 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {Badge} from '@/components/ui/badge'
 import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption, InvoicePurchaseLookup} from '@/types/invoice'
 import {softDeleteInvoiceInAction, hardDeleteInvoiceInAction, undeleteInvoiceInAction} from '@/serverFunctions/invoices'
-import {InvoiceInFormDialog} from '@/components/custom/invoiceInFormDialog'
+import {InvoiceInFormDialog} from '@/components/custom/invoiceInFormDialog'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 type SortField =
   | 'invoiceNumber'
@@ -220,6 +221,8 @@ export function InvoiceInTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="invoice-in-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {

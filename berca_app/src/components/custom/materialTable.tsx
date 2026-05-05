@@ -17,7 +17,6 @@ import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {Alert} from '@/components/ui/alert'
-import {StickyTableScroll} from '@/components/ui/stickyTableScroll'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
@@ -814,7 +813,7 @@ export function MaterialTable({
         </Button>
       </div>
 
-      <StickyTableScroll disabled={dialogOpen}>
+      <div className="rounded-xl border border-border">
         <Table className="w-full min-w-max">
           <TableHeader>
             <TableRow className="bg-secondary hover:bg-secondary">
@@ -1051,7 +1050,7 @@ export function MaterialTable({
             )}
           </TableBody>
         </Table>
-      </StickyTableScroll>
+      </div>
 
       <MaterialFormDialog
         open={dialogOpen}

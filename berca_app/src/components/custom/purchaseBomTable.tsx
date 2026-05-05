@@ -10,6 +10,7 @@ import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import type {MappedPurchaseBOM} from '@/types/purchaseBom'
 import {
   softDeletePurchaseBOMAction,
@@ -267,6 +268,7 @@ export function PurchaseBOMTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="purchase-bom-table.csv" />
       </div>
 
       {/* Table */}

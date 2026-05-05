@@ -74,7 +74,10 @@ async function assertMaterialIsSupplierLinked(quoteSupplierId: string, materialI
   }
 }
 
-async function resyncMaterialDemand(materialDemandId: string | null | undefined, logger: {warn: (message: string) => void}) {
+async function resyncMaterialDemand(
+  materialDemandId: string | null | undefined,
+  logger: {warn: (message: string) => void},
+) {
   if (!materialDemandId) return
 
   const result = await syncMaterialDemandReservations(materialDemandId)
@@ -87,7 +90,6 @@ async function resyncMaterialDemand(materialDemandId: string | null | undefined,
 }
 
 // ─── Actions ───────────────────────────────────────────────────────────────────
-
 
 /**
  * Create a QuoteSupplierLine linking a quote to material demand.
@@ -113,7 +115,11 @@ export const createQuoteSupplierLineAction = protectedServerFunction({
           },
         },
       })
-      if (existingForDemand.some(line => !line.QuoteSupplier.deleted && !(line.QuoteSupplier.sent && line.QuoteSupplier.acceptedForPOB))) {
+      if (
+        existingForDemand.some(
+          line => !line.QuoteSupplier.deleted && !(line.QuoteSupplier.sent && line.QuoteSupplier.acceptedForPOB),
+        )
+      ) {
         throw new Error('A quote line already exists for this material demand.')
       }
     }
@@ -130,6 +136,7 @@ export const createQuoteSupplierLineAction = protectedServerFunction({
         quantity: data.quantity,
         unitPrice: data.unitPrice,
         minQuantity: data.minQuantity ?? null,
+        supplierDescription: data.supplierDescription?.trim() || null,
         selected: false,
         notDeliverable: data.notDeliverable ?? false,
       },
@@ -141,8 +148,8 @@ export const createQuoteSupplierLineAction = protectedServerFunction({
 
     logger.info(
       `Created QuoteSupplierLine: ${id} ` +
-      `for material ${created.Material.id} ` +
-      `under quote ${created.QuoteSupplier.id}`,
+        `for material ${created.Material.id} ` +
+        `under quote ${created.QuoteSupplier.id}`,
     )
 
     revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
@@ -178,9 +185,7 @@ export const selectQuoteSupplierLineAction = protectedServerFunction({
 
     await resyncMaterialDemand(demandId, logger)
 
-    logger.info(
-      `${selected ? 'Selected' : 'Deselected'} QuoteSupplierLine ${id} for MaterialDemand ${demandId}`,
-    )
+    logger.info(`${selected ? 'Selected' : 'Deselected'} QuoteSupplierLine ${id} for MaterialDemand ${demandId}`)
 
     revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
@@ -214,7 +219,12 @@ export const updateQuoteSupplierLineAction = protectedServerFunction({
       affectedDemandIds.add(updated.materialDemandId)
     }
 
-    if (current.selected || updates.selected !== undefined || updates.quantity !== undefined || updates.materialDemandId !== undefined) {
+    if (
+      current.selected ||
+      updates.selected !== undefined ||
+      updates.quantity !== undefined ||
+      updates.materialDemandId !== undefined
+    ) {
       for (const demandId of affectedDemandIds) {
         await resyncMaterialDemand(demandId, logger)
       }
@@ -251,4 +261,3 @@ export const deleteQuoteSupplierLineAction = protectedServerFunction({
     revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
   },
 })
-

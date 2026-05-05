@@ -5,6 +5,7 @@ import {useRouter} from 'next/navigation'
 import {Plus, Pencil, Trash2} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {
   PurchaseDetailFormDialog,
@@ -34,7 +35,12 @@ function formatCurrency(val: string | number | null | undefined) {
   if (val == null) return '—'
   const num = typeof val === 'string' ? parseFloat(val) : val
   if (isNaN(num)) return '—'
-  return new Intl.NumberFormat('nl-BE', {style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2}).format(num)
+  return new Intl.NumberFormat('nl-BE', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(num)
 }
 
 function formatDate(iso: string | null | undefined) {
@@ -144,17 +150,20 @@ export function PurchaseDetailTable({
             </span>
           )}
         </div>
-        <Button
-          size="sm"
-          disabled={!canCreate}
-          onClick={() => {
-            setEditing(null)
-            setDialogOpen(true)
-          }}
-          className="bg-accent text-accent-foreground hover:bg-accent/80 gap-1.5">
-          <Plus className="h-3.5 w-3.5" />
-          Add Line Item
-        </Button>
+        <div className="flex items-center gap-2">
+          <TableCsvActions filename="purchase-detail-table.csv" />
+          <Button
+            size="sm"
+            disabled={!canCreate}
+            onClick={() => {
+              setEditing(null)
+              setDialogOpen(true)
+            }}
+            className="bg-accent text-accent-foreground hover:bg-accent/80 gap-1.5">
+            <Plus className="h-3.5 w-3.5" />
+            Add Line Item
+          </Button>
+        </div>
       </div>
 
       {/* Table */}
@@ -188,6 +197,9 @@ export function PurchaseDetailTable({
                 <TableRow key={d.id} className="border-border/40 hover:bg-secondary/50">
                   <TableCell className={`${tdClass} font-medium text-foreground`}>{d.materialLabel}</TableCell>
                   <TableCell className={`${tdClass} whitespace-normal max-w-70`}>{d.additionalInfo ?? '—'}</TableCell>
+                  <TableCell className={tdClass}>
+                    {d.materialDemandId ? (demandLabelById.get(d.materialDemandId) ?? d.materialDemandId) : '—'}
+                  </TableCell>
                   <TableCell className={tdClass}>{formatCurrency(d.unitPrice)}</TableCell>
                   <TableCell className={tdClass}>{d.quantity}</TableCell>
                   <TableCell className={tdClass}>{d.minQuantity ?? '—'}</TableCell>
@@ -202,7 +214,13 @@ export function PurchaseDetailTable({
                     )}
                   </TableCell>
                   <TableCell className={tdClass}>
-                    {d.notDeliverable ? <Badge variant="destructive" className="text-[10px]">Not deliverable</Badge> : '—'}
+                    {d.notDeliverable ? (
+                      <Badge variant="destructive" className="text-[10px]">
+                        Not deliverable
+                      </Badge>
+                    ) : (
+                      '—'
+                    )}
                   </TableCell>
                   <TableCell className={tdClass}>{d.additionalInfo ?? '—'}</TableCell>
                   <TableCell className={tdClass}>

@@ -5,6 +5,7 @@ import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {InventoryManagementFormDialog} from './inventoryManagementFormDialog'
 import type {MappedInventory} from '@/types/inventory'
@@ -199,6 +200,7 @@ export function InventoryManagementTable({initialItems, materials}: InventoryTab
             <SelectItem value="invalid">Invalid</SelectItem>
           </SelectContent>
         </Select>
+        <TableCsvActions filename="inventory-management-table.csv" />
         <Button
           onClick={() => {
             setEditingItem(null)

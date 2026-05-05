@@ -3015,6 +3015,7 @@ model QuoteSupplierLine {
   quantity             Int
   unitPrice            Decimal                @db.Decimal(10, 2)
   minQuantity          Int?
+  supplierDescription  String?                @db.Text
   selected             Boolean?               @default(false)
   notDeliverable       Boolean                @default(false)
   additionalInfo       String?                @db.VarChar(255)

@@ -16,17 +16,21 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import type {Department, Employee} from '@/generated/prisma/client'
+import type {Department} from '@/generated/prisma/client'
 import {useEffect, useState} from 'react'
 import type {RoleContext, RoleContextInput} from '@/schemas/roleSchemas'
 import {useTheme} from 'next-themes'
 
+export type NavbarEmployee = {
+  id: string
+  username: string
+}
+
 interface DashboardNavbarProps {
-  employee: EmployeeSafe
+  employee: NavbarEmployee
   roleContext: RoleContext
   roleContextInput: RoleContextInput
 }
-export type EmployeeSafe = Omit<Employee, 'password_hash' | 'weeklyWorkHours' | 'maxOvertimeHours'>
 type AppTheme = 'light' | 'dark' | 'high-contrast'
 type BreadcrumbItem = {
   href: Route

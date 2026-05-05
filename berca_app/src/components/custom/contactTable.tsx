@@ -40,7 +40,8 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import type {CountryOption} from '@/components/custom/countrySelect'
+import type {CountryOption} from '@/components/custom/countrySelect'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 type SortField =
   | 'lastName'
@@ -692,6 +693,8 @@ export function ContactTable({
           </SelectContent>
         </Select>
       </div>
+      <TableCsvActions filename="contact-table.csv" />
+
       {canCreate && (
         <Button
           onClick={() => {

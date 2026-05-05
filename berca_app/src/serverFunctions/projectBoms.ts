@@ -9,6 +9,8 @@ import {
   createProjectBOMStructureSchema,
   updateProjectBOMStructureSchema,
   projectBOMStructureIdSchema,
+  importProjectBOMRowsSchema,
+  importProjectBOMStructureRowsSchema,
 } from '@/schemas/projectBomSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {searchProjects, getDescendantBOMIds, getAncestorBOMIds} from '@/dal/projectBoms'
@@ -60,6 +62,12 @@ async function getProjectBOMCanCopy(id: string) {
   } catch {
     return false
   }
+}
+
+function parseCsvDate(value: string | undefined, fallback: Date | null = null) {
+  if (!value) return fallback
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? fallback : date
 }
 
 // ─── ProjectBOM CRUD ───────────────────────────────────────────────────────────
@@ -203,7 +211,7 @@ export const updateProjectBOMAction = protectedServerFunction({
 export const copyProjectBOMAction = protectedServerFunction({
   schema: copyProjectBOMSchema,
   functionName: 'Copy project BOM action',
-  serverFn: async ({data: {sourceId, projectBomNumber, shortDescription}, profile, logger}) => {
+  serverFn: async ({data: {sourceId, targetProjectId, projectBomNumber, shortDescription}, profile, logger}) => {
     const source = await prismaClient.projectBOM.findUniqueOrThrow({
       where: {id: sourceId},
       include: {
@@ -221,11 +229,14 @@ export const copyProjectBOMAction = protectedServerFunction({
     const id = crypto.randomUUID()
     const target = await createTargetForType('ProjectBom', profile.id)
 
+    const resolvedTargetProjectId = targetProjectId ?? source.projectId
+    const resolvedParentBomId = resolvedTargetProjectId === source.projectId ? source.projectBomId : null
+
     await prismaClient.projectBOM.create({
       data: {
         id,
-        projectId: source.projectId,
-        projectBomId: source.projectBomId,
+        projectId: resolvedTargetProjectId,
+        projectBomId: resolvedParentBomId,
         projectBomNumber,
         description: source.description,
         shortDescription,
@@ -318,6 +329,74 @@ export const undeleteProjectBOMAction = protectedServerFunction({
       data: {deleted: false, deletedAt: null, deletedBy: null},
     })
     logger.info(`Project BOM undeleted: ${id}`)
+    revalidatePath('/projectBOMs')
+  },
+})
+
+export const importProjectBOMRowsAction = protectedServerFunction({
+  schema: importProjectBOMRowsSchema,
+  functionName: 'Import project BOM rows action',
+  serverFn: async ({data: {rows}, profile, logger}) => {
+    let imported = 0
+
+    for (const row of rows) {
+      const project =
+        row.projectId || !row.projectNumber
+          ? null
+          : await prismaClient.project.findFirst({
+              where: {projectNumber: row.projectNumber, deleted: false},
+              select: {id: true},
+            })
+      const projectId = row.projectId || project?.id
+      if (!projectId) throw new Error(`Project not found for BOM ${row.projectBomNumber}.`)
+
+      const parent = row.parentProjectBomNumber?.trim()
+        ? await prismaClient.projectBOM.findFirst({
+            where: {projectId, projectBomNumber: row.parentProjectBomNumber.trim(), deleted: false},
+            select: {id: true},
+          })
+        : null
+
+      const existing = await prismaClient.projectBOM.findFirst({
+        where: {projectId, projectBomNumber: row.projectBomNumber},
+        select: {id: true},
+      })
+      const data = {
+        projectId,
+        projectBomId: parent?.id ?? null,
+        projectBomNumber: row.projectBomNumber.trim(),
+        shortDescription: (row.shortDescription || row.description || row.projectBomNumber).trim(),
+        description: row.description?.trim() || null,
+        additionalInfo: row.additionalInfo?.trim() || null,
+        startDate: parseCsvDate(row.startDate, new Date()) ?? new Date(),
+        endDate: parseCsvDate(row.endDate),
+        closed: row.closed ?? false,
+        materialClosed: row.materialClosed ?? false,
+        readyForPurchase: row.readyForPurchase ?? false,
+      }
+
+      if (existing) {
+        await prismaClient.projectBOM.update({where: {id: existing.id}, data})
+        await setProjectBOMCanCopy(existing.id, row.canCopy ?? false)
+      } else {
+        const id = crypto.randomUUID()
+        const target = await createTargetForType('ProjectBom', profile.id)
+        await prismaClient.projectBOM.create({
+          data: {
+            ...data,
+            id,
+            createdBy: profile.id,
+            createdAt: new Date(),
+            targetId: target.id,
+          },
+        })
+        await setProjectBOMCanCopy(id, row.canCopy ?? false)
+      }
+
+      imported++
+    }
+
+    logger.info(`Imported ${imported} project BOM row(s)`)
     revalidatePath('/projectBOMs')
   },
 })
@@ -510,6 +589,64 @@ export const restoreProjectBOMStructureAction = protectedServerFunction({
     })
     logger.info(`Project BOM structure restored: ${id}`)
 
+    revalidatePath('/projectBOMs')
+    revalidatePath('/purchaseBOMs')
+  },
+})
+
+export const importProjectBOMStructureRowsAction = protectedServerFunction({
+  schema: importProjectBOMStructureRowsSchema,
+  functionName: 'Import project BOM structure rows action',
+  serverFn: async ({data: {projectBOMId, rows}, profile, logger}) => {
+    await assertProjectBOMNotQuoteApproved(projectBOMId)
+
+    const bom = await prismaClient.projectBOM.findUniqueOrThrow({
+      where: {id: projectBOMId},
+      select: {materialClosed: true},
+    })
+    if (bom.materialClosed) throw new Error('Cannot import structures into a material-closed BOM.')
+
+    let imported = 0
+    for (const row of rows) {
+      const material =
+        row.materialId || !row.materialBeNumber
+          ? null
+          : await prismaClient.material.findFirst({
+              where: {beNumber: row.materialBeNumber, deleted: false},
+              select: {id: true, shortDescription: true, name: true},
+            })
+      const materialId = row.materialId || material?.id
+      if (!materialId) throw new Error(`Material not found for row ${imported + 1}.`)
+
+      const id = crypto.randomUUID()
+      await prismaClient.projectBOMStructure.create({
+        data: {
+          id,
+          projectBOMId,
+          materialId,
+          shortDescription: row.shortDescription?.trim() || material?.shortDescription || material?.name || null,
+          description: row.description?.trim() || null,
+          additionalInfo: row.additionalInfo?.trim() || null,
+          tag: row.tag?.trim() || null,
+          readyForPurchase: row.readyForPurchase ?? false,
+          readyForPurchaseDate: parseCsvDate(row.readyForPurchaseDate),
+          createdBy: profile.id,
+          createdAt: new Date(),
+          BOMExecution: {
+            create: {
+              id: crypto.randomUUID(),
+              requiredQuantity: row.requiredQuantity ?? 0,
+              createdBy: profile.id,
+              createdAt: new Date(),
+            },
+          },
+        },
+      })
+      await ensureMaterialDemandForMaterial(materialId)
+      imported++
+    }
+
+    logger.info(`Imported ${imported} project BOM structure row(s) into ${projectBOMId}`)
     revalidatePath('/projectBOMs')
     revalidatePath('/purchaseBOMs')
   },

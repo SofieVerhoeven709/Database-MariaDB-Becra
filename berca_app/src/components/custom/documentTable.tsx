@@ -69,7 +69,8 @@ import {
 } from '@/serverFunctions/documents'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
-import type {Route} from 'next'
+import type {Route} from 'next'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -366,6 +367,8 @@ export function DocumentTable({
                 </SelectContent>
               </Select>
             </div>
+            <TableCsvActions filename="document-table.csv" />
+
             {canCreate && (
               <Button
                 onClick={() => {

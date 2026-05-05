@@ -9,11 +9,8 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
 import {VatMarginFormDialog} from '@/components/custom/vatMarginFormDialog'
-import {
-  softDeleteVatMarginAction,
-  hardDeleteVatMarginAction,
-  undeleteVatMarginAction,
-} from '@/serverFunctions/invoices'
+import {softDeleteVatMarginAction, hardDeleteVatMarginAction, undeleteVatMarginAction} from '@/serverFunctions/invoices'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
 type SortField = 'vat' | 'countryName' | 'createdAt'
 type SortDir = 'asc' | 'desc'
@@ -43,12 +40,7 @@ interface VatMarginTableProps {
   currentUserLevel: number
 }
 
-export function VatMarginTable({
-  initialVatMargins,
-  countries,
-  currentUserRole,
-  currentUserLevel,
-}: VatMarginTableProps) {
+export function VatMarginTable({initialVatMargins, countries, currentUserRole, currentUserLevel}: VatMarginTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canEdit = currentUserLevel >= 40
@@ -86,11 +78,8 @@ export function VatMarginTable({
   const filteredMargins = initialVatMargins
     .filter(m => {
       const matchesSearch =
-        m.vat.toString().includes(search) ||
-        (m.countryName?.toLowerCase().includes(search.toLowerCase()) ?? false)
-      const matchesDeleted =
-        filterDeleted === 'all' ||
-        (filterDeleted === 'not-deleted' ? !m.deleted : m.deleted)
+        m.vat.toString().includes(search) || (m.countryName?.toLowerCase().includes(search.toLowerCase()) ?? false)
+      const matchesDeleted = filterDeleted === 'all' || (filterDeleted === 'not-deleted' ? !m.deleted : m.deleted)
       return matchesSearch && matchesDeleted
     })
     .sort((a, b) => {
@@ -130,6 +119,8 @@ export function VatMarginTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="vat-margin-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {
@@ -273,4 +264,3 @@ export function VatMarginTable({
     </div>
   )
 }
-

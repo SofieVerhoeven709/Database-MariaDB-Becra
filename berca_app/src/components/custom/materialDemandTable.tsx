@@ -23,7 +23,8 @@ import {
 } from '@/serverFunctions/materialDemands'
 import {createInventoryOrderAction} from '@/serverFunctions/inventoryOrders'
 import {selectQuoteSupplierLineAction} from '@/serverFunctions/quoteSupplierLines'
-import {DEMAND_PERMISSION_LEVELS} from '@/constants'
+import {DEMAND_PERMISSION_LEVELS} from '@/constants'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 type SortField = 'material' | 'totalRequiredQty' | 'reservedQty' | 'sourceCount' | 'quoteLineCount' | 'createdAt'
 type SortDir = 'asc' | 'desc'
@@ -575,6 +576,8 @@ export function MaterialDemandTable({
           <span className="text-xs uppercase tracking-wide text-muted-foreground">
             {filtered.length} / {initialEntries.length}
           </span>
+          <TableCsvActions filename="material-demand-table.csv" />
+
           {canCreate && (
             <Button
               onClick={() => setCreating(v => !v)}

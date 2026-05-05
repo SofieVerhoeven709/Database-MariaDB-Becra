@@ -18,7 +18,8 @@ import {
 } from '@/serverFunctions/projects'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
-import type {Route} from 'next'
+import type {Route} from 'next'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+
 
 type SortField =
   | 'projectNumber'
@@ -264,6 +265,8 @@ export function ProjectTable({
             </SelectContent>
           </Select>
         </div>
+        <TableCsvActions filename="project-table.csv" />
+
         {canCreate && (
           <Button
             onClick={() => {

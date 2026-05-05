@@ -35,6 +35,7 @@ export interface MappedQuoteSupplierDetailLine {
   quantity: number
   unitPrice: number
   minQuantity: number | null
+  supplierDescription: string | null
   selected: boolean
   notDeliverable: boolean
 }

@@ -51,6 +51,8 @@ export const projectBOMIdSchema = projectBOMSchema.pick({id: true})
 
 export const copyProjectBOMSchema = z.object({
   sourceId: z.string(),
+  /** Optional: copy the BOM into another project. Defaults to the source BOM's project. */
+  targetProjectId: z.string().nullable().optional(),
   projectBomNumber: z.string().min(1).max(255),
   shortDescription: z.string().min(1).max(255),
 })
@@ -96,3 +98,40 @@ export const updateProjectBOMStructureSchema = projectBOMStructureSchema.pick({
 })
 
 export const projectBOMStructureIdSchema = projectBOMStructureSchema.pick({id: true})
+
+export const importProjectBOMRowsSchema = z.object({
+  rows: z.array(
+    z.object({
+      projectId: z.string().optional(),
+      projectNumber: z.string().optional(),
+      projectBomNumber: z.string().min(1).max(255),
+      shortDescription: z.string().max(255).optional(),
+      description: z.string().max(255).optional(),
+      parentProjectBomNumber: z.string().max(255).optional(),
+      additionalInfo: z.string().max(255).optional(),
+      startDate: z.string().optional(),
+      endDate: z.string().optional(),
+      closed: z.boolean().optional(),
+      materialClosed: z.boolean().optional(),
+      readyForPurchase: z.boolean().optional(),
+      canCopy: z.boolean().optional(),
+    }),
+  ),
+})
+
+export const importProjectBOMStructureRowsSchema = z.object({
+  projectBOMId: z.string(),
+  rows: z.array(
+    z.object({
+      materialId: z.string().optional(),
+      materialBeNumber: z.string().optional(),
+      shortDescription: z.string().max(255).optional(),
+      description: z.string().max(255).optional(),
+      additionalInfo: z.string().max(255).optional(),
+      tag: z.string().max(255).optional(),
+      requiredQuantity: z.number().int().optional(),
+      readyForPurchaseDate: z.string().optional(),
+      readyForPurchase: z.boolean().optional(),
+    }),
+  ),
+})

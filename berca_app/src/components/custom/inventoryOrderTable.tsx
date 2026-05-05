@@ -8,6 +8,7 @@ import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {InventoryOrderFormDialog, type InventoryOption} from '@/components/custom/inventoryOrderFormDialog'
 import type {MappedInventoryOrder} from '@/types/inventoryOrder'
 import {
@@ -34,7 +35,11 @@ function formatDate(iso: string | null | undefined) {
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
-  return sortDir === 'asc' ? <ChevronUp className="inline h-3.5 w-3.5 ml-1" /> : <ChevronDown className="inline h-3.5 w-3.5 ml-1" />
+  return sortDir === 'asc' ? (
+    <ChevronUp className="inline h-3.5 w-3.5 ml-1" />
+  ) : (
+    <ChevronDown className="inline h-3.5 w-3.5 ml-1" />
+  )
 }
 
 function classifyMaterialNumber(beNumber: string | null | undefined): 'be' | 'iso' | 'unknown' {
@@ -96,11 +101,16 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
       const dir = sortDir === 'asc' ? 1 : -1
       const cmp = (x: string | null | undefined, y: string | null | undefined) => dir * (x ?? '').localeCompare(y ?? '')
       switch (sortField) {
-        case 'orderDate': return cmp(a.orderDate, b.orderDate)
-        case 'orderNumber': return cmp(a.orderNumber, b.orderNumber)
-        case 'shortDescription': return cmp(a.shortDescription, b.shortDescription)
-        case 'inventoryBeNumber': return cmp(a.inventoryBeNumber, b.inventoryBeNumber)
-        default: return 0
+        case 'orderDate':
+          return cmp(a.orderDate, b.orderDate)
+        case 'orderNumber':
+          return cmp(a.orderNumber, b.orderNumber)
+        case 'shortDescription':
+          return cmp(a.shortDescription, b.shortDescription)
+        case 'inventoryBeNumber':
+          return cmp(a.inventoryBeNumber, b.inventoryBeNumber)
+        default:
+          return 0
       }
     })
 
@@ -115,14 +125,22 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
   async function handleSave(e: MappedInventoryOrder) {
     if (editing) {
       await updateInventoryOrderAction({
-        id: e.id, materialId: e.materialId, orderNumber: e.orderNumber,
+        id: e.id,
+        materialId: e.materialId,
+        orderNumber: e.orderNumber,
         requestedQty: e.requestedQty,
-        orderDate: e.orderDate, shortDescription: e.shortDescription, longDescription: e.longDescription,
+        orderDate: e.orderDate,
+        shortDescription: e.shortDescription,
+        longDescription: e.longDescription,
       })
     } else {
       await createInventoryOrderAction({
-        materialId: e.materialId, orderNumber: e.orderNumber, requestedQty: e.requestedQty,
-        orderDate: e.orderDate, shortDescription: e.shortDescription, longDescription: e.longDescription,
+        materialId: e.materialId,
+        orderNumber: e.orderNumber,
+        requestedQty: e.requestedQty,
+        orderDate: e.orderDate,
+        shortDescription: e.shortDescription,
+        longDescription: e.longDescription,
       })
     }
     setEditing(null)
@@ -146,9 +164,7 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
   }
 
   async function handleHardDelete(entry: MappedInventoryOrder) {
-    const confirmed = window.confirm(
-      `Permanently delete order request ${entry.orderNumber}? This cannot be undone.`,
-    )
+    const confirmed = window.confirm(`Permanently delete order request ${entry.orderNumber}? This cannot be undone.`)
     if (!confirmed) return
     await hardDeleteInventoryOrderAction({id: entry.id})
     router.refresh()
@@ -179,7 +195,9 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
       return <Badge className="text-[10px] bg-red-500/15 text-red-700 border border-red-500/30">Rejected</Badge>
     }
     if (entry.approved) {
-      return <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">Approved</Badge>
+      return (
+        <Badge className="text-[10px] bg-emerald-500/15 text-emerald-700 border border-emerald-500/30">Approved</Badge>
+      )
     }
     return <Badge className="text-[10px] bg-amber-500/15 text-amber-700 border border-amber-500/30">Pending</Badge>
   }
@@ -215,8 +233,12 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative max-w-sm flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Search order, description, BE…" value={search} onChange={e => setSearch(e.target.value)}
-            className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60" />
+          <Input
+            placeholder="Search order, description, BE…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60"
+          />
         </div>
         <div className="flex items-center gap-3">
           <Select value={statusFilter} onValueChange={v => setStatusFilter(v as StatusFilter)}>
@@ -241,8 +263,17 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
               <SelectItem value="iso">ISO (&gt;= 4000000)</SelectItem>
             </SelectContent>
           </Select>
-          <span className="text-xs uppercase tracking-wide text-muted-foreground">{filtered.length} / {initialEntries.length}</span>
-          <Button disabled={!canCreate} onClick={() => { setEditing(null); setDialogOpen(true) }} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+          <span className="text-xs uppercase tracking-wide text-muted-foreground">
+            {filtered.length} / {initialEntries.length}
+          </span>
+          <TableCsvActions filename="inventory-order-table.csv" />
+          <Button
+            disabled={!canCreate}
+            onClick={() => {
+              setEditing(null)
+              setDialogOpen(true)
+            }}
+            className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
             <Plus className="h-4 w-4" /> New Request
           </Button>
         </div>
@@ -258,9 +289,7 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
               <TableHead className={thClass} onClick={() => toggleSort('orderNumber')}>
                 Order # <SortIcon field="orderNumber" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className={thClass}>
-                Qty
-              </TableHead>
+              <TableHead className={thClass}>Qty</TableHead>
               <TableHead className="text-xs whitespace-nowrap">Status</TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('inventoryBeNumber')}>
                 Inventory Item <SortIcon field="inventoryBeNumber" sortField={sortField} sortDir={sortDir} />
@@ -270,7 +299,9 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
               </TableHead>
               <TableHead className="text-xs whitespace-nowrap">Created / Decision</TableHead>
               <TableHead className="text-xs whitespace-nowrap">Flags</TableHead>
-              <TableHead className="w-20"><span className="sr-only">Actions</span></TableHead>
+              <TableHead className="w-20">
+                <span className="sr-only">Actions</span>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -280,108 +311,130 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
                   No order requests found.
                 </TableCell>
               </TableRow>
-            ) : filtered.map(entry => (
-              <TableRow key={entry.id} className={`border-border/40 hover:bg-secondary/50 ${entry.deleted ? 'opacity-70' : ''}`}>
-                <TableCell className={tdClass}>{formatDate(entry.orderDate)}</TableCell>
-                <TableCell className={`${tdClass} font-medium text-foreground`}>{entry.orderNumber}</TableCell>
-                <TableCell className={tdClass}>{entry.requestedQty}</TableCell>
-                <TableCell>{renderStatus(entry)}</TableCell>
-                <TableCell className={tdClass}>
-                  <div className="flex flex-col gap-0.5">
-                    <span>{entry.inventoryBeNumber ?? '—'}</span>
-                    {entry.inventoryDescription && (
-                      <span className="text-[11px] text-muted-foreground">{entry.inventoryDescription}</span>
-                    )}
-                  </div>
-                </TableCell>
-                <TableCell className={`${tdClass} max-w-50 truncate`}>{entry.shortDescription}</TableCell>
-                <TableCell className={tdClass}>
-                  <div className="flex flex-col gap-0.5">
-                    <span>{entry.createdByName}</span>
-                    {entry.approved && (
-                      <span className="text-[11px] text-emerald-700">
-                        Approved{entry.approvedByName ? ` by ${entry.approvedByName}` : ''}
-                      </span>
-                    )}
-                    {entry.rejected && (
-                      <span className="text-[11px] text-red-700">
-                        Rejected{entry.rejectedByName ? ` by ${entry.rejectedByName}` : ''}
-                      </span>
-                    )}
-                    {entry.deleted && (
-                      <span className="text-[11px] text-red-700">
-                        Deleted{entry.deletedByName ? ` by ${entry.deletedByName}` : ''}
-                      </span>
-                    )}
-                    {entry.snapshotTakenAt && (
-                      <span className="text-[11px] text-muted-foreground">Snapshot {formatDate(entry.snapshotTakenAt)}</span>
-                    )}
-                    {!entry.approved && !entry.deleted && <span className="text-[11px] text-muted-foreground">Waiting approval</span>}
-                  </div>
-                </TableCell>
-                <TableCell className={tdClass}>{renderFlags(entry)}</TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-1">
-                    {entry.deleted ? (
-                      <>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-7 px-2 text-[11px] text-sky-700 hover:bg-sky-500/10"
-                          disabled={!canDelete}
-                          onClick={() => handleRestore(entry)}>
-                          <RotateCcw className="mr-1 h-3.5 w-3.5" />
-                          Restore
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                          disabled={!canDelete}
-                          onClick={() => handleHardDelete(entry)}>
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10"
-                      disabled={!canApprove || entry.approved || entry.deleted || entry.rejected}
-                      onClick={() => handleApprove(entry.id)}>
-                      <Check className="h-3.5 w-3.5" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-7 w-7 text-red-600 hover:bg-red-500/10"
-                      disabled={!canApprove || entry.approved || entry.deleted || entry.rejected}
-                      onClick={() => handleReject(entry)}>
-                      <X className="h-3.5 w-3.5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                      disabled={!canEdit || entry.deleted}
-                      onClick={() => { setEditing(entry); setDialogOpen(true) }}>
-                      <Pencil className="h-3.5 w-3.5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                      disabled={!canDelete || entry.deleted}
-                      onClick={() => handleDelete(entry)}>
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </Button>
-                      </>
-                    )}
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
+            ) : (
+              filtered.map(entry => (
+                <TableRow
+                  key={entry.id}
+                  className={`border-border/40 hover:bg-secondary/50 ${entry.deleted ? 'opacity-70' : ''}`}>
+                  <TableCell className={tdClass}>{formatDate(entry.orderDate)}</TableCell>
+                  <TableCell className={`${tdClass} font-medium text-foreground`}>{entry.orderNumber}</TableCell>
+                  <TableCell className={tdClass}>{entry.requestedQty}</TableCell>
+                  <TableCell>{renderStatus(entry)}</TableCell>
+                  <TableCell className={tdClass}>
+                    <div className="flex flex-col gap-0.5">
+                      <span>{entry.inventoryBeNumber ?? '—'}</span>
+                      {entry.inventoryDescription && (
+                        <span className="text-[11px] text-muted-foreground">{entry.inventoryDescription}</span>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell className={`${tdClass} max-w-50 truncate`}>{entry.shortDescription}</TableCell>
+                  <TableCell className={tdClass}>
+                    <div className="flex flex-col gap-0.5">
+                      <span>{entry.createdByName}</span>
+                      {entry.approved && (
+                        <span className="text-[11px] text-emerald-700">
+                          Approved{entry.approvedByName ? ` by ${entry.approvedByName}` : ''}
+                        </span>
+                      )}
+                      {entry.rejected && (
+                        <span className="text-[11px] text-red-700">
+                          Rejected{entry.rejectedByName ? ` by ${entry.rejectedByName}` : ''}
+                        </span>
+                      )}
+                      {entry.deleted && (
+                        <span className="text-[11px] text-red-700">
+                          Deleted{entry.deletedByName ? ` by ${entry.deletedByName}` : ''}
+                        </span>
+                      )}
+                      {entry.snapshotTakenAt && (
+                        <span className="text-[11px] text-muted-foreground">
+                          Snapshot {formatDate(entry.snapshotTakenAt)}
+                        </span>
+                      )}
+                      {!entry.approved && !entry.deleted && (
+                        <span className="text-[11px] text-muted-foreground">Waiting approval</span>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell className={tdClass}>{renderFlags(entry)}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      {entry.deleted ? (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 px-2 text-[11px] text-sky-700 hover:bg-sky-500/10"
+                            disabled={!canDelete}
+                            onClick={() => handleRestore(entry)}>
+                            <RotateCcw className="mr-1 h-3.5 w-3.5" />
+                            Restore
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                            disabled={!canDelete}
+                            onClick={() => handleHardDelete(entry)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-emerald-600 hover:bg-emerald-500/10"
+                            disabled={!canApprove || entry.approved || entry.deleted || entry.rejected}
+                            onClick={() => handleApprove(entry.id)}>
+                            <Check className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-red-600 hover:bg-red-500/10"
+                            disabled={!canApprove || entry.approved || entry.deleted || entry.rejected}
+                            onClick={() => handleReject(entry)}>
+                            <X className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                            disabled={!canEdit || entry.deleted}
+                            onClick={() => {
+                              setEditing(entry)
+                              setDialogOpen(true)
+                            }}>
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                            disabled={!canDelete || entry.deleted}
+                            onClick={() => handleDelete(entry)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>
 
-      <InventoryOrderFormDialog open={dialogOpen} onOpenChange={setDialogOpen} entry={editing} inventories={inventories} onSave={handleSave} />
+      <InventoryOrderFormDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        entry={editing}
+        inventories={inventories}
+        onSave={handleSave}
+      />
     </div>
   )
 }
-

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import type {Route} from 'next'
 import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Check, Pencil, Save, Trash2, X} from 'lucide-react'
+import {ArrowLeft, Check, FileText, Pencil, Save, Trash2, X} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {Checkbox} from '@/components/ui/checkbox'
@@ -181,6 +181,7 @@ export function QuoteSupplierDetail({
   const [newQuantity, setNewQuantity] = useState('1')
   const [newUnitPrice, setNewUnitPrice] = useState('')
   const [newMinQuantity, setNewMinQuantity] = useState('')
+  const [newSupplierDescription, setNewSupplierDescription] = useState('')
   const [newNotDeliverable, setNewNotDeliverable] = useState(false)
 
   // ── Inline edit line state ───────────────────────────────────────────────
@@ -188,6 +189,7 @@ export function QuoteSupplierDetail({
   const [editAdditionalInfo, setEditAdditionalInfo] = useState('')
   const [editUnitPrice, setEditUnitPrice] = useState('')
   const [editMinQuantity, setEditMinQuantity] = useState('')
+  const [editSupplierDescription, setEditSupplierDescription] = useState('')
   const [editNotDeliverable, setEditNotDeliverable] = useState(false)
 
   // ── Misc line state ──────────────────────────────────────────────────────
@@ -212,6 +214,7 @@ export function QuoteSupplierDetail({
     setEditAdditionalInfo(line.additionalInfo ?? '')
     setEditUnitPrice(String(line.unitPrice))
     setEditMinQuantity(line.minQuantity !== null ? String(line.minQuantity) : '')
+    setEditSupplierDescription(line.supplierDescription ?? '')
     setEditNotDeliverable(line.notDeliverable)
   }
 
@@ -221,6 +224,7 @@ export function QuoteSupplierDetail({
     setEditAdditionalInfo('')
     setEditUnitPrice('')
     setEditMinQuantity('')
+    setEditSupplierDescription('')
     setEditNotDeliverable(false)
   }
 
@@ -268,6 +272,7 @@ export function QuoteSupplierDetail({
         quantity,
         unitPrice,
         minQuantity,
+        supplierDescription: newSupplierDescription.trim() || undefined,
         notDeliverable: newNotDeliverable,
       })
       setError(null)
@@ -275,6 +280,7 @@ export function QuoteSupplierDetail({
       setNewAdditionalInfo('')
       setNewUnitPrice('')
       setNewMinQuantity('')
+      setNewSupplierDescription('')
       setNewNotDeliverable(false)
       router.refresh()
     } catch (e) {
@@ -310,6 +316,7 @@ export function QuoteSupplierDetail({
         unitPrice,
         minQuantity,
         additionalInfo: editAdditionalInfo.trim() || null,
+        supplierDescription: editSupplierDescription.trim() || null,
         notDeliverable: editNotDeliverable,
       })
       setError(null)
@@ -458,6 +465,12 @@ export function QuoteSupplierDetail({
 
         {/* Edit / Save / Cancel */}
         <div className="flex items-center gap-2">
+          <Link href={`/api/orderQuote/${quote.id}/pdf` as Route}>
+            <Button variant="outline" className="gap-2 border-border">
+              <FileText className="h-4 w-4" />
+              PDF
+            </Button>
+          </Link>
           {editing ? (
             <>
               <Button variant="outline" onClick={handleCancel} className="gap-2 border-border" disabled={saving}>
@@ -770,6 +783,16 @@ export function QuoteSupplierDetail({
           </div>
 
           <div className="mt-3 flex items-end justify-between gap-3">
+          <div className="mt-3 grid gap-3 md:grid-cols-[1fr_auto_auto] md:items-end">
+            <div>
+              <Label className="text-xs">Supplier description</Label>
+              <Input
+                value={newSupplierDescription}
+                onChange={e => setNewSupplierDescription(e.target.value)}
+                placeholder="Supplier reference, remark or alternative description…"
+                className="bg-secondary border-border mt-1"
+              />
+            </div>
             <div className="w-40">
               <Label className="text-xs">Min Qty (optional)</Label>
               <Input
@@ -804,6 +827,8 @@ export function QuoteSupplierDetail({
             <TableRow className="hover:bg-transparent border-border/60">
               <TableHead className="text-xs">Material</TableHead>
               <TableHead className="text-xs">Additional Info</TableHead>
+              <TableHead className="text-xs">Supplier Description</TableHead>
+              <TableHead className="text-xs">Demand</TableHead>
               <TableHead className="text-xs">Qty</TableHead>
               <TableHead className="text-xs">Min Qty</TableHead>
               <TableHead className="text-xs">Unit Price</TableHead>
@@ -817,7 +842,7 @@ export function QuoteSupplierDetail({
           <TableBody>
             {quote.lines.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="h-24 text-center text-muted-foreground text-sm">
+                <TableCell colSpan={9} className="h-24 text-center text-muted-foreground text-sm">
                   No quote lines yet. Add one or more lines above.
                 </TableCell>
               </TableRow>
@@ -846,6 +871,18 @@ export function QuoteSupplierDetail({
                         <span className="whitespace-pre-wrap">{line.additionalInfo ?? '—'}</span>
                       )}
                     </TableCell>
+                    <TableCell className="text-sm text-muted-foreground min-w-56">
+                      {isEditing ? (
+                        <Input
+                          value={editSupplierDescription}
+                          onChange={e => setEditSupplierDescription(e.target.value)}
+                          className="h-8 bg-secondary border-border"
+                        />
+                      ) : (
+                        (line.supplierDescription ?? '—')
+                      )}
+                    </TableCell>
+                    <TableCell className="text-sm text-muted-foreground">{line.materialDemandLabel ?? '—'}</TableCell>
 
                     <TableCell className="text-sm text-muted-foreground">
                       {isEditing ? (

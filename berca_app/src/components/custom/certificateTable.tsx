@@ -28,6 +28,7 @@ import {
   hardDeleteCertificateTypeAction,
   undeleteCertificateTypeAction,
 } from '@/serverFunctions/training'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 type SortDir = 'asc' | 'desc'
@@ -206,6 +207,8 @@ export function CertificateTable({
                 </SelectContent>
               </Select>
             </div>
+            <TableCsvActions filename="certificate-table.csv" />
+
             {canCreate && (
               <Button
                 onClick={() => {

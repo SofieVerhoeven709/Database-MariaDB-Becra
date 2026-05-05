@@ -89,6 +89,7 @@ export function mapQuoteSupplierDetail(q: QuoteSupplierDetailWithRelations): Map
       // Prisma returns Decimal for unitPrice; cast to number for UI math/formatting.
       unitPrice: Number(line.unitPrice),
       minQuantity: line.minQuantity ?? null,
+      supplierDescription: line.supplierDescription ?? null,
       selected: !!line.selected,
       notDeliverable: line.notDeliverable,
     })),

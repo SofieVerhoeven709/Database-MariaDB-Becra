@@ -2417,4 +2417,4 @@ CREATE TABLE IF NOT EXISTS HrFacilityFine (
     ) ENGINE = InnoDB;
 
 ALTER TABLE QuoteSupplierLine ADD COLUMN IF NOT EXISTS additionalInfo VARCHAR(255);
-ALTER TABLE QuoteSupplierLine ADD COLLUMN IF NOT EXISTS supplierDescription TEXT;
+ALTER TABLE QuoteSupplierLine ADD COLUMN IF NOT EXISTS supplierDescription TEXT;

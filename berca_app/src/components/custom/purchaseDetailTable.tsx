@@ -134,7 +134,6 @@ export function PurchaseDetailTable({
     return sum + (Number.isFinite(amount) ? amount : 0)
   }, 0)
 
-
   return (
     <div className="flex flex-col gap-4">
       {/* Header */}
@@ -197,9 +196,6 @@ export function PurchaseDetailTable({
                 <TableRow key={d.id} className="border-border/40 hover:bg-secondary/50">
                   <TableCell className={`${tdClass} font-medium text-foreground`}>{d.materialLabel}</TableCell>
                   <TableCell className={`${tdClass} whitespace-normal max-w-70`}>{d.additionalInfo ?? '—'}</TableCell>
-                  <TableCell className={tdClass}>
-                    {d.materialDemandId ? (demandLabelById.get(d.materialDemandId) ?? d.materialDemandId) : '—'}
-                  </TableCell>
                   <TableCell className={tdClass}>{formatCurrency(d.unitPrice)}</TableCell>
                   <TableCell className={tdClass}>{d.quantity}</TableCell>
                   <TableCell className={tdClass}>{d.minQuantity ?? '—'}</TableCell>

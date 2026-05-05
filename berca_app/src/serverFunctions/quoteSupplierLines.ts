@@ -126,6 +126,7 @@ export const createQuoteSupplierLineAction = protectedServerFunction({
         quoteSupplierId: data.quoteSupplierId,
         materialId: data.materialId,
         materialDemandId: data.materialDemandId ?? null,
+        additionalInfo: data.additionalInfo ?? null,
         quantity: data.quantity,
         unitPrice: data.unitPrice,
         minQuantity: data.minQuantity ?? null,

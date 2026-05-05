@@ -17,6 +17,7 @@ export interface DetailOption {
 export interface QuoteLineOption extends DetailOption {
   materialId: string
   materialDemandId: string | null
+  additionalInfo: string | null
   quantity: number
   unitPrice: string
   minQuantity: number | null
@@ -92,6 +93,7 @@ export function PurchaseDetailFormDialog({
         if (line) {
           next.materialId = line.materialId
           next.materialDemandId = line.materialDemandId
+          next.additionalInfo = line.additionalInfo
           next.quantity = line.quantity
           next.unitPrice = line.unitPrice
           next.minQuantity = line.minQuantity

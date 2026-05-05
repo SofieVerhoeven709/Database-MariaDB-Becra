@@ -2215,6 +2215,7 @@
                 quoteSupplierId CHAR(36) NOT NULL,
                 materialId CHAR(36) NOT NULL,
                 materialDemandId CHAR(36),
+                additionalInfo VARCHAR(255),
                 quantity INT NOT NULL,
                 unitPrice DECIMAL(10, 2) NOT NULL,
                 minQuantity INT,

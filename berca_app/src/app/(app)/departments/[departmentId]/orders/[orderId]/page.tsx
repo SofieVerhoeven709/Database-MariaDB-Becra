@@ -67,16 +67,21 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
     }))
     .sort((a, b) => a.name.localeCompare(b.name))
 
-  const quoteLineOptions = (purchase.QuoteSupplier?.QuoteSupplierLine ?? []).map(line => ({
+  const quoteLineOptions = (purchase.QuoteSupplier?.QuoteSupplierLine ?? []).map(line => {
+    const quoteLine = line as typeof line & {additionalInfo?: string | null}
+
+    return {
     id: line.id,
     name: `${line.Material?.beNumber ?? 'N/A'} - ${line.Material?.name ?? 'Line'} (${line.quantity})`,
     materialId: line.materialId,
     materialDemandId: line.materialDemandId,
+    additionalInfo: quoteLine.additionalInfo ?? null,
     quantity: line.quantity,
     unitPrice: line.unitPrice?.toString() ?? '0.00',
     minQuantity: line.minQuantity ?? null,
     notDeliverable: line.notDeliverable,
-  }))
+    }
+  })
 
   const quoteMiscLineOptions = (purchase.QuoteSupplier?.QuoteSupplierMiscLine ?? []).map(miscLine => ({
     id: miscLine.id,

@@ -128,8 +128,6 @@ export function PurchaseDetailTable({
     return sum + (Number.isFinite(amount) ? amount : 0)
   }, 0)
 
-  // Fast lookup from demand id to label for table rendering.
-  const demandLabelById = new Map(materialDemandOptions.map(option => [option.id, option.name]))
 
   return (
     <div className="flex flex-col gap-4">
@@ -165,7 +163,7 @@ export function PurchaseDetailTable({
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
               <TableHead className={thClass}>Material</TableHead>
-              <TableHead className={thClass}>Demand</TableHead>
+              <TableHead className={thClass}>Additional Info</TableHead>
               <TableHead className={thClass}>Unit Price</TableHead>
               <TableHead className={thClass}>Qty</TableHead>
               <TableHead className={thClass}>Min Qty</TableHead>
@@ -189,9 +187,7 @@ export function PurchaseDetailTable({
               initialDetails.map(d => (
                 <TableRow key={d.id} className="border-border/40 hover:bg-secondary/50">
                   <TableCell className={`${tdClass} font-medium text-foreground`}>{d.materialLabel}</TableCell>
-                  <TableCell className={tdClass}>
-                    {d.materialDemandId ? demandLabelById.get(d.materialDemandId) ?? d.materialDemandId : '—'}
-                  </TableCell>
+                  <TableCell className={`${tdClass} whitespace-normal max-w-70`}>{d.additionalInfo ?? '—'}</TableCell>
                   <TableCell className={tdClass}>{formatCurrency(d.unitPrice)}</TableCell>
                   <TableCell className={tdClass}>{d.quantity}</TableCell>
                   <TableCell className={tdClass}>{d.minQuantity ?? '—'}</TableCell>

@@ -782,7 +782,6 @@ export function QuoteSupplierDetail({
             />
           </div>
 
-          <div className="mt-3 flex items-end justify-between gap-3">
           <div className="mt-3 grid gap-3 md:grid-cols-[1fr_auto_auto] md:items-end">
             <div>
               <Label className="text-xs">Supplier description</Label>

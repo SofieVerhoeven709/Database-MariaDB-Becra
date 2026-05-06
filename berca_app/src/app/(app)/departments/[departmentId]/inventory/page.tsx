@@ -57,6 +57,7 @@ export default async function InventoryPage() {
     beNumber: m.beNumber ?? '', // Ensure beNumber is always a string
     name: m.name ?? '', // Ensure name is always a string
     shortDescription: m.shortDescription ?? '', // Ensure shortDescription is always a string
+    place: locationByBeNumber.get(m.beNumber ?? '') ?? 'Unassigned',
   }))
 
   return (

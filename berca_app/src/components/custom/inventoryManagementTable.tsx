@@ -20,6 +20,7 @@ interface MaterialOption {
   beNumber: string
   name: string | null
   shortDescription: string
+  place: string
 }
 type SortField = 'beNumber' | 'shortDescription' | 'place' | 'quantityInStock' | 'materialName' | 'valid'
 type SortDir = 'asc' | 'desc'
@@ -100,7 +101,7 @@ export function InventoryManagementTable({initialItems, materials}: InventoryTab
         id: form.id,
         materialId: form.materialId ?? '',
         beNumber: form.beNumber ?? material?.beNumber ?? '',
-        place: form.place ?? editingItem?.place ?? 'Unassigned',
+        place: form.place ?? material?.place ?? editingItem?.place ?? 'Unassigned',
         shortDescription: form.shortDescription ?? material?.shortDescription ?? '',
         longDescription: form.longDescription ?? '',
         serialNumber: form.serialNumber ?? null,

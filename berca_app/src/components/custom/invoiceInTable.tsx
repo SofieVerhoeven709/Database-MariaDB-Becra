@@ -11,9 +11,16 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
 import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption, InvoicePurchaseLookup} from '@/types/invoice'
-import {softDeleteInvoiceInAction, hardDeleteInvoiceInAction, undeleteInvoiceInAction} from '@/serverFunctions/invoices'
-import {InvoiceInFormDialog} from '@/components/custom/invoiceInFormDialog'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {
+  createInvoiceInAction,
+  softDeleteInvoiceInAction,
+  hardDeleteInvoiceInAction,
+  undeleteInvoiceInAction,
+} from '@/serverFunctions/invoices'
+import {InvoiceInFormDialog} from '@/components/custom/invoiceInFormDialog'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 type SortField =
   | 'invoiceNumber'
@@ -37,6 +44,25 @@ type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create invoice in.'
+}
+
+function parseCsvDate(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return null
+  const dayMonthYear = trimmed.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})$/)
+  if (dayMonthYear) {
+    const [, day, month, rawYear] = dayMonthYear
+    const year = rawYear.length === 2 ? `20${rawYear}` : rawYear
+    const parsed = new Date(Number(year), Number(month) - 1, Number(day))
+    return Number.isNaN(parsed.getTime()) ? null : parsed
+  }
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -196,6 +222,101 @@ export function InvoiceInTable({
     router.refresh()
   }
 
+  function resolveLookupId(value: string, options: InvoiceLookup[]) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalizedValue)?.id ?? null
+    )
+  }
+
+  function resolveVatMarginId(value: string) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value.replace('%', ''))
+    return vatMargins.find(option => option.id === value || String(option.vat) === normalizedValue)?.id ?? null
+  }
+
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const invoiceDate = parseCsvDate(getCsvValue(row, ['Invoice Date', 'Date', 'invoiceDate']))
+      const dueDate = parseCsvDate(getCsvValue(row, ['Due Date', 'dueDate']))
+      const invoiceTypeId = resolveLookupId(getCsvValue(row, ['Invoice Type', 'invoiceType']), invoiceTypes)
+      const paymentMethodId = resolveLookupId(getCsvValue(row, ['Payment Method', 'paymentMethod']), paymentMethods)
+      const invoiceSentTypeId = resolveLookupId(
+        getCsvValue(row, ['Sent Type', 'Invoice Sent Type', 'invoiceSentType']),
+        invoiceSentTypes,
+      )
+      const invoiceStatusId = resolveLookupId(
+        getCsvValue(row, ['Status', 'Invoice Status', 'invoiceStatus']),
+        invoiceStatuses,
+      )
+      const vatMarginId = resolveVatMarginId(getCsvValue(row, ['VAT', 'VAT Margin', 'vatMargin']))
+      const companyId = resolveLookupId(getCsvValue(row, ['Company', 'company']), companyOptions)
+
+      if (!invoiceDate) errors.push(`Row ${rowNumber}: Invoice Date is required or invalid.`)
+      if (!dueDate) errors.push(`Row ${rowNumber}: Due Date is required or invalid.`)
+      if (!invoiceTypeId) errors.push(`Row ${rowNumber}: Invoice Type could not be matched.`)
+      if (!paymentMethodId) errors.push(`Row ${rowNumber}: Payment Method could not be matched.`)
+      if (!invoiceSentTypeId) errors.push(`Row ${rowNumber}: Invoice Sent Type could not be matched.`)
+      if (!invoiceStatusId) errors.push(`Row ${rowNumber}: Invoice Status could not be matched.`)
+      if (!vatMarginId) errors.push(`Row ${rowNumber}: VAT Margin could not be matched.`)
+      if (!companyId) errors.push(`Row ${rowNumber}: Company could not be matched.`)
+      if (
+        !invoiceDate ||
+        !dueDate ||
+        !invoiceTypeId ||
+        !paymentMethodId ||
+        !invoiceSentTypeId ||
+        !invoiceStatusId ||
+        !vatMarginId ||
+        !companyId
+      ) {
+        continue
+      }
+
+      try {
+        await createInvoiceInAction({
+          invoiceNumber: getCsvValue(row, ['Invoice #', 'Invoice Number', 'invoiceNumber']) || undefined,
+          poNumber: getCsvValue(row, ['PO Number', 'poNumber']) || null,
+          clientInvoiceNumber: getCsvValue(row, ['Client Invoice Number', 'clientInvoiceNumber']) || null,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          invoiceDate,
+          dueDate,
+          reminderSent: isTruthyCsvValue(getCsvValue(row, ['Reminder Sent', 'reminderSent'])),
+          outstanding: isTruthyCsvValue(getCsvValue(row, ['Outstanding', 'outstanding'])),
+          invoiceTypeId,
+          paymentMethodId,
+          invoiceSentTypeId,
+          invoiceStatusId,
+          vatMarginId,
+          companyId,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+
+    window.alert(
+      errors.length > 0
+        ? `Created ${created} invoice in record(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} invoice in record(s).`,
+    )
+  }
+
   return (
     <div className="flex flex-col gap-6">
       {/* Toolbar */}
@@ -221,7 +342,7 @@ export function InvoiceInTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="invoice-in-table.csv" />
+        <TableCsvActions filename="invoice-in-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
 
         {canCreate && (
           <Button

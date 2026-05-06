@@ -9,8 +9,14 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
 import {VatMarginFormDialog} from '@/components/custom/vatMarginFormDialog'
-import {softDeleteVatMarginAction, hardDeleteVatMarginAction, undeleteVatMarginAction} from '@/serverFunctions/invoices'
+import {
+  softDeleteVatMarginAction,
+  hardDeleteVatMarginAction,
+  undeleteVatMarginAction,
+  createVatMarginAction,
+} from '@/serverFunctions/invoices'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 type SortField = 'vat' | 'countryName' | 'createdAt'
 type SortDir = 'asc' | 'desc'
@@ -19,6 +25,11 @@ type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create VAT margin.'
 }
 
 interface MappedVatMargin {
@@ -94,7 +105,62 @@ export function VatMarginTable({initialVatMargins, countries, currentUserRole, c
       const cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0
       return sortDir === 'asc' ? cmp : -cmp
     })
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+    const errors: string[] = []
+    let created = 0
 
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const vatValue = getCsvValue(row, ['VAT (%)', 'VAT', 'vat'])
+      const countryValue = getCsvValue(row, ['Country', 'country', 'countryName'])
+      const country =
+        countryValue && normalizeCsvLookup(countryValue) !== 'global'
+          ? countries.find(
+              option =>
+                option.id === countryValue || normalizeCsvLookup(option.name) === normalizeCsvLookup(countryValue),
+            )
+          : null
+
+      if (!vatValue) {
+        errors.push(`Row ${rowNumber}: Missing VAT value.`)
+        continue
+      }
+
+      const vat = Number(vatValue.replace('%', '').replace(',', '.'))
+      if (!Number.isFinite(vat) || vat < 0 || vat > 100) {
+        errors.push(`Row ${rowNumber}: VAT must be a number between 0 and 100.`)
+        continue
+      }
+
+      if (countryValue && normalizeCsvLookup(countryValue) !== 'global' && !country) {
+        errors.push(`Row ${rowNumber}: Country could not be matched.`)
+        continue
+      }
+
+      try {
+        await createVatMarginAction({
+          vat,
+          countryId: country?.id ?? null,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+    if (created > 0) router.refresh()
+
+    window.alert(
+      errors.length > 0
+        ? `Created ${created} vat(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} vat(s).`,
+    )
+  }
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -119,7 +185,7 @@ export function VatMarginTable({initialVatMargins, countries, currentUserRole, c
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="vat-margin-table.csv" />
+        <TableCsvActions filename="vat-margin-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
 
         {canCreate && (
           <Button

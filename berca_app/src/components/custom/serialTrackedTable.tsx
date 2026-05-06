@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, Copy, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
@@ -12,6 +13,7 @@ import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
 import {
+  createMaterialSerialTrackedAction,
   deleteMaterialSerialTrackedAction,
   undeleteMaterialSerialTrackedAction,
   hardDeleteMaterialSerialTrackedAction,
@@ -98,6 +100,23 @@ function YesNoBadge({value}: {value: boolean}) {
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
 const tdClass = 'whitespace-nowrap text-sm text-muted-foreground'
+
+function parseCsvDate(value: string) {
+  if (!value) return null
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
+function parsePositiveInt(value: string) {
+  if (!value) return null
+  const parsed = Number(value)
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : null
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create record.'
+}
 
 function Th({
   field,
@@ -301,6 +320,136 @@ export function SerialTrackedTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const materialValue = getCsvValue(row, ['Material', 'BE Number', 'Material BE Number', 'materialId'])
+      const material = materialOptions.find(
+        option =>
+          option.id === materialValue ||
+          normalizeCsvLookup(option.beNumber) === normalizeCsvLookup(materialValue) ||
+          normalizeCsvLookup(option.shortDescription) === normalizeCsvLookup(materialValue),
+      )
+
+      if (!material) {
+        errors.push(`Row ${rowNumber}: Material could not be matched.`)
+        continue
+      }
+
+      const companyValue = getCsvValue(row, ['Company', 'companyId'])
+      const company = companyValue
+        ? companyOptions.find(
+            option =>
+              option.id === companyValue || normalizeCsvLookup(option.name) === normalizeCsvLookup(companyValue),
+          )
+        : null
+      const projectValue = getCsvValue(row, ['Project', 'projectId'])
+      const project = projectValue
+        ? projectOptions.find(
+            option =>
+              option.id === projectValue || normalizeCsvLookup(option.name) === normalizeCsvLookup(projectValue),
+          )
+        : null
+      const groupValue = getCsvValue(row, ['Material Group', 'materialGroupId'])
+      const materialGroup = groupValue
+        ? materialGroupOptions.find(
+            option => option.id === groupValue || normalizeCsvLookup(option.name) === normalizeCsvLookup(groupValue),
+          )
+        : null
+      const warehouseValue = getCsvValue(row, ['Stock Location', 'Warehouse Place', 'warehousePlaceId'])
+      const warehousePlace = warehouseValue
+        ? warehousePlaceOptions.find(
+            option =>
+              option.id === warehouseValue || normalizeCsvLookup(option.label) === normalizeCsvLookup(warehouseValue),
+          )
+        : null
+
+      if (companyValue && !company) {
+        errors.push(`Row ${rowNumber}: Company could not be matched.`)
+        continue
+      }
+
+      if (projectValue && !project) {
+        errors.push(`Row ${rowNumber}: Project could not be matched.`)
+        continue
+      }
+
+      if (groupValue && !materialGroup) {
+        errors.push(`Row ${rowNumber}: Material Group could not be matched.`)
+        continue
+      }
+
+      if (warehouseValue && !warehousePlace) {
+        errors.push(`Row ${rowNumber}: Stock Location could not be matched.`)
+        continue
+      }
+
+      const intervalValueText = getCsvValue(row, ['Inspection Interval Value', 'inspectionIntervalValue'])
+      const intervalValue = parsePositiveInt(intervalValueText)
+      const intervalUnit = getCsvValue(row, ['Inspection Interval Unit', 'inspectionIntervalUnit']).toUpperCase()
+
+      if (intervalValueText && !intervalValue) {
+        errors.push(`Row ${rowNumber}: Inspection Interval Value must be a positive whole number.`)
+        continue
+      }
+
+      if (intervalUnit && !['DAY', 'WEEK', 'MONTH', 'YEAR'].includes(intervalUnit)) {
+        errors.push(`Row ${rowNumber}: Inspection Interval Unit must be DAY, WEEK, MONTH, or YEAR.`)
+        continue
+      }
+
+      try {
+        await createMaterialSerialTrackedAction({
+          id: crypto.randomUUID(),
+          materialId: material.id,
+          beNumber: getCsvValue(row, ['BE Number', 'beNumber']) || material.beNumber,
+          brandName: getCsvValue(row, ['Brand', 'brandName']) || material.brandName,
+          management: getCsvValue(row, ['Management', 'management']) || material.management,
+          brandOrderNumber: getCsvValue(row, ['Brand Order Nr', 'brandOrderNumber']) || material.brandOrderNr,
+          companyId: company?.id ?? null,
+          orderNumber: getCsvValue(row, ['Order Number', 'orderNumber']) || null,
+          shortDescription: getCsvValue(row, ['Description', 'Short Description']) || material.shortDescription,
+          longDescription: getCsvValue(row, ['Long Description', 'longDescription']) || material.longDescription,
+          transactionType: getCsvValue(row, ['Transaction Type', 'transactionType']) || null,
+          materialGroupId: materialGroup?.id ?? material.materialGroupId,
+          fromLocation: getCsvValue(row, ['From', 'fromLocation']) || null,
+          toLocation: getCsvValue(row, ['To', 'toLocation']) || null,
+          preferredSupplier: getCsvValue(row, ['Preferred Supplier', 'preferredSupplier']) || null,
+          rejected: isTruthyCsvValue(getCsvValue(row, ['Rejected', 'rejected'])),
+          additionalInfo: getCsvValue(row, ['Additional Info', 'additionalInfo']) || null,
+          projectId: project?.id ?? null,
+          becraCode: getCsvValue(row, ['Becra Code', 'becraCode']) || null,
+          warehousePlaceId: warehousePlace?.id ?? null,
+          createdBy: undefined,
+          lastInspectionDate: parseCsvDate(getCsvValue(row, ['Last Inspection', 'lastInspectionDate'])),
+          nextInspectionDate: parseCsvDate(getCsvValue(row, ['Next Inspection', 'nextInspectionDate'])),
+          inspectionIntervalValue: intervalValue,
+          inspectionIntervalUnit: intervalUnit ? (intervalUnit as 'DAY' | 'WEEK' | 'MONTH' | 'YEAR') : null,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} serial tracked item(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} serial tracked item(s).`,
+    )
+  }
+
   const showDeletedCols = filterDeleted !== 'not-deleted'
   const showInspectionItemsColumn = Boolean(inspectionItemsBySerialTrackedId)
   const showInspectionStatusColumn = inspectionWarningWindowDays > 0
@@ -359,7 +508,7 @@ export function SerialTrackedTable({
           )}
         </div>
 
-        <TableCsvActions filename="serial-tracked-table.csv" />
+        <TableCsvActions filename="serial-tracked-table.csv" onUpload={canDelete ? handleUploadCsv : undefined} />
         {canDelete && (
           <Button
             onClick={() => {

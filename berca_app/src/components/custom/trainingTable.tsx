@@ -22,6 +22,7 @@ import {
   updateTrainingAction,
 } from '@/serverFunctions/training'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 type SortField =
@@ -36,7 +37,30 @@ function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create training.'
+}
 
+function parseCsvDate(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return null
+
+  const dayMonthYear = trimmed.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})$/)
+  if (dayMonthYear) {
+    const [, day, month, rawYear] = dayMonthYear
+    const year = rawYear.length === 2 ? `20${rawYear}` : rawYear
+    const parsed = new Date(Number(year), Number(month) - 1, Number(day))
+    return Number.isNaN(parsed.getTime()) ? null : parsed
+  }
+
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
+}
+
+function parseClosedCsvValue(value: string) {
+  return isTruthyCsvValue(value) || normalizeCsvLookup(value) === 'closed'
+}
 interface TrainingTableProps {
   initialTrainings: MappedTraining[]
   currentUserRole: string
@@ -93,6 +117,74 @@ export function TrainingTable({
     )
   }
 
+  function resolveOptionId(value: string, options: {id: string; name: string}[]) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalizedValue)?.id ?? null
+    )
+  }
+
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const trainingNumber = getCsvValue(row, ['Training #', 'Number', 'Training Number', 'trainingNumber'])
+      const trainingDateValue = getCsvValue(row, ['Date', 'Training Date', 'trainingDate'])
+      const trainingStandardValue = getCsvValue(row, ['Standard', 'Training Standard', 'trainingStandard'])
+      const workOrderValue = getCsvValue(row, ['Work Order', 'workOrder', 'WorkOrder', 'Work Order Number'])
+      const closedValue = getCsvValue(row, ['Closed', 'closed'])
+      const trainingStandardId = resolveOptionId(trainingStandardValue, standardOptions)
+      const workOrderId = resolveOptionId(workOrderValue, workOrderOptions)
+      const trainingDate = trainingDateValue ? parseCsvDate(trainingDateValue) : new Date()
+
+      if (!trainingStandardId) {
+        errors.push(`Row ${rowNumber}: Training Standard could not be matched.`)
+        continue
+      }
+
+      if (!workOrderId) {
+        errors.push(`Row ${rowNumber}: Work Order could not be matched.`)
+        continue
+      }
+
+      if (!trainingDate) {
+        errors.push(`Row ${rowNumber}: Training Date is invalid.`)
+        continue
+      }
+
+      try {
+        await createTrainingAction({
+          trainingNumber: trainingNumber || null,
+          trainingStandardId,
+          trainingDate,
+          workOrderId,
+          visibilityForRoles: [],
+          closed: parseClosedCsvValue(closedValue),
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+
+    window.alert(
+      errors.length > 0
+        ? `Created ${created} training(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} training(s).`,
+    )
+  }
   // Apply search, filter, and sort for the training list.
   const filtered = initialTrainings
     .filter(t => {
@@ -154,7 +246,7 @@ export function TrainingTable({
             />
           </div>
           <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
-            <SelectTrigger className="w-[150px] bg-secondary border-border">
+            <SelectTrigger className="w-37.5 bg-secondary border-border">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-card border-border">
@@ -164,7 +256,7 @@ export function TrainingTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="training-table.csv" />
+        <TableCsvActions filename="training-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
 
         {canCreate && (
           <Button

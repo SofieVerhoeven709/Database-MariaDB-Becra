@@ -1,6 +1,6 @@
 import 'server-only'
 import {prismaClient} from './prismaClient'
-import type {WarehousePlace, Employee} from '@/generated/prisma/client'
+import type {WarehousePlace, Employee, Prisma} from '@/generated/prisma/client'
 
 export type WarehousePlaceWithRelations = WarehousePlace & {
   Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
@@ -25,6 +25,34 @@ export async function getWarehousePlaceById(id: string): Promise<WarehousePlaceW
   })
 }
 
+async function syncMaterialWarehousePlace(
+  tx: Prisma.TransactionClient,
+  data: {
+    warehousePlaceId: string
+    beNumber?: string | null
+  },
+) {
+  const beNumber = data.beNumber?.trim() || null
+
+  if (!beNumber) {
+    await tx.material.updateMany({
+      where: {warehousePlaceId: data.warehousePlaceId},
+      data: {warehousePlaceId: null},
+    })
+    return
+  }
+
+  await tx.material.updateMany({
+    where: {warehousePlaceId: data.warehousePlaceId, beNumber: {not: beNumber}},
+    data: {warehousePlaceId: null},
+  })
+
+  await tx.material.updateMany({
+    where: {beNumber},
+    data: {warehousePlaceId: data.warehousePlaceId},
+  })
+}
+
 export async function createWarehousePlace(data: {
   id: string
   abbreviation: string
@@ -40,7 +68,11 @@ export async function createWarehousePlace(data: {
   createdAt: Date
   createdBy: string
 }) {
-  return prismaClient.warehousePlace.create({data})
+  return prismaClient.$transaction(async tx => {
+    const place = await tx.warehousePlace.create({data})
+    await syncMaterialWarehousePlace(tx, {warehousePlaceId: place.id, beNumber: place.beNumber})
+    return place
+  })
 }
 
 export async function updateWarehousePlace(
@@ -58,12 +90,25 @@ export async function updateWarehousePlace(
     quantityInStock?: number
   },
 ) {
-  return prismaClient.warehousePlace.update({where: {id}, data})
+  return prismaClient.$transaction(async tx => {
+    const place = await tx.warehousePlace.update({where: {id}, data})
+    if ('beNumber' in data) {
+      await syncMaterialWarehousePlace(tx, {warehousePlaceId: place.id, beNumber: place.beNumber})
+    }
+    return place
+  })
 }
 
 export async function softDeleteWarehousePlace(id: string, deletedBy: string) {
-  return prismaClient.warehousePlace.update({
-    where: {id},
-    data: {deleted: true, deletedAt: new Date(), deletedBy},
+  return prismaClient.$transaction(async tx => {
+    const place = await tx.warehousePlace.update({
+      where: {id},
+      data: {deleted: true, deletedAt: new Date(), deletedBy},
+    })
+    await tx.material.updateMany({
+      where: {warehousePlaceId: id},
+      data: {warehousePlaceId: null},
+    })
+    return place
   })
 }

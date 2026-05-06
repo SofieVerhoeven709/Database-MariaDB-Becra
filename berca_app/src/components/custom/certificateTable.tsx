@@ -29,6 +29,7 @@ import {
   undeleteCertificateTypeAction,
 } from '@/serverFunctions/training'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 type SortDir = 'asc' | 'desc'
@@ -36,6 +37,11 @@ type SortDir = 'asc' | 'desc'
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create certificate.'
 }
 
 interface CertificateTableProps {
@@ -101,6 +107,58 @@ export function CertificateTable({
     )
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const descriptionShort = getCsvValue(row, ['Name', 'Certificate Name', 'Short Name', 'descriptionShort'])
+      const certificateTypeValue = getCsvValue(row, ['Type', 'Certificate Type', 'certificateTypeId'])
+      const certificateType = certificateTypeOptions.find(
+        option =>
+          option.id === certificateTypeValue ||
+          normalizeCsvLookup(option.name) === normalizeCsvLookup(certificateTypeValue),
+      )
+
+      if (!descriptionShort) {
+        errors.push(`Row ${rowNumber}: Certificate name is required.`)
+        continue
+      }
+
+      if (!certificateType) {
+        errors.push(`Row ${rowNumber}: Certificate Type could not be matched.`)
+        continue
+      }
+
+      try {
+        await createCertificateAction({
+          descriptionShort,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          certificateTypeId: certificateType.id,
+          visibilityForRoles: [],
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+
+    window.alert(
+      errors.length > 0
+        ? `Created ${created} certificate(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} certificate(s).`,
+    )
+  }
   // Apply filters and sorting for the certificate list.
   const filteredCerts = initialCertificates
     .filter(c => {
@@ -160,7 +218,6 @@ export function CertificateTable({
     setTypeDialogOpen(false)
     router.refresh()
   }
-
   const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
   const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
   const showDeletedCols = filterDeleted !== 'not-deleted'
@@ -207,7 +264,7 @@ export function CertificateTable({
                 </SelectContent>
               </Select>
             </div>
-            <TableCsvActions filename="certificate-table.csv" />
+            <TableCsvActions filename="certificate-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
 
             {canCreate && (
               <Button

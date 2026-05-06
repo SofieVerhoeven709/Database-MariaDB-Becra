@@ -21,8 +21,10 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import type {CountryOption} from '@/components/custom/countrySelect'import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import type {CountryOption} from '@/components/custom/countrySelect'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 type SortField =
   | 'name'
@@ -55,6 +57,11 @@ type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create company.'
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -286,6 +293,131 @@ export function CompanyTable({
     router.refresh()
   }
 
+  function resolveCompanyId(value: string) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      companies.find(
+        c =>
+          c.id === value ||
+          normalizeCsvLookup(c.name) === normalizedValue ||
+          normalizeCsvLookup(c.number) === normalizedValue,
+      )?.id ?? null
+    )
+  }
+
+  function resolveCountryId(value: string) {
+    if (!value) return null
+    const normalizedValue = normalizeCsvLookup(value)
+    return (
+      countryOptions.find(country => country.id === value || normalizeCsvLookup(country.name) === normalizedValue)
+        ?.id ?? null
+    )
+  }
+
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const name = getCsvValue(row, ['Name', 'name'])
+      const number = getCsvValue(row, ['Number', 'Company Number', 'number'])
+      const parentCompanyValue = getCsvValue(row, ['Parent', 'Parent Company', 'parentCompany'])
+      const countryValue = getCsvValue(row, ['Country', 'country'])
+      const companyId = resolveCompanyId(parentCompanyValue)
+      const countryId = resolveCountryId(countryValue)
+
+      if (!name) {
+        errors.push(`Row ${rowNumber}: Name is required.`)
+        continue
+      }
+
+      if (!number) {
+        errors.push(`Row ${rowNumber}: Number is required.`)
+        continue
+      }
+
+      if (parentCompanyValue && !companyId) {
+        errors.push(`Row ${rowNumber}: Parent company could not be matched.`)
+        continue
+      }
+
+      if (countryValue && !countryId) {
+        errors.push(`Row ${rowNumber}: Country could not be matched.`)
+        continue
+      }
+
+      const address = {
+        street: getCsvValue(row, ['Street', 'street']) || null,
+        houseNumber: getCsvValue(row, ['House Number', 'houseNumber']) || null,
+        busNumber: getCsvValue(row, ['Bus Number', 'busNumber']) || null,
+        zipCode: getCsvValue(row, ['Zip Code', 'Postal Code', 'zipCode']) || null,
+        place: getCsvValue(row, ['Place', 'City', 'place']) || null,
+        typeAddress: getCsvValue(row, ['Address Type', 'typeAddress']) || null,
+        countryId,
+      }
+      const hasAddress = Object.values(address).some(Boolean)
+
+      try {
+        await createCompanyAction({
+          name,
+          officialName: getCsvValue(row, ['Official Name', 'officialName']) || name,
+          number,
+          idOld: getCsvValue(row, ['Old ID', 'idOld']) || null,
+          mail: getCsvValue(row, ['Email', 'Mail', 'mail']) || null,
+          businessPhone: getCsvValue(row, ['Phone', 'Business Phone', 'businessPhone']) || null,
+          website: getCsvValue(row, ['Website', 'website']) || null,
+          vatNumber: getCsvValue(row, ['VAT', 'VAT Number', 'vatNumber']) || null,
+          bankNumber: getCsvValue(row, ['Bank #', 'Bank Number', 'bankNumber']) || null,
+          iban: getCsvValue(row, ['IBAN', 'iban']) || null,
+          bic: getCsvValue(row, ['BIC', 'bic']) || null,
+          becraCustomerNumber: getCsvValue(row, ['Becra #', 'Becra Customer Number', 'becraCustomerNumber']) || null,
+          becraWebsiteLogin: getCsvValue(row, ['Becra Website Login', 'becraWebsiteLogin']) || null,
+          supplier: isTruthyCsvValue(getCsvValue(row, ['Supplier', 'supplier'])),
+          preferredSupplier: isTruthyCsvValue(
+            getCsvValue(row, ['Pref. Supplier', 'Preferred Supplier', 'preferredSupplier']),
+          ),
+          companyActive: getCsvValue(row, ['Active', 'companyActive'])
+            ? isTruthyCsvValue(getCsvValue(row, ['Active', 'companyActive']))
+            : true,
+          newsLetter: isTruthyCsvValue(getCsvValue(row, ['Newsletter', 'newsLetter'])),
+          customer: isTruthyCsvValue(getCsvValue(row, ['Customer', 'customer'])),
+          potentialCustomer: isTruthyCsvValue(
+            getCsvValue(row, ['Pot. Customer', 'Potential Customer', 'potentialCustomer']),
+          ),
+          headQuarters: isTruthyCsvValue(getCsvValue(row, ['HQ', 'Headquarters', 'headQuarters'])),
+          potentialSubContractor: isTruthyCsvValue(
+            getCsvValue(row, ['Pot. Sub-Con', 'Potential Sub-Contractor', 'potentialSubContractor']),
+          ),
+          subContractor: isTruthyCsvValue(getCsvValue(row, ['Sub-Con', 'Sub-Contractor', 'subContractor'])),
+          notes: getCsvValue(row, ['Notes', 'notes']) || null,
+          companyId,
+          addresses: hasAddress ? [address] : [],
+          visibilityForRoles: [],
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+
+    window.alert(
+      errors.length > 0
+        ? `Created ${created} company(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} company(s).`,
+    )
+  }
+
   const showDeletedCols = filterDeleted !== 'not-deleted'
 
   return (
@@ -313,7 +445,7 @@ export function CompanyTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="company-table.csv" />
+        <TableCsvActions filename="company-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
 
         {canCreate && (
           <Button

@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
@@ -13,6 +14,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import type {MappedPurchaseBOM} from '@/types/purchaseBom'
 import {
+  createPurchaseBOMAction,
   softDeletePurchaseBOMAction,
   hardDeletePurchaseBOMAction,
   undeletePurchaseBOMAction,
@@ -37,6 +39,21 @@ type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 function formatDate(date: string | null) {
   if (!date) return '—'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function parseRequiredCsvDate(value: string) {
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
+function parseOptionalCsvDate(value: string) {
+  if (!value) return null
+  return parseRequiredCsvDate(value)
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create record.'
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -243,6 +260,94 @@ export function PurchaseBOMTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const projectValue = getCsvValue(row, ['Project', 'Project Number', 'projectId'])
+      const matchedProject = initialBOMs.find(
+        bom =>
+          bom.projectId === projectValue ||
+          normalizeCsvLookup(bom.projectNumber ?? '') === normalizeCsvLookup(projectValue) ||
+          normalizeCsvLookup(bom.projectName ?? '') === normalizeCsvLookup(projectValue),
+      )
+      const resolvedProjectId = projectId || matchedProject?.projectId || projectValue
+      const projectBOMId = getCsvValue(row, ['Project BOM ID', 'projectBOMId'])
+      const shortDescription = getCsvValue(row, ['Short Description', 'shortDescription'])
+      const startDate = parseRequiredCsvDate(getCsvValue(row, ['Start Date', 'startDate']))
+      const parentValue = getCsvValue(row, ['Parent BOM', 'Parent BOM Number', 'purchaseBomId'])
+      const parentBom = parentValue
+        ? initialBOMs.find(
+            bom =>
+              bom.id === parentValue ||
+              normalizeCsvLookup(bom.purchaseBomNumber ?? '') === normalizeCsvLookup(parentValue),
+          )
+        : null
+
+      if (!resolvedProjectId) {
+        errors.push(`Row ${rowNumber}: Project is required.`)
+        continue
+      }
+
+      if (!projectBOMId) {
+        errors.push(`Row ${rowNumber}: Project BOM ID is required for purchase BOM import.`)
+        continue
+      }
+
+      if (!shortDescription) {
+        errors.push(`Row ${rowNumber}: Short Description is required.`)
+        continue
+      }
+
+      if (!startDate) {
+        errors.push(`Row ${rowNumber}: Start Date is required and must be valid.`)
+        continue
+      }
+
+      if (parentValue && !parentBom) {
+        errors.push(`Row ${rowNumber}: Parent BOM could not be matched.`)
+        continue
+      }
+
+      try {
+        await createPurchaseBOMAction({
+          projectId: resolvedProjectId,
+          projectBOMId,
+          purchaseBomId: parentBom?.id ?? null,
+          purchaseBomNumber: getCsvValue(row, ['BOM Number', 'Purchase BOM Number', 'purchaseBomNumber']),
+          additionalInfo: getCsvValue(row, ['Additional Info', 'additionalInfo']) || null,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          shortDescription,
+          startDate,
+          endDate: parseOptionalCsvDate(getCsvValue(row, ['End Date', 'endDate'])),
+          closed: isTruthyCsvValue(getCsvValue(row, ['Closed', 'closed'])),
+          materialClosed: isTruthyCsvValue(getCsvValue(row, ['Mat. Closed', 'Material Closed', 'materialClosed'])),
+          approvedForQuote: isTruthyCsvValue(getCsvValue(row, ['Approved', 'Approved For Quote'])),
+          purchased: isTruthyCsvValue(getCsvValue(row, ['Purchased', 'purchased'])),
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} purchase BOM(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} purchase BOM(s).`,
+    )
+  }
+
   return (
     <div className="flex flex-col gap-6">
       {/* Toolbar */}
@@ -268,7 +373,7 @@ export function PurchaseBOMTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="purchase-bom-table.csv" />
+        <TableCsvActions filename="purchase-bom-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
       </div>
 
       {/* Table */}

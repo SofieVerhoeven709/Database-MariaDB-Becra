@@ -4,6 +4,7 @@ export const createQuoteSupplierLineSchema = z.object({
   quoteSupplierId: z.string().uuid(),
   materialId: z.string().uuid(),
   materialDemandId: z.string().uuid().optional(),
+  additionalInfo: z.string().nullable().optional(),
   // Line quantities must be positive integers.
   quantity: z.number().int().positive(),
   // Unit price is positive and validated as a numeric value.
@@ -21,6 +22,7 @@ export const updateQuoteSupplierLineSchema = z.object({
   supplierDescription: z.string().max(1000).nullable().optional(),
   selected: z.boolean().optional(),
   materialDemandId: z.string().uuid().optional(),
+  additionalInfo: z.string().nullable().optional(),
   notDeliverable: z.boolean().optional(),
 })
 

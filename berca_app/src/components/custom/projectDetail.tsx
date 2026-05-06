@@ -1168,7 +1168,7 @@ export function ProjectDetail({
 
         {/* ── Project BOMs ── */}
         <TabsContent value="boms" className="mt-3">
-          {can(PERM.boms) && (
+          {(can(PERM.boms) || isProjectManager || isProjectSupervisor) && (
             <div className="flex items-center gap-2 mb-3">
               <Button
                 size="sm"
@@ -1182,7 +1182,7 @@ export function ProjectDetail({
               </Button>
             </div>
           )}
-          {canDelete && (
+          {(canDelete || isProjectManager) && (
             <div className="flex justify-end mb-2">
               <Button
                 size="sm"
@@ -1528,7 +1528,7 @@ export function ProjectDetail({
 
         {/* ── Employees ── */}
         <TabsContent value="employees" className="mt-3">
-          {(canManageEmployees || isProjectManager || isProjectSupervisor) && (
+          {(canManageEmployees || isProjectManager) && (
             <div className="flex items-center gap-2 mb-3">
               <Button
                 size="sm"
@@ -1590,7 +1590,7 @@ export function ProjectDetail({
                         )}
                       </TableCell>
                       <TableCell>
-                        {(canManageEmployees || isProjectManager || isProjectSupervisor) && (
+                        {(canManageEmployees || isProjectManager) && (
                           <div className="flex items-center gap-1">
                             <Button
                               variant="ghost"

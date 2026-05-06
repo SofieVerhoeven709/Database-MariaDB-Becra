@@ -2221,7 +2221,8 @@ export const QuoteSupplierLineScalarFieldEnum = {
   minQuantity: 'minQuantity',
   supplierDescription: 'supplierDescription',
   selected: 'selected',
-  notDeliverable: 'notDeliverable'
+  notDeliverable: 'notDeliverable',
+  additionalInfo: 'additionalInfo'
 } as const
 
 export type QuoteSupplierLineScalarFieldEnum = (typeof QuoteSupplierLineScalarFieldEnum)[keyof typeof QuoteSupplierLineScalarFieldEnum]
@@ -4094,7 +4095,8 @@ export const QuoteSupplierLineOrderByRelevanceFieldEnum = {
   quoteSupplierId: 'quoteSupplierId',
   materialId: 'materialId',
   materialDemandId: 'materialDemandId',
-  supplierDescription: 'supplierDescription'
+  supplierDescription: 'supplierDescription',
+  additionalInfo: 'additionalInfo'
 } as const
 
 export type QuoteSupplierLineOrderByRelevanceFieldEnum = (typeof QuoteSupplierLineOrderByRelevanceFieldEnum)[keyof typeof QuoteSupplierLineOrderByRelevanceFieldEnum]

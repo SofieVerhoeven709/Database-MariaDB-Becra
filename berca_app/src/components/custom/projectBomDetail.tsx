@@ -13,7 +13,7 @@ import {Badge} from '@/components/ui/badge'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
-import type {MappedProjectBOM, MappedProjectBOMStructure, BomMaterialOption} from '@/types/projectBom'
+import {MappedProjectBOM, MappedProjectBOMStructure, BomMaterialOption, ProjectOptionBom} from '@/types/projectBom'
 import {
   updateProjectBOMAction,
   softDeleteProjectBOMStructureAction,
@@ -37,8 +37,10 @@ interface ProjectBOMDetailProps {
   materialOptions: BomMaterialOption[]
   currentUserLevel: number
   currentUserRole: string
+  currentUserId: string
   departmentId: string
   allBOMs?: MappedProjectBOM[]
+  project: ProjectOptionBom
 }
 
 export function ProjectBOMDetail({
@@ -46,7 +48,9 @@ export function ProjectBOMDetail({
   materialOptions,
   currentUserLevel,
   currentUserRole,
+  currentUserId,
   departmentId,
+  project,
   allBOMs = [],
 }: ProjectBOMDetailProps) {
   const router = useRouter()
@@ -55,6 +59,15 @@ export function ProjectBOMDetail({
   const canDelete = currentUserLevel >= 80
   const canEditNumber = currentUserLevel >= 80
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+
+  const currentEmployee = project.ProjectEmployee.find(pe => pe.employeeId === currentUserId) ?? null
+  let isProjectManager = false
+  let isProjectSupervisor = false
+
+  if (currentEmployee) {
+    isProjectManager = currentEmployee.manager
+    isProjectSupervisor = currentEmployee.supervisor
+  }
 
   // ─── Header editing ──────────────────────────────────────────────────────────
   const [editing, setEditing] = useState(false)
@@ -229,7 +242,7 @@ export function ProjectBOMDetail({
             </p>
           </div>
         </div>
-        {canEdit && (
+        {(canEdit || isProjectManager || isProjectSupervisor) && (
           <div className="flex items-center gap-2">
             {editing ? (
               <>
@@ -507,7 +520,7 @@ export function ProjectBOMDetail({
                     </Button>
                   </>
                 )}
-                {canCreate &&
+                {(canCreate || isProjectManager || isProjectSupervisor) &&
                   (bom.materialClosed ? (
                     <div className="flex items-center gap-1.5 rounded-md border border-border bg-secondary/50 px-2.5 py-1 text-xs text-muted-foreground/60 select-none">
                       <Plus className="h-3.5 w-3.5" /> Material Closed

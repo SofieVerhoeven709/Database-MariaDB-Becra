@@ -4,12 +4,13 @@ import {Fragment, useEffect, useMemo, useState} from 'react'
 import Link from 'next/link'
 import type {Route} from 'next'
 import {useRouter} from 'next/navigation'
-import {Search, ChevronDown, ChevronUp, Pencil, Check, X, Plus, Trash2} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Pencil, Check, X, Plus, Trash2, ShoppingCart} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
+import {Checkbox} from '@/components/ui/checkbox'
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog'
 import {Label} from '@/components/ui/label'
 import type {MappedMaterialDemand, MaterialDemandMaterialOption} from '@/types/materialDemand'
@@ -23,8 +24,8 @@ import {
 } from '@/serverFunctions/materialDemands'
 import {createInventoryOrderAction} from '@/serverFunctions/inventoryOrders'
 import {selectQuoteSupplierLineAction} from '@/serverFunctions/quoteSupplierLines'
-import {DEMAND_PERMISSION_LEVELS} from '@/constants'import {TableCsvActions} from '@/components/custom/tableCsvActions'
-
+import {createQuoteSupplierAction} from '@/serverFunctions/quoteSuppliers'
+import {DEMAND_PERMISSION_LEVELS} from '@/constants'
 
 type SortField = 'material' | 'totalRequiredQty' | 'reservedQty' | 'sourceCount' | 'quoteLineCount' | 'createdAt'
 type SortDir = 'asc' | 'desc'
@@ -185,6 +186,15 @@ export function MaterialDemandTable({
   const canAssign = isAdmin || currentUserLevel >= DEMAND_PERMISSION_LEVELS.assign
   const canAddSource = isAdmin || currentUserLevel >= DEMAND_PERMISSION_LEVELS.addSource
 
+  // ── Original single-row quote dialog ─────────────────────────────────────────
+  const [makeQuoteDialog, setMakeQuoteDialog] = useState<{entry: MappedMaterialDemand; supplierId: string} | null>(null)
+
+  // ── Multi-select bulk quote creation ─────────────────────────────────────────
+  const [selectedDemandIds, setSelectedDemandIds] = useState<Set<string>>(new Set())
+  const [bulkQuoteDialog, setBulkQuoteDialog] = useState(false)
+  const [bulkSupplierId, setBulkSupplierId] = useState<string>('__none__')
+  const [bulkQuoteLoading, setBulkQuoteLoading] = useState(false)
+
   const [assignDialog, setAssignDialog] = useState<{
     entry: MappedMaterialDemand
     sourceId: string
@@ -230,7 +240,6 @@ export function MaterialDemandTable({
   const [lowStockRequestDialog, setLowStockRequestDialog] = useState<{entry: MappedMaterialDemand; qty: string} | null>(
     null,
   )
-  const [makeQuoteDialog, setMakeQuoteDialog] = useState<{entry: MappedMaterialDemand; supplierId: string} | null>(null)
 
   const usedMaterialIds = useMemo(() => new Set(initialEntries.map(e => e.materialId)), [initialEntries])
   const availableMaterials = useMemo(
@@ -240,10 +249,25 @@ export function MaterialDemandTable({
         .sort((a, b) => materialLabel(a).localeCompare(materialLabel(b))),
     [materials, usedMaterialIds],
   )
+
   const eligibleSuppliersForDialog = useMemo(() => {
     if (!makeQuoteDialog) return []
     return suppliers.filter(supplier => makeQuoteDialog.entry.eligibleSupplierCompanyIds.includes(supplier.id))
   }, [makeQuoteDialog, suppliers])
+
+  // Suppliers eligible for the bulk quote: intersection of eligible suppliers across all selected entries
+  const bulkEligibleSuppliers = useMemo(() => {
+    if (selectedDemandIds.size === 0) return suppliers
+    const selectedEntries = initialEntries.filter(e => selectedDemandIds.has(e.id))
+    if (selectedEntries.length === 0) return suppliers
+    const firstSet = new Set(selectedEntries[0].eligibleSupplierCompanyIds)
+    for (const entry of selectedEntries.slice(1)) {
+      for (const id of firstSet) {
+        if (!entry.eligibleSupplierCompanyIds.includes(id)) firstSet.delete(id)
+      }
+    }
+    return suppliers.filter(s => firstSet.has(s.id))
+  }, [selectedDemandIds, initialEntries, suppliers])
 
   const filtered = initialEntries
     .filter(entry => {
@@ -254,17 +278,14 @@ export function MaterialDemandTable({
       )
     })
     .sort((a, b) => {
-      // Primary sort: low-stock items first
       const aIsLowStock = a.isLowStock ? 0 : 1
       const bIsLowStock = b.isLowStock ? 0 : 1
       if (aIsLowStock !== bIsLowStock) return aIsLowStock - bIsLowStock
 
-      // Secondary sort: items with required quantities first
       const aHasRequired = a.totalRequiredQty > 0 ? 0 : 1
       const bHasRequired = b.totalRequiredQty > 0 ? 0 : 1
       if (aHasRequired !== bHasRequired) return aHasRequired - bHasRequired
 
-      // Tertiary sort: apply user's sort preference
       const dir = sortDir === 'asc' ? 1 : -1
       const cmpStr = (x: string | null | undefined, y: string | null | undefined) =>
         dir * (x ?? '').localeCompare(y ?? '')
@@ -332,6 +353,169 @@ export function MaterialDemandTable({
       return next
     })
   }
+
+  // ── Original single-row quote handlers (unchanged) ────────────────────────────
+
+  function openMakeQuoteDialog(entry: MappedMaterialDemand) {
+    const hasBlockingQuote = entry.quoteOptions.some(
+      option => !option.deleted && !(option.sent && option.acceptedForPOB),
+    )
+    if (hasBlockingQuote) {
+      setActionError(
+        'A quote already exists for this demand. Create another quote from the existing quote detail if needed.',
+      )
+      return
+    }
+
+    if (entry.eligibleSupplierCompanyIds.length === 0) {
+      setActionError('No suppliers are linked to this material. Add a material supplier first.')
+      return
+    }
+
+    setMakeQuoteDialog({entry, supplierId: '__none__'})
+  }
+
+  function continueToQuotePage() {
+    if (!makeQuoteDialog) return
+    if (!makeQuoteDialog.supplierId || makeQuoteDialog.supplierId === '__none__') {
+      setActionError('Please select a supplier first.')
+      return
+    }
+
+    const {entry, supplierId} = makeQuoteDialog
+    if (!entry.eligibleSupplierCompanyIds.includes(supplierId)) {
+      setActionError('Selected supplier is not linked to this material.')
+      return
+    }
+
+    const initialQuoteQty = Math.max(entry.totalRequiredQty, 1)
+    setMakeQuoteDialog(null)
+    setActionError(null)
+    router.push(
+      `/departments/${departmentId}/orderQuote?materialId=${entry.materialId}&materialDemandId=${entry.id}&supplierId=${supplierId}&quoteQty=${initialQuoteQty}` as Route,
+    )
+  }
+
+  // ── Multi-select helpers ──────────────────────────────────────────────────────
+
+  function getCommonSupplierIds(candidateEntry: MappedMaterialDemand): string[] {
+    if (selectedDemandIds.size === 0) return candidateEntry.eligibleSupplierCompanyIds
+    const selectedEntries = initialEntries.filter(e => selectedDemandIds.has(e.id))
+    const intersection = new Set(candidateEntry.eligibleSupplierCompanyIds)
+    for (const entry of selectedEntries) {
+      for (const id of intersection) {
+        if (!entry.eligibleSupplierCompanyIds.includes(id)) intersection.delete(id)
+      }
+    }
+    return [...intersection]
+  }
+
+  function canSelectEntry(entry: MappedMaterialDemand): boolean {
+    if (selectedDemandIds.has(entry.id)) return true
+    if (entry.eligibleSupplierCompanyIds.length === 0) return false
+    // Rows with a blocking quote cannot be added to a bulk quote
+    const hasBlockingQuote = entry.quoteOptions.some(
+      option => !option.deleted && !(option.sent && option.acceptedForPOB),
+    )
+    if (hasBlockingQuote) return false
+    if (selectedDemandIds.size > 0) {
+      return getCommonSupplierIds(entry).length > 0
+    }
+    return true
+  }
+
+  function toggleDemandSelection(entry: MappedMaterialDemand) {
+    setSelectedDemandIds(prev => {
+      const next = new Set(prev)
+      if (next.has(entry.id)) {
+        next.delete(entry.id)
+      } else {
+        if (!canSelectEntry(entry)) return prev
+        next.add(entry.id)
+      }
+      return next
+    })
+    setActionError(null)
+  }
+
+  function clearSelection() {
+    setSelectedDemandIds(new Set())
+    setBulkSupplierId('__none__')
+  }
+
+  function openBulkQuoteDialog() {
+    if (selectedDemandIds.size === 0) return
+    if (bulkEligibleSuppliers.length === 1) {
+      setBulkSupplierId(bulkEligibleSuppliers[0].id)
+    } else {
+      setBulkSupplierId('__none__')
+    }
+    setBulkQuoteDialog(true)
+  }
+
+  async function handleBulkQuoteCreate() {
+    if (!bulkSupplierId || bulkSupplierId === '__none__') {
+      setActionError('Please select a supplier.')
+      return
+    }
+
+    const selectedEntries = initialEntries
+      .filter(e => selectedDemandIds.has(e.id))
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+
+    if (selectedEntries.length === 0) return
+
+    setBulkQuoteLoading(true)
+    setActionError(null)
+
+    const basePayload = {
+      quoteNumber: '',
+      rejected: false,
+      acceptedForPOB: false,
+      companyId: bulkSupplierId,
+    }
+
+    try {
+      const [first, ...rest] = selectedEntries
+
+      const createResult = await createQuoteSupplierAction({
+        ...basePayload,
+        initialMaterialId: first.materialId,
+        initialMaterialDemandId: first.id,
+        initialQuantity: Math.max(first.totalRequiredQty, 1),
+      })
+
+      const createError = extractActionError(createResult)
+      if (createError) {
+        setActionError(createError)
+        return
+      }
+
+      for (const entry of rest) {
+        const lineResult = await createQuoteSupplierAction({
+          ...basePayload,
+          initialMaterialId: entry.materialId,
+          initialMaterialDemandId: entry.id,
+          initialQuantity: Math.max(entry.totalRequiredQty, 1),
+        })
+        const lineError = extractActionError(lineResult)
+        if (lineError) {
+          setActionError(lineError)
+          return
+        }
+      }
+
+      setBulkQuoteDialog(false)
+      clearSelection()
+      router.push(`/departments/${departmentId}/orderQuote` as Route)
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : 'Could not create quote.')
+    } finally {
+      setBulkQuoteLoading(false)
+    }
+  }
+
+  // ── Other handlers ────────────────────────────────────────────────────────────
 
   async function handleQuoteLineSelection(demandId: string, lineId: string, selected: boolean) {
     try {
@@ -404,51 +588,10 @@ export function MaterialDemandTable({
       return
     }
 
-    // Open dialog to let user specify quantity
     setLowStockRequestDialog({
       entry,
       qty: String(entry.suggestedRequestQty),
     })
-  }
-
-  function openMakeQuoteDialog(entry: MappedMaterialDemand) {
-    const hasBlockingQuote = entry.quoteOptions.some(
-      option => !option.deleted && !(option.sent && option.acceptedForPOB),
-    )
-    if (hasBlockingQuote) {
-      setActionError(
-        'A quote already exists for this demand. Create another quote from the existing quote detail if needed.',
-      )
-      return
-    }
-
-    if (entry.eligibleSupplierCompanyIds.length === 0) {
-      setActionError('No suppliers are linked to this material. Add a material supplier first.')
-      return
-    }
-
-    setMakeQuoteDialog({entry, supplierId: '__none__'})
-  }
-
-  function continueToQuotePage() {
-    if (!makeQuoteDialog) return
-    if (!makeQuoteDialog.supplierId || makeQuoteDialog.supplierId === '__none__') {
-      setActionError('Please select a supplier first.')
-      return
-    }
-
-    const {entry, supplierId} = makeQuoteDialog
-    if (!entry.eligibleSupplierCompanyIds.includes(supplierId)) {
-      setActionError('Selected supplier is not linked to this material.')
-      return
-    }
-
-    const initialQuoteQty = Math.max(entry.totalRequiredQty, 1)
-    setMakeQuoteDialog(null)
-    setActionError(null)
-    router.push(
-      `/departments/${departmentId}/orderQuote?materialId=${entry.materialId}&materialDemandId=${entry.id}&supplierId=${supplierId}&quoteQty=${initialQuoteQty}` as Route,
-    )
   }
 
   async function submitLowStockRequest() {
@@ -542,6 +685,9 @@ export function MaterialDemandTable({
     }
   }
 
+  const selectedCount = selectedDemandIds.size
+  const selectedEntries = initialEntries.filter(e => selectedDemandIds.has(e.id))
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -576,8 +722,6 @@ export function MaterialDemandTable({
           <span className="text-xs uppercase tracking-wide text-muted-foreground">
             {filtered.length} / {initialEntries.length}
           </span>
-          <TableCsvActions filename="material-demand-table.csv" />
-
           {canCreate && (
             <Button
               onClick={() => setCreating(v => !v)}
@@ -648,10 +792,49 @@ export function MaterialDemandTable({
         </div>
       )}
 
+      {/* ── Bulk quote selection bar ─────────────────────────────────────────── */}
+      {selectedCount > 0 && (
+        <div className="rounded-xl border border-accent/40 bg-accent/5 px-4 py-3 flex flex-wrap items-center gap-3">
+          <ShoppingCart className="h-4 w-4 text-accent shrink-0" />
+          <span className="text-sm font-medium text-foreground">
+            {selectedCount} material{selectedCount !== 1 ? 's' : ''} selected for bulk quote
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {selectedEntries.map(e => (
+              <Badge
+                key={e.id}
+                variant="outline"
+                className="text-xs border-accent/40 text-accent cursor-pointer hover:bg-accent/10"
+                onClick={() => toggleDemandSelection(e)}>
+                {e.materialBeNumber ?? e.materialName ?? e.materialId} ×
+              </Badge>
+            ))}
+          </div>
+          {bulkEligibleSuppliers.length === 0 && (
+            <span className="text-xs text-destructive">No common supplier for selected materials</span>
+          )}
+          <div className="ml-auto flex items-center gap-2">
+            <Button variant="ghost" size="sm" className="h-8 text-xs text-muted-foreground" onClick={clearSelection}>
+              Clear
+            </Button>
+            <Button
+              size="sm"
+              className="h-8 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
+              disabled={bulkEligibleSuppliers.length === 0}
+              onClick={openBulkQuoteDialog}>
+              Create Bulk Quote →
+            </Button>
+          </div>
+        </div>
+      )}
+
       <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
+              <TableHead className="w-10">
+                <span className="sr-only">Select for bulk quote</span>
+              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('material')}>
                 Material <SortIcon field="material" sortField={sortField} sortDir={sortDir} />
               </TableHead>
@@ -678,7 +861,7 @@ export function MaterialDemandTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="h-28 text-center text-muted-foreground">
+                <TableCell colSpan={8} className="h-28 text-center text-muted-foreground">
                   No material demand rows found.
                 </TableCell>
               </TableRow>
@@ -689,7 +872,6 @@ export function MaterialDemandTable({
                 const isExpanded = expandedDemandIds.has(entry.id)
                 const isSourcesExpanded = expandedSourceDemandIds.has(entry.id)
                 const hasManualDemandWithoutSources = entry.totalRequiredQty > 0 && entry.sourceCount === 0
-                // Block new quotes when a non-accepted quote already exists.
                 const hasBlockingQuote = entry.quoteOptions.some(
                   option => !option.deleted && !(option.sent && option.acceptedForPOB),
                 )
@@ -699,9 +881,32 @@ export function MaterialDemandTable({
                   ? quoteOptions.filter(option => option.isEligibleForBest)
                   : quoteOptions
                 const bestOptionId = quoteOptions.find(option => option.isEligibleForBest)?.id ?? null
+
+                const isSelected = selectedDemandIds.has(entry.id)
+                const isSelectable = canSelectEntry(entry)
+                const isDimmed = selectedCount > 0 && !isSelected && !isSelectable
+
                 return (
                   <Fragment key={entry.id}>
-                    <TableRow key={entry.id} className="border-border/40 hover:bg-secondary/50">
+                    <TableRow
+                      className={`border-border/40 hover:bg-secondary/50 transition-opacity ${isDimmed ? 'opacity-40' : ''} ${isSelected ? 'bg-accent/5' : ''}`}>
+                      <TableCell className="pr-0">
+                        <div className="flex flex-col items-center gap-0.5">
+                          <Checkbox
+                            checked={isSelected}
+                            disabled={!isSelectable && !isSelected}
+                            onCheckedChange={() => toggleDemandSelection(entry)}
+                            aria-label={`Select ${entry.materialBeNumber ?? entry.materialId} for bulk quote`}
+                            className="border-border data-[state=checked]:bg-accent data-[state=checked]:border-accent"
+                          />
+                          {entry.eligibleSupplierCompanyIds.length === 0 && (
+                            <span className="text-[9px] text-muted-foreground leading-none">no supplier</span>
+                          )}
+                          {entry.eligibleSupplierCompanyIds.length > 0 && hasBlockingQuote && (
+                            <span className="text-[9px] text-muted-foreground leading-none">has quote</span>
+                          )}
+                        </div>
+                      </TableCell>
                       <TableCell className={tdClass}>
                         <Link href={materialHref} className="hover:text-accent hover:underline transition-colors">
                           <div
@@ -816,6 +1021,7 @@ export function MaterialDemandTable({
                       <TableCell className={tdClass}>{formatDate(entry.createdAt)}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
+                          {/* Original single-row Make Quote button — unchanged */}
                           <button
                             type="button"
                             disabled={hasBlockingQuote}
@@ -875,7 +1081,7 @@ export function MaterialDemandTable({
 
                     {isSourcesExpanded && (
                       <TableRow className="bg-secondary/20">
-                        <TableCell colSpan={7} className="py-3">
+                        <TableCell colSpan={8} className="py-3">
                           <div className="rounded-lg border border-border/50 bg-card overflow-x-auto">
                             <Table>
                               <TableHeader>
@@ -1016,7 +1222,7 @@ export function MaterialDemandTable({
 
                     {isExpanded && (
                       <TableRow className="bg-secondary/20">
-                        <TableCell colSpan={7} className="py-3">
+                        <TableCell colSpan={8} className="py-3">
                           <div className="rounded-lg border border-border/50 bg-card overflow-x-auto">
                             <Table>
                               <TableHeader>
@@ -1162,6 +1368,102 @@ export function MaterialDemandTable({
         Demand rows are unique per material. Auto-create/remove on material lifecycle can be added next.
       </p>
 
+      {/* ── Original single-row Make Quote dialog — unchanged ────────────────── */}
+      <Dialog open={!!makeQuoteDialog} onOpenChange={open => !open && setMakeQuoteDialog(null)}>
+        <DialogContent className="bg-card border-border">
+          <DialogHeader>
+            <DialogTitle>Select Supplier</DialogTitle>
+            <DialogDescription>
+              Choose a supplier for {makeQuoteDialog?.entry.materialBeNumber ?? makeQuoteDialog?.entry.materialId}, then
+              continue to quotes.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="makeQuoteSupplier" className="text-xs">
+              Supplier
+            </Label>
+            <Select
+              value={makeQuoteDialog?.supplierId ?? '__none__'}
+              onValueChange={value => {
+                if (!makeQuoteDialog) return
+                setMakeQuoteDialog({...makeQuoteDialog, supplierId: value})
+              }}>
+              <SelectTrigger id="makeQuoteSupplier" className="bg-secondary border-border">
+                <SelectValue placeholder="Select supplier" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                <SelectItem value="__none__">— Select supplier —</SelectItem>
+                {eligibleSuppliersForDialog.map(supplier => (
+                  <SelectItem key={supplier.id} value={supplier.id}>
+                    {supplier.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setMakeQuoteDialog(null)}>
+              Cancel
+            </Button>
+            <Button onClick={continueToQuotePage}>Continue to Quotes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Bulk quote creation dialog ───────────────────────────────────────── */}
+      <Dialog open={bulkQuoteDialog} onOpenChange={open => !open && setBulkQuoteDialog(false)}>
+        <DialogContent className="bg-card border-border">
+          <DialogHeader>
+            <DialogTitle>Create Bulk Quote</DialogTitle>
+            <DialogDescription>
+              Select a supplier for the {selectedCount} selected material{selectedCount !== 1 ? 's' : ''}. A quote will
+              be created with all selected materials as lines and you'll be taken to the quotes page.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="rounded-md bg-secondary/50 p-3 text-xs text-muted-foreground space-y-1">
+              {selectedEntries.map(e => (
+                <div key={e.id} className="flex items-center justify-between gap-2">
+                  <span className="font-medium text-foreground">{e.materialBeNumber ?? e.materialId}</span>
+                  <span className="text-muted-foreground">qty {Math.max(e.totalRequiredQty, 1)}</span>
+                </div>
+              ))}
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs">Supplier</Label>
+              <Select value={bulkSupplierId} onValueChange={setBulkSupplierId}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="Select supplier" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="__none__">— Select supplier —</SelectItem>
+                  {bulkEligibleSuppliers.map(s => (
+                    <SelectItem key={s.id} value={s.id}>
+                      {s.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {bulkEligibleSuppliers.length === 0 && (
+                <p className="text-xs text-destructive">
+                  No supplier is linked to all selected materials. Deselect some materials or add supplier links first.
+                </p>
+              )}
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setBulkQuoteDialog(false)} disabled={bulkQuoteLoading}>
+              Cancel
+            </Button>
+            <Button
+              disabled={bulkQuoteLoading || !bulkSupplierId || bulkSupplierId === '__none__'}
+              onClick={handleBulkQuoteCreate}>
+              {bulkQuoteLoading ? 'Creating…' : 'Create & Go to Quotes'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Low-stock request dialog */}
       <Dialog open={!!lowStockRequestDialog} onOpenChange={open => !open && setLowStockRequestDialog(null)}>
         <DialogContent className="bg-card border-border">
@@ -1210,47 +1512,6 @@ export function MaterialDemandTable({
             <Button onClick={submitLowStockRequest} className="bg-amber-600 hover:bg-amber-700 text-white">
               Submit Request
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={!!makeQuoteDialog} onOpenChange={open => !open && setMakeQuoteDialog(null)}>
-        <DialogContent className="bg-card border-border">
-          <DialogHeader>
-            <DialogTitle>Select Supplier</DialogTitle>
-            <DialogDescription>
-              Choose a supplier for {makeQuoteDialog?.entry.materialBeNumber ?? makeQuoteDialog?.entry.materialId}, then
-              continue to quotes.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-2">
-            <Label htmlFor="makeQuoteSupplier" className="text-xs">
-              Supplier
-            </Label>
-            <Select
-              value={makeQuoteDialog?.supplierId ?? '__none__'}
-              onValueChange={value => {
-                if (!makeQuoteDialog) return
-                setMakeQuoteDialog({...makeQuoteDialog, supplierId: value})
-              }}>
-              <SelectTrigger id="makeQuoteSupplier" className="bg-secondary border-border">
-                <SelectValue placeholder="Select supplier" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                <SelectItem value="__none__">— Select supplier —</SelectItem>
-                {eligibleSuppliersForDialog.map(supplier => (
-                  <SelectItem key={supplier.id} value={supplier.id}>
-                    {supplier.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setMakeQuoteDialog(null)}>
-              Cancel
-            </Button>
-            <Button onClick={continueToQuotePage}>Continue to Quotes</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

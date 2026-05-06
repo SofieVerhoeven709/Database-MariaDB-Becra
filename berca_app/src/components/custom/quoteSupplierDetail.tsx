@@ -177,6 +177,7 @@ export function QuoteSupplierDetail({
   // ── New line state ───────────────────────────────────────────────────────
   const [newMaterialId, setNewMaterialId] = useState(defaultMaterialId ?? '__none__')
   const [newMaterialDemandId, setNewMaterialDemandId] = useState(defaultMaterialDemandId ?? '__none__')
+  const [newAdditionalInfo, setNewAdditionalInfo] = useState('')
   const [newQuantity, setNewQuantity] = useState('1')
   const [newUnitPrice, setNewUnitPrice] = useState('')
   const [newMinQuantity, setNewMinQuantity] = useState('')
@@ -185,6 +186,7 @@ export function QuoteSupplierDetail({
 
   // ── Inline edit line state ───────────────────────────────────────────────
   const [editQuantity, setEditQuantity] = useState('1')
+  const [editAdditionalInfo, setEditAdditionalInfo] = useState('')
   const [editUnitPrice, setEditUnitPrice] = useState('')
   const [editMinQuantity, setEditMinQuantity] = useState('')
   const [editSupplierDescription, setEditSupplierDescription] = useState('')
@@ -209,6 +211,7 @@ export function QuoteSupplierDetail({
   function startEdit(line: MappedQuoteSupplierDetail['lines'][number]) {
     setEditingLineId(line.id)
     setEditQuantity(String(line.quantity))
+    setEditAdditionalInfo(line.additionalInfo ?? '')
     setEditUnitPrice(String(line.unitPrice))
     setEditMinQuantity(line.minQuantity !== null ? String(line.minQuantity) : '')
     setEditSupplierDescription(line.supplierDescription ?? '')
@@ -218,6 +221,7 @@ export function QuoteSupplierDetail({
   function cancelEdit() {
     setEditingLineId(null)
     setEditQuantity('1')
+    setEditAdditionalInfo('')
     setEditUnitPrice('')
     setEditMinQuantity('')
     setEditSupplierDescription('')
@@ -264,6 +268,7 @@ export function QuoteSupplierDetail({
         quoteSupplierId: quote.id,
         materialId: newMaterialId,
         materialDemandId: newMaterialDemandId !== '__none__' ? newMaterialDemandId : undefined,
+        additionalInfo: newAdditionalInfo.trim() || null,
         quantity,
         unitPrice,
         minQuantity,
@@ -272,6 +277,7 @@ export function QuoteSupplierDetail({
       })
       setError(null)
       setNewQuantity('1')
+      setNewAdditionalInfo('')
       setNewUnitPrice('')
       setNewMinQuantity('')
       setNewSupplierDescription('')
@@ -309,6 +315,7 @@ export function QuoteSupplierDetail({
         quantity,
         unitPrice,
         minQuantity,
+        additionalInfo: editAdditionalInfo.trim() || null,
         supplierDescription: editSupplierDescription.trim() || null,
         notDeliverable: editNotDeliverable,
       })
@@ -764,6 +771,17 @@ export function QuoteSupplierDetail({
             </div>
           </div>
 
+          <div className="mt-3">
+            <Label className="text-xs">Additional Info</Label>
+            <Textarea
+              value={newAdditionalInfo}
+              onChange={e => setNewAdditionalInfo(e.target.value)}
+              placeholder="Optional extra notes for this quote line"
+              className="bg-secondary border-border mt-1 resize-none"
+              rows={2}
+            />
+          </div>
+
           <div className="mt-3 grid gap-3 md:grid-cols-[1fr_auto_auto] md:items-end">
             <div>
               <Label className="text-xs">Supplier description</Label>
@@ -807,6 +825,7 @@ export function QuoteSupplierDetail({
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
               <TableHead className="text-xs">Material</TableHead>
+              <TableHead className="text-xs">Additional Info</TableHead>
               <TableHead className="text-xs">Supplier Description</TableHead>
               <TableHead className="text-xs">Demand</TableHead>
               <TableHead className="text-xs">Qty</TableHead>
@@ -838,6 +857,18 @@ export function QuoteSupplierDetail({
                           {line.materialShortDescription ?? line.materialName ?? line.materialId}
                         </span>
                       </div>
+                    </TableCell>
+                    <TableCell className="text-sm text-muted-foreground">
+                      {isEditing ? (
+                        <Input
+                          value={editAdditionalInfo}
+                          onChange={e => setEditAdditionalInfo(e.target.value)}
+                          placeholder="Optional notes"
+                          className="h-8 bg-secondary border-border"
+                        />
+                      ) : (
+                        <span className="whitespace-pre-wrap">{line.additionalInfo ?? '—'}</span>
+                      )}
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground min-w-56">
                       {isEditing ? (

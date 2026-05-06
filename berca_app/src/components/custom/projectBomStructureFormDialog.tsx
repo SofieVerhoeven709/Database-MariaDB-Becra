@@ -155,7 +155,7 @@ export function ProjectBOMStructureFormDialog({
                   filteredInventories.map(i => (
                     <SelectItem key={i.id} value={i.id}>
                       {i.beNumber ?? i.id}
-                      {i.name ? ` — ${i.name}` : i.shortDescription ? ` — ${i.shortDescription}` : ''}
+                      {` — ${i.shortDescription}`}
                     </SelectItem>
                   ))
                 )}

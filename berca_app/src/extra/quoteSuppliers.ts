@@ -84,6 +84,7 @@ export function mapQuoteSupplierDetail(q: QuoteSupplierDetailWithRelations): Map
       materialDemandLabel: line.MaterialDemand
         ? `${line.MaterialDemand.Material.beNumber ?? '—'} — ${line.MaterialDemand.Material.shortDescription ?? line.MaterialDemand.Material.name ?? line.MaterialDemand.id}`
         : null,
+      additionalInfo: line.additionalInfo ?? null,
       quantity: line.quantity,
       // Prisma returns Decimal for unitPrice; cast to number for UI math/formatting.
       unitPrice: Number(line.unitPrice),

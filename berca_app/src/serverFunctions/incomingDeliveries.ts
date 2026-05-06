@@ -509,13 +509,12 @@ export const createIncomingDeliveryLineAllocationAction = protectedServerFunctio
     })
     if (!allocLine) throw new Error('Incoming delivery line not found.')
 
-    // Sum already allocated quantities for this line across NON-warehouse sources (deleted=false).
+    // Sum already allocated quantities for this line across all active allocations (deleted=false).
     const allocatedAggregate = await prismaClient.incomingDeliveryLineAllocation.aggregate({
       _sum: {allocatedQty: true},
       where: {
         incomingDeliveryLineId: allocLine.id,
         deleted: false,
-        MaterialDemandSource: {MaterialDemandSourceType: {name: {not: 'WarehousePlace'}}},
       },
     })
 
@@ -630,6 +629,7 @@ export const createIncomingDeliveryOverDeliveryAllocationAction = protectedServe
           materialId: true,
           orderedQty: true,
           deliveredQty: true,
+          acceptedQty: true,
           deleted: true,
         },
       })
@@ -687,7 +687,15 @@ export const createIncomingDeliveryOverDeliveryAllocationAction = protectedServe
         })
       }
 
-      const assignedQtyAggregate = await tx.incomingDeliveryLineAllocation.aggregate({
+      const acceptedAllocatedAggregate = await tx.incomingDeliveryLineAllocation.aggregate({
+        _sum: {allocatedQty: true},
+        where: {
+          incomingDeliveryLineId: line.id,
+          deleted: false,
+        },
+      })
+
+      const warehouseAssignedAggregate = await tx.incomingDeliveryLineAllocation.aggregate({
         _sum: {allocatedQty: true},
         where: {
           incomingDeliveryLineId: line.id,
@@ -696,21 +704,33 @@ export const createIncomingDeliveryOverDeliveryAllocationAction = protectedServe
         },
       })
 
-      const alreadyAssignedQty = assignedQtyAggregate._sum.allocatedQty ?? 0
-      const remainingQty = Math.max(availableQtyForAllocation - alreadyAssignedQty, 0)
-      if (data.allocatedQty > remainingQty) {
-        throw new Error(
-          `Assigned quantity (${data.allocatedQty}) exceeds available remaining quantity (${remainingQty}).`,
-        )
-      }
-
       const existingAllocation = await tx.incomingDeliveryLineAllocation.findFirst({
         where: {
           incomingDeliveryLineId: line.id,
           materialDemandSourceId: warehouseSource.id,
         },
-        select: {id: true, deleted: true},
+        select: {id: true, deleted: true, allocatedQty: true},
       })
+
+      const alreadyAcceptedAllocated = acceptedAllocatedAggregate._sum.allocatedQty ?? 0
+      const alreadyWarehouseAllocated = warehouseAssignedAggregate._sum.allocatedQty ?? 0
+      const excludingExistingAccepted =
+        existingAllocation && !existingAllocation.deleted
+          ? alreadyAcceptedAllocated - (existingAllocation.allocatedQty ?? 0)
+          : alreadyAcceptedAllocated
+      const excludingExistingWarehouse =
+        existingAllocation && !existingAllocation.deleted
+          ? alreadyWarehouseAllocated - (existingAllocation.allocatedQty ?? 0)
+          : alreadyWarehouseAllocated
+
+      const remainingAcceptedQty = Math.max((line.acceptedQty ?? 0) - excludingExistingAccepted, 0)
+      const remainingWarehouseQty = Math.max(availableQtyForAllocation - excludingExistingWarehouse, 0)
+      const remainingQty = Math.min(remainingAcceptedQty, remainingWarehouseQty)
+      if (data.allocatedQty > remainingQty) {
+        throw new Error(
+          `Assigned quantity (${data.allocatedQty}) exceeds available remaining quantity (${remainingQty}).`,
+        )
+      }
 
       if (existingAllocation) {
         await tx.incomingDeliveryLineAllocation.update({

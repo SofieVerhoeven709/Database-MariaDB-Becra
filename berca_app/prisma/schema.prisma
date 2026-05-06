@@ -3018,6 +3018,7 @@ model QuoteSupplierLine {
   supplierDescription  String?                @db.Text
   selected             Boolean?               @default(false)
   notDeliverable       Boolean                @default(false)
+  additionalInfo       String?                @db.VarChar(255)
   PurchaseBOMStructure PurchaseBOMStructure[]
   PurchaseDetail       PurchaseDetail[]
   QuoteSupplier        QuoteSupplier          @relation(fields: [quoteSupplierId], references: [id], onUpdate: Restrict, map: "QuoteSupplierLine_ibfk_1")

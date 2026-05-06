@@ -5,6 +5,7 @@ import {ProjectBOMDetail} from '@/components/custom/projectBomDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {getProjectById} from '@/dal/projects'
 
 interface PageProps {
   params: Promise<{departmentId: string; projectBomId: string}>
@@ -27,6 +28,7 @@ export default async function ProjectBOMDetailPage({params}: PageProps) {
   const bom = mapProjectBOM(bomRaw)
   const allBOMs = allBomsRaw.map(r => mapProjectBOM(r))
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+  const project = bomRaw.Project
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -36,7 +38,9 @@ export default async function ProjectBOMDetailPage({params}: PageProps) {
           materialOptions={materialOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          currentUserId={profile.id}
           departmentId={departmentId}
+          project={project}
           allBOMs={allBOMs}
         />
       </div>

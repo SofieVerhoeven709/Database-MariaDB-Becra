@@ -31,6 +31,7 @@ export interface MappedQuoteSupplierDetailLine {
   materialShortDescription: string | null
   materialDemandId: string | null
   materialDemandLabel: string | null
+  additionalInfo: string | null
   quantity: number
   unitPrice: number
   minQuantity: number | null

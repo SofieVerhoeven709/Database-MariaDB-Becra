@@ -382,7 +382,7 @@ function mapWorkOrderWithLines(
       workOrderId: wo.id,
       type: 'material',
       sourceId: mat.id,
-      sourceLabel: mat.name ?? mat.shortDescription ?? mat.beNumber,
+      sourceLabel: `${mat.beNumber} - ${mat.shortDescription ?? ''}`,
       quantity: qty,
       unit: match?.unit ?? mat.Unit.abbreviation,
       priceListItemId: match?.itemId ?? null,

@@ -49,6 +49,7 @@ export type QuoteSupplierLineMinAggregateOutputType = {
   supplierDescription: string | null
   selected: boolean | null
   notDeliverable: boolean | null
+  additionalInfo: string | null
 }
 
 export type QuoteSupplierLineMaxAggregateOutputType = {
@@ -62,6 +63,7 @@ export type QuoteSupplierLineMaxAggregateOutputType = {
   supplierDescription: string | null
   selected: boolean | null
   notDeliverable: boolean | null
+  additionalInfo: string | null
 }
 
 export type QuoteSupplierLineCountAggregateOutputType = {
@@ -75,6 +77,7 @@ export type QuoteSupplierLineCountAggregateOutputType = {
   supplierDescription: number
   selected: number
   notDeliverable: number
+  additionalInfo: number
   _all: number
 }
 
@@ -102,6 +105,7 @@ export type QuoteSupplierLineMinAggregateInputType = {
   supplierDescription?: true
   selected?: true
   notDeliverable?: true
+  additionalInfo?: true
 }
 
 export type QuoteSupplierLineMaxAggregateInputType = {
@@ -115,6 +119,7 @@ export type QuoteSupplierLineMaxAggregateInputType = {
   supplierDescription?: true
   selected?: true
   notDeliverable?: true
+  additionalInfo?: true
 }
 
 export type QuoteSupplierLineCountAggregateInputType = {
@@ -128,6 +133,7 @@ export type QuoteSupplierLineCountAggregateInputType = {
   supplierDescription?: true
   selected?: true
   notDeliverable?: true
+  additionalInfo?: true
   _all?: true
 }
 
@@ -228,6 +234,7 @@ export type QuoteSupplierLineGroupByOutputType = {
   supplierDescription: string | null
   selected: boolean | null
   notDeliverable: boolean
+  additionalInfo: string | null
   _count: QuoteSupplierLineCountAggregateOutputType | null
   _avg: QuoteSupplierLineAvgAggregateOutputType | null
   _sum: QuoteSupplierLineSumAggregateOutputType | null
@@ -264,6 +271,7 @@ export type QuoteSupplierLineWhereInput = {
   supplierDescription?: Prisma.StringNullableFilter<"QuoteSupplierLine"> | string | null
   selected?: Prisma.BoolNullableFilter<"QuoteSupplierLine"> | boolean | null
   notDeliverable?: Prisma.BoolFilter<"QuoteSupplierLine"> | boolean
+  additionalInfo?: Prisma.StringNullableFilter<"QuoteSupplierLine"> | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureListRelationFilter
   PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
   QuoteSupplier?: Prisma.XOR<Prisma.QuoteSupplierScalarRelationFilter, Prisma.QuoteSupplierWhereInput>
@@ -282,6 +290,7 @@ export type QuoteSupplierLineOrderByWithRelationInput = {
   supplierDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   selected?: Prisma.SortOrderInput | Prisma.SortOrder
   notDeliverable?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureOrderByRelationAggregateInput
   PurchaseDetail?: Prisma.PurchaseDetailOrderByRelationAggregateInput
   QuoteSupplier?: Prisma.QuoteSupplierOrderByWithRelationInput
@@ -304,6 +313,7 @@ export type QuoteSupplierLineWhereUniqueInput = Prisma.AtLeast<{
   supplierDescription?: Prisma.StringNullableFilter<"QuoteSupplierLine"> | string | null
   selected?: Prisma.BoolNullableFilter<"QuoteSupplierLine"> | boolean | null
   notDeliverable?: Prisma.BoolFilter<"QuoteSupplierLine"> | boolean
+  additionalInfo?: Prisma.StringNullableFilter<"QuoteSupplierLine"> | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureListRelationFilter
   PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
   QuoteSupplier?: Prisma.XOR<Prisma.QuoteSupplierScalarRelationFilter, Prisma.QuoteSupplierWhereInput>
@@ -322,6 +332,7 @@ export type QuoteSupplierLineOrderByWithAggregationInput = {
   supplierDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   selected?: Prisma.SortOrderInput | Prisma.SortOrder
   notDeliverable?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.QuoteSupplierLineCountOrderByAggregateInput
   _avg?: Prisma.QuoteSupplierLineAvgOrderByAggregateInput
   _max?: Prisma.QuoteSupplierLineMaxOrderByAggregateInput
@@ -343,6 +354,7 @@ export type QuoteSupplierLineScalarWhereWithAggregatesInput = {
   supplierDescription?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplierLine"> | string | null
   selected?: Prisma.BoolNullableWithAggregatesFilter<"QuoteSupplierLine"> | boolean | null
   notDeliverable?: Prisma.BoolWithAggregatesFilter<"QuoteSupplierLine"> | boolean
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"QuoteSupplierLine"> | string | null
 }
 
 export type QuoteSupplierLineCreateInput = {
@@ -353,6 +365,7 @@ export type QuoteSupplierLineCreateInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutQuoteSupplierLineInput
   QuoteSupplier: Prisma.QuoteSupplierCreateNestedOneWithoutQuoteSupplierLineInput
@@ -371,6 +384,7 @@ export type QuoteSupplierLineUncheckedCreateInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
@@ -383,6 +397,7 @@ export type QuoteSupplierLineUpdateInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutQuoteSupplierLineNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -401,6 +416,7 @@ export type QuoteSupplierLineUncheckedUpdateInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
@@ -416,6 +432,7 @@ export type QuoteSupplierLineCreateManyInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
 }
 
 export type QuoteSupplierLineUpdateManyMutationInput = {
@@ -426,6 +443,7 @@ export type QuoteSupplierLineUpdateManyMutationInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type QuoteSupplierLineUncheckedUpdateManyInput = {
@@ -439,6 +457,7 @@ export type QuoteSupplierLineUncheckedUpdateManyInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type QuoteSupplierLineListRelationFilter = {
@@ -473,6 +492,7 @@ export type QuoteSupplierLineCountOrderByAggregateInput = {
   supplierDescription?: Prisma.SortOrder
   selected?: Prisma.SortOrder
   notDeliverable?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
 }
 
 export type QuoteSupplierLineAvgOrderByAggregateInput = {
@@ -492,6 +512,7 @@ export type QuoteSupplierLineMaxOrderByAggregateInput = {
   supplierDescription?: Prisma.SortOrder
   selected?: Prisma.SortOrder
   notDeliverable?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
 }
 
 export type QuoteSupplierLineMinOrderByAggregateInput = {
@@ -505,6 +526,7 @@ export type QuoteSupplierLineMinOrderByAggregateInput = {
   supplierDescription?: Prisma.SortOrder
   selected?: Prisma.SortOrder
   notDeliverable?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
 }
 
 export type QuoteSupplierLineSumOrderByAggregateInput = {
@@ -679,6 +701,7 @@ export type QuoteSupplierLineCreateWithoutMaterialInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutQuoteSupplierLineInput
   QuoteSupplier: Prisma.QuoteSupplierCreateNestedOneWithoutQuoteSupplierLineInput
@@ -695,6 +718,7 @@ export type QuoteSupplierLineUncheckedCreateWithoutMaterialInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
@@ -739,6 +763,7 @@ export type QuoteSupplierLineScalarWhereInput = {
   supplierDescription?: Prisma.StringNullableFilter<"QuoteSupplierLine"> | string | null
   selected?: Prisma.BoolNullableFilter<"QuoteSupplierLine"> | boolean | null
   notDeliverable?: Prisma.BoolFilter<"QuoteSupplierLine"> | boolean
+  additionalInfo?: Prisma.StringNullableFilter<"QuoteSupplierLine"> | string | null
 }
 
 export type QuoteSupplierLineCreateWithoutPurchaseDetailInput = {
@@ -749,6 +774,7 @@ export type QuoteSupplierLineCreateWithoutPurchaseDetailInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutQuoteSupplierLineInput
   QuoteSupplier: Prisma.QuoteSupplierCreateNestedOneWithoutQuoteSupplierLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutQuoteSupplierLineInput
@@ -766,6 +792,7 @@ export type QuoteSupplierLineUncheckedCreateWithoutPurchaseDetailInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
 
@@ -793,6 +820,7 @@ export type QuoteSupplierLineUpdateWithoutPurchaseDetailInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutQuoteSupplierLineNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -810,6 +838,7 @@ export type QuoteSupplierLineUncheckedUpdateWithoutPurchaseDetailInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
 
@@ -821,6 +850,7 @@ export type QuoteSupplierLineCreateWithoutQuoteSupplierInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutQuoteSupplierLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutQuoteSupplierLineInput
@@ -837,6 +867,7 @@ export type QuoteSupplierLineUncheckedCreateWithoutQuoteSupplierInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
@@ -875,6 +906,7 @@ export type QuoteSupplierLineCreateWithoutPurchaseBOMStructureInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutQuoteSupplierLineInput
   QuoteSupplier: Prisma.QuoteSupplierCreateNestedOneWithoutQuoteSupplierLineInput
   Material: Prisma.MaterialCreateNestedOneWithoutQuoteSupplierLineInput
@@ -892,6 +924,7 @@ export type QuoteSupplierLineUncheckedCreateWithoutPurchaseBOMStructureInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
 
@@ -919,6 +952,7 @@ export type QuoteSupplierLineUpdateWithoutPurchaseBOMStructureInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutQuoteSupplierLineNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -936,6 +970,7 @@ export type QuoteSupplierLineUncheckedUpdateWithoutPurchaseBOMStructureInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
 
@@ -947,6 +982,7 @@ export type QuoteSupplierLineCreateWithoutMaterialDemandInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutQuoteSupplierLineInput
   QuoteSupplier: Prisma.QuoteSupplierCreateNestedOneWithoutQuoteSupplierLineInput
@@ -963,6 +999,7 @@ export type QuoteSupplierLineUncheckedCreateWithoutMaterialDemandInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutQuoteSupplierLineInput
 }
@@ -1003,6 +1040,7 @@ export type QuoteSupplierLineCreateManyMaterialInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
 }
 
 export type QuoteSupplierLineUpdateWithoutMaterialInput = {
@@ -1013,6 +1051,7 @@ export type QuoteSupplierLineUpdateWithoutMaterialInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutQuoteSupplierLineNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -1029,6 +1068,7 @@ export type QuoteSupplierLineUncheckedUpdateWithoutMaterialInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
@@ -1043,6 +1083,7 @@ export type QuoteSupplierLineUncheckedUpdateManyWithoutMaterialInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type QuoteSupplierLineCreateManyQuoteSupplierInput = {
@@ -1055,6 +1096,7 @@ export type QuoteSupplierLineCreateManyQuoteSupplierInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
 }
 
 export type QuoteSupplierLineUpdateWithoutQuoteSupplierInput = {
@@ -1065,6 +1107,7 @@ export type QuoteSupplierLineUpdateWithoutQuoteSupplierInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutQuoteSupplierLineNestedInput
   Material?: Prisma.MaterialUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -1081,6 +1124,7 @@ export type QuoteSupplierLineUncheckedUpdateWithoutQuoteSupplierInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
@@ -1095,6 +1139,7 @@ export type QuoteSupplierLineUncheckedUpdateManyWithoutQuoteSupplierInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type QuoteSupplierLineCreateManyMaterialDemandInput = {
@@ -1107,6 +1152,7 @@ export type QuoteSupplierLineCreateManyMaterialDemandInput = {
   supplierDescription?: string | null
   selected?: boolean | null
   notDeliverable?: boolean
+  additionalInfo?: string | null
 }
 
 export type QuoteSupplierLineUpdateWithoutMaterialDemandInput = {
@@ -1117,6 +1163,7 @@ export type QuoteSupplierLineUpdateWithoutMaterialDemandInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutQuoteSupplierLineNestedInput
   QuoteSupplier?: Prisma.QuoteSupplierUpdateOneRequiredWithoutQuoteSupplierLineNestedInput
@@ -1133,6 +1180,7 @@ export type QuoteSupplierLineUncheckedUpdateWithoutMaterialDemandInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   PurchaseBOMStructure?: Prisma.PurchaseBOMStructureUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutQuoteSupplierLineNestedInput
 }
@@ -1147,6 +1195,7 @@ export type QuoteSupplierLineUncheckedUpdateManyWithoutMaterialDemandInput = {
   supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   selected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   notDeliverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1200,6 +1249,7 @@ export type QuoteSupplierLineSelect<ExtArgs extends runtime.Types.Extensions.Int
   supplierDescription?: boolean
   selected?: boolean
   notDeliverable?: boolean
+  additionalInfo?: boolean
   PurchaseBOMStructure?: boolean | Prisma.QuoteSupplierLine$PurchaseBOMStructureArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.QuoteSupplierLine$PurchaseDetailArgs<ExtArgs>
   QuoteSupplier?: boolean | Prisma.QuoteSupplierDefaultArgs<ExtArgs>
@@ -1221,9 +1271,10 @@ export type QuoteSupplierLineSelectScalar = {
   supplierDescription?: boolean
   selected?: boolean
   notDeliverable?: boolean
+  additionalInfo?: boolean
 }
 
-export type QuoteSupplierLineOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteSupplierId" | "materialId" | "materialDemandId" | "quantity" | "unitPrice" | "minQuantity" | "supplierDescription" | "selected" | "notDeliverable", ExtArgs["result"]["quoteSupplierLine"]>
+export type QuoteSupplierLineOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteSupplierId" | "materialId" | "materialDemandId" | "quantity" | "unitPrice" | "minQuantity" | "supplierDescription" | "selected" | "notDeliverable" | "additionalInfo", ExtArgs["result"]["quoteSupplierLine"]>
 export type QuoteSupplierLineInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   PurchaseBOMStructure?: boolean | Prisma.QuoteSupplierLine$PurchaseBOMStructureArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.QuoteSupplierLine$PurchaseDetailArgs<ExtArgs>
@@ -1253,6 +1304,7 @@ export type $QuoteSupplierLinePayload<ExtArgs extends runtime.Types.Extensions.I
     supplierDescription: string | null
     selected: boolean | null
     notDeliverable: boolean
+    additionalInfo: string | null
   }, ExtArgs["result"]["quoteSupplierLine"]>
   composites: {}
 }
@@ -1637,6 +1689,7 @@ export interface QuoteSupplierLineFieldRefs {
   readonly supplierDescription: Prisma.FieldRef<"QuoteSupplierLine", 'String'>
   readonly selected: Prisma.FieldRef<"QuoteSupplierLine", 'Boolean'>
   readonly notDeliverable: Prisma.FieldRef<"QuoteSupplierLine", 'Boolean'>
+  readonly additionalInfo: Prisma.FieldRef<"QuoteSupplierLine", 'String'>
 }
     
 

@@ -25,4 +25,14 @@
 - Reuse variants
 - Avoid duplicated styling
 - Centralize theme values
+<<<<<<< Updated upstream
 ```
+=======
+
+---
+### Other Coding
+
+- Use camelCase for everything else (variables, functions, etc.)
+- Write clear and concise comments
+- Follow consistent naming conventions
+>>>>>>> Stashed changes

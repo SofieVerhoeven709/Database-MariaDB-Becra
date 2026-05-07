@@ -8,7 +8,7 @@ Daar zie je opnieuw tegels met “acties” binnen dat departement.
 Deze handleiding behandelt twee vaak voorkomende vragen:
 
 1. **Een extra knop/tegel toevoegen** onder een departement (bv. nieuwe actie in het departement)
-2. **De kleur van een departement veranderen**
+2. **De kleur van een departement veranderen** (Niet werkende)
 
 ---
 

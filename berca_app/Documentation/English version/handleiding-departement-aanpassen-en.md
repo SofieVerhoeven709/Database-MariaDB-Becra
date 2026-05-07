@@ -8,7 +8,7 @@ On that page you’ll see tiles again, representing “actions” inside that de
 This guide covers two common questions:
 
 1. **Add an extra button/tile** under a department (e.g. a new action inside the department)
-2. **Change the color of a department**
+2. **Change the color of a department** (does not yet work)
 
 ---
 

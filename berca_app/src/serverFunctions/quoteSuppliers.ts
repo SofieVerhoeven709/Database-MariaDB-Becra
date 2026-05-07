@@ -305,7 +305,7 @@ export const createQuoteSupplierAction = protectedServerFunction({
       }
     }
 
-    if (data.initialMaterialId && data.initialMaterialDemandId) {
+    if (data.initialMaterialId) {
       const reusableQuote = await prismaClient.quoteSupplier.findFirst({
         where: {
           companyId: data.companyId,
@@ -318,15 +318,13 @@ export const createQuoteSupplierAction = protectedServerFunction({
         select: {id: true},
       })
 
-      // Reuse the latest unsent quote for the same supplier instead of creating a new header.
       if (reusableQuote) {
-        // One unsent quote can collect multiple lines for the same supplier while it is still being prepared.
         await prismaClient.quoteSupplierLine.create({
           data: {
             id: crypto.randomUUID(),
             quoteSupplierId: reusableQuote.id,
             materialId: data.initialMaterialId,
-            materialDemandId: data.initialMaterialDemandId,
+            materialDemandId: data.initialMaterialDemandId ?? null,
             quantity: data.initialQuantity ?? 1,
             unitPrice: 0,
             minQuantity: null,
@@ -335,7 +333,9 @@ export const createQuoteSupplierAction = protectedServerFunction({
         })
 
         logger.info(
-          `Quote line added to existing unsent quote ${reusableQuote.id} from material demand ${data.initialMaterialDemandId}`,
+          `Quote line added to existing unsent quote ${reusableQuote.id} ` +
+            `for material ${data.initialMaterialId}` +
+            (data.initialMaterialDemandId ? ` from demand ${data.initialMaterialDemandId}` : ''),
         )
         revalidatePath(REVALIDATE_DEPARTMENTS_PATH, 'layout')
         return

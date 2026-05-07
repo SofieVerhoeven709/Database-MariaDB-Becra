@@ -246,7 +246,7 @@ export function TrainingTable({
             />
           </div>
           <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
-            <SelectTrigger className="w-[150px] bg-secondary border-border">
+            <SelectTrigger className="w-37.5 bg-secondary border-border">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-card border-border">

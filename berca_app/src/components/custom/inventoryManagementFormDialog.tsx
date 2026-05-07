@@ -12,6 +12,7 @@ interface MaterialOption {
   beNumber: string
   name: string | null
   shortDescription: string
+  place: string
 }
 interface InventoryFormDialogProps {
   open: boolean
@@ -138,8 +139,9 @@ export function InventoryManagementFormDialog({open, onOpenChange, item, materia
     setForm(prev => ({
       ...prev,
       materialId,
-      beNumber: prev.beNumber || mat?.beNumber || '',
-      shortDescription: prev.shortDescription || mat?.shortDescription || '',
+      beNumber: mat?.beNumber || '',
+      shortDescription: mat?.shortDescription || '',
+      place: mat?.place || 'Unassigned',
     }))
   }
   return (

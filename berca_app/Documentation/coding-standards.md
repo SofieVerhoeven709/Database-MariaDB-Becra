@@ -12,7 +12,8 @@
 
 ## SQL
 
-- Use snake_case
+- Use PascalCase for table names and singular
+- Use camelCase for column names and singular
 - Use descriptive table names
 - Always use foreign keys
 - Never use destructive queries without backups
@@ -25,4 +26,11 @@
 - Reuse variants
 - Avoid duplicated styling
 - Centralize theme values
+
+---
+### Other Coding
+
+- Use camelCase for everything else (variables, functions, etc.)
+- Write clear and concise comments
+- Follow consistent naming conventions
 ```

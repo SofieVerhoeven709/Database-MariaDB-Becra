@@ -17,3 +17,15 @@ export const departmentSchema = z.object({
 export type Department = z.infer<typeof departmentSchema>
 export const departmentsSchema = z.array(departmentSchema)
 export type Departments = z.infer<typeof departmentsSchema>
+
+export const departmentIdSchema = z.object({id: z.string()})
+
+export const createDepartmentSchema = z.object({
+  name: z.string().min(1).max(100),
+  color: z.string().max(10).nullable().optional(),
+  icon: z.string().max(255).nullable().optional(),
+  description: z.string().max(255).nullable().optional(),
+  number: z.number().int().nullable().optional(),
+})
+
+export const updateDepartmentSchema = createDepartmentSchema.extend({id: z.string()})

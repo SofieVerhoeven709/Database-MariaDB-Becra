@@ -70,6 +70,3 @@ Railway hosts:
 - Frontend
 - Backend
 - Database services
-```
-
----

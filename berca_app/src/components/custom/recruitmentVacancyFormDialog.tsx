@@ -41,9 +41,9 @@ const publicationOptions = [
   {key: 'publishWebsite', label: 'Website'},
   {key: 'publishVdab', label: 'VDAB'},
   {key: 'publishLinkedIn', label: 'LinkedIn'},
-  {key: 'publishTempAgencies', label: 'Uitzendkantoren'},
-  {key: 'publishRecruitmentAgencies', label: 'Detacheringskantoren'},
-  {key: 'publishOther', label: 'Andere'},
+  {key: 'publishTempAgencies', label: 'Temp agency'},
+  {key: 'publishRecruitmentAgencies', label: 'Recruitment Agencies'},
+  {key: 'publishOther', label: 'Other'},
 ] as const
 
 export function toNullableSalary(value: string) {
@@ -116,17 +116,17 @@ export function RecruitmentVacancyFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle>{vacancy ? 'Vacature wijzigen' : 'Vacature toevoegen'}</DialogTitle>
+          <DialogTitle>{vacancy ? 'Change job offer' : 'Add job offer'}</DialogTitle>
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label>Titel *</Label>
+            <Label>Title *</Label>
             <Input value={form.title} onChange={event => setForm(f => ({...f, title: event.target.value}))} />
           </div>
 
           <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label>Beschrijving</Label>
+            <Label>Description</Label>
             <Textarea
               value={form.description}
               onChange={event => setForm(f => ({...f, description: event.target.value}))}
@@ -135,7 +135,7 @@ export function RecruitmentVacancyFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Afdeling</Label>
+            <Label>Department</Label>
             <Select value={form.department} onValueChange={value => setForm(f => ({...f, department: value}))}>
               <SelectTrigger className="w-full">
                 <SelectValue />
@@ -160,8 +160,8 @@ export function RecruitmentVacancyFormDialog({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="permanent">Vast</SelectItem>
-                  <SelectItem value="temporary">Tijdelijk</SelectItem>
+                  <SelectItem value="permanent">Permanent</SelectItem>
+                  <SelectItem value="temporary">Temporary</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -175,8 +175,8 @@ export function RecruitmentVacancyFormDialog({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="fulltime">Fulltime</SelectItem>
-                  <SelectItem value="parttime">Deeltijds</SelectItem>
+                  <SelectItem value="fulltime">Full-time</SelectItem>
+                  <SelectItem value="parttime">Part-time</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -184,7 +184,7 @@ export function RecruitmentVacancyFormDialog({
 
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
-              <Label>Loonschaal van</Label>
+              <Label>Pay scale from</Label>
               <Input
                 type="number"
                 min="0"
@@ -194,7 +194,7 @@ export function RecruitmentVacancyFormDialog({
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label>Loonschaal tot</Label>
+              <Label>Pay scale to</Label>
               <Input
                 type="number"
                 min="0"
@@ -218,7 +218,7 @@ export function RecruitmentVacancyFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label>Andere publicatie</Label>
+            <Label>Other publication</Label>
             <Input
               value={form.otherPublication}
               onChange={event => setForm(f => ({...f, otherPublication: event.target.value}))}
@@ -228,10 +228,10 @@ export function RecruitmentVacancyFormDialog({
 
         <DialogFooter>
           <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Annuleren
+            Cancel
           </Button>
           <Button type="button" onClick={() => onSave(form)} disabled={!isValid || saving}>
-            Opslaan
+            Save
           </Button>
         </DialogFooter>
       </DialogContent>

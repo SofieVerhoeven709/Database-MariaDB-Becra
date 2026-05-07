@@ -101,13 +101,13 @@ export function trainingTypeLabel(type: HrTrainingType) {
 export function absenceTypeLabel(type: HrAbsenceType) {
   switch (type) {
     case 'VACATION':
-      return 'Vakantiedagen'
+      return 'Vacation'
     case 'SICKNESS':
-      return 'Ziekte'
+      return 'Sickness'
     case 'SMALL_LEAVE':
-      return 'Klein verlet'
+      return 'Small Leave'
     case 'HOLIDAY':
-      return 'Feestdag'
+      return 'Holiday'
     default:
       return 'ADV'
   }
@@ -156,21 +156,21 @@ export function HrCertificationTrainingFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>{record ? 'Opleiding wijzigen' : 'Opleiding toevoegen'}</DialogTitle>
+          <DialogTitle>{record ? 'Change training' : 'Add training'}</DialogTitle>
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
-            <Label>Werknemer *</Label>
+            <Label>Employee *</Label>
             <Select
               value={form.employeeId || 'none'}
               onValueChange={value => setForm(f => ({...f, employeeId: value === 'none' ? '' : value}))}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Kies werknemer" />
+                <SelectValue placeholder="Choose employee werknemer" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="none" disabled>
-                  Kies werknemer
+                  Choose employee
                 </SelectItem>
                 {employees.map(employee => (
                   <SelectItem key={employee.id} value={employee.id}>
@@ -182,7 +182,7 @@ export function HrCertificationTrainingFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Naam opleiding *</Label>
+            <Label>Name Training *</Label>
             <Input
               value={form.trainingName}
               onChange={event => setForm(f => ({...f, trainingName: event.target.value}))}
@@ -190,7 +190,7 @@ export function HrCertificationTrainingFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Type opleiding *</Label>
+            <Label>Type Training *</Label>
             <Select
               value={form.trainingType}
               onValueChange={value =>
@@ -212,7 +212,7 @@ export function HrCertificationTrainingFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Herhaling</Label>
+            <Label>Recurring</Label>
             <Select
               value={form.recurrenceInterval}
               disabled={form.trainingType !== 'recurring'}
@@ -221,15 +221,15 @@ export function HrCertificationTrainingFormDialog({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">Niet recurrent</SelectItem>
-                <SelectItem value="5y">5 jaar</SelectItem>
-                <SelectItem value="10y">10 jaar</SelectItem>
+                <SelectItem value="none">Not recurring</SelectItem>
+                <SelectItem value="5y">5 year</SelectItem>
+                <SelectItem value="10y">10 year</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Datum opleiding *</Label>
+            <Label>Date Training *</Label>
             <Input
               type="date"
               value={form.trainingDate}
@@ -238,7 +238,7 @@ export function HrCertificationTrainingFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Geldigheid certificaat{requiresValidity ? ' *' : ''}</Label>
+            <Label>Validity certificate{requiresValidity ? ' *' : ''}</Label>
             <Input
               type="date"
               value={form.certificateValidUntil}
@@ -247,7 +247,7 @@ export function HrCertificationTrainingFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label>Naam opleidingsverstrekker *</Label>
+            <Label>Name Provider *</Label>
             <Input
               value={form.providerName}
               onChange={event => setForm(f => ({...f, providerName: event.target.value}))}
@@ -266,10 +266,10 @@ export function HrCertificationTrainingFormDialog({
 
         <DialogFooter>
           <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Annuleren
+            Cancel
           </Button>
           <Button type="button" onClick={() => onSave(form)} disabled={!isValid || saving}>
-            Opslaan
+            Save
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -313,21 +313,21 @@ export function HrAbsenceFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-xl">
         <DialogHeader>
-          <DialogTitle>{absence ? 'Afwezigheid wijzigen' : 'Afwezigheid toevoegen'}</DialogTitle>
+          <DialogTitle>{absence ? 'Change absence' : 'Add absence'}</DialogTitle>
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label>Werknemer *</Label>
+            <Label>Employee *</Label>
             <Select
               value={form.employeeId || 'none'}
               onValueChange={value => setForm(f => ({...f, employeeId: value === 'none' ? '' : value}))}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Kies werknemer" />
+                <SelectValue placeholder="Choose employee" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="none" disabled>
-                  Kies werknemer
+                  Choose employee
                 </SelectItem>
                 {employees.map(employee => (
                   <SelectItem key={employee.id} value={employee.id}>
@@ -339,7 +339,7 @@ export function HrAbsenceFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Jaar *</Label>
+            <Label>Year *</Label>
             <Input
               type="number"
               min="2000"
@@ -350,7 +350,7 @@ export function HrAbsenceFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Dagen *</Label>
+            <Label>Days *</Label>
             <Input
               type="number"
               min="0"
@@ -361,7 +361,7 @@ export function HrAbsenceFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label>Type afwezigheid *</Label>
+            <Label>Type absence *</Label>
             <Select
               value={form.absenceType}
               onValueChange={value => setForm(f => ({...f, absenceType: value as HrAbsenceType}))}>
@@ -370,10 +370,10 @@ export function HrAbsenceFormDialog({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="ADV">ADV</SelectItem>
-                <SelectItem value="VACATION">Vakantiedagen</SelectItem>
-                <SelectItem value="SICKNESS">Ziekte</SelectItem>
-                <SelectItem value="SMALL_LEAVE">Klein verlet</SelectItem>
-                <SelectItem value="HOLIDAY">Feestdag</SelectItem>
+                <SelectItem value="VACATION">Vacation</SelectItem>
+                <SelectItem value="SICKNESS">Sickness</SelectItem>
+                <SelectItem value="SMALL_LEAVE">Small leave</SelectItem>
+                <SelectItem value="HOLIDAY">Holiday</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -390,10 +390,10 @@ export function HrAbsenceFormDialog({
 
         <DialogFooter>
           <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Annuleren
+            Cancel
           </Button>
           <Button type="button" onClick={() => onSave(form)} disabled={!isValid || saving}>
-            Opslaan
+            Save
           </Button>
         </DialogFooter>
       </DialogContent>

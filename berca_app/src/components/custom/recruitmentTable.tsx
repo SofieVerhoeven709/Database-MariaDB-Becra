@@ -40,22 +40,22 @@ function formatDate(value: string | null) {
 }
 
 function contactLabel(value: RecruitmentApplicant['contactType']) {
-  return value === 'phone' ? 'Telefoon' : 'Email'
+  return value === 'phone' ? 'Phone' : 'Email'
 }
 
 function contractLabel(value: RecruitmentVacancy['contractType']) {
-  return value === 'temporary' ? 'Tijdelijk' : 'Vast'
+  return value === 'temporary' ? 'Temporary' : 'Permanent'
 }
 
 function regimeLabel(value: RecruitmentVacancy['workRegime']) {
-  return value === 'parttime' ? 'Deeltijds' : 'Fulltime'
+  return value === 'parttime' ? 'Part-time' : 'Full-time'
 }
 
 function salaryRange(vacancy: RecruitmentVacancy) {
   if (vacancy.salaryMin == null && vacancy.salaryMax == null) return '-'
   const formatter = new Intl.NumberFormat('nl-BE', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0})
-  if (vacancy.salaryMin == null) return `tot ${formatter.format(vacancy.salaryMax ?? 0)}`
-  if (vacancy.salaryMax == null) return `vanaf ${formatter.format(vacancy.salaryMin)}`
+  if (vacancy.salaryMin == null) return `from ${formatter.format(vacancy.salaryMax ?? 0)}`
+  if (vacancy.salaryMax == null) return `to ${formatter.format(vacancy.salaryMin)}`
   return `${formatter.format(vacancy.salaryMin)} - ${formatter.format(vacancy.salaryMax)}`
 }
 
@@ -64,8 +64,8 @@ function publicationLabels(vacancy: RecruitmentVacancy) {
     vacancy.publishWebsite && 'Website',
     vacancy.publishVdab && 'VDAB',
     vacancy.publishLinkedIn && 'LinkedIn',
-    vacancy.publishTempAgencies && 'Agencies',
-    vacancy.publishRecruitmentAgencies && 'Detacheringskantoren',
+    vacancy.publishTempAgencies && 'Temp Agencies',
+    vacancy.publishRecruitmentAgencies && 'Recruitment Agencies',
     vacancy.publishOther && 'Other',
     vacancy.otherPublication,
   ].filter(Boolean)
@@ -181,7 +181,7 @@ export function RecruitmentTable({applicants, vacancies, departmentId}: Recruitm
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Recruitment</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Manage sollicitanten en vacatures binnen HR.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Manage job applicants en Job offers in HR.</p>
         </div>
 
         <label className="relative w-full lg:w-80">
@@ -189,7 +189,7 @@ export function RecruitmentTable({applicants, vacancies, departmentId}: Recruitm
           <Input
             value={filter}
             onChange={event => setFilter(event.target.value)}
-            placeholder="Zoeken"
+            placeholder="Search"
             className="pl-9"
           />
         </label>
@@ -200,22 +200,22 @@ export function RecruitmentTable({applicants, vacancies, departmentId}: Recruitm
           <TabsList>
             <TabsTrigger value="applicants">
               <UserRound className="h-4 w-4" />
-              Sollicitanten
+              Applicants
             </TabsTrigger>
             <TabsTrigger value="vacancies">
               <BriefcaseBusiness className="h-4 w-4" />
-              Vacatures
+              Job Offers
             </TabsTrigger>
           </TabsList>
 
           <div className="flex gap-2">
             <Button type="button" variant="outline" onClick={() => openApplicantDialog(null)}>
               <Plus className="h-4 w-4" />
-              Sollicitant
+              Applicants
             </Button>
             <Button type="button" onClick={() => openVacancyDialog(null)}>
               <Plus className="h-4 w-4" />
-              Vacature
+              Job Offers
             </Button>
           </div>
         </div>
@@ -275,7 +275,7 @@ export function RecruitmentTable({applicants, vacancies, departmentId}: Recruitm
                 {!filteredApplicants.length && (
                   <TableRow>
                     <TableCell colSpan={7} className="h-24 text-center text-sm text-muted-foreground">
-                      Geen sollicitanten gevonden.
+                      No applicants found.
                     </TableCell>
                   </TableRow>
                 )}
@@ -292,7 +292,7 @@ export function RecruitmentTable({applicants, vacancies, departmentId}: Recruitm
                   <TableHead>Title</TableHead>
                   <TableHead>Department</TableHead>
                   <TableHead>Contract</TableHead>
-                  <TableHead>Loonschaal</TableHead>
+                  <TableHead>Pay scale</TableHead>
                   <TableHead>Publication</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -333,7 +333,7 @@ export function RecruitmentTable({applicants, vacancies, departmentId}: Recruitm
                 {!filteredVacancies.length && (
                   <TableRow>
                     <TableCell colSpan={6} className="h-24 text-center text-sm text-muted-foreground">
-                      Geen vacatures gevonden.
+                      No job offers found.
                     </TableCell>
                   </TableRow>
                 )}

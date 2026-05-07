@@ -88,12 +88,12 @@ export function RecruitmentApplicantFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle>{applicant ? 'Sollicitant wijzigen' : 'Sollicitant toevoegen'}</DialogTitle>
+          <DialogTitle>{applicant ? 'Change applicant' : 'Add applicant'}</DialogTitle>
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
-            <Label>Naam kandidaat *</Label>
+            <Label>Name applicant *</Label>
             <Input
               value={form.candidateName}
               onChange={event => setForm(f => ({...f, candidateName: event.target.value}))}
@@ -101,22 +101,23 @@ export function RecruitmentApplicantFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Type contact</Label>
+            <Label>Type contact *</Label>
             <Select
               value={form.contactType}
-              onValueChange={value => setForm(f => ({...f, contactType: value as RecruitmentContactType}))}>
+              onValueChange={value => setForm(f => ({...f, contactType: value as RecruitmentContactType}))}
+              required>
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="email">Email</SelectItem>
-                <SelectItem value="phone">Telefoon</SelectItem>
+                <SelectItem value="phone">Phone</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Datum contact</Label>
+            <Label>Contact date *</Label>
             <Input
               type="date"
               value={form.contactDate}
@@ -125,7 +126,7 @@ export function RecruitmentApplicantFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Datum op gesprek</Label>
+            <Label>Interview date</Label>
             <Input
               type="date"
               value={form.interviewDate}
@@ -134,7 +135,7 @@ export function RecruitmentApplicantFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label>Profiel</Label>
+            <Label>Profile</Label>
             <Textarea
               value={form.profile}
               onChange={event => setForm(f => ({...f, profile: event.target.value}))}
@@ -143,7 +144,7 @@ export function RecruitmentApplicantFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label>Notities gesprek</Label>
+            <Label>Notes interview</Label>
             <Textarea
               value={form.description}
               onChange={event => setForm(f => ({...f, description: event.target.value}))}
@@ -152,27 +153,27 @@ export function RecruitmentApplicantFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label>Verwijzing CV op server</Label>
+            <Label>CV reference on the server</Label>
             <Input value={form.cvPath} onChange={event => setForm(f => ({...f, cvPath: event.target.value}))} />
           </div>
 
           <div className="flex items-center justify-between rounded-md border border-border px-3 py-2">
-            <Label>Potentieel</Label>
+            <Label>Potential</Label>
             <Switch checked={form.potential} onCheckedChange={checked => setForm(f => ({...f, potential: checked}))} />
           </div>
 
           <div className="flex items-center justify-between rounded-md border border-border px-3 py-2">
-            <Label>Weerhouden</Label>
+            <Label>Retained</Label>
             <Switch checked={form.retained} onCheckedChange={checked => setForm(f => ({...f, retained: checked}))} />
           </div>
         </div>
 
         <DialogFooter>
           <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Annuleren
+            Cancel
           </Button>
           <Button type="button" onClick={() => onSave(form)} disabled={!isValid || saving}>
-            Opslaan
+            Save
           </Button>
         </DialogFooter>
       </DialogContent>

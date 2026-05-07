@@ -107,15 +107,15 @@ const benefitSwitches: {field: BenefitSwitchField; label: string}[] = [
   {field: 'homeWorkInternetAllowance', label: 'Home Work Internet Allowance'},
 ]
 
-const defaultEmploymentStatusOptions = ['Arbeider', 'Bediende']
+const defaultEmploymentStatusOptions = ['Manual worker', 'Office worker']
 
 const defaultContractTypeOptions = [
-  'Bepaalde duur arbeider',
-  'Bepaalde duur bediende',
-  'Bepaalde duur duidelijk omschreven werk',
-  'Onbepaalde duur bediende',
-  'Onbepaalde duur arbeider',
-  'Deeltijds contract',
+  'Fixed-term manual worker',
+  'Fixed-term office worker',
+  'Fixed-term clearly defined work',
+  'Permanent office worker',
+  'Permanent manual worker',
+  'Part-time contract',
 ]
 
 function ReadOnlyField({label, value}: {label: string; value: string}) {

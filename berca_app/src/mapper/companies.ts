@@ -6,8 +6,8 @@ import type {
   MappedCompanyContact,
   MappedCompanyProject,
 } from '@/types/company'
-import type {VisibilityWithRoleLevel} from '@/extra/visibilityForRole'
-import {mapVisibility} from '@/extra/visibilityForRole'
+import type {VisibilityWithRoleLevel} from '@/mapper/visibilityForRole'
+import {mapVisibility} from '@/mapper/visibilityForRole'
 
 type AddressWithCountry = CompanyAddress & {
   Country?: {id: string; name: string} | null

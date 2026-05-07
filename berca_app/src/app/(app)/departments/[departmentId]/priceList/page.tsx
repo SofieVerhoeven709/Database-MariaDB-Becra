@@ -1,5 +1,5 @@
 import {getPriceLists} from '@/dal/priceLists'
-import {mapPriceList} from '@/extra/priceLists'
+import {mapPriceList} from '../../../../../mapper/priceLists'
 import {PriceListTable} from '@/components/custom/priceListTable'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'

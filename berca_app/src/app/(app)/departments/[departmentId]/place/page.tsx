@@ -1,7 +1,7 @@
 import {getWarehousePlaces} from '@/dal/warehousePlace'
 import {getMaterials} from '@/dal/materials'
 import {WarehousePlaceTable} from '@/components/custom/warehousePlaceTable'
-import {mapWarehousePlace} from '@/extra/warehousePlace'
+import {mapWarehousePlace} from '../../../../../mapper/warehousePlace'
 
 export default async function WarehousePlacePage() {
   const [places, materials] = await Promise.all([getWarehousePlaces(), getMaterials()])

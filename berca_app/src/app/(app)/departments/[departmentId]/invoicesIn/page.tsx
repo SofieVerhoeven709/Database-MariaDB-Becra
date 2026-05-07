@@ -8,7 +8,7 @@ import {
   getCountries,
 } from '@/dal/invoices'
 import {getCompanies} from '@/dal/companies'
-import {mapInvoiceIn} from '@/extra/invoices'
+import {mapInvoiceIn} from '../../../../../mapper/invoices'
 import {InvoiceInTable} from '@/components/custom/invoiceInTable'
 import {VatMarginTable} from '@/components/custom/vatMarginTable'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'

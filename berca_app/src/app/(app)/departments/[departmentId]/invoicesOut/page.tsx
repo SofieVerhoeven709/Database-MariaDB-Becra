@@ -9,7 +9,7 @@ import {
   getOpenProjects,
 } from '@/dal/invoices'
 import {getContactOptions} from '@/dal/contacts'
-import {mapInvoiceOut} from '@/extra/invoices'
+import {mapInvoiceOut} from '../../../../../mapper/invoices'
 import {InvoiceOutTable} from '@/components/custom/invoiceOutTable'
 import {VatMarginTable} from '@/components/custom/vatMarginTable'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'

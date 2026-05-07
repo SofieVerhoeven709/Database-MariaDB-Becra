@@ -7,8 +7,8 @@ import type {
   MappedContactProject,
   MappedContactTraining,
 } from '@/types/contact'
-import type {VisibilityWithRoleLevel} from '@/extra/visibilityForRole'
-import {mapVisibility} from '@/extra/visibilityForRole'
+import type {VisibilityWithRoleLevel} from '@/mapper/visibilityForRole'
+import {mapVisibility} from '@/mapper/visibilityForRole'
 
 type CompanyContactLink = {
   endDate: Date | null

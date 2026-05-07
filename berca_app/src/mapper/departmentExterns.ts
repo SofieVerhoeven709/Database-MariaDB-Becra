@@ -19,4 +19,3 @@ export function mapDepartmentExternItem(d: DepartmentExternWithAudit): MappedDep
       : null,
   }
 }
-

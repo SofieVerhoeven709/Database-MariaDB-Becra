@@ -4,7 +4,7 @@ import {DashboardHrMeetingPopup} from '@/components/custom/dashboardHrMeetingPop
 import {DashboardInspectionPopup} from '@/components/custom/dashboardInspectionPopup'
 import {getSessionFromCookie} from '@/lib/sessionUtils'
 import {getSerialTracked} from '@/dal/materialSerialTracked'
-import {mapMaterialSerialTracked} from '@/extra/serialTracked'
+import {mapMaterialSerialTracked} from '@/mapper/serialTracked'
 import {AppSettings} from '@/constants'
 import {prismaClient} from '@/dal/prismaClient'
 import {getEvaluationWarningDays} from '@/lib/hrScheduleMeetings'

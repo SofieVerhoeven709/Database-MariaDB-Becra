@@ -1,7 +1,7 @@
 import {TrainingDetail} from '@/components/custom/trainingDetail'
 import {getTrainingDetail, getTrainingStandards} from '@/dal/training'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {mapTrainingDetail, mapTrainingStandard} from '@/extra/training'
+import {mapTrainingDetail, mapTrainingStandard} from '../../../../../../mapper/training'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {getDepartmentById} from '@/dal/department'

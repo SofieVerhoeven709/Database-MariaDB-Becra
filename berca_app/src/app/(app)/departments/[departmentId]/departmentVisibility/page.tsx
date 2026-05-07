@@ -3,7 +3,7 @@ import {getAllRoleLevels} from '@/dal/roleLevel'
 import {getDepartments, getDepartmentById} from '@/dal/department'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
-import {mapVisibility} from '@/extra/visibilityForRole'
+import {mapVisibility} from '../../../../../mapper/visibilityForRole'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface PageProps {

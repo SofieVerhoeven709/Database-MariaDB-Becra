@@ -1,6 +1,6 @@
 import {DepartmentTable} from '@/components/custom/departmentTable'
 import {getDepartments} from '@/dal/department'
-import {mapDepartment} from '@/extra/departments'
+import {mapDepartment} from '../../../../../mapper/departments'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 

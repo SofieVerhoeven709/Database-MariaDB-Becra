@@ -1,7 +1,7 @@
 import {IncomingDeliveryTable} from '@/components/custom/incomingDeliveryTable'
 import {getDepartmentById} from '@/dal/department'
 import {getIncomingDeliveries, getIncomingDeliveryPurchaseOptions} from '@/dal/incomingDeliveries'
-import {mapIncomingDelivery, mapIncomingDeliveryOption} from '@/extra/incomingDeliveries'
+import {mapIncomingDelivery, mapIncomingDeliveryOption} from '../../../../../mapper/incomingDeliveries'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentRoleInfo} from '@/lib/utils'

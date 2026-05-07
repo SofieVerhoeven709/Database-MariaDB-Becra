@@ -1,6 +1,6 @@
 import {WorkOrderStructureTable} from '@/components/custom/workOrderStructureTable'
 import {getWorkOrderStructures} from '@/dal/workOrderStructures'
-import {mapWorkOrderStructure} from '@/extra/workOrderStructures'
+import {mapWorkOrderStructure} from '../../../../../mapper/workOrderStructures'
 import {getWorkOrders} from '@/dal/workOrders'
 import {getMaterials} from '@/dal/materials'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
@@ -34,7 +34,11 @@ export default async function WorkOrderStructuresPage({params}: PageProps) {
       name: w.workOrderNumber ?? w.id,
       description: w.description ?? null,
     }))
-  const materialOptions = materialsFromDAL.map(m => ({id: m.id, name: m.name ?? '', beNumber: m.beNumber ?? '' as string}))
+  const materialOptions = materialsFromDAL.map(m => ({
+    id: m.id,
+    name: m.name ?? '',
+    beNumber: m.beNumber ?? ('' as string),
+  }))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

@@ -1,5 +1,5 @@
 import {getPurchases} from '@/dal/purchases'
-import {mapPurchase} from '@/extra/purchases'
+import {mapPurchase} from '../../../../../mapper/purchases'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getDepartmentById} from '@/dal/department'
 import {getCustomerCompanies} from '@/dal/companies'

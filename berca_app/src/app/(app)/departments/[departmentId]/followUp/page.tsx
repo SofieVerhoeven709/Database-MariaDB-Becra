@@ -1,11 +1,11 @@
 import {FollowUpTable} from '@/components/custom/followUpTable'
 import {getFollowUps} from '@/dal/followUps'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {mapFollowUp} from '@/extra/followUps'
+import {mapFollowUp} from '../../../../../mapper/followUps'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
-import {getFollowUpTargetOptions} from '@/extra/followUpTargetOptions'
+import {getFollowUpTargetOptions} from '../../../../../mapper/followUpTargetOptions'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 

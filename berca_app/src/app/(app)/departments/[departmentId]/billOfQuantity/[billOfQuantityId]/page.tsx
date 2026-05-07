@@ -8,7 +8,7 @@ import {
   getCompanyContactsForBoq,
   getPriceListsForCompanies,
 } from '@/dal/billOfQuantities'
-import {mapBoq} from '@/extra/billOfQuantities'
+import {mapBoq} from '../../../../../../mapper/billOfQuantities'
 import {BoqDetail} from '@/components/custom/billOfQuantityDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'

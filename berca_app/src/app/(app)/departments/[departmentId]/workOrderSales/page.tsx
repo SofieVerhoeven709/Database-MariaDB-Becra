@@ -1,6 +1,6 @@
 import {WorkOrderTable} from '@/components/custom/workOrderTable'
 import {getWorkOrders} from '@/dal/workOrders'
-import {mapWorkOrder} from '@/extra/workOrders'
+import {mapWorkOrder} from '../../../../../mapper/workOrders'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getProjects} from '@/dal/projects'
 import {getDepartmentById} from '@/dal/department'

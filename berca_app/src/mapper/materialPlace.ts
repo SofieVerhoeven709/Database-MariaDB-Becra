@@ -2,9 +2,10 @@ import type {MaterialPlaceWithRelations} from '@/dal/materialPlace'
 import type {MappedMaterialPlace} from '@/types/materialPlace'
 
 export function mapMaterialPlace(p: MaterialPlaceWithRelations): MappedMaterialPlace {
-  const deletedByEmployee = p.Employee_WarehousePlace_deletedByToEmployee as
-    | {firstName: string; lastName: string}
-    | null
+  const deletedByEmployee = p.Employee_WarehousePlace_deletedByToEmployee as {
+    firstName: string
+    lastName: string
+  } | null
 
   return {
     id: p.id,
@@ -24,8 +25,6 @@ export function mapMaterialPlace(p: MaterialPlaceWithRelations): MappedMaterialP
     deleted: p.deleted,
     deletedAt: p.deletedAt?.toISOString() ?? null,
     deletedBy: p.deletedBy ?? null,
-    deletedByName: deletedByEmployee
-      ? `${deletedByEmployee.firstName} ${deletedByEmployee.lastName}`
-      : null,
+    deletedByName: deletedByEmployee ? `${deletedByEmployee.firstName} ${deletedByEmployee.lastName}` : null,
   }
 }

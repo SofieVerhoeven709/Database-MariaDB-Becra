@@ -11,7 +11,11 @@ import {
   getIncomingDeliveryPurchaseDetailOptions,
   getMaterialDemandSourceOptions,
 } from '@/dal/incomingDeliveries'
-import {mapIncomingDeliveryLine, mapIncomingDeliveryLineAllocation, mapMaterialDemandSourceOption} from '@/extra/incomingDeliveries'
+import {
+  mapIncomingDeliveryLine,
+  mapIncomingDeliveryLineAllocation,
+  mapMaterialDemandSourceOption,
+} from '../../../../../../mapper/incomingDeliveries'
 import {IncomingDeliveryDetailTable} from '@/components/custom/incomingDeliveryDetailTable'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentRoleInfo} from '@/lib/utils'
@@ -30,14 +34,15 @@ function formatDate(iso: string | Date | null | undefined) {
 export default async function IncomingDeliveryDetailPage({params}: PageProps) {
   const {departmentId, incomingDeliveryId} = await params
 
-  const [department, incomingDelivery, materialOptionsRaw, sourceOptionsRaw, warehousePlacesRaw, profile] = await Promise.all([
-    getDepartmentById(departmentId),
-    getIncomingDeliveryById(incomingDeliveryId),
-    getIncomingDeliveryMaterialOptions(),
-    getMaterialDemandSourceOptions(),
-    getWarehousePlaces(),
-    getSessionProfileFromCookieOrThrow(),
-  ])
+  const [department, incomingDelivery, materialOptionsRaw, sourceOptionsRaw, warehousePlacesRaw, profile] =
+    await Promise.all([
+      getDepartmentById(departmentId),
+      getIncomingDeliveryById(incomingDeliveryId),
+      getIncomingDeliveryMaterialOptions(),
+      getMaterialDemandSourceOptions(),
+      getWarehousePlaces(),
+      getSessionProfileFromCookieOrThrow(),
+    ])
 
   if (!department) return <p>Department not found</p>
   if (!incomingDelivery) notFound()
@@ -68,9 +73,10 @@ export default async function IncomingDeliveryDetailPage({params}: PageProps) {
   const sourceOptions = sourceOptionsRaw.map(mapMaterialDemandSourceOption)
   const warehousePlaceOptions = warehousePlacesRaw.map(place => ({
     id: place.id,
-    label: [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
-      .filter(Boolean)
-      .join(' - ') || place.id,
+    label:
+      [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+        .filter(Boolean)
+        .join(' - ') || place.id,
   }))
 
   return (
@@ -87,7 +93,8 @@ export default async function IncomingDeliveryDetailPage({params}: PageProps) {
             <div>
               <h1 className="text-lg font-semibold text-foreground">{incomingDelivery.incomingDeliveryNumber}</h1>
               <p className="text-sm text-muted-foreground">
-                Purchase {incomingDelivery.Purchase?.purchaseNumber ?? 'Manual'} · Delivery date {formatDate(incomingDelivery.deliveryDate)}
+                Purchase {incomingDelivery.Purchase?.purchaseNumber ?? 'Manual'} · Delivery date{' '}
+                {formatDate(incomingDelivery.deliveryDate)}
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -122,5 +129,3 @@ export default async function IncomingDeliveryDetailPage({params}: PageProps) {
     </main>
   )
 }
-
-

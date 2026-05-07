@@ -11,7 +11,7 @@ import type {
   MappedDocumentPlace,
   MappedDocumentStatus,
 } from '@/types/document'
-import {mapVisibility} from '@/extra/visibilityForRole'
+import {mapVisibility} from '@/mapper/visibilityForRole'
 
 // ─── Prisma payload types ─────────────────────────────────────────────────────
 
@@ -33,7 +33,7 @@ export type DocumentListPayload = Prisma.DocumentStructureGetPayload<{
     }
     DocumentPlace: {select: {id: true; headFolder: true; subFolder: true}}
     DocumentStatus: {select: {id: true; name: true}}
-    DocumentStructure: {select: {id: true, documentNumber: true}}
+    DocumentStructure: {select: {id: true; documentNumber: true}}
     DocumentStructureTarget: {
       include: {
         Target: {
@@ -74,7 +74,7 @@ export type DocumentDetailPayload = Prisma.DocumentStructureGetPayload<{
     }
     DocumentPlace: {select: {id: true; headFolder: true; subFolder: true}}
     DocumentStatus: {select: {id: true; name: true}}
-    DocumentStructure: {select: {id: true, documentNumber: true}}
+    DocumentStructure: {select: {id: true; documentNumber: true}}
     DocumentStructureTarget: {
       take: 1
       include: {

@@ -1,6 +1,6 @@
 import {getMaterialPrices} from '@/dal/materialPrices'
 import {getCompanies} from '@/dal/companies'
-import {mapMaterialPrice} from '@/extra/materialPrices'
+import {mapMaterialPrice} from '../../../../../mapper/materialPrices'
 import {MaterialPriceTable} from '@/components/custom/materialPriceTable'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'

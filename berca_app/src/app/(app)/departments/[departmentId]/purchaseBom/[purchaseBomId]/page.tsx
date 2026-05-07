@@ -1,6 +1,6 @@
 import {notFound} from 'next/navigation'
 import {getPurchaseBOMById, getMaterialOptions, getPurchaseBOMs} from '@/dal/purchaseBoms'
-import {mapPurchaseBOM} from '@/extra/purchaseBoms'
+import {mapPurchaseBOM} from '../../../../../../mapper/purchaseBoms'
 import {PurchaseBOMDetail} from '@/components/custom/purchaseBomDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'

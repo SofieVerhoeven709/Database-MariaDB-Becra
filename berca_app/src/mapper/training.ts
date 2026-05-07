@@ -9,7 +9,7 @@ import type {
   TrainingDetailData,
   MappedTrainingContact,
 } from '@/types/training'
-import {mapVisibility} from '@/extra/visibilityForRole'
+import {mapVisibility} from '@/mapper/visibilityForRole'
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────-
 

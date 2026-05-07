@@ -18,7 +18,7 @@ import {
   hardDeleteTimeRegistryAction,
   undeleteTimeRegistryAction,
 } from '@/serverFunctions/timeRegistries'
-import {combineDateAndTime} from '@/extra/workOrderHelpers'
+import {combineDateAndTime} from '../../mapper/workOrderHelpers'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type SortField =

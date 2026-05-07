@@ -1,5 +1,5 @@
 import {getInventoryOrders, getInventoryForPicker} from '@/dal/inventoryOrders'
-import {mapInventoryOrder} from '@/extra/inventoryOrders'
+import {mapInventoryOrder} from '../../../../../mapper/inventoryOrders'
 import {InventoryOrderTable} from '@/components/custom/inventoryOrderTable'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'

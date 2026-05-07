@@ -21,7 +21,7 @@ import {
   undeleteTimeRegistryAction,
 } from '@/serverFunctions/timeRegistries'
 import type {PermissionProps, TimeRegistryRow} from '@/types/workOrder'
-import {combineDateAndTime, formatDate, formatDateTime, tdClass, thClass} from '@/extra/workOrderHelpers'
+import {combineDateAndTime, formatDate, formatDateTime, tdClass, thClass} from '../../mapper/workOrderHelpers'
 
 interface WorkOrderTimeRegistriesProps {
   timeRegistries: TimeRegistryRow[]

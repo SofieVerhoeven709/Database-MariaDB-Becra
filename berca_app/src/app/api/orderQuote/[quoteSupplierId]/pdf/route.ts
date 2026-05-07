@@ -1,6 +1,6 @@
 import {NextResponse} from 'next/server'
 import {getQuoteSupplierById} from '@/dal/quoteSuppliers'
-import {mapQuoteSupplierDetail} from '@/extra/quoteSuppliers'
+import {mapQuoteSupplierDetail} from '../../../../../mapper/quoteSuppliers'
 
 interface RouteContext {
   params: Promise<{quoteSupplierId: string}>

@@ -2,7 +2,7 @@ import {getProjectById, getProjectTypes} from '@/dal/projects'
 import {getEmployees} from '@/dal/employees'
 import {getContacts} from '@/dal/contacts'
 import {getProjectBOMs} from '@/dal/projectBoms'
-import {mapEmployee} from '@/extra/employees'
+import {mapEmployee} from '../../../../../../mapper/employees'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {ProjectDetail} from '@/components/custom/projectDetail'
 import {notFound} from 'next/navigation'
@@ -13,7 +13,7 @@ import {getTitles} from '@/dal/titles'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {getCountries} from '@/dal/countries'
-import {mapProjectBOM} from '@/extra/projectBom'
+import {mapProjectBOM} from '../../../../../../mapper/projectBom'
 
 interface PageProps {
   params: Promise<{departmentId: string; projectId: string}>

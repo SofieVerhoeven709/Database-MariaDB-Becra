@@ -1,11 +1,11 @@
 import {PurchaseTable} from '@/components/custom/purchaseTable'
 import {getPurchases} from '@/dal/purchases'
-import {mapPurchase} from '@/extra/purchases'
+import {mapPurchase} from '../../../../../mapper/purchases'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getCompanies, getCustomerCompanies} from '@/dal/companies'
 import {getPaymentConditionOptions, getPaymentConditions, getQuoteSuppliers} from '@/dal/quoteSuppliers'
-import {mapPaymentCondition} from '@/extra/quoteSuppliers'
+import {mapPaymentCondition} from '../../../../../mapper/quoteSuppliers'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
@@ -24,7 +24,16 @@ export default async function PurchaseOrdersPage({params, searchParams}: PagePro
   const prefillPurchaseId = typeof query.prefillPurchaseId === 'string' ? query.prefillPurchaseId : undefined
   const returnToConfirmation = query.returnTo === 'confirmation'
 
-  const [department, purchasesFromDAL, profile, companiesRaw, customersRaw, quoteSuppliersRaw, paymentConditionsRaw, paymentConditionRowsRaw] = await Promise.all([
+  const [
+    department,
+    purchasesFromDAL,
+    profile,
+    companiesRaw,
+    customersRaw,
+    quoteSuppliersRaw,
+    paymentConditionsRaw,
+    paymentConditionRowsRaw,
+  ] = await Promise.all([
     getDepartmentById(departmentId),
     getPurchases(),
     getSessionProfileFromCookieOrThrow(),
@@ -40,7 +49,7 @@ export default async function PurchaseOrdersPage({params, searchParams}: PagePro
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const purchases = purchasesFromDAL.map(mapPurchase)
-  const prefillPurchase = prefillPurchaseId ? purchases.find(p => p.id === prefillPurchaseId) ?? null : null
+  const prefillPurchase = prefillPurchaseId ? (purchases.find(p => p.id === prefillPurchaseId) ?? null) : null
   const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'orders')
 
   const companyOptions = companiesRaw

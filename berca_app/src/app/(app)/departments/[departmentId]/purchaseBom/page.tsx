@@ -1,5 +1,5 @@
 import {getPurchaseBOMs} from '@/dal/purchaseBoms'
-import {mapPurchaseBOM} from '@/extra/purchaseBoms'
+import {mapPurchaseBOM} from '../../../../../mapper/purchaseBoms'
 import {PurchaseBOMTable} from '@/components/custom/purchaseBomTable'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'

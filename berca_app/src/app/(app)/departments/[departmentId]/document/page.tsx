@@ -19,7 +19,7 @@ import {
   mapDocumentGroupD,
   mapDocumentPlace,
   mapDocumentStatus,
-} from '@/extra/documents'
+} from '../../../../../mapper/documents'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'

@@ -19,7 +19,7 @@ import {
   undeleteWorkOrderStructureAction,
 } from '@/serverFunctions/workOrderStructures'
 import type {MaterialOption, PermissionProps, StructureRow} from '@/types/workOrder'
-import {formatDate, tdClass, thClass} from '@/extra/workOrderHelpers'
+import {formatDate, tdClass, thClass} from '../../mapper/workOrderHelpers'
 
 // ─── Local types ──────────────────────────────────────────────────────────────
 interface WorkOrderStructuresProps {

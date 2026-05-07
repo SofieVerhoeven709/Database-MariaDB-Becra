@@ -10,8 +10,8 @@ import {getMaterialGroups, getMaterials} from '@/dal/materials'
 import {getWarehousePlaces} from '@/dal/warehousePlace'
 import {getEmployees} from '@/dal/employees'
 import {getSerialTrackedStructuresBySerialTrackedIds} from '@/dal/materialSerialTrackedStructure'
-import {mapMaterialSerialTracked} from '@/extra/serialTracked'
-import {mapWorkOrder} from '@/extra/workOrders'
+import {mapMaterialSerialTracked} from '../../../../../mapper/serialTracked'
+import {mapWorkOrder} from '../../../../../mapper/workOrders'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {AppSettings} from '@/constants'
@@ -64,17 +64,22 @@ export default async function MaintenancePage({params}: PageProps) {
       item => item.lastInspectionDate || item.nextInspectionDate || item.inspectionIntervalValue,
     )
 
-    const structureRows = await getSerialTrackedStructuresBySerialTrackedIds(maintenanceSerialTracked.map(item => item.id))
-    const inspectionItemsBySerialTrackedId = structureRows.reduce<Record<string, MaintenanceInspectionItem[]>>((acc, row) => {
-      if (!acc[row.serialTrackedId]) acc[row.serialTrackedId] = []
-      acc[row.serialTrackedId].push({
-        id: row.id,
-        beNumber: row.beNumber,
-        shortDescription: row.shortDescription,
-        quantityRequired: row.quantityRequired,
-      })
-      return acc
-    }, {})
+    const structureRows = await getSerialTrackedStructuresBySerialTrackedIds(
+      maintenanceSerialTracked.map(item => item.id),
+    )
+    const inspectionItemsBySerialTrackedId = structureRows.reduce<Record<string, MaintenanceInspectionItem[]>>(
+      (acc, row) => {
+        if (!acc[row.serialTrackedId]) acc[row.serialTrackedId] = []
+        acc[row.serialTrackedId].push({
+          id: row.id,
+          beNumber: row.beNumber,
+          shortDescription: row.shortDescription,
+          quantityRequired: row.quantityRequired,
+        })
+        return acc
+      },
+      {},
+    )
 
     const workOrders = workOrdersFromDAL.map(mapWorkOrder)
 

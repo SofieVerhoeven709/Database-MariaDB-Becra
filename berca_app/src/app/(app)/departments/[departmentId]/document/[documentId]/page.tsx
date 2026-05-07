@@ -8,7 +8,7 @@ import {
   getDocumentStructureTargetNames,
 } from '@/dal/documents'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {mapDocumentDetail, mapDocumentPlace, mapDocument, mapDocumentStatus} from '@/extra/documents'
+import {mapDocumentDetail, mapDocumentPlace, mapDocument, mapDocumentStatus} from '../../../../../../mapper/documents'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'

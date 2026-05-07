@@ -7,7 +7,7 @@ import {
   getOpenProjects,
 } from '@/dal/billOfQuantities'
 import {getContactOptions} from '@/dal/contacts'
-import {mapBoq} from '@/extra/billOfQuantities'
+import {mapBoq} from '../../../../../mapper/billOfQuantities'
 import {BoqTable} from '@/components/custom/billOfQuantityTable'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'

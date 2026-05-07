@@ -19,4 +19,3 @@ export function mapFunctionItem(f: FunctionWithAudit): MappedFunctionItem {
       : null,
   }
 }
-

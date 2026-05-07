@@ -1,7 +1,7 @@
 import type {Prisma} from '@/generated/prisma/client'
 import type {MappedFollowUp, FollowUpDetailData, MappedFollowUpStructureSummary} from '@/types/followUp'
-import {mapVisibility} from '@/extra/visibilityForRole'
-import {mapDepartmentVisibility} from '@/extra/visibilityForDepartment'
+import {mapVisibility} from '@/mapper/visibilityForRole'
+import {mapDepartmentVisibility} from '@/mapper/visibilityForDepartment'
 
 // ─── Prisma payload types ─────────────────────────────────────────────────────
 

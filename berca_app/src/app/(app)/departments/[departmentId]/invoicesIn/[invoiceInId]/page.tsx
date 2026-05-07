@@ -8,7 +8,7 @@ import {
   getVatMargins,
 } from '@/dal/invoices'
 import {getCompanies} from '@/dal/companies'
-import {mapInvoiceIn} from '@/extra/invoices'
+import {mapInvoiceIn} from '../../../../../../mapper/invoices'
 import {InvoiceInDetail} from '@/components/custom/invoiceInDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'

@@ -77,7 +77,7 @@ function validityBadge(record: HrCertificationTraining) {
   const state = getValidityState(record)
 
   if (state === 'expired') {
-    return <Badge className="border-0 bg-red-500/15 text-red-700 dark:text-red-300">Vervallen</Badge>
+    return <Badge className="border-0 bg-red-500/15 text-red-700 dark:text-red-300">Expired</Badge>
   }
   if (state === 'expiring') {
     return (
@@ -88,7 +88,7 @@ function validityBadge(record: HrCertificationTraining) {
     )
   }
   if (state === 'valid') {
-    return <Badge className="border-0 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">Geldig</Badge>
+    return <Badge className="border-0 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">Valid</Badge>
   }
   return <Badge variant="secondary">No certificate</Badge>
 }
@@ -246,7 +246,7 @@ export function HrCertificationTrainingTable({
           <Input
             value={query}
             onChange={event => setQuery(event.target.value)}
-            placeholder="Zoek werknemer, opleiding of verstrekker"
+            placeholder="Search employee, training or provider name..."
             className="pl-9"
           />
         </label>
@@ -303,7 +303,7 @@ export function HrCertificationTrainingTable({
                   <TableHead>Type</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Valid until</TableHead>
-                  <TableHead>Verstrekker</TableHead>
+                  <TableHead>Provider</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>

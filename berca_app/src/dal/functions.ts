@@ -1,7 +1,7 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 import type {Function} from '@/generated/prisma/client'
-import type {FunctionWithAudit} from '@/extra/functions'
+import type {FunctionWithAudit} from '../mapper/functions'
 
 export async function getFunctions(): Promise<Function[] | null> {
   return prismaClient.function.findMany({orderBy: {name: 'asc'}})
@@ -16,4 +16,3 @@ export async function getFunctionsWithAudit(): Promise<FunctionWithAudit[]> {
     orderBy: {name: 'asc'},
   })
 }
-

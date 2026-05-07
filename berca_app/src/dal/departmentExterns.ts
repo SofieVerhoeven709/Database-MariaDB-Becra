@@ -1,7 +1,7 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 import type {DepartmentExtern} from '@/generated/prisma/client'
-import type {DepartmentExternWithAudit} from '@/extra/departmentExterns'
+import type {DepartmentExternWithAudit} from '../mapper/departmentExterns'
 
 export async function getDepartmentExterns(): Promise<DepartmentExtern[] | null> {
   return prismaClient.departmentExtern.findMany({orderBy: {name: 'asc'}})
@@ -16,4 +16,3 @@ export async function getDepartmentExternsWithAudit(): Promise<DepartmentExternW
     orderBy: {name: 'asc'},
   })
 }
-

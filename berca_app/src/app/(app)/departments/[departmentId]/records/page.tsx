@@ -1,6 +1,11 @@
 import {EmployeeTable} from '@/components/custom/employeeTable'
-import {getEmployeeBenefitOptions, getEmployeeContractStatusOptions, getEmployeeContractTypeOptions, getEmployees} from '@/dal/employees'
-import {mapEmployee, mapManagedEmployeeOption} from '@/extra/employees'
+import {
+  getEmployeeBenefitOptions,
+  getEmployeeContractStatusOptions,
+  getEmployeeContractTypeOptions,
+  getEmployees,
+} from '@/dal/employees'
+import {mapEmployee, mapManagedEmployeeOption} from '../../../../../mapper/employees'
 import {getTitles} from '@/dal/titles'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getRoleLevels} from '@/dal/roleLevel'

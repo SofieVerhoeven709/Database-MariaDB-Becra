@@ -26,4 +26,3 @@ export function mapQuoteBecra(q: QuoteBecraWithRelations): MappedQuoteBecra {
       : null,
   }
 }
-

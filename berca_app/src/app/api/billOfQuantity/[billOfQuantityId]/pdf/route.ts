@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server'
 import {getBoqById} from '@/dal/billOfQuantities'
 import {getMaterialPricesForBeNumbers} from '@/dal/invoices'
-import {mapBoq} from '@/extra/billOfQuantities'
+import {mapBoq} from '../../../../../mapper/billOfQuantities'
 
 interface RouteContext {
   params: Promise<{billOfQuantityId: string}>

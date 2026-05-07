@@ -1,5 +1,5 @@
 import {getProjectBOMs} from '@/dal/projectBoms'
-import {mapProjectBOM} from '@/extra/projectBom'
+import {mapProjectBOM} from '../../../../../mapper/projectBom'
 import {ProjectBOMTable} from '@/components/custom/projectBomTable'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'

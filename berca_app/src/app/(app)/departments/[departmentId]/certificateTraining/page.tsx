@@ -1,7 +1,7 @@
 import {CertificateTable} from '@/components/custom/certificateTable'
 import {getCertificates, getCertificateTypes} from '@/dal/training'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {mapCertificate, mapCertificateType} from '@/extra/training'
+import {mapCertificate, mapCertificateType} from '@/mapper/training'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {getDepartmentById} from '@/dal/department'

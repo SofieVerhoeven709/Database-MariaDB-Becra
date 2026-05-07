@@ -1,6 +1,6 @@
 import {EmployeeDetail} from '@/components/custom/employeeDetail'
 import {getEmployeeDetail} from '@/dal/employees'
-import {mapEmployeeDetail} from '@/extra/employees'
+import {mapEmployeeDetail} from '../../../../../../mapper/employees'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getRoleLevels} from '@/dal/roleLevel'
 import {getTitles} from '@/dal/titles'

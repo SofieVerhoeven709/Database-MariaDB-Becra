@@ -1,6 +1,6 @@
 import {notFound} from 'next/navigation'
 import {getPriceListById, enrichLinkedTargets, getMaterialPricesForPriceListItems} from '@/dal/priceLists'
-import {mapPriceList} from '@/extra/priceLists'
+import {mapPriceList} from '../../../../../../mapper/priceLists'
 import {PriceListDetail} from '@/components/custom/priceListDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'

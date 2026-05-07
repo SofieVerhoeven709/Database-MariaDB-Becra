@@ -9,7 +9,7 @@ import {
   getPriceListsForCompanies,
   getMaterialPricesForBeNumbers,
 } from '@/dal/invoices'
-import {mapInvoiceOut} from '@/extra/invoices'
+import {mapInvoiceOut} from '../../../../../../mapper/invoices'
 import {InvoiceOutDetail} from '@/components/custom/invoiceOutDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'

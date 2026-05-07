@@ -1,4 +1,4 @@
-import type {WorkOrderDetailData} from '@/extra/workOrders'
+import type {WorkOrderDetailData} from '../mapper/workOrders'
 
 export interface MappedWorkOrder {
   id: string

@@ -9,7 +9,7 @@ import {
   getPurchaseDetailMaterialDemandOptions,
 } from '@/dal/purchases'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
-import {mapPurchaseDetail, normalizePurchaseStatus} from '@/extra/purchases'
+import {mapPurchaseDetail, normalizePurchaseStatus} from '../../../../../../mapper/purchases'
 import type {MappedPurchaseDetail} from '@/types/purchase'
 import {PurchaseDetailTable} from '@/components/custom/purchaseDetailTable'
 import {PurchaseOrderHeader} from '@/components/custom/purchaseOrderHeader'
@@ -71,15 +71,15 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
     const quoteLine = line as typeof line & {additionalInfo?: string | null}
 
     return {
-    id: line.id,
-    name: `${line.Material?.beNumber ?? 'N/A'} - ${line.Material?.name ?? 'Line'} (${line.quantity})`,
-    materialId: line.materialId,
-    materialDemandId: line.materialDemandId,
-    additionalInfo: quoteLine.additionalInfo ?? null,
-    quantity: line.quantity,
-    unitPrice: line.unitPrice?.toString() ?? '0.00',
-    minQuantity: line.minQuantity ?? null,
-    notDeliverable: line.notDeliverable,
+      id: line.id,
+      name: `${line.Material?.beNumber ?? 'N/A'} - ${line.Material?.name ?? 'Line'} (${line.quantity})`,
+      materialId: line.materialId,
+      materialDemandId: line.materialDemandId,
+      additionalInfo: quoteLine.additionalInfo ?? null,
+      quantity: line.quantity,
+      unitPrice: line.unitPrice?.toString() ?? '0.00',
+      minQuantity: line.minQuantity ?? null,
+      notDeliverable: line.notDeliverable,
     }
   })
 

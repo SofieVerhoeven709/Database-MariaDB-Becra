@@ -3,7 +3,7 @@ import {
   getMaterialDemandMaterialOptions,
   getMaterialDemandSourceReferenceLabels,
 } from '@/dal/materialDemands'
-import {mapMaterialDemand} from '@/extra/materialDemands'
+import {mapMaterialDemand} from '../../../../../mapper/materialDemands'
 import {MaterialDemandTable} from '@/components/custom/materialDemandTable'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
@@ -89,4 +89,3 @@ export default async function MaterialDemandPage({params, searchParams}: PagePro
     </main>
   )
 }
-

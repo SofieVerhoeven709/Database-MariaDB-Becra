@@ -39,14 +39,14 @@ import {
 } from '@/serverFunctions/projectBoms'
 import {createContactAndReturnIdAction} from '@/serverFunctions/contacts'
 import type {Route} from 'next'
-import type {ProjectDetailData} from '@/extra/projectDetails'
+import type {ProjectDetailData} from '../../mapper/projectDetails'
 import type {MappedContact} from '@/types/contact'
 import type {MappedProjectBOM} from '@/types/projectBom'
 import {ContactFormDialog} from '@/components/custom/contactFormDialog'
 import {WorkOrderFormDialog} from '@/components/custom/workOrderFormDialog'
 import {ProjectBOMFormDialog} from '@/components/custom/projectBomFormDialog'
 import type {CountryOption} from '@/components/custom/countrySelect'
-import {mapProjectBOM} from '@/extra/projectBom'
+import {mapProjectBOM} from '../../mapper/projectBom'
 
 interface Option {
   id: string

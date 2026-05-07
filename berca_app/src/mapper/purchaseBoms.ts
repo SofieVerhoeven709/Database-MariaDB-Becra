@@ -1,5 +1,5 @@
 import type {MappedPurchaseBOM, MappedPurchaseBOMStructure, ChildPurchaseBOM} from '@/types/purchaseBom'
-import type {BOMExecutionRaw} from '@/extra/projectBom'
+import type {BOMExecutionRaw} from '@/mapper/projectBom'
 
 // ─── Raw types (matching updated Prisma include shape) ─────────────────────────
 type StructureEmployeeRaw = {id: string; firstName: string; lastName: string}

@@ -116,7 +116,7 @@ export function RecruitmentVacancyFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle>{vacancy ? 'Vacature wijzigen' : 'Vacature toevoegen'}</DialogTitle>
+          <DialogTitle>{vacancy ? 'Change job offer' : 'Add job offer'}</DialogTitle>
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

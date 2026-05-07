@@ -101,10 +101,11 @@ export function RecruitmentApplicantFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Type contact</Label>
+            <Label>Type contact *</Label>
             <Select
               value={form.contactType}
-              onValueChange={value => setForm(f => ({...f, contactType: value as RecruitmentContactType}))}>
+              onValueChange={value => setForm(f => ({...f, contactType: value as RecruitmentContactType}))}
+              required>
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
@@ -116,7 +117,7 @@ export function RecruitmentApplicantFormDialog({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label>Contact date</Label>
+            <Label>Contact date *</Label>
             <Input
               type="date"
               value={form.contactDate}

@@ -1,6 +1,7 @@
 'use client'
 
 import {useRef} from 'react'
+import {useState} from 'react'
 import {Download, Upload} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {buildCsv, downloadCsv, parseCsv, type CsvRow} from '@/lib/csv'
@@ -61,6 +62,7 @@ function exportTable(table: HTMLTableElement, filename: string) {
 export function TableCsvActions({filename = 'table.csv', onUpload}: TableCsvActionsProps) {
   const rootRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const [uploading, setUploading] = useState(false)
 
   return (
     <div ref={rootRef} className="flex items-center gap-2">
@@ -83,19 +85,24 @@ export function TableCsvActions({filename = 'table.csv', onUpload}: TableCsvActi
         onChange={async event => {
           const file = event.target.files?.[0]
           if (!file || !onUpload) return
-          await onUpload(parseCsv(await file.text()), file)
-          event.target.value = ''
+          setUploading(true)
+          try {
+            await onUpload(parseCsv(await file.text()), file)
+          } finally {
+            setUploading(false)
+            event.target.value = ''
+          }
         }}
       />
       <Button
         type="button"
         variant="outline"
-        disabled={!onUpload}
+        disabled={!onUpload || uploading}
         title={onUpload ? 'Upload CSV' : 'CSV upload requires a table-specific importer'}
         onClick={() => inputRef.current?.click()}
         className="flex items-center gap-2">
         <Upload className="h-4 w-4" />
-        Upload CSV
+        {uploading ? 'Uploading...' : 'Upload CSV'}
       </Button>
     </div>
   )

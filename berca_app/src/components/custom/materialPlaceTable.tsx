@@ -6,6 +6,7 @@ import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, type CsvRow} from '@/lib/csv'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialPlaceFormDialog} from '@/components/custom/materialPlaceFormDialog'
 import type {MappedMaterialPlace} from '@/types/materialPlace'
@@ -28,6 +29,11 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
   ) : (
     <ChevronDown className="inline h-3.5 w-3.5 ml-1" />
   )
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create material place.'
 }
 
 interface MaterialPlaceTableProps {
@@ -132,6 +138,62 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const abbreviation = getCsvValue(row, ['Abbreviation', 'abbreviation'])
+
+      if (!abbreviation) {
+        errors.push(`Row ${rowNumber}: Abbreviation is required.`)
+        continue
+      }
+
+      const quantityValue = getCsvValue(row, ['Qty In Stock', 'Quantity In Stock', 'quantityInStock'])
+      const quantityInStock = quantityValue ? Number(quantityValue) : 0
+
+      if (!Number.isFinite(quantityInStock) || quantityInStock < 0) {
+        errors.push(`Row ${rowNumber}: Quantity in stock is invalid.`)
+        continue
+      }
+
+      try {
+        await createMaterialPlaceAction({
+          id: crypto.randomUUID(),
+          abbreviation,
+          beNumber: getCsvValue(row, ['Material Number (BE/IOS)', 'BE Number', 'beNumber']) || undefined,
+          place: getCsvValue(row, ['Warehouse Place', 'Warehouse', 'Place', 'place']) || undefined,
+          shelf: getCsvValue(row, ['Shelf', 'X', 'shelf']) || undefined,
+          column: getCsvValue(row, ['Column', 'Y', 'column']) || undefined,
+          layer: getCsvValue(row, ['Layer', 'Z', 'layer']) || undefined,
+          layerPlace: getCsvValue(row, ['Layer Place', 'layerPlace']) || undefined,
+          information: getCsvValue(row, ['Information', 'information']) || undefined,
+          quantityInStock,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+
+    window.alert(
+      errors.length > 0
+        ? `Created ${created} material place(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} material place(s).`,
+    )
+  }
+
   const columns: {key: SortField; label: string}[] = [
     {key: 'abbreviation', label: 'Abbreviation'},
     {key: 'beNumber', label: 'Material Number (BE/IOS)'},
@@ -161,7 +223,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
             <SelectItem value="all">All statuses</SelectItem>
           </SelectContent>
         </Select>
-        <TableCsvActions filename="material-place-table.csv" />
+        <TableCsvActions filename="material-place-table.csv" onUpload={handleUploadCsv} />
         <Button
           onClick={() => {
             setDialogMode('create')

@@ -68,3 +68,23 @@ export function parseCsv(text: string): CsvRow[] {
 export function isTruthyCsvValue(value: string | undefined) {
   return ['1', 'true', 'yes', 'y', 'ja', 'x'].includes((value ?? '').trim().toLowerCase())
 }
+
+export function getCsvValue(row: CsvRow, aliases: string[]) {
+  const entries = Object.entries(row)
+  for (const alias of aliases) {
+    const found = entries.find(([key]) => key.trim().toLowerCase() === alias.toLowerCase())
+    if (found) return found[1].trim()
+  }
+  return ''
+}
+
+export function normalizeCsvLookup(value: string) {
+  return value.trim().toLowerCase()
+}
+
+export function splitCsvList(value: string) {
+  return value
+    .split(/[|,;]/)
+    .map(item => item.trim())
+    .filter(Boolean)
+}

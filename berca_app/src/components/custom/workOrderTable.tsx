@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, RotateCcw} from 'lucide-react'
 import {WorkOrderFormDialog} from '@/components/custom/workOrderFormDialog'
 import {Input} from '@/components/ui/input'
@@ -14,6 +15,7 @@ import Link from 'next/link'
 import type {Route} from 'next'
 import type {MappedWorkOrder} from '@/types/workOrder'
 import {
+  createWorkOrderAction,
   softDeleteWorkOrderAction,
   hardDeleteWorkOrderAction,
   undeleteWorkOrderAction,
@@ -38,6 +40,21 @@ type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function parseRequiredCsvDate(value: string) {
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
+function parseOptionalCsvDate(value: string) {
+  if (!value) return null
+  return parseRequiredCsvDate(value)
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create record.'
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -179,6 +196,62 @@ export function WorkOrderTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const projectValue = getCsvValue(row, ['Project', 'Project Number', 'projectId'])
+      const project = projectOptions.find(
+        option => option.id === projectValue || normalizeCsvLookup(option.name) === normalizeCsvLookup(projectValue),
+      )
+      const startDate = parseRequiredCsvDate(getCsvValue(row, ['Start Date', 'startDate']))
+
+      if (!project) {
+        errors.push(`Row ${rowNumber}: Project could not be matched.`)
+        continue
+      }
+
+      if (!startDate) {
+        errors.push(`Row ${rowNumber}: Start Date is required and must be valid.`)
+        continue
+      }
+
+      try {
+        await createWorkOrderAction({
+          workOrderNumber: getCsvValue(row, ['WO Number', 'Work Order Number', 'workOrderNumber']),
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          additionalInfo: getCsvValue(row, ['Additional Info', 'additionalInfo']) || null,
+          startDate,
+          endDate: parseOptionalCsvDate(getCsvValue(row, ['End Date', 'endDate'])),
+          projectId: project.id,
+          hoursMaterialClosed: isTruthyCsvValue(getCsvValue(row, ['Hrs/Mat Closed', 'Hours Material Closed'])),
+          invoiceSent: isTruthyCsvValue(getCsvValue(row, ['Invoice Sent', 'invoiceSent'])),
+          completed: isTruthyCsvValue(getCsvValue(row, ['Completed', 'completed'])),
+          redirectToProject: false,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} work order(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} work order(s).`,
+    )
+  }
+
   const showDeletedCols = filterDeleted !== 'not-deleted'
   const colCount = showDeletedCols ? 15 : 12
 
@@ -207,7 +280,7 @@ export function WorkOrderTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="work-order-table.csv" />
+        <TableCsvActions filename="work-order-table.csv" onUpload={canDelete ? handleUploadCsv : undefined} />
         {canDelete && (
           <Button
             onClick={() => {

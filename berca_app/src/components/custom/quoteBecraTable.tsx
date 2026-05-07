@@ -1,5 +1,6 @@
 'use client'
 import {useState} from 'react'
+import {getCsvValue, isTruthyCsvValue, type CsvRow} from '@/lib/csv'
 import {useRouter} from 'next/navigation'
 import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, RotateCcw} from 'lucide-react'
 import {Input} from '@/components/ui/input'
@@ -37,6 +38,17 @@ type QuoteBecraUpdatePayload = {
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function parseCsvDate(value: string) {
+  if (!value) return null
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create record.'
 }
 
 function getQuoteNumber(id: string) {
@@ -267,6 +279,48 @@ export function QuoteBecraTable({
     setDialogOpen(true)
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const id = getCsvValue(row, ['Q Number', 'Quote Number', 'id'])
+
+      if (!/^\d{8}$/.test(id)) {
+        errors.push(`Row ${rowNumber}: Quote number must contain exactly 8 digits.`)
+        continue
+      }
+
+      try {
+        await handleSave({
+          id,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          company: getCsvValue(row, ['Company', 'company']) || null,
+          validDate: isTruthyCsvValue(getCsvValue(row, ['Quote Validity', 'Valid', 'validDate'])),
+          date: parseCsvDate(getCsvValue(row, ['Date', 'date']))?.toISOString() ?? null,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} quote(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} quote(s).`,
+    )
+  }
+
   const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
   const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 
@@ -304,7 +358,7 @@ export function QuoteBecraTable({
               <SelectItem value="all">All</SelectItem>
             </SelectContent>
           </Select>
-          <TableCsvActions filename="quote-becra-table.csv" />
+          <TableCsvActions filename="quote-becra-table.csv" onUpload={handleUploadCsv} />
           <Button onClick={openCreate} size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90">
             <Plus className="h-4 w-4 mr-1" /> New Quote
           </Button>

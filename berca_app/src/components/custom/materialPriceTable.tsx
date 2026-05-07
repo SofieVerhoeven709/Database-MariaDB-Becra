@@ -2,7 +2,7 @@
 
 import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Copy, RotateCcw, Download} from 'lucide-react'
+import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Copy, RotateCcw} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -17,6 +17,8 @@ import {
   restoreMaterialPriceAction,
   hardDeleteMaterialPriceAction,
 } from '@/serverFunctions/materialPrices'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, splitCsvList, type CsvRow} from '@/lib/csv'
 
 type SortField = 'beNumber' | 'companyName' | 'brandName' | 'unitPrice' | 'createdByName' | 'createdAt'
 type SortDir = 'asc' | 'desc'
@@ -138,44 +140,6 @@ export function MaterialPriceTable({
       }
     })
 
-  function escapeCsvValue(value: string) {
-    const normalized = value ?? ''
-    if (/[",\n\r]/.test(normalized)) {
-      return `"${normalized.replace(/"/g, '""')}"`
-    }
-    return normalized
-  }
-
-  function handleExportCsv() {
-    if (filtered.length === 0) return
-
-    const headers = ['BE Number', 'Supplier', 'Brand', 'Description', 'Unit Price', 'Unit Qty']
-
-    const lines = filtered.map(materialPrice => {
-      const base = [
-        materialPrice.beNumber,
-        materialPrice.companyName,
-        materialPrice.brandName,
-        materialPrice.shortDescription,
-        materialPrice.unitPrice,
-        materialPrice.quantityPrice,
-      ]
-      return base.map(v => escapeCsvValue(v ?? '')).join(',')
-    })
-
-    const csv = [headers.map(escapeCsvValue).join(','), ...lines].join('\n')
-    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'})
-    const url = URL.createObjectURL(blob)
-    const anchor = document.createElement('a')
-    const date = new Date().toISOString().slice(0, 10)
-    anchor.href = url
-    anchor.download = `materialPrice-${date}.csv`
-    document.body.appendChild(anchor)
-    anchor.click()
-    document.body.removeChild(anchor)
-    URL.revokeObjectURL(url)
-  }
-
   function toggleSort(field: SortField) {
     if (sortField === field) setSortDir(prev => (prev === 'asc' ? 'desc' : 'asc'))
     else {
@@ -280,24 +244,7 @@ export function MaterialPriceTable({
           <span className="text-xs uppercase tracking-wide text-muted-foreground">
             {filtered.length} / {initialEntries.length}
           </span>
-          {(currentUserRole === 'Administrator' || (currentUserRole === 'Manager' && currentUserLevel >= 80)) && (
-            <Button
-              variant="outline"
-              onClick={handleExportCsv}
-              disabled={filtered.length === 0}
-              className="flex items-center gap-2">
-              <Download className="h-4 w-4" />
-              Download CSV
-            </Button>
-          )}
-          <Button
-            variant="outline"
-            onClick={handleExportCsv}
-            disabled={filtered.length === 0}
-            className="flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            Download CSV
-          </Button>
+          <TableCsvActions filename="material-price-table.csv" />
 
           <Button
             onClick={() => {

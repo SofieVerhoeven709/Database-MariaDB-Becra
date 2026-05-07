@@ -4,7 +4,6 @@
 
 - Button handleiding: [NL](handleiding-button-aanpassen.md) | [EN](../../../../OneDrive/Desktop/Becra/docs/handleiding-button-aanpassen-en.md) — stappenplan om knoppen (Shadcn UI Button) te vinden en aan te passen.
 - Departement handleiding: [NL](handleiding-departement-aanpassen.md) | [EN](./handleiding-departement-aanpassen-en.md) — extra actie/knop toevoegen bij een departement + departementkleur aanpassen.
-
 ---
 
 ## NL/EN sync

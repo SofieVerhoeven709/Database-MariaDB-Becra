@@ -140,6 +140,9 @@ const ALL_TARGET_TYPES = [
   'PriceList',
   'HourType',
   'Material',
+  'ProjectBom',
+  'PurchaseBom',
+  'BillOfQuantities',
 ]
 
 const URGENCY_TYPES = ['Low', 'Medium', 'High', 'Critical']
@@ -162,12 +165,15 @@ const FOLLOW_UP_TYPES = [
 const VAT_MARGINS = [0, 6, 12, 21]
 
 const INVOICE_STATUSES = ['Draft', 'Sent', 'Received', 'Overdue', 'Paid', 'Cancelled', 'Disputed']
+const BOQ_STATUSES = ['Draft', 'Sent', 'Received', 'Overdue', 'Paid', 'Cancelled', 'Disputed', 'Approved']
 
 const INVOICE_SENT_TYPES = ['Email', 'Post', 'Hand Delivery', 'Portal', 'Fax']
+const BOQ_SENT_TYPES = ['Email', 'Post', 'Hand Delivery', 'Portal', 'Fax']
 
 const PAYMENT_METHODS = ['Bank Transfer', 'Cash', 'Credit Card', 'Debit Card', 'Direct Debit', 'Cheque']
 
 const INVOICE_TYPES = ['Standard', 'Credit Note', 'Proforma', 'Recurring', 'Intercompany']
+const BOQ_TYPES = ['Standard', 'Credit Note', 'Proforma', 'Recurring', 'Intercompany']
 const DEFAULT_PAYMENT_CONDITIONS = [
   '14 days',
   '30 days invoice date',
@@ -175,7 +181,6 @@ const DEFAULT_PAYMENT_CONDITIONS = [
   '60 days invoice date',
   '60 days end of month',
 ]
-
 export const seedProd = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
   const now = new Date()
@@ -275,6 +280,7 @@ export const seedProd = async (prisma: PrismaClient) => {
   const departmentTargetType = await prisma.targetType.findFirst({where: {name: 'Department'}})
   const companyTargetType = await prisma.targetType.findFirst({where: {name: 'Company'}})
   const hourTypeTargetType = await prisma.targetType.findFirst({where: {name: 'HourType'}})
+  const contactTargetType = await prisma.targetType.findFirst({where: {name: 'Contact'}})
 
   // 8. Upsert UrgencyTypes
   for (const name of URGENCY_TYPES) {
@@ -544,7 +550,41 @@ export const seedProd = async (prisma: PrismaClient) => {
     }
   }
 
-  console.log('Invoice types seeded')
+  // 18. Upsert BOQStatuses
+  for (const name of BOQ_STATUSES) {
+    const existing = await prisma.billOfQuantitiesStatus.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.billOfQuantitiesStatus.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('BOQ statuses seeded')
+
+  // 19. Upsert BOQSentTypes
+  for (const name of BOQ_SENT_TYPES) {
+    const existing = await prisma.billOfQuantitiesSentType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.billOfQuantitiesSentType.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('BOQ sent types seeded')
+
+  // 21. Upsert BOQTypes
+  for (const name of BOQ_TYPES) {
+    const existing = await prisma.billOfQuantitiesType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.billOfQuantitiesType.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('BOQ types seeded')
 
   // 22. Upsert default payment conditions
   for (const name of DEFAULT_PAYMENT_CONDITIONS) {
@@ -565,6 +605,112 @@ export const seedProd = async (prisma: PrismaClient) => {
   }
 
   console.log('Default payment conditions seeded')
+
+  const companies = await prisma.company.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  })
+
+  for (const company of companies) {
+    // 🔍 Check if invoice contact already exists
+    const existingInvoiceContact = await prisma.companyContact.findFirst({
+      where: {
+        companyId: company.id,
+        roleWithCompany: 'Invoice',
+      },
+    })
+
+    if (existingInvoiceContact) continue
+
+    // 🆕 Create target for contact
+    const contactTarget = await prisma.target.create({
+      data: {
+        id: randomUUID(),
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        targetTypeId: contactTargetType!.id,
+      },
+    })
+
+    const contactId = randomUUID()
+
+    // 🆕 Create contact
+    await prisma.contact.create({
+      data: {
+        id: contactId,
+        firstName: company.name,
+        lastName: 'Invoice',
+        active: true,
+        infoCorrect: false,
+        checkInfo: false,
+        newYearCard: false,
+        newsLetter: false,
+        mailing: false,
+        trainingAdvice: false,
+        contactForTrainingAndAdvice: false,
+        customerTrainingAndAdvice: false,
+        potentialCustomerTrainingAndAdvice: false,
+        potentialTeacherTrainingAndAdvice: false,
+        teacherTrainingAndAdvice: false,
+        participantTrainingAndAdvice: false,
+        createdBy: adminEmployee.id,
+        createdAt: now,
+        targetId: contactTarget.id,
+      },
+    })
+
+    // 🏢 Get company addresses (for optional linking)
+    const addresses = await prisma.companyAddress.findMany({
+      where: {companyId: company.id},
+      select: {id: true},
+    })
+
+    // 🔗 Link contact to company
+    await prisma.companyContact.create({
+      data: {
+        id: randomUUID(),
+        contactId,
+        companyId: company.id,
+        roleWithCompany: 'Invoice',
+        companyAddressId: addresses.length === 1 ? addresses[0].id : null,
+        startedDate: now,
+        createdBy: adminEmployee.id,
+        createdAt: now,
+      },
+    })
+
+    // 👁 Optional: visibility (recommended)
+    await prisma.visibilityForRole.create({
+      data: {
+        id: randomUUID(),
+        visible: true,
+        roleLevelId: adminRoleLevel.id,
+        targetId: contactTarget.id,
+      },
+    })
+  }
+
+  console.log('Company invoice contact backfill complete')
+
+  // 23. Backfill MaterialDemand for every existing Material row
+  const materials = await prisma.material.findMany({select: {id: true, shortDescription: true}})
+  for (const material of materials) {
+    await prisma.materialDemand.upsert({
+      where: {materialId: material.id},
+      update: {},
+      create: {
+        id: randomUUID(),
+        materialId: material.id,
+        totalRequiredQty: 0,
+        reservedQty: 0,
+        createdAt: now,
+      },
+    })
+  }
+
+  console.log(`Material demand backfill complete for ${materials.length} material(s)`)
 
   console.log('Seed complete')
 }

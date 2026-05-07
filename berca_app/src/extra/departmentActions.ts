@@ -364,6 +364,13 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       icon: 'Eye',
       owner: 'database',
     },
+    {
+      id: 'department',
+      name: 'Department',
+      description: 'Edit departments',
+      icon: 'Eye',
+      owner: 'database',
+    },
   ],
 
   Purchasing: [

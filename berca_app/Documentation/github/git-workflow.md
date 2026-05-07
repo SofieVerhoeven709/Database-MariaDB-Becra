@@ -31,4 +31,3 @@ git commit -m "Add new feature"
 ```bash
 git push
 ```
-```

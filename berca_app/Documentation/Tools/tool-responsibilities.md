@@ -22,4 +22,3 @@
 | Visual Studio Code | Production deployment |
 | Railway | Editing source code |
 | Docker | Production hosting |
-```

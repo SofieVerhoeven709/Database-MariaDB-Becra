@@ -46,6 +46,3 @@ ADD COLUMN role VARCHAR(50);
 - Direct production edits
 - Deleting tables without backup
 - Manual schema changes outside migrations
-```
-
----

@@ -2,8 +2,14 @@ import type {NextRequest} from 'next/server'
 import {NextResponse} from 'next/server'
 import {getLogger} from '@/lib/logger'
 import type {SessionWithProfile} from '@/models/employees'
+import {departmentSubRoutes} from '@/proxy/protectedRoutes'
 
 const uuidV4Regex = new RegExp(/[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}/gi)
+
+const departmentRoutes = departmentSubRoutes.flatMap(route => [
+  `/departments/:param/${route}`,
+  `/departments/:param/${route}/:param`,
+])
 
 const publicRoutes = new Set<string>(['/', '/login', '/register'])
 
@@ -17,6 +23,9 @@ const protectedRoutes = new Set<string>([
   '/tags',
   '/tags/:param',
   '/account',
+  '/dashboard',
+  '/departments/:param',
+  ...departmentRoutes,
 ])
 
 const publicRedirects: Record<string, string> = {
@@ -53,7 +62,7 @@ export async function redirectProxy(
 
   if (protectedRoutes.has(parameterizedRoute) && !session) {
     logger.warn(`Someone tried to access ${request.nextUrl.pathname} while unauthenticated.`)
-    return NextResponse.redirect(new URL('/login', request.url))
+    return NextResponse.redirect(new URL('/', request.url))
   }
 
   // API Routes must perform their own authentication since these can be called from external applications.

@@ -65,7 +65,19 @@ type ProjectBOMRaw = {
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
-  Project: {id: string; projectNumber: string | null; projectName: string | null}
+  Project: {
+    id: string
+    projectNumber: string | null
+    projectName: string | null
+    ProjectEmployee: {
+      id: string
+      employeeId: string
+      additionalInfo: string | null
+      manager: boolean
+      supervisor: boolean
+      Employee: {id: string; firstName: string; lastName: string}
+    }[]
+  }
   Employee_ProjectBOM_createdByToEmployee: StructureEmployeeRaw
   Employee_ProjectBOM_deletedByToEmployee: StructureEmployeeRaw | null
   other_ProjectBOM: ChildBOMRaw[]
@@ -150,5 +162,13 @@ export function mapProjectBOM(r: ProjectBOMRaw): MappedProjectBOM {
     structures,
     structureCount: structures.filter(s => !s.deleted).length,
     children: r.other_ProjectBOM.map(mapChild),
+    projectEmployees: r.Project.ProjectEmployee.map(pe => ({
+      id: pe.id,
+      employeeId: pe.employeeId,
+      employeeName: `${pe.Employee.firstName} ${pe.Employee.lastName}`,
+      additionalInfo: pe.additionalInfo,
+      manager: pe.manager,
+      supervisor: pe.supervisor,
+    })),
   }
 }

@@ -60,7 +60,7 @@ export function ProjectBOMDetail({
   const canEditNumber = currentUserLevel >= 80
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
-  const currentEmployee = project.ProjectEmployee.find(pe => pe.employeeId === currentUserId) ?? null
+  const currentEmployee = project.projectEmployees.find(pe => pe.employeeId === currentUserId) ?? null
   let isProjectManager = false
   let isProjectSupervisor = false
 

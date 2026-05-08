@@ -10,6 +10,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {InventoryOrderFormDialog, type InventoryOption} from '@/components/custom/inventoryOrderFormDialog'
+import {getCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import type {MappedInventoryOrder} from '@/types/inventoryOrder'
 import {
   createInventoryOrderAction,
@@ -31,6 +32,36 @@ const ISO_THRESHOLD = 4_000_000
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '—'
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create inventory order.'
+}
+
+function parseCsvDate(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return new Date().toISOString().split('T')[0]
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString().split('T')[0]
+}
+
+function findInventoryOption(options: InventoryOption[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return (
+    options.find(
+      option =>
+        option.id === value ||
+        normalizeCsvLookup(option.beNumber ?? '') === normalized ||
+        normalizeCsvLookup(option.shortDescription) === normalized,
+    ) ?? null
+  )
+}
+
+function parsePositiveInt(value: string, fallback = 1) {
+  const parsed = Number.parseInt(value, 10)
+  return Number.isNaN(parsed) || parsed < 1 ? fallback : parsed
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -145,6 +176,68 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
     }
     setEditing(null)
     router.refresh()
+  }
+
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const inventoryValue = getCsvValue(row, [
+        'Material',
+        'Material Number',
+        'Inventory',
+        'inventoryBeNumber',
+        'materialId',
+      ])
+      const inventory = findInventoryOption(inventories, inventoryValue)
+      const orderDate = parseCsvDate(getCsvValue(row, ['Order Date', 'Date', 'orderDate']))
+      const shortDescription = getCsvValue(row, ['Short Description', 'Description', 'shortDescription'])
+
+      if (!inventory) {
+        errors.push(`Row ${rowNumber}: Inventory material could not be matched.`)
+        continue
+      }
+
+      if (!orderDate) {
+        errors.push(`Row ${rowNumber}: Order Date must be valid.`)
+        continue
+      }
+
+      if (!shortDescription) {
+        errors.push(`Row ${rowNumber}: Short Description is required.`)
+        continue
+      }
+
+      try {
+        await createInventoryOrderAction({
+          materialId: inventory.id,
+          orderNumber: getCsvValue(row, ['Order #', 'Order Number', 'orderNumber']) || `OR-${Date.now()}-${index}`,
+          requestedQty: parsePositiveInt(getCsvValue(row, ['Requested Qty', 'Quantity', 'requestedQty'])),
+          orderDate,
+          shortDescription,
+          longDescription: getCsvValue(row, ['Long Description', 'longDescription']) || null,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} inventory order(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} inventory order(s).`,
+    )
   }
 
   async function handleDelete(entry: MappedInventoryOrder) {
@@ -266,7 +359,7 @@ export function InventoryOrderTable({initialEntries, inventories, currentUserRol
           <span className="text-xs uppercase tracking-wide text-muted-foreground">
             {filtered.length} / {initialEntries.length}
           </span>
-          <TableCsvActions filename="inventory-order-table.csv" />
+          <TableCsvActions filename="inventory-order-table.csv" onUpload={handleUploadCsv} />
           <Button
             disabled={!canCreate}
             onClick={() => {

@@ -264,7 +264,7 @@ export function CertificateTable({
                 </SelectContent>
               </Select>
             </div>
-            <TableCsvActions filename="certificate-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
+            <TableCsvActions filename="certificate-table.csv" onUpload={handleUploadCsv} />
 
             {canCreate && (
               <Button

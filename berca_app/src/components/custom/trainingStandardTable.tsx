@@ -217,7 +217,7 @@ export function TrainingStandardTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="training-standard-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
+        <TableCsvActions filename="training-standard-table.csv" onUpload={handleUploadCsv} />
 
         {canCreate && (
           <Button

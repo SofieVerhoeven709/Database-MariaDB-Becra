@@ -185,7 +185,7 @@ export function VatMarginTable({initialVatMargins, countries, currentUserRole, c
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="vat-margin-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
+        <TableCsvActions filename="vat-margin-table.csv" onUpload={handleUploadCsv} />
 
         {canCreate && (
           <Button

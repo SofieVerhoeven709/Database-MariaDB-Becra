@@ -18,8 +18,9 @@ import {
   undeleteIncomingDeliveryAction,
   hardDeleteIncomingDeliveryAction,
 } from '@/serverFunctions/incomingDeliveries'
-import {INCOMING_PERMISSION_LEVELS} from '@/constants'import {TableCsvActions} from '@/components/custom/tableCsvActions'
-
+import {INCOMING_PERMISSION_LEVELS} from '@/constants'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 type SortField = 'incomingDeliveryNumber' | 'deliveryDate' | 'purchaseNumber' | 'status'
 type SortDir = 'asc' | 'desc'
@@ -39,6 +40,38 @@ const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '—'
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create incoming delivery.'
+}
+
+function parseCsvDate(value: string, defaultToToday = false) {
+  const trimmed = value.trim()
+  if (!trimmed) return defaultToToday ? new Date().toISOString() : null
+  const dayMonthYear = trimmed.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})$/)
+  if (dayMonthYear) {
+    const [, day, month, rawYear] = dayMonthYear
+    const year = rawYear.length === 2 ? `20${rawYear}` : rawYear
+    const parsed = new Date(Number(year), Number(month) - 1, Number(day))
+    return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString()
+  }
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString()
+}
+
+function findIncomingDeliveryOption(options: IncomingDeliveryOption[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return (
+    options.find(
+      option =>
+        option.id === value ||
+        normalizeCsvLookup(option.name) === normalized ||
+        normalizeCsvLookup(option.description) === normalized,
+    ) ?? null
+  )
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -126,6 +159,20 @@ export function IncomingDeliveryTable({
       setSortDir('asc')
     }
   }
+  function showCsvUploadResult(entity: string, created: number, errors: string[]) {
+    const description =
+      errors.length > 0
+        ? `Created ${created} ${entity}(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} ${entity}(s).`
+
+    window.alert(description)
+  }
+
+  function optionalCsvValue(row: CsvRow, aliases: string[]) {
+    return getCsvValue(row, aliases) || null
+  }
 
   async function handleSave(entry: MappedIncomingDelivery) {
     if (editing && !canEdit) return
@@ -157,7 +204,61 @@ export function IncomingDeliveryTable({
     setEditing(null)
     router.refresh()
   }
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
 
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const purchaseValue = getCsvValue(row, ['Purchase', 'Purchase Order', 'Purchase Number', 'purchaseId'])
+      const purchase = findIncomingDeliveryOption(purchaseOptions, purchaseValue)
+      const deliveryDate = parseCsvDate(getCsvValue(row, ['Delivery Date', 'Date', 'deliveryDate']), true)
+      const receivedAt = parseCsvDate(getCsvValue(row, ['Received At', 'Received Date', 'receivedAt']))
+
+      if (purchaseValue && !purchase) {
+        errors.push(`Row ${rowNumber}: Purchase Order could not be matched.`)
+        continue
+      }
+
+      if (!deliveryDate) {
+        errors.push(`Row ${rowNumber}: Delivery Date is required and must be valid.`)
+        continue
+      }
+
+      if (getCsvValue(row, ['Received At', 'Received Date', 'receivedAt']) && !receivedAt) {
+        errors.push(`Row ${rowNumber}: Received At must be a valid date.`)
+        continue
+      }
+
+      try {
+        await createIncomingDeliveryAction({
+          incomingDeliveryNumber: getCsvValue(row, [
+            'Delivery #',
+            'Incoming Delivery #',
+            'Incoming Delivery Number',
+            'incomingDeliveryNumber',
+          ]),
+          purchaseId: purchase?.id ?? null,
+          additionalInfo: optionalCsvValue(row, ['Additional Info', 'Additional Information', 'additionalInfo']),
+          description: optionalCsvValue(row, ['Description', 'description']),
+          status: getCsvValue(row, ['Status', 'status']) || 'DRAFT',
+          deliveryDate,
+          receivedAt,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    showCsvUploadResult('incoming delivery', created, errors)
+  }
   async function handleDelete(id: string) {
     if (!canDelete) return
     await softDeleteIncomingDeliveryAction({id})
@@ -220,7 +321,7 @@ export function IncomingDeliveryTable({
           <span className="text-xs uppercase tracking-wide text-muted-foreground">
             {filtered.length} / {initialEntries.length}
           </span>
-          <TableCsvActions filename="incoming-delivery-table.csv" />
+          <TableCsvActions filename="incoming-delivery-table.csv" onUpload={handleUploadCsv} />
 
           {canCreate && (
             <Button

@@ -530,7 +530,7 @@ export function EmployeeTable({
               </SelectContent>
             </Select>
           </div>
-          <TableCsvActions filename="employee-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
+          <TableCsvActions filename="employee-table.csv" onUpload={handleUploadCsv} />
 
           {canCreate && (
             <Button onClick={handleCreate} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">

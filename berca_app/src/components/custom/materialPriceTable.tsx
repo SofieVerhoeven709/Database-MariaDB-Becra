@@ -56,6 +56,17 @@ function parseNullableNumber(value: string | null | undefined) {
   const parsed = parseFloat(value)
   return Number.isNaN(parsed) ? null : parsed
 }
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create material price.'
+}
+
+function findPriceOption(options: MaterialPriceOption[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalized) ?? null
+}
 interface MaterialPriceTableProps {
   initialEntries: MappedMaterialPrice[]
   companies: MaterialPriceOption[]
@@ -187,6 +198,69 @@ export function MaterialPriceTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const companyValue = getCsvValue(row, ['Company', 'companyId'])
+      const company = findPriceOption(companies, companyValue)
+      const beNumber = getCsvValue(row, ['BE Number', 'Material Number', 'beNumber'])
+      const shortDescription = getCsvValue(row, ['Short Description', 'Description', 'shortDescription'])
+
+      if (!beNumber) {
+        errors.push(`Row ${rowNumber}: BE Number is required.`)
+        continue
+      }
+
+      if (!shortDescription) {
+        errors.push(`Row ${rowNumber}: Short Description is required.`)
+        continue
+      }
+
+      if (companyValue && !company) {
+        errors.push(`Row ${rowNumber}: Company could not be matched.`)
+        continue
+      }
+
+      try {
+        await createMaterialPriceAction({
+          beNumber,
+          orderNr: getCsvValue(row, ['Order Nr', 'Order Number', 'orderNr']) || null,
+          quoteBecra: getCsvValue(row, ['Quote Becra', 'quoteBecra']) || null,
+          supplierOrderNr: getCsvValue(row, ['Supplier Order Nr', 'supplierOrderNr']) || null,
+          brandOrderNr: getCsvValue(row, ['Brand Order Nr', 'brandOrderNr']) || null,
+          shortDescription,
+          longDescription: getCsvValue(row, ['Long Description', 'longDescription']) || null,
+          brandName: getCsvValue(row, ['Brand', 'Brand Name', 'brandName']) || null,
+          rejected: isTruthyCsvValue(getCsvValue(row, ['Rejected', 'rejected'])),
+          additionalInfo: getCsvValue(row, ['Additional Info', 'additionalInfo']) || null,
+          unitPrice: parseNullableNumber(getCsvValue(row, ['Unit Price', 'unitPrice'])),
+          quantityPrice: parseNullableNumber(getCsvValue(row, ['Quantity Price', 'quantityPrice'])),
+          companyId: company?.id ?? '',
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} material price(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} material price(s).`,
+    )
+  }
+
   async function handleDelete(id: string) {
     if (isAdmin) {
       await hardDeleteMaterialPriceAction({id})
@@ -244,7 +318,7 @@ export function MaterialPriceTable({
           <span className="text-xs uppercase tracking-wide text-muted-foreground">
             {filtered.length} / {initialEntries.length}
           </span>
-          <TableCsvActions filename="material-price-table.csv" />
+          <TableCsvActions filename="material-price-table.csv" onUpload={handleUploadCsv} />
 
           <Button
             onClick={() => {

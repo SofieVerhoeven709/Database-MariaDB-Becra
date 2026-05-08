@@ -11,6 +11,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import {PurchaseFormDialog, type PurchaseOption} from '@/components/custom/purchaseFormDialog'
 import {PaymentConditionFormDialog} from '@/components/custom/paymentConditionFormDialog'
 import {normalizePurchaseStatus} from '../../mapper/purchases'
@@ -46,6 +47,31 @@ function isOrderedNotSentStatus(status: string | null | undefined): boolean {
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '-'
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create purchase order.'
+}
+
+function parseCsvDate(value: string, defaultToToday = false) {
+  const trimmed = value.trim()
+  if (!trimmed) return defaultToToday ? new Date().toISOString() : null
+  const dayMonthYear = trimmed.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})$/)
+  if (dayMonthYear) {
+    const [, day, month, rawYear] = dayMonthYear
+    const year = rawYear.length === 2 ? `20${rawYear}` : rawYear
+    const parsed = new Date(Number(year), Number(month) - 1, Number(day))
+    return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString()
+  }
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString()
+}
+
+function findCsvOption(options: PurchaseOption[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalized) ?? null
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -254,6 +280,117 @@ export function PurchaseTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const companyValue = getCsvValue(row, ['Company', 'Supplier', 'companyId'])
+      const company = findCsvOption(companies, companyValue)
+      const purchaseDate = parseCsvDate(getCsvValue(row, ['Purchase Date', 'Date', 'purchaseDate']), true)
+      const quoteValue = getCsvValue(row, ['Quote', 'Quote Supplier', 'quoteSupplierId'])
+      const quoteSupplier = findCsvOption(quoteSuppliers, quoteValue)
+      const paymentConditionValue = getCsvValue(row, ['Payment Condition', 'Payment Conditions', 'paymentConditionId'])
+      const paymentCondition = findCsvOption(paymentConditions, paymentConditionValue)
+
+      if (!company) {
+        errors.push(`Row ${rowNumber}: Company could not be matched.`)
+        continue
+      }
+
+      if (!purchaseDate) {
+        errors.push(`Row ${rowNumber}: Purchase Date is required and must be valid.`)
+        continue
+      }
+
+      if (quoteValue && !quoteSupplier) {
+        errors.push(`Row ${rowNumber}: Quote could not be matched.`)
+        continue
+      }
+
+      if (paymentConditionValue && !paymentCondition) {
+        errors.push(`Row ${rowNumber}: Payment Condition could not be matched.`)
+        continue
+      }
+
+      try {
+        await createPurchaseAction({
+          purchaseNumber: getCsvValue(row, ['Purchase #', 'Purchase Number', 'purchaseNumber']),
+          purchaseDate,
+          status: getCsvValue(row, ['Status', 'status']) || 'DRAFT',
+          companyId: company.id,
+          quoteSupplierId: quoteSupplier?.id ?? null,
+          paymentConditionId: paymentCondition?.id ?? null,
+          customerPoNumber: getCsvValue(row, ['Customer PO', 'Customer PO Number', 'customerPoNumber']) || null,
+          bocNumber: getCsvValue(row, ['Confirmation', 'BOC Number', 'bocNumber']) || null,
+          bocCustomerName:
+            getCsvValue(row, ['BOC Customer', 'Confirmation Customer', 'bocCustomerName']) ||
+            findCsvOption(customerOptions, getCsvValue(row, ['Customer', 'Customer Name']))?.name ||
+            null,
+          bocDescription: getCsvValue(row, ['BOC Description', 'Confirmation Description', 'bocDescription']) || null,
+          bocCreatedAt: parseCsvDate(getCsvValue(row, ['BOC Created At', 'Confirmation Date', 'bocCreatedAt'])),
+          bocStatus: getCsvValue(row, ['BOC Status', 'Confirmation Status', 'bocStatus']) || null,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          additionalInfo: getCsvValue(row, ['Additional Info', 'Additional Information', 'additionalInfo']) || null,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} purchase order(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} purchase order(s).`,
+    )
+  }
+
+  async function handleUploadPaymentConditionsCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const name = getCsvValue(row, ['Name', 'Payment Condition', 'Payment Conditions', 'name'])
+
+      if (!name) {
+        errors.push(`Row ${rowNumber}: Name is required.`)
+        continue
+      }
+
+      try {
+        await createPaymentConditionAction({name})
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} payment condition(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} payment condition(s).`,
+    )
+  }
+
   async function handleSavePaymentCondition(name: string, id?: string) {
     if (id) await updatePaymentConditionAction({id, name})
     else await createPaymentConditionAction({name})
@@ -324,7 +461,7 @@ export function PurchaseTable({
               <span className="text-xs uppercase tracking-wide text-muted-foreground">
                 {filtered.length} / {initialPurchases.length}
               </span>
-              <TableCsvActions filename="purchase-table.csv" />
+              <TableCsvActions filename="purchase-table.csv" onUpload={handleUploadCsv} />
               <Button
                 onClick={() => {
                   setEditing(null)
@@ -539,7 +676,7 @@ export function PurchaseTable({
                 className="pl-10 bg-secondary border-border"
               />
             </div>
-            <TableCsvActions filename="payment-conditions-table.csv" />
+            <TableCsvActions filename="payment-conditions-table.csv" onUpload={handleUploadPaymentConditionsCsv} />
             <Button
               onClick={() => {
                 setEditingPaymentCondition(null)

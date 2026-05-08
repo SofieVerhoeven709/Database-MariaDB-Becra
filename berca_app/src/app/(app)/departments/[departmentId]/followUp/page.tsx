@@ -1,11 +1,11 @@
 import {FollowUpTable} from '@/components/custom/followUpTable'
 import {getFollowUps} from '@/dal/followUps'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {mapFollowUp} from '../../../../../mapper/followUps'
+import {mapFollowUp} from '@/mapper/followUps'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
-import {getFollowUpTargetOptions} from '../../../../../mapper/followUpTargetOptions'
+import {getFollowUpTargetOptions} from '@/mapper/followUpTargetOptions'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
@@ -67,9 +67,8 @@ export default async function FollowUpsPage({params}: PageProps) {
     ? allFollowUps
     : allFollowUps.filter(f => {
         const rows = f.visibilityForRoles
-        if (rows.length === 0) return true
-        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
-        return myRow?.visible ?? false
+        if (!rows || rows.length === 0) return false // no rules = hidden
+        return rows.some(r => currentUserRoleLevelIds.includes(r.roleLevelId) && r.visible)
       })
 
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)

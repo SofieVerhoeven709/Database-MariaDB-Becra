@@ -47,10 +47,8 @@ export const createFollowUpAction = protectedServerFunction({
       })
     }
 
-    // Persist role visibility rules for the follow-up target.
-    if (visibilityForRoles.length > 0) {
-      await upsertVisibilityRows(target.id, visibilityForRoles)
-    }
+    await upsertVisibilityRows(target.id, visibilityForRoles)
+
     if (visibilityForDepartments.length > 0) {
       await upsertVisibilityDepartmentRows(target.id, visibilityForDepartments)
     }

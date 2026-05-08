@@ -65,6 +65,15 @@ const emptyProject = (): MappedProject => ({
   deletedBy: null,
   targetId: '',
   projectEmployees: [],
+  // ─── Detail-only fields ───────────────────────────────────────────────────
+  createdByEmployeeId: null,
+  createdByEmployeeName: null,
+  contacts: [],
+  workOrders: [],
+  materialSerialTracks: [],
+  subProjects: [],
+  projectBoms: [],
+  parentProjectNumber: null,
 })
 
 export function ProjectFormDialog({

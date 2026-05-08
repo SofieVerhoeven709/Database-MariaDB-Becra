@@ -1,5 +1,5 @@
 // ─── ProjectBOMStructure ───────────────────────────────────────────────────────
-import {ProjectEmployee} from '@/generated/prisma/client'
+import {MappedProjectEmployee} from '@/types/project'
 
 export interface MappedProjectBOMStructure {
   id: string
@@ -72,13 +72,14 @@ export interface MappedProjectBOM {
   structureCount: number
   /** Direct children of this BOM (one level deep) */
   children: ChildProjectBOM[]
+  projectEmployees: MappedProjectEmployee[]
 }
 
 export interface ProjectOptionBom {
   id: string
   projectNumber: string | null
   projectName: string | null
-  ProjectEmployee: ProjectEmployee[]
+  projectEmployees: MappedProjectEmployee[]
 }
 
 // ─── Project option (for search/select) ───────────────────────────────────────

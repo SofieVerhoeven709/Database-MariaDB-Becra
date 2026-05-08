@@ -1,9 +1,9 @@
 import {ProjectTable} from '@/components/custom/projectTable'
 import {getProjects, getProjectTypes} from '@/dal/projects'
-import {mapProject} from '../../../../../mapper/projects'
+import {mapProjectList} from '@/mapper/projects'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getEmployees} from '@/dal/employees'
-import {mapEmployee} from '../../../../../mapper/employees'
+import {mapEmployee} from '@/mapper/employees'
 import {getCompanies} from '@/dal/companies'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
@@ -30,7 +30,7 @@ export default async function ProjectsPage({params}: PageProps) {
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const currentEmployeeId = profile.id
 
-  const allProjects = projectsFromDAL.map(mapProject)
+  const allProjects = projectsFromDAL.map(mapProjectList)
   const projects =
     isAdmin || (currentUserLevel >= 60 && currentUserRole === 'Project Role') || currentUserRole === 'Management Role'
       ? allProjects

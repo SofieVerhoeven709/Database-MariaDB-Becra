@@ -1,6 +1,6 @@
 import {notFound} from 'next/navigation'
 import {getProjectBOMById, getMaterialOptions, getProjectBOMs} from '@/dal/projectBoms'
-import {mapProjectBOM} from '../../../../../../mapper/projectBom'
+import {mapProjectBOM} from '@/mapper/projectBom'
 import {ProjectBOMDetail} from '@/components/custom/projectBomDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
@@ -28,7 +28,19 @@ export default async function ProjectBOMDetailPage({params}: PageProps) {
   const bom = mapProjectBOM(bomRaw)
   const allBOMs = allBomsRaw.map(r => mapProjectBOM(r))
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const project = bomRaw.Project
+  const project = {
+    id: bomRaw.Project.id,
+    projectNumber: bomRaw.Project.projectNumber,
+    projectName: bomRaw.Project.projectName,
+    projectEmployees: bomRaw.Project.ProjectEmployee.map(pe => ({
+      id: pe.id,
+      employeeId: pe.employeeId,
+      employeeName: `${pe.Employee.firstName} ${pe.Employee.lastName}`,
+      additionalInfo: pe.additionalInfo,
+      manager: pe.manager,
+      supervisor: pe.supervisor,
+    })),
+  }
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

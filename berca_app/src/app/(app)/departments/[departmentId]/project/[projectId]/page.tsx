@@ -2,7 +2,7 @@ import {getProjectById, getProjectTypes} from '@/dal/projects'
 import {getEmployees} from '@/dal/employees'
 import {getContacts} from '@/dal/contacts'
 import {getProjectBOMs} from '@/dal/projectBoms'
-import {mapEmployee} from '../../../../../../mapper/employees'
+import {mapEmployee} from '@/mapper/employees'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {ProjectDetail} from '@/components/custom/projectDetail'
 import {notFound} from 'next/navigation'
@@ -13,7 +13,8 @@ import {getTitles} from '@/dal/titles'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {getCountries} from '@/dal/countries'
-import {mapProjectBOM} from '../../../../../../mapper/projectBom'
+import {mapProjectBOM} from '@/mapper/projectBom'
+import {mapProject} from '@/mapper/projects'
 
 interface PageProps {
   params: Promise<{departmentId: string; projectId: string}>
@@ -66,12 +67,13 @@ export default async function ProjectDetailPage({params}: PageProps) {
     .map(d => ({id: d.id, name: d.name ?? ''}))
     .filter(d => d.name)
   const titleOptions = (titles ?? []).map(t => ({id: t.id, name: t.name ?? ''})).filter(t => t.name)
+  const mappedProject = mapProject(project)
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-6xl">
         <ProjectDetail
-          project={project}
+          project={mappedProject}
           projectTypes={projectTypeOptions}
           companies={companyOptions}
           employees={employeeOptions}

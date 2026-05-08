@@ -1,7 +1,12 @@
 import {DashboardNavbar, type NavbarEmployee} from '@/components/custom/dashboardNavbar'
 import {getSessionFromCookie} from '@/lib/sessionUtils'
 import {redirect} from 'next/navigation'
-import {Route} from 'next'
+import {type Metadata, Route} from 'next'
+
+export const metadata: Metadata = {
+  title: 'Becra BV',
+  description: 'Becra BV dashboard',
+}
 
 export default async function DashboardLayout({children}: {children: React.ReactNode}) {
   const session = await getSessionFromCookie()

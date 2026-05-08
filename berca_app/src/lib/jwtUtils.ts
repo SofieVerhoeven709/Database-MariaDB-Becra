@@ -69,6 +69,6 @@ export const createStatefulJwtToken = (session: SessionWithProfile) => {
       sessionId: session.id,
     },
     PRIVATE_KEY_DECODED,
-    {algorithm: 'RS256', expiresIn: TOKEN_EXPIRATION, subject: session.Employee.username, issuer: 'contacts-app'},
+    {algorithm: 'RS256', expiresIn: TOKEN_EXPIRATION, subject: session.Employee.id, issuer: 'contacts-app'},
   )
 }

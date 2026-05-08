@@ -39,14 +39,13 @@ import {
 } from '@/serverFunctions/projectBoms'
 import {createContactAndReturnIdAction} from '@/serverFunctions/contacts'
 import type {Route} from 'next'
-import type {ProjectDetailData} from '../../mapper/projectDetails'
 import type {MappedContact} from '@/types/contact'
 import type {MappedProjectBOM} from '@/types/projectBom'
 import {ContactFormDialog} from '@/components/custom/contactFormDialog'
 import {WorkOrderFormDialog} from '@/components/custom/workOrderFormDialog'
 import {ProjectBOMFormDialog} from '@/components/custom/projectBomFormDialog'
 import type {CountryOption} from '@/components/custom/countrySelect'
-import {mapProjectBOM} from '../../mapper/projectBom'
+import {MappedProject} from '@/types/project'
 
 interface Option {
   id: string
@@ -54,7 +53,7 @@ interface Option {
 }
 
 interface ProjectDetailProps {
-  project: ProjectDetailData
+  project: MappedProject
   projectTypes: Option[]
   companies: Option[]
   employees: Option[]
@@ -73,11 +72,6 @@ interface ProjectDetailProps {
 function formatDate(date: Date | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
-}
-
-function toInputDate(date: Date | null) {
-  if (!date) return ''
-  return new Date(date).toISOString().slice(0, 10)
 }
 
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
@@ -136,10 +130,10 @@ export function ProjectDetail({
     extraInfo: project.extraInfo ?? '',
     companyId: project.companyId,
     projectTypeId: project.projectTypeId,
-    startDate: toInputDate(project.startDate),
-    endDate: toInputDate(project.endDate),
-    engineeringStartDate: toInputDate(project.engineeringStartDate),
-    closingDate: toInputDate(project.closingDate),
+    startDate: project.startDate,
+    endDate: project.endDate,
+    engineeringStartDate: project.engineeringStartDate,
+    closingDate: project.closingDate,
     isMainProject: project.isMainProject,
     isIntern: project.isIntern,
     isOpen: project.isOpen,
@@ -169,7 +163,7 @@ export function ProjectDetail({
   const [savingDelete, setSavingDelete] = useState(false)
 
   // Employees already assigned — derive from project relation
-  const assignedEmployeeIds = new Set(project.ProjectEmployee.map((pe: any) => pe.employeeId))
+  const assignedEmployeeIds = new Set(project.projectEmployees.map((pe: any) => pe.employeeId))
   const unassignedEmployees = employees.filter(e => !assignedEmployeeIds.has(e.id))
 
   const can = (level: number) => currentUserLevel >= level
@@ -180,7 +174,7 @@ export function ProjectDetail({
   const canManageEmployees = currentUserLevel >= 80
   const canEditNumber = currentUserLevel >= 80
 
-  const currentEmployee = project.ProjectEmployee.find(pe => pe.employeeId === currentUserId) ?? null
+  const currentEmployee = project.projectEmployees.find(pe => pe.employeeId === currentUserId) ?? null
   let isProjectManager = false
   let isProjectSupervisor = false
 
@@ -188,8 +182,8 @@ export function ProjectDetail({
     isProjectManager = currentEmployee.manager
     isProjectSupervisor = currentEmployee.supervisor
   }
-  const projectManager = project.ProjectEmployee.find(pe => pe.manager)?.Employee
-  const projectSupervisor = project.ProjectEmployee.find(pe => pe.supervisor)?.Employee
+  const projectManager = project.projectEmployees.find(pe => pe.manager)?.employeeName
+  const projectSupervisor = project.projectEmployees.find(pe => pe.supervisor)?.employeeName
 
   const workOrderProjectOptions = [{id: project.id, name: `${project.projectNumber} — ${project.projectName}`}]
   const projectScopedBoms: MappedProjectBOM[] = projectBoms.filter(b => b.projectId === project.id)
@@ -202,10 +196,10 @@ export function ProjectDetail({
       extraInfo: project.extraInfo ?? '',
       companyId: project.companyId,
       projectTypeId: project.projectTypeId,
-      startDate: toInputDate(project.startDate),
-      endDate: toInputDate(project.endDate),
-      engineeringStartDate: toInputDate(project.engineeringStartDate),
-      closingDate: toInputDate(project.closingDate),
+      startDate: project.startDate,
+      endDate: project.endDate,
+      engineeringStartDate: project.engineeringStartDate,
+      closingDate: project.closingDate,
       isMainProject: project.isMainProject,
       isIntern: project.isIntern,
       isOpen: project.isOpen,
@@ -233,11 +227,11 @@ export function ProjectDetail({
         isIntern: form.isIntern,
         isOpen: form.isOpen,
         isClosed: form.isClosed,
-        createdAt: project.createdAt,
+        createdAt: new Date(project.createdAt),
         createdBy: project.createdBy,
         parentProjectId: project.parentProjectId,
         deleted: project.deleted,
-        deletedAt: project.deletedAt,
+        deletedAt: project.deletedAt ? new Date(project.deletedAt) : null,
         deletedBy: project.deletedBy,
       })
       setEditing(false)
@@ -537,7 +531,7 @@ export function ProjectDetail({
     )
   }
 
-  const bomsOnProject: MappedProjectBOM[] = project.ProjectBOM.map(b => mapProjectBOM(b as any)) ?? []
+  const bomsOnProject = project.projectBoms
 
   return (
     <div className="flex flex-col gap-6">
@@ -554,7 +548,7 @@ export function ProjectDetail({
               {project.projectNumber} {project.projectName}
             </h1>
             <p className="text-sm text-muted-foreground">
-              {project.Company.name} · {project.ProjectType.name}
+              {project.companyName} · {project.projectTypeName}
             </p>
           </div>
         </div>
@@ -636,7 +630,7 @@ export function ProjectDetail({
                 </SelectContent>
               </Select>
             ) : (
-              <p className="text-sm text-muted-foreground">{project.Company.name}</p>
+              <p className="text-sm text-muted-foreground">{project.companyName}</p>
             )}
           </div>
           <div className="flex flex-col gap-1.5">
@@ -656,20 +650,20 @@ export function ProjectDetail({
               </Select>
             ) : (
               <Badge variant="outline" className="w-fit border-border text-muted-foreground font-normal">
-                {project.ProjectType.name}
+                {project.projectTypeName}
               </Badge>
             )}
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Parent Project</Label>
-            <p className="text-sm text-muted-foreground">{project.Project?.projectNumber ?? '-'}</p>
+            <p className="text-sm text-muted-foreground">{project.parentProjectNumber ?? '-'}</p>
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Start Date</Label>
             {editing ? (
               <Input
                 type="date"
-                value={form.startDate}
+                value={form.startDate ?? ''}
                 onChange={e => {
                   const newStart = e.target.value
                   setForm(f => {
@@ -684,7 +678,9 @@ export function ProjectDetail({
                 className="bg-secondary border-border"
               />
             ) : (
-              <p className="text-sm text-muted-foreground">{formatDate(project.startDate)}</p>
+              <p className="text-sm text-muted-foreground">
+                {formatDate(project.startDate ? new Date(project.startDate) : null)}
+              </p>
             )}
           </div>
           <div className="flex flex-col gap-1.5">
@@ -692,7 +688,7 @@ export function ProjectDetail({
             {editing ? (
               <Input
                 type="date"
-                value={form.endDate}
+                value={form.endDate ?? ''}
                 min={form.startDate || undefined}
                 onChange={e => {
                   const newEnd = e.target.value
@@ -705,7 +701,9 @@ export function ProjectDetail({
                 className="bg-secondary border-border"
               />
             ) : (
-              <p className="text-sm text-muted-foreground">{formatDate(project.endDate)}</p>
+              <p className="text-sm text-muted-foreground">
+                {formatDate(project.endDate ? new Date(project.endDate) : null)}
+              </p>
             )}
           </div>
           <div className="flex flex-col gap-1.5">
@@ -713,13 +711,15 @@ export function ProjectDetail({
             {editing ? (
               <Input
                 type="date"
-                value={form.engineeringStartDate}
+                value={form.engineeringStartDate ?? ''}
                 min={form.startDate || undefined}
                 onChange={e => setForm(f => ({...f, engineeringStartDate: e.target.value}))}
                 className="bg-secondary border-border"
               />
             ) : (
-              <p className="text-sm text-muted-foreground">{formatDate(project.engineeringStartDate)}</p>
+              <p className="text-sm text-muted-foreground">
+                {formatDate(project.engineeringStartDate ? new Date(project.engineeringStartDate) : null)}
+              </p>
             )}
           </div>
           <div className="flex flex-col gap-1.5">
@@ -727,36 +727,32 @@ export function ProjectDetail({
             {editing ? (
               <Input
                 type="date"
-                value={form.closingDate}
+                value={form.closingDate ?? ''}
                 min={form.endDate || undefined}
                 onChange={e => setForm(f => ({...f, closingDate: e.target.value}))}
                 className="bg-secondary border-border"
               />
             ) : (
-              <p className="text-sm text-muted-foreground">{formatDate(project.closingDate)}</p>
+              <p className="text-sm text-muted-foreground">
+                {formatDate(project.closingDate ? new Date(project.closingDate) : null)}
+              </p>
             )}
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created By</Label>
-            <p className="text-sm text-muted-foreground">
-              {project.Employee.firstName} {project.Employee.lastName}
-            </p>
+            <p className="text-sm text-muted-foreground">{project.createdByEmployeeName}</p>
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created At</Label>
-            <p className="text-sm text-muted-foreground">{formatDate(project.createdAt)}</p>
+            <p className="text-sm text-muted-foreground">{formatDate(new Date(project.createdAt))}</p>
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Manager</Label>
-            <p className="text-sm text-muted-foreground">
-              {projectManager?.firstName} {projectManager?.lastName}
-            </p>
+            <p className="text-sm text-muted-foreground">{projectManager}</p>
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Supervisor</Label>
-            <p className="text-sm text-muted-foreground">
-              {projectSupervisor?.firstName} {projectSupervisor?.lastName}
-            </p>
+            <p className="text-sm text-muted-foreground">{projectSupervisor}</p>
           </div>
           <div className="sm:col-span-2 lg:col-span-3 grid grid-cols-2 sm:grid-cols-4 gap-4">
             {(
@@ -818,13 +814,13 @@ export function ProjectDetail({
           <TabsTrigger value="contacts">
             Contacts
             <Badge variant="secondary" className="ml-2 text-xs">
-              {project.ProjectContact.length}
+              {project.contacts.length}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="workorders">
             Work Orders
             <Badge variant="secondary" className="ml-2 text-xs">
-              {project.WorkOrder.length}
+              {project.workOrders.length}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="boms">
@@ -836,19 +832,19 @@ export function ProjectDetail({
           <TabsTrigger value="materials">
             Material Tracks
             <Badge variant="secondary" className="ml-2 text-xs">
-              {project.MaterialSerialTrack.length}
+              {project.materialSerialTracks.length}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="subprojects">
             Sub-projects
             <Badge variant="secondary" className="ml-2 text-xs">
-              {project.other_Project.length}
+              {project.subProjects.length}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="employees">
             Employees
             <Badge variant="secondary" className="ml-2 text-xs">
-              {project.ProjectEmployee.length}
+              {project.projectEmployees.length}
             </Badge>
           </TabsTrigger>
         </TabsList>
@@ -942,7 +938,7 @@ export function ProjectDetail({
                     </TableCell>
                   </TableRow>
                 )}
-                {project.ProjectContact.filter(pc => (showDeletedContacts ? !!pc.deleted : !pc.deleted)).length === 0 &&
+                {project.contacts.filter(pc => (showDeletedContacts ? pc.deleted : !pc.deleted)).length === 0 &&
                 !showInlineContact ? (
                   <TableRow>
                     <TableCell colSpan={canDelete ? 8 : 7} className="h-24 text-center text-muted-foreground">
@@ -950,73 +946,70 @@ export function ProjectDetail({
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.ProjectContact.filter(pc => (showDeletedContacts ? !!pc.deleted : !pc.deleted)).map(pc => (
-                    <TableRow
-                      key={pc.id}
-                      className={`border-border/40 hover:bg-secondary/50 ${pc.deleted ? 'opacity-50' : ''}`}>
-                      <TableCell className={`${tdClass} text-foreground font-medium`}>
-                        {pc.Contact ? `${pc.Contact.firstName} ${pc.Contact.lastName}` : '-'}
-                      </TableCell>
-                      <TableCell className={tdClass}>{pc.Contact?.mail1 ?? '-'}</TableCell>
-                      <TableCell className={tdClass}>{pc.Contact?.generalPhone ?? '-'}</TableCell>
-                      <TableCell className={tdClass}>
-                        <span className="max-w-[200px] truncate inline-block">{pc.description ?? '-'}</span>
-                      </TableCell>
-                      <TableCell>
-                        {pc.isValid ? (
-                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
-                        ) : (
-                          <Badge variant="secondary" className="text-muted-foreground font-medium">
-                            No
-                          </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell className={tdClass}>
-                        {pc.Employee_ProjectContact_createdByToEmployee.firstName}{' '}
-                        {pc.Employee_ProjectContact_createdByToEmployee.lastName}
-                      </TableCell>
-                      <TableCell className={tdClass}>{formatDate(pc.createdAt)}</TableCell>
-                      {canDelete && (
-                        <TableCell>
-                          <RowActions
-                            isDeleted={!!pc.deleted}
-                            onEdit={() =>
-                              openEditContact({
-                                id: pc.id,
-                                description: pc.description,
-                                extraInfo: pc.extraInfo,
-                                isValid: pc.isValid,
-                              })
-                            }
-                            onSoftDelete={() =>
-                              setDeleteTarget({
-                                type: 'contact',
-                                id: pc.id,
-                                label: pc.Contact ? `${pc.Contact.firstName} ${pc.Contact.lastName}` : pc.id,
-                                action: 'soft',
-                              })
-                            }
-                            onHardDelete={() =>
-                              setDeleteTarget({
-                                type: 'contact',
-                                id: pc.id,
-                                label: pc.Contact ? `${pc.Contact.firstName} ${pc.Contact.lastName}` : pc.id,
-                                action: 'hard',
-                              })
-                            }
-                            onUndelete={() =>
-                              setDeleteTarget({
-                                type: 'contact',
-                                id: pc.id,
-                                label: pc.Contact ? `${pc.Contact.firstName} ${pc.Contact.lastName}` : pc.id,
-                                action: 'undelete',
-                              })
-                            }
-                          />
+                  project.contacts
+                    .filter(pc => (showDeletedContacts ? pc.deleted : !pc.deleted))
+                    .map(pc => (
+                      <TableRow
+                        key={pc.id}
+                        className={`border-border/40 hover:bg-secondary/50 ${pc.deleted ? 'opacity-50' : ''}`}>
+                        <TableCell className={`${tdClass} text-foreground font-medium`}>{pc.contactName}</TableCell>
+                        <TableCell className={tdClass}>{pc.contactEmail ?? '-'}</TableCell>
+                        <TableCell className={tdClass}>{pc.contactPhone ?? '-'}</TableCell>
+                        <TableCell className={tdClass}>
+                          <span className="max-w-50 truncate inline-block">{pc.description ?? '-'}</span>
                         </TableCell>
-                      )}
-                    </TableRow>
-                  ))
+                        <TableCell>
+                          {pc.isValid ? (
+                            <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-muted-foreground font-medium">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className={tdClass}>{pc.createdByName}</TableCell>
+                        <TableCell className={tdClass}>{formatDate(new Date(pc.createdAt))}</TableCell>
+                        {canDelete && (
+                          <TableCell>
+                            <RowActions
+                              isDeleted={pc.deleted}
+                              onEdit={() =>
+                                openEditContact({
+                                  id: pc.id,
+                                  description: pc.description,
+                                  extraInfo: pc.extraInfo,
+                                  isValid: pc.isValid,
+                                })
+                              }
+                              onSoftDelete={() =>
+                                setDeleteTarget({
+                                  type: 'contact',
+                                  id: pc.id,
+                                  label: pc.contactName,
+                                  action: 'soft',
+                                })
+                              }
+                              onHardDelete={() =>
+                                setDeleteTarget({
+                                  type: 'contact',
+                                  id: pc.id,
+                                  label: pc.contactName,
+                                  action: 'hard',
+                                })
+                              }
+                              onUndelete={() =>
+                                setDeleteTarget({
+                                  type: 'contact',
+                                  id: pc.id,
+                                  label: pc.contactName,
+                                  action: 'undelete',
+                                })
+                              }
+                            />
+                          </TableCell>
+                        )}
+                      </TableRow>
+                    ))
                 )}
               </TableBody>
             </Table>
@@ -1070,96 +1063,100 @@ export function ProjectDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {project.WorkOrder.filter(wo => (showDeletedWorkOrders ? !!wo.deleted : !wo.deleted)).length === 0 ? (
+                {project.workOrders.filter(wo => (showDeletedWorkOrders ? wo.deleted : !wo.deleted)).length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={canDelete ? 10 : 9} className="h-24 text-center text-muted-foreground">
                       No work orders found.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.WorkOrder.filter(wo => (showDeletedWorkOrders ? !!wo.deleted : !wo.deleted)).map(wo => (
-                    <TableRow key={wo.id} className="border-border/40 hover:bg-secondary/50">
-                      <TableCell className={`${tdClass} text-foreground font-medium`}>
-                        {wo.workOrderNumber ?? '-'}
-                      </TableCell>
-                      <TableCell className={tdClass}>
-                        <span className="max-w-[200px] truncate inline-block">{wo.description ?? '-'}</span>
-                      </TableCell>
-                      <TableCell className={tdClass}>{formatDate(wo.startDate)}</TableCell>
-                      <TableCell className={tdClass}>{formatDate(wo.endDate)}</TableCell>
-                      <TableCell>
-                        {wo.completed ? (
-                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
-                        ) : (
-                          <Badge variant="secondary" className="text-muted-foreground font-medium">
-                            No
-                          </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {wo.invoiceSent ? (
-                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
-                        ) : (
-                          <Badge variant="secondary" className="text-muted-foreground font-medium">
-                            No
-                          </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {wo.hoursMaterialClosed ? (
-                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
-                        ) : (
-                          <Badge variant="secondary" className="text-muted-foreground font-medium">
-                            No
-                          </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell className={tdClass}>
-                        {wo.Employee.firstName} {wo.Employee.lastName}
-                      </TableCell>
-                      <TableCell>
-                        <Link href={`/departments/${departmentId}/workOrder/${wo.id}` as Route}>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </Button>
-                        </Link>
-                      </TableCell>
-                      {canDelete && (
-                        <TableCell>
-                          <RowActions
-                            isDeleted={!!wo.deleted}
-                            onSoftDelete={() =>
-                              setDeleteTarget({
-                                type: 'workorder',
-                                id: wo.id,
-                                label: wo.workOrderNumber ?? wo.id,
-                                action: 'soft',
-                              })
-                            }
-                            onHardDelete={() =>
-                              setDeleteTarget({
-                                type: 'workorder',
-                                id: wo.id,
-                                label: wo.workOrderNumber ?? wo.id,
-                                action: 'hard',
-                              })
-                            }
-                            onUndelete={() =>
-                              setDeleteTarget({
-                                type: 'workorder',
-                                id: wo.id,
-                                label: wo.workOrderNumber ?? wo.id,
-                                action: 'undelete',
-                              })
-                            }
-                          />
+                  project.workOrders
+                    .filter(wo => (showDeletedWorkOrders ? wo.deleted : !wo.deleted))
+                    .map(wo => (
+                      <TableRow key={wo.id} className="border-border/40 hover:bg-secondary/50">
+                        <TableCell className={`${tdClass} text-foreground font-medium`}>
+                          {wo.workOrderNumber ?? '-'}
                         </TableCell>
-                      )}
-                    </TableRow>
-                  ))
+                        <TableCell className={tdClass}>
+                          <span className="max-w-50 truncate inline-block">{wo.description ?? '-'}</span>
+                        </TableCell>
+                        <TableCell className={tdClass}>
+                          {formatDate(wo.startDate ? new Date(wo.startDate) : null)}
+                        </TableCell>
+                        <TableCell className={tdClass}>
+                          {formatDate(wo.endDate ? new Date(wo.endDate) : null)}
+                        </TableCell>
+                        <TableCell>
+                          {wo.completed ? (
+                            <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-muted-foreground font-medium">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {wo.invoiceSent ? (
+                            <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-muted-foreground font-medium">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {wo.hoursMaterialClosed ? (
+                            <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-muted-foreground font-medium">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className={tdClass}>{wo.employeeName}</TableCell>
+                        <TableCell>
+                          <Link href={`/departments/${departmentId}/workOrder/${wo.id}` as Route}>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                              <ExternalLink className="h-3.5 w-3.5" />
+                            </Button>
+                          </Link>
+                        </TableCell>
+                        {canDelete && (
+                          <TableCell>
+                            <RowActions
+                              isDeleted={wo.deleted}
+                              onSoftDelete={() =>
+                                setDeleteTarget({
+                                  type: 'workorder',
+                                  id: wo.id,
+                                  label: wo.workOrderNumber ?? wo.id,
+                                  action: 'soft',
+                                })
+                              }
+                              onHardDelete={() =>
+                                setDeleteTarget({
+                                  type: 'workorder',
+                                  id: wo.id,
+                                  label: wo.workOrderNumber ?? wo.id,
+                                  action: 'hard',
+                                })
+                              }
+                              onUndelete={() =>
+                                setDeleteTarget({
+                                  type: 'workorder',
+                                  id: wo.id,
+                                  label: wo.workOrderNumber ?? wo.id,
+                                  action: 'undelete',
+                                })
+                              }
+                            />
+                          </TableCell>
+                        )}
+                      </TableRow>
+                    ))
                 )}
               </TableBody>
             </Table>
@@ -1215,7 +1212,7 @@ export function ProjectDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {bomsOnProject.filter(b => (showDeletedBoms ? !!b.deleted : !b.deleted)).length === 0 ? (
+                {bomsOnProject.filter(b => (showDeletedBoms ? b.deleted : !b.deleted)).length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={canDelete ? 9 : 8} className="h-24 text-center text-muted-foreground">
                       No project BOMs found.
@@ -1223,7 +1220,7 @@ export function ProjectDetail({
                   </TableRow>
                 ) : (
                   bomsOnProject
-                    .filter(b => (showDeletedBoms ? !!b.deleted : !b.deleted))
+                    .filter(b => (showDeletedBoms ? b.deleted : !b.deleted))
                     .map(b => (
                       <TableRow
                         key={b.id}
@@ -1232,7 +1229,7 @@ export function ProjectDetail({
                           {b.projectBomNumber ?? '-'}
                         </TableCell>
                         <TableCell className={tdClass}>
-                          <span className="max-w-[200px] truncate inline-block">{b.shortDescription ?? '-'}</span>
+                          <span className="max-w-50 truncate inline-block">{b.shortDescription ?? '-'}</span>
                         </TableCell>
                         <TableCell className={tdClass}>
                           {b.startDate ? formatDate(new Date(b.startDate)) : '-'}
@@ -1278,7 +1275,7 @@ export function ProjectDetail({
                         {canDelete && (
                           <TableCell>
                             <RowActions
-                              isDeleted={!!b.deleted}
+                              isDeleted={b.deleted}
                               onEdit={() => {
                                 setEditBom(b)
                                 setBomDialogOpen(true)
@@ -1409,7 +1406,7 @@ export function ProjectDetail({
                     </TableCell>
                   </TableRow>
                 )}
-                {project.MaterialSerialTrack.filter(m => (showDeletedMaterials ? !!m.deleted : !m.deleted)).length ===
+                {project.materialSerialTracks.filter(m => (showDeletedMaterials ? m.deleted : !m.deleted)).length ===
                   0 && !showInlineMaterial ? (
                   <TableRow>
                     <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
@@ -1417,20 +1414,20 @@ export function ProjectDetail({
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.MaterialSerialTrack.filter(m => (showDeletedMaterials ? !!m.deleted : !m.deleted)).map(m => (
-                    <TableRow key={m.id} className="border-border/40 hover:bg-secondary/50">
-                      <TableCell className={`${tdClass} text-foreground font-medium`}>{m.becraCode ?? '-'}</TableCell>
-                      <TableCell className={tdClass}>
-                        <span className="max-w-[200px] truncate inline-block">{m.shortDescription ?? '-'}</span>
-                      </TableCell>
-                      <TableCell className={tdClass}>{m.brandName ?? '-'}</TableCell>
-                      <TableCell className={tdClass}>{m.transactionType ?? '-'}</TableCell>
-                      <TableCell className={tdClass}>{m.Company?.name ?? '-'}</TableCell>
-                      <TableCell className={tdClass}>
-                        {m.Employee ? `${m.Employee.firstName} ${m.Employee.lastName}` : '-'}
-                      </TableCell>
-                    </TableRow>
-                  ))
+                  project.materialSerialTracks
+                    .filter(m => (showDeletedMaterials ? m.deleted : !m.deleted))
+                    .map(m => (
+                      <TableRow key={m.id} className="border-border/40 hover:bg-secondary/50">
+                        <TableCell className={`${tdClass} text-foreground font-medium`}>{m.becraCode ?? '-'}</TableCell>
+                        <TableCell className={tdClass}>
+                          <span className="max-w-50 truncate inline-block">{m.shortDescription ?? '-'}</span>
+                        </TableCell>
+                        <TableCell className={tdClass}>{m.brandName ?? '-'}</TableCell>
+                        <TableCell className={tdClass}>{m.transactionType ?? '-'}</TableCell>
+                        <TableCell className={tdClass}>{m.companyName ?? '-'}</TableCell>
+                        <TableCell className={tdClass}>{m.employeeName}</TableCell>
+                      </TableRow>
+                    ))
                 )}
               </TableBody>
             </Table>
@@ -1467,29 +1464,32 @@ export function ProjectDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {project.other_Project.filter(sp => (showDeletedSubProjects ? !!sp.deleted : !sp.deleted)).length ===
-                0 ? (
+                {project.subProjects.filter(sp => (showDeletedSubProjects ? sp.deleted : !sp.deleted)).length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={8} className="h-24 text-center text-muted-foreground">
                       No sub-projects found.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.other_Project
-                    .filter(sp => (showDeletedSubProjects ? !!sp.deleted : !sp.deleted))
+                  project.subProjects
+                    .filter(sp => (showDeletedSubProjects ? sp.deleted : !sp.deleted))
                     .map(sp => (
                       <TableRow
                         key={sp.id}
                         className={`border-border/40 hover:bg-secondary/50 ${sp.deleted ? 'opacity-50' : ''}`}>
                         <TableCell className={`${tdClass} text-foreground font-medium`}>{sp.projectNumber}</TableCell>
-                        <TableCell className={tdClass}>{sp.Company.name}</TableCell>
+                        <TableCell className={tdClass}>{sp.companyName}</TableCell>
                         <TableCell>
                           <Badge variant="outline" className="border-border text-muted-foreground font-normal">
-                            {sp.ProjectType.name}
+                            {sp.projectTypeName}
                           </Badge>
                         </TableCell>
-                        <TableCell className={tdClass}>{formatDate(sp.startDate)}</TableCell>
-                        <TableCell className={tdClass}>{formatDate(sp.endDate)}</TableCell>
+                        <TableCell className={tdClass}>
+                          {formatDate(sp.startDate ? new Date(sp.startDate) : null)}
+                        </TableCell>
+                        <TableCell className={tdClass}>
+                          {formatDate(sp.endDate ? new Date(sp.endDate) : null)}
+                        </TableCell>
                         <TableCell>
                           {sp.isOpen ? (
                             <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
@@ -1556,20 +1556,18 @@ export function ProjectDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {project.ProjectEmployee.length === 0 ? (
+                {project.projectEmployees.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
                       No employees assigned.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.ProjectEmployee.map((pe: any) => (
+                  project.projectEmployees.map((pe: any) => (
                     <TableRow key={pe.id} className="border-border/40 hover:bg-secondary/50">
-                      <TableCell className={`${tdClass} text-foreground font-medium`}>
-                        {pe.Employee.firstName} {pe.Employee.lastName}
-                      </TableCell>
+                      <TableCell className={`${tdClass} text-foreground font-medium`}>{pe.employeeName}</TableCell>
                       <TableCell className={tdClass}>
-                        <span className="max-w-[200px] truncate inline-block">{pe.additionalInfo ?? '-'}</span>
+                        <span className="max-w-50 truncate inline-block">{pe.additionalInfo ?? '-'}</span>
                       </TableCell>
                       <TableCell>
                         {pe.manager ? (
@@ -1606,7 +1604,7 @@ export function ProjectDetail({
                               onClick={() =>
                                 setDeleteEmployeeTarget({
                                   id: pe.id,
-                                  name: `${pe.Employee.firstName} ${pe.Employee.lastName}`,
+                                  name: `${pe.employeeName}`,
                                 })
                               }>
                               <Trash2 className="h-3.5 w-3.5" />

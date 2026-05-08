@@ -4,7 +4,7 @@ import Link from 'next/link'
 import type {Route} from 'next'
 import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Check, FileText, Pencil, Save, Trash2, X} from 'lucide-react'
+import {ArrowLeft, Check, Download, FileText, Pencil, Save, Trash2, X} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {Checkbox} from '@/components/ui/checkbox'
@@ -27,6 +27,7 @@ import {
   updateQuoteSupplierMiscLineAction,
   deleteQuoteSupplierMiscLineAction,
 } from '@/serverFunctions/quoteSupplierMiscLines'
+import {buildCsv, downloadCsv} from '@/lib/csv'
 
 // ── Prop types ───────────────────────────────────────────────────────────────
 
@@ -71,6 +72,15 @@ function getLifecycleStatus(
   if (quote.received) return 'received'
   if (quote.sent) return 'sent'
   return 'pending'
+}
+
+function fileSafeName(value: string) {
+  return (
+    value
+      .replace(/[^a-z0-9-_]+/gi, '_')
+      .replace(/^_+|_+$/g, '')
+      .toLowerCase() || 'quote'
+  )
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -425,6 +435,67 @@ export function QuoteSupplierDetail({
 
   // Total misc cost shown as an informational sum under the misc table.
   const totalMiscCost = quote.miscLines.reduce((acc, ml) => acc + ml.unitPrice, 0)
+
+  function handleDownloadCsv() {
+    const headers = [
+      'Type',
+      'Quote Number',
+      'Quotation Number',
+      'Supplier',
+      'Material BE Number',
+      'Material Description',
+      'Additional Info',
+      'Supplier Description',
+      'Demand',
+      'Quantity',
+      'Min Quantity',
+      'Unit Price',
+      'Not Deliverable',
+      'Selected',
+      'Extra Cost Description',
+      'Extra Cost Amount',
+    ]
+
+    const lineRows = quote.lines.map(line => [
+      'Item',
+      quote.quoteNumber,
+      quote.quotationNumber ?? '',
+      quote.companyName,
+      line.materialBeNumber ?? '',
+      line.materialShortDescription ?? line.materialName ?? line.materialId,
+      line.additionalInfo ?? '',
+      line.supplierDescription ?? '',
+      line.materialDemandLabel ?? '',
+      line.quantity,
+      line.minQuantity ?? '',
+      line.unitPrice,
+      line.notDeliverable ? 'Yes' : 'No',
+      line.selected ? 'Yes' : 'No',
+      '',
+      '',
+    ])
+
+    const miscRows = quote.miscLines.map(line => [
+      'Extra cost',
+      quote.quoteNumber,
+      quote.quotationNumber ?? '',
+      quote.companyName,
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      line.description,
+      line.unitPrice,
+    ])
+
+    downloadCsv(`${fileSafeName(quote.quoteNumber)}-order-quote-detail.csv`, buildCsv(headers, [...lineRows, ...miscRows]))
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -820,7 +891,15 @@ export function QuoteSupplierDetail({
       )}
 
       {/* ── Lines table ── */}
-      <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
+      <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
+        <div className="flex items-center justify-between gap-3 border-b border-border/60 px-4 py-3">
+          <h2 className="text-sm font-medium text-foreground">Quote lines</h2>
+          <Button type="button" variant="outline" onClick={handleDownloadCsv} className="gap-2 border-border">
+            <Download className="h-4 w-4" />
+            Download CSV
+          </Button>
+        </div>
+        <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
@@ -1004,6 +1083,7 @@ export function QuoteSupplierDetail({
             )}
           </TableBody>
         </Table>
+        </div>
       </div>
 
       {/* ── Miscellaneous cost lines ── */}

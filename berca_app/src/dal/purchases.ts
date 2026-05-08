@@ -336,7 +336,7 @@ export async function getPurchaseById(id: string) {
               id: true,
               materialId: true,
               materialDemandId: true,
-              additionalInfo: true as any,
+              supplierDescription: true,
               quantity: true,
               unitPrice: true,
               minQuantity: true,

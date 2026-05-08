@@ -12,8 +12,8 @@
 
 ## SQL
 
-- Use PascalCase for table names and singular
-- Use camelCase for column names and singular
+- Use PascalCase for table names
+- Use camelCase for column names
 - Use descriptive table names
 - Always use foreign keys
 - Never use destructive queries without backups

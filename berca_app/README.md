@@ -353,13 +353,15 @@ pnpm install --force
 
 | Document | Purpose |
 |---|---|
-| onboarding.md | Developer onboarding |
+| onboarding.md | Local setup and requirements |
+| coding-standards.md | Coding conventions |
+| database.md | Database and migrations rules |
+| api.md | API standards |
+| development-flow.md | Development workflow |
 | architecture.md | System architecture overview |
-| database.md | Database procedures and migrations |
 | deployment.md | Railway deployment instructions |
-| api.md | API endpoint documentation |
 | troubleshooting.md | Common issue resolution |
-| coding-standards.md | Development conventions |
+
 
 ---
 
@@ -375,5 +377,5 @@ pnpm install --force
 
 # Contact
 
-For project access, deployment permissions, or infrastructure questions, contact the project administrators.
+For project access, deployment permissions, or infrastructure questions, you can always contact us if needed.
 

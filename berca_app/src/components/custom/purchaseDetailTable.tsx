@@ -7,6 +7,7 @@ import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import {
   PurchaseDetailFormDialog,
   type DetailOption,
@@ -46,6 +47,22 @@ function formatCurrency(val: string | number | null | undefined) {
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '—'
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create purchase detail.'
+}
+
+function findDetailOption(options: DetailOption[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalized) ?? null
+}
+
+function parsePositiveInt(value: string, fallback = 1) {
+  const parsed = Number.parseInt(value, 10)
+  return Number.isNaN(parsed) || parsed < 1 ? fallback : parsed
 }
 
 const STATUS_COLOR: Record<string, string> = {
@@ -111,6 +128,70 @@ export function PurchaseDetailTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const quoteLineValue = getCsvValue(row, ['Quote Line', 'Quote Supplier Line', 'quoteSupplierLineId'])
+      const quoteLine = findDetailOption(quoteLineOptions, quoteLineValue) as QuoteLineOption | null
+      const materialValue = getCsvValue(row, ['Material', 'Material Label', 'materialId'])
+      const material = quoteLine ? null : findDetailOption(materialOptions, materialValue)
+      const materialDemandValue = getCsvValue(row, ['Material Demand', 'materialDemandId'])
+      const materialDemand = findDetailOption(materialDemandOptions, materialDemandValue)
+
+      if (quoteLineValue && !quoteLine) {
+        errors.push(`Row ${rowNumber}: Quote Line could not be matched.`)
+        continue
+      }
+
+      if (!quoteLine && !material) {
+        errors.push(`Row ${rowNumber}: Material could not be matched.`)
+        continue
+      }
+
+      if (materialDemandValue && !materialDemand) {
+        errors.push(`Row ${rowNumber}: Material Demand could not be matched.`)
+        continue
+      }
+
+      try {
+        await createPurchaseDetailAction({
+          purchaseId,
+          quoteSupplierLineId: quoteLine?.id ?? null,
+          materialId: quoteLine?.materialId ?? material?.id ?? '',
+          materialDemandId: quoteLine?.materialDemandId ?? materialDemand?.id ?? null,
+          unitPrice: getCsvValue(row, ['Unit Price', 'unitPrice']) || quoteLine?.unitPrice || '0.00',
+          quantity: parsePositiveInt(getCsvValue(row, ['Quantity', 'Qty', 'quantity']), quoteLine?.quantity ?? 1),
+          minQuantity: getCsvValue(row, ['Min Quantity', 'minQuantity'])
+            ? parsePositiveInt(getCsvValue(row, ['Min Quantity', 'minQuantity']), 0)
+            : (quoteLine?.minQuantity ?? null),
+          lineStatus: getCsvValue(row, ['Status', 'Line Status', 'lineStatus']) || 'OPEN',
+          additionalInfo: getCsvValue(row, ['Additional Info', 'additionalInfo']) || quoteLine?.additionalInfo || null,
+          notDeliverable: isTruthyCsvValue(getCsvValue(row, ['Not Deliverable', 'notDeliverable'])),
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} purchase detail(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} purchase detail(s).`,
+    )
+  }
+
   async function handleDelete(id: string) {
     if (canHardDelete) {
       await hardDeletePurchaseDetailAction({id, purchaseId})
@@ -150,7 +231,7 @@ export function PurchaseDetailTable({
           )}
         </div>
         <div className="flex items-center gap-2">
-          <TableCsvActions filename="purchase-detail-table.csv" />
+          <TableCsvActions filename="purchase-detail-table.csv" onUpload={handleUploadCsv} />
           <Button
             size="sm"
             disabled={!canCreate}

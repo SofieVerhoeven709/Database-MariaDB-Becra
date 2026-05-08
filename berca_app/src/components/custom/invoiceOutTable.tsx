@@ -338,7 +338,7 @@ export function InvoiceOutTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="invoice-out-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
+        <TableCsvActions filename="invoice-out-table.csv" onUpload={handleUploadCsv} />
 
         {canCreate && (
           <Button

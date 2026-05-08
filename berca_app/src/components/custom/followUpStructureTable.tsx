@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
 import {FollowUpStructureFormDialog} from '@/components/custom/followUpStructureFormDialog'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
@@ -20,8 +21,8 @@ import {
 } from '@/serverFunctions/followUpStructures'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
-import type {Route} from 'next'import {TableCsvActions} from '@/components/custom/tableCsvActions'
-
+import type {Route} from 'next'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -58,6 +59,24 @@ interface SelectOption {
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create follow-up structure.'
+}
+
+function parseCsvDate(value: string, defaultToToday = false) {
+  const trimmed = value.trim()
+  if (!trimmed) return defaultToToday ? new Date() : null
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
+}
+
+function findSelectOption(options: SelectOption[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalized) ?? null
 }
 
 function YesNoBadge({value}: {value: boolean}) {
@@ -257,6 +276,75 @@ export function FollowUpStructureTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const ownedBy =
+        findSelectOption(employeeOptions, getCsvValue(row, ['Owned By', 'Owner', 'ownedBy'])) ?? employeeOptions[0]
+      const executedBy =
+        findSelectOption(employeeOptions, getCsvValue(row, ['Executed By', 'Executor', 'executedBy'])) ?? ownedBy
+      const taskFor = findSelectOption(employeeOptions, getCsvValue(row, ['Task For', 'taskFor'])) ?? ownedBy
+      const status = findSelectOption(statusOptions, getCsvValue(row, ['Status', 'statusId'])) ?? statusOptions[0]
+      const urgency =
+        findSelectOption(urgencyTypeOptions, getCsvValue(row, ['Urgency', 'Urgency Type', 'urgencyTypeId'])) ??
+        urgencyTypeOptions[0]
+      const followUp =
+        findSelectOption(followUpOptions, getCsvValue(row, ['Follow Up', 'followUpId'])) ?? followUpOptions[0]
+      const contact = findSelectOption(contactOptions, getCsvValue(row, ['Contact', 'contactId'])) ?? contactOptions[0]
+      const contactDate = parseCsvDate(getCsvValue(row, ['Contact Date', 'contactDate']), true)
+
+      if (!ownedBy || !executedBy || !taskFor || !status || !urgency || !followUp || !contact || !contactDate) {
+        errors.push(`Row ${rowNumber}: Required lookup values are missing.`)
+        continue
+      }
+
+      try {
+        await createFollowUpStructureAction({
+          activityDescription: getCsvValue(row, ['Activity Description', 'activityDescription']) || null,
+          additionalInfo: getCsvValue(row, ['Additional Info', 'additionalInfo']) || null,
+          actionAgenda: parseCsvDate(getCsvValue(row, ['Action Agenda', 'actionAgenda'])),
+          closedAgenda: parseCsvDate(getCsvValue(row, ['Closed Agenda', 'closedAgenda'])),
+          recurringItem: getCsvValue(row, ['Recurring Item', 'recurringItem']) || null,
+          item: getCsvValue(row, ['Item', 'item']) || null,
+          contactDate,
+          taskDescription: getCsvValue(row, ['Task Description', 'taskDescription']) || null,
+          taskStartDate: parseCsvDate(getCsvValue(row, ['Task Start Date', 'taskStartDate'])),
+          taskCompleteDate: parseCsvDate(getCsvValue(row, ['Task Complete Date', 'taskCompleteDate'])),
+          recurringActive: isTruthyCsvValue(getCsvValue(row, ['Recurring Active', 'recurringActive'])),
+          ownedBy: ownedBy.id,
+          executedBy: executedBy.id,
+          taskFor: taskFor.id,
+          statusId: status.id,
+          urgencyTypeId: urgency.id,
+          followUpId: followUp.id,
+          contactId: contact.id,
+          documentId: null,
+          visibilityForRoles: [],
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} follow-up structure(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} follow-up structure(s).`,
+    )
+  }
+
   const showDeletedCols = filterDeleted !== 'not-deleted'
   const baseColCount = 18
   const colCount = showDeletedCols ? baseColCount + 3 : baseColCount
@@ -299,7 +387,7 @@ export function FollowUpStructureTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="follow-up-structure-table.csv" />
+        <TableCsvActions filename="follow-up-structure-table.csv" onUpload={handleUploadCsv} />
 
         {canCreate && (
           <Button
@@ -483,7 +571,7 @@ export function FollowUpStructureTable({
                             setDialogOpen(true)
                           }}>
                           <Pencil className="h-3.5 w-3.5" />
-                           <span className="sr-only">Edit structure</span>
+                          <span className="sr-only">Edit structure</span>
                         </Button>
                       )}
                       {!s.deleted && canDelete && (
@@ -496,7 +584,7 @@ export function FollowUpStructureTable({
                             router.refresh()
                           }}>
                           <Trash2 className="h-3.5 w-3.5" />
-                           <span className="sr-only">Delete structure</span>
+                          <span className="sr-only">Delete structure</span>
                         </Button>
                       )}
                       {s.deleted && canDelete && (
@@ -521,7 +609,7 @@ export function FollowUpStructureTable({
                             router.refresh()
                           }}>
                           <Trash2 className="h-3.5 w-3.5" />
-                           <span className="sr-only">Permanently delete structure</span>
+                          <span className="sr-only">Permanently delete structure</span>
                         </Button>
                       )}
                     </div>

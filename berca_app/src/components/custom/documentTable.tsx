@@ -545,7 +545,7 @@ export function DocumentTable({
                 </SelectContent>
               </Select>
             </div>
-            <TableCsvActions filename="document-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
+            <TableCsvActions filename="document-table.csv" onUpload={handleUploadCsv} />
 
             {canCreate && (
               <Button

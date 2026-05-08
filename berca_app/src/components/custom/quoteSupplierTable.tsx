@@ -32,6 +32,7 @@ import {
   setQuoteSupplierReceivedAction,
 } from '@/serverFunctions/quoteSuppliers'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 
 type SortField = 'quoteNumber' | 'companyName' | 'validUntil' | 'deliveryTimeDays'
 type SortDir = 'asc' | 'desc'
@@ -58,6 +59,30 @@ function formatQuoteNumber(n: number): string {
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '—'
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create quote supplier.'
+}
+
+function parseCsvDate(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return null
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString()
+}
+
+function findOption<T extends {id: string; name: string}>(options: T[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalized) ?? null
+}
+
+function parseOptionalInt(value: string) {
+  if (!value.trim()) return null
+  const parsed = Number.parseInt(value, 10)
+  return Number.isNaN(parsed) ? null : parsed
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -242,6 +267,102 @@ export function QuoteSupplierTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const companyValue = getCsvValue(row, ['Company', 'Supplier', 'companyId'])
+      const company = findOption(companies, companyValue)
+      const paymentValue = getCsvValue(row, ['Payment Condition', 'paymentConditionId'])
+      const paymentCondition = findOption(paymentConditions, paymentValue)
+
+      if (!company) {
+        errors.push(`Row ${rowNumber}: Company could not be matched.`)
+        continue
+      }
+
+      if (paymentValue && !paymentCondition) {
+        errors.push(`Row ${rowNumber}: Payment Condition could not be matched.`)
+        continue
+      }
+
+      try {
+        const result = await createQuoteSupplierAction({
+          quoteNumber: getCsvValue(row, ['Quote #', 'Quote Number', 'quoteNumber']) || defaultQuoteNumber,
+          quotationNumber: getCsvValue(row, ['Quotation Number', 'quotationNumber']) || null,
+          companyId: company.id,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+          rejected: isTruthyCsvValue(getCsvValue(row, ['Rejected', 'rejected'])),
+          additionalInfo: getCsvValue(row, ['Additional Info', 'additionalInfo']) || null,
+          acceptedForPOB: isTruthyCsvValue(getCsvValue(row, ['Approved', 'Accepted For POB', 'acceptedForPOB'])),
+          validUntil: parseCsvDate(getCsvValue(row, ['Valid Until', 'validUntil'])),
+          deliveryTimeDays: parseOptionalInt(getCsvValue(row, ['Delivery Time Days', 'deliveryTimeDays'])),
+          paymentConditionId: paymentCondition?.id ?? null,
+          initialMaterialId: defaultMaterialId,
+          initialMaterialDemandId: defaultMaterialDemandId,
+          initialQuantity: defaultInitialQuantity,
+        })
+        const error = extractActionError(result)
+        if (error) throw new Error(error)
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} quote supplier(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} quote supplier(s).`,
+    )
+  }
+
+  async function handleUploadPaymentConditionsCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const name = getCsvValue(row, ['Name', 'Payment Condition', 'Payment Conditions', 'name'])
+
+      if (!name) {
+        errors.push(`Row ${rowNumber}: Name is required.`)
+        continue
+      }
+
+      try {
+        await createPaymentConditionAction({name})
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} payment condition(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} payment condition(s).`,
+    )
+  }
+
   async function handleSavePaymentCondition(name: string, id?: string) {
     if (id) await updatePaymentConditionAction({id, name})
     else await createPaymentConditionAction({name})
@@ -374,7 +495,7 @@ export function QuoteSupplierTable({
               <span className="text-xs uppercase tracking-wide text-muted-foreground">
                 {filtered.length} / {initialEntries.length}
               </span>
-              <TableCsvActions filename="quote-supplier-table.csv" />
+              <TableCsvActions filename="quote-supplier-table.csv" onUpload={handleUploadCsv} />
 
               {canCreate && (
                 <Button

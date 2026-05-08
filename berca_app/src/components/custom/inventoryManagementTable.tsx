@@ -6,6 +6,7 @@ import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {InventoryManagementFormDialog} from './inventoryManagementFormDialog'
 import type {MappedInventory} from '@/types/inventory'
@@ -32,6 +33,25 @@ function getActionErrorMessage(result: {errors?: Record<string, string[] | undef
     .flat()
     .filter(Boolean)
     .join('\n')
+}
+
+function findMaterialOption(options: MaterialOption[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return (
+    options.find(
+      option =>
+        option.id === value ||
+        normalizeCsvLookup(option.beNumber) === normalized ||
+        normalizeCsvLookup(option.shortDescription) === normalized ||
+        normalizeCsvLookup(option.name ?? '') === normalized,
+    ) ?? null
+  )
+}
+
+function parseIntCsv(value: string, fallback = 0) {
+  const parsed = Number.parseInt(value, 10)
+  return Number.isNaN(parsed) ? fallback : parsed
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -141,6 +161,61 @@ export function InventoryManagementTable({initialItems, materials}: InventoryTab
       // handled by server actions
     }
   }
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const materialValue = getCsvValue(row, ['Material', 'Material Number', 'BE Number', 'materialId', 'beNumber'])
+      const material = findMaterialOption(materials, materialValue)
+      const shortDescription = getCsvValue(row, ['Description', 'Short Description', 'shortDescription'])
+
+      if (!material) {
+        errors.push(`Row ${rowNumber}: Material could not be matched.`)
+        continue
+      }
+
+      const fd = new FormData()
+      fd.append('id', crypto.randomUUID())
+      fd.append('materialId', material.id)
+      fd.append('beNumber', getCsvValue(row, ['BE Number', 'Material Number', 'beNumber']) || material.beNumber)
+      fd.append('place', getCsvValue(row, ['Location', 'Place', 'place']) || material.place || 'Unassigned')
+      fd.append('shortDescription', shortDescription || material.shortDescription)
+      fd.append('longDescription', getCsvValue(row, ['Long Description', 'longDescription']))
+      fd.append('serialNumber', getCsvValue(row, ['Serial Number', 'serialNumber']))
+      fd.append('quantityInStock', String(parseIntCsv(getCsvValue(row, ['In Stock', 'Quantity', 'quantityInStock']))))
+      fd.append('minQuantityInStock', String(parseIntCsv(getCsvValue(row, ['Min', 'minQuantityInStock']))))
+      fd.append('maxQuantityInStock', String(parseIntCsv(getCsvValue(row, ['Max', 'maxQuantityInStock']))))
+      fd.append('information', getCsvValue(row, ['Information', 'Info', 'information']))
+      fd.append(
+        'valid',
+        String(!getCsvValue(row, ['Valid', 'valid']) || isTruthyCsvValue(getCsvValue(row, ['Valid', 'valid']))),
+      )
+      fd.append('noValidDate', new Date().toISOString())
+
+      const result = await createInventoryAction({success: false}, fd)
+      if (!result.success) {
+        errors.push(`Row ${rowNumber}: ${getActionErrorMessage(result) || 'Could not create inventory item.'}`)
+        continue
+      }
+      created += 1
+    }
+
+    if (created > 0) window.location.reload()
+    alert(
+      errors.length
+        ? `Created ${created} inventory item(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} inventory item(s).`,
+    )
+  }
   async function handleDelete(id: string) {
     if (!confirm('Are you sure you want to delete this inventory item?')) return
     const fd = new FormData()
@@ -201,7 +276,7 @@ export function InventoryManagementTable({initialItems, materials}: InventoryTab
             <SelectItem value="invalid">Invalid</SelectItem>
           </SelectContent>
         </Select>
-        <TableCsvActions filename="inventory-management-table.csv" />
+        <TableCsvActions filename="inventory-management-table.csv" onUpload={handleUploadCsv} />
         <Button
           onClick={() => {
             setEditingItem(null)

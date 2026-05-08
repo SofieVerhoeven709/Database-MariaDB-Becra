@@ -851,7 +851,7 @@ export function ContactTable({
           </SelectContent>
         </Select>
       </div>
-      <TableCsvActions filename="contact-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
+      <TableCsvActions filename="contact-table.csv" onUpload={handleUploadCsv} />
 
       {canCreate && (
         <Button

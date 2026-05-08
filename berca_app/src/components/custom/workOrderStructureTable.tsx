@@ -8,10 +8,12 @@ import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import {Badge} from '@/components/ui/badge'
 import {useRouter} from 'next/navigation'
 import type {MappedWorkOrderStructure, MaterialOption} from '@/types/workOrderStructure'
 import {
+  createWorkOrderStructureAction,
   softDeleteWorkOrderStructureAction,
   hardDeleteWorkOrderStructureAction,
   undeleteWorkOrderStructureAction,
@@ -34,6 +36,36 @@ type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create work order structure.'
+}
+
+function findNamedOption<T extends {id: string; name: string}>(options: T[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalized) ?? null
+}
+
+function findMaterialOption(options: MaterialOption[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return (
+    options.find(
+      option =>
+        option.id === value ||
+        normalizeCsvLookup(option.name) === normalized ||
+        normalizeCsvLookup(option.beNumber) === normalized,
+    ) ?? null
+  )
+}
+
+function parseOptionalInt(value: string) {
+  if (!value.trim()) return null
+  const parsed = Number.parseInt(value, 10)
+  return Number.isNaN(parsed) ? null : parsed
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -164,6 +196,59 @@ export function WorkOrderStructureTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const workOrderValue = getCsvValue(row, ['Work Order', 'Work Order Number', 'workOrderId'])
+      const workOrder = findNamedOption(workOrderOptions, workOrderValue)
+      const materialValue = getCsvValue(row, ['Material', 'Material Number', 'materialId'])
+      const material = findMaterialOption(materialOptions, materialValue)
+
+      if (!workOrder) {
+        errors.push(`Row ${rowNumber}: Work Order could not be matched.`)
+        continue
+      }
+
+      if (!material) {
+        errors.push(`Row ${rowNumber}: Material could not be matched.`)
+        continue
+      }
+
+      try {
+        await createWorkOrderStructureAction({
+          workOrderId: workOrder.id,
+          materialId: material.id,
+          clientNumber: getCsvValue(row, ['Client Number', 'clientNumber']) || null,
+          tag: getCsvValue(row, ['Tag', 'tag']) || null,
+          quantity: parseOptionalInt(getCsvValue(row, ['Quantity', 'Qty', 'quantity'])),
+          shortDescription: getCsvValue(row, ['Short Description', 'Description', 'shortDescription']) || null,
+          longDescription: getCsvValue(row, ['Long Description', 'longDescription']) || null,
+          additionalInfo: getCsvValue(row, ['Additional Info', 'additionalInfo']) || null,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} work order structure(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} work order structure(s).`,
+    )
+  }
+
   const showDeletedCols = filterDeleted !== 'not-deleted'
   const colCount = showDeletedCols ? 14 : 11
 
@@ -191,7 +276,7 @@ export function WorkOrderStructureTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="work-order-structure-table.csv" />
+        <TableCsvActions filename="work-order-structure-table.csv" onUpload={handleUploadCsv} />
         <Button
           onClick={() => {
             setEditingStructure(null)

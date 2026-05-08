@@ -508,7 +508,7 @@ export function SerialTrackedTable({
           )}
         </div>
 
-        <TableCsvActions filename="serial-tracked-table.csv" onUpload={canDelete ? handleUploadCsv : undefined} />
+        <TableCsvActions filename="serial-tracked-table.csv" onUpload={handleUploadCsv} />
         {canDelete && (
           <Button
             onClick={() => {

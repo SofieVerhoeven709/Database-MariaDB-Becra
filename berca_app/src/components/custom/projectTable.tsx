@@ -369,7 +369,7 @@ export function ProjectTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="project-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
+        <TableCsvActions filename="project-table.csv" onUpload={handleUploadCsv} />
 
         {canCreate && (
           <Button

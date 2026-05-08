@@ -373,7 +373,7 @@ export function PurchaseBOMTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="purchase-bom-table.csv" onUpload={canCreate ? handleUploadCsv : undefined} />
+        <TableCsvActions filename="purchase-bom-table.csv" onUpload={handleUploadCsv} />
       </div>
 
       {/* Table */}

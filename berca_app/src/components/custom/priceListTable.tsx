@@ -33,6 +33,11 @@ function formatDate(date: string | null) {
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create price list.'
+}
+
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
   return sortDir === 'asc' ? (
@@ -233,6 +238,45 @@ export function PriceListTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const name = getCsvValue(row, ['Name', 'Price List', 'name'])
+
+      if (!name) {
+        errors.push(`Row ${rowNumber}: Name is required.`)
+        continue
+      }
+
+      try {
+        await createPriceListAction({
+          name,
+          repeatUse: isTruthyCsvValue(getCsvValue(row, ['Repeat Use', 'repeatUse'])),
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} price list(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} price list(s).`,
+    )
+  }
+
   return (
     <div className="flex flex-col gap-6">
       {/* Toolbar */}
@@ -258,7 +302,7 @@ export function PriceListTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="price-list-table.csv" />
+        <TableCsvActions filename="price-list-table.csv" onUpload={handleUploadCsv} />
 
         {canCreate && (
           <Button

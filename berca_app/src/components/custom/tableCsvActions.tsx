@@ -97,9 +97,11 @@ export function TableCsvActions({filename = 'table.csv', onUpload}: TableCsvActi
       <Button
         type="button"
         variant="outline"
-        disabled={!onUpload || uploading}
-        title={onUpload ? 'Upload CSV' : 'CSV upload requires a table-specific importer'}
-        onClick={() => inputRef.current?.click()}
+        title="Upload CSV"
+        onClick={() => {
+          if (!onUpload || uploading) return
+          inputRef.current?.click()
+        }}
         className="flex items-center gap-2">
         <Upload className="h-4 w-4" />
         {uploading ? 'Uploading...' : 'Upload CSV'}

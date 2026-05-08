@@ -8,10 +8,12 @@ import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {TableCsvActions} from '@/components/custom/tableCsvActions'
+import {getCsvValue, type CsvRow} from '@/lib/csv'
 import {Badge} from '@/components/ui/badge'
 import {useRouter} from 'next/navigation'
 import type {MappedDepartment} from '@/types/department'
 import {
+  createDepartmentAction,
   softDeleteDepartmentAction,
   hardDeleteDepartmentAction,
   undeleteDepartmentAction,
@@ -24,6 +26,17 @@ type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create department.'
+}
+
+function parseOptionalNumber(value: string) {
+  if (!value.trim()) return null
+  const parsed = Number.parseInt(value, 10)
+  return Number.isNaN(parsed) ? null : parsed
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -135,6 +148,48 @@ export function DepartmentTable({initialDepartments, currentUserRole, currentUse
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const name = getCsvValue(row, ['Name', 'Department', 'name'])
+
+      if (!name) {
+        errors.push(`Row ${rowNumber}: Name is required.`)
+        continue
+      }
+
+      try {
+        await createDepartmentAction({
+          name,
+          number: parseOptionalNumber(getCsvValue(row, ['Number', 'Department Number', 'number'])),
+          color: getCsvValue(row, ['Color', 'color']) || null,
+          icon: getCsvValue(row, ['Icon', 'icon']) || null,
+          description: getCsvValue(row, ['Description', 'description']) || null,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} department(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} department(s).`,
+    )
+  }
+
   const showDeletedCols = filterDeleted !== 'not-deleted'
   const colCount = showDeletedCols ? 10 : 7
 
@@ -162,7 +217,7 @@ export function DepartmentTable({initialDepartments, currentUserRole, currentUse
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="departments-table.csv" />
+        <TableCsvActions filename="departments-table.csv" onUpload={handleUploadCsv} />
         <Button
           onClick={() => {
             setEditingDepartment(null)

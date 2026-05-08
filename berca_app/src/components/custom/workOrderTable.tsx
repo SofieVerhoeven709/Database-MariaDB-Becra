@@ -280,7 +280,7 @@ export function WorkOrderTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="work-order-table.csv" onUpload={canDelete ? handleUploadCsv : undefined} />
+        <TableCsvActions filename="work-order-table.csv" onUpload={handleUploadCsv} />
         {canDelete && (
           <Button
             onClick={() => {

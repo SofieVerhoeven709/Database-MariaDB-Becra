@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react'
+import {getCsvValue, isTruthyCsvValue, normalizeCsvLookup, type CsvRow} from '@/lib/csv'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
 import {FollowUpFormDialog} from '@/components/custom/followUpFormDialog'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
@@ -22,8 +23,8 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {VisibilityDepartmentRow} from '@/components/custom/visibilityForDepartmentTab'import {TableCsvActions} from '@/components/custom/tableCsvActions'
-
+import {VisibilityDepartmentRow} from '@/components/custom/visibilityForDepartmentTab'
+import {TableCsvActions} from '@/components/custom/tableCsvActions'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -60,6 +61,30 @@ interface SelectOption {
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function csvErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message
+  return 'Could not create follow-up.'
+}
+
+function parseCsvDate(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return null
+  const parsed = new Date(trimmed)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
+}
+
+function findSelectOption(options: SelectOption[], value: string) {
+  if (!value) return null
+  const normalized = normalizeCsvLookup(value)
+  return options.find(option => option.id === value || normalizeCsvLookup(option.name) === normalized) ?? null
+}
+
+function parseOptionalPositiveInt(value: string) {
+  if (!value.trim()) return null
+  const parsed = Number.parseInt(value, 10)
+  return Number.isNaN(parsed) || parsed < 1 ? null : parsed
 }
 
 function YesNoBadge({value}: {value: boolean}) {
@@ -285,6 +310,72 @@ export function FollowUpTable({
     router.refresh()
   }
 
+  async function handleUploadCsv(rows: CsvRow[]) {
+    if (rows.length === 0) {
+      window.alert('The selected CSV file does not contain rows.')
+      return
+    }
+
+    const errors: string[] = []
+    let created = 0
+
+    for (const [index, row] of rows.entries()) {
+      const rowNumber = index + 2
+      const ownedBy =
+        findSelectOption(employeeOptions, getCsvValue(row, ['Owned By', 'Owner', 'ownedBy'])) ?? employeeOptions[0]
+      const executedBy =
+        findSelectOption(employeeOptions, getCsvValue(row, ['Executed By', 'Executor', 'executedBy'])) ?? ownedBy
+      const status = findSelectOption(statusOptions, getCsvValue(row, ['Status', 'statusId'])) ?? statusOptions[0]
+      const urgency =
+        findSelectOption(urgencyTypeOptions, getCsvValue(row, ['Urgency', 'Urgency Type', 'urgencyTypeId'])) ??
+        urgencyTypeOptions[0]
+      const followUpType =
+        findSelectOption(followUpTypeOptions, getCsvValue(row, ['Type', 'Follow Up Type', 'followUpTypeId'])) ??
+        followUpTypeOptions[0]
+
+      if (!ownedBy || !executedBy || !status || !urgency || !followUpType) {
+        errors.push(`Row ${rowNumber}: Required lookup values are missing.`)
+        continue
+      }
+
+      try {
+        await createFollowUpAction({
+          activityDescription: getCsvValue(row, ['Activity Description', 'Description', 'activityDescription']) || null,
+          additionalInfo: getCsvValue(row, ['Additional Info', 'additionalInfo']) || null,
+          actionAgenda: parseCsvDate(getCsvValue(row, ['Action Agenda', 'actionAgenda'])),
+          closedAgenda: parseCsvDate(getCsvValue(row, ['Closed Agenda', 'closedAgenda'])),
+          recurringCallDays: parseOptionalPositiveInt(getCsvValue(row, ['Recurring Call Days', 'recurringCallDays'])),
+          itemClosed: isTruthyCsvValue(getCsvValue(row, ['Item Closed', 'itemClosed'])),
+          salesFollowUp: isTruthyCsvValue(getCsvValue(row, ['Sales Follow Up', 'salesFollowUp'])),
+          nonConform: isTruthyCsvValue(getCsvValue(row, ['Non Conform', 'nonConform'])),
+          periodicControl: isTruthyCsvValue(getCsvValue(row, ['Periodic Control', 'periodicControl'])),
+          recurringActive: isTruthyCsvValue(getCsvValue(row, ['Recurring Active', 'recurringActive'])),
+          review: isTruthyCsvValue(getCsvValue(row, ['Review', 'review'])),
+          ownedBy: ownedBy.id,
+          executedBy: executedBy.id,
+          statusId: status.id,
+          urgencyTypeId: urgency.id,
+          followUpTypeId: followUpType.id,
+          visibilityForRoles: [],
+          visibilityForDepartments: [],
+          followUpTargetId: null,
+        })
+        created += 1
+      } catch (error) {
+        errors.push(`Row ${rowNumber}: ${csvErrorMessage(error)}`)
+      }
+    }
+
+    if (created > 0) router.refresh()
+    window.alert(
+      errors.length
+        ? `Created ${created} follow-up(s). ${errors.slice(0, 5).join(' ')}${
+            errors.length > 5 ? ` +${errors.length - 5} more error(s).` : ''
+          }`
+        : `Created ${created} follow-up(s).`,
+    )
+  }
+
   const showDeletedCols = filterDeleted !== 'not-deleted'
   const baseColCount = 19
   const colCount = showDeletedCols ? baseColCount + 3 : baseColCount
@@ -353,7 +444,7 @@ export function FollowUpTable({
             </SelectContent>
           </Select>
         </div>
-        <TableCsvActions filename="follow-up-table.csv" />
+        <TableCsvActions filename="follow-up-table.csv" onUpload={handleUploadCsv} />
 
         {canCreate && (
           <Button

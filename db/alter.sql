@@ -2418,36 +2418,3 @@ CREATE TABLE IF NOT EXISTS HrFacilityFine (
 
 ALTER TABLE QuoteSupplierLine ADD COLUMN IF NOT EXISTS additionalInfo VARCHAR(255);
 ALTER TABLE QuoteSupplierLine ADD COLUMN IF NOT EXISTS supplierDescription TEXT;
-
-
-ALTER TABLE WarehousePlace DROP COLUMN IF EXISTS quantityInStock;
-ALTER TABLE WarehousePlace DROP COLUMN IF EXISTS beNumber;
-ALTER TABLE WarehousePlace
-    DROP FOREIGN KEY IF EXISTS fk_warehouseplace_serialtrack;
-ALTER TABLE WarehousePlace DROP COLUMN IF EXISTS serialTrackedId;
-ALTER TABLE Material
-    DROP FOREIGN KEY IF EXISTS Material_ibfk_5;
-ALTER TABLE Material DROP COLUMN IF EXISTS warehousePlaceId;
-ALTER TABLE Inventory DROP COLUMN IF EXISTS serialNumber;
-ALTER TABLE Inventory DROP COLUMN IF EXISTS quantityInStock;
-ALTER TABLE Inventory DROP COLUMN IF EXISTS place;
-
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP TABLE IF EXISTS InventoryStructure;
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-    CREATE TABLE
-        IF NOT EXISTS InventoryStructure (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            materialId CHAR(36) NOT NULL,
-            warehousePlaceId CHAR(36) NOT NULL,
-            quantity INT NOT NULL DEFAULT 0,
-            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
-            FOREIGN KEY (warehousePlaceId) REFERENCES WarehousePlace (id) ON DELETE RESTRICT,
-            UNIQUE (materialId, warehousePlaceId)
-        ) ENGINE = InnoDB;
-
-   ALTER TABLE WarehousePlace ADD COLUMN IF NOT EXISTS multipleMaterial BOOLEAN NOT NULL DEFAULT 0;
- ALTER TABLE CompanyAddress ADD COLUMN IF NOT EXISTS info TEXT;

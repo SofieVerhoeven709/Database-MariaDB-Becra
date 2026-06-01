@@ -269,15 +269,17 @@
             IF NOT EXISTS WarehousePlace (
                 id CHAR(36) NOT NULL PRIMARY KEY,
                 abbreviation VARCHAR(255) NOT NULL,
+                beNumber VARCHAR(255),
+                serialTrackedId CHAR(36),
                 place VARCHAR(255),
                 shelf VARCHAR(255),
                 `column` VARCHAR(255),
                 layer VARCHAR(255),
                 layerPlace VARCHAR(255),
                 information VARCHAR(255),
+                quantityInStock INT NOT NULL,
                 createdAt DATETIME NOT NULL,
                 createdBy CHAR(36) NOT NULL,
-                multipleMaterial BOOLEAN NOT NULL DEFAULT 0,
                 FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
                 deleted BOOLEAN NOT NULL DEFAULT 0,
                 deletedAt DATETIME,
@@ -295,6 +297,7 @@
                 longDescription TEXT,
                 preferredSupplier VARCHAR(255),
                 brandName VARCHAR(255),
+                warehousePlaceId CHAR(36),
                 rejected BOOLEAN DEFAULT FALSE,
                 isSerialTracked BOOLEAN NOT NULL DEFAULT 0,
                 materialGroupIdA CHAR(36) NULL,
@@ -320,6 +323,7 @@
                 FOREIGN KEY (materialGroupIdB) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
                 FOREIGN KEY (materialGroupIdC) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
                 FOREIGN KEY (materialGroupIdD) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
+                FOREIGN KEY (warehousePlaceId) REFERENCES WarehousePlace (id) ON DELETE SET NULL,
                 FOREIGN KEY (unitId) REFERENCES Unit (id) ON DELETE RESTRICT,
                 FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
                 deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -503,7 +507,6 @@
                 place VARCHAR(100),
                 createdAt DATETIME NOT NULL,
                 typeAddress VARCHAR(100),
-                info TEXT,
                 createdBy CHAR(36) NOT NULL,
                 companyId CHAR(36) NOT NULL,
                 countryId CHAR(36) NULL,
@@ -1255,8 +1258,11 @@
                 id CHAR(36) NOT NULL PRIMARY KEY,
                 materialId CHAR(36) NOT NULL,
                 beNumber VARCHAR(255) NOT NULL,
+                place VARCHAR(255) NOT NULL,
                 shortDescription VARCHAR(255) NOT NULL,
                 longDescription TEXT NOT NULL,
+                serialNumber VARCHAR(255) NOT NULL,
+                quantityInStock INT NOT NULL,
                 minQuantityInStock INT NOT NULL,
                 maxQuantityInStock INT NOT NULL,
                 information TEXT NOT NULL,
@@ -1300,12 +1306,32 @@
         CREATE TABLE
             IF NOT EXISTS InventoryStructure (
                 id CHAR(36) NOT NULL PRIMARY KEY,
-                materialId CHAR(36) NOT NULL,
-                warehousePlaceId CHAR(36) NOT NULL,
-                quantity INT NOT NULL DEFAULT 0,
-                FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
-                FOREIGN KEY (warehourPlaceId) REFERENCES WarehousePlace (id) ON DELETE RESTRICT,
-                UNIQUE (materialId, warehousePlaceId)
+                inventoryPlaceId CHAR(36) NOT NULL,
+                place VARCHAR(255) NOT NULL,
+                shortDescription VARCHAR(255) NOT NULL,
+                longDescription TEXT,
+                beNumber VARCHAR(255),
+                purchaseOrderBecraId CHAR(36),
+                projectId CHAR(36),
+                partSupplierNumber VARCHAR(255),
+                partDescription VARCHAR(255),
+                warehousePlaceId CHAR(36),
+                information TEXT,
+                coordinate BOOLEAN NOT NULL,
+                inventoryId CHAR(36) NOT NULL,
+                forInventory BOOLEAN NOT NULL,
+                forProject BOOLEAN NOT NULL,
+                active BOOLEAN NOT NULL,
+                materialActive BOOLEAN NOT NULL,
+                valid BOOLEAN NOT NULL,
+                createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                createdBy CHAR(36) NOT NULL,
+                FOREIGN KEY (inventoryId) REFERENCES Inventory (id) ON DELETE RESTRICT,
+                FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+                deleted BOOLEAN NOT NULL DEFAULT 0,
+                deletedAt DATETIME,
+                deletedBy CHAR(36),
+                FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
             ) ENGINE = InnoDB;
 
         CREATE TABLE
@@ -1561,6 +1587,8 @@
                 deletedBy CHAR(36),
                 FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
             ) ENGINE = InnoDB;
+
+        ALTER TABLE WarehousePlace ADD CONSTRAINT fk_warehouseplace_serialtrack FOREIGN KEY (serialTrackedId) REFERENCES MaterialSerialTrack (id) ON DELETE SET NULL;
 
         ALTER TABLE Inventory ADD CONSTRAINT uq_inventory_beNumber UNIQUE (beNumber);
 
